@@ -24,6 +24,14 @@
                         android:icon="@drawable/ic_save_white"
                         android:title="@string/drafts" />
                     <item
+                        android:id="@+id/nav_archive"
+                        android:icon="@drawable/ic_archive"
+                        android:title="@string/owner_cached_toots" />
+                    <item
+                        android:id="@+id/nav_bookmarks"
+                        android:icon="@drawable/ic_bookmark"
+                        android:title="@string/bookmarks" />
+                    <item
                         android:id="@+id/nav_search"
                         android:icon="@drawable/ic_search"
                         android:title="@string/search" />

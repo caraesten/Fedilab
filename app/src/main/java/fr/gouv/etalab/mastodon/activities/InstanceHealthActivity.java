@@ -140,7 +140,7 @@ public class InstanceHealthActivity extends BaseActivity {
                 try {
                     HashMap<String, String> parameters = new HashMap<>();
                     parameters.put("name", instance.trim());
-                    final String response = new HttpsConnection().get("https://instances.social/api/1.0/instances/show", 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
+                    final String response = new HttpsConnection(InstanceHealthActivity.this).get("https://instances.social/api/1.0/instances/show", 30, parameters, Helper.THEKINRAR_SECRET_TOKEN );
                     if( response != null)
                         instanceSocial = API.parseInstanceSocialResponse(getApplicationContext(), new JSONObject(response));
                     runOnUiThread(new Runnable() {
@@ -177,7 +177,7 @@ public class InstanceHealthActivity extends BaseActivity {
                                 up.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                             }
                             uptime.setText(String.format("Uptime: %.2f %%", (instanceSocial.getUptime()*100)));
-                            checked_at.setText(String.format("Checked at: %s", Helper.dateToString(getApplicationContext(), instanceSocial.getChecked_at())));
+                            checked_at.setText(String.format("Checked at: %s", Helper.dateToString(instanceSocial.getChecked_at())));
                             values.setText(String.format("version: %s \n %s users - %s statuses", instanceSocial.getVersion(), withSuffix(instanceSocial.getUsers()), withSuffix(instanceSocial.getStatuses())));
                             instance_container.setVisibility(View.VISIBLE);
                             loader.setVisibility(View.GONE);

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2017 Thomas Schneider
+
+    This file is a part of Mastalab
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Mastalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Mastalab; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:paddingStart="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingEnd="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            style="?attr/shapeBorder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal">
+            <TextView
+                android:text="@string/settings_time_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:focusableInTouchMode="false"
+                android:id="@+id/settings_time_from"
+                style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/settings_time_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:focusableInTouchMode="false"
+                style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                android:id="@+id/settings_time_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/filter_visibility_public"
+            android:layout_width="wrap_content"
+            android:text="@string/v_public"
+            android:checked="true"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/filter_visibility_unlisted"
+            android:layout_width="wrap_content"
+            android:text="@string/v_unlisted"
+            android:checked="true"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/filter_visibility_private"
+            android:layout_width="wrap_content"
+            android:text="@string/v_private"
+            android:checked="true"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/filter_visibility_direct"
+            android:layout_width="wrap_content"
+            android:text="@string/v_direct"
+            android:checked="true"
+            android:layout_height="wrap_content" />
+
+        <!-- Show boosts -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_boosts"/>
+            <Spinner
+                android:id="@+id/filter_boost"
+                android:entries="@array/filter_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Show replies -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_replies"/>
+            <Spinner
+                android:id="@+id/filter_replies"
+                android:entries="@array/filter_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Show media -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_media"/>
+            <Spinner
+                android:id="@+id/filter_media"
+                android:entries="@array/filter_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <!-- Show pinned -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_pinned"/>
+            <Spinner
+                android:id="@+id/filter_pinned"
+                android:entries="@array/filter_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <EditText
+            android:inputType="text"
+            android:id="@+id/filter_keywords"
+            android:maxLines="2"
+            android:hint="@string/v_keywords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>

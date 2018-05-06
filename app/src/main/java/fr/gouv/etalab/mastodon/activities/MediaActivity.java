@@ -16,28 +16,23 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+
 import android.graphics.RectF;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.GestureDetector;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
@@ -46,21 +41,24 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.gw.swipeback.SwipeBackLayout;
+
 import java.io.File;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
+import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 
@@ -92,36 +90,47 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private Bitmap downloadedImage;
     private File fileVideo;
     private TextView progress;
-    private boolean canSwipe;
-    private AppBarLayout appBar;
     private ProgressBar pbar_inf;
     private TextView message_ready;
-
+    private boolean canSwipe;
 
     private enum actionSwipe{
         RIGHT_TO_LEFT,
         LEFT_TO_RIGHT,
         POP
     }
-    private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-    private GestureDetector gestureDetector;
+
+    private FloatingActionButton media_save, media_close;
+    private boolean scheduleHidden;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gestureDetector = new GestureDetector(new SwipeDetector());
 
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT){
-            setTheme(R.style.AppTheme_NoActionBar);
-        }else {
-            setTheme(R.style.AppThemeDark_NoActionBar);
-        }
+
         setContentView(R.layout.activity_media);
+        SwipeBackLayout mSwipeBackLayout = new SwipeBackLayout(MediaActivity.this);
+        mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_BOTTOM);
+        mSwipeBackLayout.setMaskAlpha(125);
+        mSwipeBackLayout.setSwipeBackFactor(0.5f);
+        mSwipeBackLayout.setSwipeBackListener(new SwipeBackLayout.OnSwipeBackListener() {
+            @Override
+            public void onViewPositionChanged(View mView, float swipeBackFraction, float SWIPE_BACK_FACTOR) {
+                canSwipe = swipeBackFraction<0.1;
+            }
+
+            @Override
+            public void onViewSwipeFinished(View mView, boolean isEnd) {
+                if(!isEnd)
+                    canSwipe = true;
+                else
+                    finish();
+            }
+        });
+        mSwipeBackLayout.attachToActivity(this);
         attachments = getIntent().getParcelableArrayListExtra("mediaArray");
         if( getIntent().getExtras() != null)
             mediaPosition = getIntent().getExtras().getInt("position", 1);
@@ -137,58 +146,45 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         message_ready = findViewById(R.id.message_ready);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if( getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            LayoutInflater inflater = (LayoutInflater) this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);
-            assert inflater != null;
-            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.picture_actionbar, null);
-            getSupportActionBar().setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        media_save = findViewById(R.id.media_save);
+        media_close = findViewById(R.id.media_close);
 
-
-            ImageView action_save = getSupportActionBar().getCustomView().findViewById(R.id.action_save);
-            ImageView close = getSupportActionBar().getCustomView().findViewById(R.id.close);
-            if( close != null){
-                close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
-            }
-            action_save.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(Build.VERSION.SDK_INT >= 23 ){
-                        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
-                            ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
-                        } else {
-                            Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
-                        }
-                    }else{
+        media_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Build.VERSION.SDK_INT >= 23 ){
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+                        ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
+                    } else {
                         Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
                     }
+                }else{
+                    Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
                 }
-            });
-            Handler h = new Handler();
+            }
+        });
+        media_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        Handler h = new Handler();
+        scheduleHidden = true;
+        h.postDelayed(new Runnable() {
 
-            h.postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-                    // DO DELAYED STUFF
-                    if(canSwipe)
-                        appBar.setExpanded(false);
-                }
-            }, 2000);
-        }
-
-
+            @Override
+            public void run() {
+                // DO DELAYED STUFF
+                media_close.setVisibility(View.GONE);
+                media_save.setVisibility(View.GONE);
+                scheduleHidden = false;
+            }
+        }, 2000);
         canSwipe = true;
         loader = findViewById(R.id.loader);
         imageView = findViewById(R.id.media_picture);
         videoView = findViewById(R.id.media_video);
-        appBar = findViewById(R.id.appBar);
         prev = findViewById(R.id.media_prev);
         next = findViewById(R.id.media_next);
         changeDrawableColor(getApplicationContext(), prev,R.color.mastodonC4);
@@ -207,17 +203,14 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 displayMediaAtPosition(actionSwipe.POP);
             }
         });
+
+        progress = findViewById(R.id.loader_progress);
         imageView.setOnMatrixChangeListener(new OnMatrixChangedListener() {
             @Override
             public void onMatrixChanged(RectF rect) {
                 canSwipe = (imageView.getScale() == 1 );
-                if( !canSwipe && getSupportActionBar() != null && getSupportActionBar().isShowing()){
-                    appBar.setExpanded(false);
-                }
             }
         });
-
-        progress = findViewById(R.id.loader_progress);
         pbar_inf = findViewById(R.id.pbar_inf);
         setTitle("");
 
@@ -227,32 +220,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     }
 
 
-    //It's a part of the code from Hitesh Sahu on stackoverflow. See: https://stackoverflow.com/a/38442055
-    private class SwipeDetector extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 
-            // Check movement along the Y-axis. If it exceeds SWIPE_MAX_OFF_PATH,
-            // then dismiss the swipe.
-            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                return false;
-
-            // Swipe from left to right.
-            // The swipe needs to exceed a certain distance (SWIPE_MIN_DISTANCE)
-            // and a certain velocity (SWIPE_THRESHOLD_VELOCITY).
-            if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                finish();
-                return true;
-            }
-
-            return false;
-        }
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return gestureDetector.onTouchEvent(event);
-    }
     /**
      * Manage touch event
      * Allows to swipe from timelines
@@ -261,23 +229,20 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (gestureDetector != null && imageView.getScale() == 1 && mediaPosition == 1) {
-            if (gestureDetector.onTouchEvent(event))
-                // If the gestureDetector handles the event, a swipe has been
-                // executed and no more needs to be done.
-                return true;
-        }
-        if( event.getAction() == MotionEvent.ACTION_DOWN){
-            if( getSupportActionBar() != null  && canSwipe) {
-                appBar.setExpanded(true);
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        appBar.setExpanded(false);
-                    }
-                }, 2000);
-            }
+
+        if( event.getAction() == MotionEvent.ACTION_DOWN && !scheduleHidden){
+            scheduleHidden = true;
+            media_close.setVisibility(View.VISIBLE);
+            media_save.setVisibility(View.VISIBLE);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    media_close.setVisibility(View.GONE);
+                    media_save.setVisibility(View.GONE);
+                    scheduleHidden = false;
+                }
+            }, 2000);
         }
         if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
             return super.dispatchTouchEvent(event);
@@ -356,31 +321,20 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 fileVideo = null;
                 pbar_inf.setIndeterminate(true);
                 loader.setVisibility(View.VISIBLE);
+                fileVideo = null;
                 Glide.with(getApplicationContext())
-                        .asBitmap()
-                        .load(preview_url).listener(new RequestListener<Bitmap>() {
-
-                    @Override
-                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                        Glide.with(getApplicationContext())
+                    .asBitmap()
+                    .load(preview_url).into(
+                    new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull final Bitmap resource, Transition<? super Bitmap> transition) {
+                            imageView.setImageBitmap(resource);
+                            Glide.with(getApplicationContext())
                                 .asBitmap()
-                                .load(finalUrl)
-                                .listener(new RequestListener<Bitmap>() {
-
+                                .load(finalUrl).into(
+                                new SimpleTarget<Bitmap>() {
                                     @Override
-                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                        return false;
-                                    }
-
-                                    @Override
-                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                        loader.setVisibility(View.GONE);
-                                        return false;
-                                    }
-                                })
-                                .into(new SimpleTarget<Bitmap>() {
-                                    @Override
-                                    public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
+                                    public void onResourceReady(@NonNull final Bitmap resource, Transition<? super Bitmap> transition) {
                                         loader.setVisibility(View.GONE);
                                         if( imageView.getScale() < 1.1) {
                                             downloadedImage = resource;
@@ -396,56 +350,12 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                                                 message_ready.setVisibility(View.GONE);
                                             }
                                         });
-                                        fileVideo = null;
                                     }
-                                });
-                        return false;
+                                }
+                            );
+                        }
                     }
-
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                        Glide.with(getApplicationContext())
-                                .asBitmap()
-                                .load(finalUrl)
-                                .listener(new RequestListener<Bitmap>() {
-
-                                    @Override
-                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                        return false;
-                                    }
-
-                                    @Override
-                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                        loader.setVisibility(View.GONE);
-                                        return false;
-                                    }
-                                })
-                                .into(new SimpleTarget<Bitmap>() {
-                                    @Override
-                                    public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
-                                        loader.setVisibility(View.GONE);
-                                        if( imageView.getScale() < 1.1) {
-                                            downloadedImage = resource;
-                                            imageView.setImageBitmap(resource);
-                                        }else{
-                                            message_ready.setVisibility(View.VISIBLE);
-                                        }
-                                        message_ready.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                downloadedImage = resource;
-                                                imageView.setImageBitmap(resource);
-                                                message_ready.setVisibility(View.GONE);
-                                            }
-                                        });
-                                        fileVideo = null;
-
-                                    }
-                                });
-                        return false;
-                    }
-                }).into(imageView);
-
+                );
                 break;
             case "video":
             case "gifv":
@@ -455,6 +365,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 if(file.exists()) {
                     Uri uri = Uri.parse(file.getAbsolutePath());
                     videoView.setVisibility(View.VISIBLE);
+                    try {
+                        HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
+                    } catch (KeyManagementException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
                     videoView.setVideoURI(uri);
                     videoView.start();
                     MediaController mc = new MediaController(MediaActivity.this);
@@ -491,18 +408,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 }
                 break;
         }
-        String filename = URLUtil.guessFileName(url, null, null);
-        if( filename == null)
-            filename = url;
-        if( attachments.size() > 1 )
-            filename = String.format("%s  (%s/%s)",filename, mediaPosition, attachments.size());
-        ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null){
-            TextView picture_actionbar_title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
-            picture_actionbar_title.setText(filename);
-        }else {
-            setTitle(url);
-        }
     }
 
     @Override
@@ -517,10 +422,27 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             from.renameTo(to);
         fileVideo = to;
         downloadedImage = null;
-        progress.setVisibility(View.GONE);
-        loader.setVisibility(View.GONE);
+        if( progress != null)
+            progress.setVisibility(View.GONE);
+        if( loader != null)
+            loader.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        FullScreencall();
+    }
+    public void FullScreencall() {
+        if(Build.VERSION.SDK_INT < 19) {
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if(Build.VERSION.SDK_INT >= 19) {
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+    }
 
     @Override
     public void onUpdateProgress(int progressPercentage) {

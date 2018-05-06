@@ -105,7 +105,7 @@ public class SettingsNotificationsFragment extends Fragment {
         boolean notif_wifi = sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false);
         boolean notif_silent = sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT, false);
 
-        boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
+        boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, false);
 
         final String time_from = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
         final String time_to = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");

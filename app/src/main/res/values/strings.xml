@@ -41,6 +41,7 @@
     <string name="choose_picture">Select a picture…</string>
     <string name="clear">Clean</string>
     <string name="microphone">Microphone</string>
+    <string name="camera">Camera</string>
     <string name="speech_prompt">Please, say something</string>
     <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
     <string name="delete_all">Delete all</string>
@@ -137,6 +138,14 @@
         <item quantity="one">%d reply</item>
         <item quantity="other">%d replies</item>
     </plurals>
+    <string name="set_display_bookmark_button">Display the bookmark button</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="bookmark_add">Add to bookmarks</string>
+    <string name="bookmark_remove">Remove bookmark</string>
+    <string name="bookmarks_empty">No bookmarks to display</string>
+    <string name="status_bookmarked">Status has been added to bookmarks!</string>
+    <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -191,6 +200,7 @@
     <string name="about_thekinrar">Search instances:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Icon designer:</string>
+    <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
 
@@ -259,7 +269,7 @@
     <string name="toast_unpin">The toot was unpinned!</string>
     <string name="toast_error">Oops ! An error occurred!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-    <string name="toast_error_instance">The instance domain does not seem to be valide!</string>
+    <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
     <string name="toast_error_search">An error occurred while searching!</string>
     <string name="toast_error_login">Can not log in!</string>
@@ -308,11 +318,13 @@
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Edit profile</string>
     <string name="set_profile_description">Bio…</string>
+    <string name="set_lock_account">Lock account</string>
     <string name="set_save_changes">Save changes</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
     <string name="set_preview_reply">Display the number of replies in home timeline</string>
     <string name="set_preview_reply_pp">Display profile pictures?</string>
     <string name="set_multiaccount_actions">Allow interactions between accounts?</string>
+    <string name="set_fit_preview">Fit preview images</string>
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
 
@@ -324,7 +336,9 @@
     <string name="settings_hour_init">Start time</string>
     <string name="settings_hour_end">End time</string>
     <string name="embedded_browser">Use the built-in browser</string>
+    <string name="custom_tabs">Custom tabs</string>
     <string name="use_javascript">Enable Javascript</string>
+    <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
     <string-array name="settings_menu_tabs">
@@ -336,6 +350,13 @@
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>No</item>
+    </string-array>
+
+    <string-array name="settings_resize_picture">
+        <item>No</item>
+        <item>512 Kb</item>
+        <item>1 Mb</item>
+        <item>2 Mb</item>
     </string-array>
 
     <string name="set_led_colour">Set LED colour:</string>
@@ -365,6 +386,8 @@
 
     <string name="action_search">Search</string>
     <string name="set_capitalize">First letter in capital for replies</string>
+    <string name="set_resize_picture">Resize pictures</string>
+
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push notifications</string>
     <string name="settings_popup_message">
@@ -379,6 +402,27 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
 
+
+    <!-- ACTIVITY CACHE -->
+    <string name="action_sync">Synchronize</string>
+    <string name="action_filter">Filter</string>
+    <string name="owner_cached_toots">Your toots</string>
+    <string name="v_public">Public</string>
+    <string name="v_unlisted">Unlisted</string>
+    <string name="v_private">Private</string>
+    <string name="v_direct">Direct</string>
+    <string name="v_keywords">Some keywords…</string>
+    <string name="show_media">Show media</string>
+    <string name="show_pinned">Show pinned</string>
+    <string name="filter_no_result">No matching result found!</string>
+    <string name="data_backup_toots">Backup toots for %1$s</string>
+    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string-array name="filter_select">
+        <item>No</item>
+        <item>Only</item>
+        <item>Both</item>
+    </string-array>
+    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Recorded data</string>
     <string name="privacy_data">
@@ -474,4 +518,16 @@
     <string name="data_export_toots">Export statuses for %1$s</string>
     <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
     <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+    <!-- Proxy -->
+    <string name="proxy_set">Proxy</string>
+    <string name="proxy_type">Type</string>
+    <string name="proxy_enable">Enable proxy?</string>
+    <string name="poxy_host">Host</string>
+    <string name="poxy_port">Port</string>
+    <string name="poxy_login">Login</string>
+    <string name="poxy_password">Password</string>
+    <string-array translatable="false" name="proxy_type_choice">
+        <item>HTTP</item>
+        <item>SOCKS</item>
+    </string-array>
 </resources>

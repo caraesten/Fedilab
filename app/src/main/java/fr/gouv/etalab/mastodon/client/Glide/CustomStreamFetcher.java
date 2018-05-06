@@ -1,5 +1,6 @@
 package fr.gouv.etalab.mastodon.client.Glide;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.bumptech.glide.Priority;
@@ -8,6 +9,7 @@ import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.model.GlideUrl;
 
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 
@@ -19,14 +21,16 @@ import fr.gouv.etalab.mastodon.client.HttpsConnection;
 public class CustomStreamFetcher implements DataFetcher<InputStream> {
 
     private GlideUrl url;
+    private WeakReference<Context> contextWeakReference;
 
-    CustomStreamFetcher(GlideUrl url) {
+    CustomStreamFetcher(Context context, GlideUrl url) {
+        this.contextWeakReference = new WeakReference<>(context);
         this.url = url;
     }
 
     @Override
-    public void loadData(Priority priority, DataCallback<? super InputStream> callback) {
-        callback.onDataReady(new HttpsConnection().getPicture(url.toStringUrl()));
+    public void loadData(@NonNull Priority priority, @NonNull DataCallback<? super InputStream> callback) {
+        callback.onDataReady(new HttpsConnection(this.contextWeakReference.get()).getPicture(url.toStringUrl()));
     }
 
     @Override

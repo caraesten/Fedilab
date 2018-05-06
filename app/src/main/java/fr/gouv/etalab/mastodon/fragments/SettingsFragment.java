@@ -70,7 +70,7 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
-    int count2 = 0;
+    int count1, count2 = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -180,6 +180,47 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_NOTIF_VALIDATION_FAV, set_share_validation_fav.isChecked());
+                editor.apply();
+            }
+        });
+
+
+        boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
+        final CheckBox set_expand_cw = rootView.findViewById(R.id.set_expand_cw);
+        set_expand_cw.setChecked(expand_cw);
+
+        set_expand_cw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_EXPAND_CW, set_expand_cw.isChecked());
+                editor.apply();
+            }
+        });
+
+
+        boolean display_bookmark = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
+        final CheckBox set_display_bookmark = rootView.findViewById(R.id.set_display_bookmarks);
+        set_display_bookmark.setChecked(display_bookmark);
+
+        set_display_bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_SHOW_BOOKMARK, set_display_bookmark.isChecked());
+                editor.apply();
+            }
+        });
+
+        boolean fit_preview = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
+        final CheckBox set_fit_preview = rootView.findViewById(R.id.set_fit_preview);
+        set_fit_preview.setChecked(fit_preview);
+
+        set_fit_preview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_FULL_PREVIEW, set_fit_preview.isChecked());
                 editor.apply();
             }
         });
@@ -302,13 +343,17 @@ public class SettingsFragment extends Fragment {
 
         final CheckBox set_embedded_browser = rootView.findViewById(R.id.set_embedded_browser);
         final LinearLayout set_javascript_container = rootView.findViewById(R.id.set_javascript_container);
+        final CheckBox set_custom_tabs  = rootView.findViewById(R.id.set_custom_tabs);
         final SwitchCompat set_javascript = rootView.findViewById(R.id.set_javascript);
         boolean javascript = sharedpreferences.getBoolean(Helper.SET_JAVASCRIPT, true);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
+        boolean custom_tabs = sharedpreferences.getBoolean(Helper.SET_CUSTOM_TABS, true);
         if( !embedded_browser){
             set_javascript_container.setVisibility(View.GONE);
+            set_custom_tabs.setVisibility(View.VISIBLE);
         }else{
             set_javascript_container.setVisibility(View.VISIBLE);
+            set_custom_tabs.setVisibility(View.GONE);
         }
         set_embedded_browser.setChecked(embedded_browser);
         set_embedded_browser.setOnClickListener(new View.OnClickListener() {
@@ -319,8 +364,10 @@ public class SettingsFragment extends Fragment {
                 editor.apply();
                 if( !set_embedded_browser.isChecked()){
                     set_javascript_container.setVisibility(View.GONE);
+                    set_custom_tabs.setVisibility(View.VISIBLE);
                 }else{
                     set_javascript_container.setVisibility(View.VISIBLE);
+                    set_custom_tabs.setVisibility(View.GONE);
                 }
             }
         });
@@ -331,6 +378,16 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_JAVASCRIPT, isChecked);
+                editor.apply();
+            }
+        });
+
+        set_custom_tabs.setChecked(custom_tabs);
+        set_custom_tabs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_CUSTOM_TABS, isChecked);
                 editor.apply();
             }
         });
@@ -434,8 +491,9 @@ public class SettingsFragment extends Fragment {
             changeDrawableColor(context, set_toot_visibility, R.color.white);
         }
         //Only displayed for non locked accounts
-        if (account != null && !account.isLocked()) {
-            String tootVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), "public");
+        if (account != null ) {
+            String defaultVisibility = account.isLocked()?"private":"public";
+            String tootVisibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
             switch (tootVisibility) {
                 case "public":
                     set_toot_visibility.setImageResource(R.drawable.ic_public);
@@ -520,6 +578,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //Translators
         final Spinner translation_layout_spinner = rootView.findViewById(R.id.translation_layout_spinner);
         ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getContext(),
                 R.array.settings_translation, android.R.layout.simple_spinner_item);
@@ -569,8 +628,28 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-
-
+        //Resize
+        final Spinner resize_layout_spinner = rootView.findViewById(R.id.set_resize_picture);
+        ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(getContext(),
+                R.array.settings_resize_picture, android.R.layout.simple_spinner_item);
+        resize_layout_spinner.setAdapter(adapterResize);
+        int positionSpinnerResize = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
+        resize_layout_spinner.setSelection(positionSpinnerResize);
+        resize_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count1 > 0){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putInt(Helper.SET_PICTURE_RESIZE, position);
+                    editor.apply();
+                }else {
+                    count1++;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
         return rootView;
     }
 

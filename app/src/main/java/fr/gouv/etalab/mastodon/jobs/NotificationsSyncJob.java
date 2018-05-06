@@ -20,7 +20,8 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -40,13 +41,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.R;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
@@ -64,7 +64,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
  * Notifications refresh job
  */
 
-public class NotificationsSyncJob extends Job implements OnRetrieveNotificationsInterface{
+public class NotificationsSyncJob extends Job {
 
     static final String NOTIFICATION_REFRESH = "job_notification";
     static {
@@ -126,17 +126,17 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
                 return;
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
-                new RetrieveNotificationsAsyncTask(getContext(), false, account, null, NotificationsSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                API api = new API(getContext(), account.getInstance(), account.getToken());
+                APIResponse apiResponse = api.getNotificationsSince(null, false);
+                onRetrieveNotifications(apiResponse, account);
             }
         }
     }
 
 
-
-    @Override
-    public void onRetrieveNotifications(APIResponse apiResponse, final Account account, boolean refreshData) {
+    private void onRetrieveNotifications(APIResponse apiResponse, final Account account) {
         List<Notification> notificationsReceived = apiResponse.getNotifications();
-        if( apiResponse.getError() != null || notificationsReceived == null || notificationsReceived.size() == 0)
+        if( apiResponse.getError() != null || notificationsReceived == null || notificationsReceived.size() == 0 || account == null)
             return;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
@@ -240,41 +240,51 @@ public class NotificationsSyncJob extends Job implements OnRetrieveNotifications
 
 
                 final String finalTitle = title;
-                Glide.with(getContext())
-                        .asBitmap()
-                        .load(notificationUrl)
-                        .listener(new RequestListener<Bitmap>() {
+                Handler mainHandler = new Handler(Looper.getMainLooper());
 
-                            @Override
-                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                return false;
-                            }
+                final String finalNotificationUrl = notificationUrl;
+                Runnable myRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        Glide.with(getContext())
+                                .asBitmap()
+                                .load(finalNotificationUrl)
+                                .listener(new RequestListener<Bitmap>() {
 
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
-                                        R.drawable.mastodonlogo), finalTitle, message);
-                                String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
-                                    editor.apply();
-                                }
-                                return false;
-                            }
-                        })
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                notify_user(getContext(), intent, notificationId, resource, finalTitle, message);
-                                String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
-                                    editor.apply();
-                                }
-                            }
-                        });
+                                    @Override
+                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                        notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
+                                                R.drawable.mastodonlogo), finalTitle, message);
+                                        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
+                                        if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
+                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
+                                            editor.apply();
+                                        }
+                                        return false;
+                                    }
+                                })
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                        notify_user(getContext(), intent, notificationId, resource, finalTitle, message);
+                                        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
+                                        if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
+                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notifications.get(0).getId());
+                                            editor.apply();
+                                        }
+                                    }
+                                });
+                    }
+                };
+                mainHandler.post(myRunnable);
+
             }
 
         }

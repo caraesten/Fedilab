@@ -271,7 +271,7 @@
   <!-- Settings -->
   <string name="settings_title_optimisation">Optymalizacja ładowania</string>
   <string name="set_toots_page">Liczba wpisów do załadowania</string>
-  <string name="set_accounts_page">Ilość kont do załadowania</string>
+  <string name="set_accounts_page">Ilość kont do załadowania</string>
   <string name="set_notifications_page">Ilość powiadomień do załadowania</string>
   <string name="set_attachment_always">Zawsze</string>
   <string name="set_attachment_wifi">WiFi</string>

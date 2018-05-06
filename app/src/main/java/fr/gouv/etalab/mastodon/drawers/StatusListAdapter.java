@@ -18,8 +18,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
@@ -47,6 +47,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -66,6 +67,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
@@ -88,14 +91,15 @@ import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
-import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Application;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -103,23 +107,26 @@ import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveCardInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
 
 
 /**
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -131,10 +138,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
     private final int DISPLAYED_STATUS = 1;
-    private List<Status> pins;
+    private final int FOCUSED_STATUS = 2;
     private int conversationPosition;
     private List<String> timedMute;
-
 
 
 
@@ -149,7 +155,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.type = type;
         this.targetedId = targetedId;
         this.translator = translator;
-        pins = new ArrayList<>();
         this.timedMute = timedMute;
     }
 
@@ -164,7 +169,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.type = type;
         this.targetedId = targetedId;
         this.translator = translator;
-        pins = new ArrayList<>();
     }
 
     public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
@@ -178,7 +182,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.conversationPosition = position;
         this.targetedId = targetedId;
         this.translator = translator;
-        pins = new ArrayList<>();
     }
 
     public void updateMuted(List<String> timedMute){
@@ -217,6 +220,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        if( holder.getItemViewType() == DISPLAYED_STATUS) {
+            final ViewHolder viewHolder = (ViewHolder) holder;
+            // Bug workaround for losing text selection ability, see:
+            // https://code.google.com/p/android/issues/detail?id=208169
+            viewHolder.status_content.setEnabled(false);
+            viewHolder.status_content.setEnabled(true);
+            viewHolder.status_spoiler.setEnabled(false);
+            viewHolder.status_spoiler.setEnabled(true);
+        }
+    }
+
+
     class ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout status_content_container;
         LinearLayout status_spoiler_container;
@@ -236,6 +254,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         Button status_show_more;
         ImageView status_more;
         LinearLayout status_document_container;
+        RelativeLayout status_horizontal_document_container;
         ImageView status_prev1;
         ImageView status_prev2;
         ImageView status_prev3;
@@ -244,11 +263,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView status_prev2_play;
         ImageView status_prev3_play;
         ImageView status_prev4_play;
+        ImageView status_prev1_h;
+        ImageView status_prev2_h;
+        ImageView status_prev3_h;
+        ImageView status_prev4_h;
+        ImageView status_prev1_play_h;
+        ImageView status_prev2_play_h;
+        ImageView status_prev3_play_h;
+        ImageView status_prev4_play_h;
         RelativeLayout status_prev4_container;
         TextView status_reply;
         ImageView status_pin;
         ImageView status_privacy;
-        FloatingActionButton status_translate;
+        FloatingActionButton status_translate, status_bookmark;
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout main_container;
@@ -266,6 +293,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_cardview_title, status_cardview_content, status_cardview_url;
         FrameLayout status_cardview_video;
         WebView status_cardview_webview;
+        ImageView hide_preview, hide_preview_h;
+        TextView status_toot_app;
+
         public View getView(){
             return itemView;
         }
@@ -275,6 +305,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             loader_replies = itemView.findViewById(R.id.loader_replies);
             fetch_more = itemView.findViewById(R.id.fetch_more);
             status_document_container = itemView.findViewById(R.id.status_document_container);
+            status_horizontal_document_container = itemView.findViewById(R.id.status_horizontal_document_container);
             status_content = itemView.findViewById(R.id.status_content);
             status_content_translated = itemView.findViewById(R.id.status_content_translated);
             status_account_username = itemView.findViewById(R.id.status_account_username);
@@ -296,12 +327,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_prev2_play = itemView.findViewById(R.id.status_prev2_play);
             status_prev3_play = itemView.findViewById(R.id.status_prev3_play);
             status_prev4_play = itemView.findViewById(R.id.status_prev4_play);
+            status_prev1_h = itemView.findViewById(R.id.status_prev1_h);
+            status_prev2_h = itemView.findViewById(R.id.status_prev2_h);
+            status_prev3_h = itemView.findViewById(R.id.status_prev3_h);
+            status_prev4_h = itemView.findViewById(R.id.status_prev4_h);
+            status_prev1_play_h = itemView.findViewById(R.id.status_prev1_play_h);
+            status_prev2_play_h = itemView.findViewById(R.id.status_prev2_play_h);
+            status_prev3_play_h = itemView.findViewById(R.id.status_prev3_play_h);
+            status_prev4_play_h = itemView.findViewById(R.id.status_prev4_play_h);
             status_container2 = itemView.findViewById(R.id.status_container2);
             status_container3 = itemView.findViewById(R.id.status_container3);
             status_prev4_container = itemView.findViewById(R.id.status_prev4_container);
             status_reply = itemView.findViewById(R.id.status_reply);
             status_privacy = itemView.findViewById(R.id.status_privacy);
             status_translate = itemView.findViewById(R.id.status_translate);
+            status_bookmark = itemView.findViewById(R.id.status_bookmark);
             status_content_translated_container = itemView.findViewById(R.id.status_content_translated_container);
             main_container = itemView.findViewById(R.id.main_container);
             status_spoiler_container = itemView.findViewById(R.id.status_spoiler_container);
@@ -322,6 +362,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_cardview_url = itemView.findViewById(R.id.status_cardview_url);
             status_cardview_video = itemView.findViewById(R.id.status_cardview_video);
             status_cardview_webview = itemView.findViewById(R.id.status_cardview_webview);
+            hide_preview = itemView.findViewById(R.id.hide_preview);
+            hide_preview_h = itemView.findViewById(R.id.hide_preview_h);
+            status_toot_app = itemView.findViewById(R.id.status_toot_app);
         }
     }
 
@@ -332,7 +375,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int HIDDEN_STATUS = 0;
         String filter;
-        if( type == RetrieveFeedsAsyncTask.Type.HOME)
+        if( type == RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS)
+            return DISPLAYED_STATUS;
+        else if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
+            return FOCUSED_STATUS;
+        else if( type == RetrieveFeedsAsyncTask.Type.HOME)
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
         else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
@@ -380,10 +427,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if( viewType == DISPLAYED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
+        else if(viewType == FOCUSED_STATUS)
+            return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status_focused, parent, false));
         else
             return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_empty, parent, false));
     }
@@ -391,9 +441,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int position) {
 
-        if( viewHolder.getItemViewType() == DISPLAYED_STATUS){
+        if( viewHolder.getItemViewType() == DISPLAYED_STATUS || viewHolder.getItemViewType() == FOCUSED_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
             final Status status = statuses.get(position);
 
@@ -409,6 +459,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
+            boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
+
+            if( displayBookmarkButton)
+                holder.status_bookmark.setVisibility(View.VISIBLE);
+            else
+                holder.status_bookmark.setVisibility(View.GONE);
 
             holder.status_reply.setText("");
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
@@ -454,6 +511,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_replies.setVisibility(View.GONE);
                 }
             }
+            final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Status statusBookmarked = new StatusCacheDAO(context, db).getStatus(StatusCacheDAO.BOOKMARK_CACHE, status.getId());
+            if( statusBookmarked != null)
+                status.setBookmarked(true);
+            else
+                status.setBookmarked(false);
+            if( status.isBookmarked())
+                holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark));
+            else
+                holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_border));
             changeDrawableColor(context, R.drawable.ic_fiber_new,R.color.mastodonC4);
             if( status.isNew())
                 holder.new_element.setVisibility(View.VISIBLE);
@@ -466,12 +533,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-            holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-            holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-            holder.status_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
-            holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
+
+            if( getItemViewType(position) == FOCUSED_STATUS ) {
+                holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16*textSizePercent/100);
+                holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16 * textSizePercent / 100);
+                holder.status_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
+                holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+                holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16*textSizePercent/100);
+            }else {
+                holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14 * textSizePercent / 100);
+                holder.status_account_username.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12 * textSizePercent / 100);
+                holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+                holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
+                holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+            }
             holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
-            holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
+
             switch (translator) {
                 case Helper.TRANS_NONE:
                     holder.yandex_translate.setVisibility(View.GONE);
@@ -485,6 +562,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             //Manages theme for icon colors
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
             if( theme == Helper.THEME_DARK){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
                 changeDrawableColor(context, holder.status_more, R.color.dark_icon);
@@ -499,7 +577,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                if( type != RetrieveFeedsAsyncTask.Type.CONTEXT)
+                    holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
@@ -539,9 +618,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
-
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
-
+            holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
             //Manages translations
             final MyTransL myTransL = MyTransL.getInstance(MyTransL.translatorEngine.YANDEX);
             myTransL.setObfuscation(true);
@@ -557,7 +635,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             //noinspection deprecation
                             statusToTranslate = Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()).toString();
                         //TODO: removes the replaceAll once fixed with the lib
-                        myTransL.translate(statusToTranslate.replaceAll("%","%25"), myTransL.getLocale(), new Results() {
+                        myTransL.translate(statusToTranslate, myTransL.getLocale(), new Results() {
                             @Override
                             public void onSuccess(Translate translate) {
                                 if( translate.getTranslatedContent() != null) {
@@ -579,6 +657,35 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }else {
                         status.setTranslationShown(!status.isTranslationShown());
                         notifyStatusChanged(status);
+                    }
+                }
+            });
+
+            holder.status_bookmark.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if( type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
+                        status.setBookmarked(!status.isBookmarked());
+                        if (status.isBookmarked()) {
+                            new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
+                            Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                        } else {
+                            new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
+                            Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                        }
+                        notifyStatusChanged(status);
+                    }else {
+                        int position = 0;
+                        for (Status statustmp : statuses) {
+                            if (statustmp.getId().equals(status.getId())) {
+                                statuses.remove(status);
+                                statusListAdapter.notifyItemRemoved(position);
+                                new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
+                                Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                break;
+                            }
+                            position++;
+                        }
                     }
                 }
             });
@@ -661,9 +768,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 else
                     holder.status_reblog_count.setText(String.valueOf(status.getReblog().getReblogs_count()));
             }
-            holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
-
-            Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
+            if( getItemViewType(position) == FOCUSED_STATUS) {
+                String fullDate_tmp = Helper.dateDiffFull(status.getCreated_at());
+                String fullDate = fullDate_tmp.substring(0,1).toUpperCase() + fullDate_tmp.substring(1);
+                holder.status_toot_date.setText(fullDate);
+            }else {
+                holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
+                Helper.absoluteDateTimeReveal(context, holder.status_toot_date, status.getCreated_at());
+            }
 
             if( status.getReblog() != null) {
                 Helper.loadGiF(context, ppurl, holder.status_account_profile_boost);
@@ -677,264 +789,273 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_profile_boost_by.setVisibility(View.GONE);
                 holder.status_account_profile.setVisibility(View.VISIBLE);
             }
-            if( status.isTakingScreenShot()){
-                holder.status_document_container.setVisibility(View.GONE);
-                holder.status_content.setVisibility(View.VISIBLE);
-                holder.status_content_translated_container.setVisibility(View.GONE);
-                holder.status_spoiler_button.setVisibility(View.GONE);
-                holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                holder.status_content_container.setVisibility(View.VISIBLE);
-                holder.status_translate.setVisibility(View.GONE);
-                holder.status_show_more.setVisibility(View.GONE);
-                holder.status_action_container.setVisibility(View.INVISIBLE);
+            holder.status_action_container.setVisibility(View.VISIBLE);
+            if( trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale))){
+                holder.status_translate.setVisibility(View.VISIBLE);
             }else {
-                holder.status_action_container.setVisibility(View.VISIBLE);
-                if( trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale))){
-                    holder.status_translate.setVisibility(View.VISIBLE);
-                }else {
-                    holder.status_translate.setVisibility(View.GONE);
-                }
-                if( status.getReblog() == null) {
-                    if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
-                        holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        if( !status.isSpoilerShown()) {
-                            holder.status_content_container.setVisibility(View.GONE);
-                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
-                        }else {
-                            holder.status_content_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
-                        }
-                    } else {
-                        holder.status_spoiler_container.setVisibility(View.GONE);
-                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                        holder.status_content_container.setVisibility(View.VISIBLE);
-                    }
-                }else {
-                    if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
-                        holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                        if( !status.isSpoilerShown()) {
-                            holder.status_content_container.setVisibility(View.GONE);
-                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
-                        }else {
-                            holder.status_content_container.setVisibility(View.VISIBLE);
-                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                            holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
-                        }
-                    } else {
-                        holder.status_spoiler_container.setVisibility(View.GONE);
-                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
-                        holder.status_content_container.setVisibility(View.VISIBLE);
-                    }
-                }
-
-                if( status.getReblog() == null) {
-                    if (status.getMedia_attachments().size() < 1) {
-                        holder.status_document_container.setVisibility(View.GONE);
-                        holder.status_show_more.setVisibility(View.GONE);
-                    } else {
-                        //If medias are loaded without any conditions or if device is on wifi
-                        if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status, holder);
-                            holder.status_show_more.setVisibility(View.GONE);
-                            status.setAttachmentShown(true);
-                        } else {
-                            //Text depending if toots is sensitive or not
-                            String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
-                            if (!status.isAttachmentShown()) {
-                                holder.status_show_more.setVisibility(View.VISIBLE);
-                                holder.status_document_container.setVisibility(View.GONE);
-                            } else {
-                                loadAttachments(status, holder);
-                            }
-                        }
-                    }
-                }else { //Attachments for reblogs
-
-                    if (status.getReblog().getMedia_attachments().size() < 1) {
-                        holder.status_document_container.setVisibility(View.GONE);
-                        holder.status_show_more.setVisibility(View.GONE);
-                    } else {
-                        //If medias are loaded without any conditions or if device is on wifi
-                        if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status.getReblog(), holder);
-                            holder.status_show_more.setVisibility(View.GONE);
-                            status.getReblog().setAttachmentShown(true);
-                        } else {
-                            //Text depending if toots is sensitive or not
-                            String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
-                            if (!status.isAttachmentShown()) {
-                                holder.status_show_more.setVisibility(View.VISIBLE);
-                                holder.status_document_container.setVisibility(View.GONE);
-                            } else {
-                                loadAttachments(status.getReblog(), holder);
-                            }
-                        }
-                    }
-                }
-
-                Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSans-Regular.ttf");
-                holder.status_content.setTypeface(tf);
-                holder.status_content_translated.setTypeface(tf);
-                //Toot was translated and user asked to see it
-
-                if( status.isTranslationShown() && status.getContentSpanTranslated() != null){
-                    holder.status_content_translated.setText(status.getContentSpanTranslated(), TextView.BufferType.SPANNABLE);
-                    holder.status_content.setVisibility(View.GONE);
-                    holder.status_content_translated_container.setVisibility(View.VISIBLE);
-                }else { //Toot is not translated
-                    holder.status_content.setVisibility(View.VISIBLE);
-                    holder.status_content_translated_container.setVisibility(View.GONE);
-                }
-
-                switch (status.getVisibility()){
-                    case "direct":
-                    case "private":
-                        holder.status_reblog_count.setVisibility(View.GONE);
-                        break;
-                    case "public":
-                    case "unlisted":
-                        holder.status_reblog_count.setVisibility(View.VISIBLE);
-                        break;
-                    default:
-                        holder.status_reblog_count.setVisibility(View.VISIBLE);
-                }
-
-                switch (status.getVisibility()){
-                    case "public":
-                        holder.status_privacy.setImageResource(R.drawable.ic_public);
-                        break;
-                    case "unlisted":
-                        holder.status_privacy.setImageResource(R.drawable.ic_lock_open);
-                        break;
-                    case "private":
-                        holder.status_privacy.setImageResource(R.drawable.ic_lock_outline);
-                        break;
-                    case "direct":
-                        holder.status_privacy.setImageResource(R.drawable.ic_mail_outline);
-                        break;
-                }
-
-                Drawable imgFav, imgReblog, imgReply;
-                if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
-                    changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
-                }else {
-                    if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
-                    else
-                        changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
-                    imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
-                }
-
-                if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                    changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
-                }else {
-                    if( theme == THEME_DARK)
-                        changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
-                    else
-                        changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
-                    imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
-                }
-
-
-                if( theme == THEME_DARK)
-                    changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
-                else
-                    changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
-                imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
-
-
-                assert imgFav != null;
-                imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-                assert imgReblog != null;
-                imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-                assert imgReply != null;
-                imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-
-                holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
-                holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
-                holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
-
-
-                boolean isOwner = status.getAccount().getId().equals(userId);
-
-                // Pinning toots is only available on Mastodon 1._6_.0 instances.
-                if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted")) && status.getReblog() == null) {
-                    Drawable imgPin;
-                    if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned())) {
-                        changeDrawableColor(context, R.drawable.ic_pin_drop_p,R.color.marked_icon);
-                        imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop_p);
+                holder.status_translate.setVisibility(View.GONE);
+            }
+            if( status.getReblog() == null) {
+                if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
+                    holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                    if( !status.isSpoilerShown() && !expand_cw) {
+                        holder.status_content_container.setVisibility(View.GONE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
                     }else {
-                        if( theme == THEME_DARK)
-                            changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.dark_icon);
-                        else
-                            changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.black);
-                        imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop);
+                        holder.status_content_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
                     }
-                    assert imgPin != null;
-                    imgPin.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-                    holder.status_pin.setImageDrawable(imgPin);
-
-                    holder.status_pin.setVisibility(View.VISIBLE);
+                } else {
+                    holder.status_spoiler_container.setVisibility(View.GONE);
+                    holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                    holder.status_content_container.setVisibility(View.VISIBLE);
                 }
-                else {
-                    holder.status_pin.setVisibility(View.GONE);
+            }else {
+                if (status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().trim().length() > 0) {
+                    holder.status_spoiler_container.setVisibility(View.VISIBLE);
+                    if( !status.isSpoilerShown() && !expand_cw) {
+                        holder.status_content_container.setVisibility(View.GONE);
+                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
+                    }else {
+                        holder.status_content_container.setVisibility(View.VISIBLE);
+                        holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                        holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler_less));
+                    }
+                } else {
+                    holder.status_spoiler_container.setVisibility(View.GONE);
+                    holder.status_spoiler_mention_container.setVisibility(View.GONE);
+                    holder.status_content_container.setVisibility(View.VISIBLE);
+                }
+            }
+            if( status.getReblog() == null) {
+                if (status.getMedia_attachments().size() < 1) {
+                    if( fullAttachement )
+                        holder.status_horizontal_document_container.setVisibility(View.GONE);
+                    else
+                        holder.status_document_container.setVisibility(View.GONE);
+                    holder.status_show_more.setVisibility(View.GONE);
+                } else {
+                    //If medias are loaded without any conditions or if device is on wifi
+                    if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                        loadAttachments(status, holder);
+                        holder.status_show_more.setVisibility(View.GONE);
+                        status.setAttachmentShown(true);
+                    } else {
+                        //Text depending if toots is sensitive or not
+                        String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                        holder.status_show_more.setText(textShowMore);
+                        if (!status.isAttachmentShown()) {
+                            holder.status_show_more.setVisibility(View.VISIBLE);
+                            if( fullAttachement )
+                                holder.status_horizontal_document_container.setVisibility(View.GONE);
+                            else
+                                holder.status_document_container.setVisibility(View.GONE);
+                        } else {
+                            loadAttachments(status, holder);
+                        }
+                    }
+                }
+            }else { //Attachments for reblogs
+
+                if (status.getReblog().getMedia_attachments().size() < 1) {
+                    if( fullAttachement )
+                        holder.status_horizontal_document_container.setVisibility(View.GONE);
+                    else
+                        holder.status_document_container.setVisibility(View.GONE);
+                    holder.status_show_more.setVisibility(View.GONE);
+                } else {
+                    //If medias are loaded without any conditions or if device is on wifi
+                    if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                        loadAttachments(status.getReblog(), holder);
+                        holder.status_show_more.setVisibility(View.GONE);
+                        status.setAttachmentShown(true);
+                    } else {
+                        //Text depending if toots is sensitive or not
+                        String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                        holder.status_show_more.setText(textShowMore);
+                        if (!status.isAttachmentShown()) {
+                            holder.status_show_more.setVisibility(View.VISIBLE);
+                            if( fullAttachement )
+                                holder.status_horizontal_document_container.setVisibility(View.GONE);
+                            else
+                                holder.status_document_container.setVisibility(View.GONE);
+                        } else {
+                            loadAttachments(status.getReblog(), holder);
+                        }
+                    }
                 }
             }
 
-            //Click on a conversation
-            if( type != RetrieveFeedsAsyncTask.Type.CONTEXT ){
-                holder.status_content.setOnClickListener(new View.OnClickListener() {
+            if(!fullAttachement)
+                holder.hide_preview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        if( status.getReblog() == null)
-                            b.putString("statusId", status.getId());
+                        status.setAttachmentShown(!status.isAttachmentShown());
+                        if( status.getReblog() != null)
+                            status.getReblog().setSensitive(true);
                         else
-                            b.putString("statusId", status.getReblog().getId());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
-                    }
-                });
-                holder.main_container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        if( status.getReblog() == null)
-                            b.putString("statusId", status.getId());
-                        else
-                            b.putString("statusId", status.getReblog().getId());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
-                    }
-                });
-                if( theme == Helper.THEME_LIGHT){
-                    holder.main_container.setBackgroundResource(R.color.mastodonC3__);
-                }else {
-                    holder.main_container.setBackgroundResource(R.color.mastodonC1_);
-                }
-            }else {
+                            status.setSensitive(true);
 
+                        if( theme == Helper.THEME_DARK)
+                            changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
+                        else
+                            changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
+                        notifyStatusChanged(status);
+                    }
+                });
+            else
+                holder.hide_preview_h.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        status.setAttachmentShown(!status.isAttachmentShown());
+                        if( status.getReblog() != null)
+                            status.getReblog().setSensitive(true);
+                        else
+                            status.setSensitive(true);
+
+                        if( theme == Helper.THEME_DARK)
+                            changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
+                        else
+                            changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
+                        notifyStatusChanged(status);
+                    }
+                });
+
+            //Toot was translated and user asked to see it
+
+            if( status.isTranslationShown() && status.getContentSpanTranslated() != null){
+                holder.status_content_translated.setText(status.getContentSpanTranslated(), TextView.BufferType.SPANNABLE);
+                holder.status_content.setVisibility(View.GONE);
+                holder.status_content_translated_container.setVisibility(View.VISIBLE);
+            }else { //Toot is not translated
+                holder.status_content.setVisibility(View.VISIBLE);
+                holder.status_content_translated_container.setVisibility(View.GONE);
+            }
+
+            switch (status.getVisibility()){
+                case "direct":
+                case "private":
+                    holder.status_reblog_count.setVisibility(View.GONE);
+                    break;
+                case "public":
+                case "unlisted":
+                    holder.status_reblog_count.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    holder.status_reblog_count.setVisibility(View.VISIBLE);
+            }
+
+            switch (status.getVisibility()){
+                case "public":
+                    holder.status_privacy.setImageResource(R.drawable.ic_public);
+                    break;
+                case "unlisted":
+                    holder.status_privacy.setImageResource(R.drawable.ic_lock_open);
+                    break;
+                case "private":
+                    holder.status_privacy.setImageResource(R.drawable.ic_lock_outline);
+                    break;
+                case "direct":
+                    holder.status_privacy.setImageResource(R.drawable.ic_mail_outline);
+                    break;
+            }
+
+            Drawable imgFav, imgReblog, imgReply;
+            if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
+                changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
+                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
+            }else {
+                if( theme == THEME_DARK)
+                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
+                else
+                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
+                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
+            }
+
+            if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
+                changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
+                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
+            }else {
+                if( theme == THEME_DARK)
+                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
+                else
+                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
+                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
+            }
+
+
+            if( theme == THEME_DARK)
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+            else
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
+            imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
+
+
+            assert imgFav != null;
+            imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            assert imgReblog != null;
+            imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            assert imgReply != null;
+            imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
+            holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
+            holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
+            holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
+
+
+            boolean isOwner = status.getAccount().getId().equals(userId);
+
+            // Pinning toots is only available on Mastodon 1._6_.0 instances.
+            if (isOwner && Helper.canPin && (status.getVisibility().equals("public") || status.getVisibility().equals("unlisted")) && status.getReblog() == null) {
+                Drawable imgPin;
+                if( status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned())) {
+                    changeDrawableColor(context, R.drawable.ic_pin_drop_p,R.color.marked_icon);
+                    imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop_p);
+                }else {
+                    if( theme == THEME_DARK)
+                        changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.dark_icon);
+                    else
+                        changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.black);
+                    imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop);
+                }
+                assert imgPin != null;
+                imgPin.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+                holder.status_pin.setImageDrawable(imgPin);
+
+                holder.status_pin.setVisibility(View.VISIBLE);
+            }
+            else {
+                holder.status_pin.setVisibility(View.GONE);
+            }
+
+
+            holder.status_content.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN && !view.hasFocus()) {
+                        try{view.requestFocus();}catch (Exception ignored){}
+                    }
+                    return false;
+                }
+            });
+            //Click on a conversation
+            if( getItemViewType(position) == DISPLAYED_STATUS) {
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, ShowConversationActivity.class);
                         Bundle b = new Bundle();
-                        if( status.getReblog() == null)
+                        if (status.getReblog() == null)
                             b.putString("statusId", status.getId());
                         else
                             b.putString("statusId", status.getReblog().getId());
                         intent.putExtras(b);
+                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                            ((Activity) context).finish();
                         context.startActivity(intent);
-                        ((ShowConversationActivity)context).finish();
                     }
                 });
                 holder.main_container.setOnClickListener(new View.OnClickListener() {
@@ -942,15 +1063,24 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public void onClick(View v) {
                         Intent intent = new Intent(context, ShowConversationActivity.class);
                         Bundle b = new Bundle();
-                        if( status.getReblog() == null)
+                        if (status.getReblog() == null)
                             b.putString("statusId", status.getId());
                         else
                             b.putString("statusId", status.getReblog().getId());
                         intent.putExtras(b);
+                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                            ((Activity) context).finish();
                         context.startActivity(intent);
-                        ((ShowConversationActivity)context).finish();
                     }
                 });
+            }
+            if( theme == Helper.THEME_LIGHT){
+                holder.main_container.setBackgroundResource(R.color.mastodonC3__);
+            }else {
+                holder.main_container.setBackgroundResource(R.color.mastodonC1_);
+            }
+            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+
                 if( position == conversationPosition){
                     if( theme == Helper.THEME_LIGHT)
                         holder.main_container.setBackgroundResource(R.color.mastodonC3_);
@@ -974,11 +1104,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_cardview.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Intent intent = new Intent(context, WebviewActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putString("url", status.getCard().getUrl());
-                                    intent.putExtras(b);
-                                    context.startActivity(intent);
+                                    Helper.openBrowser(context, status.getCard().getUrl());
                                 }
                             });
                         }else {
@@ -998,16 +1124,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                                     holder.status_cardview_video.setVisibility(View.GONE);
                                 }
-                                @Override
-                                public boolean shouldOverrideUrlLoading (WebView view, String url){
-                                    Intent intent = new Intent(context, WebviewActivity.class);
-                                    Bundle b = new Bundle();
-                                    b.putString("url", url);
-                                    intent.putExtras(b);
-                                    context.startActivity(intent);
-                                    holder.status_cardview_webview.loadUrl(finalSrc);
-                                    return true;
-                                }
                             });
                             holder.status_cardview_webview.loadUrl(finalSrc);
                         }
@@ -1017,6 +1133,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
 
                 }else {
+                    holder.status_cardview.setVisibility(View.GONE);
+                    holder.status_cardview_video.setVisibility(View.GONE);
                     if( theme == Helper.THEME_LIGHT)
                         holder.main_container.setBackgroundResource(R.color.mastodonC3__);
                     else
@@ -1097,7 +1215,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 @Override
                 public void onClick(View v) {
                     loadAttachments(status, holder);
-                    holder.status_show_more.setVisibility(View.GONE);
                     status.setAttachmentShown(true);
                     notifyStatusChanged(status);
                 /*
@@ -1118,7 +1235,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                             public void onFinish() {
                                 status.setAttachmentShown(false);
-                                holder.status_show_more.setVisibility(View.VISIBLE);
                                 notifyStatusChanged(status);
                             }
                         }.start();
@@ -1139,6 +1255,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
                         popup.getMenu().findItem(R.id.action_mention).setVisible(false);
                     }
+                    if( status.isBookmarked())
+                        popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_remove);
+                    else
+                        popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_add);
                     final String[] stringArrayConf;
                     if( isOwner) {
                         popup.getMenu().findItem(R.id.action_block).setVisible(false);
@@ -1173,6 +1293,31 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     builderInner.setTitle(stringArrayConf[0]);
                                     doAction = API.StatusAction.MUTE;
                                     break;
+                                case R.id.action_bookmark:
+                                    if( type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
+                                        status.setBookmarked(!status.isBookmarked());
+                                        if (status.isBookmarked()) {
+                                            new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
+                                            Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                                        } else {
+                                            new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
+                                            Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                        }
+                                        notifyStatusChanged(status);
+                                    }else {
+                                        int position = 0;
+                                        for (Status statustmp : statuses) {
+                                            if (statustmp.getId().equals(status.getId())) {
+                                                statuses.remove(status);
+                                                statusListAdapter.notifyItemRemoved(position);
+                                                new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
+                                                Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                                break;
+                                            }
+                                            position++;
+                                        }
+                                    }
+                                    return true;
                                 case R.id.action_timed_mute:
                                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
                                     LayoutInflater inflater = ((Activity)context).getLayoutInflater();
@@ -1249,7 +1394,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                     timedMute = new ArrayList<>();
                                                     timedMute.add(targeted_id);
                                                 }
-                                                Toast.makeText(context,context.getString(R.string.timed_mute_date,status.getAccount().getAcct(),Helper.dateToString(context, date_mute)), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(context,context.getString(R.string.timed_mute_date,status.getAccount().getAcct(),Helper.dateToString(date_mute)), Toast.LENGTH_LONG).show();
                                                 alertDialog.dismiss();
                                                 notifyDataSetChanged();
                                             }
@@ -1274,7 +1419,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     break;
                                 case R.id.action_copy:
                                     ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                                    String content;
+                                    final String content;
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                                         content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
                                     else
@@ -1302,21 +1447,33 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         else
                                             url = status.getUrl();
                                     }
-                                    sendIntent.putExtra(Intent.EXTRA_TEXT, url);
+                                    String extra_text = (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct();
+                                    if( extra_text.split("@").length == 1)
+                                        extra_text = "@" + extra_text + "@" + Helper.getLiveInstance(context);
+                                    else
+                                        extra_text = "@" + extra_text;
+                                    extra_text += " " + Helper.shortnameToUnicode(":link:",true) + " " + url + "\r\n-\n";
+                                    final String contentToot;
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                        contentToot = Html.fromHtml((status.getReblog() != null)?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+                                    else
+                                        //noinspection deprecation
+                                        contentToot = Html.fromHtml((status.getReblog() != null)?status.getReblog().getContent():status.getContent()).toString();
+                                    extra_text += contentToot;
+                                    sendIntent.putExtra(Intent.EXTRA_TEXT, extra_text);
                                     sendIntent.setType("text/plain");
                                     context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
                                     return true;
                                 case R.id.action_mention:
-                                    status.setTakingScreenShot(true);
-                                    statusListAdapter.notifyDataSetChanged();
                                     // Get a handler that can be used to post to the main thread
                                     final Handler handler = new Handler();
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, holder.getView());
-                                            status.setTakingScreenShot(false);
-                                            statusListAdapter.notifyDataSetChanged();
+                                            String name = "@"+(status.getReblog()!=null?status.getReblog().getAccount().getAcct():status.getAccount().getAcct());
+                                            if( name.split("@", -1).length - 1 == 1)
+                                                name = name + "@" + getLiveInstance(context);
+                                            Bitmap bitmap = Helper.convertTootIntoBitmap(context, name, holder.status_content);
                                             Intent intent = new Intent(context, TootActivity.class);
                                             Bundle b = new Bundle();
                                             String fname = "tootmention_" + status.getId() +".jpg";
@@ -1325,6 +1482,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 file.delete ();
                                             try {
                                                 FileOutputStream out = new FileOutputStream(file);
+                                                assert bitmap != null;
                                                 bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                                                 out.flush();
                                                 out.close();
@@ -1411,78 +1569,196 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 }
             });
+
+            if( status.getApplication() != null && getItemViewType(position) == FOCUSED_STATUS){
+                Application application = status.getApplication();
+                holder.status_toot_app.setText(application.getName());
+                if( application.getWebsite() != null && !application.getWebsite().trim().equals("null"))
+                holder.status_toot_app.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Helper.openBrowser(context, application.getWebsite());
+                    }
+                });
+            }
         }
     }
 
 
 
     private void loadAttachments(final Status status, final ViewHolder holder){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
         List<Attachment> attachments = status.getMedia_attachments();
+
         if( attachments != null && attachments.size() > 0){
             int i = 0;
-            holder.status_document_container.setVisibility(View.VISIBLE);
-            if( attachments.size() == 1){
-                holder.status_container2.setVisibility(View.GONE);
-                if( attachments.get(0).getUrl().trim().contains("missing.png"))
-                    holder.status_document_container.setVisibility(View.GONE);
-            }else if(attachments.size() == 2){
-                holder.status_container2.setVisibility(View.VISIBLE);
-                holder.status_container3.setVisibility(View.GONE);
-                holder.status_prev4_container.setVisibility(View.GONE);
-                if( attachments.get(1).getUrl().trim().contains("missing.png"))
+            if(fullAttachement)
+                holder.status_horizontal_document_container.setVisibility(View.VISIBLE);
+            else
+                holder.status_document_container.setVisibility(View.VISIBLE);
+            if( attachments.size() == 1 ){
+                if( !fullAttachement)
                     holder.status_container2.setVisibility(View.GONE);
-            }else if( attachments.size() == 3){
-                holder.status_container2.setVisibility(View.VISIBLE);
-                holder.status_container3.setVisibility(View.VISIBLE);
-                holder.status_prev4_container.setVisibility(View.GONE);
-                if( attachments.get(2).getUrl().trim().contains("missing.png"))
+                else {
+                    holder.status_prev1_h.setVisibility(View.VISIBLE);
+                    holder.status_prev2_h.setVisibility(View.GONE);
+                    holder.status_prev3_h.setVisibility(View.GONE);
+                    holder.status_prev4_h.setVisibility(View.GONE);
+                }
+                if( attachments.get(0).getUrl().trim().contains("missing.png"))
+                    if(fullAttachement)
+                        holder.status_horizontal_document_container.setVisibility(View.GONE);
+                    else
+                        holder.status_document_container.setVisibility(View.GONE);
+            }else if(attachments.size() == 2){
+                if( !fullAttachement) {
+                    holder.status_container2.setVisibility(View.VISIBLE);
                     holder.status_container3.setVisibility(View.GONE);
-            }else {
-                holder.status_container2.setVisibility(View.VISIBLE);
-                holder.status_container3.setVisibility(View.VISIBLE);
-                holder.status_prev4_container.setVisibility(View.VISIBLE);
-                if( attachments.get(2).getUrl().trim().contains("missing.png"))
                     holder.status_prev4_container.setVisibility(View.GONE);
+                    if (attachments.get(1).getUrl().trim().contains("missing.png"))
+                        holder.status_container2.setVisibility(View.GONE);
+                }else {
+                    holder.status_prev1_h.setVisibility(View.VISIBLE);
+                    holder.status_prev2_h.setVisibility(View.VISIBLE);
+                    holder.status_prev3_h.setVisibility(View.GONE);
+                    holder.status_prev4_h.setVisibility(View.GONE);
+                    if (attachments.get(1).getUrl().trim().contains("missing.png"))
+                        holder.status_prev2_h.setVisibility(View.GONE);
+                }
+            }else if( attachments.size() == 3 ){
+                if( !fullAttachement) {
+                    holder.status_container2.setVisibility(View.VISIBLE);
+                    holder.status_container3.setVisibility(View.VISIBLE);
+                    holder.status_prev4_container.setVisibility(View.GONE);
+                    if (attachments.get(2).getUrl().trim().contains("missing.png"))
+                        holder.status_container3.setVisibility(View.GONE);
+                }else {
+                    holder.status_prev1_h.setVisibility(View.VISIBLE);
+                    holder.status_prev2_h.setVisibility(View.VISIBLE);
+                    holder.status_prev3_h.setVisibility(View.VISIBLE);
+                    holder.status_prev4_h.setVisibility(View.GONE);
+                    if (attachments.get(2).getUrl().trim().contains("missing.png"))
+                        holder.status_prev3_h.setVisibility(View.GONE);
+                }
+            }else {
+                if(!fullAttachement) {
+                    holder.status_container2.setVisibility(View.VISIBLE);
+                    holder.status_container3.setVisibility(View.VISIBLE);
+                    holder.status_prev4_container.setVisibility(View.VISIBLE);
+                    if (attachments.get(2).getUrl().trim().contains("missing.png"))
+                        holder.status_prev4_container.setVisibility(View.GONE);
+                }else {
+                    holder.status_prev1_h.setVisibility(View.VISIBLE);
+                    holder.status_prev2_h.setVisibility(View.VISIBLE);
+                    holder.status_prev3_h.setVisibility(View.VISIBLE);
+                    holder.status_prev4_h.setVisibility(View.VISIBLE);
+                    if (attachments.get(2).getUrl().trim().contains("missing.png"))
+                        holder.status_prev3_h.setVisibility(View.GONE);
+                }
             }
             int position = 1;
             for(final Attachment attachment: attachments){
                 ImageView imageView;
                 if( i == 0) {
-                    imageView = holder.status_prev1;
+                    imageView = fullAttachement?holder.status_prev1_h:holder.status_prev1;
                     if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
-                        holder.status_prev1_play.setVisibility(View.GONE);
+                        if( fullAttachement)
+                            holder.status_prev1_play_h.setVisibility(View.GONE);
+                        else
+                            holder.status_prev1_play.setVisibility(View.GONE);
                     else
-                        holder.status_prev1_play.setVisibility(View.VISIBLE);
+                        if( fullAttachement)
+                            holder.status_prev1_play_h.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_prev1_play.setVisibility(View.VISIBLE);
                 }else if( i == 1) {
-                    imageView = holder.status_prev2;
+                    imageView = fullAttachement?holder.status_prev2_h:holder.status_prev2;
                     if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
-                        holder.status_prev2_play.setVisibility(View.GONE);
+                        if( fullAttachement)
+                            holder.status_prev2_play_h.setVisibility(View.GONE);
+                        else
+                            holder.status_prev2_play.setVisibility(View.GONE);
                     else
-                        holder.status_prev2_play.setVisibility(View.VISIBLE);
+                        if( fullAttachement)
+                            holder.status_prev2_play_h.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_prev2_play.setVisibility(View.VISIBLE);
                 }else if(i == 2) {
-                    imageView = holder.status_prev3;
+                    imageView = fullAttachement?holder.status_prev3_h:holder.status_prev3;
                     if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
-                        holder.status_prev3_play.setVisibility(View.GONE);
+                        if( fullAttachement)
+                            holder.status_prev3_play_h.setVisibility(View.GONE);
+                        else
+                            holder.status_prev3_play.setVisibility(View.GONE);
                     else
-                        holder.status_prev3_play.setVisibility(View.VISIBLE);
+                        if( fullAttachement)
+                            holder.status_prev3_play_h.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_prev3_play.setVisibility(View.VISIBLE);
                 }else {
-                    imageView = holder.status_prev4;
+                    imageView = fullAttachement?holder.status_prev4_h:holder.status_prev4;
                     if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
-                        holder.status_prev4_play.setVisibility(View.GONE);
+                        if( fullAttachement)
+                            holder.status_prev4_play_h.setVisibility(View.GONE);
+                        else
+                            holder.status_prev4_play.setVisibility(View.GONE);
                     else
-                        holder.status_prev4_play.setVisibility(View.VISIBLE);
+                        if( fullAttachement)
+                            holder.status_prev4_play_h.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_prev4_play.setVisibility(View.VISIBLE);
                 }
                 String url = attachment.getPreview_url();
+
                 if( url == null || url.trim().equals("") )
                     url = attachment.getUrl();
                 else if( attachment.getType().equals("unknown"))
                     url = attachment.getRemote_url();
-                if( !url.trim().contains("missing.png"))
-                    Glide.with(imageView.getContext())
-                            .load(url)
-                            .thumbnail(0.1f)
-                            .transition(DrawableTransitionOptions.withCrossFade())
-                            .into(imageView);
+
+                if( fullAttachement){
+                    imageView.setImageBitmap(null);
+                    if( !url.trim().contains("missing.png") && !((Activity)context).isFinishing() )
+                        Glide.with(imageView.getContext())
+                                .asBitmap()
+                                .load(url)
+                                .thumbnail(0.1f)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                        DrawableTransitionOptions.withCrossFade();
+                                        int width = resource.getWidth();
+                                        int height = resource.getHeight();
+
+                                        if( height < Helper.convertDpToPixel(200, context)){
+                                            double ratio = ((double)Helper.convertDpToPixel(200, context) / (double)height);
+                                            width = (int)(ratio * width);
+                                            height = (int) Helper.convertDpToPixel(200, context);
+                                            resource = Bitmap.createScaledBitmap(resource, width, height, false);
+                                        }
+                                        //Allow to put full width for preview for single attachment -> disabled for the moment
+                                        /*int tootWidth = holder.status_content_container.getWidth();
+
+                                        if( width < tootWidth && attachments.size() == 1){
+                                            double ratio = ((double)tootWidth/ (double)width);
+                                            height = (int)(ratio * (double)height);
+                                            width = tootWidth;
+                                            holder.status_horizontal_document_container.getLayoutParams().height = height;
+                                            resource = Bitmap.createScaledBitmap(resource, width, height, false);
+                                        }else{
+                                            holder.status_horizontal_document_container.getLayoutParams().height = (int)Helper.convertDpToPixel(200, context);
+                                        }*/
+                                        imageView.setImageBitmap(resource);
+                                    }
+                                });
+                }else {
+                    if (!url.trim().contains("missing.png") && !((Activity) context).isFinishing())
+                        Glide.with(imageView.getContext())
+                                .load(url)
+                                .thumbnail(0.1f)
+                                .transition(DrawableTransitionOptions.withCrossFade())
+                                .into(imageView);
+                }
                 final int finalPosition = position;
                 if( attachment.getDescription() != null && !attachment.getDescription().equals("null"))
                     imageView.setContentDescription(attachment.getDescription());
@@ -1501,7 +1777,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 position++;
             }
         }else{
-            holder.status_document_container.setVisibility(View.GONE);
+            if(fullAttachement)
+                holder.status_horizontal_document_container.setVisibility(View.GONE);
+            else
+                holder.status_document_container.setVisibility(View.GONE);
         }
         holder.status_show_more.setVisibility(View.GONE);
 
@@ -1512,28 +1791,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
-        if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
-            return;
-        }
 
-        pins = apiResponse.getStatuses();
-
-        for (Status haystack : statuses)
-        {
-            for (Status pin : pins) {
-
-                if (haystack.getId().equals(pin.getId()))
-                {
-                    haystack.setPinned(true);
-                    break;
-                }
-            }
-        }
     }
+
+
+
+    @Override
+    public void onRetrieveAccount(Card card) {
+        if( conversationPosition < this.statuses.size() && card != null)
+            this.statuses.get(conversationPosition).setCard(card);
+        if( conversationPosition < this.statuses.size())
+            statusListAdapter.notifyItemChanged(conversationPosition);
+    }
+
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
@@ -1557,66 +1827,84 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             statuses.removeAll(statusesToRemove);
             statusListAdapter.notifyDataSetChanged();
         }else  if( statusAction == API.StatusAction.UNSTATUS ){
+            int position = 0;
             for(Status status: statuses){
-                if( status.getId().equals(targetedId))
-                    statusesToRemove.add(status);
-            }
-            statuses.removeAll(statusesToRemove);
-            statusListAdapter.notifyDataSetChanged();
-        }
-        else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
-            Status toCheck = null;
-            for (Status checkPin: statuses) {
-                if (checkPin.getId().equals(targetedId)) {
-                    toCheck = checkPin;
+                if( status.getId().equals(targetedId)) {
+                    statuses.remove(status);
+                    statusListAdapter.notifyItemRemoved(position);
+                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    //Remove the status from cache also
+                    try {
+                        new StatusCacheDAO(context, db).remove(StatusCacheDAO.ARCHIVE_CACHE,status);
+                    }catch (Exception ignored){}
                     break;
                 }
+                position++;
             }
-            if (statusAction == API.StatusAction.PIN) {
-                if (toCheck != null)
-                    toCheck.setPinned(true);
+        }
+        else if ( statusAction == API.StatusAction.PIN || statusAction == API.StatusAction.UNPIN ) {
+            int position = 0;
+            for (Status status: statuses) {
+                if (status.getId().equals(targetedId)) {
+                    if (statusAction == API.StatusAction.PIN)
+                        status.setPinned(true);
+                    else
+                        status.setPinned(false);
+                    statusListAdapter.notifyItemChanged(position);
+                    break;
+                }
+                position++;
             }
-            else {
-                if (toCheck != null)
-                    toCheck.setPinned(false);
-            }
-            statusListAdapter.notifyDataSetChanged();
         }
 
         if( statusAction == API.StatusAction.REBLOG){
+            int position = 0;
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
                     status.setReblogs_count(status.getReblogs_count() + 1);
+                    statusListAdapter.notifyItemChanged(position);
                     break;
                 }
+                position++;
             }
-            statusListAdapter.notifyDataSetChanged();
         }else if( statusAction == API.StatusAction.UNREBLOG){
+            int position = 0;
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
                     if( status.getReblogs_count() - 1 >= 0)
                         status.setReblogs_count(status.getReblogs_count() - 1);
+                    statusListAdapter.notifyItemChanged(position);
+                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    //Remove the status from cache also
+                    try {
+                        new StatusCacheDAO(context, db).remove(StatusCacheDAO.ARCHIVE_CACHE,status);
+                    }catch (Exception ignored){}
                     break;
                 }
+                position++;
             }
-            statusListAdapter.notifyDataSetChanged();
         }else if( statusAction == API.StatusAction.FAVOURITE){
+            int position = 0;
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
                     status.setFavourites_count(status.getFavourites_count() + 1);
+                    statusListAdapter.notifyItemChanged(position);
                     break;
                 }
+                position++;
             }
             statusListAdapter.notifyDataSetChanged();
         }else if( statusAction == API.StatusAction.UNFAVOURITE){
+            int position = 0;
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
                     if( status.getFavourites_count() - 1 >= 0)
                         status.setFavourites_count(status.getFavourites_count() - 1);
+                    statusListAdapter.notifyItemChanged(position);
                     break;
                 }
+                position++;
             }
-            statusListAdapter.notifyDataSetChanged();
         }
     }
 

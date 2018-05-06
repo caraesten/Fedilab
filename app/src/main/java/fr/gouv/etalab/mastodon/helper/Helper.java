@@ -21,13 +21,19 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.CountDownTimer;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.media.ExifInterface;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
@@ -42,9 +48,6 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
@@ -68,6 +71,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -95,19 +99,23 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 import org.conscrypt.Conscrypt;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -115,6 +123,7 @@ import java.security.Security;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -136,9 +145,13 @@ import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Application;
+import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -152,10 +165,11 @@ import static android.content.Context.DOWNLOAD_SERVICE;
  * - Reusable methods are implemented in this section
  */
 
+@SuppressWarnings("WeakerAccess")
 public class Helper {
 
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "WeakerAccess"})
     public static  final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Mastalab";
     public static final String OAUTH_SCOPES = "read write follow";
@@ -200,6 +214,7 @@ public class Helper {
     public static final int CHANGE_THEME_INTENT = 3;
     public static final int CHANGE_USER_INTENT = 4;
     public static final int ADD_USER_INTENT = 5;
+    public static final int BACKUP_INTENT = 6;
     //Settings
     public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";
     public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";
@@ -224,6 +239,12 @@ public class Helper {
     public static final String SET_LIVE_NOTIFICATIONS = "set_live_notifications";
     public static final String SET_DISABLE_GIF = "set_disable_gif";
     public static final String SET_CAPITALIZE = "set_capitalize";
+    public static final String SET_PICTURE_RESIZE = "set_picture_resize";
+    public static final String SET_SHOW_BOOKMARK = "set_show_bookmark";
+    public static final String SET_FULL_PREVIEW = "set_full_preview";
+    public static final int S_512KO = 1;
+    public static final int S_1MO = 2;
+    public static final int S_2MO = 3;
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
@@ -256,7 +277,9 @@ public class Helper {
     public static final String SET_NOTIF_HOMETIMELINE = "set_notif_hometimeline";
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
     public static final String SET_SHOW_ERROR_MESSAGES = "set_show_error_messages";
+    public static final String SET_EXPAND_CW = "set_expand_cw";
     public static final String SET_EMBEDDED_BROWSER = "set_embedded_browser";
+    public static final String SET_CUSTOM_TABS = "set_custom_tabs";
     public static final String SET_JAVASCRIPT = "set_javascript";
     public static final String SET_COOKIES = "set_cookies";
     public static final String SET_FOLDER_RECORD = "set_folder_record";
@@ -269,6 +292,13 @@ public class Helper {
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
 
+    //Proxy
+    public static final String SET_PROXY_ENABLED = "set_proxy_enabled";
+    public static final String SET_PROXY_TYPE = "set_proxy_type";
+    public static final String SET_PROXY_HOST = "set_proxy_host";
+    public static final String SET_PROXY_PORT = "set_proxy_port";
+    public static final String SET_PROXY_LOGIN = "set_proxy_login";
+    public static final String SET_PROXY_PASSWORD = "set_proxy_password";
     //Refresh job
     public static final int MINUTES_BETWEEN_NOTIFICATIONS_REFRESH = 15;
     public static final int MINUTES_BETWEEN_HOME_TIMELINE = 30;
@@ -279,11 +309,13 @@ public class Helper {
     //Intent
     public static final String INTENT_ACTION = "intent_action";
     public static final String INTENT_TARGETED_ACCOUNT = "intent_targeted_account";
+    public static final String INTENT_BACKUP_FINISH = "intent_backup_finish";
     //Receiver
     public static final String RECEIVE_DATA = "receive_data";
     public static final String RECEIVE_FEDERATED_DATA = "receive_federated_data";
     public static final String RECEIVE_LOCAL_DATA = "receive_local_data";
     public static final String RECEIVE_PICTURE = "receive_picture";
+
     //User agent
     public static final String USER_AGENT = "Mastalab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
 
@@ -445,20 +477,22 @@ public class Helper {
 
     /**
      * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
-     * @param context Context
      * @param date Date
      * @return String
      */
-    public static String dateToString(Context context, Date date) {
-        Locale userLocale;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            userLocale = context.getResources().getConfiguration().getLocales().get(0);
-        } else {
-            //noinspection deprecation
-            userLocale = context.getResources().getConfiguration().locale;
-        }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",userLocale);
+    public static String dateToString(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
         return dateFormat.format(date);
+    }
+
+    /**
+     * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
+     * @param date Date
+     * @return String
+     */
+    public static String shortDateToString(Date date) {
+        SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
+        return df.format(date);
     }
 
     /**
@@ -567,6 +601,11 @@ public class Helper {
     }
 
 
+    public static String dateDiffFull(Date dateToot){
+        SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.MEDIUM, Locale.getDefault());
+        return df.format(dateToot);
+    }
+
     /***
      * Returns a String depending of the date
      * @param context Context
@@ -587,7 +626,10 @@ public class Helper {
         if( years > 0 ) {
             return format;
         } else if( months > 0 || days > 7) {
-            return format.substring(0,5);
+            //Removes the year depending of the locale from DateFormat.SHORT format
+            SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
+            df.applyPattern(df.toPattern().replaceAll("[^\\p{Alpha}]*y+[^\\p{Alpha}]*", ""));
+            return df.format(dateToot);
         }else if( days > 0 )
             return context.getString(R.string.date_day, days);
         else if(hours > 0)
@@ -832,7 +874,7 @@ public class Helper {
                     })
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                             notify_user(context, intent, notificationIdTmp, resource, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                             Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
                         }
@@ -885,6 +927,18 @@ public class Helper {
         return null;
     }
 
+    public static String getLiveInstanceWithProtocol(Context context) {
+        return instanceWithProtocol(getLiveInstance(context));
+    }
+
+    public static String instanceWithProtocol(String instance){
+        if( instance == null)
+            return null;
+        if( instance.endsWith(".onion"))
+            return "http://" + instance;
+        else
+            return "https://" + instance;
+    }
 
 
 
@@ -948,14 +1002,14 @@ public class Helper {
                     item.setIcon(R.drawable.ic_person);
                     String url = account.getAvatar();
                     if( url.startsWith("/") ){
-                        url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
+                        url = Helper.getLiveInstanceWithProtocol(activity) + account.getAvatar();
                     }
                     Glide.with(activity.getApplicationContext())
                             .asBitmap()
                             .load(url)
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
-                                public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                     item.setIcon(new BitmapDrawable(activity.getResources(), resource));
                                     item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
                                 }
@@ -1083,7 +1137,7 @@ public class Helper {
      */
     public static void loadPictureIcon(final Activity activity, String url, final ImageView imageView){
         if( url.startsWith("/") ){
-            url = "https://" + Helper.getLiveInstance(activity) + url;
+            url = Helper.getLiveInstanceWithProtocol(activity) + url;
         }
 
         Glide.with(activity.getApplicationContext())
@@ -1091,7 +1145,7 @@ public class Helper {
                 .load(url)
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                         Resources res = activity.getResources();
                         BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(resource, 20));
                         imageView.setImageDrawable(icon);
@@ -1159,36 +1213,34 @@ public class Helper {
             displayedName.setText(account.getDisplay_name());
             String url = account.getAvatar();
             if( url.startsWith("/") ){
-                url = "https://" + Helper.getLiveInstance(activity) + account.getAvatar();
+                url = Helper.getLiveInstanceWithProtocol(activity) + account.getAvatar();
             }
             Glide.with(activity.getApplicationContext())
                     .load(url)
                     .into(profilePicture);
             String urlHeader = account.getHeader();
             if( urlHeader.startsWith("/") ){
-                urlHeader = "https://" + Helper.getLiveInstance(activity) + account.getHeader();
+                urlHeader = Helper.getLiveInstanceWithProtocol(activity) + account.getHeader();
+            }
+            LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
+            final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if( theme == Helper.THEME_LIGHT){
+                main_header_container.setBackgroundDrawable( activity.getResources().getDrawable(R.drawable.side_nav_bar_dark));
             }
             if (!urlHeader.contains("missing.png")) {
-
                 Glide.with(activity.getApplicationContext())
                         .asBitmap()
                         .load(urlHeader)
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
-                                Bitmap workingBitmap = Bitmap.createBitmap(resource);
-                                Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                Canvas canvas = new Canvas(mutableBitmap);
-                                Paint p = new Paint(Color.BLACK);
-                                ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-                                p.setColorFilter(filter);
-                                canvas.drawBitmap(mutableBitmap, new Matrix(), p);
-                                BitmapDrawable background = new BitmapDrawable(activity.getResources(), mutableBitmap);
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                ImageView backgroundImage = headerLayout.findViewById(R.id.back_ground_image);
+                                backgroundImage.setImageBitmap(resource);
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                    main_header_container.setBackground(background);
+                                    backgroundImage.setImageAlpha(60);
                                 }else {
-                                    main_header_container.setBackgroundDrawable(background);
+                                    backgroundImage.setAlpha(60);
                                 }
                             }
                         });
@@ -1282,11 +1334,7 @@ public class Helper {
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View textView) {
-                        Intent intent = new Intent(context, WebviewActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("url", url);
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                        Helper.openBrowser(context, url);
                     }
                     @Override
                     public void updateDrawState(TextPaint ds) {
@@ -1584,6 +1632,143 @@ public class Helper {
         }
     }
 
+
+    /**
+     * Serialized an Application class
+     * @param application Application to serialize
+     * @return String serialized Application
+     */
+    public static String applicationToStringStorage(Application application){
+        Gson gson = new Gson();
+        return gson.toJson(application);
+    }
+
+    /**
+     * Unserialized an Application
+     * @param serializedApplication String serialized application
+     * @return Application
+     */
+    public static Application restoreApplicationFromString(String serializedApplication){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedApplication, Application.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+    /**
+     * Serialized a Account class
+     * @param account Account to serialize
+     * @return String serialized Account
+     */
+    public static String accountToStringStorage(Account account){
+        Gson gson = new Gson();
+        return gson.toJson(account);
+    }
+
+    /**
+     * Unserialized an Account
+     * @param serializedAccount String serialized account
+     * @return Account
+     */
+    public static Account restoreAccountFromString(String serializedAccount){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedAccount, Account.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+    /**
+     * Serialized a List of Emojis class
+     * @param emojis Emojis List to serialize
+     * @return String serialized List of Emojis
+     */
+    public static String emojisToStringStorage(List<Emojis> emojis){
+        Gson gson = new Gson();
+        return gson.toJson(emojis);
+    }
+
+    /**
+     * Unserialized a list of Emojis
+     * @param serializedEmojis String serialized emojis
+     * @return List<Emojis>
+     */
+    public static List<Emojis> restoreEmojisFromString(String serializedEmojis){
+        Type listType = new TypeToken<ArrayList<Emojis>>(){}.getType();
+        return new Gson().fromJson(serializedEmojis, listType);
+    }
+
+
+    /**
+     * Serialized a List of a Attachment class
+     * @param attachments Attachment List to serialize
+     * @return String serialized List of Attachment
+     */
+    public static String attachmentToStringStorage(List<Attachment> attachments){
+        Gson gson = new Gson();
+        return gson.toJson(attachments);
+    }
+
+    /**
+     * Unserialized a list of Attachment
+     * @param serializedAttachment String serialized attachment
+     * @return List<Attachment>
+     */
+    public static ArrayList<Attachment> restoreAttachmentFromString(String serializedAttachment){
+        Type listType = new TypeToken<ArrayList<Attachment>>(){}.getType();
+        return new Gson().fromJson(serializedAttachment, listType);
+    }
+
+
+
+    /**
+     * Serialized a List of a Mention class
+     * @param mentions Mention List to serialize
+     * @return String serialized List of Mention
+     */
+    public static String mentionToStringStorage(List<Mention> mentions){
+        Gson gson = new Gson();
+        return gson.toJson(mentions);
+    }
+
+    /**
+     * Unserialized a list of Mention
+     * @param serializedMention String serialized mention
+     * @return String serialized List of Mention
+     */
+    public static List<Mention> restoreMentionFromString(String serializedMention){
+        Type listType = new TypeToken<ArrayList<Mention>>(){}.getType();
+        return new Gson().fromJson(serializedMention, listType);
+    }
+
+
+    /**
+     * Serialized a List of a Tag class
+     * @param tags Tag List to serialize
+     * @return String serialized List of Tag
+     */
+    public static String tagToStringStorage(List<Tag> tags){
+        Gson gson = new Gson();
+        return gson.toJson(tags);
+    }
+
+    /**
+     * Unserialized a list of Tag
+     * @param serializedTag String serialized tag
+     * @return String serialized List of Tag
+     */
+    public static List<Tag> restoreTagFromString(String serializedTag){
+        Type listType = new TypeToken<ArrayList<Tag>>(){}.getType();
+        return new Gson().fromJson(serializedTag, listType);
+    }
+
+
+
     /**
      * Check if a job id is in array of ids
      * @param jobIds int[]
@@ -1661,28 +1846,28 @@ public class Helper {
      * @param view The view to convert
      * @return Bitmap
      */
-    public static Bitmap convertTootIntoBitmap(Context context, View view) {
+    public static Bitmap convertTootIntoBitmap(Context context, String name, View view) {
 
-        int new_element_v = View.VISIBLE, notification_delete_v = View.VISIBLE;
-        //Removes some elements
-        ImageView new_element = view.findViewById(R.id.new_element);
-        if( new_element != null) {
-            new_element_v = new_element.getVisibility();
-            new_element.setVisibility(View.GONE);
+        if( view.getWidth() == 0 || view.getHeight() == 0){
+            Toast.makeText(context, R.string.toast_error, Toast.LENGTH_SHORT).show();
+            return null;
         }
-
-        ImageView notification_delete = view.findViewById(R.id.notification_delete);
-        if( notification_delete != null) {
-            notification_delete_v = notification_delete.getVisibility();
-            notification_delete.setVisibility(View.GONE);
-        }
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth()+10, view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
+        canvas.drawBitmap(returnedBitmap, 10, 0, null); 
         Drawable bgDrawable =view.getBackground();
         if (bgDrawable!=null)
             bgDrawable.draw(canvas);
-        else
-            canvas.drawColor(Color.WHITE);
+        else {
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if (theme == Helper.THEME_DARK) {
+                canvas.drawColor(ContextCompat.getColor(context, R.color.mastodonC1));
+            }else {
+                canvas.drawColor(Color.WHITE);
+            }
+        }
+
         view.draw(canvas);
         Paint paint = new Paint();
         int mastodonC4 = ContextCompat.getColor(context, R.color.mastodonC4);
@@ -1690,12 +1875,8 @@ public class Helper {
         paint.setStrokeWidth(12);
         paint.setTextSize(30);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-        canvas.drawText("Via #Mastalab", view.getWidth()-230, view.getHeight() -50, paint);
+        canvas.drawText(name +" - #Mastalab", 10, view.getHeight() -50, paint);
 
-        if( new_element != null)
-            new_element.setVisibility(new_element_v);
-        if( notification_delete != null)
-            notification_delete.setVisibility(notification_delete_v);
         return returnedBitmap;
     }
 
@@ -1775,16 +1956,185 @@ public class Helper {
                     })
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                            if( resource != null)
-                                imageView.setImageBitmap(resource);
+                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                            imageView.setImageBitmap(resource);
                         }
                     });
     }
+
+    /**
+     * Manage URLs to open (built-in or external app)
+     * @param context Context
+     * @param url String url to open
+     */
+    public static void openBrowser(Context context, String url){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
+        if( embedded_browser) {
+            Intent intent = new Intent(context, WebviewActivity.class);
+            Bundle b = new Bundle();
+            String finalUrl = url;
+            if (!url.startsWith("http://") && !url.startsWith("https://"))
+                finalUrl = "http://" + url;
+            b.putString("url", finalUrl);
+            intent.putExtras(b);
+            context.startActivity(intent);
+        }else {
+            boolean custom_tabs = sharedpreferences.getBoolean(Helper.SET_CUSTOM_TABS, true);
+            if( custom_tabs){
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                CustomTabsIntent customTabsIntent = builder.build();
+                builder.setToolbarColor(ContextCompat.getColor(context, R.color.mastodonC1));
+                customTabsIntent.launchUrl(context, Uri.parse(url));
+            }else{
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                context.startActivity(intent);
+            }
+        }
+    }
+
 
     public static void installProvider(){
         Security.insertProviderAt(Conscrypt.newProvider(),1);
     }
 
 
+    public enum MediaType{
+        MEDIA,
+        PROFILE
+    }
+
+    public static ByteArrayInputStream compressImage(Context context, android.net.Uri uriFile, MediaType mediaType){
+        Bitmap takenImage;
+        ByteArrayInputStream bs = null;
+        try {
+            takenImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uriFile);
+        } catch (IOException e) {
+            Toast.makeText(context, R.string.toast_error, Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        ExifInterface exif = null;
+        try (InputStream inputStream = context.getContentResolver().openInputStream(uriFile)) {
+            assert inputStream != null;
+            exif = new ExifInterface(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Matrix matrix = null;
+        if( takenImage != null ){
+            int size = takenImage.getByteCount();
+            if( exif != null) {
+                int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                int rotationDegree = 0;
+                if (rotation == ExifInterface.ORIENTATION_ROTATE_90) { rotationDegree = 90; }
+                else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {  rotationDegree = 180; }
+                else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {  rotationDegree =  270; }
+                matrix = new Matrix();
+                if (rotation != 0f) {matrix.preRotate(rotationDegree);}
+            }
+
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
+            if( mediaType == MediaType.PROFILE)
+                resizeSet = Helper.S_1MO;
+            double resizeby = size;
+            if( resizeSet == Helper.S_512KO){
+                resizeby = 4194304;
+            }else if(resizeSet == Helper.S_1MO){
+                resizeby = 8388608;
+            }else if(resizeSet == Helper.S_2MO){
+                resizeby = 16777216;
+            }
+            double resize = ((double)size)/resizeby;
+            if( resize > 1 ){
+                ContentResolver cr = context.getContentResolver();
+                String mime = cr.getType(uriFile);
+                Bitmap newBitmap = Bitmap.createScaledBitmap(takenImage, (int) (takenImage.getWidth() / resize),
+                        (int) (takenImage.getHeight() / resize), true);
+                Bitmap adjustedBitmap;
+                if( matrix != null)
+                    adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
+                else
+                    adjustedBitmap = newBitmap;
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                if( mime !=null && (mime.contains("png") || mime.contains(".PNG")))
+                    adjustedBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                else
+                    adjustedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+                byte[] bitmapdata = bos.toByteArray();
+                bs = new ByteArrayInputStream(bitmapdata);
+            }else {
+                try {
+                    InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
+                    byte[] buff = new byte[8 * 1024];
+                    int bytesRead;
+                    ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                    assert inputStream != null;
+                    while((bytesRead = inputStream.read(buff)) != -1) {
+                        bao.write(buff, 0, bytesRead);
+                    }
+                    byte[] data = bao.toByteArray();
+                    bs  = new ByteArrayInputStream(data);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else {
+            try {
+                InputStream inputStream = context.getContentResolver().openInputStream(uriFile);
+                byte[] buff = new byte[8 * 1024];
+                int bytesRead;
+                ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                assert inputStream != null;
+                while((bytesRead = inputStream.read(buff)) != -1) {
+                    bao.write(buff, 0, bytesRead);
+                }
+                byte[] data = bao.toByteArray();
+                bs  = new ByteArrayInputStream(data);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return bs;
+    }
+
+    public static String getFileName(Context context, Uri uri) {
+        ContentResolver resolver = context.getContentResolver();
+        Cursor returnCursor =
+                resolver.query(uri, null, null, null, null);
+        assert returnCursor != null;
+        try {
+            int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+            returnCursor.moveToFirst();
+            String name = returnCursor.getString(nameIndex);
+            returnCursor.close();
+            Random r = new Random();
+            int suf = r.nextInt(9999 - 1000) + 1000;
+            return String.valueOf(suf)+name;
+        }catch (Exception e){
+            Random r = new Random();
+            int suf = r.nextInt(9999 - 1000) + 1000;
+            ContentResolver cr = context.getContentResolver();
+            String mime = cr.getType(uri);
+            if( mime != null && mime.split("/").length > 1)
+                return "__" + String.valueOf(suf)+"."+mime.split("/")[1];
+            else
+                return "__" + String.valueOf(suf)+".jpg";
+        }
+    }
+
+    @SuppressWarnings({"WeakerAccess", "unused"})
+    public static void largeLog(String content) {
+        if (content.length() > 4000) {
+            Log.v(Helper.TAG, content.substring(0, 4000));
+            largeLog(content.substring(4000));
+        } else {
+            Log.v(Helper.TAG, content);
+        }
+    }
 }

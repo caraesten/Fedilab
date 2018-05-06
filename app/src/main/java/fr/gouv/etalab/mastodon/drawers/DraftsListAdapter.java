@@ -133,13 +133,13 @@ public class DraftsListAdapter extends BaseAdapter  {
         }else{
             changeDrawableColor(context, holder.draft_delete, R.color.black);
         }
-        holder.draft_date.setText(Helper.dateToString(context, draft.getCreation_date()));
+        holder.draft_date.setText(Helper.dateToString(draft.getCreation_date()));
         holder.draft_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(draft.getStatus().getContent() + '\n' + Helper.dateToString(context, draft.getCreation_date()));
+                builder.setMessage(draft.getStatus().getContent() + '\n' + Helper.dateToString(draft.getCreation_date()));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle(R.string.remove_draft)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

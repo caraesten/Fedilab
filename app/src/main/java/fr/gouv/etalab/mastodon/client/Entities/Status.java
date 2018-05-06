@@ -15,24 +15,26 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 
+import android.app.Activity;
 import android.content.*;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
-import android.util.Patterns;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -43,19 +45,16 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
-import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
-import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -76,8 +75,10 @@ public class Status implements Parcelable{
     private int favourites_count;
     private boolean reblogged;
     private boolean favourited;
+    private boolean muted;
     private boolean pinned;
     private boolean sensitive;
+    private boolean bookmarked;
     private String visibility;
     private boolean attachmentShown = false;
     private boolean spoilerShown = false;
@@ -95,7 +96,6 @@ public class Status implements Parcelable{
     private boolean isClickable = false;
     private boolean isTranslationShown = false;
     private boolean isNew = false;
-    private boolean isTakingScreenShot = false;
     private boolean isVisible = true;
     private boolean fetchMore = false;
     private Status status;
@@ -122,6 +122,7 @@ public class Status implements Parcelable{
         favourites_count = in.readInt();
         reblogged = in.readByte() != 0;
         favourited = in.readByte() != 0;
+        muted = in.readByte() != 0;
         sensitive = in.readByte() != 0;
         contentCW = in.readString();
         visibility = in.readString();
@@ -201,7 +202,10 @@ public class Status implements Parcelable{
     }
 
     public void setContent(String content) {
-        this.content = content;
+        //Remove UTM by default
+        this.content = content.replaceAll("&amp;utm_\\w+=[0-9a-zA-Z._-]*", "");
+        this.content = this.content.replaceAll("&utm_\\w+=[0-9a-zA-Z._-]*", "");
+        this.content = this.content.replaceAll("\\?utm_\\w+=[0-9a-zA-Z._-]*", "?");
     }
 
     public Status getReblog() {
@@ -343,6 +347,7 @@ public class Status implements Parcelable{
         dest.writeInt(favourites_count);
         dest.writeByte((byte) (reblogged ? 1 : 0));
         dest.writeByte((byte) (favourited ? 1 : 0));
+        dest.writeByte((byte) (muted ? 1 : 0));
         dest.writeByte((byte) (sensitive ? 1 : 0));
         dest.writeString(contentCW);
         dest.writeString(visibility);
@@ -411,14 +416,6 @@ public class Status implements Parcelable{
         isNew = aNew;
     }
 
-    public boolean isTakingScreenShot() {
-        return isTakingScreenShot;
-    }
-
-    public void setTakingScreenShot(boolean takingScreenShot) {
-        isTakingScreenShot = takingScreenShot;
-    }
-
     public boolean isVisible() {
         return isVisible;
     }
@@ -447,7 +444,12 @@ public class Status implements Parcelable{
 
     public void makeClickable(Context context){
 
+        if( ((Activity)context).isFinishing() || status == null)
+            return;
         SpannableString spannableStringContent, spannableStringCW;
+        if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
+            return;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY));
         else
@@ -467,6 +469,10 @@ public class Status implements Parcelable{
 
     public void makeClickableTranslation(Context context){
 
+        if( ((Activity)context).isFinishing() || status == null)
+            return;
+        if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
+            return;
         SpannableString spannableStringTranslated;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY));
@@ -481,6 +487,8 @@ public class Status implements Parcelable{
 
     public void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener){
 
+        if( ((Activity)context).isFinishing() )
+            return;
 
         final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         if( emojis != null && emojis.size() > 0 ) {
@@ -506,13 +514,14 @@ public class Status implements Parcelable{
                         })
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
                                 if (contentSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        contentSpan.setSpan(
+                                        if( startPosition >= 0 && endPosition <= contentSpan.toString().length() && endPosition >= startPosition)
+                                            contentSpan.setSpan(
                                                 new ImageSpan(context,
                                                         Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
                                                                 (int) Helper.convertDpToPixel(20, context), false)), startPosition,
@@ -523,7 +532,8 @@ public class Status implements Parcelable{
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpanCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        contentSpanCW.setSpan(
+                                        if( startPosition >= 0 && endPosition <= contentSpan.toString().length() && endPosition >= startPosition)
+                                            contentSpanCW.setSpan(
                                                 new ImageSpan(context,
                                                         Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
                                                                 (int) Helper.convertDpToPixel(20, context), false)), startPosition,
@@ -544,8 +554,9 @@ public class Status implements Parcelable{
 
     public void makeEmojisTranslation(final Context context, final OnRetrieveEmojiInterface listener){
 
+        if( ((Activity)context).isFinishing() )
+            return;
         SpannableString spannableStringTranslated = null;
-
 
         if( status.getContentTranslated() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -589,7 +600,8 @@ public class Status implements Parcelable{
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = finalSpannableStringTranslated.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        finalSpannableStringTranslated.setSpan(
+                                        if( startPosition >= 0 && endPosition <= finalSpannableStringTranslated.toString().length() && endPosition >= startPosition)
+                                            finalSpannableStringTranslated.setSpan(
                                                 new ImageSpan(context,
                                                         Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
                                                                 (int) Helper.convertDpToPixel(20, context), false)), startPosition,
@@ -618,39 +630,40 @@ public class Status implements Parcelable{
             spannableString.removeSpan(span);
         List<Mention> mentions = this.status.getReblog() != null ? this.status.getReblog().getMentions() : this.status.getMentions();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
-        if( embedded_browser){
-            Matcher matcher;
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
-                matcher = Patterns.WEB_URL.matcher(spannableString);
-            else
-                matcher = Helper.urlPattern.matcher(spannableString);
-            while (matcher.find()){
-                int matchStart = matcher.start(1);
-                int matchEnd = matcher.end();
-                final String url = spannableString.toString().substring(matchStart, matchEnd);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
+        Matcher matcher;
+        /*if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+            matcher = Patterns.WEB_URL.matcher(spannableString);
+        else
+            matcher = Helper.urlPattern.matcher(spannableString);*/
+        matcher = Helper.urlPattern.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(1);
+            int matchEnd = matcher.end();
+            final String url = spannableString.toString().substring(matchStart, matchEnd);
+            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View textView) {
-                        Intent intent = new Intent(context, WebviewActivity.class);
-                        Bundle b = new Bundle();
                         String finalUrl = url;
                         if( !url.startsWith("http://") && ! url.startsWith("https://"))
                             finalUrl = "http://" + url;
-                        b.putString("url", finalUrl);
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                        Helper.openBrowser(context, finalUrl);
                     }
                     @Override
                     public void updateDrawState(TextPaint ds) {
                         super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
                     }
                 },
                 matchStart, matchEnd,
                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
-            }
+            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, theme==Helper.THEME_DARK?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
+
         //Deals with mention to make them clickable
         if( mentions != null && mentions.size() > 0 ) {
             //Looping through accounts which are mentioned
@@ -661,7 +674,8 @@ public class Status implements Parcelable{
                     //Accounts can be mentioned several times so we have to loop
                     for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
                         int endPosition = startPosition + targetedAccount.length();
-                        spannableString.setSpan(new ClickableSpan() {
+                        if( startPosition >= 0 && endPosition <= spannableString.toString().length() && endPosition >= startPosition)
+                            spannableString.setSpan(new ClickableSpan() {
                                     @Override
                                     public void onClick(View textView) {
                                         Intent intent = new Intent(context, ShowAccountActivity.class);
@@ -673,34 +687,43 @@ public class Status implements Parcelable{
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
                                         super.updateDrawState(ds);
+                                        ds.setUnderlineText(false);
                                     }
                                 },
                                 startPosition, endPosition,
+                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        if( startPosition >= 0 && endPosition <= spannableString.toString().length() && endPosition >= startPosition)
+                            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, theme==Helper.THEME_DARK?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
                 }
 
             }
         }
-        Matcher matcher = Helper.hashtagPattern.matcher(spannableString);
+        matcher = Helper.hashtagPattern.matcher(spannableString);
         while (matcher.find()){
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
             final String tag = spannableString.toString().substring(matchStart, matchEnd);
-            spannableString.setSpan(new ClickableSpan() {
-                @Override
-                public void onClick(View textView) {
-                    Intent intent = new Intent(context, HashTagActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString("tag", tag.substring(1));
-                    intent.putExtras(b);
-                    context.startActivity(intent);
-                }
-                @Override
-                public void updateDrawState(TextPaint ds) {
-                    super.updateDrawState(ds);
-                }
-            }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+                spannableString.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        Intent intent = new Intent(context, HashTagActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("tag", tag.substring(1));
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
+                    }
+                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, theme==Helper.THEME_DARK?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         return spannableString;
     }
@@ -762,5 +785,21 @@ public class Status implements Parcelable{
 
     public void setCard(Card card) {
         this.card = card;
+    }
+
+    public boolean isMuted() {
+        return muted;
+    }
+
+    public void setMuted(boolean muted) {
+        this.muted = muted;
+    }
+
+    public boolean isBookmarked() {
+        return bookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
     }
 }

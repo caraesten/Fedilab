@@ -86,6 +86,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayBookmarksFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
@@ -107,6 +108,7 @@ import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.BACKUP_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
@@ -740,6 +742,10 @@ public abstract class BaseMainActivity extends BaseActivity
                                         .setIcon(android.R.drawable.ic_dialog_alert)
                                         .show();
                                 return true;
+                            case R.id.action_proxy:
+                                intent = new Intent(getApplicationContext(), ProxyActivity.class);
+                                startActivity(intent);
+                                return true;
                             case R.id.action_export:
                                 if(Build.VERSION.SDK_INT >= 23 ){
                                     if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
@@ -821,7 +827,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
             final SwitchCompat set_push_hometimeline = dialogView.findViewById(R.id.set_push_hometimeline);
             final SwitchCompat set_push_notification = dialogView.findViewById(R.id.set_push_notification);
-            boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
+            boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, false);
             boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
             boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
             boolean notif_ask = sharedpreferences.getBoolean(Helper.SET_NOTIF_ASK, true);
@@ -1075,6 +1081,9 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }else if (extras.getInt(INTENT_ACTION) == ADD_USER_INTENT){
                 this.recreate();
+            }else if( extras.getInt(INTENT_ACTION) == BACKUP_INTENT){
+                Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
+                startActivity(myIntent);
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
             if ("text/plain".equals(type)) {
@@ -1096,7 +1105,7 @@ public abstract class BaseMainActivity extends BaseActivity
                         if(matchStart < matchEnd && sharedText.length() >= matchEnd)
                             sharedText = sharedText.substring(matchStart, matchEnd);
                     }
-                    new RetrieveMetaDataAsyncTask(sharedText, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new RetrieveMetaDataAsyncTask(BaseMainActivity.this, sharedText, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
                     b.putString("sharedSubject", sharedSubject);
@@ -1291,6 +1300,11 @@ public abstract class BaseMainActivity extends BaseActivity
             startActivity(remoteFollow);
             return false;
         }
+        if( id == R.id.nav_archive) {
+            Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
+            startActivity(myIntent);
+            return false;
+        }
         final NavigationView navigationView = findViewById(R.id.nav_view);
         unCheckAllMenuItems(navigationView);
         item.setChecked(true);
@@ -1311,7 +1325,7 @@ public abstract class BaseMainActivity extends BaseActivity
         toolbarTitle.setVisibility(View.VISIBLE);
 
         appBar.setExpanded(true);
-        if (id != R.id.nav_drafts) {
+        if (id != R.id.nav_drafts && id != R.id.nav_bookmarks ) {
             delete_all.setVisibility(View.GONE);
         }else{
             delete_all.setVisibility(View.VISIBLE);
@@ -1363,6 +1377,12 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "DRAFTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
+            toot.setVisibility(View.GONE);
+        }else if (id == R.id.nav_bookmarks) {
+            DisplayBookmarksFragment displayBookmarksFragment = new DisplayBookmarksFragment();
+            fragmentTag = "BOOKMARKS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayBookmarksFragment, fragmentTag).commit();
             toot.setVisibility(View.GONE);
         }else if (id == R.id.nav_search) {
             DisplaySearchFragment displaySearchFragment = new DisplaySearchFragment();
@@ -1662,8 +1682,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public void startSreaming(){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-        if( notify && liveNotifications) {
+        if( liveNotifications) {
             ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             assert manager != null;
             for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {

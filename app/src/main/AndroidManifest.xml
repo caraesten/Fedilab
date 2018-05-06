@@ -25,10 +25,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
     <application
         android:name=".activities.MainApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:hardwareAccelerated="true"
@@ -40,6 +40,8 @@
             android:name=".services.LiveNotificationService"
             android:exported="false"/>
         <service android:name=".services.BackupStatusService"
+            android:exported="false"/>
+        <service android:name=".services.BackupStatusInDataBaseService"
             android:exported="false"/>
         <receiver android:name=".services.RestartLiveNotificationReceiver"
             android:exported="false">
@@ -104,7 +106,14 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
-            />
+           >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="backtomastalab" android:scheme="mastalab" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activities.ShowAccountActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
@@ -125,6 +134,7 @@
             />
         <activity android:name=".activities.MediaActivity"
             android:label="@string/app_name"
+            android:theme="@style/Theme.Transparent"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:noHistory="true"
             />
@@ -147,6 +157,12 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
+            />
+        <activity android:name=".activities.OwnerStatusActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
             />
         <activity android:name=".activities.AboutActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
@@ -178,9 +194,22 @@
         <activity android:name=".activities.InstanceHealthActivity"
             android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
             android:excludeFromRecents="true"/>
+        <activity android:name=".activities.ProxyActivity"
+            android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
+            android:excludeFromRecents="true"/>
         <activity android:name=".activities.ManageAccountsInListActivity"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
             android:excludeFromRecents="true"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="fr.gouv.etalab.mastodon.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
     </application>
 </manifest>

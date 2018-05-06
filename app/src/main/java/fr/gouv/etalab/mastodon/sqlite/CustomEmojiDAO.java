@@ -57,7 +57,7 @@ public class CustomEmojiDAO {
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_URL, emoji.getUrl());
         values.put(Sqlite.COL_URL_STATIC, emoji.getStatic_url());
-        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(context, new Date()));
+        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
         //Inserts emoji
         try{
             db.insert(Sqlite.TABLE_CUSTOM_EMOJI, null, values);
@@ -75,7 +75,7 @@ public class CustomEmojiDAO {
         String instance = Helper.getLiveInstance(context);
         values.put(Sqlite.COL_URL, emoji.getUrl());
         values.put(Sqlite.COL_URL_STATIC, emoji.getStatic_url());
-        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(context, new Date()));
+        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
         db.update(Sqlite.TABLE_CUSTOM_EMOJI,
                 values, Sqlite.COL_SHORTCODE + " =  ? AND " + Sqlite.COL_INSTANCE + " =  ? ",
                 new String[]{emoji.getShortcode(), instance});

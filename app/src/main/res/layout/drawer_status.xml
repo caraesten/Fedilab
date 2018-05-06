@@ -90,6 +90,14 @@
                 app:fabSize="mini"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/ic_translate" />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/status_bookmark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                app:fabSize="mini"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_bookmark_border" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginStart="5dp"
@@ -139,6 +147,7 @@
                 <TextView
                     android:id="@+id/status_spoiler"
                     android:layout_marginTop="10dp"
+                    android:textIsSelectable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <Button
@@ -171,6 +180,19 @@
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+                <TextView
+                    android:visibility="gone"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/status_toot_app"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="italic"
+                    />
                 <LinearLayout
                     android:id="@+id/status_content_translated_container"
                     android:visibility="gone"
@@ -254,7 +276,124 @@
                         android:layout_height="match_parent"/>
                 </FrameLayout>
 
+
+                <RelativeLayout
+                    android:id="@+id/status_horizontal_document_container"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            >
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                >
+                                <ImageView
+                                    android:id="@+id/status_prev1_h"
+                                    android:layout_width="wrap_content"
+                                    android:scaleType="fitCenter"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="match_parent"
+                                    tools:ignore="ContentDescription" />
+                                <ImageView
+                                    android:id="@+id/status_prev1_play_h"
+                                    android:visibility="gone"
+                                    android:layout_centerInParent="true"
+                                    android:layout_width="20dp"
+                                    android:src="@drawable/ic_play_arrow"
+                                    android:layout_height="20dp"
+                                    tools:ignore="ContentDescription" />
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginStart="1dp"
+                                >
+                                <ImageView
+                                    android:id="@+id/status_prev2_h"
+                                    android:scaleType="fitCenter"
+                                    android:layout_width="wrap_content"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="match_parent"
+                                    tools:ignore="ContentDescription" />
+                                <ImageView
+                                    android:id="@+id/status_prev2_play_h"
+                                    android:visibility="gone"
+                                    android:layout_centerInParent="true"
+                                    android:layout_width="20dp"
+                                    android:src="@drawable/ic_play_arrow"
+                                    android:layout_height="20dp"
+                                    tools:ignore="ContentDescription" />
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginStart="1dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                >
+                                <ImageView
+                                    android:id="@+id/status_prev3_h"
+                                    android:layout_width="wrap_content"
+                                    android:scaleType="fitCenter"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    tools:ignore="ContentDescription" />
+                                <ImageView
+                                    android:id="@+id/status_prev3_play_h"
+                                    android:visibility="gone"
+                                    android:layout_centerInParent="true"
+                                    android:layout_width="20dp"
+                                    android:src="@drawable/ic_play_arrow"
+                                    android:layout_height="20dp"
+                                    tools:ignore="ContentDescription" />
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:layout_marginLeft="1dp"
+                                android:layout_marginStart="1dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                >
+                                <ImageView
+                                    android:id="@+id/status_prev4_h"
+                                    android:layout_width="wrap_content"
+                                    android:scaleType="fitCenter"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    tools:ignore="ContentDescription" />
+                                <ImageView
+                                    android:id="@+id/status_prev4_play_h"
+                                    android:visibility="gone"
+                                    android:layout_centerInParent="true"
+                                    android:layout_width="20dp"
+                                    android:src="@drawable/ic_play_arrow"
+                                    android:layout_height="20dp"
+                                    tools:ignore="ContentDescription" />
+                            </RelativeLayout>
+                        </LinearLayout>
+                    </HorizontalScrollView>
+                    <ImageView
+                        android:id="@+id/hide_preview_h"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/ic_remove_red_eye"
+                        android:layout_height="wrap_content"
+                        tools:ignore="ContentDescription" />
+                </RelativeLayout>
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/status_document_container"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -278,6 +417,15 @@
                             android:layout_width="20dp"
                             android:src="@drawable/ic_play_arrow"
                             android:layout_height="20dp"
+                            tools:ignore="ContentDescription" />
+                        <ImageView
+                            android:id="@+id/hide_preview"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_width="wrap_content"
+                            android:src="@drawable/ic_remove_red_eye"
+                            android:layout_height="wrap_content"
                             tools:ignore="ContentDescription" />
                     </RelativeLayout>
                     <LinearLayout

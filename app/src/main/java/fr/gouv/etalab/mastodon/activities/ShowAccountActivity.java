@@ -20,12 +20,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -339,13 +333,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         return true;
                     case R.id.action_open_browser:
                         if( accountUrl != null) {
-                            Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
-                            Bundle b = new Bundle();
                             if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
                                 accountUrl = "http://" + accountUrl;
-                            b.putString("url", accountUrl);
-                            intent.putExtras(b);
-                            startActivity(intent);
+                            Helper.openBrowser(ShowAccountActivity.this, accountUrl);
                         }
                         return true;
                     case R.id.action_mention:
@@ -422,7 +412,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
         String urlHeader = account.getHeader();
         if (urlHeader.startsWith("/")) {
-            urlHeader = "https://" + Helper.getLiveInstance(ShowAccountActivity.this) + account.getHeader();
+            urlHeader = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + account.getHeader();
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !urlHeader.contains("missing.png")) {
 
@@ -433,15 +423,12 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         @Override
                         public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                             ImageView banner_pp = findViewById(R.id.banner_pp);
-                            Bitmap workingBitmap = Bitmap.createBitmap(resource);
-                            Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
-                            Canvas canvas = new Canvas(mutableBitmap);
-                            Paint p = new Paint(Color.BLACK);
-                            ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
-                            p.setColorFilter(filter);
-                            canvas.drawBitmap(mutableBitmap, new Matrix(), p);
-                            BitmapDrawable background = new BitmapDrawable(getResources(), mutableBitmap);
-                            banner_pp.setImageDrawable(background);
+                            banner_pp.setImageBitmap(resource);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                banner_pp.setImageAlpha(60);
+                            }else {
+                                banner_pp.setAlpha(60);
+                            }
                         }
                     });
 
@@ -464,7 +451,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         pp_actionBar = findViewById(R.id.pp_actionBar);
         String url = account.getAvatar();
         if( url.startsWith("/") ){
-            url = "https://" + Helper.getLiveInstance(getApplicationContext()) + account.getAvatar();
+            url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
         }
         Glide.with(getApplicationContext())
                 .asBitmap()
@@ -491,13 +478,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         warning_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), WebviewActivity.class);
-                Bundle b = new Bundle();
                 if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
                     accountUrl = "http://" + accountUrl;
-                b.putString("url", accountUrl);
-                intent.putExtras(b);
-                startActivity(intent);
+                Helper.openBrowser(ShowAccountActivity.this, accountUrl);
             }
         });
         //Timed muted account

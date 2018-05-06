@@ -20,7 +20,8 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -41,12 +42,11 @@ import java.util.concurrent.TimeUnit;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveHomeTimelineServiceAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveHomeTimelineServiceInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
@@ -64,9 +64,12 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
  * Notifications for home timeline job
  */
 
-public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineServiceInterface{
+public class HomeTimelineSyncJob extends Job {
 
     static final String HOME_TIMELINE = "home_timeline";
+    static {
+        Helper.installProvider();
+    }
 
     @NonNull
     @Override
@@ -74,16 +77,13 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         callAsynchronousTask();
         return Result.SUCCESS;
     }
-
-    static {
-        Helper.installProvider();
-    }
     public static int schedule(boolean updateCurrent){
 
         Set<JobRequest> jobRequests = JobManager.instance().getAllJobRequestsForTag(HOME_TIMELINE);
         if (!jobRequests.isEmpty() && !updateCurrent) {
             return jobRequests.iterator().next().getJobId();
         }
+
         return new JobRequest.Builder(HomeTimelineSyncJob.HOME_TIMELINE)
                 .setPeriodic(TimeUnit.MINUTES.toMillis(Helper.MINUTES_BETWEEN_HOME_TIMELINE), TimeUnit.MINUTES.toMillis(5))
                 .setUpdateCurrent(updateCurrent)
@@ -103,7 +103,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
         if( !canNotify(getContext()))
             return;
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, true);
+        boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, false);
         //User disagree with home timeline refresh
         if( !notif_hometimeline)
             return; //Nothing is done
@@ -130,23 +130,21 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                         editor.apply();
                     }
                 }
-                new RetrieveHomeTimelineServiceAsyncTask(getContext(), account, max_id, HomeTimelineSyncJob.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
+                API api = new API(getContext(), account.getInstance(), account.getToken());
+                APIResponse apiResponse = api.getHomeTimelineSinceId(max_id);
+                onRetrieveHomeTimelineService(apiResponse, account);
             }
         }
     }
 
-
-    @Override
-    public void onRetrieveHomeTimelineService(APIResponse apiResponse, final Account account) {
+    private void onRetrieveHomeTimelineService(APIResponse apiResponse, final Account account) {
         final List<Status> statuses = apiResponse.getStatuses();
-        if( apiResponse.getError() != null || statuses == null || statuses.size() == 0)
+        if( apiResponse.getError() != null || statuses == null || statuses.size() == 0 || account == null)
             return;
 
         final SharedPreferences sharedpreferences = getContext().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         final String max_id = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-
         //No previous notifications in cache, so no notification will be sent
         String message;
 
@@ -155,7 +153,7 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
             //Also, if the toot comes from the owner, we will avoid to warn him/her...
             if( max_id != null && (status.getId().equals(max_id)) || (account.getAcct() != null && status.getAccount().getAcct().trim().equals(account.getAcct().trim()) ))
                 continue;
-            String notificationUrl = status.getAccount().getAvatar();
+            final String notificationUrl = status.getAccount().getAvatar();
 
             if(statuses.size() > 0 )
                 message = getContext().getResources().getQuantityString(R.plurals.other_notif_hometimeline, statuses.size(), statuses.size());
@@ -168,7 +166,6 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
             intent.putExtra(PREF_INSTANCE, account.getInstance());
             long notif_id = Long.parseLong(account.getId());
             final int notificationId = ((notif_id + 2) > 2147483647) ? (int) (2147483647 - notif_id - 2) : (int) (notif_id + 2);
-
             if( notificationUrl != null){
 
                 final String finalMessage = message;
@@ -178,35 +175,43 @@ public class HomeTimelineSyncJob extends Job implements OnRetrieveHomeTimelineSe
                 else
                     title = getContext().getResources().getString(R.string.notif_pouet, status.getAccount().getUsername());
                 final String finalTitle = title;
-                Glide.with(getContext())
-                        .asBitmap()
-                        .load(notificationUrl)
-                        .listener(new RequestListener<Bitmap>(){
 
-                            @Override
-                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                return false;
-                            }
+                Handler mainHandler = new Handler(Looper.getMainLooper());
 
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
-                                        R.drawable.mastodonlogo), finalTitle, finalMessage);
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());
-                                editor.apply();
-                                return false;
-                            }
-                        })
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                notify_user(getContext(), intent, notificationId, resource, finalTitle, finalMessage);
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());
-                                editor.apply();
-                            }
-                        });
+                Runnable myRunnable = new Runnable() {
+                    @Override
+                    public void run() {Glide.with(getContext())
+                            .asBitmap()
+                            .load(notificationUrl)
+                            .listener(new RequestListener<Bitmap>(){
+
+                                @Override
+                                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                    notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
+                                            R.drawable.mastodonlogo), finalTitle, finalMessage);
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());
+                                    editor.apply();
+                                    return false;
+                                }
+                            })
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                    notify_user(getContext(), intent, notificationId, resource, finalTitle, finalMessage);
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());
+                                    editor.apply();
+                                }
+                            });
+                    }
+                };
+                mainHandler.post(myRunnable);
 
             }
         }

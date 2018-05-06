@@ -14,14 +14,30 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
-import java.io.Serializable;
 
 /**
  * Created by Thomas on 23/04/2017.
+ * Manage Entity Application
  */
 
 public class Application {
 
-    public String name;
-    public String website;
+    private String name;
+    private String website;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
 }

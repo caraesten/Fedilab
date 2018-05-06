@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.2"
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 102
-        versionName "1.7.2"
+        versionCode 121
+        versionName "1.8.8"
     }
     flavorDimensions "default"
     buildTypes {
@@ -19,6 +19,10 @@ android {
         debug {
             pseudoLocalesEnabled true
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     productFlavors {
@@ -34,18 +38,38 @@ allprojects {
         maven { url "https://maven.google.com"}
     }
 }
+ext.supportLibraryVersion = '27.1.1'
+ext.glideLibraryVersion = '4.6.1'
+ext.conscryptLibraryVersion = '1.0.1'
+ext.evernoteLibraryVersion = '1.2.5'
+ext.gsonLibraryVersion = '2.8.2'
+ext.guavaLibraryVersion = '24.1-android'
+ext.photoViewLibraryVersion = '2.0.0'
+ext.swipebackLibraryVersion = '1.0.2'
+ext.ratethisappLibraryVersion = '1.2.0'
+
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.0.2'
-    implementation 'com.android.support:design:27.0.2'
-    implementation 'com.android.support:support-v4:27.0.2'
-    implementation 'com.android.support:recyclerview-v7:27.0.2'
-    implementation 'com.github.bumptech.glide:glide:4.4.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
-    implementation 'com.evernote:android-job:1.2.1'
-    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation "com.android.support:support-v4:$supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    implementation "com.android.support:customtabs:$supportLibraryVersion"
+    implementation "com.android.support:exifinterface:$supportLibraryVersion"
+    implementation "com.github.bumptech.glide:glide:$glideLibraryVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glideLibraryVersion"
+    implementation "org.conscrypt:conscrypt-android:$conscryptLibraryVersion"
+    implementation "com.evernote:android-job:$evernoteLibraryVersion"
+    implementation "com.google.code.gson:gson:$gsonLibraryVersion"
+    implementation "com.google.guava:guava:$guavaLibraryVersion"
+    implementation "com.github.chrisbanes:PhotoView:$photoViewLibraryVersion"
+    implementation "com.gongwen:swipeback:$swipebackLibraryVersion"
+
     implementation 'com.github.stom79:country-picker-android:1.2.0'
-    implementation 'com.github.stom79:mytransl:1.2'
-    playstoreImplementation 'io.github.kobakei:ratethisapp:1.2.0'
-    implementation 'org.conscrypt:conscrypt-android:1.0.0.RC13'
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.github.stom79:mytransl:1.4'
+
+
+    playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
+
+
+
 }
