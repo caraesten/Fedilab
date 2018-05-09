@@ -35,7 +35,6 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -643,12 +642,7 @@ public class Status implements Parcelable{
         while (matcher.find()){
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
-            Log.v(Helper.TAG,"matchStart: " + matchStart);
-            Log.v(Helper.TAG,"matchEnd: " + matchEnd);
-
             final String url = spannableString.toString().substring(matchStart, matchEnd);
-            Log.v(Helper.TAG,"url: " + url);
-            Log.v(Helper.TAG,"spannableString.toString().length(): " + spannableString.toString().length());
             if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
@@ -666,12 +660,10 @@ public class Status implements Parcelable{
                 },
                 matchStart, matchEnd,
                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            Log.v(Helper.TAG,"spannableString.toString().length(): " + spannableString.toString().length());
-          /*  if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, theme==Helper.THEME_DARK?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);*/
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        Log.v(Helper.TAG,"mentions: " + mentions);
         //Deals with mention to make them clickable
         if( mentions != null && mentions.size() > 0 ) {
             //Looping through accounts which are mentioned
@@ -708,7 +700,6 @@ public class Status implements Parcelable{
 
             }
         }
-        Log.v(Helper.TAG,"tag: " + spannableString);
         matcher = Helper.hashtagPattern.matcher(spannableString);
         while (matcher.find()){
             int matchStart = matcher.start(1);
@@ -734,7 +725,6 @@ public class Status implements Parcelable{
                 spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, theme==Helper.THEME_DARK?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        Log.v(Helper.TAG,"spannableString: " + spannableString);
         return spannableString;
     }
 
