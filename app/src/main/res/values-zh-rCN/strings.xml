@@ -279,7 +279,7 @@
   <string name="set_folder_title">路径：</string>
   <string name="set_auto_store_toot">自动保存草稿</string>
   <string name="set_bubble_counter">显示计数器</string>
-  <string name="set_auto_add_media_url">在 toots 里添加媒体的 URL</string>
+  <string name="set_auto_add_media_url">在嘟文中添加媒体的 URL</string>
   <string name="settings_title_notifications">管理通知</string>
   <string name="set_notif_follow">当有人关注您时通知</string>
   <string name="set_notif_follow_ask">当有人请求关注您时通知您</string>
