@@ -35,6 +35,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
+import android.util.Patterns;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -637,7 +638,7 @@ public class Status implements Parcelable{
             matcher = Patterns.WEB_URL.matcher(spannableString);
         else
             matcher = Helper.urlPattern.matcher(spannableString);*/
-        matcher = Helper.urlPattern.matcher(spannableString);
+        matcher = Patterns.WEB_URL.matcher(spannableString);
         while (matcher.find()){
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
@@ -663,7 +664,6 @@ public class Status implements Parcelable{
                 spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, theme==Helper.THEME_DARK?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-
         //Deals with mention to make them clickable
         if( mentions != null && mentions.size() > 0 ) {
             //Looping through accounts which are mentioned
