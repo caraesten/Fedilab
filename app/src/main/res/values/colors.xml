@@ -34,7 +34,7 @@
     <color name="buttonb">#B3E5FC</color>
     <color name="titleb">#D7CCC8</color>
     <color name="black">#000</color>
-
+    <color name="black_2">#222</color>
     <!-- Mastodon color scheme -->
     <color name="mastodonC1__">#585c67</color>
     <color name="mastodonC1___">#454b5b</color>
@@ -49,6 +49,8 @@
     <color name="mastodonC4_">#1b80c9</color>
 
 
+    <color name="black_button_disabled">#8089A4</color>
+    <color name="black_button_pressed">#404964</color>
     <!-- Primary & accent colors -->
     <color name="notif_dark_1">#313543</color>
     <color name="notif_dark_2">#353947</color>

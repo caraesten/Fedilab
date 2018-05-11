@@ -200,11 +200,20 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT){
-            setTheme(R.style.AppTheme);
-        }else {
-            setTheme(R.style.AppThemeDark);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                setTheme(R.style.AppTheme);
+                break;
+            case Helper.THEME_DARK:
+                setTheme(R.style.AppThemeDark);
+                break;
+            case Helper.THEME_BLACK:
+                setTheme(R.style.AppThemeBlack);
+                break;
+            default:
+                setTheme(R.style.AppThemeDark);
         }
+
         setContentView(R.layout.activity_toot);
 
         ActionBar actionBar = getSupportActionBar();

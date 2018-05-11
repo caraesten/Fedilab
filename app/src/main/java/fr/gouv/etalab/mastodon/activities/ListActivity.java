@@ -76,10 +76,18 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         super.onCreate(savedInstanceState);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT){
-            setTheme(R.style.AppTheme_NoActionBar);
-        }else {
-            setTheme(R.style.AppThemeDark_NoActionBar);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                setTheme(R.style.AppTheme_NoActionBar);
+                break;
+            case Helper.THEME_DARK:
+                setTheme(R.style.AppThemeDark_NoActionBar);
+                break;
+            case Helper.THEME_BLACK:
+                setTheme(R.style.AppThemeBlack_NoActionBar);
+                break;
+            default:
+                setTheme(R.style.AppThemeDark_NoActionBar);
         }
         setContentView(R.layout.activity_list);
         Toolbar toolbar = findViewById(R.id.toolbar);

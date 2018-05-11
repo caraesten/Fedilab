@@ -972,7 +972,7 @@ public class Helper {
 
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
+        if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK){
             changeDrawableColor(activity, R.drawable.ic_person_add,R.color.dark_text);
             changeDrawableColor(activity, R.drawable.ic_person,R.color.dark_text);
             changeDrawableColor(activity, R.drawable.ic_cancel,R.color.dark_text);
@@ -1865,7 +1865,11 @@ public class Helper {
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             if (theme == Helper.THEME_DARK) {
                 canvas.drawColor(ContextCompat.getColor(context, R.color.mastodonC1));
-            }else {
+
+            }else if( theme == Helper.THEME_BLACK){
+                canvas.drawColor(ContextCompat.getColor(context, R.color.black));
+            }
+            else {
                 canvas.drawColor(Color.WHITE);
             }
         }

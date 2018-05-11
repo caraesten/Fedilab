@@ -58,7 +58,6 @@
         <item name="color_in_account_header">@color/mastodonC3</item>
     </style>
 
-
     <style name="Theme.Transparent" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="colorPrimaryDark">@color/transparent</item>
@@ -171,7 +170,7 @@
 
     <style name="BlackButtonColor" parent="Base.Widget.AppCompat.Button">
         <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/button_selector</item>
+        <item name="android:background">@drawable/button_selector_black</item>
     </style>
 
     <style name="DialogBlack" parent="Theme.AppCompat.Dialog">
@@ -185,7 +184,6 @@
         <item name="android:windowBackground">@color/black</item>
     </style>
 
-
     <style name="BlackSpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
         <item name="android:popupBackground">@color/black</item>
         <item name="android:windowBackground">@color/black</item>
@@ -195,9 +193,6 @@
         <item name="android:padding">10dp</item>
     </style>
 
-
-
-
     <style name="AlertDialogBlack" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:windowBackground">@color/black</item>
     </style>
@@ -206,19 +201,13 @@
         <item name="android:windowBackground">@color/black</item>
     </style>
 
-
-
     <style name="Image.Border.Black" parent="AppThemeDark">
         <item name="android:background">@drawable/imageview_border_black</item>
     </style>
 
-
-
     <style name="Header.Black" parent="AppThemeDark">
         <item name="android:background">@drawable/side_nav_bar_black</item>
     </style>
-
-
 
     <style name="Shape.Black" parent="AppThemeDark">
         <item name="android:background">@drawable/shape_border_bottom_settings_black</item>
@@ -297,7 +286,6 @@
         <item name="android:windowBackground">@color/mastodonC1</item>
     </style>
 
-
     <style name="DarkSpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
         <item name="android:popupBackground">@color/mastodonC1</item>
         <item name="android:windowBackground">@color/mastodonC1</item>
@@ -306,9 +294,6 @@
     <style name="DarkSpinnerItemStyle" parent="Base.Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:padding">10dp</item>
     </style>
-
-
-
 
     <style name="AlertDialogDark" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:windowBackground">@color/mastodonC1</item>
@@ -320,7 +305,6 @@
         <item name="android:windowBackground">@color/mastodonC1</item>
     </style>
 
-
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
@@ -329,17 +313,11 @@
         <item name="android:background">@drawable/imageview_border_dark</item>
     </style>
 
-
-
     <style name="Header.Dark" parent="AppThemeDark">
         <item name="android:background">@drawable/side_nav_bar_dark</item>
     </style>
 
-
-
     <style name="Shape.Dark" parent="AppThemeDark">
         <item name="android:background">@drawable/shape_border_bottom_settings_dark</item>
     </style>
-
-
 </resources>
