@@ -334,6 +334,11 @@
     <item>Yandex</item>
     <item>Nein</item>
   </string-array>
+  <string-array name="settings_theme">
+    <item>Dark</item>
+    <item>Light</item>
+    <item>Black</item>
+  </string-array>
   <string-array name="settings_resize_picture">
     <item>Nein</item>
     <item>512 Kb</item>
@@ -469,4 +474,5 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="poxy_port">Port</string>
   <string name="poxy_login">Login</string>
   <string name="poxy_password">Passwort</string>
+  <string name="set_theme">Theme:</string>
 </resources>
