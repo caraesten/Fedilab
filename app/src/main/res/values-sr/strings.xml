@@ -333,6 +333,11 @@
     <item>Yandex</item>
     <item>Не</item>
   </string-array>
+  <string-array name="settings_theme">
+    <item>Dark</item>
+    <item>Light</item>
+    <item>Black</item>
+  </string-array>
   <string-array name="settings_resize_picture">
     <item>Не</item>
     <item>512 Ko</item>
@@ -483,4 +488,5 @@
   <string name="poxy_port">Порт</string>
   <string name="poxy_login">Пријава</string>
   <string name="poxy_password">Лозинка</string>
+  <string name="set_theme">Theme:</string>
 </resources>
