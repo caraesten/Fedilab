@@ -25,6 +25,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -117,6 +118,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_TARGETED_ACCOUNT;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
@@ -200,6 +202,8 @@ public abstract class BaseMainActivity extends BaseActivity
         //Here, the user is authenticated
         appBar = findViewById(R.id.appBar);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        if( theme == THEME_BLACK)
+            toolbar.setBackgroundColor(ContextCompat.getColor(BaseMainActivity.this, R.color.black));
         setSupportActionBar(toolbar);
         toolbarTitle  = toolbar.findViewById(R.id.toolbar_title);
         toolbar_search = toolbar.findViewById(R.id.toolbar_search);
@@ -218,7 +222,10 @@ public abstract class BaseMainActivity extends BaseActivity
         iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconHome.setImageResource(R.drawable.ic_home);
 
-        iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+        if( theme == THEME_BLACK)
+            iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+        else
+            iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
 
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
@@ -395,7 +402,11 @@ public abstract class BaseMainActivity extends BaseActivity
                 if( tab.getCustomView() != null) {
                     ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
                     if( icon != null)
-                        icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+                        if( theme == THEME_BLACK)
+                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                        else
+                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+
                 }
             }
 
@@ -577,8 +588,10 @@ public abstract class BaseMainActivity extends BaseActivity
         });
 
         //Hide the default title
-        if( getSupportActionBar() != null)
+        if( getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().getThemedContext().setTheme(R.style.AppThemeBlack);
+        }
         //Defines the current locale of the device in a static variable
         currentLocale = Helper.currentLocale(getApplicationContext());
 

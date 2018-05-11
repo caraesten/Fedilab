@@ -77,6 +77,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
@@ -131,7 +132,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
 
-        if (theme == THEME_DARK){
+        if (theme == THEME_DARK || theme == THEME_BLACK){
             holder.main_container_trans.setAlpha(.3f);
         }else {
             holder.main_container_trans.setAlpha(.1f);
@@ -146,6 +147,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_mention));
                 if( theme == Helper.THEME_DARK){
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
+                }else if( theme == Helper.THEME_BLACK){
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_1));
                 }else {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
                 }
@@ -161,6 +164,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_reblog));
                 if( theme == Helper.THEME_DARK){
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_2));
+                }else if( theme == Helper.THEME_BLACK){
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_2));
                 }else {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_2));
                 }
@@ -176,6 +181,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_favourite));
                 if( theme == Helper.THEME_DARK){
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_3));
+                }else if( theme == Helper.THEME_BLACK){
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_3));
                 }else {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_3));
                 }
@@ -191,6 +198,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     typeString = String.format("@%s %s", notification.getAccount().getUsername(),context.getString(R.string.notif_follow));
                 if( theme == Helper.THEME_DARK){
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_4));
+                }else if( theme == Helper.THEME_BLACK){
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_4));
                 }else {
                     holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_4));
                 }
@@ -198,10 +207,20 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.main_container_trans.setVisibility(View.GONE);
                 break;
         }
-        changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.mastodonC4);
-        changeDrawableColor(context, R.drawable.ic_repeat_head,R.color.mastodonC4);
-        changeDrawableColor(context, R.drawable.ic_star_border_header,R.color.mastodonC4);
-        changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
+
+        if( theme == THEME_BLACK){
+            changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_repeat_head,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_star_border_header,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.dark_icon);
+        }else {
+            changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.mastodonC4);
+            changeDrawableColor(context, R.drawable.ic_repeat_head,R.color.mastodonC4);
+            changeDrawableColor(context, R.drawable.ic_star_border_header,R.color.mastodonC4);
+            changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
+        }
+
+
         holder.notification_type.setText(typeString);
         if( imgH != null) {
             holder.notification_type.setCompoundDrawablePadding((int)Helper.convertDpToPixel(5, context));
@@ -221,7 +240,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
 
         //Manages theme for icon colors
-        if( theme == Helper.THEME_DARK){
+        if( theme == Helper.THEME_DARK || theme == THEME_BLACK){
             changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
             changeDrawableColor(context, holder.status_more, R.color.dark_icon);
             changeDrawableColor(context, holder.status_privacy, R.color.dark_icon);
@@ -300,7 +319,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
                 imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
             }else {
-                if( theme == THEME_DARK)
+                if( theme == THEME_DARK || theme == THEME_BLACK)
                     changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
                 else
                     changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
@@ -311,13 +330,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
                 imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
             }else {
-                if( theme == THEME_DARK)
+                if( theme == THEME_DARK || theme == THEME_BLACK)
                     changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
                 else
                     changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
                 imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
             }
-            if( theme == THEME_DARK)
+            if( theme == THEME_DARK || theme == THEME_BLACK)
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
             else
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
@@ -371,7 +390,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
             holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
 
-            if( theme == THEME_DARK){
+            if( theme == THEME_DARK || theme == THEME_BLACK){
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));

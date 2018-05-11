@@ -69,6 +69,17 @@
         <item name="colorAccent">@color/mastodonC4</item>
     </style>
 
+    <style name="TransparentBlack" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="colorPrimary">@color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="colorAccent">@color/dark_icon</item>
+    </style>
+
     <style name="DropDownListViewStyle" parent="Base.Widget.AppCompat.ListView.DropDown">
         <item name="android:background">@color/mastodonC3__</item>
     </style>
@@ -159,6 +170,11 @@
         <item name="android:dropDownListViewStyle">@style/BlackdropDownListViewStyle</item>
         <item name="actionBarTextColor">@color/mastodonC3</item>
         <item name="color_in_account_header">@color/mastodonC3</item>
+        <item name="android:actionBarStyle">@style/BlackActionBarTheme</item>
+    </style>
+
+    <style name="BlackActionBarTheme" parent="Base.Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black</item>
     </style>
 
     <style name="BlackdropDownListViewStyle" parent="Base.Widget.AppCompat.ListView.DropDown">

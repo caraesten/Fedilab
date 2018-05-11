@@ -64,6 +64,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 
 
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -105,12 +106,11 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-
+        if( theme == THEME_BLACK)
+            setTheme(R.style.TransparentBlack);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media);
         SwipeBackLayout mSwipeBackLayout = new SwipeBackLayout(MediaActivity.this);
         mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_BOTTOM);
@@ -140,7 +140,9 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         RelativeLayout main_container_media = findViewById(R.id.main_container_media);
         if( theme == Helper.THEME_LIGHT){
             main_container_media.setBackgroundResource(R.color.mastodonC2);
-        }else {
+        }else if( theme == Helper.THEME_BLACK){
+            main_container_media.setBackgroundResource(R.color.black);
+        }else if( theme == Helper.THEME_DARK){
             main_container_media.setBackgroundResource(R.color.mastodonC1_);
         }
         message_ready = findViewById(R.id.message_ready);
@@ -187,8 +189,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         videoView = findViewById(R.id.media_video);
         prev = findViewById(R.id.media_prev);
         next = findViewById(R.id.media_next);
-        changeDrawableColor(getApplicationContext(), prev,R.color.mastodonC4);
-        changeDrawableColor(getApplicationContext(), next,R.color.mastodonC4);
+        if( theme == THEME_BLACK){
+            changeDrawableColor(getApplicationContext(), prev, R.color.dark_icon);
+            changeDrawableColor(getApplicationContext(), next, R.color.dark_icon);
+        }else {
+            changeDrawableColor(getApplicationContext(), prev, R.color.mastodonC4);
+            changeDrawableColor(getApplicationContext(), next, R.color.mastodonC4);
+        }
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

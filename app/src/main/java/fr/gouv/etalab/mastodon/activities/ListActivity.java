@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,6 +50,8 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 
 
 /**
@@ -91,8 +94,9 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         }
         setContentView(R.layout.activity_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        if( theme == THEME_BLACK)
+            toolbar.setBackgroundColor(ContextCompat.getColor(ListActivity.this, R.color.black));
         setSupportActionBar(toolbar);
-
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         statuses = new ArrayList<>();

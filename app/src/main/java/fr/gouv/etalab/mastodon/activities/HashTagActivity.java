@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,6 +41,7 @@ import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 
 
 /**
@@ -84,6 +86,8 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
 
         setContentView(R.layout.activity_hashtag);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        if( theme == THEME_BLACK)
+            toolbar.setBackgroundColor(ContextCompat.getColor(HashTagActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
         if( getSupportActionBar() != null)

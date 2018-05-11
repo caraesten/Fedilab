@@ -29,6 +29,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -72,6 +73,8 @@ import fr.gouv.etalab.mastodon.services.BackupStatusInDataBaseService;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 
 
 /**
@@ -126,6 +129,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                         new IntentFilter(Helper.INTENT_BACKUP_FINISH));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        if( theme == THEME_BLACK)
+            toolbar.setBackgroundColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
