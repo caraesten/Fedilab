@@ -248,8 +248,10 @@ public class Helper {
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
+
     public static final int THEME_LIGHT = 1;
     public static final int THEME_DARK = 2;
+    public static final int THEME_BLACK = 3;
 
     public static final int LED_COLOUR = 0;
 

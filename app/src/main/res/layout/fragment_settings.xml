@@ -302,6 +302,8 @@
                     />
             </LinearLayout>
         </LinearLayout>
+
+        <!-- THEME -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -311,15 +313,11 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/set_night_mode"/>
-            <android.support.v7.widget.SwitchCompat
+                android:text="@string/set_theme"/>
+            <Spinner
                 android:id="@+id/set_night_mode"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:layout_margin="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <!-- TOOTS visibility -->
