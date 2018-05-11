@@ -330,6 +330,11 @@
     <item>Yandex</item>
     <item>Ez</item>
   </string-array>
+  <string-array name="settings_theme">
+    <item>Dark</item>
+    <item>Light</item>
+    <item>Black</item>
+  </string-array>
   <string-array name="settings_resize_picture">
     <item>Ez</item>
     <item>512 KB</item>
@@ -479,4 +484,5 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="poxy_port">Ataka</string>
   <string name="poxy_login">Saioa</string>
   <string name="poxy_password">Pasahitza</string>
+  <string name="set_theme">Theme:</string>
 </resources>
