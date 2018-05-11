@@ -330,6 +330,11 @@
     <item>Yandex</item>
     <item>Non</item>
   </string-array>
+  <string-array name="settings_theme">
+    <item>Dark</item>
+    <item>Light</item>
+    <item>Black</item>
+  </string-array>
   <string-array name="settings_resize_picture">
     <item>Non</item>
     <item>512 Ko</item>
@@ -478,4 +483,5 @@
   <string name="poxy_port">Port</string>
   <string name="poxy_login">Identifiant</string>
   <string name="poxy_password">Mot de passe</string>
+  <string name="set_theme">Theme:</string>
 </resources>
