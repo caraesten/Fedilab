@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -180,9 +181,28 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                R.color.mastodonC2,
-                R.color.mastodonC3);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
+                        R.color.mastodonC2,
+                        R.color.mastodonC3);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.white));
+                break;
+            case Helper.THEME_DARK:
+                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
+                        R.color.mastodonC4,
+                        R.color.mastodonC4);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.mastodonC1_));
+                break;
+            case Helper.THEME_BLACK:
+                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
+                        R.color.mastodonC2,
+                        R.color.mastodonC3);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_2));
+                break;
+        }
         if( context != null) {
             if (type == RetrieveFeedsAsyncTask.Type.USER)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

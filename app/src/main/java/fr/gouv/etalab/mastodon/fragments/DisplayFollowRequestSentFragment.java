@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -122,10 +123,27 @@ public class DisplayFollowRequestSentFragment extends Fragment implements OnRetr
                 asyncTask = new RetrieveFollowRequestSentAsyncTask(context, max_id, DisplayFollowRequestSentFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                R.color.mastodonC2,
-                R.color.mastodonC3);
-
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
+                        R.color.mastodonC2,
+                        R.color.mastodonC3);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.white));
+                break;
+            case Helper.THEME_DARK:
+                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
+                        R.color.mastodonC4,
+                        R.color.mastodonC4);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.mastodonC1_));
+                break;
+            case Helper.THEME_BLACK:
+                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
+                        R.color.mastodonC2,
+                        R.color.mastodonC3);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_2));
+                break;
+        }
 
         asyncTask = new RetrieveFollowRequestSentAsyncTask(context, max_id, DisplayFollowRequestSentFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         return rootView;

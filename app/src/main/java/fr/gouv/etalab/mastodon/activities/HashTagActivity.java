@@ -130,9 +130,6 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
                 new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.TAG, tag,null, max_id, HashTagActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                R.color.mastodonC2,
-                R.color.mastodonC3);
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
         lv_status.setLayoutManager(mLayoutManager);

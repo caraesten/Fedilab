@@ -215,9 +215,26 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false,false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                R.color.mastodonC2,
-                R.color.mastodonC3);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
+                        R.color.mastodonC2,
+                        R.color.mastodonC3);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.white));
+                break;
+            case Helper.THEME_DARK:
+                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
+                        R.color.mastodonC4,
+                        R.color.mastodonC4);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.mastodonC1_));
+                break;
+            case Helper.THEME_BLACK:
+                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
+                        R.color.mastodonC2,
+                        R.color.mastodonC3);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.black_2));
+                break;
+        }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
