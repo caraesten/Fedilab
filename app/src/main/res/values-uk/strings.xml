@@ -336,6 +336,11 @@
     <item>Яндекс</item>
     <item>Ні</item>
   </string-array>
+  <string-array name="settings_theme">
+    <item>Dark</item>
+    <item>Light</item>
+    <item>Black</item>
+  </string-array>
   <string-array name="settings_resize_picture">
     <item>Ні</item>
     <item>512 Кб</item>
@@ -476,4 +481,5 @@
   <string name="poxy_port">Порт</string>
   <string name="poxy_login">Логін</string>
   <string name="poxy_password">Пароль</string>
+  <string name="set_theme">Theme:</string>
 </resources>
