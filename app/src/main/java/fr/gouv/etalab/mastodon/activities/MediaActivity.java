@@ -94,6 +94,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private ProgressBar pbar_inf;
     private TextView message_ready;
     private boolean canSwipe;
+    private TextView media_description;
 
     private enum actionSwipe{
         RIGHT_TO_LEFT,
@@ -145,6 +146,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         }else if( theme == Helper.THEME_DARK){
             main_container_media.setBackgroundResource(R.color.mastodonC1_);
         }
+        media_description = findViewById(R.id.media_description);
         message_ready = findViewById(R.id.message_ready);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -309,6 +311,14 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             videoView.stopPlayback();
         }
         imageView.setVisibility(View.GONE);
+
+        if( attachment.getDescription() != null && !attachment.getDescription().equals("null")){
+            media_description.setText(attachment.getDescription());
+            media_description.setVisibility(View.VISIBLE);
+        }else{
+            media_description.setText("");
+            media_description.setVisibility(View.GONE);
+        }
         preview_url = attachment.getPreview_url();
         if( type.equals("unknown")){
             preview_url = attachment.getRemote_url();

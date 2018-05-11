@@ -1628,6 +1628,9 @@ public class API {
                     attachment.setType(attObj.get("type").toString());
                     attachment.setText_url(attObj.get("text_url").toString());
                     attachment.setUrl(attObj.get("url").toString());
+                    try {
+                        attachment.setDescription(attObj.get("description").toString());
+                    }catch (JSONException ignore){}
                     attachments.add(attachment);
                 }
             }
