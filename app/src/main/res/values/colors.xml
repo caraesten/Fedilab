@@ -34,7 +34,7 @@
     <color name="buttonb">#B3E5FC</color>
     <color name="titleb">#D7CCC8</color>
     <color name="black">#000</color>
-    <color name="black_2">#222</color>
+    <color name="black_2">#050505</color>
     <!-- Mastodon color scheme -->
     <color name="mastodonC1__">#585c67</color>
     <color name="mastodonC1___">#454b5b</color>
@@ -67,8 +67,5 @@
     <color name="notif_light_2">#ebf3fa</color>
     <color name="notif_light_3">#d9e1e8</color>
     <color name="notif_light_4">#c9d1d8</color>
-
-    <color name="foreground_material_dark" >@color/mastodonC3__</color>
-    <color name="foreground_material_light">@color/mastodonC1</color>
 
 </resources>

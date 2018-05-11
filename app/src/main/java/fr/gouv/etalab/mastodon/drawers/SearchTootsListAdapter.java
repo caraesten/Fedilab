@@ -97,8 +97,11 @@ public class SearchTootsListAdapter extends BaseAdapter  {
         if( theme == Helper.THEME_LIGHT){
             holder.search_container.setBackgroundResource(R.color.mastodonC3__);
             changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.black);
-        }else {
+        }else if(theme == Helper.THEME_DARK){
             holder.search_container.setBackgroundResource(R.color.mastodonC1_);
+            changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
+        }else if(theme == Helper.THEME_BLACK) {
+            holder.search_container.setBackgroundResource(R.color.black_2);
             changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
         }
         Drawable next = ContextCompat.getDrawable(context, R.drawable.ic_keyboard_arrow_right);

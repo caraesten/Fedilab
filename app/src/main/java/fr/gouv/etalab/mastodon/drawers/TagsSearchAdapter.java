@@ -66,7 +66,7 @@ public class TagsSearchAdapter extends ArrayAdapter<String> implements Filterabl
 
     @NonNull
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
 
         final String tag = tags.get(position);
         final ViewHolder holder;
