@@ -131,7 +131,7 @@
                             tools:ignore="UselessParent">
                             <TextView
                                 android:id="@+id/account_dn"
-                                android:textColor="@color/mastodonC4"
+                                android:textColor="?colorAccent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"

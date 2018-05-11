@@ -583,8 +583,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                if( type != RetrieveFeedsAsyncTask.Type.CONTEXT)
-                    holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
