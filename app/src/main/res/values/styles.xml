@@ -115,6 +115,118 @@
     </style>
 
 
+    <!-- BLACK theme -->
+    <style name="AppThemeBlack" parent="Theme.AppCompat">
+        <item name="android:textColor">@color/dark_text</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/dark_icon</item>
+        <item name="android:buttonStyle">@style/BlackButtonColor</item>
+        <item name="headerbg">@style/Header.Black</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="shapeBorder">@style/Shape.Black</item>
+        <item name="imgbd">@style/Image.Border.Black</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="popupOverlay">@style/AppThemeBlack.PopupOverlay</item>
+        <item name="android:spinnerStyle">@style/BlackSpinnerStyle</item>
+        <item name="android:spinnerItemStyle">@style/BlackSpinnerItemStyle</item>
+        <item name="android:popupMenuStyle">@style/BlackPopupMenu</item>
+        <item name="android:itemBackground">@drawable/menu_selector_black</item>
+        <item name="android:actionModeStyle">@style/BlackActionMode</item>
+        <item name="android:dropDownListViewStyle">@style/BlackdropDownListViewStyle</item>
+        <item name="actionBarTextColor">@color/mastodonC3</item>
+        <item name="color_in_account_header">@color/mastodonC3</item>
+    </style>
+
+    <style name="AppThemeBlack_NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColor">@color/dark_text</item>
+        <item name="android:scrollbarThumbVertical">@color/transparent</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/dark_icon</item>
+        <item name="android:buttonStyle">@style/BlackButtonColor</item>
+        <item name="headerbg">@style/Header.Black</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="shapeBorder">@style/Shape.Black</item>
+        <item name="imgbd">@style/Image.Border.Black</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="popupOverlay">@style/AppThemeBlack.PopupOverlay</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:spinnerStyle">@style/BlackSpinnerStyle</item>
+        <item name="android:spinnerItemStyle">@style/BlackSpinnerItemStyle</item>
+        <item name="android:popupMenuStyle">@style/BlackPopupMenu</item>
+        <item name="android:itemBackground">@drawable/menu_selector_black</item>
+        <item name="android:actionModeStyle">@style/BlackActionMode</item>
+        <item name="android:dropDownListViewStyle">@style/BlackdropDownListViewStyle</item>
+        <item name="actionBarTextColor">@color/mastodonC3</item>
+        <item name="color_in_account_header">@color/mastodonC3</item>
+    </style>
+
+    <style name="BlackdropDownListViewStyle" parent="Base.Widget.AppCompat.ListView.DropDown">
+        <item name="android:background">@color/black</item>
+    </style>
+    <style name="BlackActionMode" parent="Base.Widget.AppCompat.ActionMode">
+        <item name="android:background">@drawable/menu_selector_black</item>
+    </style>
+
+    <style name="BlackButtonColor" parent="Base.Widget.AppCompat.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/button_selector</item>
+    </style>
+
+    <style name="DialogBlack" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="colorAccent">@color/dark_icon</item>
+        <item name="android:headerBackground">@color/black</item>
+        <item name="colorControlNormal">@color/mastodonC2</item>
+    </style>
+
+    <style name="BlackPopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+
+
+    <style name="BlackSpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@color/black</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:colorBackground">@color/black</item>
+    </style>
+    <style name="BlackSpinnerItemStyle" parent="Base.Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:padding">10dp</item>
+    </style>
+
+
+
+
+    <style name="AlertDialogBlack" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+
+    <style name="AppThemeBlack.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+
+
+
+    <style name="Image.Border.Black" parent="AppThemeDark">
+        <item name="android:background">@drawable/imageview_border_black</item>
+    </style>
+
+
+
+    <style name="Header.Black" parent="AppThemeDark">
+        <item name="android:background">@drawable/side_nav_bar_black</item>
+    </style>
+
+
+
+    <style name="Shape.Black" parent="AppThemeDark">
+        <item name="android:background">@drawable/shape_border_bottom_settings_black</item>
+    </style>
+
+
+
+
     <!-- Dark theme -->
     <style name="AppThemeDark" parent="Theme.AppCompat">
         <item name="android:textColor">@color/dark_text</item>
@@ -228,8 +340,6 @@
     <style name="Shape.Dark" parent="AppThemeDark">
         <item name="android:background">@drawable/shape_border_bottom_settings_dark</item>
     </style>
-
-
 
 
 </resources>
