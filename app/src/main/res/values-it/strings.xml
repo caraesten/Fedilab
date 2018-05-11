@@ -330,6 +330,11 @@
     <item>Yandex</item>
     <item>No</item>
   </string-array>
+  <string-array name="settings_theme">
+    <item>Dark</item>
+    <item>Light</item>
+    <item>Black</item>
+  </string-array>
   <string-array name="settings_resize_picture">
     <item>No</item>
     <item>512 Kb</item>
@@ -480,4 +485,5 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <string name="poxy_port">Porta</string>
   <string name="poxy_login">Login</string>
   <string name="poxy_password">Password</string>
+  <string name="set_theme">Theme:</string>
 </resources>
