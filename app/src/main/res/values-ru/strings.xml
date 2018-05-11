@@ -336,6 +336,11 @@
     <item>Яндекс</item>
     <item>Нет</item>
   </string-array>
+  <string-array name="settings_theme">
+    <item>Dark</item>
+    <item>Light</item>
+    <item>Black</item>
+  </string-array>
   <string-array name="settings_resize_picture">
     <item>Нет</item>
     <item>512 Кб</item>
@@ -428,7 +433,7 @@
         Приложение <b>не использует инструменты для отслеживания</b> (замеры аудитории, отчёты об ошибках, и т. д.) и не содержит какой-либо рекламы.\n\n
        Использование библиотек минимизированно: \n 
        - <b>Glide</b>: Для управления файлами\n 
-       - <b>Android-Job</b>: Для управления сервисами\n
+       -</b><b>Android-Job: Для управления сервисами\n 
        - <b>PhotoView</b>: Для управления изображениями\n
     </string>
   <string name="privacy_API_yandex_title">Перевод toots</string>
@@ -484,4 +489,5 @@
   <string name="poxy_port">Порт</string>
   <string name="poxy_login">Логин</string>
   <string name="poxy_password">Пароль</string>
+  <string name="set_theme">Theme:</string>
 </resources>
