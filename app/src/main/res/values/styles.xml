@@ -31,6 +31,9 @@
         <item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
         <item name="actionBarTextColor">@color/mastodonC3__</item>
         <item name="color_in_account_header">@color/mastodonC3</item>
+        <item name="colorBackgroundFloating">@color/mastodonC3__</item>
+        <item name="android:colorBackground">@color/mastodonC3__</item>
+        <item name="android:colorForeground">@color/mastodonC3__</item>
     </style>
 
     <style name="AppTheme_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
@@ -56,6 +59,9 @@
         <item name="actionBarTextColor">@color/mastodonC3__</item>
         <item name="colorButtonNormal">@color/mastodonC4</item>
         <item name="color_in_account_header">@color/mastodonC3</item>
+        <item name="colorBackgroundFloating">@color/mastodonC3__</item>
+        <item name="android:colorBackground">@color/mastodonC3__</item>
+        <item name="android:colorForeground">@color/mastodonC3__</item>
     </style>
 
     <style name="Theme.Transparent" parent="Theme.AppCompat.Light.NoActionBar">
@@ -146,6 +152,9 @@
         <item name="android:dropDownListViewStyle">@style/BlackdropDownListViewStyle</item>
         <item name="actionBarTextColor">@color/mastodonC3</item>
         <item name="color_in_account_header">@color/mastodonC3</item>
+        <item name="colorBackgroundFloating">@color/black</item>
+        <item name="android:colorBackground">@color/black</item>
+        <item name="android:colorForeground">@color/black</item>
     </style>
 
     <style name="AppThemeBlack_NoActionBar" parent="Theme.AppCompat.NoActionBar">
@@ -171,6 +180,9 @@
         <item name="actionBarTextColor">@color/mastodonC3</item>
         <item name="color_in_account_header">@color/mastodonC3</item>
         <item name="android:actionBarStyle">@style/BlackActionBarTheme</item>
+        <item name="colorBackgroundFloating">@color/black</item>
+        <item name="android:colorBackground">@color/black</item>
+        <item name="android:colorForeground">@color/black</item>
     </style>
 
     <style name="BlackActionBarTheme" parent="Base.Widget.AppCompat.ActionBar">
@@ -253,6 +265,9 @@
         <item name="android:dropDownListViewStyle">@style/DarkdropDownListViewStyle</item>
         <item name="actionBarTextColor">@color/mastodonC3</item>
         <item name="color_in_account_header">@color/mastodonC3</item>
+        <item name="colorBackgroundFloating">@color/mastodonC1</item>
+        <item name="android:colorBackground">@color/mastodonC1</item>
+        <item name="android:colorForeground">@color/mastodonC1</item>
     </style>
 
     <style name="AppThemeDark_NoActionBar" parent="Theme.AppCompat.NoActionBar">
@@ -277,6 +292,9 @@
         <item name="android:dropDownListViewStyle">@style/DarkdropDownListViewStyle</item>
         <item name="actionBarTextColor">@color/mastodonC3</item>
         <item name="color_in_account_header">@color/mastodonC3</item>
+        <item name="colorBackgroundFloating">@color/mastodonC1</item>
+        <item name="android:colorBackground">@color/mastodonC1</item>
+        <item name="android:colorForeground">@color/mastodonC1</item>
     </style>
 
     <style name="DarkdropDownListViewStyle" parent="Base.Widget.AppCompat.ListView.DropDown">

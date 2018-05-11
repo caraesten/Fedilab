@@ -17,9 +17,9 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,14 +30,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-
-import java.lang.reflect.Proxy;
-
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.helper.Helper;
-
-import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
-import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 
 
 /**
@@ -53,14 +47,29 @@ public class ProxyActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setTheme(R.style.AppThemeDark_NoActionBar);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                setTheme(R.style.AppTheme_NoActionBar);
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.mastodonC3__));
+                break;
+            case Helper.THEME_DARK:
+                setTheme(R.style.AppThemeDark_NoActionBar);
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.mastodonC1));
+                break;
+            case Helper.THEME_BLACK:
+                setTheme(R.style.AppThemeBlack_NoActionBar);
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.black));
+                break;
+            default:
+                setTheme(R.style.AppThemeDark_NoActionBar);
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ProxyActivity.this, R.color.mastodonC1));
+        }
         setContentView(R.layout.activity_proxy);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        Bundle b = getIntent().getExtras();
         if( getSupportActionBar() != null)
             getSupportActionBar().hide();
-
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         //Enable proxy
         boolean enable_proxy = sharedpreferences.getBoolean(Helper.SET_PROXY_ENABLED, false);
@@ -100,9 +109,6 @@ public class ProxyActivity extends BaseActivity {
         proxy_type.setAdapter(adapterTrans);
 
 
-
-
-
         proxy_type.setSelection(sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0));
         proxy_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -120,9 +126,6 @@ public class ProxyActivity extends BaseActivity {
 
             }
         });
-
-
-
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
