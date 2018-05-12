@@ -690,7 +690,7 @@ public class SettingsFragment extends Fragment {
         ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(getContext(),
                 R.array.settings_resize_picture, android.R.layout.simple_spinner_item);
         resize_layout_spinner.setAdapter(adapterResize);
-        int positionSpinnerResize = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
+        int positionSpinnerResize = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_2MO);
         resize_layout_spinner.setSelection(positionSpinnerResize);
         resize_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
