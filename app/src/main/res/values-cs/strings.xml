@@ -493,4 +493,5 @@
   <string name="poxy_password">Password</string>
   <string name="set_theme">Theme:</string>
   <string name="set_compact_mode">Compact mode</string>
+  <string name="set_share_details">Add toot details when sharing</string>
 </resources>
