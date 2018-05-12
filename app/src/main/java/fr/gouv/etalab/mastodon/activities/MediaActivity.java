@@ -95,6 +95,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private TextView message_ready;
     private boolean canSwipe;
     private TextView media_description;
+    private Attachment attachment;
 
     private enum actionSwipe{
         RIGHT_TO_LEFT,
@@ -182,6 +183,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 // DO DELAYED STUFF
                 media_close.setVisibility(View.GONE);
                 media_save.setVisibility(View.GONE);
+                media_description.setVisibility(View.GONE);
                 scheduleHidden = false;
             }
         }, 2000);
@@ -243,12 +245,20 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             scheduleHidden = true;
             media_close.setVisibility(View.VISIBLE);
             media_save.setVisibility(View.VISIBLE);
+            if( attachment != null && attachment.getDescription() != null && !attachment.getDescription().equals("null")){
+                media_description.setText(attachment.getDescription());
+                media_description.setVisibility(View.VISIBLE);
+            }else{
+                media_description.setText("");
+                media_description.setVisibility(View.GONE);
+            }
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     media_close.setVisibility(View.GONE);
                     media_save.setVisibility(View.GONE);
+                    media_description.setVisibility(View.GONE);
                     scheduleHidden = false;
                 }
             }, 2000);
@@ -302,7 +312,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         if( mediaPosition < 1)
             mediaPosition = attachments.size();
         currentAction = action;
-        final Attachment attachment = attachments.get(mediaPosition-1);
+        attachment = attachments.get(mediaPosition-1);
         String type = attachment.getType();
         String url = attachment.getUrl();
         finalUrlDownload = url;
