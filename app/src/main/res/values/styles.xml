@@ -150,7 +150,7 @@
         <item name="android:dropDownListViewStyle">@style/BlackdropDownListViewStyle</item>
         <item name="actionBarTextColor">@color/mastodonC3</item>
         <item name="color_in_account_header">@color/mastodonC3</item>
-        <item name="colorBackgroundFloating">@color/black</item>
+        <item name="colorBackgroundFloating">@color/black_3</item>
         <item name="android:colorBackground">@color/black</item>
     </style>
 
@@ -177,16 +177,16 @@
         <item name="actionBarTextColor">@color/mastodonC3</item>
         <item name="color_in_account_header">@color/mastodonC3</item>
         <item name="android:actionBarStyle">@style/BlackActionBarTheme</item>
-        <item name="colorBackgroundFloating">@color/black</item>
+        <item name="colorBackgroundFloating">@color/black_3</item>
         <item name="android:colorBackground">@color/black</item>
     </style>
 
     <style name="BlackActionBarTheme" parent="Base.Widget.AppCompat.ActionBar">
-        <item name="android:background">@color/black</item>
+        <item name="android:background">@color/black_3</item>
     </style>
 
     <style name="BlackdropDownListViewStyle" parent="Base.Widget.AppCompat.ListView.DropDown">
-        <item name="android:background">@color/black</item>
+        <item name="android:background">@color/black_3</item>
     </style>
     <style name="BlackActionMode" parent="Base.Widget.AppCompat.ActionMode">
         <item name="android:background">@drawable/menu_selector_black</item>
@@ -198,31 +198,31 @@
     </style>
 
     <style name="DialogBlack" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowBackground">@color/black_3</item>
         <item name="colorAccent">@color/dark_icon</item>
-        <item name="android:headerBackground">@color/black</item>
+        <item name="android:headerBackground">@color/black_3</item>
         <item name="colorControlNormal">@color/mastodonC2</item>
     </style>
 
     <style name="BlackPopupMenu" parent="@android:style/Widget.PopupMenu">
-        <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowBackground">@color/black_3</item>
     </style>
 
     <style name="BlackSpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
-        <item name="android:popupBackground">@color/black</item>
-        <item name="android:windowBackground">@color/black</item>
-        <item name="android:colorBackground">@color/black</item>
+        <item name="android:popupBackground">@color/black_3</item>
+        <item name="android:windowBackground">@color/black_3</item>
+        <item name="android:colorBackground">@color/black_3</item>
     </style>
     <style name="BlackSpinnerItemStyle" parent="Base.Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:padding">10dp</item>
     </style>
 
     <style name="AlertDialogBlack" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowBackground">@color/black_3</item>
     </style>
 
     <style name="AppThemeBlack.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
-        <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowBackground">@color/black_3</item>
     </style>
 
     <style name="Image.Border.Black" parent="AppThemeDark">

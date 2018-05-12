@@ -188,7 +188,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
                 swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
                         R.color.mastodonC2,
                         R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ListActivity.this, R.color.black_2));
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ListActivity.this, R.color.black_3));
                 break;
         }
 

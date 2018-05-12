@@ -35,6 +35,7 @@
     <color name="titleb">#D7CCC8</color>
     <color name="black">#000</color>
     <color name="black_2">#050505</color>
+    <color name="black_3">#222</color>
     <!-- Mastodon color scheme -->
     <color name="mastodonC1__">#585c67</color>
     <color name="mastodonC1___">#454b5b</color>

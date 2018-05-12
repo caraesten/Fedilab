@@ -232,7 +232,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                 swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
                         R.color.mastodonC2,
                         R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.black_2));
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.black_3));
                 break;
         }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

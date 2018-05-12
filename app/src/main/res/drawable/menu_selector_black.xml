@@ -3,5 +3,5 @@
     <item android:drawable="@color/dark_icon" android:state_checked="true" />
     <item android:drawable="@color/dark_icon" android:state_pressed="true" />
     <item android:drawable="@color/dark_icon" android:state_focused="true" />
-    <item android:drawable="@color/black" />
+    <item android:drawable="@color/black_3" />
 </selector>

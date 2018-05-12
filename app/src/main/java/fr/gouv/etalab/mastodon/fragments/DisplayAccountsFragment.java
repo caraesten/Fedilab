@@ -153,7 +153,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                 swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
                         R.color.mastodonC2,
                         R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_2));
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_3));
                 break;
         }
 

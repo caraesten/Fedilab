@@ -80,7 +80,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
                 break;
             case Helper.THEME_BLACK:
                 setTheme(R.style.AppThemeBlack_NoActionBar);
-                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ManageAccountsInListActivity.this, R.color.black));
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ManageAccountsInListActivity.this, R.color.black_3));
                 break;
             default:
                 setTheme(R.style.AppThemeDark_NoActionBar);

@@ -153,7 +153,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
                         R.color.mastodonC2,
                         R.color.mastodonC3);
-                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_2));
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_3));
                 break;
         }
         if( context != null)
