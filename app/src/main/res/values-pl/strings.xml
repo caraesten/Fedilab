@@ -489,4 +489,5 @@ Podziękowania dla:    </string>
   <string name="poxy_login">Login</string>
   <string name="poxy_password">Hasło</string>
   <string name="set_theme">Theme:</string>
+  <string name="set_compact_mode">Compact mode</string>
 </resources>

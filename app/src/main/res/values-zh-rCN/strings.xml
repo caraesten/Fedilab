@@ -478,4 +478,5 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
   <string name="poxy_login">登录</string>
   <string name="poxy_password">密码</string>
   <string name="set_theme">Theme:</string>
+  <string name="set_compact_mode">Compact mode</string>
 </resources>
