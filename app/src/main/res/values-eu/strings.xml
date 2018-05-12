@@ -331,9 +331,9 @@
     <item>Ez</item>
   </string-array>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Iluna</item>
+    <item>Argia</item>
+    <item>Beltza</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>Ez</item>
@@ -484,6 +484,6 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="poxy_port">Ataka</string>
   <string name="poxy_login">Saioa</string>
   <string name="poxy_password">Pasahitza</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
+  <string name="set_theme">Itxura:</string>
+  <string name="set_compact_mode">Modu trinkoa</string>
 </resources>
