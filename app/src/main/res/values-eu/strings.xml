@@ -486,4 +486,5 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="poxy_password">Pasahitza</string>
   <string name="set_theme">Itxura:</string>
   <string name="set_compact_mode">Modu trinkoa</string>
+  <string name="set_share_details">Add toot details when sharing</string>
 </resources>
