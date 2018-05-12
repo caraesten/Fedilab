@@ -117,7 +117,9 @@ public class DisplaySearchFragment extends Fragment {
                             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                             if( theme == Helper.THEME_LIGHT){
                                 changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.black);
-                            }else {
+                            }else if(theme == Helper.THEME_DARK){
+                                changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
+                            }else if(theme == Helper.THEME_BLACK) {
                                 changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
                             }
                             searchTootsListAdapter.notifyDataSetChanged();

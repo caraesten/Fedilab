@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.ListActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveManyRelationshipsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -132,9 +134,28 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                     asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                R.color.mastodonC2,
-                R.color.mastodonC3);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
+                        R.color.mastodonC2,
+                        R.color.mastodonC3);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.white));
+                break;
+            case Helper.THEME_DARK:
+                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
+                        R.color.mastodonC4,
+                        R.color.mastodonC4);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.mastodonC1_));
+                break;
+            case Helper.THEME_BLACK:
+                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
+                        R.color.mastodonC2,
+                        R.color.mastodonC3);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_3));
+                break;
+        }
 
         if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
             asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

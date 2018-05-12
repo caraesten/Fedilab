@@ -70,7 +70,7 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
-    int count1, count2 = 0;
+    int count1, count2, count3 = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -225,6 +225,32 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        final CheckBox set_compact_mode = rootView.findViewById(R.id.set_compact_mode);
+        set_compact_mode.setChecked(compact_mode);
+
+        set_compact_mode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_COMPACT_MODE, set_compact_mode.isChecked());
+                editor.apply();
+            }
+        });
+
+
+        boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
+        final CheckBox set_share_details = rootView.findViewById(R.id.set_share_details);
+        set_share_details.setChecked(share_details);
+
+        set_share_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_SHARE_DETAILS, set_share_details.isChecked());
+                editor.apply();
+            }
+        });
 
         boolean multiaccount_actions = sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true);
         final CheckBox set_multiaccount_actions = rootView.findViewById(R.id.set_multiaccount_actions);
@@ -428,25 +454,56 @@ public class SettingsFragment extends Fragment {
             file_chooser.setVisibility(View.GONE);
         }
 
-        final SwitchCompat set_night_mode = rootView.findViewById(R.id.set_night_mode);
-        set_night_mode.setChecked(theme == Helper.THEME_DARK);
-        set_night_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final Spinner set_night_mode = rootView.findViewById(R.id.set_night_mode);
+        ArrayAdapter<CharSequence> adapterTheme = ArrayAdapter.createFromResource(getContext(),
+                R.array.settings_theme, android.R.layout.simple_spinner_item);
+        set_night_mode.setAdapter(adapterTheme);
+
+        int positionSpinnerTheme;
+        switch (sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK)){
+            case Helper.THEME_DARK:
+                positionSpinnerTheme = 0;
+                break;
+            case Helper.THEME_LIGHT:
+                positionSpinnerTheme = 1;
+                break;
+            case Helper.THEME_BLACK:
+                positionSpinnerTheme = 2;
+                break;
+            default:
+                positionSpinnerTheme = 0;
+        }
+        set_night_mode.setSelection(positionSpinnerTheme);
+        set_night_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putInt(Helper.SET_THEME, isChecked?Helper.THEME_DARK:Helper.THEME_LIGHT);
-                editor.apply();
-                if( isChecked){
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count3 > 0){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (position){
+                        case 0:
+                            editor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
+                            editor.apply();
+                            break;
+                        case 1:
+                            editor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+                            editor.apply();
+                            break;
+                        case 2:
+                            editor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
+                            editor.apply();
+                            break;
+                    }
                     if( getActivity() != null)
-                        getActivity().setTheme(R.style.AppThemeDark);
+                        getActivity().recreate();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                    startActivity(intent);
                 }else {
-                    if( getActivity() != null)
-                        getActivity().setTheme(R.style.AppTheme);
+                    count3++;
                 }
-                getActivity().recreate();
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
-                startActivity(intent);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -633,7 +690,7 @@ public class SettingsFragment extends Fragment {
         ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(getContext(),
                 R.array.settings_resize_picture, android.R.layout.simple_spinner_item);
         resize_layout_spinner.setAdapter(adapterResize);
-        int positionSpinnerResize = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
+        int positionSpinnerResize = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_2MO);
         resize_layout_spinner.setSelection(positionSpinnerResize);
         resize_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

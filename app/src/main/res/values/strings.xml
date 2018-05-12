@@ -352,6 +352,12 @@
         <item>No</item>
     </string-array>
 
+    <string-array name="settings_theme">
+        <item>Dark</item>
+        <item>Light</item>
+        <item>Black</item>
+    </string-array>
+
     <string-array name="settings_resize_picture">
         <item>No</item>
         <item>512 Kb</item>
@@ -526,6 +532,10 @@
     <string name="poxy_port">Port</string>
     <string name="poxy_login">Login</string>
     <string name="poxy_password">Password</string>
+    <string name="set_theme">Theme:</string>
+    <string name="set_compact_mode">Compact mode</string>
+    <string name="set_share_details">Add toot details when sharing</string>
+    <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string-array translatable="false" name="proxy_type_choice">
         <item>HTTP</item>
         <item>SOCKS</item>

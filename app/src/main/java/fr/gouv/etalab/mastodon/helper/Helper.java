@@ -242,14 +242,18 @@ public class Helper {
     public static final String SET_PICTURE_RESIZE = "set_picture_resize";
     public static final String SET_SHOW_BOOKMARK = "set_show_bookmark";
     public static final String SET_FULL_PREVIEW = "set_full_preview";
+    public static final String SET_COMPACT_MODE = "set_compact_mode";
+    public static final String SET_SHARE_DETAILS = "set_share_details";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
+
     public static final int THEME_LIGHT = 1;
     public static final int THEME_DARK = 2;
+    public static final int THEME_BLACK = 3;
 
     public static final int LED_COLOUR = 0;
 
@@ -970,7 +974,7 @@ public class Helper {
 
         final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
+        if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK){
             changeDrawableColor(activity, R.drawable.ic_person_add,R.color.dark_text);
             changeDrawableColor(activity, R.drawable.ic_person,R.color.dark_text);
             changeDrawableColor(activity, R.drawable.ic_cancel,R.color.dark_text);
@@ -1863,7 +1867,11 @@ public class Helper {
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             if (theme == Helper.THEME_DARK) {
                 canvas.drawColor(ContextCompat.getColor(context, R.color.mastodonC1));
-            }else {
+
+            }else if( theme == Helper.THEME_BLACK){
+                canvas.drawColor(ContextCompat.getColor(context, R.color.black));
+            }
+            else {
                 canvas.drawColor(Color.WHITE);
             }
         }
@@ -2035,7 +2043,7 @@ public class Helper {
             }
 
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_1MO);
+            int resizeSet = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_2MO);
             if( mediaType == MediaType.PROFILE)
                 resizeSet = Helper.S_1MO;
             double resizeby = size;

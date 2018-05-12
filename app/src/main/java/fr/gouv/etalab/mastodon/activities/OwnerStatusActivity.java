@@ -29,6 +29,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -73,6 +74,8 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
+
 
 /**
  * Created by Thomas on 17/02/2018.
@@ -104,10 +107,18 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
 
         sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT){
-            setTheme(R.style.AppTheme_NoActionBar);
-        }else {
-            setTheme(R.style.AppThemeDark_NoActionBar);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                setTheme(R.style.AppTheme_NoActionBar);
+                break;
+            case Helper.THEME_DARK:
+                setTheme(R.style.AppThemeDark_NoActionBar);
+                break;
+            case Helper.THEME_BLACK:
+                setTheme(R.style.AppThemeBlack_NoActionBar);
+                break;
+            default:
+                setTheme(R.style.AppThemeDark_NoActionBar);
         }
         setContentView(R.layout.activity_ower_status);
 
@@ -118,6 +129,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                         new IntentFilter(Helper.INTENT_BACKUP_FINISH));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        if( theme == THEME_BLACK)
+            toolbar.setBackgroundColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -192,9 +205,26 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                R.color.mastodonC2,
-                R.color.mastodonC3);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
+                        R.color.mastodonC2,
+                        R.color.mastodonC3);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.white));
+                break;
+            case Helper.THEME_DARK:
+                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
+                        R.color.mastodonC4,
+                        R.color.mastodonC4);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.mastodonC1_));
+                break;
+            case Helper.THEME_BLACK:
+                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
+                        R.color.mastodonC2,
+                        R.color.mastodonC3);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(OwnerStatusActivity.this, R.color.black_3));
+                break;
+        }
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

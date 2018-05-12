@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -66,7 +67,25 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setTheme(R.style.AppThemeDark_NoActionBar);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                setTheme(R.style.AppTheme_NoActionBar);
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ManageAccountsInListActivity.this, R.color.mastodonC3__));
+                break;
+            case Helper.THEME_DARK:
+                setTheme(R.style.AppThemeDark_NoActionBar);
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ManageAccountsInListActivity.this, R.color.mastodonC1));
+                break;
+            case Helper.THEME_BLACK:
+                setTheme(R.style.AppThemeBlack_NoActionBar);
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ManageAccountsInListActivity.this, R.color.black_3));
+                break;
+            default:
+                setTheme(R.style.AppThemeDark_NoActionBar);
+                getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(ManageAccountsInListActivity.this, R.color.mastodonC1));
+        }
         setContentView(R.layout.activity_manage_accounts_list);
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if( getSupportActionBar() != null)

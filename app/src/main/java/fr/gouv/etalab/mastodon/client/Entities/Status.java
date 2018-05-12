@@ -451,13 +451,21 @@ public class Status implements Parcelable{
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
 
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        int mode;
+        if( isCompactMode)
+            mode = Html.FROM_HTML_MODE_COMPACT;
+        else
+            mode = Html.FROM_HTML_MODE_LEGACY;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+            spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), mode));
         else
             //noinspection deprecation
             spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), Html.FROM_HTML_MODE_LEGACY));
+            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), mode));
         else
             //noinspection deprecation
             spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text()));
@@ -474,9 +482,16 @@ public class Status implements Parcelable{
             return;
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        int mode;
+        if( isCompactMode)
+            mode = Html.FROM_HTML_MODE_COMPACT;
+        else
+            mode = Html.FROM_HTML_MODE_LEGACY;
         SpannableString spannableStringTranslated;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY));
+            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), mode));
         else
             //noinspection deprecation
             spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated()));
@@ -558,10 +573,16 @@ public class Status implements Parcelable{
         if( ((Activity)context).isFinishing() )
             return;
         SpannableString spannableStringTranslated = null;
-
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        int mode;
+        if( isCompactMode)
+            mode = Html.FROM_HTML_MODE_COMPACT;
+        else
+            mode = Html.FROM_HTML_MODE_LEGACY;
         if( status.getContentTranslated() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY));
+                spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), mode));
             else
                 //noinspection deprecation
                 spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated()));
@@ -661,7 +682,7 @@ public class Status implements Parcelable{
                 matchStart, matchEnd,
                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
-                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, theme==Helper.THEME_DARK?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
+                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         //Deals with mention to make them clickable
@@ -693,7 +714,7 @@ public class Status implements Parcelable{
                                 startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                         if( startPosition >= 0 && endPosition <= spannableString.toString().length() && endPosition >= startPosition)
-                            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, theme==Helper.THEME_DARK?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
+                            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
                 }
@@ -722,7 +743,7 @@ public class Status implements Parcelable{
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
-                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, theme==Helper.THEME_DARK?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
+                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         return spannableString;

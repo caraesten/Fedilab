@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,6 +41,7 @@ import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 
 
 /**
@@ -68,14 +70,24 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_LIGHT){
-            setTheme(R.style.AppTheme_NoActionBar);
-        }else {
-            setTheme(R.style.AppThemeDark_NoActionBar);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                setTheme(R.style.AppTheme_NoActionBar);
+                break;
+            case Helper.THEME_DARK:
+                setTheme(R.style.AppThemeDark_NoActionBar);
+                break;
+            case Helper.THEME_BLACK:
+                setTheme(R.style.AppThemeBlack_NoActionBar);
+                break;
+            default:
+                setTheme(R.style.AppThemeDark_NoActionBar);
         }
 
         setContentView(R.layout.activity_hashtag);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        if( theme == THEME_BLACK)
+            toolbar.setBackgroundColor(ContextCompat.getColor(HashTagActivity.this, R.color.black));
         setSupportActionBar(toolbar);
 
         if( getSupportActionBar() != null)
@@ -118,9 +130,6 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
                 new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.TAG, tag,null, max_id, HashTagActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
-                R.color.mastodonC2,
-                R.color.mastodonC3);
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
         lv_status.setLayoutManager(mLayoutManager);

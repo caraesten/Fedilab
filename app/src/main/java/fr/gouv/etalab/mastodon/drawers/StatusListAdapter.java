@@ -105,6 +105,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
+import fr.gouv.etalab.mastodon.helper.CustomTextView;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveCardInterface;
@@ -117,6 +118,7 @@ import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
@@ -139,6 +141,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private String targetedId;
     private final int DISPLAYED_STATUS = 1;
     private final int FOCUSED_STATUS = 2;
+    private final int COMPACT_STATUS = 3;
     private int conversationPosition;
     private List<String> timedMute;
 
@@ -223,7 +226,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        if( holder.getItemViewType() == DISPLAYED_STATUS) {
+        if( holder.getItemViewType() == DISPLAYED_STATUS || holder.getItemViewType() == COMPACT_STATUS) {
             final ViewHolder viewHolder = (ViewHolder) holder;
             // Bug workaround for losing text selection ability, see:
             // https://code.google.com/p/android/issues/detail?id=208169
@@ -238,9 +241,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     class ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout status_content_container;
         LinearLayout status_spoiler_container;
-        TextView status_spoiler;
+        CustomTextView status_spoiler;
         Button status_spoiler_button;
-        TextView status_content;
+        CustomTextView status_content;
         TextView status_content_translated;
         LinearLayout status_content_translated_container;
         TextView status_account_username;
@@ -373,10 +376,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         Status status = statuses.get(position);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         int HIDDEN_STATUS = 0;
         String filter;
         if( type == RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS)
-            return DISPLAYED_STATUS;
+            return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
         else if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
             return FOCUSED_STATUS;
         else if( type == RetrieveFeedsAsyncTask.Type.HOME)
@@ -409,9 +413,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if (timedMute.contains(status.getAccount().getId()))
                         return HIDDEN_STATUS;
                     else
-                        return DISPLAYED_STATUS;
+                        return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
                 }else {
-                    return DISPLAYED_STATUS;
+                    return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
                 }
             }
         }else {
@@ -421,9 +425,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 else if( status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !((ShowAccountActivity)context).showReplies())
                     return HIDDEN_STATUS;
                 else
-                    return DISPLAYED_STATUS;
+                    return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
             }else
-            return DISPLAYED_STATUS;
+            return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
         }
     }
 
@@ -432,6 +436,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if( viewType == DISPLAYED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
+        else if(viewType == COMPACT_STATUS)
+            return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status_compact, parent, false));
         else if(viewType == FOCUSED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status_focused, parent, false));
         else
@@ -443,7 +449,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int position) {
 
-        if( viewHolder.getItemViewType() == DISPLAYED_STATUS || viewHolder.getItemViewType() == FOCUSED_STATUS){
+        if( viewHolder.getItemViewType() == DISPLAYED_STATUS || viewHolder.getItemViewType() == FOCUSED_STATUS || viewHolder.getItemViewType() == COMPACT_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
             final Status status = statuses.get(position);
 
@@ -462,7 +468,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
 
-            if( displayBookmarkButton)
+            if( getItemViewType(position) != COMPACT_STATUS  && displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
             else
                 holder.status_bookmark.setVisibility(View.GONE);
@@ -521,7 +527,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark));
             else
                 holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_border));
-            changeDrawableColor(context, R.drawable.ic_fiber_new,R.color.mastodonC4);
+
             if( status.isNew())
                 holder.new_element.setVisibility(View.VISIBLE);
             else
@@ -562,8 +568,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             //Manages theme for icon colors
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if( theme == Helper.THEME_BLACK)
+                changeDrawableColor(context, R.drawable.ic_fiber_new,R.color.dark_icon);
+            else
+                changeDrawableColor(context, R.drawable.ic_fiber_new,R.color.mastodonC4);
+
+            if( getItemViewType(position) == COMPACT_STATUS )
+                holder.status_privacy.setVisibility(View.GONE);
+            else
+                holder.status_privacy.setVisibility(View.VISIBLE);
+
             boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
-            if( theme == Helper.THEME_DARK){
+            if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
                 changeDrawableColor(context, holder.status_more, R.color.dark_icon);
                 changeDrawableColor(context, holder.status_privacy, R.color.dark_icon);
@@ -577,8 +593,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                if( type != RetrieveFeedsAsyncTask.Type.CONTEXT)
-                    holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
@@ -620,44 +635,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
-            //Manages translations
-            final MyTransL myTransL = MyTransL.getInstance(MyTransL.translatorEngine.YANDEX);
-            myTransL.setObfuscation(true);
-            myTransL.setYandexAPIKey(Helper.YANDEX_KEY);
+
             holder.status_translate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if( !status.isTranslated() ){
-                        String statusToTranslate;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            statusToTranslate = Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
-                        else
-                            //noinspection deprecation
-                            statusToTranslate = Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()).toString();
-                        //TODO: removes the replaceAll once fixed with the lib
-                        myTransL.translate(statusToTranslate, myTransL.getLocale(), new Results() {
-                            @Override
-                            public void onSuccess(Translate translate) {
-                                if( translate.getTranslatedContent() != null) {
-                                    status.setTranslated(true);
-                                    status.setTranslationShown(true);
-                                    status.setContentTranslated(translate.getTranslatedContent());
-                                    status.makeClickableTranslation(context);
-                                    status.makeEmojisTranslation(context, StatusListAdapter.this);
-                                    notifyStatusChanged(status);
-                                }else {
-                                    Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-                                }
-                            }
-                            @Override
-                            public void onFail(HttpsConnectionException e) {
-                                Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }else {
-                        status.setTranslationShown(!status.isTranslationShown());
-                        notifyStatusChanged(status);
-                    }
+                    translateToot(status);
                 }
             });
 
@@ -716,7 +698,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             //Change the color in gray for accounts in DARK Theme only
             Spannable wordtoSpan = new SpannableString(name);
-            if( theme == THEME_DARK) {
+            if( theme == THEME_DARK || theme == Helper.THEME_BLACK) {
                 Pattern hashAcct;
                 if( status.getReblog() != null)
                     hashAcct = Pattern.compile("\\s(@"+status.getReblog().getAccount().getAcct()+")");
@@ -758,7 +740,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
             boolean displayBoost = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOOST_COUNT, true);
-            if( displayBoost) {
+            if( getItemViewType(position) != COMPACT_STATUS  && displayBoost) {
                 if( status.getReblog() == null)
                     holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
                 else
@@ -790,7 +772,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_profile.setVisibility(View.VISIBLE);
             }
             holder.status_action_container.setVisibility(View.VISIBLE);
-            if( trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale))){
+            if( ( getItemViewType(position) != COMPACT_STATUS ) && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale)))){
                 holder.status_translate.setVisibility(View.VISIBLE);
             }else {
                 holder.status_translate.setVisibility(View.GONE);
@@ -899,7 +881,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         else
                             status.setSensitive(true);
 
-                        if( theme == Helper.THEME_DARK)
+                        if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK)
                             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
                         else
                             changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
@@ -916,7 +898,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         else
                             status.setSensitive(true);
 
-                        if( theme == Helper.THEME_DARK)
+                        if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK)
                             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
                         else
                             changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
@@ -968,7 +950,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
                 imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
             }else {
-                if( theme == THEME_DARK)
+                if( theme == THEME_DARK || theme == THEME_BLACK)
                     changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
                 else
                     changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
@@ -979,7 +961,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
                 imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
             }else {
-                if( theme == THEME_DARK)
+                if( theme == THEME_DARK || theme == THEME_BLACK)
                     changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
                 else
                     changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
@@ -987,7 +969,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
 
-            if( theme == THEME_DARK)
+            if( theme == THEME_DARK || theme == THEME_BLACK)
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
             else
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
@@ -1015,7 +997,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     changeDrawableColor(context, R.drawable.ic_pin_drop_p,R.color.marked_icon);
                     imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop_p);
                 }else {
-                    if( theme == THEME_DARK)
+                    if( theme == THEME_DARK || theme == THEME_BLACK)
                         changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.dark_icon);
                     else
                         changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.black);
@@ -1042,7 +1024,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
             //Click on a conversation
-            if( getItemViewType(position) == DISPLAYED_STATUS) {
+            if( getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS) {
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -1076,16 +1058,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             if( theme == Helper.THEME_LIGHT){
                 holder.main_container.setBackgroundResource(R.color.mastodonC3__);
-            }else {
+            }else if (theme == Helper.THEME_DARK){
                 holder.main_container.setBackgroundResource(R.color.mastodonC1_);
+            }else if (theme == Helper.THEME_BLACK){
+                holder.main_container.setBackgroundResource(R.color.black);
             }
             if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
 
                 if( position == conversationPosition){
                     if( theme == Helper.THEME_LIGHT)
                         holder.main_container.setBackgroundResource(R.color.mastodonC3_);
-                    else
+                    else if( theme == Helper.THEME_DARK)
                         holder.main_container.setBackgroundResource(R.color.mastodonC1___);
+                    else if( theme == Helper.THEME_BLACK)
+                        holder.main_container.setBackgroundResource(R.color.black_2);
                     if( status.getCard() != null){
 
                         holder.status_cardview_content.setText(status.getCard().getDescription());
@@ -1137,8 +1123,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_cardview_video.setVisibility(View.GONE);
                     if( theme == Helper.THEME_LIGHT)
                         holder.main_container.setBackgroundResource(R.color.mastodonC3__);
-                    else
+                    else if( theme == Helper.THEME_DARK)
                         holder.main_container.setBackgroundResource(R.color.mastodonC1_);
+                    else if (theme == Helper.THEME_BLACK)
+                        holder.main_container.setBackgroundResource(R.color.black);
                 }
             }
 
@@ -1407,6 +1395,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     builderInner.setTitle(stringArrayConf[1]);
                                     doAction = API.StatusAction.BLOCK;
                                     break;
+                                case R.id.action_translate:
+                                    translateToot(status);
+                                    return true;
                                 case R.id.action_report:
                                     builderInner = new AlertDialog.Builder(context);
                                     builderInner.setTitle(stringArrayConf[2]);
@@ -1447,19 +1438,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         else
                                             url = status.getUrl();
                                     }
-                                    String extra_text = (status.getReblog() != null)?status.getReblog().getAccount().getAcct():status.getAccount().getAcct();
-                                    if( extra_text.split("@").length == 1)
-                                        extra_text = "@" + extra_text + "@" + Helper.getLiveInstance(context);
-                                    else
-                                        extra_text = "@" + extra_text;
-                                    extra_text += " " + Helper.shortnameToUnicode(":link:",true) + " " + url + "\r\n-\n";
-                                    final String contentToot;
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                                        contentToot = Html.fromHtml((status.getReblog() != null)?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
-                                    else
-                                        //noinspection deprecation
-                                        contentToot = Html.fromHtml((status.getReblog() != null)?status.getReblog().getContent():status.getContent()).toString();
-                                    extra_text += contentToot;
+                                    String extra_text;
+                                    boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
+                                    if( share_details) {
+                                        extra_text = (status.getReblog() != null) ? status.getReblog().getAccount().getAcct() : status.getAccount().getAcct();
+                                        if (extra_text.split("@").length == 1)
+                                            extra_text = "@" + extra_text + "@" + Helper.getLiveInstance(context);
+                                        else
+                                            extra_text = "@" + extra_text;
+                                        extra_text += " " + Helper.shortnameToUnicode(":link:", true) + " " + url + "\r\n-\n";
+                                        final String contentToot;
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                            contentToot = Html.fromHtml((status.getReblog() != null) ? status.getReblog().getContent() : status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+                                        else
+                                            //noinspection deprecation
+                                            contentToot = Html.fromHtml((status.getReblog() != null) ? status.getReblog().getContent() : status.getContent()).toString();
+                                        extra_text += contentToot;
+                                    }else {
+                                        extra_text = url;
+                                    }
                                     sendIntent.putExtra(Intent.EXTRA_TEXT, extra_text);
                                     sendIntent.setType("text/plain");
                                     context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
@@ -1573,6 +1570,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( status.getApplication() != null && getItemViewType(position) == FOCUSED_STATUS){
                 Application application = status.getApplication();
                 holder.status_toot_app.setText(application.getName());
+                holder.status_toot_app.setVisibility(View.VISIBLE);
                 if( application.getWebsite() != null && !application.getWebsite().trim().equals("null"))
                 holder.status_toot_app.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1580,6 +1578,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         Helper.openBrowser(context, application.getWebsite());
                     }
                 });
+            }else {
+                holder.status_toot_app.setVisibility(View.GONE);
             }
         }
     }
@@ -1957,4 +1957,42 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     }
 
+
+    private void translateToot(Status status){
+        //Manages translations
+        final MyTransL myTransL = MyTransL.getInstance(MyTransL.translatorEngine.YANDEX);
+        myTransL.setObfuscation(true);
+        myTransL.setYandexAPIKey(Helper.YANDEX_KEY);
+        if( !status.isTranslated() ){
+            String statusToTranslate;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                statusToTranslate = Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+            else
+                //noinspection deprecation
+                statusToTranslate = Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()).toString();
+            //TODO: removes the replaceAll once fixed with the lib
+            myTransL.translate(statusToTranslate, myTransL.getLocale(), new Results() {
+                @Override
+                public void onSuccess(Translate translate) {
+                    if( translate.getTranslatedContent() != null) {
+                        status.setTranslated(true);
+                        status.setTranslationShown(true);
+                        status.setContentTranslated(translate.getTranslatedContent());
+                        status.makeClickableTranslation(context);
+                        status.makeEmojisTranslation(context, StatusListAdapter.this);
+                        notifyStatusChanged(status);
+                    }else {
+                        Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                    }
+                }
+                @Override
+                public void onFail(HttpsConnectionException e) {
+                    Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                }
+            });
+        }else {
+            status.setTranslationShown(!status.isTranslationShown());
+            notifyStatusChanged(status);
+        }
+    }
 }

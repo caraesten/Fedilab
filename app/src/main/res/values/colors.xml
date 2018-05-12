@@ -34,7 +34,8 @@
     <color name="buttonb">#B3E5FC</color>
     <color name="titleb">#D7CCC8</color>
     <color name="black">#000</color>
-
+    <color name="black_2">#050505</color>
+    <color name="black_3">#222</color>
     <!-- Mastodon color scheme -->
     <color name="mastodonC1__">#585c67</color>
     <color name="mastodonC1___">#454b5b</color>
@@ -49,29 +50,23 @@
     <color name="mastodonC4_">#1b80c9</color>
 
 
+    <color name="black_button_disabled">#8089A4</color>
+    <color name="black_button_pressed">#404964</color>
     <!-- Primary & accent colors -->
     <color name="notif_dark_1">#313543</color>
     <color name="notif_dark_2">#353947</color>
     <color name="notif_dark_3">#393f4f</color>
     <color name="notif_dark_4">#494f5f</color>
 
+
+    <color name="notif_black_1">#050505</color>
+    <color name="notif_black_2">#151515</color>
+    <color name="notif_black_3">#202020</color>
+    <color name="notif_black_4">#252525</color>
+
     <color name="notif_light_1">#efefef</color>
     <color name="notif_light_2">#ebf3fa</color>
     <color name="notif_light_3">#d9e1e8</color>
     <color name="notif_light_4">#c9d1d8</color>
-
-    <color name="foreground_material_dark" >@color/mastodonC3__</color>
-    <color name="foreground_material_light">@color/mastodonC1</color>
-
-    <color name="background_material_dark">@color/mastodonC1</color>
-    <color name="background_material_light">@color/mastodonC3__</color>
-    <color name="background_floating_material_dark">@color/mastodonC1</color>
-    <color name="background_floating_material_light">@color/mastodonC3__</color>
-
-    <color name="primary_material_dark">@color/mastodonC1</color>
-    <color name="primary_material_light">@color/mastodonC3__</color>
-    <color name="primary_dark_material_dark">@color/mastodonC1</color>
-    <color name="primary_dark_material_light">@color/mastodonC3__</color>
-
 
 </resources>
