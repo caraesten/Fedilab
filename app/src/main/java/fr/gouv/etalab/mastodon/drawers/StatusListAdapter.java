@@ -105,6 +105,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
+import fr.gouv.etalab.mastodon.helper.CustomTextView;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveCardInterface;
@@ -240,9 +241,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     class ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout status_content_container;
         LinearLayout status_spoiler_container;
-        TextView status_spoiler;
+        CustomTextView status_spoiler;
         Button status_spoiler_button;
-        TextView status_content;
+        CustomTextView status_content;
         TextView status_content_translated;
         LinearLayout status_content_translated_container;
         TextView status_account_username;

@@ -70,6 +70,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
+import fr.gouv.etalab.mastodon.helper.CustomTextView;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
@@ -1048,10 +1049,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     class ViewHolder extends RecyclerView.ViewHolder {
 
         FrameLayout card_status_container;
-        TextView notification_status_content;
+        CustomTextView notification_status_content;
         TextView notification_type;
         LinearLayout status_spoiler_container;
-        TextView status_spoiler;
+        CustomTextView status_spoiler;
         Button status_spoiler_button;
         TextView notification_account_username;
         ImageView notification_account_profile;
