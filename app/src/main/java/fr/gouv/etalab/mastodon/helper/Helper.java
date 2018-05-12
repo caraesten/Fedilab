@@ -242,6 +242,7 @@ public class Helper {
     public static final String SET_PICTURE_RESIZE = "set_picture_resize";
     public static final String SET_SHOW_BOOKMARK = "set_show_bookmark";
     public static final String SET_FULL_PREVIEW = "set_full_preview";
+    public static final String SET_COMPACT_MODE = "set_compact_mode";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;

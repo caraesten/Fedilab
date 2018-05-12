@@ -164,6 +164,14 @@
             android:text="@string/set_fit_preview"
             android:layout_height="wrap_content" />
 
+        <!-- COMPACT MODE  -->
+        <CheckBox
+            android:id="@+id/set_compact_mode"
+            android:layout_width="wrap_content"
+            android:text="@string/set_compact_mode"
+            android:layout_height="wrap_content" />
+
+
         <!-- Resize pictures -->
         <LinearLayout
             android:layout_marginTop="10dp"

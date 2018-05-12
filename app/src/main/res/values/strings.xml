@@ -533,6 +533,7 @@
     <string name="poxy_login">Login</string>
     <string name="poxy_password">Password</string>
     <string name="set_theme">Theme:</string>
+    <string name="set_compact_mode">Compact mode</string>
     <string-array translatable="false" name="proxy_type_choice">
         <item>HTTP</item>
         <item>SOCKS</item>

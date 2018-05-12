@@ -451,13 +451,21 @@ public class Status implements Parcelable{
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
 
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        int mode;
+        if( isCompactMode)
+            mode = Html.FROM_HTML_MODE_COMPACT;
+        else
+            mode = Html.FROM_HTML_MODE_LEGACY;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+            spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), mode));
         else
             //noinspection deprecation
             spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), Html.FROM_HTML_MODE_LEGACY));
+            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), mode));
         else
             //noinspection deprecation
             spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text()));
@@ -474,9 +482,16 @@ public class Status implements Parcelable{
             return;
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        int mode;
+        if( isCompactMode)
+            mode = Html.FROM_HTML_MODE_COMPACT;
+        else
+            mode = Html.FROM_HTML_MODE_LEGACY;
         SpannableString spannableStringTranslated;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY));
+            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), mode));
         else
             //noinspection deprecation
             spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated()));
@@ -558,10 +573,16 @@ public class Status implements Parcelable{
         if( ((Activity)context).isFinishing() )
             return;
         SpannableString spannableStringTranslated = null;
-
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        int mode;
+        if( isCompactMode)
+            mode = Html.FROM_HTML_MODE_COMPACT;
+        else
+            mode = Html.FROM_HTML_MODE_LEGACY;
         if( status.getContentTranslated() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY));
+                spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), mode));
             else
                 //noinspection deprecation
                 spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated()));

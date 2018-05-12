@@ -225,6 +225,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        final CheckBox set_compact_mode = rootView.findViewById(R.id.set_compact_mode);
+        set_compact_mode.setChecked(compact_mode);
+
+        set_compact_mode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_COMPACT_MODE, set_compact_mode.isChecked());
+                editor.apply();
+            }
+        });
+
 
         boolean multiaccount_actions = sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true);
         final CheckBox set_multiaccount_actions = rootView.findViewById(R.id.set_multiaccount_actions);
