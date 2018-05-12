@@ -494,4 +494,5 @@
   <string name="poxy_login">إسم المستخدم</string>
   <string name="poxy_password">كلمة السر</string>
   <string name="set_theme">Theme:</string>
+  <string name="set_compact_mode">Compact mode</string>
 </resources>
