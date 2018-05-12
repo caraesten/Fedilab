@@ -239,6 +239,19 @@ public class SettingsFragment extends Fragment {
         });
 
 
+        boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
+        final CheckBox set_share_details = rootView.findViewById(R.id.set_share_details);
+        set_share_details.setChecked(share_details);
+
+        set_share_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_SHARE_DETAILS, set_share_details.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean multiaccount_actions = sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true);
         final CheckBox set_multiaccount_actions = rootView.findViewById(R.id.set_multiaccount_actions);
         set_multiaccount_actions.setChecked(multiaccount_actions);
