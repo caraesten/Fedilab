@@ -1024,7 +1024,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
             //Click on a conversation
-            if( getItemViewType(position) == DISPLAYED_STATUS) {
+            if( getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS) {
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

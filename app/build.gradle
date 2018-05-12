@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 122
-        versionName "1.8.9"
+        versionCode 123
+        versionName "1.9.0"
     }
     flavorDimensions "default"
     buildTypes {
@@ -40,7 +40,7 @@ allprojects {
 }
 ext.supportLibraryVersion = '27.1.1'
 ext.glideLibraryVersion = '4.6.1'
-ext.conscryptLibraryVersion = '1.0.1'
+ext.conscryptLibraryVersion = '1.1.2'
 ext.evernoteLibraryVersion = '1.2.5'
 ext.gsonLibraryVersion = '2.8.2'
 ext.guavaLibraryVersion = '24.1-android'
