@@ -25,7 +25,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -45,6 +44,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -74,6 +75,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
@@ -1021,6 +1023,27 @@ public abstract class BaseMainActivity extends BaseActivity
                             @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_regex, null);
                             dialogBuilder.setView(dialogView);
                             final EditText editText = dialogView.findViewById(R.id.filter_regex);
+                            Toast alertRegex = Toast.makeText(BaseMainActivity.this, R.string.alert_regex, Toast.LENGTH_LONG);
+                            editText.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                }
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                }
+                                @Override
+                                public void afterTextChanged(Editable s) {
+                                    try {
+                                        //noinspection ResultOfMethodCallIgnored
+                                        Pattern.compile("(" + s.toString() + ")", Pattern.CASE_INSENSITIVE);
+                                    }catch (Exception e){
+                                        if( !alertRegex.getView().isShown()){
+                                            alertRegex.show();
+                                        }
+                                    }
+
+                                }
+                            });
                             if( show_filtered != null) {
                                 editText.setText(show_filtered);
                                 editText.setSelection(editText.getText().toString().length());

@@ -419,7 +419,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }else {
             changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
         }
-        
         String urlHeader = account.getHeader();
         if (urlHeader.startsWith("/")) {
             urlHeader = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + account.getHeader();
