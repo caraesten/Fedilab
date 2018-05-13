@@ -87,6 +87,7 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
@@ -413,8 +414,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         accountUrl = account.getUrl();
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK){
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
+        if( theme == Helper.THEME_BLACK){
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.dark_icon);
         }else {
             changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
         }
@@ -518,7 +519,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if( account.getMoved_to_account() != null){
             TextView account_moved = findViewById(R.id.account_moved);
             account_moved.setVisibility(View.VISIBLE);
-            if( theme == THEME_DARK)
+            if( theme == THEME_DARK || theme == THEME_BLACK)
                 changeDrawableColor(ShowAccountActivity.this, R.drawable.ic_card_travel,R.color.dark_icon);
             else
                 changeDrawableColor(ShowAccountActivity.this, R.drawable.ic_card_travel,R.color.black);
