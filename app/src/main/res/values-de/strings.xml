@@ -335,9 +335,9 @@
     <item>Nein</item>
   </string-array>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Dunkel</item>
+    <item>Hell</item>
+    <item>Schwarz</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>Nein</item>
@@ -474,9 +474,9 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="poxy_port">Port</string>
   <string name="poxy_login">Login</string>
   <string name="poxy_password">Passwort</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
+  <string name="set_theme">Layout:</string>
+  <string name="set_compact_mode">Kompakte Darstellung</string>
   <string name="set_share_details">Add toot details when sharing</string>
   <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
+  <string name="alert_regex">Es gibt einen Fehler im regulären Ausdruck!</string>
 </resources>
