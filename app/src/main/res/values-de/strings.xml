@@ -33,7 +33,7 @@
   <string name="no_result">Kein Ergebnis!</string>
   <string name="instance">Instanz</string>
   <string name="instance_example">Instanz: mastodon.social</string>
-  <string name="toast_account_changed" formatted="false">Funktioniert jetzt mit dem Konto %1$s</string>
+  <string name="toast_account_changed" formatted="false">Konto %1$s wird verwendet</string>
   <string name="add_account">Konto hinzufügen</string>
   <string name="clipboard">Der Inhalt des Toots wurde in die Zwischenablage kopiert</string>
   <string name="change">Ändern</string>
