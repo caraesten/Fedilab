@@ -188,7 +188,7 @@
   <string name="about_thekinrar">البحث عن مثيلات الخوادم :</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">مصمم الأيقونات :</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_banner">مصمم الشعار :</string>
   <!-- Conversation -->
   <string name="conversation">محادثة</string>
   <!-- Accounts -->
@@ -343,9 +343,9 @@
     <item>لا</item>
   </string-array>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>مظلمة</item>
+    <item>فاتحة</item>
+    <item>سوداء</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>لا</item>
@@ -493,9 +493,9 @@
   <string name="poxy_port">المنفذ</string>
   <string name="poxy_login">إسم المستخدم</string>
   <string name="poxy_password">كلمة السر</string>
-  <string name="set_theme">Theme:</string>
+  <string name="set_theme">السمة :</string>
   <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
+  <string name="set_share_details">إضافة التفاصيل عند مشاركة تبويق ما</string>
+  <string name="support_the_app_on_liberapay">إدعم التطبيق على ليبيراباي</string>
+  <string name="alert_regex">هناك خطأ في العبارة المنطقية !</string>
 </resources>

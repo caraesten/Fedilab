@@ -132,7 +132,7 @@
   <string name="set_display_bookmark_button">ブックマークボタンを表示する</string>
   <string name="bookmarks">ブックマーク</string>
   <string name="bookmark_add">ブックマークに追加する</string>
-  <string name="bookmark_remove">Remove bookmark</string>
+  <string name="bookmark_remove">ブックマークを削除</string>
   <string name="bookmarks_empty">ブックマークがありません</string>
   <string name="status_bookmarked">トゥートがブックマークに追加されました！</string>
   <string name="status_unbookmarked">トゥートがブックマークから削除されました！</string>
@@ -183,7 +183,7 @@
   <string name="about_thekinrar">インスタンスを検索：</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">アイコンデザイナー：</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_banner">バナー デザイナー:</string>
   <!-- Conversation -->
   <string name="conversation">会話</string>
   <!-- Accounts -->
@@ -296,13 +296,13 @@
   <string name="set_nsfw_timeout">NSFWビューのタイムアウト（秒、0はオフを意味します）</string>
   <string name="settings_title_profile">プロフィールを編集</string>
   <string name="set_profile_description">バイオ…</string>
-  <string name="set_lock_account">Lock account</string>
+  <string name="set_lock_account">アカウントをロック</string>
   <string name="set_save_changes">変更内容を保存</string>
   <string name="set_header_picture_overlay">ヘッダー画像を選択</string>
   <string name="set_preview_reply">ホームタイムラインに返信件数を表示する</string>
   <string name="set_preview_reply_pp">プロフィール画像を表示しますか？</string>
   <string name="set_multiaccount_actions">アカウント間のやりとりを許可しますか？</string>
-  <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_fit_preview">プレビュー画像をフィットさせる</string>
   <string name="note_no_space">160文字の制限に達しました！</string>
   <string name="username_no_space">30文字の制限に達しました。</string>
   <string name="settings_title_hour">通知のタイムスロット：</string>
@@ -474,9 +474,9 @@
   <string name="poxy_port">ポート</string>
   <string name="poxy_login">ログイン</string>
   <string name="poxy_password">パスワード</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
+  <string name="set_theme">テーマ:</string>
+  <string name="set_compact_mode">コンパクト モード</string>
+  <string name="set_share_details">共有時にトゥートの詳細を付加する</string>
+  <string name="support_the_app_on_liberapay">Liberapayでアプリを支援</string>
+  <string name="alert_regex">正規表現に誤りがあります！</string>
 </resources>
