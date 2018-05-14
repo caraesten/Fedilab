@@ -485,7 +485,7 @@
   <string name="poxy_password">Mot de passe</string>
   <string name="set_theme">Thèmes :</string>
   <string name="set_compact_mode">Mode compact</string>
-  <string name="set_share_details">Add toot details when sharing</string>
+  <string name="set_share_details">Ajouter les détails du pouet en le partageant</string>
   <string name="support_the_app_on_liberapay">Soutenir l\'app sur Liberpay</string>
   <string name="alert_regex">Il y a une erreur dans l\'expression régulière !</string>
 </resources>
