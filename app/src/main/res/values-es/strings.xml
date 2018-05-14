@@ -484,5 +484,5 @@ Gracias a:    </string>
   <string name="set_compact_mode">Modo compacto</string>
   <string name="set_share_details">Agregar datos del toot al compartir</string>
   <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
+  <string name="alert_regex">Hay un error en la expresión regular!</string>
 </resources>
