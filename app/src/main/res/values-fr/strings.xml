@@ -331,9 +331,9 @@
     <item>Non</item>
   </string-array>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Sombre</item>
+    <item>Clair</item>
+    <item>Noir</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>Non</item>
@@ -441,7 +441,7 @@
   <string name="thanks_text_dev">
         Merci à :
     </string>
-  <string name="filter_regex">Filtrer avec une expression rationnelle</string>
+  <string name="filter_regex">Filtrer avec une expression régulière</string>
   <string name="search">Rechercher</string>
   <string name="delete">Supprimer</string>
   <string name="fetch_more_toots">Retrouver plus de pouets…</string>
@@ -483,9 +483,9 @@
   <string name="poxy_port">Port</string>
   <string name="poxy_login">Identifiant</string>
   <string name="poxy_password">Mot de passe</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
+  <string name="set_theme">Thèmes :</string>
+  <string name="set_compact_mode">Mode compact</string>
   <string name="set_share_details">Add toot details when sharing</string>
   <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
+  <string name="alert_regex">Il y a une erreur dans l\'expression régulière !</string>
 </resources>
