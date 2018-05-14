@@ -184,7 +184,7 @@
   <string name="about_thekinrar">Recherche d\'instances :</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Concepteur de l\'icône : </string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_banner">Concepteur de la bannière :</string>
   <!-- Conversation -->
   <string name="conversation">Conversation</string>
   <!-- Accounts -->
@@ -486,6 +486,6 @@
   <string name="set_theme">Thèmes :</string>
   <string name="set_compact_mode">Mode compact</string>
   <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+  <string name="support_the_app_on_liberapay">Soutenir l\'app sur Liberpay</string>
   <string name="alert_regex">Il y a une erreur dans l\'expression régulière !</string>
 </resources>
