@@ -382,6 +382,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_marginBottom="10dp"
             android:baselineAligned="false">
             <RelativeLayout
                 android:layout_width="0dp"
@@ -576,7 +577,9 @@
         </LinearLayout>
         <ImageView
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:id="@+id/new_element"
             android:visibility="gone"
             android:src="@drawable/ic_fiber_new"
