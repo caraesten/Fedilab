@@ -331,9 +331,9 @@
     <item>No</item>
   </string-array>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Oscuro</item>
+    <item>Claro</item>
+    <item>Negro</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>No</item>
@@ -480,9 +480,9 @@ Gracias a:    </string>
   <string name="poxy_port">Puerto</string>
   <string name="poxy_login">Usuario</string>
   <string name="poxy_password">Contraseña</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
+  <string name="set_theme">Tema:</string>
+  <string name="set_compact_mode">Modo compacto</string>
+  <string name="set_share_details">Agregar datos del toot al compartir</string>
+  <string name="support_the_app_on_liberapay">Apoya la aplicación en Liberapay</string>
+  <string name="alert_regex">Hay un error en la expresión regular!</string>
 </resources>

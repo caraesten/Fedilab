@@ -334,9 +334,9 @@
     <item>Не</item>
   </string-array>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Тамна</item>
+    <item>Светла</item>
+    <item>Црна</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>Не</item>
@@ -488,9 +488,9 @@
   <string name="poxy_port">Порт</string>
   <string name="poxy_login">Пријава</string>
   <string name="poxy_password">Лозинка</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
+  <string name="set_theme">Тема:</string>
+  <string name="set_compact_mode">Сажети режим</string>
+  <string name="set_share_details">Додај детаље тута приликом дељења</string>
+  <string name="support_the_app_on_liberapay">Подржи апликацију на Liberapay-у</string>
+  <string name="alert_regex">Постоји грешка у регуларном изразу!</string>
 </resources>
