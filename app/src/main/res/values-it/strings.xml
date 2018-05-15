@@ -331,9 +331,9 @@
     <item>No</item>
   </string-array>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Scuro</item>
+    <item>Chiaro</item>
+    <item>Nero</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>No</item>
@@ -442,7 +442,7 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <string name="thanks_text_dev">
         Grazie anche a:
     </string>
-  <string name="filter_regex">Filtrati tramite espressioni regolari</string>
+  <string name="filter_regex">Filtra tramite espressioni regolari</string>
   <string name="search">Cerca</string>
   <string name="delete">Elimina</string>
   <string name="fetch_more_toots">Recupera altri toot…</string>
@@ -485,9 +485,9 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <string name="poxy_port">Porta</string>
   <string name="poxy_login">Login</string>
   <string name="poxy_password">Password</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
+  <string name="set_theme">Tema:</string>
+  <string name="set_compact_mode">Modalità compatta</string>
+  <string name="set_share_details">Aggiungi dettagli del toot quando condividi</string>
+  <string name="support_the_app_on_liberapay">Supporta l\'app su Liberapay</string>
+  <string name="alert_regex">C\'è un errore nell\'espressione regolare!</string>
 </resources>
