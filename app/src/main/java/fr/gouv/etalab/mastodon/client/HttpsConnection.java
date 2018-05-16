@@ -429,7 +429,7 @@ public class HttpsConnection {
                                     final int currentProgress = (downloadedFileSize * 100) / contentSize;
                                     ((MediaActivity) context).runOnUiThread(new Runnable() {
                                         public void run() {
-                                            listener.onUpdateProgress(currentProgress>0?currentProgress:0);
+                                            listener.onUpdateProgress(currentProgress>0?currentProgress:101);
                                         }
                                     });
                                 }
@@ -519,7 +519,7 @@ public class HttpsConnection {
                                     final int currentProgress = (downloadedFileSize * 100) / contentSize;
                                     ((MediaActivity) context).runOnUiThread(new Runnable() {
                                         public void run() {
-                                            listener.onUpdateProgress(currentProgress>0?currentProgress:0);
+                                            listener.onUpdateProgress(currentProgress>0?currentProgress:101);
                                         }
                                     });
                                 }
@@ -1068,7 +1068,7 @@ public class HttpsConnection {
                             final int progress = 100 * bytesTransferred / totalSize;
                             ((TootActivity) context).runOnUiThread(new Runnable() {
                                 public void run() {
-                                    listener.onUpdateProgress(progress>0?progress:0);
+                                    listener.onUpdateProgress(progress>0?progress:101);
                                 }
                             });
                             request.flush();
@@ -1214,7 +1214,7 @@ public class HttpsConnection {
                             final int progress = 100 * bytesTransferred / totalSize;
                             ((TootActivity)context).runOnUiThread(new Runnable() {
                                 public void run() {
-                                    listener.onUpdateProgress(progress>0?progress:0);
+                                    listener.onUpdateProgress(progress>0?progress:101);
                                 }});
                             request.flush();
                         }
