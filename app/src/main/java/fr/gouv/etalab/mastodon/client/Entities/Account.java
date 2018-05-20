@@ -26,6 +26,8 @@ import android.view.View;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -62,6 +64,8 @@ public class Account implements Parcelable {
     private boolean isMakingAction = false;
     private Account moved_to_account;
     private boolean muting_notifications;
+    private int metaDataSize;
+    private HashMap<String, String> fields = new HashMap<>();
 
     public followAction getFollowType() {
         return followType;
@@ -95,6 +99,14 @@ public class Account implements Parcelable {
         this.muting_notifications = muting_notifications;
     }
 
+    public HashMap<String, String> getFields() {
+        return fields;
+    }
+
+    public void setFields(HashMap<String, String> fields) {
+        this.fields = fields;
+    }
+
     public enum followAction{
         FOLLOW,
         NOT_FOLLOW,
@@ -122,6 +134,12 @@ public class Account implements Parcelable {
         header_static = in.readString();
         token = in.readString();
         instance = in.readString();
+        metaDataSize = in.readInt();
+        for(int i = 0; i < metaDataSize; i++){
+            String key = in.readString();
+            String value = in.readString();
+            fields.put(key,value);
+        }
     }
 
     public Account(){}
@@ -297,6 +315,14 @@ public class Account implements Parcelable {
         dest.writeString(header_static);
         dest.writeString(token);
         dest.writeString(instance);
+
+        metaDataSize = fields.size();
+        dest.writeInt(metaDataSize);
+        for (Map.Entry<String, String> entry : fields.entrySet()) {
+            dest.writeString(entry.getKey());
+            dest.writeString(entry.getValue());
+        }
+
     }
 
     public boolean isFollowing() {
@@ -362,4 +388,5 @@ public class Account implements Parcelable {
         }
         return spannableString;
     }
+
 }

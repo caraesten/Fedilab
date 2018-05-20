@@ -59,7 +59,10 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 import fr.gouv.etalab.mastodon.R;
@@ -423,7 +426,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if (urlHeader.startsWith("/")) {
             urlHeader = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + account.getHeader();
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !urlHeader.contains("missing.png")) {
+        if (!urlHeader.contains("missing.png")) {
 
             Glide.with(getApplicationContext())
                     .asBitmap()
@@ -576,6 +579,76 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 }
             }
         });
+
+        if ( account.getFields() != null && account.getFields().size() > 0){
+            HashMap<String, String> fields = account.getFields();
+            Iterator it = fields.entrySet().iterator();
+            int i = 1;
+            LinearLayout fields_container = findViewById(R.id.fields_container);
+            if( fields_container != null)
+                fields_container.setVisibility(View.VISIBLE);
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                String label = (String)pair.getKey();
+                String value = (String)pair.getValue();
+                LinearLayout field;
+                TextView labelView;
+                TextView valueView;
+                switch(i){
+                    case 1:
+                        field = findViewById(R.id.field1);
+                        labelView = findViewById(R.id.label1);
+                        valueView = findViewById(R.id.value1);
+                        break;
+                    case 2:
+                        field = findViewById(R.id.field2);
+                        labelView = findViewById(R.id.label2);
+                        valueView = findViewById(R.id.value2);
+                        break;
+                    case 3:
+                        field = findViewById(R.id.field3);
+                        labelView = findViewById(R.id.label3);
+                        valueView = findViewById(R.id.value3);
+                        break;
+                    case 4:
+                        field = findViewById(R.id.field4);
+                        labelView = findViewById(R.id.label4);
+                        valueView = findViewById(R.id.value4);
+                        break;
+                    default:
+                        field = findViewById(R.id.field1);
+                        labelView = findViewById(R.id.label1);
+                        valueView = findViewById(R.id.value1);
+                        break;
+                }
+                if( field != null && labelView != null && valueView != null) {
+                    switch (theme){
+                        case Helper.THEME_LIGHT:
+                            labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_2));
+                            valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_4));
+                            break;
+                        case Helper.THEME_DARK:
+                            labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
+                            valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
+                            break;
+                        case Helper.THEME_BLACK:
+                            labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_2));
+                            valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_4));
+                            break;
+                        default:
+                            labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
+                            valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
+                    }
+                    field.setVisibility(View.VISIBLE);
+                    SpannableString spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value);
+                    valueView.setText(spannableValueString, TextView.BufferType.SPANNABLE);
+                    valueView.setMovementMethod(LinkMovementMethod.getInstance());
+                    labelView.setText(label);
+                }
+                i++;
+                it.remove();
+            }
+        }
 
         account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
         account_un.setText(String.format("@%s", account.getAcct()));

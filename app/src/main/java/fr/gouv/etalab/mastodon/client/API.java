@@ -1849,6 +1849,16 @@ public class API {
             account.setAvatar_static(resobj.get("avatar_static").toString());
             account.setHeader(resobj.get("header").toString());
             account.setHeader_static(resobj.get("header_static").toString());
+            try {
+                JSONArray fields = resobj.getJSONArray("fields");
+                HashMap<String, String> fieldsMap = new HashMap<>();
+                if( fields != null){
+                    for(int j = 0 ; j < fields.length() ; j++){
+                        fieldsMap.put(fields.getJSONObject(j).getString("name"),fields.getJSONObject(j).getString("value"));
+                    }
+                }
+                account.setFields(fieldsMap);
+            }catch (Exception ignored){}
         } catch (JSONException ignored) {}
         return account;
     }
