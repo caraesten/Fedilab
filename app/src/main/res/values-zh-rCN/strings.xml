@@ -183,7 +183,7 @@
   <string name="about_thekinrar">搜索实例：</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">图标设计者：</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_banner">横幅设计者：</string>
   <!-- Conversation -->
   <string name="conversation">会话</string>
   <!-- Accounts -->
@@ -275,7 +275,7 @@
   <string name="set_display_reply">在回复中显示上一条消息</string>
   <string name="set_display_local">显示本地时间线</string>
   <string name="set_display_global">显示联邦时间线</string>
-  <string name="set_disable_gif">禁用GIF头像</string>
+  <string name="set_disable_gif">禁用 GIF 头像</string>
   <string name="set_folder_title">路径：</string>
   <string name="set_auto_store_toot">自动保存草稿</string>
   <string name="set_bubble_counter">显示计数器</string>
@@ -477,9 +477,9 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
   <string name="poxy_port">端口</string>
   <string name="poxy_login">登录</string>
   <string name="poxy_password">密码</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
+  <string name="set_theme">主题：</string>
+  <string name="set_compact_mode">紧凑模式</string>
+  <string name="set_share_details">在分享时添加嘟文的详细信息</string>
+  <string name="support_the_app_on_liberapay">在 Liberapay 上支持这个应用</string>
+  <string name="alert_regex">正则表达式中有错误！</string>
 </resources>
