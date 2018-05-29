@@ -284,7 +284,7 @@
   <string name="set_display_reply">Отображать предыдущее сообщение в ответах</string>
   <string name="set_display_local">Отображать локальную ленту</string>
   <string name="set_display_global">Отображать ленту федерации</string>
-  <string name="set_disable_gif">Отключить GIF-аватары</string>
+  <string name="set_disable_gif">Использовать GIF-аватары</string>
   <string name="set_folder_title">Путь: </string>
   <string name="set_auto_store_toot">Сохранять черновики автоматически</string>
   <string name="set_bubble_counter">Показывать счётчики</string>
@@ -347,7 +347,7 @@
     <item>1 Мб</item>
     <item>2 Мб</item>
   </string-array>
-  <string name="set_led_colour">Задать цвет LED:</string>
+  <string name="set_led_colour">Цвет светодиода:</string>
   <string-array name="led_colours">
     <item>Синий</item>
     <item>Бирюзовый</item>
@@ -490,7 +490,7 @@
   <string name="poxy_login">Логин</string>
   <string name="poxy_password">Пароль</string>
   <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
+  <string name="set_compact_mode">Компактный режим</string>
   <string name="set_share_details">Add toot details when sharing</string>
   <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
   <string name="alert_regex">There is an error in the regular expression!</string>
