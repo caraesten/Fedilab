@@ -90,7 +90,7 @@
   <string name="send_email">Отправить эл. письмо</string>
   <string name="choose_file">Выберите файл</string>
   <string name="choose_file_error">Файл не найден!</string>
-  <string name="click_to_change">Нажмите на путь для изменения</string>
+  <string name="click_to_change">Нажмите для изменения</string>
   <string name="failed">Ошибка!</string>
   <string name="scheduled_toots">Запланированные toots</string>
   <string name="disclaimer_full">Информация, представленная ниже, не может отражать профиль пользователя полностью.</string>
@@ -244,8 +244,8 @@
   <string name="toast_unblock">Аккаунт больше не заблокирован!</string>
   <string name="toast_mute">Аккаунт был приглушён!</string>
   <string name="toast_unmute">Аккаунт более не пригушён!</string>
-  <string name="toast_follow">За аккаунтом следуют подписчики!</string>
-  <string name="toast_unfollow">Аккаунт более не читаемый!</string>
+  <string name="toast_follow">Вы подписались на этот аккаунт!</string>
+  <string name="toast_unfollow">Вы больше не подписаны!</string>
   <string name="toast_reblog">Toot был поднят!</string>
   <string name="toast_unreblog">Toot более не поднят!</string>
   <string name="toast_favourite">Toot был добавлен в избранные!</string>
@@ -337,9 +337,9 @@
     <item>Нет</item>
   </string-array>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Темная</item>
+    <item>Светлая</item>
+    <item>Черная</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>Нет</item>
