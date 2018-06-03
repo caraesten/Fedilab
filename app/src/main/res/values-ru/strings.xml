@@ -90,7 +90,7 @@
   <string name="send_email">Отправить эл. письмо</string>
   <string name="choose_file">Выберите файл</string>
   <string name="choose_file_error">Файл не найден!</string>
-  <string name="click_to_change">Нажмите на путь для изменения</string>
+  <string name="click_to_change">Нажмите для изменения</string>
   <string name="failed">Ошибка!</string>
   <string name="scheduled_toots">Запланированные toots</string>
   <string name="disclaimer_full">Информация, представленная ниже, не может отражать профиль пользователя полностью.</string>
@@ -244,8 +244,8 @@
   <string name="toast_unblock">Аккаунт больше не заблокирован!</string>
   <string name="toast_mute">Аккаунт был приглушён!</string>
   <string name="toast_unmute">Аккаунт более не пригушён!</string>
-  <string name="toast_follow">За аккаунтом следуют подписчики!</string>
-  <string name="toast_unfollow">Аккаунт более не читаемый!</string>
+  <string name="toast_follow">Вы подписались на этот аккаунт!</string>
+  <string name="toast_unfollow">Вы больше не подписаны!</string>
   <string name="toast_reblog">Toot был поднят!</string>
   <string name="toast_unreblog">Toot более не поднят!</string>
   <string name="toast_favourite">Toot был добавлен в избранные!</string>
@@ -284,7 +284,7 @@
   <string name="set_display_reply">Отображать предыдущее сообщение в ответах</string>
   <string name="set_display_local">Отображать локальную ленту</string>
   <string name="set_display_global">Отображать ленту федерации</string>
-  <string name="set_disable_gif">Отключить GIF-аватары</string>
+  <string name="set_disable_gif">Использовать GIF-аватары</string>
   <string name="set_folder_title">Путь: </string>
   <string name="set_auto_store_toot">Сохранять черновики автоматически</string>
   <string name="set_bubble_counter">Показывать счётчики</string>
@@ -311,7 +311,7 @@
   <string name="set_preview_reply">Отображать количество ответов в домашней ленте</string>
   <string name="set_preview_reply_pp">Отображение изображения профиля?</string>
   <string name="set_multiaccount_actions">Разрешить взаимодействие между аккаунтами?</string>
-  <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_fit_preview">Показ масштабируемых изображений</string>
   <string name="note_no_space">Вы достигли 160 символов!</string>
   <string name="username_no_space">Вы достигли 30 символов!</string>
   <string name="settings_title_hour">Промежутки времени для уведомлений:</string>
@@ -337,9 +337,9 @@
     <item>Нет</item>
   </string-array>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Темное</item>
+    <item>Светлое</item>
+    <item>Черное</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>Нет</item>
@@ -347,7 +347,7 @@
     <item>1 Мб</item>
     <item>2 Мб</item>
   </string-array>
-  <string name="set_led_colour">Задать цвет LED:</string>
+  <string name="set_led_colour">Цвет светодиода:</string>
   <string-array name="led_colours">
     <item>Синий</item>
     <item>Бирюзовый</item>
@@ -489,8 +489,8 @@
   <string name="poxy_port">Порт</string>
   <string name="poxy_login">Логин</string>
   <string name="poxy_password">Пароль</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
+  <string name="set_theme">Оформление:</string>
+  <string name="set_compact_mode">Компактный режим</string>
   <string name="set_share_details">Add toot details when sharing</string>
   <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
   <string name="alert_regex">There is an error in the regular expression!</string>
