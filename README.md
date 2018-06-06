@@ -7,9 +7,9 @@ The number of libraries is minimized and it does not use tracking tools. The sou
 
 
 
-[WIKI](https://github.com/stom79/mastalab/wiki)
+[WIKI](https://gitlab.com/tom79/mastalab/wikis/home)
 
-[Release notes](https://github.com/stom79/mastalab/releases)
+[Release notes](https://gitlab.com/tom79/mastalab/tags)
 
 
 
