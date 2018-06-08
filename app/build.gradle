@@ -64,8 +64,8 @@ dependencies {
     implementation "com.github.chrisbanes:PhotoView:$photoViewLibraryVersion"
     implementation "com.gongwen:swipeback:$swipebackLibraryVersion"
 
-    implementation 'com.gitlab.tom79:country-picker-android:1.2.0'
-    implementation 'com.gitlab.tom79:mytransl:1.4'
+    implementation 'com.github.stom79:country-picker-android:1.2.0'
+    implementation 'com.github.stom79:mytransl:1.4'
 
 
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
