@@ -577,7 +577,7 @@ public class Helper {
             @Override
             public void onClick(View v) {
 
-                tvDate.setText(Helper.shortDateTime(context, date));
+                tvDate.setText(Helper.dateDiffFull(date));
 
                 new CountDownTimer((5 * 1000), 1000) {
 
