@@ -101,12 +101,12 @@
   <string name="no_status">Ez dago toot-ik bistaratzeko</string>
   <string name="fav_added">Toot-a gogokoetara gehitu da</string>
   <string name="fav_removed">Toot-a gogokoetatik kendu da!</string>
-  <string name="reblog_added">Toot-a bultzatu da!</string>
-  <string name="reblog_removed">Toot-a ez dago jada bultzatua!</string>
-  <string name="reblog_by">%1$s(e)k bultzatua</string>
+  <string name="reblog_added">Toot-ari bultzada eman zaio!</string>
+  <string name="reblog_removed">Toot-ari bultzada kendu zaio!</string>
+  <string name="reblog_by">%1$s(e)n bultzada</string>
   <string name="favourite_add">Gehitu toot hau zure gogokoetara?</string>
   <string name="favourite_remove">Kendu toot hau zure gogokoetatik?</string>
-  <string name="reblog_add">Bultzatu toot hau?</string>
+  <string name="reblog_add">Bultzada eman toot honi?</string>
   <string name="reblog_remove">Desbultzatu toot hau?</string>
   <string name="pin_add">Finkatu toot hau?</string>
   <string name="pin_remove">Desfinkatu toot hau?</string>
@@ -158,7 +158,7 @@
   <string name="toots_visibility_tilte">Toot-en lehenetsitako ikusgaitasuna: </string>
   <string name="toot_sent">Toot-a bidali da!</string>
   <string name="toot_reply_content_title">Toot honi erantzuten ari zara:</string>
-  <string name="toot_sensitive">Eduki mingarria?</string>
+  <string name="toot_sensitive">Eduki hunkigarria?</string>
   <string-array name="toot_visibility">
     <item>Argitaratu denbora-lerro publikoetan</item>
     <item>Ez argitaratu denbora-lerro publikoetan</item>
@@ -274,7 +274,7 @@
   <string name="load_attachment">Kargatu irudiak</string>
   <string name="load_attachment_spoiler">Erakutsi gehiago…</string>
   <string name="load_attachment_spoiler_less">Erakutsi gutxiago…</string>
-  <string name="load_sensitive_attachment">Eduki mingarria</string>
+  <string name="load_sensitive_attachment">Eduki hunkigarria</string>
   <string name="set_display_reply">Erakutsi aurreko mezua erantzunetan</string>
   <string name="set_display_local">Bistaratu denbora-lerro lokala</string>
   <string name="set_display_global">Bistaratu denbora-lerro federatua</string>
