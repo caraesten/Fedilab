@@ -101,13 +101,13 @@
   <string name="no_status">Ez dago toot-ik bistaratzeko</string>
   <string name="fav_added">Toot-a gogokoetara gehitu da</string>
   <string name="fav_removed">Toot-a gogokoetatik kendu da!</string>
-  <string name="reblog_added">Toot-a bultzatu da!</string>
-  <string name="reblog_removed">Toot-a ez dago jada bultzatua!</string>
-  <string name="reblog_by">%1$s(e)k bultzatua</string>
+  <string name="reblog_added">Toot-ari bultzada eman zaio!</string>
+  <string name="reblog_removed">Toot-ari bultzada kendu zaio!</string>
+  <string name="reblog_by">%1$s(e)n bultzada</string>
   <string name="favourite_add">Gehitu toot hau zure gogokoetara?</string>
   <string name="favourite_remove">Kendu toot hau zure gogokoetatik?</string>
-  <string name="reblog_add">Bultzatu toot hau?</string>
-  <string name="reblog_remove">Desbultzatu toot hau?</string>
+  <string name="reblog_add">Bultzada eman toot honi?</string>
+  <string name="reblog_remove">Bultzada kendu toot honi?</string>
   <string name="pin_add">Finkatu toot hau?</string>
   <string name="pin_remove">Desfinkatu toot hau?</string>
   <string name="more_action_1">Mututu</string>
@@ -158,7 +158,7 @@
   <string name="toots_visibility_tilte">Toot-en lehenetsitako ikusgaitasuna: </string>
   <string name="toot_sent">Toot-a bidali da!</string>
   <string name="toot_reply_content_title">Toot honi erantzuten ari zara:</string>
-  <string name="toot_sensitive">Eduki mingarria?</string>
+  <string name="toot_sensitive">Eduki hunkigarria?</string>
   <string-array name="toot_visibility">
     <item>Argitaratu denbora-lerro publikoetan</item>
     <item>Ez argitaratu denbora-lerro publikoetan</item>
@@ -211,7 +211,7 @@
   <!-- Notifications -->
   <string name="no_notifications">Jakinarazpenik ez bistaratzeko</string>
   <string name="notif_mention">erabiltzaileak aipatu zaitu</string>
-  <string name="notif_reblog">erabiltzaileak zure mezua bultzatu du</string>
+  <string name="notif_reblog">erabiltzaileak zure mezuari bultzada eman dio</string>
   <string name="notif_favourite">erabiltzaileak zure mezua gogoko du</string>
   <string name="notif_follow">zu jarraitzen hasi da</string>
   <string name="notif_pouet">%1$s erabiltzailearen toot berria</string>
@@ -240,8 +240,8 @@
   <string name="toast_unmute">Kontua ez dago jada mututua!</string>
   <string name="toast_follow">Kontua jarraitzen hasi zara!</string>
   <string name="toast_unfollow">Ez duzu jada kontu hau jarraitzen!</string>
-  <string name="toast_reblog">Toot-a bultzatu da!</string>
-  <string name="toast_unreblog">Toot-a ez dago jada bultzatua!</string>
+  <string name="toast_reblog">Toot-ari bultzada eman zaio!</string>
+  <string name="toast_unreblog">Toot-ari bultzada kendu zaio!</string>
   <string name="toast_favourite">Toot-a zure gogokoetara gehitu da!</string>
   <string name="toast_unfavourite">Toot-a zure gogokoetatik kendu da!</string>
   <string name="toast_report">Toot-a salatu da!</string>
@@ -274,7 +274,7 @@
   <string name="load_attachment">Kargatu irudiak</string>
   <string name="load_attachment_spoiler">Erakutsi gehiago…</string>
   <string name="load_attachment_spoiler_less">Erakutsi gutxiago…</string>
-  <string name="load_sensitive_attachment">Eduki mingarria</string>
+  <string name="load_sensitive_attachment">Eduki hunkigarria</string>
   <string name="set_display_reply">Erakutsi aurreko mezua erantzunetan</string>
   <string name="set_display_local">Bistaratu denbora-lerro lokala</string>
   <string name="set_display_global">Bistaratu denbora-lerro federatua</string>
@@ -286,10 +286,10 @@
   <string name="settings_title_notifications">Kudeatu jakinarazpenak</string>
   <string name="set_notif_follow">Jakinarazi norbaitek jarraitzen zaituenean</string>
   <string name="set_notif_follow_ask">Jakinarazi norbait zu jarraitzeko eskaera egiten duenean</string>
-  <string name="set_notif_follow_share">Jakinarazi norbaitek zure mezua bultzatzen duenean</string>
+  <string name="set_notif_follow_share">Jakinarazi norbaitek zure mezuari bultzada ematean</string>
   <string name="set_notif_follow_add">Jakinarazi norbaitek zure mezua gogoko duenean</string>
   <string name="set_notif_follow_mention">Jakinarazi norbaitek aipatzen zaituenean</string>
-  <string name="set_share_validation">Erakutsi berrespen elkarrizketa-koadroa bultzatu aurretik</string>
+  <string name="set_share_validation">Erakutsi berrespen elkarrizketa-koadroa bultzada eman aurretik</string>
   <string name="set_share_validation_fav">Erakutsi baieztapen elkarrizketa-koadroa gogokoetara erantsi aurretik</string>
   <string name="settings_title_more_options">Ezarpen aurreratuak</string>
   <string name="set_wifi_only">Jakinarazi WIFI bidez besterik ez</string>
@@ -459,7 +459,7 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="action_lists_owner">Zure zerrendak</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s %2$s(e)ra mugitu da</string>
-  <string name="show_boost_count">Erakutsi bultzatutako/gogokoen kopurua</string>
+  <string name="show_boost_count">Erakutsi bultzada/gogoko kopurua</string>
   <string name="issue_login_title">Autentifikazioa ez dabil?</string>
   <string name="issue_login_message">
         <b>Hona lagundu dezaketen egiaztaketa batzuk:</b>\n\n
