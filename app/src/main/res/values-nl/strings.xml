@@ -305,7 +305,7 @@
   <string name="set_preview_reply">Aantal reacties per toot op jouw start-tijdlijn tonen</string>
   <string name="set_preview_reply_pp">Avatars bij aantal reacties tonen?</string>
   <string name="set_multiaccount_actions">Interactie tussen ingestelde accounts toestaan?</string>
-  <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_fit_preview">Voorbeeldafbeeldingen passend maken</string>
   <string name="note_no_space">Je hebt het limiet van 160 karakters bereikt!</string>
   <string name="username_no_space">Je hebt het limiet van 30 karakters bereikt!</string>
   <string name="settings_title_hour">Op welk moment van de dag zijn meldingen toegestaan:</string>
@@ -331,9 +331,9 @@
     <item>Nee</item>
   </string-array>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Donker</item>
+    <item>Licht</item>
+    <item>Zwart</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>Niet</item>
@@ -485,9 +485,9 @@
   <string name="poxy_port">Poort</string>
   <string name="poxy_login">Gebruikersnaam</string>
   <string name="poxy_password">Wachtwoord</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
+  <string name="set_theme">Thema:</string>
+  <string name="set_compact_mode">Compacte modus</string>
+  <string name="set_share_details">Volledige toot delen</string>
+  <string name="support_the_app_on_liberapay">Ondersteun de app op Liberapay</string>
+  <string name="alert_regex">Er zit een fout in de reguliere expressie!</string>
 </resources>
