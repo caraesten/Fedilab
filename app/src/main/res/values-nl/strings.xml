@@ -241,9 +241,9 @@
   <string name="toast_follow">Account wordt nu gevolgd!</string>
   <string name="toast_unfollow">Account wordt niet langer gevolgd!</string>
   <string name="toast_reblog">Toot is geboost!</string>
-  <string name="toast_unreblog">Toot wordt niet meer geboost!</string>
+  <string name="toast_unreblog">Toot wordt niet langer geboost!</string>
   <string name="toast_favourite">Toot is als favoriet gemarkeerd!</string>
-  <string name="toast_unfavourite">Toot is niet meer als favoriet gemarkeerd!</string>
+  <string name="toast_unfavourite">Toot wordt niet langer als favoriet gemarkeerd!</string>
   <string name="toast_report">Toot is gerapporteerd!</string>
   <string name="toast_unstatus">Toot is verwijderd!</string>
   <string name="toast_pin">Toot is vastgezet!</string>
@@ -360,7 +360,7 @@
   <string name="action_unblock">Deblokkeren</string>
   <string name="action_mute">Negeren</string>
   <string name="action_no_action">Geen actie</string>
-  <string name="action_unmute">Niet meer negeren</string>
+  <string name="action_unmute">Niet langer negeren</string>
   <string name="request_sent">Verzoek verzonden</string>
   <string name="followed_by">Volgt jou</string>
   <string name="action_search">Zoeken</string>
