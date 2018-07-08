@@ -7,8 +7,8 @@
   <string name="action_about_instance">Over deze Mastodonserver</string>
   <string name="action_privacy">Privacy</string>
   <string name="action_cache">Buffer</string>
-  <string name="action_logout">Uitloggen</string>
-  <string name="login">Inloggen</string>
+  <string name="action_logout">Afmelden</string>
+  <string name="login">Aanmelden</string>
   <!-- common -->
   <string name="close">Sluiten</string>
   <string name="yes">Ja</string>
@@ -102,12 +102,12 @@
   <string name="fav_added">De toot is aan jouw favorieten toegevoegd</string>
   <string name="fav_removed">De toot is uit jouw favorieten verwijderd!</string>
   <string name="reblog_added">De toot is geboost!</string>
-  <string name="reblog_removed">De toot is niet meer geboost!</string>
+  <string name="reblog_removed">De toot wordt niet langer geboost!</string>
   <string name="reblog_by">Geboost door %1$s</string>
   <string name="favourite_add">Deze toot aan jouw favorieten toevoegen?</string>
   <string name="favourite_remove">Deze toot uit jouw favorieten verwijderen?</string>
   <string name="reblog_add">Deze toot boosten?</string>
-  <string name="reblog_remove">Deze toot niet meer boosten?</string>
+  <string name="reblog_remove">Deze toot niet langer boosten?</string>
   <string name="pin_add">Deze toot aan jouw profielpagina vastmaken?</string>
   <string name="pin_remove">Deze toot van profielpagina losmaken?</string>
   <string name="more_action_1">Negeren</string>
@@ -207,7 +207,7 @@
   <!-- timed mute -->
   <string name="timed_mute_date_error">De tijd om te negeren moet langer duren dan een minuut.</string>
   <string name="timed_mute_date">%1$s wordt tot %2$s genegeerd.\n Ga naar het profiel van dit account om het negeren op te heffen.</string>
-  <string name="timed_mute_profile">%1$s wordt tot %2$s genegeerd.\n Klik hier om dit account niet meer te negeren.</string>
+  <string name="timed_mute_profile">%1$s wordt tot %2$s genegeerd.\n Klik hier om dit account niet langer te negeren.</string>
   <!-- Notifications -->
   <string name="no_notifications">Je hebt nog geen meldingen</string>
   <string name="notif_mention">vermeldde jou</string>
@@ -237,9 +237,9 @@
   <string name="toast_block">Account is geblokkeerd!</string>
   <string name="toast_unblock">Account is gedeblokkeerd!</string>
   <string name="toast_mute">Account wordt nu genegeerd!</string>
-  <string name="toast_unmute">Account wordt niet meer genegeerd!</string>
+  <string name="toast_unmute">Account wordt niet langer genegeerd!</string>
   <string name="toast_follow">Account wordt nu gevolgd!</string>
-  <string name="toast_unfollow">Account wordt niet meer gevolgd!</string>
+  <string name="toast_unfollow">Account wordt niet langer gevolgd!</string>
   <string name="toast_reblog">Toot is geboost!</string>
   <string name="toast_unreblog">Toot wordt niet meer geboost!</string>
   <string name="toast_favourite">Toot is als favoriet gemarkeerd!</string>
@@ -253,7 +253,7 @@
   <string name="toast_error_instance">De domeinnaam van de Mastodonserver is onjuist!</string>
   <string name="toast_error_loading_account">Er ging wat mis tijdens het omschakelen van accounts!</string>
   <string name="toast_error_search">Er ging wat mis tijdens het zoeken!</string>
-  <string name="toast_error_login">Kan niet inloggen!</string>
+  <string name="toast_error_login">Kan niet aanmelden!</string>
   <string name="toast_update_credential_ok">De profielgegevens zijn opgeslagen!</string>
   <string name="nothing_to_do">Er valt niets te doen</string>
   <string name="toast_saved">Media is opgeslagen!</string>
