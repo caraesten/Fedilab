@@ -35,13 +35,13 @@
   <string name="instance_example">Instans: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">Fungerar nu med kontot %1$s</string>
   <string name="add_account">Lägg till ett konto</string>
-  <string name="clipboard">The content of the toot has been copied to the clipboard</string>
-  <string name="change">Change</string>
-  <string name="choose_picture">Select a picture…</string>
-  <string name="clear">Clean</string>
-  <string name="microphone">Microphone</string>
-  <string name="camera">Camera</string>
-  <string name="speech_prompt">Please, say something</string>
+  <string name="clipboard">Tootens innehåll har kopierats till urklipp</string>
+  <string name="change">Ändra</string>
+  <string name="choose_picture">Välj en bild…</string>
+  <string name="clear">Rengör</string>
+  <string name="microphone">Mikrofon</string>
+  <string name="camera">Kamera</string>
+  <string name="speech_prompt">Var god säg något</string>
   <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
   <string name="delete_all">Delete all</string>
   <string name="translate_toot">Translate this toot.</string>
