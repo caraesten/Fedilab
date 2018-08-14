@@ -118,6 +118,7 @@
   <string name="more_action_6">Поделиться</string>
   <string name="more_action_7">Упомянуть</string>
   <string name="more_action_8">Временно заглушить</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>Заглушить этот аккаунт?</item>
     <item>Блокировать этот аккаунт?</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Удалить этот toot?</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d ответ</item>
@@ -335,7 +337,9 @@
   <string-array name="settings_translation">
     <item>Яндекс</item>
     <item>Нет</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
     <item>Темное</item>
     <item>Светлое</item>
