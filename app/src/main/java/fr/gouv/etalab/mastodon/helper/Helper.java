@@ -343,6 +343,7 @@ public class Helper {
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]+)");
+    public static final Pattern twitterPattern = Pattern.compile("((@[\\w]+)@twitter\\.com)");
     private static final Pattern mentionPattern = Pattern.compile("(@[\\w]+)");
 
 
