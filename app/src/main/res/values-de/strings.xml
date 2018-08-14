@@ -162,7 +162,7 @@
   <string-array name="toot_visibility">
     <item>Absenden an öffentliche Zeitleiste</item>
     <item>Nicht an öffentliche Zeitleiste absenden</item>
-    <item>Nur an Follower senden</item>
+    <item>Nur an Anhänger senden</item>
     <item>Nur an erwähnten Nutzer absenden</item>
   </string-array>
   <string name="no_draft">Keine Entwürfe vorhanden!</string>
@@ -192,9 +192,9 @@
   <string name="no_follow_request">Keine Folgen-Anfrage</string>
   <string name="status_cnt">Toots \n
      %1$s</string>
-  <string name="following_cnt">Following \n
+  <string name="following_cnt">Folgt \n
      %1$s</string>
-  <string name="followers_cnt">Followers \n
+  <string name="followers_cnt">Anhänger \n
      %1$s</string>
   <string name="pins_cnt">Angeheftet\n
  %d</string>
@@ -233,7 +233,7 @@
   <string name="delete_notification_all">Alle Benachrichtigungen wurden gelöscht!</string>
   <!-- HEADER -->
   <string name="following">Folgt</string>
-  <string name="followers">Followers</string>
+  <string name="followers">Anhänger</string>
   <string name="pinned_toots">Angeheftet</string>
   <!-- TOAST -->
   <string name="client_error">Fehler beim Laden der Client ID!</string>
