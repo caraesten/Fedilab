@@ -118,6 +118,7 @@
   <string name="more_action_6">Teilen</string>
   <string name="more_action_7">Erwähnen</string>
   <string name="more_action_8">Zeitlich begrenzt stummschalten</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>Nutzer stummschalten?</item>
     <item>Diesen Nutzer blockieren?</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Entferne diesen Toot?</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d Antwort</item>
@@ -333,7 +335,9 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>Nein</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
     <item>Dunkel</item>
     <item>Hell</item>
