@@ -19,8 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center_vertical">
+    >
     <ImageView
         android:id="@+id/tab_icon"
         android:layout_centerInParent="true"
@@ -29,18 +28,19 @@
         android:layout_height="25dp"
         tools:ignore="ContentDescription" />
     <TextView
-        android:id="@+id/tab_counter"
         android:visibility="gone"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/tab_counter"
+        android:layout_alignRight="@+id/tab_icon"
+        android:layout_alignEnd="@+id/tab_icon"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
         android:gravity="center"
         android:textSize="12sp"
         android:textColor="@color/mastodonC1"
         android:background="@drawable/shape_counter"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </RelativeLayout>

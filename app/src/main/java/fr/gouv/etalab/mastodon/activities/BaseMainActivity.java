@@ -122,6 +122,8 @@ import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_TARGETED_ACCOUNT;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_KEYWORD;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_TAG;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
@@ -679,9 +681,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                 long sizeCache = Helper.cacheSize(getCacheDir());
                                 float cacheSize = 0;
                                 if( sizeCache > 0 ) {
-                                    if (sizeCache > 0) {
-                                        cacheSize = (float) sizeCache / 1000000.0f;
-                                    }
+                                    cacheSize = (float) sizeCache / 1000000.0f;
                                 }
                                 final float finalCacheSize = cacheSize;
                                 builder.setMessage(getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), getString(R.string.cache_units))))
@@ -1136,6 +1136,14 @@ public abstract class BaseMainActivity extends BaseActivity
             }else if( extras.getInt(INTENT_ACTION) == BACKUP_INTENT){
                 Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
                 startActivity(myIntent);
+            }else if(extras.getInt(INTENT_ACTION) == SEARCH_TAG){
+                String keyword = extras.getString(SEARCH_KEYWORD);
+                if( keyword != null){
+                    for(int i = 0; i < tabLayout.getTabCount() ; i++ ){
+                        if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(keyword))
+                            tabLayout.getTabAt(i).select();
+                    }
+                }
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
             if ("text/plain".equals(type)) {

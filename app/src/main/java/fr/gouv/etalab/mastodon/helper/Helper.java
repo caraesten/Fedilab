@@ -209,7 +209,7 @@ public class Helper {
     public static final String SHOULD_CONTINUE_STREAMING = "should_continue_streaming";
     public static final String SHOULD_CONTINUE_STREAMING_FEDERATED = "should_continue_streaming_federated";
     public static final String SHOULD_CONTINUE_STREAMING_LOCAL = "should_continue_streaming_local";
-
+    public static final String SEARCH_KEYWORD = "search_keyword";
     public static final String CLIP_BOARD = "clipboard";
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
@@ -218,6 +218,7 @@ public class Helper {
     public static final int CHANGE_USER_INTENT = 4;
     public static final int ADD_USER_INTENT = 5;
     public static final int BACKUP_INTENT = 6;
+    public static final int SEARCH_TAG = 7;
     //Settings
     public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";
     public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";
@@ -2151,7 +2152,6 @@ public class Helper {
 
 
     public static void addSearchTag(Context context, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<String> searches = new SearchDAO(context, db).getAllSearch();
         int countInitialTab = ((BaseMainActivity) context).countPage;
@@ -2162,10 +2162,15 @@ public class Helper {
                 allTabCount -=1;
             }
         }
-        if( searches != null)
-            for(String search: searches){
+        if( searches != null) {
+            for (String search : searches) {
                 addTab(tableLayout, pagerAdapter, search);
             }
+            if( searches.size() > 0 ){
+                tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+                tableLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+            }
+        }
     }
 
     private static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {

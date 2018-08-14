@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -45,6 +46,9 @@ import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.R;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_KEYWORD;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_TAG;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -111,20 +115,12 @@ public class DisplaySearchFragment extends Fragment {
                                 return;
                             }
                             new SearchDAO(context, db).insertSearch(keyword);
-                            ((BaseMainActivity)context).refreshSearchTab();
-                            searches.add(keyword);
-                            if( textviewNoAction.getVisibility() == View.VISIBLE)
-                                textviewNoAction.setVisibility(View.GONE);
-                            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-                            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                            if( theme == Helper.THEME_LIGHT){
-                                changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.black);
-                            }else if(theme == Helper.THEME_DARK){
-                                changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
-                            }else if(theme == Helper.THEME_BLACK) {
-                                changeDrawableColor(context, R.drawable.ic_keyboard_arrow_right,R.color.dark_text);
-                            }
-                            searchTootsListAdapter.notifyDataSetChanged();
+                            if( getActivity() != null)
+                                getActivity().recreate();
+                            Intent intent = new Intent(context, MainActivity.class);
+                            intent.putExtra(INTENT_ACTION, SEARCH_TAG);
+                            intent.putExtra(SEARCH_KEYWORD, keyword);
+                            startActivity(intent);
                         }
                     });
                     AlertDialog alertDialog = dialogBuilder.create();
