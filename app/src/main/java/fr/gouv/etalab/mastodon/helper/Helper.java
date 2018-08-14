@@ -2173,10 +2173,23 @@ public class Helper {
         }
     }
 
+    public static void removeSearchTag(String keyword, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
+
+        int selection = -1;
+        for(int i = 0; i < tableLayout.getTabCount() ; i++ ){
+            if( tableLayout.getTabAt(i).getText() != null && tableLayout.getTabAt(i).getText().equals(keyword)) {
+                selection = i;
+                break;
+            }
+        }
+        if( selection != -1)
+            removeTab(tableLayout, pagerAdapter, selection);
+    }
+
     private static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
         if (tableLayout.getTabCount() >= position) {
             tableLayout.removeTabAt(position);
-            pagerAdapter.removeTabPage(position);
+            pagerAdapter.removeTabPage();
         }
     }
 

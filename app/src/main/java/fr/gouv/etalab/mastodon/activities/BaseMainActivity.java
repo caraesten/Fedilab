@@ -534,6 +534,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 startActivity(intent);
                 toolbar_search.setQuery("", false);
                 toolbar_search.setIconified(true);
+
                 if( main_app_container.getVisibility() == View.VISIBLE){
                     main_app_container.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
@@ -930,6 +931,18 @@ public abstract class BaseMainActivity extends BaseActivity
         Helper.addSearchTag(BaseMainActivity.this, tabLayout, adapter);
     }
 
+    public void removeSearchTab(String tag){
+        Helper.removeSearchTag(tag, tabLayout, adapter);
+        int allTabCount = tabLayout.getTabCount();
+        if( allTabCount == countPage){
+            main_app_container.setVisibility(View.GONE);
+            viewPager.setVisibility(View.VISIBLE);
+            tabLayout.setVisibility(View.VISIBLE);
+            toolbarTitle.setVisibility(View.GONE);
+        }
+    }
+
+
     protected abstract void rateThisApp();
 
 
@@ -1139,6 +1152,9 @@ public abstract class BaseMainActivity extends BaseActivity
             }else if(extras.getInt(INTENT_ACTION) == SEARCH_TAG){
                 String keyword = extras.getString(SEARCH_KEYWORD);
                 if( keyword != null){
+                    adapter = new PagerAdapter
+                            (getSupportFragmentManager(), tabLayout.getTabCount());
+                    viewPager.setAdapter(adapter);
                     for(int i = 0; i < tabLayout.getTabCount() ; i++ ){
                         if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(keyword))
                             tabLayout.getTabAt(i).select();
@@ -1384,7 +1400,6 @@ public abstract class BaseMainActivity extends BaseActivity
         viewPager.setVisibility(View.GONE);
         tabLayout.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.VISIBLE);
-
         appBar.setExpanded(true);
         if (id != R.id.nav_drafts && id != R.id.nav_bookmarks ) {
             delete_all.setVisibility(View.GONE);
@@ -1584,8 +1599,7 @@ public abstract class BaseMainActivity extends BaseActivity
             this.mNumOfTabs = NumOfTabs;
         }
 
-        public void removeTabPage(int position) {
-            tabLayout.removeTabAt(position);
+        public void removeTabPage() {
             this.mNumOfTabs--;
             notifyDataSetChanged();
         }

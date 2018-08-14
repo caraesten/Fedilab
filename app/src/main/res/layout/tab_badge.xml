@@ -29,8 +29,8 @@
         tools:ignore="ContentDescription" />
     <TextView
         android:visibility="gone"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:id="@+id/tab_counter"
         android:layout_alignRight="@+id/tab_icon"
         android:layout_alignEnd="@+id/tab_icon"
