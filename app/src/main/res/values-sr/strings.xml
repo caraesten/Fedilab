@@ -118,7 +118,7 @@
   <string name="more_action_6">Подели</string>
   <string name="more_action_7">Спомени</string>
   <string name="more_action_8">Временски ограничено ућуткивање</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_9">Избриши &amp; и поново изради</string>
   <string-array name="more_action_confirm">
     <item>Ућуткај овај налог?</item>
     <item>Блокирај овај налог?</item>
@@ -126,7 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Уклони овај тут?</item>
-    <item>Delete &amp; re-draft this toot?</item>
+    <item>Избриши &amp; и поново напиши овај тут?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d одговор</item>
@@ -334,9 +334,9 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>Не</item>
-    <item>No</item>
+    <item>Не</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">Ваш API кључ, можете оставити празно за Yandex</string>
   <string-array name="settings_theme">
     <item>Тамна</item>
     <item>Светла</item>
