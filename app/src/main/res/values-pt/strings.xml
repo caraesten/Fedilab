@@ -40,7 +40,7 @@
   <string name="choose_picture">Selecione uma imagem…</string>
   <string name="clear">Limpar</string>
   <string name="microphone">Microfone</string>
-  <string name="camera">Camera</string>
+  <string name="camera">Câmera</string>
   <string name="speech_prompt">Por favor, diga algo</string>
   <string name="speech_not_supported">Desculpe! Seu aparelho não suporta entrada por voz!</string>
   <string name="delete_all">Excluir tudo</string>
@@ -64,10 +64,10 @@
   <string name="follow">Novos seguidores</string>
   <string name="mention">Menções</string>
   <string name="reblog">Compartilhamentos</string>
-  <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
-  <string name="action_open_in_web">Open in browser</string>
-  <string name="translate">Translate</string>
+  <string name="show_boosts">Mostrar boosts</string>
+  <string name="show_replies">Mostrar respostas</string>
+  <string name="action_open_in_web">Abrir no navegador</string>
+  <string name="translate">Traduzir</string>
   <string name="please_wait">Please, wait few seconds before making this action.</string>
   <!--- Menu -->
   <string name="home_menu">Página inicial</string>
