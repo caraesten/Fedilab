@@ -398,7 +398,7 @@
     <item>Apenas</item>
     <item>Ambos</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Nenhum toot foi encontrado no banco de dados. Por favor, use o botão de sincronização no menu para recuperá-los.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Dados salvos</string>
   <string name="privacy_data">
@@ -425,11 +425,11 @@
     </string>
   <string name="privacy_API_title">Rastreamento e bibliotecas</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        O aplicativo <b>não usa ferramentas de rastreamento</b> (medição de audiência, relatórios de erro, etc) e não contém qualquer propaganda.\n\n
+        O uso de bibliotecas é minimizado: \n
+        - <b>Glide</b>: Para gerenciar mídia\n
+        - <b>Android-Job</b>: Para gerenciar serviços\n
+        - <b>PhotoView</b>: Para gerenciar imagens\n
     </string>
   <string name="privacy_API_yandex_title">Tradução de toots</string>
   <string name="privacy_API_yandex_authorizations">
@@ -442,49 +442,49 @@
   <string name="thanks_text_dev">
         Agradecimentos a:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="filter_regex">Filtrar por expressões regulares</string>
+  <string name="search">Busca</string>
+  <string name="delete">Apagar</string>
+  <string name="fetch_more_toots">Buscar mais toots…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">Listas</string>
+  <string name="action_lists_confirm_delete">Tem certeza que deseja apagar permanentemente esta lista?</string>
+  <string name="action_lists_empty_content">Não há nada nesta lista ainda. Quando membros desta lista postarem novos status, eles aparecerão aqui.</string>
+  <string name="action_lists_add_to">Adicionar à lista</string>
+  <string name="action_lists_remove_from">Remover da lista</string>
+  <string name="action_lists_create">Adicionar lista</string>
+  <string name="action_lists_delete">Apagar lista</string>
+  <string name="action_lists_update">Editar lista</string>
+  <string name="action_lists_title_placeholder">Título da nova lista</string>
+  <string name="action_lists_search_users">Procure entre pessoas que você segue</string>
+  <string name="action_lists_owner">Suas listas</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s foi movido para %2$s</string>
+  <string name="show_boost_count">Mostrar a contagem de compartilhamentos/favoritos</string>
+  <string name="issue_login_title">Autenticação não funciona?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Aqui estão algumas verificações que podem ajudar:</b>\n\n
+        - Verifique se não há erros de digitação no nome da instância\n\n
+        - Verifique se a sua instância não está fora do ar\n\n
+        - Se você utiliza a autenticação de dois fatores (2FA), use o link na parte inferior (uma vez que o nome da instância estiver preenchido) \n\n
+        - Você também pode usar este link sem usar o 2FA\n\n
+        - Se ainda não funcionar, por favor, crie um issue no Github em https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="media_ready">A mídia foi carregada. Clique aqui para exibi-la.</string>
+  <string name="data_export_start">Esta ação pode ser bastante longa. Você será notificado quando ela será terminada.</string>
+  <string name="data_export_running">Ainda em execução, por favor aguarde…</string>
+  <string name="data_export">Exportar status</string>
+  <string name="data_export_toots">Exportar status para %1$s</string>
+  <string name="data_export_success">%1$s toots de %2$s foram exportados.</string>
+  <string name="data_export_error">Algo deu errado enquanto exportava dados para %1$s</string>
   <!-- Proxy -->
   <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
+  <string name="proxy_type">Tipo</string>
+  <string name="proxy_enable">Habilitar o proxy?</string>
+  <string name="poxy_host">Servidor</string>
+  <string name="poxy_port">Porta</string>
   <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="poxy_password">Senha</string>
   <string name="set_theme">Tema:</string>
   <string name="set_compact_mode">Modo compacto</string>
   <string name="set_share_details">Adicionar detalhes do toot quando compartilhar</string>
