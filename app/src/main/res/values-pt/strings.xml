@@ -68,7 +68,7 @@
   <string name="show_replies">Mostrar respostas</string>
   <string name="action_open_in_web">Abrir no navegador</string>
   <string name="translate">Traduzir</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="please_wait">Por favor, espere alguns segundos antes de fazer esta ação.</string>
   <!--- Menu -->
   <string name="home_menu">Página inicial</string>
   <string name="local_menu">Timeline local</string>
