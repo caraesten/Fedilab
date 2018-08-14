@@ -333,7 +333,7 @@
     <item>No</item>
     <item>No</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">Tu llave API, puedes dejar en blanco para Yandex</string>
   <string-array name="settings_theme">
     <item>Oscuro</item>
     <item>Claro</item>
