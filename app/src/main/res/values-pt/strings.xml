@@ -64,7 +64,7 @@
   <string name="follow">Novos seguidores</string>
   <string name="mention">Menções</string>
   <string name="reblog">Compartilhamentos</string>
-  <string name="show_boosts">Mostrar boosts</string>
+  <string name="show_boosts">Mostrar compartilhamentos</string>
   <string name="show_replies">Mostrar respostas</string>
   <string name="action_open_in_web">Abrir no navegador</string>
   <string name="translate">Traduzir</string>
@@ -80,7 +80,7 @@
   <string name="blocked_menu">Usuários bloqueados</string>
   <string name="remote_follow_menu">Seguir remotamente</string>
   <string name="notifications">Notificações</string>
-  <string name="follow_request">Solicitações de seguidor</string>
+  <string name="follow_request">Solicitação para seguir</string>
   <string name="optimization">Otimização</string>
   <string name="settings">Configurações</string>
   <string name="profile">Perfil</string>
@@ -381,22 +381,22 @@
   <string name="toast_cache_clear">Cache limpo! %1$s foram liberados</string>
   <!-- ACTIVITY CACHE -->
   <string name="action_sync">Sincronizar</string>
-  <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="action_filter">Filtro</string>
+  <string name="owner_cached_toots">Seus toots</string>
+  <string name="v_public">Público</string>
+  <string name="v_unlisted">Não Listado</string>
+  <string name="v_private">Privado</string>
+  <string name="v_direct">Direto</string>
+  <string name="v_keywords">Algumas palavras-chave…</string>
+  <string name="show_media">Exibir mídia</string>
+  <string name="show_pinned">Mostrar fixado</string>
+  <string name="filter_no_result">Nenhum resultado correspondente encontrado!</string>
+  <string name="data_backup_toots">Fazer backup dos toots por %1$s</string>
+  <string name="data_backup_success">%1$s novos toots foram importados</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Não</item>
+    <item>Apenas</item>
+    <item>Ambos</item>
   </string-array>
   <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
   <!-- PRIVACY -->
