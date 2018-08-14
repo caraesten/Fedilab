@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -103,6 +104,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.BackupStatusService;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
+import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -160,6 +162,8 @@ public abstract class BaseMainActivity extends BaseActivity
     private String bookmark;
     private String userId;
     private String instance;
+    public int countPage;
+    private PagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -369,14 +373,14 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
         viewPager = findViewById(R.id.viewpager);
-        int countPage = 2;
+        countPage = 2;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true))
             countPage++;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true))
             countPage++;
         viewPager.setOffscreenPageLimit(countPage);
         main_app_container = findViewById(R.id.main_app_container);
-        PagerAdapter adapter = new PagerAdapter
+        adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -915,12 +919,16 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         };
+        refreshSearchTab();
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
 
         // Retrieves instance
         new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    public void refreshSearchTab(){
+        Helper.addSearchTag(BaseMainActivity.this, tabLayout, adapter);
+    }
 
     protected abstract void rateThisApp();
 
@@ -1310,6 +1318,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_local_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
+
     }
 
     @Override
@@ -1559,12 +1568,25 @@ public abstract class BaseMainActivity extends BaseActivity
     /**
      * Page Adapter for settings
      */
-    private class PagerAdapter extends FragmentStatePagerAdapter  {
+    public class PagerAdapter extends FragmentStatePagerAdapter  {
         int mNumOfTabs;
 
         private PagerAdapter(FragmentManager fm, int NumOfTabs) {
             super(fm);
             this.mNumOfTabs = NumOfTabs;
+        }
+
+        public void removeTabPage(int position) {
+            tabLayout.removeTabAt(position);
+            this.mNumOfTabs--;
+            notifyDataSetChanged();
+        }
+
+        public void addTabPage(String title) {
+            TabLayout.Tab tab = tabLayout.newTab();
+            tab.setText(title);
+            this.mNumOfTabs++;
+            notifyDataSetChanged();
         }
 
         @Override
@@ -1575,6 +1597,9 @@ public abstract class BaseMainActivity extends BaseActivity
                 tabLayout.setVisibility(View.VISIBLE);
                 toolbar_search.setIconified(true);
             }
+            SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            List<String> searches = new SearchDAO(BaseMainActivity.this, db).getAllSearch();
+            int sizeSearches = (searches ==null)?0:searches.size();
             //Selection comes from another menu, no action to do
             DisplayStatusFragment statusFragment;
             Bundle bundle = new Bundle();
@@ -1591,18 +1616,24 @@ public abstract class BaseMainActivity extends BaseActivity
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            }else if(position == 2){
+            }else if(position == 2 && display_global){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            }else if (position == 3){
+            }else if (position == 3 && display_global && display_local){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
+                statusFragment.setArguments(bundle);
+                return statusFragment;
+            }else{ //Here it's a search fragment
+                statusFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.TAG);
+                if( tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null)
+                    bundle.putString("tag", tabLayout.getTabAt(position).getText().toString());
                 statusFragment.setArguments(bundle);
                 return statusFragment;
             }
-            return null;
         }
 
         @NonNull
@@ -1630,6 +1661,7 @@ public abstract class BaseMainActivity extends BaseActivity
             }
             return createdFragment;
         }
+
         @Override
         public int getCount() {
             return mNumOfTabs;

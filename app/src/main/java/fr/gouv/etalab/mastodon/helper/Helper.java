@@ -33,6 +33,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.design.widget.TabLayout;
 import android.support.media.ExifInterface;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -137,6 +138,7 @@ import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.BuildConfig;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -154,6 +156,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -2145,4 +2148,36 @@ public class Helper {
             Log.v(Helper.TAG, content);
         }
     }
+
+
+    public static void addSearchTag(Context context, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        List<String> searches = new SearchDAO(context, db).getAllSearch();
+        int countInitialTab = ((BaseMainActivity) context).countPage;
+        int allTabCount = tableLayout.getTabCount();
+        if( allTabCount > countInitialTab){
+            while(allTabCount > countInitialTab){
+                removeTab(tableLayout, pagerAdapter, allTabCount-1);
+                allTabCount -=1;
+            }
+        }
+        if( searches != null)
+            for(String search: searches){
+                addTab(tableLayout, pagerAdapter, search);
+            }
+    }
+
+    private static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
+        if (tableLayout.getTabCount() >= position) {
+            tableLayout.removeTabAt(position);
+            pagerAdapter.removeTabPage(position);
+        }
+    }
+
+    private static void addTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, String title) {
+        tableLayout.addTab(tableLayout.newTab().setText(title));
+        pagerAdapter.addTabPage(title);
+    }
+
 }

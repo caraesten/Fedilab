@@ -37,6 +37,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.drawers.SearchTootsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -110,6 +111,7 @@ public class DisplaySearchFragment extends Fragment {
                                 return;
                             }
                             new SearchDAO(context, db).insertSearch(keyword);
+                            ((BaseMainActivity)context).refreshSearchTab();
                             searches.add(keyword);
                             if( textviewNoAction.getVisibility() == View.VISIBLE)
                                 textviewNoAction.setVisibility(View.GONE);
