@@ -262,6 +262,7 @@ public class Helper {
     public static final int LED_COLOUR = 0;
 
     public static final int TRANS_YANDEX = 0;
+    public static final int TRANS_DEEPL = 1;
     public static final int TRANS_NONE = 2;
 
     public static final String SET_TRANS_FORCED = "set_trans_forced";
@@ -327,6 +328,8 @@ public class Helper {
     //User agent
     public static final String USER_AGENT = "Mastalab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
 
+    public static final String SET_YANDEX_API_KEY = "set_yandex_api_key";
+    public static final String SET_DEEPL_API_KEY = "set_deepl_api_key";
 
     private static boolean menuAccountsOpened = false;
 

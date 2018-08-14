@@ -65,7 +65,7 @@ dependencies {
     implementation "com.gongwen:swipeback:$swipebackLibraryVersion"
 
     implementation 'com.github.stom79:country-picker-android:1.2.0'
-    implementation 'com.github.stom79:mytransl:1.4'
+    implementation 'com.github.stom79:mytransl:1.5'
 
 
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"

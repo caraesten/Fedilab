@@ -571,7 +571,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.yandex_translate.setVisibility(View.VISIBLE);
                     break;
                 default:
-                    holder.yandex_translate.setVisibility(View.VISIBLE);
+                    holder.yandex_translate.setVisibility(View.GONE);
             }
 
             //Manages theme for icon colors
@@ -1988,9 +1988,29 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     private void translateToot(Status status){
         //Manages translations
-        final MyTransL myTransL = MyTransL.getInstance(MyTransL.translatorEngine.YANDEX);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int trans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+        MyTransL.translatorEngine et = MyTransL.translatorEngine.YANDEX;
+        String api_key = null;
+
+
+
+        if( trans == Helper.TRANS_YANDEX) {
+            et = MyTransL.translatorEngine.YANDEX;
+        }else if( trans == Helper.TRANS_DEEPL) {
+            et = MyTransL.translatorEngine.DEEPL;
+        }
+        final MyTransL myTransL = MyTransL.getInstance(et);
         myTransL.setObfuscation(true);
-        myTransL.setYandexAPIKey(Helper.YANDEX_KEY);
+        if( trans == Helper.TRANS_YANDEX) {
+            api_key = sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, Helper.YANDEX_KEY);
+            myTransL.setYandexAPIKey(api_key);
+        }else if( trans == Helper.TRANS_DEEPL) {
+            api_key = sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, "");
+            myTransL.setDeeplAPIKey(api_key);
+        }
+
+
         if( !status.isTranslated() ){
             String statusToTranslate;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -2015,6 +2035,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
                 @Override
                 public void onFail(HttpsConnectionException e) {
+                    e.printStackTrace();
                     Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
                 }
             });

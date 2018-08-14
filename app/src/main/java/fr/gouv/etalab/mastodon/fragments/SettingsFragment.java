@@ -33,6 +33,8 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +42,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -57,6 +60,7 @@ import fr.gouv.etalab.mastodon.R;
 import static android.app.Activity.RESULT_OK;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.SET_YANDEX_API_KEY;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -71,6 +75,8 @@ public class SettingsFragment extends Fragment {
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
     int count1, count2, count3 = 0;
+    private EditText your_api_key;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -167,6 +173,36 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_NOTIF_VALIDATION, set_share_validation.isChecked());
+                editor.apply();
+            }
+        });
+        your_api_key = rootView.findViewById(R.id.translation_key);
+
+        your_api_key.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                int translatore = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+                String store = null;
+                if( translatore == Helper.TRANS_YANDEX)
+                    store = Helper.SET_YANDEX_API_KEY;
+                else if( translatore == Helper.TRANS_DEEPL)
+                    store = Helper.SET_DEEPL_API_KEY;
+                if( store != null)
+                    if( s != null && s.length() > 0)
+                        editor.putString(store, s.toString().trim());
+                    else
+                        editor.putString(store, null);
                 editor.apply();
             }
         });
@@ -645,11 +681,20 @@ public class SettingsFragment extends Fragment {
         switch (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX)){
             case Helper.TRANS_YANDEX:
                positionSpinnerTrans = 0;
+                your_api_key.setVisibility(View.VISIBLE);
+                your_api_key.setText(sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, ""));
+                break;
+            case Helper.TRANS_DEEPL:
+                positionSpinnerTrans = 1;
+                your_api_key.setVisibility(View.VISIBLE);
+                your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
                 break;
             case Helper.TRANS_NONE:
-                positionSpinnerTrans = 1;
+                positionSpinnerTrans = 2;
+                your_api_key.setVisibility(View.GONE);
                 break;
             default:
+                your_api_key.setVisibility(View.VISIBLE);
                 positionSpinnerTrans = 0;
         }
         translation_layout_spinner.setSelection(positionSpinnerTrans);
@@ -660,10 +705,21 @@ public class SettingsFragment extends Fragment {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position){
                         case 0:
+                            your_api_key.setVisibility(View.VISIBLE);
                             editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
                             editor.apply();
+                            if( sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, null) != null)
+                                your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
                             break;
                         case 1:
+                            your_api_key.setVisibility(View.VISIBLE);
+                            editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_DEEPL);
+                            editor.apply();
+                            if( sharedpreferences.getString(SET_YANDEX_API_KEY, null) != null)
+                                your_api_key.setText(sharedpreferences.getString(SET_YANDEX_API_KEY, null));
+                            break;
+                        case 2:
+                            your_api_key.setVisibility(View.GONE);
                             set_trans_forced.isChecked();
                             editor.putBoolean(Helper.SET_TRANS_FORCED, false);
                             editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_NONE);
