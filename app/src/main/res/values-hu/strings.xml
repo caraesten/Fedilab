@@ -118,6 +118,7 @@
   <string name="more_action_6">Share</string>
   <string name="more_action_7">Mention</string>
   <string name="more_action_8">Timed mute</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>Mute this account?</item>
     <item>Block this account?</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Remove this toot?</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d reply</item>
@@ -328,8 +330,10 @@
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
+    <item>DeepL</item>
     <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
     <item>Dark</item>
     <item>Light</item>
