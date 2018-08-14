@@ -18,6 +18,10 @@
         android:title="@string/more_action_3"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_redraft"
+        android:title="@string/more_action_9"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_remove"
         android:title="@string/more_action_4"
         app:showAsAction="never" />

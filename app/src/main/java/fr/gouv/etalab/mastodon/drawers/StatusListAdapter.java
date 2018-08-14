@@ -115,6 +115,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
+import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
@@ -144,7 +145,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private final int COMPACT_STATUS = 3;
     private int conversationPosition;
     private List<String> timedMute;
-
+    private boolean redraft;
 
 
     public StatusListAdapter(Context context, List<String> timedMute, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
@@ -159,6 +160,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         this.translator = translator;
         this.timedMute = timedMute;
+        redraft = false;
     }
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
@@ -172,6 +174,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.type = type;
         this.targetedId = targetedId;
         this.translator = translator;
+        redraft = false;
     }
 
     public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
@@ -185,6 +188,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.conversationPosition = position;
         this.targetedId = targetedId;
         this.translator = translator;
+        redraft = false;
     }
 
     public void updateMuted(List<String> timedMute){
@@ -1259,6 +1263,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
                         stringArrayConf =  context.getResources().getStringArray(R.array.more_action_owner_confirm);
                     }else {
+                        popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
                         popup.getMenu().findItem(R.id.action_remove).setVisible(false);
                         stringArrayConf =  context.getResources().getStringArray(R.array.more_action_confirm);
                         if( type != RetrieveFeedsAsyncTask.Type.HOME){
@@ -1270,6 +1275,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             AlertDialog.Builder builderInner;
                             final API.StatusAction doAction;
                             switch (item.getItemId()) {
+                                case R.id.action_redraft:
+                                    builderInner = new AlertDialog.Builder(context);
+                                    builderInner.setTitle(stringArrayConf[1]);
+                                    redraft = true;
+                                    doAction = API.StatusAction.UNSTATUS;
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                        builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                                    else
+                                        //noinspection deprecation
+                                        builderInner.setMessage(Html.fromHtml(status.getContent()));
+                                break;
                                 case R.id.action_remove:
                                     builderInner = new AlertDialog.Builder(context);
                                     builderInner.setTitle(stringArrayConf[0]);
@@ -1523,6 +1539,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     if(doAction ==  API.StatusAction.UNSTATUS ){
                                         String targetedId = status.getId();
                                         new PostActionAsyncTask(context, doAction, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                        if( redraft ){
+                                            long id = new StatusStoredDAO(context, db).insertStatus(status, null);
+                                            Intent intentToot = new Intent(context, TootActivity.class);
+                                            Bundle b = new Bundle();
+                                            b.putLong("restored", id);
+                                            intentToot.putExtras(b);
+                                            context.startActivity(intentToot);
+                                        }
                                     }else if(doAction ==  API.StatusAction.REPORT ){
                                         String comment = null;
                                         if( finalInput.getText() != null)

@@ -1833,14 +1833,22 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         //Sensitive content
         toot_sensitive.setChecked(status.isSensitive());
         if( status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0 ){
-            toot_cw_content.setText(status.getSpoiler_text());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                toot_cw_content.setText(Html.fromHtml(status.getSpoiler_text(), Html.FROM_HTML_MODE_LEGACY));
+            else
+                //noinspection deprecation
+                toot_cw_content.setText(Html.fromHtml(status.getSpoiler_text()));
             toot_cw_content.setVisibility(View.VISIBLE);
         }else {
             toot_cw_content.setText("");
             toot_cw_content.setVisibility(View.GONE);
         }
         String content = status.getContent();
-        toot_content.setText(content);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            toot_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
+        else
+            //noinspection deprecation
+            toot_content.setText(Html.fromHtml(content));
         toot_space_left.setText(String.valueOf(toot_content.length()));
         toot_content.setSelection(toot_content.getText().length());
         switch (status.getVisibility()){
