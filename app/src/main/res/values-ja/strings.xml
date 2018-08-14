@@ -118,6 +118,7 @@
   <string name="more_action_6">共有</string>
   <string name="more_action_7">メンション</string>
   <string name="more_action_8">時限ミュート</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>このアカウントをミュートしますか？</item>
     <item>このアカウントをブロックしますか？</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>このトゥートを削除しますか？</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d が返信</item>
@@ -326,7 +328,9 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>いいえ</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
     <item>Dark</item>
     <item>Light</item>

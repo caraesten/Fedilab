@@ -118,6 +118,7 @@
   <string name="more_action_6">Distribuie</string>
   <string name="more_action_7">Menționează</string>
   <string name="more_action_8">Timed mute</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>Dezactivează acest cont?</item>
     <item>Blochează acest cont?</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Eliminați această notiță?</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d răspuns</item>
@@ -332,7 +334,9 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>Nu</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
     <item>Dark</item>
     <item>Light</item>

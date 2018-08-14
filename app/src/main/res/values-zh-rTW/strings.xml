@@ -118,6 +118,7 @@
   <string name="more_action_6">共享</string>
   <string name="more_action_7">提及</string>
   <string name="more_action_8">Timed mute</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>是否将此帐户静音？</item>
     <item>是否将此帐户屏蔽？</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>移除这个toot？</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d 回复</item>
@@ -326,7 +328,9 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>否　</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
     <item>Dark</item>
     <item>Light</item>

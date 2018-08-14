@@ -118,6 +118,7 @@
   <string name="more_action_6">Տարածել</string>
   <string name="more_action_7">Հիշատակել</string>
   <string name="more_action_8">Ժամանակավոր խլացում</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>Խլացնե՞լ այս հաշիվը</item>
     <item>Արգելափակե՞լ այս հաշիվը</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Հեռացնե՞լ այս թութը</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d արձագանք</item>
@@ -329,7 +331,9 @@
   <string-array name="settings_translation">
     <item>Յանդեքս</item>
     <item>Ոչ</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
     <item>Dark</item>
     <item>Light</item>
