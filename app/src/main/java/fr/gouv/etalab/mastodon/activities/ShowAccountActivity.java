@@ -536,6 +536,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             account_moved.setMovementMethod(LinkMovementMethod.getInstance());
         }
 
+
+
         if( account.getAcct().contains("@") )
             warning_message.setVisibility(View.VISIBLE);
         else
@@ -653,6 +655,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
         account_un.setText(String.format("@%s", account.getAcct()));
         SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
+        account.setNoteSpan(spannableString);
+        account.makeEmojis(ShowAccountActivity.this);
+        spannableString = account.getNoteSpan();
         account_note.setText(spannableString, TextView.BufferType.SPANNABLE);
         account_note.setMovementMethod(LinkMovementMethod.getInstance());
         if (tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {

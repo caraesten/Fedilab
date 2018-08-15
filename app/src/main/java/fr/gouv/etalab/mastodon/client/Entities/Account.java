@@ -14,23 +14,41 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+import android.app.Activity;
 import android.content.*;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
+import android.text.style.ImageSpan;
 import android.view.View;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
+import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -52,6 +70,7 @@ public class Account implements Parcelable {
     private String following_count_str;
     private String statuses_count_str;
     private String note;
+    private SpannableString noteSpan;
     private String url;
     private String avatar;
     private String avatar_static;
@@ -66,6 +85,10 @@ public class Account implements Parcelable {
     private boolean muting_notifications;
     private int metaDataSize;
     private HashMap<String, String> fields = new HashMap<>();
+    private List<Emojis> emojis;
+    private Account account;
+
+
 
     public followAction getFollowType() {
         return followType;
@@ -142,7 +165,9 @@ public class Account implements Parcelable {
         }
     }
 
-    public Account(){}
+    public Account(){
+        this.account = this;
+    }
 
     public static final Creator<Account> CREATOR = new Creator<Account>() {
         @Override
@@ -228,6 +253,14 @@ public class Account implements Parcelable {
         this.statuses_count = statuses_count;
     }
 
+    public SpannableString getNoteSpan() {
+        return noteSpan;
+    }
+
+    public void setNoteSpan(SpannableString noteSpan) {
+        this.noteSpan = noteSpan;
+    }
+
     public String getNote() {
         return note;
     }
@@ -290,6 +323,14 @@ public class Account implements Parcelable {
 
     public void setInstance(String instance) {
         this.instance = instance;
+    }
+
+    public List<Emojis> getEmojis() {
+        return emojis;
+    }
+
+    public void setEmojis(List<Emojis> emojis) {
+        this.emojis = emojis;
     }
 
     @Override
@@ -387,6 +428,45 @@ public class Account implements Parcelable {
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         return spannableString;
+    }
+
+
+    public void makeEmojis(final Context context){
+
+        if( ((Activity)context).isFinishing() )
+            return;
+        final List<Emojis> emojis = account.getEmojis();
+        if( noteSpan == null)
+            noteSpan = new SpannableString(account.getNote());
+        if( emojis != null && emojis.size() > 0 ) {
+            final int[] i = {0};
+            for (final Emojis emoji : emojis) {
+                Glide.with(context)
+                        .asBitmap()
+                        .load(emoji.getUrl())
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                if (account.getNote().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = account.getNote().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        if( endPosition <= account.getNote().length() && endPosition >= startPosition)
+                                            noteSpan.setSpan(
+                                                    new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                    }
+
+                                }
+
+                            }
+                        });
+
+            }
+        }
     }
 
 }
