@@ -1668,7 +1668,7 @@ public class API {
             List<Emojis> emojiList = new ArrayList<>();
             try {
                 JSONArray emojisTag = resobj.getJSONArray("emojis");
-                if( arrayTag != null){
+                if( emojisTag != null){
                     for(int j = 0 ; j < emojisTag.length() ; j++){
                         JSONObject emojisObj = emojisTag.getJSONObject(j);
                         Emojis emojis = parseEmojis(emojisObj);
@@ -1859,6 +1859,22 @@ public class API {
                 }
                 account.setFields(fieldsMap);
             }catch (Exception ignored){}
+
+            //Retrieves emjis
+            List<Emojis> emojiList = new ArrayList<>();
+            try {
+                JSONArray emojisTag = resobj.getJSONArray("emojis");
+                if( emojisTag != null){
+                    for(int j = 0 ; j < emojisTag.length() ; j++){
+                        JSONObject emojisObj = emojisTag.getJSONObject(j);
+                        Emojis emojis = parseEmojis(emojisObj);
+                        emojiList.add(emojis);
+                    }
+                }
+                account.setEmojis(emojiList);
+            }catch (Exception e){
+                account.setEmojis(new ArrayList<>());
+            }
         } catch (JSONException ignored) {}
         return account;
     }

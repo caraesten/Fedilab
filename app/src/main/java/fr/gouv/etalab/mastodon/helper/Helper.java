@@ -67,10 +67,12 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
+import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Patterns;
@@ -1325,7 +1327,7 @@ public class Helper {
      * @param fullContent String, should be the st
      * @return TextView
      */
-    public static SpannableString clickableElementsDescription(final Context context, String fullContent) {
+    public static SpannableString clickableElementsDescription(final Context context, String fullContent, List<Emojis> emojis) {
 
         SpannableString spannableString;
         fullContent = Helper.shortnameToUnicode(fullContent, true);

@@ -82,6 +82,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
@@ -101,7 +102,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
  * Show account activity class
  */
 
-public class ShowAccountActivity extends BaseActivity implements OnPostActionInterface, OnRetrieveAccountInterface, OnRetrieveFeedsAccountInterface, OnRetrieveRelationshipInterface, OnRetrieveFeedsInterface {
+public class ShowAccountActivity extends BaseActivity implements OnPostActionInterface, OnRetrieveAccountInterface, OnRetrieveFeedsAccountInterface, OnRetrieveRelationshipInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiAccountInterface {
 
 
     private List<Status> statuses;
@@ -128,6 +129,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private TextView account_un;
     private Account account;
     private boolean show_boosts, show_replies;
+
+
 
     public enum action{
         FOLLOW,
@@ -582,6 +585,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             }
         });
 
+
+
         if ( account.getFields() != null && account.getFields().size() > 0){
             HashMap<String, String> fields = account.getFields();
             Iterator it = fields.entrySet().iterator();
@@ -642,23 +647,22 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
                     }
                     field.setVisibility(View.VISIBLE);
-                    SpannableString spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value);
+                    SpannableString spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value, account.getEmojis());
                     valueView.setText(spannableValueString, TextView.BufferType.SPANNABLE);
                     valueView.setMovementMethod(LinkMovementMethod.getInstance());
                     labelView.setText(label);
                 }
                 i++;
-                it.remove();
+               // it.remove();
             }
         }
 
         account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
         account_un.setText(String.format("@%s", account.getAcct()));
-        SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
+        SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote(), account.getEmojis());
         account.setNoteSpan(spannableString);
-        account.makeEmojis(ShowAccountActivity.this);
-        spannableString = account.getNoteSpan();
-        account_note.setText(spannableString, TextView.BufferType.SPANNABLE);
+        account.makeEmojisAccount(ShowAccountActivity.this, ShowAccountActivity.this);
+        account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
         account_note.setMovementMethod(LinkMovementMethod.getInstance());
         if (tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
             //noinspection ConstantConditions
@@ -903,6 +907,62 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         @Override
         public int getCount() {
             return NUM_PAGES;
+        }
+    }
+
+    @Override
+    public void onRetrieveEmojiAccount(Account account) {
+        account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
+        if ( account.getFieldsSpan() != null && account.getFieldsSpan().size() > 0){
+            HashMap<String, SpannableString> fieldsSpan = account.getFieldsSpan();
+            Iterator it = fieldsSpan.entrySet().iterator();
+            int i = 1;
+            LinearLayout fields_container = findViewById(R.id.fields_container);
+            if( fields_container != null)
+                fields_container.setVisibility(View.VISIBLE);
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                String label = (String)pair.getKey();
+                String value = (String)pair.getValue();
+                LinearLayout field;
+                TextView labelView;
+                TextView valueView;
+                switch(i){
+                    case 1:
+                        field = findViewById(R.id.field1);
+                        labelView = findViewById(R.id.label1);
+                        valueView = findViewById(R.id.value1);
+                        break;
+                    case 2:
+                        field = findViewById(R.id.field2);
+                        labelView = findViewById(R.id.label2);
+                        valueView = findViewById(R.id.value2);
+                        break;
+                    case 3:
+                        field = findViewById(R.id.field3);
+                        labelView = findViewById(R.id.label3);
+                        valueView = findViewById(R.id.value3);
+                        break;
+                    case 4:
+                        field = findViewById(R.id.field4);
+                        labelView = findViewById(R.id.label4);
+                        valueView = findViewById(R.id.value4);
+                        break;
+                    default:
+                        field = findViewById(R.id.field1);
+                        labelView = findViewById(R.id.label1);
+                        valueView = findViewById(R.id.value1);
+                        break;
+                }
+                if( field != null && labelView != null && valueView != null) {
+                    field.setVisibility(View.VISIBLE);
+                    valueView.setText(value, TextView.BufferType.SPANNABLE);
+                    valueView.setMovementMethod(LinkMovementMethod.getInstance());
+                    labelView.setText(label);
+                }
+                i++;
+             //   it.remove();
+            }
         }
     }
 
