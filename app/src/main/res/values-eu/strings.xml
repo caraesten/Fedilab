@@ -118,7 +118,7 @@
   <string name="more_action_6">Partekatu</string>
   <string name="more_action_7">Aipatu</string>
   <string name="more_action_8">Denbora baterako mutututa</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_9">Ezabatu eta berridatzi</string>
   <string-array name="more_action_confirm">
     <item>Mututu kontu hau?</item>
     <item>Blokeatu kontu hau?</item>
@@ -126,7 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Kendu toot hau?</item>
-    <item>Delete &amp; re-draft this toot?</item>
+    <item>Ezabatu eta berridatzi toot hau?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">erantzun %d</item>
@@ -308,7 +308,7 @@
   <string name="set_preview_reply_pp">Bistaratu profileko argazkiak?</string>
   <string name="set_multiaccount_actions">Baimendu kontuen arteko interakzioa?</string>
   <string name="set_fit_preview">Doitu irudien aurrebistak</string>
-  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+  <string name="set_automatically_split_toot">Automatikoki zatitu 500 karakteretik gorako toot-ak erantzunetan</string>
   <string name="note_no_space">Baimendutako 160 karaktereetara heldu zara!</string>
   <string name="username_no_space">Baimendutako 30 karaktereetara heldu zara!</string>
   <string name="settings_title_hour">Jakinarazpenen denbora-tartea:</string>
@@ -332,9 +332,9 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>Ez</item>
-    <item>No</item>
+    <item>Ez</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">Zure API gakoa, Tandex erabiltzeko hutsik laga dezakezu</string>
   <string-array name="settings_theme">
     <item>Iluna</item>
     <item>Argia</item>
