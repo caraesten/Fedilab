@@ -336,7 +336,7 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>Nein</item>
-    <item>No</item>
+    <item>Nein</item>
   </string-array>
   <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
