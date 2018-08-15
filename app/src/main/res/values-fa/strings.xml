@@ -39,19 +39,19 @@
   <string name="change">تغییر دادن</string>
   <string name="choose_picture">انتخاب تصویر...</string>
   <string name="clear">پاک‌سازی</string>
-  <string name="microphone">Microphone</string>
-  <string name="camera">Camera</string>
-  <string name="speech_prompt">Please, say something</string>
-  <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-  <string name="delete_all">Delete all</string>
+  <string name="microphone">میکروفن</string>
+  <string name="camera">دوربین</string>
+  <string name="speech_prompt">لطفاً چیزی بگویید</string>
+  <string name="speech_not_supported">متاسفم! دستگاه شما از ورودی صدا پشتیبانی نمی‌کند!</string>
+  <string name="delete_all">حذف همه</string>
   <string name="translate_toot">Translate this toot.</string>
-  <string name="schedule">Schedule</string>
-  <string name="text_size">Text and icon sizes</string>
-  <string name="text_size_change">Change the current text size:</string>
-  <string name="icon_size_change">Change the current icon size:</string>
-  <string name="next">Next</string>
-  <string name="previous">Previous</string>
-  <string name="open_with">Open with</string>
+  <string name="schedule">زمان‌بندی</string>
+  <string name="text_size">اندازه متن و آیکون</string>
+  <string name="text_size_change">تغییر اندازه متن فعلی:</string>
+  <string name="icon_size_change">تغییر اندازه آیکون فعلی:</string>
+  <string name="next">بعدی</string>
+  <string name="previous">قبلی</string>
+  <string name="open_with">باز کردن با</string>
   <string name="validate">Validate</string>
   <string name="media">Media</string>
   <string name="share_with">Share with</string>
@@ -96,7 +96,7 @@
   <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
   <string name="insert_emoji">Insert emoji</string>
   <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="live_notif">اعلان‌های زنده</string>
   <!-- Status -->
   <string name="no_status">No toot to display</string>
   <string name="fav_added">The toot was added to favourites</string>
@@ -110,18 +110,18 @@
   <string name="reblog_remove">Unboost this toot?</string>
   <string name="pin_add">Pin this toot?</string>
   <string name="pin_remove">Unpin this toot?</string>
-  <string name="more_action_1">Mute</string>
-  <string name="more_action_2">Block</string>
-  <string name="more_action_3">Report</string>
-  <string name="more_action_4">Remove</string>
-  <string name="more_action_5">Copy</string>
-  <string name="more_action_6">Share</string>
+  <string name="more_action_1">بی‌صدا</string>
+  <string name="more_action_2">مسدود کردن</string>
+  <string name="more_action_3">گزارش</string>
+  <string name="more_action_4">حذف</string>
+  <string name="more_action_5">رونوشت‌</string>
+  <string name="more_action_6">به‌اشتراک‌گذاری</string>
   <string name="more_action_7">Mention</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="more_action_8">بی‌صدا کردن زمان‌دار</string>
   <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>Mute this account?</item>
-    <item>Block this account?</item>
+    <item>این حساب مسدود شود؟</item>
     <item>Report this toot?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
