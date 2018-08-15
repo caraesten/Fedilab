@@ -77,6 +77,8 @@
             android:text="@string/set_preview_reply"
             android:layout_height="wrap_content" />
 
+
+
         <LinearLayout
             android:id="@+id/set_preview_reply_pp_container"
             android:layout_width="match_parent"
@@ -175,6 +177,12 @@
             android:id="@+id/set_share_details"
             android:layout_width="wrap_content"
             android:text="@string/set_share_details"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/set_automatically_split_toot"
+            android:layout_width="wrap_content"
+            android:text="@string/set_automatically_split_toot"
             android:layout_height="wrap_content" />
 
         <!-- Resize pictures -->

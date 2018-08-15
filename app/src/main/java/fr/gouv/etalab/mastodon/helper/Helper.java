@@ -297,6 +297,8 @@ public class Helper {
     public static final String SET_DISPLAY_GLOBAL = "set_display_global";
     public static final String SET_ALLOW_CROSS_ACTIONS = "set_allow_cross_actions";
     public static final String SET_DISPLAY_BOOST_COUNT = "set_display_boost_count";
+    public static final String SET_AUTOMATICALLY_SPLIT_TOOTS = "set_automatically_split_toots";
+    public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -311,6 +313,7 @@ public class Helper {
     //Refresh job
     public static final int MINUTES_BETWEEN_NOTIFICATIONS_REFRESH = 15;
     public static final int MINUTES_BETWEEN_HOME_TIMELINE = 30;
+    public static final int SPLIT_TOOT_SIZE = 500;
 
     //Translate wait time
     public static final String LAST_TRANSLATION_TIME = "last_translation_time";
@@ -2201,5 +2204,35 @@ public class Helper {
         tableLayout.addTab(tableLayout.newTab().setText(title));
         pagerAdapter.addTabPage(title);
     }
+
+
+    /**
+     * Allows to split the toot by dot "." for sentences - adds number at the end automatically
+     * @param content String initial content
+     * @param maxChars int the max chars per toot (minus 10 to write the page: 1/x, 2/x etc.)
+     * @return ArrayList<String> split toot
+     */
+    public static ArrayList<String> splitToots(String content, int maxChars){
+        String[] splitContent = content.split("\\.");
+        ArrayList<String> splitToot = new ArrayList<>();
+        StringBuilder tempContent = new StringBuilder(splitContent[0]);
+        for(int i= 0 ; i < splitContent.length ; i++){
+            if( i < (splitContent.length-1) && (tempContent.length() + splitContent[i+1].length()) < (maxChars-10)) {
+                tempContent.append(".").append(splitContent[i + 1]);
+            }else {
+                splitToot.add(tempContent.toString());
+                if( i < (splitContent.length-1) )
+                    tempContent = new StringBuilder(splitContent[i+1]);
+            }
+        }
+        int i=1;
+        ArrayList<String> reply = new ArrayList<>();
+        for(String newContent : splitToot){
+            reply.add((i-1), newContent + " - " + i + "/" + splitToot.size());
+            i++;
+        }
+        return reply;
+    }
+
 
 }

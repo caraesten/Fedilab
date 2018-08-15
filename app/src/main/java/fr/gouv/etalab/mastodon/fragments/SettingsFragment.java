@@ -671,6 +671,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+        final CheckBox set_split_toot = rootView.findViewById(R.id.set_automatically_split_toot);
+        set_split_toot.setChecked(split_toot);
+        set_split_toot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, set_split_toot.isChecked());
+                editor.apply();
+            }
+        });
+
         //Translators
         final Spinner translation_layout_spinner = rootView.findViewById(R.id.translation_layout_spinner);
         ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getContext(),
