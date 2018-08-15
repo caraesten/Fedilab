@@ -18,27 +18,27 @@
   <string name="download_file">بارگیری %1$s</string>
   <string name="download_over">بارگیری کامل شد</string>
   <string name="save_file">ذخیره %1$s</string>
-  <string name="save_over">Media saved</string>
-  <string name="download_from" formatted="false">File: %1$s</string>
-  <string name="password">Password</string>
-  <string name="email">Email</string>
-  <string name="accounts">Accounts</string>
+  <string name="save_over">رسانه، ذخیره شد</string>
+  <string name="download_from" formatted="false">پرونده: %1$s</string>
+  <string name="password">گذرواژه</string>
+  <string name="email">رایانامه</string>
+  <string name="accounts">حساب‌ها</string>
   <string name="toots">Toots</string>
-  <string name="tags">Tags</string>
-  <string name="token">Token</string>
-  <string name="save">Save</string>
-  <string name="restore">Restore</string>
-  <string name="two_factor_authentification">Two-step authentication?</string>
+  <string name="tags">برچسب‌ها</string>
+  <string name="token">توکن</string>
+  <string name="save">ذخیره</string>
+  <string name="restore">بازگردانی</string>
+  <string name="two_factor_authentification">احراز هویت دو مرحله‌ای؟</string>
   <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
-  <string name="no_result">No results!</string>
+  <string name="no_result">بی نتیجه!</string>
   <string name="instance">Instance</string>
   <string name="instance_example">Instance: mastodon.social</string>
-  <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
-  <string name="add_account">Add an account</string>
+  <string name="toast_account_changed" formatted="false">اکنون با این حساب کار می‌کند: %1$s</string>
+  <string name="add_account">افزودن حساب کاربری</string>
   <string name="clipboard">The content of the toot has been copied to the clipboard</string>
-  <string name="change">Change</string>
-  <string name="choose_picture">Select a picture…</string>
-  <string name="clear">Clean</string>
+  <string name="change">تغییر دادن</string>
+  <string name="choose_picture">انتخاب تصویر...</string>
+  <string name="clear">پاک‌سازی</string>
   <string name="microphone">Microphone</string>
   <string name="camera">Camera</string>
   <string name="speech_prompt">Please, say something</string>
