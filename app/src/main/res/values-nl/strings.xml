@@ -29,10 +29,10 @@
   <string name="save">Opslaan</string>
   <string name="restore">Herstellen</string>
   <string name="two_factor_authentification">Tweestapsverificatie?</string>
-  <string name="other_instance">Andere Mastodonserver dan mastodon.social?</string>
+  <string name="other_instance">Andere Mastodonserver dan mastodon.etalab.gouv.fr?</string>
   <string name="no_result">Geen resultaten!</string>
   <string name="instance">Mastodonserver</string>
-  <string name="instance_example">Server: bv. mastodon.social</string>
+  <string name="instance_example">Server: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">Werkt nu met account %1$s</string>
   <string name="add_account">Account toevoegen</string>
   <string name="clipboard">De inhoud van deze toot is naar het klembord gekopieerd</string>
