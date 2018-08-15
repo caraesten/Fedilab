@@ -118,6 +118,7 @@
   <string name="more_action_6">شارك</string>
   <string name="more_action_7">أذكر</string>
   <string name="more_action_8">فترة الكتم</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>هل تود كتم هذا الحساب ؟</item>
     <item>هل تود حجب هذا الحساب ؟</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>هل تود حذف هذا التبويق ؟</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="zero">%d replies</item>
@@ -188,7 +190,7 @@
   <string name="about_thekinrar">البحث عن مثيلات الخوادم :</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">مصمم الأيقونات :</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_banner">مصمم الشعار :</string>
   <!-- Conversation -->
   <string name="conversation">محادثة</string>
   <!-- Accounts -->
@@ -317,7 +319,8 @@
   <string name="set_preview_reply">إظهار عدد الردود على الخيط الرئيسي</string>
   <string name="set_preview_reply_pp">هل تود عرض الصور الرمزية للحسابات ؟</string>
   <string name="set_multiaccount_actions">السماح للتفاعلات بين الحسابات ؟</string>
-  <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_fit_preview">تكافؤ معاينة الصور</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به !</string>
   <string name="username_no_space">لقد بلغت حد الـ 30 حرف المسموح به !</string>
   <string name="settings_title_hour">الفترة المتاحة للإخطارات :</string>
@@ -341,11 +344,13 @@
   <string-array name="settings_translation">
     <item>يانديكس</item>
     <item>لا</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>مظلمة</item>
+    <item>فاتحة</item>
+    <item>سوداء</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>لا</item>
@@ -493,8 +498,9 @@
   <string name="poxy_port">المنفذ</string>
   <string name="poxy_login">إسم المستخدم</string>
   <string name="poxy_password">كلمة السر</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+  <string name="set_theme">السمة :</string>
+  <string name="set_compact_mode">الوضع المختصر</string>
+  <string name="set_share_details">إضافة التفاصيل عند مشاركة تبويق ما</string>
+  <string name="support_the_app_on_liberapay">إدعم التطبيق على ليبيراباي</string>
+  <string name="alert_regex">هناك خطأ في العبارة المنطقية !</string>
 </resources>

@@ -33,6 +33,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.design.widget.TabLayout;
 import android.support.media.ExifInterface;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -66,10 +67,12 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
+import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Patterns;
@@ -137,6 +140,7 @@ import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.BuildConfig;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -154,6 +158,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -206,7 +211,7 @@ public class Helper {
     public static final String SHOULD_CONTINUE_STREAMING = "should_continue_streaming";
     public static final String SHOULD_CONTINUE_STREAMING_FEDERATED = "should_continue_streaming_federated";
     public static final String SHOULD_CONTINUE_STREAMING_LOCAL = "should_continue_streaming_local";
-
+    public static final String SEARCH_KEYWORD = "search_keyword";
     public static final String CLIP_BOARD = "clipboard";
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
@@ -215,6 +220,7 @@ public class Helper {
     public static final int CHANGE_USER_INTENT = 4;
     public static final int ADD_USER_INTENT = 5;
     public static final int BACKUP_INTENT = 6;
+    public static final int SEARCH_TAG = 7;
     //Settings
     public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";
     public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";
@@ -258,6 +264,7 @@ public class Helper {
     public static final int LED_COLOUR = 0;
 
     public static final int TRANS_YANDEX = 0;
+    public static final int TRANS_DEEPL = 1;
     public static final int TRANS_NONE = 2;
 
     public static final String SET_TRANS_FORCED = "set_trans_forced";
@@ -292,6 +299,8 @@ public class Helper {
     public static final String SET_DISPLAY_GLOBAL = "set_display_global";
     public static final String SET_ALLOW_CROSS_ACTIONS = "set_allow_cross_actions";
     public static final String SET_DISPLAY_BOOST_COUNT = "set_display_boost_count";
+    public static final String SET_AUTOMATICALLY_SPLIT_TOOTS = "set_automatically_split_toots";
+    public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -306,6 +315,7 @@ public class Helper {
     //Refresh job
     public static final int MINUTES_BETWEEN_NOTIFICATIONS_REFRESH = 15;
     public static final int MINUTES_BETWEEN_HOME_TIMELINE = 30;
+    public static final int SPLIT_TOOT_SIZE = 500;
 
     //Translate wait time
     public static final String LAST_TRANSLATION_TIME = "last_translation_time";
@@ -323,6 +333,8 @@ public class Helper {
     //User agent
     public static final String USER_AGENT = "Mastalab/"+ BuildConfig.VERSION_NAME + " Android/"+ Build.VERSION.RELEASE;
 
+    public static final String SET_YANDEX_API_KEY = "set_yandex_api_key";
+    public static final String SET_DEEPL_API_KEY = "set_deepl_api_key";
 
     private static boolean menuAccountsOpened = false;
 
@@ -336,6 +348,7 @@ public class Helper {
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]+)");
+    public static final Pattern twitterPattern = Pattern.compile("((@[\\w]+)@twitter\\.com)");
     private static final Pattern mentionPattern = Pattern.compile("(@[\\w]+)");
 
 
@@ -577,7 +590,7 @@ public class Helper {
             @Override
             public void onClick(View v) {
 
-                tvDate.setText(Helper.shortDateTime(context, date));
+                tvDate.setText(Helper.dateDiffFull(date));
 
                 new CountDownTimer((5 * 1000), 1000) {
 
@@ -1314,7 +1327,7 @@ public class Helper {
      * @param fullContent String, should be the st
      * @return TextView
      */
-    public static SpannableString clickableElementsDescription(final Context context, String fullContent) {
+    public static SpannableString clickableElementsDescription(final Context context, String fullContent, List<Emojis> emojis) {
 
         SpannableString spannableString;
         fullContent = Helper.shortnameToUnicode(fullContent, true);
@@ -2145,4 +2158,83 @@ public class Helper {
             Log.v(Helper.TAG, content);
         }
     }
+
+
+    public static void addSearchTag(Context context, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        List<String> searches = new SearchDAO(context, db).getAllSearch();
+        int countInitialTab = ((BaseMainActivity) context).countPage;
+        int allTabCount = tableLayout.getTabCount();
+        if( allTabCount > countInitialTab){
+            while(allTabCount > countInitialTab){
+                removeTab(tableLayout, pagerAdapter, allTabCount-1);
+                allTabCount -=1;
+            }
+        }
+        if( searches != null) {
+            for (String search : searches) {
+                addTab(tableLayout, pagerAdapter, search);
+            }
+            if( searches.size() > 0 ){
+                tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+                tableLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+            }
+        }
+    }
+
+    public static void removeSearchTag(String keyword, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
+
+        int selection = -1;
+        for(int i = 0; i < tableLayout.getTabCount() ; i++ ){
+            if( tableLayout.getTabAt(i).getText() != null && tableLayout.getTabAt(i).getText().equals(keyword)) {
+                selection = i;
+                break;
+            }
+        }
+        if( selection != -1)
+            removeTab(tableLayout, pagerAdapter, selection);
+    }
+
+    private static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
+        if (tableLayout.getTabCount() >= position) {
+            tableLayout.removeTabAt(position);
+            pagerAdapter.removeTabPage();
+        }
+    }
+
+    private static void addTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, String title) {
+        tableLayout.addTab(tableLayout.newTab().setText(title));
+        pagerAdapter.addTabPage(title);
+    }
+
+
+    /**
+     * Allows to split the toot by dot "." for sentences - adds number at the end automatically
+     * @param content String initial content
+     * @param maxChars int the max chars per toot (minus 10 to write the page: 1/x, 2/x etc.)
+     * @return ArrayList<String> split toot
+     */
+    public static ArrayList<String> splitToots(String content, int maxChars){
+        String[] splitContent = content.split("\\.");
+        ArrayList<String> splitToot = new ArrayList<>();
+        StringBuilder tempContent = new StringBuilder(splitContent[0]);
+        for(int i= 0 ; i < splitContent.length ; i++){
+            if( i < (splitContent.length-1) && (tempContent.length() + splitContent[i+1].length()) < (maxChars-10)) {
+                tempContent.append(".").append(splitContent[i + 1]);
+            }else {
+                splitToot.add(tempContent.toString());
+                if( i < (splitContent.length-1) )
+                    tempContent = new StringBuilder(splitContent[i+1]);
+            }
+        }
+        int i=1;
+        ArrayList<String> reply = new ArrayList<>();
+        for(String newContent : splitToot){
+            reply.add((i-1), newContent + " - " + i + "/" + splitToot.size());
+            i++;
+        }
+        return reply;
+    }
+
+
 }

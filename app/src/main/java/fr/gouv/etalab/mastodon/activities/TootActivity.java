@@ -50,6 +50,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -192,6 +193,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private String idRedirect;
     private String userId, instance;
     private Account account;
+    private ArrayList<String> splitToot;
+    private int stepSpliToot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -484,6 +487,17 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     toot_it.setEnabled(true);
                     return;
                 }
+                boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+                int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE, Helper.SPLIT_TOOT_SIZE);
+                String tootContent;
+                if( !split_toot || (toot_content.getText().toString().trim().length()  < split_toot_size)){
+                    tootContent = toot_content.getText().toString().trim();
+                }else{
+
+                    splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
+                    tootContent = splitToot.get(0);
+                    stepSpliToot = 1;
+                }
                 Status toot = new Status();
                 toot.setSensitive(isSensitive);
                 toot.setMedia_attachments(attachments);
@@ -492,7 +506,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 toot.setVisibility(visibility);
                 if( tootReply != null)
                     toot.setIn_reply_to_id(tootReply.getId());
-                toot.setContent(toot_content.getText().toString().trim());
+                toot.setContent(tootContent);
                 new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             }
@@ -1549,6 +1563,27 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             }
             return;
         }
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE, Helper.SPLIT_TOOT_SIZE);
+
+
+        if( split_toot && (toot_content.getText().toString().trim().length()  >= split_toot_size) && stepSpliToot < splitToot.size()){
+            String tootContent = splitToot.get(stepSpliToot);
+            stepSpliToot += 1;
+            Status toot = new Status();
+            toot.setSensitive(isSensitive);
+            toot.setMedia_attachments(attachments);
+            if( toot_cw_content.getText().toString().trim().length() > 0)
+                toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
+            toot.setVisibility(visibility);
+            if( apiResponse.getStatuses() != null)
+                toot.setIn_reply_to_id(apiResponse.getStatuses().get(0).getId());
+            toot.setContent(tootContent);
+            new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            return;
+
+        }
         if(restored != -1){
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             new StatusStoredDAO(getApplicationContext(), db).remove(restored);
@@ -1833,14 +1868,22 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         //Sensitive content
         toot_sensitive.setChecked(status.isSensitive());
         if( status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0 ){
-            toot_cw_content.setText(status.getSpoiler_text());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                toot_cw_content.setText(Html.fromHtml(status.getSpoiler_text(), Html.FROM_HTML_MODE_LEGACY));
+            else
+                //noinspection deprecation
+                toot_cw_content.setText(Html.fromHtml(status.getSpoiler_text()));
             toot_cw_content.setVisibility(View.VISIBLE);
         }else {
             toot_cw_content.setText("");
             toot_cw_content.setVisibility(View.GONE);
         }
         String content = status.getContent();
-        toot_content.setText(content);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            toot_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
+        else
+            //noinspection deprecation
+            toot_content.setText(Html.fromHtml(content));
         toot_space_left.setText(String.valueOf(toot_content.length()));
         toot_content.setSelection(toot_content.getText().length());
         switch (status.getVisibility()){

@@ -118,6 +118,7 @@
   <string name="more_action_6">Bagikan</string>
   <string name="more_action_7">Menyebut</string>
   <string name="more_action_8">Mematikan waktu</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>Bisukan akun ini?</item>
     <item>Blok akun ini?</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Menghapus kutipan ini?</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d balasan</item>
@@ -303,6 +305,7 @@
   <string name="set_preview_reply_pp">Tampilkan gambar profil?</string>
   <string name="set_multiaccount_actions">Izinkan interaksi antar akun?</string>
   <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Kamu telah mencapai 160 karakter yang diizinkan!</string>
   <string name="username_no_space">Kamu telah mencapai 30 karakter yang diizinkan!</string>
   <string name="settings_title_hour">Slot waktu untuk pemberitahuan:</string>
@@ -326,7 +329,9 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>Tidak</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
     <item>Dark</item>
     <item>Light</item>
@@ -488,4 +493,5 @@ https://yandex.ru/legal/confidential/?lang=en
   <string name="set_compact_mode">Compact mode</string>
   <string name="set_share_details">Add toot details when sharing</string>
   <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+  <string name="alert_regex">There is an error in the regular expression!</string>
 </resources>

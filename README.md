@@ -1,3 +1,4 @@
+
 ## Mastalab is a multi-accounts client for Mastodon [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [<img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"/>](https://liberapay.com/tom79/donate)
 
 The number of libraries is minimized and it does not use tracking tools. The source code is free (GPLv3). Any help would be greatly appreciated to fix spelling or for any other suggestions.
@@ -7,9 +8,9 @@ The number of libraries is minimized and it does not use tracking tools. The sou
 
 
 
-[WIKI](https://github.com/stom79/mastalab/wiki)
+[WIKI](https://gitlab.com/tom79/mastalab/wikis/home)
 
-[Release notes](https://github.com/stom79/mastalab/releases)
+[Release notes](https://gitlab.com/tom79/mastalab/tags)
 
 
 

@@ -118,6 +118,7 @@
   <string name="more_action_6">Condividi</string>
   <string name="more_action_7">Menziona</string>
   <string name="more_action_8">Silenzio temporizzato</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>Silenziare questo account?</item>
     <item>Bloccare questo account?</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Rimuovere questo toot?</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d risposta</item>
@@ -306,6 +308,7 @@
   <string name="set_preview_reply_pp">Visualizzare la foto del profilo?</string>
   <string name="set_multiaccount_actions">Permetti interazioni tra gli account?</string>
   <string name="set_fit_preview">Adatta anteprima immagini</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Hai raggiunto i 160 caratteri permessi!</string>
   <string name="username_no_space">Hai raggiunto i 30 caratteri permessi!</string>
   <string name="settings_title_hour">Slot di tempo per le notifiche:</string>
@@ -329,11 +332,13 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>No</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Scuro</item>
+    <item>Chiaro</item>
+    <item>Nero</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>No</item>
@@ -442,7 +447,7 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <string name="thanks_text_dev">
         Grazie anche a:
     </string>
-  <string name="filter_regex">Filtrati tramite espressioni regolari</string>
+  <string name="filter_regex">Filtra tramite espressioni regolari</string>
   <string name="search">Cerca</string>
   <string name="delete">Elimina</string>
   <string name="fetch_more_toots">Recupera altri toot…</string>
@@ -485,8 +490,9 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <string name="poxy_port">Porta</string>
   <string name="poxy_login">Login</string>
   <string name="poxy_password">Password</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+  <string name="set_theme">Tema:</string>
+  <string name="set_compact_mode">Modalità compatta</string>
+  <string name="set_share_details">Aggiungi dettagli del toot quando condividi</string>
+  <string name="support_the_app_on_liberapay">Supporta l\'app su Liberapay</string>
+  <string name="alert_regex">C\'è un errore nell\'espressione regolare!</string>
 </resources>

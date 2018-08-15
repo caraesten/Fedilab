@@ -77,6 +77,8 @@
             android:text="@string/set_preview_reply"
             android:layout_height="wrap_content" />
 
+
+
         <LinearLayout
             android:id="@+id/set_preview_reply_pp_container"
             android:layout_width="match_parent"
@@ -177,6 +179,12 @@
             android:text="@string/set_share_details"
             android:layout_height="wrap_content" />
 
+        <CheckBox
+            android:id="@+id/set_automatically_split_toot"
+            android:layout_width="wrap_content"
+            android:text="@string/set_automatically_split_toot"
+            android:layout_height="wrap_content" />
+
         <!-- Resize pictures -->
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -202,21 +210,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/about_yandex"/>
-            <Spinner
-                android:id="@+id/translation_layout_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <CheckBox
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:id="@+id/set_trans_forced"
-                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_yandex"/>
+                <Spinner
+                    android:id="@+id/translation_layout_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <CheckBox
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/set_trans_forced"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <EditText
+                android:hint="@string/your_api_key"
+                android:id="@+id/translation_key"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 

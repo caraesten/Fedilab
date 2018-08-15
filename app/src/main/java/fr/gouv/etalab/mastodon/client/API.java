@@ -1668,7 +1668,7 @@ public class API {
             List<Emojis> emojiList = new ArrayList<>();
             try {
                 JSONArray emojisTag = resobj.getJSONArray("emojis");
-                if( arrayTag != null){
+                if( emojisTag != null){
                     for(int j = 0 ; j < emojisTag.length() ; j++){
                         JSONObject emojisObj = emojisTag.getJSONObject(j);
                         Emojis emojis = parseEmojis(emojisObj);
@@ -1849,6 +1849,32 @@ public class API {
             account.setAvatar_static(resobj.get("avatar_static").toString());
             account.setHeader(resobj.get("header").toString());
             account.setHeader_static(resobj.get("header_static").toString());
+            try {
+                JSONArray fields = resobj.getJSONArray("fields");
+                HashMap<String, String> fieldsMap = new HashMap<>();
+                if( fields != null){
+                    for(int j = 0 ; j < fields.length() ; j++){
+                        fieldsMap.put(fields.getJSONObject(j).getString("name"),fields.getJSONObject(j).getString("value"));
+                    }
+                }
+                account.setFields(fieldsMap);
+            }catch (Exception ignored){}
+
+            //Retrieves emjis
+            List<Emojis> emojiList = new ArrayList<>();
+            try {
+                JSONArray emojisTag = resobj.getJSONArray("emojis");
+                if( emojisTag != null){
+                    for(int j = 0 ; j < emojisTag.length() ; j++){
+                        JSONObject emojisObj = emojisTag.getJSONObject(j);
+                        Emojis emojis = parseEmojis(emojisObj);
+                        emojiList.add(emojis);
+                    }
+                }
+                account.setEmojis(emojiList);
+            }catch (Exception e){
+                account.setEmojis(new ArrayList<>());
+            }
         } catch (JSONException ignored) {}
         return account;
     }

@@ -15,8 +15,8 @@
   <string name="no">Não</string>
   <string name="cancel">Cancelar</string>
   <string name="download">Baixar</string>
-  <string name="download_file">Baixar %1$s</string>
-  <string name="download_over">Download completo</string>
+  <string name="download_file">%1$s baixado</string>
+  <string name="download_over">Transferência concluída</string>
   <string name="save_file">Salvar %1$s</string>
   <string name="save_over">Mídia salva</string>
   <string name="download_from" formatted="false">Arquivo: %1$s</string>
@@ -28,7 +28,7 @@
   <string name="token">Token</string>
   <string name="save">Salvar</string>
   <string name="restore">Restaurar</string>
-  <string name="two_factor_authentification">Autenticação em dois passos?</string>
+  <string name="two_factor_authentification">Autenticação de dois fatores?</string>
   <string name="other_instance">Outra instância que não mastodon.etalab.gouv.fr?</string>
   <string name="no_result">Sem resultados!</string>
   <string name="instance">Instância</string>
@@ -40,7 +40,7 @@
   <string name="choose_picture">Selecione uma imagem…</string>
   <string name="clear">Limpar</string>
   <string name="microphone">Microfone</string>
-  <string name="camera">Camera</string>
+  <string name="camera">Câmera</string>
   <string name="speech_prompt">Por favor, diga algo</string>
   <string name="speech_not_supported">Desculpe! Seu aparelho não suporta entrada por voz!</string>
   <string name="delete_all">Excluir tudo</string>
@@ -64,11 +64,11 @@
   <string name="follow">Novos seguidores</string>
   <string name="mention">Menções</string>
   <string name="reblog">Compartilhamentos</string>
-  <string name="show_boosts">Show boosts</string>
-  <string name="show_replies">Show replies</string>
-  <string name="action_open_in_web">Open in browser</string>
-  <string name="translate">Translate</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="show_boosts">Mostrar compartilhamentos</string>
+  <string name="show_replies">Mostrar respostas</string>
+  <string name="action_open_in_web">Abrir no navegador</string>
+  <string name="translate">Traduzir</string>
+  <string name="please_wait">Por favor, espere alguns segundos antes de fazer esta ação.</string>
   <!--- Menu -->
   <string name="home_menu">Página inicial</string>
   <string name="local_menu">Timeline local</string>
@@ -80,7 +80,7 @@
   <string name="blocked_menu">Usuários bloqueados</string>
   <string name="remote_follow_menu">Seguir remotamente</string>
   <string name="notifications">Notificações</string>
-  <string name="follow_request">Solicitações de seguidor</string>
+  <string name="follow_request">Solicitação para seguir</string>
   <string name="optimization">Otimização</string>
   <string name="settings">Configurações</string>
   <string name="profile">Perfil</string>
@@ -93,10 +93,10 @@
   <string name="click_to_change">Clique no caminho para mudá-lo</string>
   <string name="failed">Falhou!</string>
   <string name="scheduled_toots">Toots agendados</string>
-  <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+  <string name="disclaimer_full">As informações abaixo podem refletir o perfil do usuário incompletamente.</string>
   <string name="insert_emoji">Inserir Emoji</string>
-  <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-  <string name="live_notif">Live notifications</string>
+  <string name="no_emoji">O app não recolhe emojis personalizado para o momento.</string>
+  <string name="live_notif">Notificações ao vivo</string>
   <!-- Status -->
   <string name="no_status">Sem toots para exibir</string>
   <string name="fav_added">Toot adicionado aos favoritos</string>
@@ -117,7 +117,8 @@
   <string name="more_action_5">Copiar</string>
   <string name="more_action_6">Compartilhar</string>
   <string name="more_action_7">Mencionar</string>
-  <string name="more_action_8">Timed mute</string>
+  <string name="more_action_8">Mudo cronometrado</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>Silenciar esta conta?</item>
     <item>Bloquear esta conta?</item>
@@ -125,18 +126,19 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Excluir este toot?</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d resposta</item>
     <item quantity="other">%d respostas</item>
   </plurals>
-  <string name="set_display_bookmark_button">Display the bookmark button</string>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmark_add">Add to bookmarks</string>
-  <string name="bookmark_remove">Remove bookmark</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="set_display_bookmark_button">Exibir o botão de favorito</string>
+  <string name="bookmarks">Favoritos</string>
+  <string name="bookmark_add">Adicionar aos favoritos</string>
+  <string name="bookmark_remove">Remover dos favoritos</string>
+  <string name="bookmarks_empty">Não há favoritos para exibir</string>
+  <string name="status_bookmarked">Status foi adicionado aos favoritos!</string>
+  <string name="status_unbookmarked">Status foi removido dos favoritos!</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
@@ -168,10 +170,10 @@
   <string name="no_draft">Sem rascunhos!</string>
   <string name="choose_toot">Escolha um toot</string>
   <string name="choose_accounts">Escolha uma conta</string>
-  <string name="select_accounts">Select some accounts</string>
+  <string name="select_accounts">Selecione algumas contas</string>
   <string name="remove_draft">Excluir rascunho?</string>
   <string name="show_reply">Clique no botão para exibir toot original</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="upload_form_description">Descreva para os deficientes visuais</string>
   <!-- Instance -->
   <string name="instance_no_description">Sem descrição!</string>
   <!-- About -->
@@ -184,15 +186,15 @@
   <string name="about_thekinrar">Busca de instâncias:</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Designer do ícone:</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_banner">Designer do banner:</string>
   <!-- Conversation -->
   <string name="conversation">Conversa</string>
   <!-- Accounts -->
   <string name="no_accounts">Sem contas para exibir</string>
   <string name="no_follow_request">Sem solicitações de seguidor</string>
   <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
+  <string name="following_cnt">Seguindo \n %1$s</string>
+  <string name="followers_cnt">Seguidores \n %1$s</string>
   <string name="pins_cnt">Fixado \n %d</string>
   <string name="authorize">Autorizar</string>
   <string name="reject">Rejeitar</string>
@@ -205,9 +207,9 @@
   <string name="toot_scheduled_date">A data de agendamento deve ser após o momento atual!</string>
   <string name="warning_battery">Economia de bateria ativada! Pode não funcionar como esperado.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">O tempo de bloqueio deve ser maior do que um minuto.</string>
+  <string name="timed_mute_date">%1$s foi silenciado até %2$s. \n Você pode reativar essa conta de sua página de perfil.</string>
+  <string name="timed_mute_profile">%1$s está silenciado até %2$s. \n Clique aqui para reativar a conta.</string>
   <!-- Notifications -->
   <string name="no_notifications">Sem notificações para exibir</string>
   <string name="notif_mention">mencionou você</string>
@@ -273,12 +275,12 @@
   <string name="set_attachment_action">Carregar mídia</string>
   <string name="load_attachment">Carregar imagens</string>
   <string name="load_attachment_spoiler">Mostrar mais…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler_less">Exibir menos…</string>
   <string name="load_sensitive_attachment">Conteúdo sensível</string>
   <string name="set_display_reply">Exibir mensagem anterior nas respostas</string>
   <string name="set_display_local">Exibir timeline local</string>
   <string name="set_display_global">Exibir timeline federada</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">Desabilitar avatares GIF</string>
   <string name="set_folder_title">Caminho: </string>
   <string name="set_auto_store_toot">Salvar rascunhos automaticamente</string>
   <string name="set_bubble_counter">Exibir contadores</string>
@@ -299,13 +301,14 @@
   <string name="set_nsfw_timeout">Tempo até visualização de NSFW expirar (segundos, 0 significa desligado)</string>
   <string name="settings_title_profile">Editar perfil</string>
   <string name="set_profile_description">Bio…</string>
-  <string name="set_lock_account">Lock account</string>
+  <string name="set_lock_account">Bloquear conta</string>
   <string name="set_save_changes">Salvar mudanças</string>
   <string name="set_header_picture_overlay">Escolher cabeçalho</string>
   <string name="set_preview_reply">Exibir número de respostas na página inicial</string>
   <string name="set_preview_reply_pp">Exibir imagens de perfil?</string>
   <string name="set_multiaccount_actions">Permitir interações entre contas?</string>
-  <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_fit_preview">Ajuste da visualização de imagens</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Você já usou os 160 caracteres permitidos!</string>
   <string name="username_no_space">Você já usou os 30 caracteres permitidos!</string>
   <string name="settings_title_hour">Horário das notificações:</string>
@@ -316,9 +319,9 @@
   <string name="settings_hour_init">Horário de início</string>
   <string name="settings_hour_end">Horário de fim</string>
   <string name="embedded_browser">Usar navegador interno</string>
-  <string name="custom_tabs">Custom tabs</string>
+  <string name="custom_tabs">Abas personalizadas</string>
   <string name="use_javascript">Habilitar Javascript</string>
-  <string name="expand_cw">Automatically expand cw</string>
+  <string name="expand_cw">Expandir cw automaticamente</string>
   <string name="use_cookies">Habilitar cookies de terceiros</string>
   <string name="settings_ui_layout">Modelo das timelines: </string>
   <string-array name="settings_menu_tabs">
@@ -329,15 +332,17 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>Não</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Escuro</item>
+    <item>Claro</item>
+    <item>Preto</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
-    <item>512 Kb</item>
+    <item>Não</item>
+    <item>512 kb</item>
     <item>1 Mb</item>
     <item>2 Mb</item>
   </string-array>
@@ -364,8 +369,8 @@
   <string name="request_sent">Solicitação enviada</string>
   <string name="followed_by">Segue você</string>
   <string name="action_search">Busca</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="set_capitalize">Primeira letra maiúscula para respostas</string>
+  <string name="set_resize_picture">Redimensionar fotos</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Notificações</string>
   <string name="settings_popup_message">
@@ -380,25 +385,25 @@
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Cache limpo! %1$s foram liberados</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
-  <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="action_sync">Sincronizar</string>
+  <string name="action_filter">Filtro</string>
+  <string name="owner_cached_toots">Seus toots</string>
+  <string name="v_public">Público</string>
+  <string name="v_unlisted">Não Listado</string>
+  <string name="v_private">Privado</string>
+  <string name="v_direct">Direto</string>
+  <string name="v_keywords">Algumas palavras-chave…</string>
+  <string name="show_media">Exibir mídia</string>
+  <string name="show_pinned">Mostrar fixado</string>
+  <string name="filter_no_result">Nenhum resultado correspondente encontrado!</string>
+  <string name="data_backup_toots">Fazer backup dos toots por %1$s</string>
+  <string name="data_backup_success">%1$s novos toots foram importados</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Não</item>
+    <item>Apenas</item>
+    <item>Ambos</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Nenhum toot foi encontrado no banco de dados. Por favor, use o botão de sincronização no menu para recuperá-los.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Dados salvos</string>
   <string name="privacy_data">
@@ -425,11 +430,11 @@
     </string>
   <string name="privacy_API_title">Rastreamento e bibliotecas</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        O aplicativo <b>não usa ferramentas de rastreamento</b> (medição de audiência, relatórios de erro, etc) e não contém qualquer propaganda.\n\n
+        O uso de bibliotecas é minimizado: \n
+        - <b>Glide</b>: Para gerenciar mídia\n
+        - <b>Android-Job</b>: Para gerenciar serviços\n
+        - <b>PhotoView</b>: Para gerenciar imagens\n
     </string>
   <string name="privacy_API_yandex_title">Tradução de toots</string>
   <string name="privacy_API_yandex_authorizations">
@@ -442,51 +447,52 @@
   <string name="thanks_text_dev">
         Agradecimentos a:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="filter_regex">Filtrar por expressões regulares</string>
+  <string name="search">Busca</string>
+  <string name="delete">Apagar</string>
+  <string name="fetch_more_toots">Buscar mais toots…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">Listas</string>
+  <string name="action_lists_confirm_delete">Tem certeza que deseja apagar permanentemente esta lista?</string>
+  <string name="action_lists_empty_content">Não há nada nesta lista ainda. Quando membros desta lista postarem novos status, eles aparecerão aqui.</string>
+  <string name="action_lists_add_to">Adicionar à lista</string>
+  <string name="action_lists_remove_from">Remover da lista</string>
+  <string name="action_lists_create">Adicionar lista</string>
+  <string name="action_lists_delete">Apagar lista</string>
+  <string name="action_lists_update">Editar lista</string>
+  <string name="action_lists_title_placeholder">Título da nova lista</string>
+  <string name="action_lists_search_users">Procure entre pessoas que você segue</string>
+  <string name="action_lists_owner">Suas listas</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s foi movido para %2$s</string>
+  <string name="show_boost_count">Mostrar a contagem de compartilhamentos/favoritos</string>
+  <string name="issue_login_title">Autenticação não funciona?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Aqui estão algumas verificações que podem ajudar:</b>\n\n
+        - Verifique se não há erros de digitação no nome da instância\n\n
+        - Verifique se a sua instância não está fora do ar\n\n
+        - Se você utiliza a autenticação de dois fatores (2FA), use o link na parte inferior (uma vez que o nome da instância estiver preenchido) \n\n
+        - Você também pode usar este link sem usar o 2FA\n\n
+        - Se ainda não funcionar, por favor, crie um issue no Github em https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="media_ready">A mídia foi carregada. Clique aqui para exibi-la.</string>
+  <string name="data_export_start">Esta ação pode ser bastante longa. Você será notificado quando ela será terminada.</string>
+  <string name="data_export_running">Ainda em execução, por favor aguarde…</string>
+  <string name="data_export">Exportar status</string>
+  <string name="data_export_toots">Exportar status para %1$s</string>
+  <string name="data_export_success">%1$s toots de %2$s foram exportados.</string>
+  <string name="data_export_error">Algo deu errado enquanto exportava dados para %1$s</string>
   <!-- Proxy -->
   <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
+  <string name="proxy_type">Tipo</string>
+  <string name="proxy_enable">Habilitar o proxy?</string>
+  <string name="poxy_host">Servidor</string>
+  <string name="poxy_port">Porta</string>
   <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+  <string name="poxy_password">Senha</string>
+  <string name="set_theme">Tema:</string>
+  <string name="set_compact_mode">Modo compacto</string>
+  <string name="set_share_details">Adicionar detalhes do toot quando compartilhar</string>
+  <string name="support_the_app_on_liberapay">Suporte a app na Liberapay</string>
+  <string name="alert_regex">Há um erro na expressão regular!</string>
 </resources>

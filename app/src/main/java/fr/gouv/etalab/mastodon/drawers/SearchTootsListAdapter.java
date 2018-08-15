@@ -34,6 +34,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
@@ -138,6 +139,7 @@ public class SearchTootsListAdapter extends BaseAdapter  {
                                 if( searches.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
                                     textviewNoAction.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
+                                ((BaseMainActivity)context).removeSearchTab(search);
                             }
                         })
                         .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

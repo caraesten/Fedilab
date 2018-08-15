@@ -118,6 +118,7 @@
   <string name="more_action_6">共享</string>
   <string name="more_action_7">提及</string>
   <string name="more_action_8">Timed mute</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>是否将此帐户静音？</item>
     <item>是否将此帐户屏蔽？</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>移除这个toot？</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d 回复</item>
@@ -303,6 +305,7 @@
   <string name="set_preview_reply_pp">是否显示配置文件图片？</string>
   <string name="set_multiaccount_actions">允许客户之间的交互？</string>
   <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">您已达到允许的160字符!</string>
   <string name="username_no_space">您已达到允许的30字符!</string>
   <string name="settings_title_hour">通知的时间段:</string>
@@ -326,7 +329,9 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>否　</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
     <item>Dark</item>
     <item>Light</item>
@@ -481,4 +486,5 @@
   <string name="set_compact_mode">Compact mode</string>
   <string name="set_share_details">Add toot details when sharing</string>
   <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+  <string name="alert_regex">There is an error in the regular expression!</string>
 </resources>

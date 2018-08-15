@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.content.*;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -659,6 +660,31 @@ public class Status implements Parcelable{
             matcher = Patterns.WEB_URL.matcher(spannableString);
         else
             matcher = Helper.urlPattern.matcher(spannableString);*/
+
+
+        matcher = Helper.twitterPattern.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(2);
+            int matchEnd = matcher.end();
+            final String twittername = spannableString.toString().substring(matchStart, matchEnd);
+            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+                spannableString.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/"+twittername.substring(1).replace("@twitter.com","")));
+                        context.startActivity(intent);
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
+                    }
+                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+
         matcher = Patterns.WEB_URL.matcher(spannableString);
         while (matcher.find()){
             int matchStart = matcher.start(1);

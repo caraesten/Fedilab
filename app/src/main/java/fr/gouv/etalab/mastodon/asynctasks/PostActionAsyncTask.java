@@ -45,6 +45,8 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private boolean muteNotifications;
 
+
+
     public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface){
         this.contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;

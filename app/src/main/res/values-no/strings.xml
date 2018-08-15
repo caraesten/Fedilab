@@ -118,6 +118,7 @@
   <string name="more_action_6">Dele</string>
   <string name="more_action_7">Nevne</string>
   <string name="more_action_8">Timed mute</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>Slå av denne kontoen?</item>
     <item>Blokker denne kontoen?</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Fjern denne tooten?</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d svar</item>
@@ -306,6 +308,7 @@
   <string name="set_preview_reply_pp">Vis profilbilder?</string>
   <string name="set_multiaccount_actions">Tillat samhandling mellom kontoer?</string>
   <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Du har nådd de 160 tegnene som er tillatt!</string>
   <string name="username_no_space">Du har nådd de 30 tegnene som er tillatt!</string>
   <string name="settings_title_hour">Tidsspor for varsler:</string>
@@ -329,7 +332,9 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>Nei</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
     <item>Dark</item>
     <item>Light</item>
@@ -481,4 +486,5 @@ Takk til:    </string>
   <string name="set_compact_mode">Compact mode</string>
   <string name="set_share_details">Add toot details when sharing</string>
   <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+  <string name="alert_regex">There is an error in the regular expression!</string>
 </resources>

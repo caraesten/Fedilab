@@ -118,6 +118,7 @@
   <string name="more_action_6">Подели</string>
   <string name="more_action_7">Спомени</string>
   <string name="more_action_8">Временски ограничено ућуткивање</string>
+  <string name="more_action_9">Избриши &amp; и поново изради</string>
   <string-array name="more_action_confirm">
     <item>Ућуткај овај налог?</item>
     <item>Блокирај овај налог?</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Уклони овај тут?</item>
+    <item>Избриши &amp; и поново напиши овај тут?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d одговор</item>
@@ -309,6 +311,7 @@
   <string name="set_preview_reply_pp">Прикажи профилну слику?</string>
   <string name="set_multiaccount_actions">Дозволи интеракције између налога?</string>
   <string name="set_fit_preview">Прилагоди преглед слике да стане</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Достигли сте дозвољених 160 карактера!</string>
   <string name="username_no_space">Достигли сте дозвољених 30 карактера!</string>
   <string name="settings_title_hour">Термин за обавештења:</string>
@@ -332,11 +335,13 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>Не</item>
+    <item>Не</item>
   </string-array>
+  <string name="your_api_key">Ваш API кључ, можете оставити празно за Yandex</string>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Тамна</item>
+    <item>Светла</item>
+    <item>Црна</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>Не</item>
@@ -488,8 +493,9 @@
   <string name="poxy_port">Порт</string>
   <string name="poxy_login">Пријава</string>
   <string name="poxy_password">Лозинка</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+  <string name="set_theme">Тема:</string>
+  <string name="set_compact_mode">Сажети режим</string>
+  <string name="set_share_details">Додај детаље тута приликом дељења</string>
+  <string name="support_the_app_on_liberapay">Подржи апликацију на Liberapay-у</string>
+  <string name="alert_regex">Постоји грешка у регуларном изразу!</string>
 </resources>

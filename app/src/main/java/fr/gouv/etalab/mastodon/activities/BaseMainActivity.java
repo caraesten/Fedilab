@@ -25,7 +25,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -34,6 +33,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -45,6 +45,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -74,6 +76,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
@@ -101,6 +104,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.BackupStatusService;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
+import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -118,6 +122,8 @@ import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_TARGETED_ACCOUNT;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_KEYWORD;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_TAG;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
@@ -158,6 +164,8 @@ public abstract class BaseMainActivity extends BaseActivity
     private String bookmark;
     private String userId;
     private String instance;
+    public int countPage;
+    private PagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -367,14 +375,14 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
         viewPager = findViewById(R.id.viewpager);
-        int countPage = 2;
+        countPage = 2;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true))
             countPage++;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true))
             countPage++;
         viewPager.setOffscreenPageLimit(countPage);
         main_app_container = findViewById(R.id.main_app_container);
-        PagerAdapter adapter = new PagerAdapter
+        adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -526,6 +534,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 startActivity(intent);
                 toolbar_search.setQuery("", false);
                 toolbar_search.setIconified(true);
+
                 if( main_app_container.getVisibility() == View.VISIBLE){
                     main_app_container.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
@@ -673,9 +682,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                 long sizeCache = Helper.cacheSize(getCacheDir());
                                 float cacheSize = 0;
                                 if( sizeCache > 0 ) {
-                                    if (sizeCache > 0) {
-                                        cacheSize = (float) sizeCache / 1000000.0f;
-                                    }
+                                    cacheSize = (float) sizeCache / 1000000.0f;
                                 }
                                 final float finalCacheSize = cacheSize;
                                 builder.setMessage(getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), getString(R.string.cache_units))))
@@ -913,10 +920,26 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         };
+        refreshSearchTab();
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
 
         // Retrieves instance
         new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    public void refreshSearchTab(){
+        Helper.addSearchTag(BaseMainActivity.this, tabLayout, adapter);
+    }
+
+    public void removeSearchTab(String tag){
+        Helper.removeSearchTag(tag, tabLayout, adapter);
+        int allTabCount = tabLayout.getTabCount();
+        if( allTabCount == countPage){
+            main_app_container.setVisibility(View.GONE);
+            viewPager.setVisibility(View.VISIBLE);
+            tabLayout.setVisibility(View.VISIBLE);
+            toolbarTitle.setVisibility(View.GONE);
+        }
     }
 
 
@@ -1021,6 +1044,27 @@ public abstract class BaseMainActivity extends BaseActivity
                             @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_regex, null);
                             dialogBuilder.setView(dialogView);
                             final EditText editText = dialogView.findViewById(R.id.filter_regex);
+                            Toast alertRegex = Toast.makeText(BaseMainActivity.this, R.string.alert_regex, Toast.LENGTH_LONG);
+                            editText.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                }
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                }
+                                @Override
+                                public void afterTextChanged(Editable s) {
+                                    try {
+                                        //noinspection ResultOfMethodCallIgnored
+                                        Pattern.compile("(" + s.toString() + ")", Pattern.CASE_INSENSITIVE);
+                                    }catch (Exception e){
+                                        if( !alertRegex.getView().isShown()){
+                                            alertRegex.show();
+                                        }
+                                    }
+
+                                }
+                            });
                             if( show_filtered != null) {
                                 editText.setText(show_filtered);
                                 editText.setSelection(editText.getText().toString().length());
@@ -1105,6 +1149,17 @@ public abstract class BaseMainActivity extends BaseActivity
             }else if( extras.getInt(INTENT_ACTION) == BACKUP_INTENT){
                 Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
                 startActivity(myIntent);
+            }else if(extras.getInt(INTENT_ACTION) == SEARCH_TAG){
+                String keyword = extras.getString(SEARCH_KEYWORD);
+                if( keyword != null){
+                    adapter = new PagerAdapter
+                            (getSupportFragmentManager(), tabLayout.getTabCount());
+                    viewPager.setAdapter(adapter);
+                    for(int i = 0; i < tabLayout.getTabCount() ; i++ ){
+                        if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(keyword))
+                            tabLayout.getTabAt(i).select();
+                    }
+                }
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
             if ("text/plain".equals(type)) {
@@ -1287,6 +1342,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_local_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
+
     }
 
     @Override
@@ -1344,7 +1400,6 @@ public abstract class BaseMainActivity extends BaseActivity
         viewPager.setVisibility(View.GONE);
         tabLayout.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.VISIBLE);
-
         appBar.setExpanded(true);
         if (id != R.id.nav_drafts && id != R.id.nav_bookmarks ) {
             delete_all.setVisibility(View.GONE);
@@ -1536,12 +1591,24 @@ public abstract class BaseMainActivity extends BaseActivity
     /**
      * Page Adapter for settings
      */
-    private class PagerAdapter extends FragmentStatePagerAdapter  {
+    public class PagerAdapter extends FragmentStatePagerAdapter  {
         int mNumOfTabs;
 
         private PagerAdapter(FragmentManager fm, int NumOfTabs) {
             super(fm);
             this.mNumOfTabs = NumOfTabs;
+        }
+
+        public void removeTabPage() {
+            this.mNumOfTabs--;
+            notifyDataSetChanged();
+        }
+
+        public void addTabPage(String title) {
+            TabLayout.Tab tab = tabLayout.newTab();
+            tab.setText(title);
+            this.mNumOfTabs++;
+            notifyDataSetChanged();
         }
 
         @Override
@@ -1552,6 +1619,9 @@ public abstract class BaseMainActivity extends BaseActivity
                 tabLayout.setVisibility(View.VISIBLE);
                 toolbar_search.setIconified(true);
             }
+            SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            List<String> searches = new SearchDAO(BaseMainActivity.this, db).getAllSearch();
+            int sizeSearches = (searches ==null)?0:searches.size();
             //Selection comes from another menu, no action to do
             DisplayStatusFragment statusFragment;
             Bundle bundle = new Bundle();
@@ -1568,18 +1638,24 @@ public abstract class BaseMainActivity extends BaseActivity
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            }else if(position == 2){
+            }else if(position == 2 && display_global){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            }else if (position == 3){
+            }else if (position == 3 && display_global && display_local){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
+                statusFragment.setArguments(bundle);
+                return statusFragment;
+            }else{ //Here it's a search fragment
+                statusFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.TAG);
+                if( tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null)
+                    bundle.putString("tag", tabLayout.getTabAt(position).getText().toString());
                 statusFragment.setArguments(bundle);
                 return statusFragment;
             }
-            return null;
         }
 
         @NonNull
@@ -1607,6 +1683,7 @@ public abstract class BaseMainActivity extends BaseActivity
             }
             return createdFragment;
         }
+
         @Override
         public int getCount() {
             return mNumOfTabs;

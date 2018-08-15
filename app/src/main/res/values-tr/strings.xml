@@ -118,6 +118,7 @@
   <string name="more_action_6">Paylaş</string>
   <string name="more_action_7">Bahset</string>
   <string name="more_action_8">Zamanlanmış susturma</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>Bu hesabı sustur?</item>
     <item>Bu hesabı engelle?</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Bu modülğ sil?</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d cevap</item>
@@ -306,6 +308,7 @@
   <string name="set_preview_reply_pp">Profil resimleri görüntülensin mi?</string>
   <string name="set_multiaccount_actions">Hesapları arasındaki etkileşimler izin verilsin mi?</string>
   <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">160 karakter sınırına ulaştınız!</string>
   <string name="username_no_space">30 karakter sınırına ulaştınız!</string>
   <string name="settings_title_hour">Bildirimler için zaman aralığı:</string>
@@ -329,7 +332,9 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>Hayır</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
     <item>Dark</item>
     <item>Light</item>
@@ -482,4 +487,5 @@ Teşekkürler:    </string>
   <string name="set_compact_mode">Compact mode</string>
   <string name="set_share_details">Add toot details when sharing</string>
   <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+  <string name="alert_regex">There is an error in the regular expression!</string>
 </resources>

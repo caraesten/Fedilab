@@ -118,6 +118,7 @@
   <string name="more_action_6">Поділитися</string>
   <string name="more_action_7">Згадати</string>
   <string name="more_action_8">Тимчасово заглушити</string>
+  <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
     <item>Заглушити цей обліковий запис?</item>
     <item>Заблокувати цей обліковий запис?</item>
@@ -125,6 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Видалити цей дмух?</item>
+    <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d відповідь</item>
@@ -312,6 +314,7 @@
   <string name="set_preview_reply_pp">Показувати зображення профілів?</string>
   <string name="set_multiaccount_actions">Дозволити взаємодію між обліковими записами?</string>
   <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Ви досягли ліміту в 160 символів!</string>
   <string name="username_no_space">Ви досягли ліміту в 30 символів!</string>
   <string name="settings_title_hour">Інтервал часу для сповіщення:</string>
@@ -335,7 +338,9 @@
   <string-array name="settings_translation">
     <item>Яндекс</item>
     <item>Ні</item>
+    <item>No</item>
   </string-array>
+  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
     <item>Dark</item>
     <item>Light</item>
@@ -485,4 +490,5 @@
   <string name="set_compact_mode">Compact mode</string>
   <string name="set_share_details">Add toot details when sharing</string>
   <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+  <string name="alert_regex">There is an error in the regular expression!</string>
 </resources>
