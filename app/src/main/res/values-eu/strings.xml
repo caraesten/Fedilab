@@ -308,6 +308,7 @@
   <string name="set_preview_reply_pp">Bistaratu profileko argazkiak?</string>
   <string name="set_multiaccount_actions">Baimendu kontuen arteko interakzioa?</string>
   <string name="set_fit_preview">Doitu irudien aurrebistak</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Baimendutako 160 karaktereetara heldu zara!</string>
   <string name="username_no_space">Baimendutako 30 karaktereetara heldu zara!</string>
   <string name="settings_title_hour">Jakinarazpenen denbora-tartea:</string>
