@@ -118,7 +118,7 @@
   <string name="more_action_6">Teilen</string>
   <string name="more_action_7">Erwähnen</string>
   <string name="more_action_8">Zeitlich begrenzt stummschalten</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_9">Löschen &amp; neu entwerfen</string>
   <string-array name="more_action_confirm">
     <item>Nutzer stummschalten?</item>
     <item>Diesen Nutzer blockieren?</item>
@@ -126,7 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Entferne diesen Toot?</item>
-    <item>Delete &amp; re-draft this toot?</item>
+    <item>Diesen Toot löschen &amp; neuentwerfen?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d Antwort</item>
@@ -312,7 +312,7 @@
   <string name="set_preview_reply_pp">Profilbilder anzeigen?</string>
   <string name="set_multiaccount_actions">Interaktionen zwischen deinen Konten erlauben?</string>
   <string name="set_fit_preview">Vorschaubilder anpassen</string>
-  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+  <string name="set_automatically_split_toot">In Antworten Toots über 500 Zeichen automatisch unterteilen</string>
   <string name="note_no_space">Du hast die Grenze von 160 Zeichen erreicht!</string>
   <string name="username_no_space">Du hast die Grenze von 30 Zeichen erreicht!</string>
   <string name="settings_title_hour">Zeitfenster für Benachrichtigungen:</string>
@@ -338,7 +338,7 @@
     <item>Nein</item>
     <item>Nein</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">Ihr API-Schlüssel, Sie können ihn leer lassen für Yandex</string>
   <string-array name="settings_theme">
     <item>Dunkel</item>
     <item>Hell</item>
