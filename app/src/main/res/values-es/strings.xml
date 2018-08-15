@@ -118,7 +118,7 @@
   <string name="more_action_6">Compartir</string>
   <string name="more_action_7">Mencionar</string>
   <string name="more_action_8">Silenciado temporal</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_9">Borrar &amp; redactar</string>
   <string-array name="more_action_confirm">
     <item>¿Silenciar esta cuenta?</item>
     <item>¿Bloquear esta cuenta?</item>
@@ -126,7 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>¿Remover este toot?</item>
-    <item>Delete &amp; re-draft this toot?</item>
+    <item>Borrar &amp; redactar este Toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d respuesta</item>
