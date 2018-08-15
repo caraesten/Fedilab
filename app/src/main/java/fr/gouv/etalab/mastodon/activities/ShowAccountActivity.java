@@ -923,7 +923,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
                 String label = (String)pair.getKey();
-                String value = (String)pair.getValue();
+                SpannableString value = (SpannableString)pair.getValue();
                 LinearLayout field;
                 TextView labelView;
                 TextView valueView;
