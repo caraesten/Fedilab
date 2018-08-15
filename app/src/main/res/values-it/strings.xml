@@ -308,6 +308,7 @@
   <string name="set_preview_reply_pp">Visualizzare la foto del profilo?</string>
   <string name="set_multiaccount_actions">Permetti interazioni tra gli account?</string>
   <string name="set_fit_preview">Adatta anteprima immagini</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Hai raggiunto i 160 caratteri permessi!</string>
   <string name="username_no_space">Hai raggiunto i 30 caratteri permessi!</string>
   <string name="settings_title_hour">Slot di tempo per le notifiche:</string>

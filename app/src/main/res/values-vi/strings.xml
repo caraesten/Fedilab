@@ -307,6 +307,7 @@ và %d toots khác để khám phá</item>
   <string name="set_preview_reply_pp">Hiển thị ảnh tiểu sử?</string>
   <string name="set_multiaccount_actions">Cho phép tương tác giữa các tài khoản?</string>
   <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Bạn đã đạt đến 160 ký tự cho phép!</string>
   <string name="username_no_space">Bạn đã đạt đến 30 ký tự!</string>
   <string name="settings_title_hour">Khoảng thời gian để thông báo:</string>

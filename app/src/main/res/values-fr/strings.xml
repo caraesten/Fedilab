@@ -308,6 +308,7 @@
   <string name="set_preview_reply_pp">Afficher les images de profil ?</string>
   <string name="set_multiaccount_actions">Permettre les interactions entre comptes ?</string>
   <string name="set_fit_preview">Voir l\'aperçu d\'image en entier</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Vous avez atteint les 160 caractères autorisés !</string>
   <string name="username_no_space">Vous avez atteint les 30 caractères autorisés !</string>
   <string name="settings_title_hour">Plage horaire pour les notifications :</string>

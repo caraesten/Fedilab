@@ -314,6 +314,7 @@
   <string name="set_preview_reply_pp">Показувати зображення профілів?</string>
   <string name="set_multiaccount_actions">Дозволити взаємодію між обліковими записами?</string>
   <string name="set_fit_preview">Fit preview images</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Ви досягли ліміту в 160 символів!</string>
   <string name="username_no_space">Ви досягли ліміту в 30 символів!</string>
   <string name="settings_title_hour">Інтервал часу для сповіщення:</string>
