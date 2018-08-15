@@ -314,6 +314,7 @@
   <string name="set_preview_reply_pp">Отображение изображения профиля?</string>
   <string name="set_multiaccount_actions">Разрешить взаимодействие между аккаунтами?</string>
   <string name="set_fit_preview">Показ масштабируемых изображений</string>
+  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Вы достигли 160 символов!</string>
   <string name="username_no_space">Вы достигли 30 символов!</string>
   <string name="settings_title_hour">Промежутки времени для уведомлений:</string>
