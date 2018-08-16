@@ -1022,7 +1022,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
 
-            holder.status_content.setOnTouchListener(new View.OnTouchListener() {
+            /*holder.status_content.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN && !view.hasFocus()) {
@@ -1030,7 +1030,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                     return false;
                 }
-            });
+            });*/
             //Click on a conversation
             if( getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS) {
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
