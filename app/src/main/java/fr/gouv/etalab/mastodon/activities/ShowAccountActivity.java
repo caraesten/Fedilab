@@ -79,6 +79,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
+import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountInterface;
@@ -260,24 +261,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         account_note = findViewById(R.id.account_note);
 
-        //Follow button
-        account_follow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( doAction == action.NOTHING){
-                    Toast.makeText(getApplicationContext(), R.string.nothing_to_do, Toast.LENGTH_LONG).show();
-                }else if( doAction == action.FOLLOW){
-                    account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else if( doAction == action.UNFOLLOW){
-                    account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNFOLLOW, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else if( doAction == action.UNBLOCK){
-                    account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNBLOCK, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-            }
-        });
+
+
+
 
         header_edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -767,7 +753,31 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         }
                     });
 
-
+        //Follow button
+        account_follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( doAction == action.NOTHING){
+                    Toast.makeText(getApplicationContext(), R.string.nothing_to_do, Toast.LENGTH_LONG).show();
+                }else if( doAction == action.FOLLOW){
+                    account_follow.setEnabled(false);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else if( doAction == action.UNFOLLOW){
+                    account_follow.setEnabled(false);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNFOLLOW, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else if( doAction == action.UNBLOCK){
+                    account_follow.setEnabled(false);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNBLOCK, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            }
+        });
+        account_follow.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CrossActions.doCrossAction(ShowAccountActivity.this, null, account, API.StatusAction.FOLLOW , null, ShowAccountActivity.this, false);
+                return false;
+            }
+        });
     }
 
 
@@ -817,7 +827,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
 
         //The authenticated account is followed by the account
-        if( relationship.isFollowed_by()){
+        if( relationship != null && relationship.isFollowed_by()){
             TextView account_followed_by = findViewById(R.id.account_followed_by);
             account_followed_by.setVisibility(View.VISIBLE);
         }

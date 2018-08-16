@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 
 
@@ -40,7 +42,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private String comment;
     private fr.gouv.etalab.mastodon.client.Entities.Status status;
     private API api;
-    private Account account;
+    private Account account, remoteAccount;
     private fr.gouv.etalab.mastodon.client.Entities.Status remoteStatus;
     private WeakReference<Context> contextReference;
     private boolean muteNotifications;
@@ -70,6 +72,14 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
         this.account = account;
     }
 
+    public PostActionAsyncTask(Context context, Account account, Account remoteAccount, API.StatusAction apiAction, OnPostActionInterface onPostActionInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.listener = onPostActionInterface;
+        this.apiAction = apiAction;
+        this.remoteAccount = remoteAccount;
+        this.account = account;
+    }
+
     public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, fr.gouv.etalab.mastodon.client.Entities.Status status, String comment, OnPostActionInterface onPostActionInterface){
         contextReference = new WeakReference<>(context);
         this.listener = onPostActionInterface;
@@ -90,33 +100,48 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
 
         //Remote action
-        if( account !=null)
+        if (account != null)
             api = new API(contextReference.get(), account.getInstance(), account.getToken());
         else
             api = new API(contextReference.get());
-        if( remoteStatus != null){
+        if (remoteStatus != null) {
             String uri;
-            if( remoteStatus.getReblog() != null){
-                if( remoteStatus.getReblog().getUri().startsWith("http"))
+            if (remoteStatus.getReblog() != null) {
+                if (remoteStatus.getReblog().getUri().startsWith("http"))
                     uri = remoteStatus.getReblog().getUri();
                 else
                     uri = remoteStatus.getReblog().getUrl();
-            }else {
-                if( remoteStatus.getUri().startsWith("http"))
+            } else {
+                if (remoteStatus.getUri().startsWith("http"))
                     uri = remoteStatus.getUri();
                 else
                     uri = remoteStatus.getUrl();
             }
             Results search = api.search(uri);
-            if( search != null){
+            if (search != null) {
                 List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses = search.getStatuses();
-                if( remoteStatuses != null && remoteStatuses.size() > 0 ){
+                if (remoteStatuses != null && remoteStatuses.size() > 0) {
                     fr.gouv.etalab.mastodon.client.Entities.Status statusTmp = remoteStatuses.get(0);
                     this.targetedId = statusTmp.getId();
                     statusCode = api.postAction(apiAction, targetedId);
                 }
             }
-        } else {
+        }else if(remoteAccount != null){
+            String searchString = remoteAccount.getAcct().contains("@")?"@" + remoteAccount.getAcct():"@" + remoteAccount.getAcct() + "@" + Helper.getLiveInstance(contextReference.get());
+            Log.v(Helper.TAG,"searchString: " + searchString);
+            Results search = api.search(searchString);
+            Log.v(Helper.TAG,"search: " + search);
+            if (search != null) {
+                List<Account> accounts = search.getAccounts();
+                Log.v(Helper.TAG,"accounts: " + accounts);
+                if (accounts != null && accounts.size() > 0) {
+                    Log.v(Helper.TAG,"accounts.size(): " + accounts.size());
+                    Account accountTmp = accounts.get(0);
+                    this.targetedId = accountTmp.getId();
+                    statusCode = api.postAction(apiAction, targetedId);
+                }
+            }
+        }else {
 
             if (apiAction == API.StatusAction.REPORT)
                 statusCode = api.reportAction(status, comment);
