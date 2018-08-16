@@ -3,12 +3,12 @@
 <resources>
   <string name="navigation_drawer_open">Menu openen</string>
   <string name="navigation_drawer_close">Menu sluiten</string>
-  <string name="action_about">Over</string>
-  <string name="action_about_instance">Over deze Mastodonserver</string>
+  <string name="action_about">Informatie</string>
+  <string name="action_about_instance">Informatie over deze Mastodonserver</string>
   <string name="action_privacy">Privacy</string>
   <string name="action_cache">Buffer</string>
-  <string name="action_logout">Afmelden</string>
-  <string name="login">Aanmelden</string>
+  <string name="action_logout">Uitloggen</string>
+  <string name="login">Inloggen</string>
   <!-- common -->
   <string name="close">Sluiten</string>
   <string name="yes">Ja</string>
@@ -29,10 +29,10 @@
   <string name="save">Opslaan</string>
   <string name="restore">Herstellen</string>
   <string name="two_factor_authentification">Tweestapsverificatie?</string>
-  <string name="other_instance">Andere Mastodonserver dan mastodon.social?</string>
+  <string name="other_instance">Andere Mastodonserver dan mastodon.etalab.gouv.fr?</string>
   <string name="no_result">Geen resultaten!</string>
   <string name="instance">Mastodonserver</string>
-  <string name="instance_example">Server: bv. mastodon.social</string>
+  <string name="instance_example">Server: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">Werkt nu met account %1$s</string>
   <string name="add_account">Account toevoegen</string>
   <string name="clipboard">De inhoud van deze toot is naar het klembord gekopieerd</string>
@@ -42,9 +42,9 @@
   <string name="microphone">Microfoon</string>
   <string name="camera">Camera</string>
   <string name="speech_prompt">Zeg naar iets</string>
-  <string name="speech_not_supported">Sorry! Jouw apparaat ondersteund geen geluidsinvoer!</string>
+  <string name="speech_not_supported">Sorry! Uw apparaat ondersteunt de spraakinvoer niet!</string>
   <string name="delete_all">Alles verwijderen</string>
-  <string name="translate_toot">Deze toot vertalen.</string>
+  <string name="translate_toot">Vertaal deze toot.</string>
   <string name="schedule">Inplannen</string>
   <string name="text_size">Tekst- en pictogramgrootte</string>
   <string name="text_size_change">De huidige tekstgrootte veranderen:</string>
@@ -118,7 +118,7 @@
   <string name="more_action_6">Delen</string>
   <string name="more_action_7">Vermelden</string>
   <string name="more_action_8">Tijdelijk negeren</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_9">Verwijderen &amp; opnieuw ontwerpen</string>
   <string-array name="more_action_confirm">
     <item>Account negeren?</item>
     <item>Account blokkeren?</item>
@@ -126,7 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Toot verwijderen?</item>
-    <item>Delete &amp; re-draft this toot?</item>
+    <item>Deze toot verwijderen &amp; opnieuw ontwerpen?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d reactie</item>
@@ -308,7 +308,7 @@
   <string name="set_preview_reply_pp">Avatars bij aantal reacties tonen?</string>
   <string name="set_multiaccount_actions">Interactie tussen ingestelde accounts toestaan?</string>
   <string name="set_fit_preview">Voorbeeldafbeeldingen passend maken</string>
-  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+  <string name="set_automatically_split_toot">Bij beantwoorden toots groter dan 500 tekens automatisch splitsen</string>
   <string name="note_no_space">Je hebt het limiet van 160 karakters bereikt!</string>
   <string name="username_no_space">Je hebt het limiet van 30 karakters bereikt!</string>
   <string name="settings_title_hour">Op welk moment van de dag zijn meldingen toegestaan:</string>
@@ -332,9 +332,9 @@
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>Nee</item>
-    <item>No</item>
+    <item>Nee</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">Uw API-sleutel, kan leeg gelaten worden voor Yandex</string>
   <string-array name="settings_theme">
     <item>Donker</item>
     <item>Licht</item>
