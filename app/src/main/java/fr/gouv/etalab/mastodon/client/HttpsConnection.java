@@ -15,12 +15,11 @@ package fr.gouv.etalab.mastodon.client;
  * see <http://www.gnu.org/licenses>. */
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
-
 import com.google.common.io.ByteStreams;
-
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -52,11 +51,14 @@ import javax.net.ssl.HttpsURLConnection;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 
 /**
@@ -985,8 +987,8 @@ public class HttpsConnection {
      * @param inputStream InputStream of the file to upload
      * @param listener - OnRetrieveAttachmentInterface: listener to send information about attachment once uploaded.
      */
-    public void upload(final InputStream inputStream, String fileName, final OnRetrieveAttachmentInterface listener) {
-        
+    public void upload(final InputStream inputStream, String fileName, String tokenUsed, final OnRetrieveAttachmentInterface listener) {
+
         if( Helper.getLiveInstanceWithProtocol(context).startsWith("https://")) {
             new Thread(new Runnable() {
                 @Override
@@ -996,9 +998,14 @@ public class HttpsConnection {
                         String twoHyphens = "--";
                         String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
                         String lineEnd = "\r\n";
-
-                        String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-                        final URL url = new URL(Helper.getLiveInstanceWithProtocol(context) + "/api/v1/media");
+                        String token;
+                        if( tokenUsed == null)
+                            token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                        else
+                            token = tokenUsed;
+                        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                        Account account = new AccountDAO(context, db).getAccountByToken(token);
+                        final URL url = new URL("https://" + account.getInstance() + "/api/v1/media");
                         ByteArrayOutputStream ous = null;
                         try {
                             try {
@@ -1113,6 +1120,7 @@ public class HttpsConnection {
                             }
                         });
                     } catch (Exception e) {
+                        e.printStackTrace();
                         ((TootActivity) context).runOnUiThread(new Runnable() {
                             public void run() {
                                 listener.onUpdateProgress(101);
@@ -1144,9 +1152,14 @@ public class HttpsConnection {
                         String twoHyphens = "--";
                         String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
                         String lineEnd = "\r\n";
-
-                        String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-                        final URL url = new URL(Helper.getLiveInstanceWithProtocol(context)+"/api/v1/media");
+                        String token;
+                        if( tokenUsed == null)
+                            token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                        else
+                            token = tokenUsed;
+                        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                        Account account = new AccountDAO(context, db).getAccountByToken(token);
+                        final URL url = new URL("http://" + account.getInstance() + "/api/v1/media");
                         ByteArrayOutputStream ous = null;
                         try {
                             try {

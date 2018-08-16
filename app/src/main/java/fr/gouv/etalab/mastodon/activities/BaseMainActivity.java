@@ -1164,6 +1164,7 @@ public abstract class BaseMainActivity extends BaseActivity
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
             if ("text/plain".equals(type)) {
+                String url = null;
                 String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
                 if (sharedText != null) {
@@ -1180,14 +1181,9 @@ public abstract class BaseMainActivity extends BaseActivity
                         int matchStart = matcher.start(1);
                         int matchEnd = matcher.end();
                         if(matchStart < matchEnd && sharedText.length() >= matchEnd)
-                            sharedText = sharedText.substring(matchStart, matchEnd);
+                            url = sharedText.substring(matchStart, matchEnd);
                     }
-                    new RetrieveMetaDataAsyncTask(BaseMainActivity.this, sharedText, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    Bundle b = new Bundle();
-                    b.putString("sharedSubject", sharedSubject);
-                    b.putString("sharedContent", sharedText);
-                    CrossActions.doCrossShare(BaseMainActivity.this, b);
-
+                    new RetrieveMetaDataAsyncTask(BaseMainActivity.this, sharedSubject, sharedText, url,BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
 
             } else if (type.startsWith("image/")) {
@@ -1522,14 +1518,16 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
     @Override
-    public void onRetrieveMetaData(boolean error, String image, String title, String description) {
+    public void onRetrieveMetaData(boolean error, String sharedSubject, String sharedText, String image, String title, String description) {
+        Bundle b = new Bundle();
         if( !error) {
-            Intent intentSendImage = new Intent(Helper.RECEIVE_PICTURE);
-            intentSendImage.putExtra("image", image);
-            intentSendImage.putExtra("title", title);
-            intentSendImage.putExtra("description", description);
-            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentSendImage);
+            b.putString("image", image);
+            b.putString("title", title);
+            b.putString("description", description);
         }
+        b.putString("sharedSubject", sharedSubject);
+        b.putString("sharedContent", sharedText);
+        CrossActions.doCrossShare(BaseMainActivity.this, b);
     }
 
     @Override

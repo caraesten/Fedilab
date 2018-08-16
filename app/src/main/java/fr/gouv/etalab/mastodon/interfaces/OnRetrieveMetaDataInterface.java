@@ -20,5 +20,5 @@ package fr.gouv.etalab.mastodon.interfaces;
  * Interface for retrieving meta data
  */
 public interface OnRetrieveMetaDataInterface {
-    void onRetrieveMetaData(boolean error, String image, String title, String description);
+    void onRetrieveMetaData(boolean error, String sharedSubject, String sharedText, String image, String title, String description);
 }

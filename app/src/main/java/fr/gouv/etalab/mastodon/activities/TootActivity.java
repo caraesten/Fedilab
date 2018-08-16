@@ -30,7 +30,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -50,7 +49,6 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -184,7 +182,6 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private TextView toot_space_left;
     private String initialContent;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
-    private BroadcastReceiver receive_picture;
     private Account accountReply;
     private View popup_trans;
     private AlertDialog dialogTrans;
@@ -354,7 +351,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 picture_scrollview.setVisibility(View.VISIBLE);
                 toot_picture.setEnabled(false);
                 toot_it.setEnabled(false);
-                new HttpsConnection(TootActivity.this).upload(bs, fileMention, TootActivity.this);
+                new HttpsConnection(TootActivity.this).upload(bs, fileMention, accountReply!=null?accountReply.getToken():null, TootActivity.this);
             }
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
             toot_space_left.setText(String.valueOf(toot_content.length()));
@@ -390,37 +387,32 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             if( sharedSubject != null){
                 sharedContent = sharedSubject + "\n\n" + sharedContent;
             }
-            receive_picture = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    final String image = intent.getStringExtra("image");
-                    String title = intent.getStringExtra("title");
-                    String description = intent.getStringExtra("description");
-                    if( description != null && description.length() > 0){
-                        if (sharedContentIni.startsWith("www."))
-                            sharedContentIni = "http://" + sharedContentIni;
-                        if( title != null && title.length() > 0)
-                            sharedContent = title + "\n\n" + description + "\n\n" + sharedContentIni;
-                        else
-                            sharedContent = description + "\n\n" + sharedContentIni;
-                        int selectionBefore = toot_content.getSelectionStart();
-                        toot_content.setText(sharedContent);
-                        if( selectionBefore >= 0 && selectionBefore < toot_content.length())
-                            toot_content.setSelection(selectionBefore);
-                        toot_space_left.setText(String.valueOf(toot_content.length()));
-                    }
-                    if( image != null){
-                        new HttpsConnection(TootActivity.this).download(image, TootActivity.this);
-                    }
-
+            if( b != null) {
+                final String image = b.getString("image");
+                String title = b.getString("title");
+                String description = b.getString("description");
+                if (description != null && description.length() > 0) {
+                    if (sharedContentIni.startsWith("www."))
+                        sharedContentIni = "http://" + sharedContentIni;
+                    if (title != null && title.length() > 0)
+                        sharedContent = title + "\n\n" + description + "\n\n" + sharedContentIni;
+                    else
+                        sharedContent = description + "\n\n" + sharedContentIni;
+                    int selectionBefore = toot_content.getSelectionStart();
+                    toot_content.setText(sharedContent);
+                    if (selectionBefore >= 0 && selectionBefore < toot_content.length())
+                        toot_content.setSelection(selectionBefore);
+                    toot_space_left.setText(String.valueOf(toot_content.length()));
                 }
-            };
-            LocalBroadcastManager.getInstance(this).registerReceiver(receive_picture, new IntentFilter(Helper.RECEIVE_PICTURE));
-            int selectionBefore = toot_content.getSelectionStart();
-            toot_content.setText( String.format("\n%s", sharedContent));
-            if( selectionBefore >= 0 && selectionBefore < toot_content.length())
-                toot_content.setSelection(selectionBefore);
-            toot_space_left.setText(String.valueOf(toot_content.length()));
+                if (image != null) {
+                    new HttpsConnection(TootActivity.this).download(image, TootActivity.this);
+                }
+                int selectionBefore = toot_content.getSelectionStart();
+                toot_content.setText(String.format("\n%s", sharedContent));
+                if (selectionBefore >= 0 && selectionBefore < toot_content.length())
+                    toot_content.setSelection(selectionBefore);
+                toot_space_left.setText(String.valueOf(toot_content.length()));
+            }
         }
         attachments = new ArrayList<>();
         int charsInCw = 0;
@@ -648,8 +640,6 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     @Override
     public void onDestroy(){
         super.onDestroy();
-        if( receive_picture != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_picture);
     }
 
 
@@ -688,7 +678,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     }
                     picture_scrollview.setVisibility(View.VISIBLE);
                     try {
-                        new asyncPicture(TootActivity.this, fileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new asyncPicture(TootActivity.this, accountReply, fileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         count++;
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -758,9 +748,9 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 String mime = cr.getType(data.getData());
                 if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    new HttpsConnection(TootActivity.this).upload(inputStream, filename, TootActivity.this);
+                    new HttpsConnection(TootActivity.this).upload(inputStream, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
                 } else if(mime != null && mime.toLowerCase().contains("image")) {
-                    new asyncPicture(TootActivity.this, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new asyncPicture(TootActivity.this, accountReply, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else {
                     Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
                 }
@@ -777,7 +767,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 toot_content.setSelection(toot_content.getText().length());
             }
         }else if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
-            new asyncPicture(TootActivity.this, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new asyncPicture(TootActivity.this, accountReply, photoFileUri).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -786,10 +776,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         ByteArrayInputStream bs;
         WeakReference<Activity> activityWeakReference;
         android.net.Uri uriFile;
-
-        asyncPicture(Activity activity, android.net.Uri uri){
+        Account accountReply;
+        asyncPicture(Activity activity, Account accountReply, android.net.Uri uri){
             this.activityWeakReference = new WeakReference<>(activity);
             this.uriFile = uri;
+            this.accountReply = accountReply;
         }
 
         @Override
@@ -819,7 +810,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             toot_picture.setEnabled(false);
             toot_it.setEnabled(false);
             String filename =  Helper.getFileName(this.activityWeakReference.get(), uriFile);
-            new HttpsConnection(this.activityWeakReference.get()).upload(bs, filename, (TootActivity)this.activityWeakReference.get());
+            new HttpsConnection(this.activityWeakReference.get()).upload(bs, filename, accountReply!=null?accountReply.getToken():null, (TootActivity)this.activityWeakReference.get());
         }
     }
 
@@ -1380,7 +1371,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             toot_picture_container.setVisibility(View.VISIBLE);
             toot_picture.setEnabled(false);
             toot_it.setEnabled(false);
-            new HttpsConnection(TootActivity.this).upload(bs, filename, TootActivity.this);
+            new HttpsConnection(TootActivity.this).upload(bs, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
         }
     }
 
