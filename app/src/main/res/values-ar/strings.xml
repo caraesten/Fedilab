@@ -118,7 +118,7 @@
   <string name="more_action_6">شارك</string>
   <string name="more_action_7">أذكر</string>
   <string name="more_action_8">فترة الكتم</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_9">حذف وإعادة الصياغة</string>
   <string-array name="more_action_confirm">
     <item>هل تود كتم هذا الحساب ؟</item>
     <item>هل تود حجب هذا الحساب ؟</item>
@@ -126,7 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>هل تود حذف هذا التبويق ؟</item>
-    <item>Delete &amp; re-draft this toot?</item>
+    <item>هل تريد حقا حذف و إعادة صياغة هذا التبويق ؟</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="zero">%d replies</item>
@@ -344,7 +344,7 @@
   <string-array name="settings_translation">
     <item>يانديكس</item>
     <item>لا</item>
-    <item>No</item>
+    <item>لا</item>
   </string-array>
   <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
