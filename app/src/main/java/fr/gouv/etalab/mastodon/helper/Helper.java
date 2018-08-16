@@ -498,6 +498,8 @@ public class Helper {
      * @return String
      */
     public static String dateToString(Date date) {
+        if( date == null)
+            return null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
         return dateFormat.format(date);
     }

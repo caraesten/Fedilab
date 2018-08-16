@@ -80,22 +80,26 @@ public class NotificationsSyncJob extends Job {
     }
 
 
-    public static int schedule(boolean updateCurrent){
+    public static int schedule(boolean updateCurrent) {
 
         Set<JobRequest> jobRequests = JobManager.instance().getAllJobRequestsForTag(NOTIFICATION_REFRESH);
         if (!jobRequests.isEmpty() && !updateCurrent) {
             return jobRequests.iterator().next().getJobId();
         }
 
-        return new JobRequest.Builder(NotificationsSyncJob.NOTIFICATION_REFRESH)
-                .setPeriodic(TimeUnit.MINUTES.toMillis(Helper.MINUTES_BETWEEN_NOTIFICATIONS_REFRESH), TimeUnit.MINUTES.toMillis(5))
-                .setUpdateCurrent(updateCurrent)
-                .setRequiredNetworkType(JobRequest.NetworkType.METERED)
-                .setRequirementsEnforced(false)
-                .build()
-                .schedule();
-    }
+        int jobRequestschedule = -1;
+        try {
+            jobRequestschedule = new JobRequest.Builder(NotificationsSyncJob.NOTIFICATION_REFRESH)
+                    .setPeriodic(TimeUnit.MINUTES.toMillis(Helper.MINUTES_BETWEEN_NOTIFICATIONS_REFRESH), TimeUnit.MINUTES.toMillis(5))
+                    .setUpdateCurrent(updateCurrent)
+                    .setRequiredNetworkType(JobRequest.NetworkType.METERED)
+                    .setRequirementsEnforced(false)
+                    .build()
+                    .schedule();
+        }catch (Exception ignored){}
 
+        return jobRequestschedule;
+    }
 
 
     /**
