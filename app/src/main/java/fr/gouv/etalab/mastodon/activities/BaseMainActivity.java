@@ -97,6 +97,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplaySearchFragment;
+import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
@@ -1182,13 +1183,11 @@ public abstract class BaseMainActivity extends BaseActivity
                             sharedText = sharedText.substring(matchStart, matchEnd);
                     }
                     new RetrieveMetaDataAsyncTask(BaseMainActivity.this, sharedText, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
                     b.putString("sharedSubject", sharedSubject);
                     b.putString("sharedContent", sharedText);
-                    intentToot.putExtras(b);
-                    startActivity(intentToot);
-                    finish();
+                    CrossActions.doCrossShare(BaseMainActivity.this, b);
+
                 }
 
             } else if (type.startsWith("image/")) {
@@ -1196,15 +1195,10 @@ public abstract class BaseMainActivity extends BaseActivity
                 Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
 
                 if (imageUri != null) {
-
-                    Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
-
                     b.putParcelable("sharedUri", imageUri);
                     b.putInt("uriNumberMast", 1);
-                    intentToot.putExtras(b);
-                    startActivity(intentToot);
-                    finish();
+                    CrossActions.doCrossShare(BaseMainActivity.this, b);
                 }
             }
         } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null ) {
@@ -1212,14 +1206,10 @@ public abstract class BaseMainActivity extends BaseActivity
 
                 ArrayList<Uri> imageList = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
                 if (imageList != null) {
-                    Intent intentToot = new Intent(getApplicationContext(), TootActivity.class);
                     Bundle b = new Bundle();
-
                     b.putParcelableArrayList("sharedUri", imageList);
                     b.putInt("uriNumberMast", imageList.size());
-                    intentToot.putExtras(b);
-                    startActivity(intentToot);
-                    finish();
+                    CrossActions.doCrossShare(BaseMainActivity.this, b);
                 }
             }
         }else if (Intent.ACTION_VIEW.equals(action)) {

@@ -31,6 +31,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.BaseActivity;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
@@ -278,6 +280,48 @@ public class CrossActions {
         }
     }
 
+
+    public static void doCrossShare(final Context context, final Bundle bundle){
+        List<Account> accounts = connectedAccounts(context, null, false);
+
+        if( accounts.size() == 1) {
+            Intent intentToot = new Intent(context, TootActivity.class);
+            intentToot.putExtras(bundle);
+            context.startActivity(intentToot);
+            ((BaseActivity)context).finish();
+        }else {
+            AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+            builderSingle.setTitle(context.getString(R.string.choose_accounts));
+            final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
+            final Account[] accountArray = new Account[accounts.size()];
+            int i = 0;
+            for(Account account: accounts){
+                accountArray[i] = account;
+                i++;
+            }
+            builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(final DialogInterface dialog, int which) {
+                    final Account account = accountArray[which];
+
+                    Intent intentToot = new Intent(context, TootActivity.class);
+                    bundle.putParcelable("accountReply", account);
+                    intentToot.putExtras(bundle);
+                    context.startActivity(intentToot);
+                    ((BaseActivity)context).finish();
+                    dialog.dismiss();
+
+                }
+            });
+            builderSingle.show();
+        }
+    }
 
     /**
      * Display a validation message
