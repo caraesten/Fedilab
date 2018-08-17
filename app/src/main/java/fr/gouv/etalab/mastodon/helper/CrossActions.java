@@ -134,8 +134,6 @@ public class CrossActions {
                     favouriteAction(context, status, baseAdapter, onPostActionInterface);
                 else if ( doAction == API.StatusAction.PIN || doAction == API.StatusAction.UNPIN)
                     pinAction(context, status, baseAdapter, onPostActionInterface);
-                else if( doAction == API.StatusAction.FOLLOW || doAction == API.StatusAction.UNFOLLOW)
-                    followAction(context, targetedAccount, baseAdapter, onPostActionInterface);
             }
         }else {
             AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
