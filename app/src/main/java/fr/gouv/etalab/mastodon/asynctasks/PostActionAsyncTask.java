@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -128,14 +127,10 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
             }
         }else if(remoteAccount != null){
             String searchString = remoteAccount.getAcct().contains("@")?"@" + remoteAccount.getAcct():"@" + remoteAccount.getAcct() + "@" + Helper.getLiveInstance(contextReference.get());
-            Log.v(Helper.TAG,"searchString: " + searchString);
             Results search = api.search(searchString);
-            Log.v(Helper.TAG,"search: " + search);
             if (search != null) {
                 List<Account> accounts = search.getAccounts();
-                Log.v(Helper.TAG,"accounts: " + accounts);
                 if (accounts != null && accounts.size() > 0) {
-                    Log.v(Helper.TAG,"accounts.size(): " + accounts.size());
                     Account accountTmp = accounts.get(0);
                     this.targetedId = accountTmp.getId();
                     statusCode = api.postAction(apiAction, targetedId);

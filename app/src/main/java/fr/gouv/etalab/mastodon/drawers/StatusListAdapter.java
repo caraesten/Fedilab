@@ -40,14 +40,12 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -641,7 +639,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
-            holder.status_account_displayname.setText(status.getAccount().getdisplayNameSpanSpan(), TextView.BufferType.SPANNABLE);
+            holder.status_account_displayname.setText(status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -686,27 +684,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             //Displays name & emoji in toot header
-            final String displayName;
-            final String username;
             final String ppurl;
-            String name;
             if( status.getReblog() != null){
-                displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
-                username = status.getReblog().getAccount().getUsername();
-                holder.status_account_displayname.setText(String.format("%s @%s",displayName, username));
                 ppurl = status.getReblog().getAccount().getAvatar();
                 holder.status_account_displayname.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
-                name = String.format("%s @%s",displayName,status.getReblog().getAccount().getAcct());
             }else {
                 ppurl = status.getAccount().getAvatar();
-                displayName = Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
-                name = String.format("%s @%s",displayName,status.getAccount().getAcct());
             }
             //-------- END -> Displays name & emoji in toot header
 
             //Change the color in gray for accounts in DARK Theme only
-            Spannable wordtoSpan = new SpannableString(name);
+            Spannable wordtoSpan = status.getDisplayNameSpan();
             if( theme == THEME_DARK || theme == Helper.THEME_BLACK) {
                 Pattern hashAcct;
                 if( status.getReblog() != null)
@@ -1952,7 +1941,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onRetrieveEmoji(Status status, boolean fromTranslation) {
-        if( !fromTranslation) {
+        if( status != null) {
+            if( !fromTranslation) {
+               status.setEmojiFound(true);
+            }else {
+              status.setEmojiTranslateFound(true);
+            }
+            notifyStatusChanged(status);
+        }
+
+       /* if( !fromTranslation) {
             if (!status.isEmojiFound()) {
                 for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
                     //noinspection ConstantConditions
@@ -1978,7 +1976,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 }
             }
-        }
+        }*/
     }
 
     @Override

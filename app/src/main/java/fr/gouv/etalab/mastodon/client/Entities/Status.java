@@ -243,7 +243,7 @@ public class Status implements Parcelable{
     }
 
     public SpannableString getDisplayNameSpan(){
-        return this.status.getAccount().getdisplayNameSpanSpan();
+        return this.displayNameSpan;
     }
     public void setDisplayNameSpan(SpannableString displayNameSpan){
         this.displayNameSpan = displayNameSpan;
@@ -513,8 +513,22 @@ public class Status implements Parcelable{
 
         if( ((Activity)context).isFinishing() )
             return;
-
         final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
+        final List<Emojis> emojisAccounts = status.getAccount().getEmojis();
+
+
+        String displayName;
+        if( status.getReblog() != null){
+            displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
+            displayName = String.format("%s @%s",displayName,status.getReblog().getAccount().getAcct());
+        }else {
+            displayName = Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
+            displayName = String.format("%s @%s",displayName,status.getAccount().getAcct());
+        }
+        displayNameSpan = new SpannableString(displayName);
+
+        if( emojisAccounts != null)
+            emojis.addAll(emojisAccounts);
         if( emojis != null && emojis.size() > 0 ) {
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
@@ -635,14 +649,14 @@ public class Status implements Parcelable{
                         })
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
 
                                 if (finalSpannableStringTranslated != null && finalSpannableStringTranslated.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = finalSpannableStringTranslated.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        if( startPosition >= 0 && endPosition <= finalSpannableStringTranslated.toString().length() && endPosition >= startPosition)
+                                        if( endPosition <= finalSpannableStringTranslated.toString().length() && endPosition >= startPosition)
                                             finalSpannableStringTranslated.setSpan(
                                                 new ImageSpan(context,
                                                         Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
@@ -686,7 +700,7 @@ public class Status implements Parcelable{
             int matchStart = matcher.start(2);
             int matchEnd = matcher.end();
             final String twittername = spannableString.toString().substring(matchStart, matchEnd);
-            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View textView) {
@@ -699,7 +713,7 @@ public class Status implements Parcelable{
                         ds.setUnderlineText(false);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
@@ -709,7 +723,7 @@ public class Status implements Parcelable{
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
             final String url = spannableString.toString().substring(matchStart, matchEnd);
-            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View textView) {
@@ -726,7 +740,7 @@ public class Status implements Parcelable{
                 },
                 matchStart, matchEnd,
                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
@@ -740,7 +754,7 @@ public class Status implements Parcelable{
                     //Accounts can be mentioned several times so we have to loop
                     for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
                         int endPosition = startPosition + targetedAccount.length();
-                        if( startPosition >= 0 && endPosition <= spannableString.toString().length() && endPosition >= startPosition)
+                        if( endPosition <= spannableString.toString().length() && endPosition >= startPosition)
                             spannableString.setSpan(new ClickableSpan() {
                                     @Override
                                     public void onClick(View textView) {
@@ -758,7 +772,7 @@ public class Status implements Parcelable{
                                 },
                                 startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                        if( startPosition >= 0 && endPosition <= spannableString.toString().length() && endPosition >= startPosition)
+                        if(endPosition <= spannableString.toString().length() && endPosition >= startPosition)
                             spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
@@ -771,7 +785,7 @@ public class Status implements Parcelable{
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
             final String tag = spannableString.toString().substring(matchStart, matchEnd);
-            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View textView) {
@@ -787,7 +801,7 @@ public class Status implements Parcelable{
                         ds.setUnderlineText(false);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            if( matchStart >= 0 && matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
