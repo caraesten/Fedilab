@@ -923,6 +923,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     @Override
     public void onRetrieveEmojiAccount(Account account) {
         account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
+        account_dn.setText(account.getdisplayNameSpanSpan(), TextView.BufferType.SPANNABLE);;
         if ( account.getFieldsSpan() != null && account.getFieldsSpan().size() > 0){
             HashMap<String, SpannableString> fieldsSpan = account.getFieldsSpan();
             Iterator it = fieldsSpan.entrySet().iterator();
@@ -971,7 +972,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     labelView.setText(label);
                 }
                 i++;
-             //   it.remove();
             }
         }
     }

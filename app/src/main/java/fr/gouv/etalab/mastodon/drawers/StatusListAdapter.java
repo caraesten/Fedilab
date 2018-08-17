@@ -641,6 +641,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
+            holder.status_account_displayname.setText(status.getAccount().getdisplayNameSpanSpan(), TextView.BufferType.SPANNABLE);
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 

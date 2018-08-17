@@ -58,6 +58,7 @@ public class Account implements Parcelable {
 
     private String id;
     private String username;
+    private SpannableString displayNameSpan;
     private String acct;
     private String display_name;
     private boolean locked;
@@ -206,6 +207,14 @@ public class Account implements Parcelable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public SpannableString getdisplayNameSpanSpan() {
+        return displayNameSpan;
+    }
+
+    public void setdisplayNameSpanSpan(SpannableString displayNameSpan) {
+        this.displayNameSpan = displayNameSpan;
     }
 
     public String getAcct() {
@@ -446,63 +455,73 @@ public class Account implements Parcelable {
 
         if( ((Activity)context).isFinishing() )
             return;
-        SpannableString spannableStringNote = null;
 
         if( account.getNote() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                spannableStringNote = new SpannableString(Html.fromHtml(account.getNote(), FROM_HTML_MODE_LEGACY));
+                noteSpan = new SpannableString(Html.fromHtml(account.getNote(), FROM_HTML_MODE_LEGACY));
             else
                 //noinspection deprecation
-                spannableStringNote = new SpannableString(Html.fromHtml(account.getNote()));
+                noteSpan = new SpannableString(Html.fromHtml(account.getNote()));
         }
 
+        if( account.getDisplay_name() != null)
+            displayNameSpan = new SpannableString(account.getDisplay_name());
+
+        if( account.getFields() != null && account.getFields().size() > 0) {
+            Iterator it = account.getFields().entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                SpannableString fieldSpan;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    fieldSpan = new SpannableString(Html.fromHtml((String)pair.getValue(), FROM_HTML_MODE_LEGACY));
+                else
+                    //noinspection deprecation
+                    fieldSpan = new SpannableString(Html.fromHtml((String)pair.getValue()));
+                fieldsSpan.put((String) pair.getKey(), fieldSpan);
+            }
+            account.setFieldsSpan(fieldsSpan);
+        }
         final List<Emojis> emojis = account.getEmojis();
         if( emojis != null && emojis.size() > 0 ) {
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
-                final SpannableString finalSpannableStringNote = spannableStringNote;
                 fields = account.getFields();
                 Glide.with(context)
                         .asBitmap()
                         .load(emoji.getUrl())
-                        /*.listener(new RequestListener<Bitmap>()  {
-                            @Override
-                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                i[0]++;
-                                if( i[0] ==  (emojis.size())) {
-                                    if( finalSpannableStringNote != null)
-                                        account.setNoteSpan(finalSpannableStringNote);
-                                    listener.onRetrieveEmojiAccount(account);
-                                }
-                                return false;
-                            }
-                        })*/
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
 
-                                if (finalSpannableStringNote != null && finalSpannableStringNote.toString().contains(targetedEmoji)) {
+                                if (noteSpan != null && noteSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
-                                    for (int startPosition = -1; (startPosition = finalSpannableStringNote.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                    for (int startPosition = -1; (startPosition = noteSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        if(endPosition <= finalSpannableStringNote.toString().length() && endPosition >= startPosition)
-                                            finalSpannableStringNote.setSpan(
+                                        if(endPosition <= noteSpan.toString().length() && endPosition >= startPosition)
+                                            noteSpan.setSpan(
                                                     new ImageSpan(context,
                                                             Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
                                                                     (int) Helper.convertDpToPixel(20, context), false)), startPosition,
                                                     endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                                     }
                                 }
-                                Iterator it = account.getFields().entrySet().iterator();
+                                if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        if(endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition)
+                                            displayNameSpan.setSpan(
+                                                    new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                    }
+                                }
+                                Iterator it = fieldsSpan.entrySet().iterator();
                                 while (it.hasNext()) {
                                     Map.Entry pair = (Map.Entry)it.next();
-                                    SpannableString fieldSpan = new SpannableString((String)pair.getValue());
+                                    SpannableString fieldSpan = (SpannableString) pair.getValue();
                                     if (fieldSpan.toString().contains(targetedEmoji)) {
                                         //emojis can be used several times so we have to loop
                                         for (int startPosition = -1; (startPosition = fieldSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
@@ -516,12 +535,15 @@ public class Account implements Parcelable {
                                         }
                                         fieldsSpan.put((String)pair.getKey(), fieldSpan);
                                     }
-                                    it.remove();
                                 }
+
                                 i[0]++;
                                 if( i[0] ==  (emojis.size())) {
-                                    if( finalSpannableStringNote != null)
-                                        account.setNoteSpan(finalSpannableStringNote);
+                                    if( noteSpan != null)
+                                        account.setNoteSpan(noteSpan);
+                                    if( displayNameSpan != null)
+                                        account.setdisplayNameSpanSpan(displayNameSpan);
+                                    account.setFieldsSpan(fieldsSpan);
                                     listener.onRetrieveEmojiAccount(account);
                                 }
                             }

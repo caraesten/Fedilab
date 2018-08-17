@@ -102,7 +102,7 @@ public class Status implements Parcelable{
     private boolean fetchMore = false;
     private Status status;
     private String content, contentCW, contentTranslated;
-    private SpannableString contentSpan, contentSpanCW, contentSpanTranslated;
+    private SpannableString contentSpan, displayNameSpan, contentSpanCW, contentSpanTranslated;
 
 
     public Status(){
@@ -240,6 +240,13 @@ public class Status implements Parcelable{
 
     public void setFavourites_count(int favourites_count) {
         this.favourites_count = favourites_count;
+    }
+
+    public SpannableString getDisplayNameSpan(){
+        return this.status.getAccount().getdisplayNameSpanSpan();
+    }
+    public void setDisplayNameSpan(SpannableString displayNameSpan){
+        this.displayNameSpan = displayNameSpan;
     }
 
     public boolean isReblogged() {
@@ -537,7 +544,7 @@ public class Status implements Parcelable{
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        if( startPosition >= 0 && endPosition <= contentSpan.toString().length() && endPosition >= startPosition)
+                                        if( endPosition <= contentSpan.toString().length() && endPosition >= startPosition)
                                             contentSpan.setSpan(
                                                 new ImageSpan(context,
                                                         Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
@@ -545,11 +552,23 @@ public class Status implements Parcelable{
                                                 endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                                     }
                                 }
+                                if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        if(endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition)
+                                            displayNameSpan.setSpan(
+                                                    new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                    }
+                                }
                                 if (contentSpanCW.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpanCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
-                                        if( startPosition >= 0 && endPosition <= contentSpan.toString().length() && endPosition >= startPosition)
+                                        if( endPosition <= contentSpan.toString().length() && endPosition >= startPosition)
                                             contentSpanCW.setSpan(
                                                 new ImageSpan(context,
                                                         Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
