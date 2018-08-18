@@ -62,6 +62,9 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountInfoAsyncTask;
@@ -105,6 +108,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_HEADER = 754;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_PICTURE = 755;
     private String avatarName, headerName;
+    private HashMap<String, String> fields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,6 +266,48 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                 }
             }
         });
+        if ( account.getFields() != null && account.getFields().size() > 0){
+            fields = account.getFields();
+            Iterator it = fields.entrySet().iterator();
+            int i = 1;
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                String label = (String)pair.getKey();
+                String value = (String)pair.getValue();
+                EditText labelView;
+                EditText valueView;
+                switch(i){
+                    case 1:
+                        labelView = findViewById(R.id.cf_key_1);
+                        valueView = findViewById(R.id.cf_val_1);
+                        break;
+                    case 2:
+                        labelView = findViewById(R.id.cf_key_2);
+                        valueView = findViewById(R.id.cf_val_2);
+                        break;
+                    case 3:
+                        labelView = findViewById(R.id.cf_key_3);
+                        valueView = findViewById(R.id.cf_val_3);
+                        break;
+                    case 4:
+                        labelView = findViewById(R.id.cf_key_4);
+                        valueView = findViewById(R.id.cf_val_4);
+                        break;
+                    default:
+                        labelView = findViewById(R.id.cf_key_1);
+                        valueView = findViewById(R.id.cf_val_1);
+                        break;
+                }
+                labelView.setText(label);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    value = Html.fromHtml(value, Html.FROM_HTML_MODE_LEGACY).toString();
+                else
+                    //noinspection deprecation
+                    value = Html.fromHtml(value).toString();
+                valueView.setText(value);
+                i++;
+            }
+        }
 
         set_profile_name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -411,8 +457,25 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                             }
                         }).start();
                         GlideApp.get(getApplicationContext()).clearMemory();
+                        HashMap<String, String> newCustomFields = new HashMap<>();
 
-                        new UpdateCredentialAsyncTask(getApplicationContext(), profile_username, profile_note, profile_picture, avatarName,  header_picture, headerName, profile_privacy, EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        String key1, key2, key3, key4, val1, val2, val3, val4;
+                        key1 = ((EditText)findViewById(R.id.cf_key_1)).getText().toString();
+                        key2 = ((EditText)findViewById(R.id.cf_key_2)).getText().toString();
+                        key3 = ((EditText)findViewById(R.id.cf_key_3)).getText().toString();
+                        key4 = ((EditText)findViewById(R.id.cf_key_4)).getText().toString();
+
+                        val1 = ((EditText)findViewById(R.id.cf_val_1)).getText().toString();
+                        val2 = ((EditText)findViewById(R.id.cf_val_2)).getText().toString();
+                        val3 = ((EditText)findViewById(R.id.cf_val_3)).getText().toString();
+                        val4 = ((EditText)findViewById(R.id.cf_val_4)).getText().toString();
+
+                        newCustomFields.put(key1,val1);
+                        newCustomFields.put(key2,val2);
+                        newCustomFields.put(key3,val3);
+                        newCustomFields.put(key4,val4);
+
+                        new UpdateCredentialAsyncTask(getApplicationContext(), newCustomFields, profile_username, profile_note, profile_picture, avatarName,  header_picture, headerName, profile_privacy, EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                 });
                 dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

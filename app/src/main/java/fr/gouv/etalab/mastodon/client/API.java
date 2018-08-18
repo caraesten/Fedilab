@@ -30,7 +30,9 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.*;
@@ -152,7 +154,7 @@ public class API {
      * Update credential of the authenticated user *synchronously*
      * @return APIResponse
      */
-    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, accountPrivacy privacy) {
+    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, accountPrivacy privacy, HashMap<String, String> customFields) {
 
         HashMap<String, String> requestParams = new HashMap<>();
         if( display_name != null)
@@ -169,7 +171,17 @@ public class API {
             }
         if( privacy != null)
             requestParams.put("locked",privacy==accountPrivacy.LOCKED?"true":"false");
-
+        int i = 0;
+        if( customFields != null && customFields.size() > 0){
+            Iterator it = customFields.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                requestParams.put("fields_attributes["+i+"][name]",(String)pair.getKey());
+                requestParams.put("fields_attributes["+i+"][value]",(String)pair.getValue());
+                it.remove();
+                i++;
+            }
+        }
         try {
             new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, avatar, avatarName, header, headerName, prefKeyOauthTokenT);
         } catch (HttpsConnection.HttpsConnectionException e) {

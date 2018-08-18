@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
+
 import com.google.common.io.ByteStreams;
 import org.json.JSONObject;
 import java.io.BufferedInputStream;
@@ -961,7 +962,6 @@ public class HttpsConnection {
                 try {
                     httpsURLConnection.getInputStream().close();
                 }catch (Exception ignored){}
-
                 throw new HttpsConnectionException(responseCode, error);
             }
             httpsURLConnection.getInputStream().close();

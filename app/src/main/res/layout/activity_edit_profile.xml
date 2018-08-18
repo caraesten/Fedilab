@@ -111,13 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </LinearLayout>
-        <!-- Lock the account -->
-        <CheckBox
-            android:layout_marginTop="10dp"
-            android:id="@+id/set_lock_account"
-            android:layout_width="wrap_content"
-            android:text="@string/set_lock_account"
-            android:layout_height="wrap_content" />
+
 
         <Button
             android:layout_marginTop="5dp"
@@ -130,6 +124,90 @@
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/cf_key_1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+                <EditText
+                    android:id="@+id/cf_val_1"
+                    android:inputType="text"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/cf_key_2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+                <EditText
+                    android:id="@+id/cf_val_2"
+                    android:inputType="text"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/cf_key_3"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+                <EditText
+                    android:id="@+id/cf_val_3"
+                    android:inputType="text"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/cf_key_4"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+                <EditText
+                    android:id="@+id/cf_val_4"
+                    android:inputType="text"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <!-- Lock the account -->
+        <CheckBox
+            android:layout_marginTop="10dp"
+            android:id="@+id/set_lock_account"
+            android:layout_width="wrap_content"
+            android:text="@string/set_lock_account"
+            android:layout_height="wrap_content" />
+
+
         <Button
             android:layout_marginTop="5dp"
             android:id="@+id/set_profile_save"

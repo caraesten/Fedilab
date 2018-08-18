@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 
 import java.io.ByteArrayInputStream;
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -38,8 +39,9 @@ public class UpdateCredentialAsyncTask extends AsyncTask<Void, Void, Void> {
     private APIResponse apiResponse;
     private OnUpdateCredentialInterface listener;
     private WeakReference<Context> contextReference;
+    private HashMap<String, String> customFields;
 
-    public UpdateCredentialAsyncTask(Context context, String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, API.accountPrivacy privacy, OnUpdateCredentialInterface onUpdateCredentialInterface){
+    public UpdateCredentialAsyncTask(Context context, HashMap<String, String> customFields, String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, API.accountPrivacy privacy, OnUpdateCredentialInterface onUpdateCredentialInterface){
         this.contextReference = new WeakReference<>(context);
         this.display_name = display_name;
         this.note = note;
@@ -49,11 +51,12 @@ public class UpdateCredentialAsyncTask extends AsyncTask<Void, Void, Void> {
         this.privacy = privacy;
         this.avatarName = avatarName;
         this.headerName = headerName;
+        this.customFields = customFields;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        apiResponse = new API(this.contextReference.get()).updateCredential(display_name, note, avatar, avatarName, header, headerName, privacy);
+        apiResponse = new API(this.contextReference.get()).updateCredential(display_name, note, avatar, avatarName, header, headerName, privacy, customFields);
         return null;
     }
 
