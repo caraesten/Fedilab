@@ -613,6 +613,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 if( status.getVisibility().equals("private") || status.getVisibility().equals("direct")){
                     popup.getMenu().findItem(R.id.action_mention).setVisible(false);
                 }
+                if( popup.getMenu().findItem(R.id.action_redraft) != null)
+                    popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
                 final String[] stringArrayConf;
                 if( isOwner) {
                     popup.getMenu().findItem(R.id.action_block).setVisible(false);
