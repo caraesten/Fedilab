@@ -118,7 +118,7 @@
   <string name="more_action_6">共有</string>
   <string name="more_action_7">メンション</string>
   <string name="more_action_8">時限ミュート</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_9">削除して書き直す</string>
   <string-array name="more_action_confirm">
     <item>このアカウントをミュートしますか？</item>
     <item>このアカウントをブロックしますか？</item>
@@ -126,7 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>このトゥートを削除しますか？</item>
-    <item>Delete &amp; re-draft this toot?</item>
+    <item>このトゥートを削除して書き直しますか？</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d が返信</item>
@@ -305,7 +305,7 @@
   <string name="set_preview_reply_pp">プロフィール画像を表示しますか？</string>
   <string name="set_multiaccount_actions">アカウント間のやりとりを許可しますか？</string>
   <string name="set_fit_preview">プレビュー画像をフィットさせる</string>
-  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+  <string name="set_automatically_split_toot">500文字以上のトゥートは自動で返信に分割されます。</string>
   <string name="note_no_space">160文字の制限に達しました！</string>
   <string name="username_no_space">30文字の制限に達しました。</string>
   <string name="settings_title_hour">通知のタイムスロット：</string>
@@ -328,14 +328,14 @@
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
+    <item>DeepL</item>
     <item>いいえ</item>
-    <item>No</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">あなたのAPIキーを入力するか、Yandex向けに空欄にすることもできます</string>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>ダーク</item>
+    <item>ライト</item>
+    <item>黒</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>なし</item>
@@ -366,7 +366,7 @@
   <string name="request_sent">リクエスト送信</string>
   <string name="followed_by">あなたをフォロー</string>
   <string name="action_search">検索</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
+  <string name="set_capitalize">返信用の最初の文字列</string>
   <string name="set_resize_picture">画像をリサイズ</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">プッシュ通知</string>
@@ -384,9 +384,9 @@
   <string name="action_sync">同期</string>
   <string name="action_filter">フィルター</string>
   <string name="owner_cached_toots">あなたのトゥート</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
+  <string name="v_public">公開</string>
+  <string name="v_unlisted">未収載</string>
+  <string name="v_private">非公開</string>
   <string name="v_direct">メンション</string>
   <string name="v_keywords">キーワード...</string>
   <string name="show_media">メディアを表示</string>
