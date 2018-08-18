@@ -1795,6 +1795,20 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             }
             toRemove.clear();
         }
+        String content = status.getContent();
+        List<Mention> tmpMention = status.getMentions();
+        if( tmpMention != null && tmpMention.size() > 0 ){
+            for(Mention mention: tmpMention){
+                String mentionString;
+                if( mention.getAcct().contains("@"))
+                    mentionString = "@" + mention.getAcct().split("@")[0];
+                else
+                    mentionString = "@" + mention.getAcct();
+                if( content.contains(mentionString)){
+                    content = content.replaceAll(mentionString,"@"+mention.getAcct());
+                }
+            }
+        }
         if( attachments != null && attachments.size() > 0){
             toot_picture_container.setVisibility(View.VISIBLE);
             picture_scrollview.setVisibility(View.VISIBLE);
@@ -1869,7 +1883,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             toot_cw_content.setText("");
             toot_cw_content.setVisibility(View.GONE);
         }
-        String content = status.getContent();
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             toot_content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
         else

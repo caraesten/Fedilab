@@ -144,7 +144,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private int conversationPosition;
     private List<String> timedMute;
     private boolean redraft;
-
+    private Status status;
 
     public StatusListAdapter(Context context, List<String> timedMute, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         super();
@@ -301,6 +301,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView hide_preview, hide_preview_h;
         TextView status_toot_app;
 
+
         public View getView(){
             return itemView;
         }
@@ -376,7 +377,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public int getItemViewType(int position) {
 
-        Status status = statuses.get(position);
+        status = statuses.get(position);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         int HIDDEN_STATUS = 0;
@@ -1530,12 +1531,24 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         String targetedId = status.getId();
                                         new PostActionAsyncTask(context, doAction, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                         if( redraft ){
-                                            long id = new StatusStoredDAO(context, db).insertStatus(status, null);
-                                            Intent intentToot = new Intent(context, TootActivity.class);
-                                            Bundle b = new Bundle();
-                                            b.putLong("restored", id);
-                                            intentToot.putExtras(b);
-                                            context.startActivity(intentToot);
+                                            if( status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().trim().equals("null")){
+                                                new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, status.getIn_reply_to_id(), null, false, false, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                            }else{
+                                                String content = status.getContent();
+                                                Spanned contentSpan;
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                                                    contentSpan = Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY);
+                                                else
+                                                    //noinspection deprecation
+                                                    contentSpan = Html.fromHtml(content);
+                                                status.setContent(contentSpan.toString());
+                                                long id = new StatusStoredDAO(context, db).insertStatus(status, null);
+                                                Intent intentToot = new Intent(context, TootActivity.class);
+                                                Bundle b = new Bundle();
+                                                b.putLong("restored", id);
+                                                intentToot.putExtras(b);
+                                                context.startActivity(intentToot);
+                                            }
                                         }
                                     }else if(doAction ==  API.StatusAction.REPORT ){
                                         String comment = null;
@@ -1809,6 +1822,24 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
+
+        if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0){
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            String content = status.getContent();
+            Spanned contentSpan;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                contentSpan = Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY);
+            else
+                //noinspection deprecation
+                contentSpan = Html.fromHtml(content);
+            status.setContent(contentSpan.toString());
+            long id = new StatusStoredDAO(context, db).insertStatus(status, apiResponse.getStatuses().get(0));
+            Intent intentToot = new Intent(context, TootActivity.class);
+            Bundle b = new Bundle();
+            b.putLong("restored", id);
+            intentToot.putExtras(b);
+            context.startActivity(intentToot);
+        }
 
     }
 
