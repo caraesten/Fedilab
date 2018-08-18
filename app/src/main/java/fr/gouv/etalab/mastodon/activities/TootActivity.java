@@ -192,6 +192,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private Account account;
     private ArrayList<String> splitToot;
     private int stepSpliToot;
+    private boolean removed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,6 +292,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             sharedSubject = b.getString("sharedSubject", null);
             mentionAccount = b.getString("mentionAccount", null);
             idRedirect =  b.getString("idRedirect", null);
+            removed = b.getBoolean("removed");
             restoredScheduled = b.getBoolean("restoredScheduled", false);
             // ACTION_SEND route
             if (b.getInt("uriNumberMast", 0) == 1) {
@@ -1780,6 +1782,9 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         StoredStatus draft = new StatusStoredDAO(TootActivity.this, db).getStatus(id);
         Status status = draft.getStatus();
         //Retrieves attachments
+        if( removed ){
+            new StatusStoredDAO(TootActivity.this, db).remove(draft.getId());
+        }
         restored = id;
         attachments = status.getMedia_attachments();
         int childCount = toot_picture_container.getChildCount();
@@ -1796,18 +1801,10 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             toRemove.clear();
         }
         String content = status.getContent();
-        List<Mention> tmpMention = status.getMentions();
-        if( tmpMention != null && tmpMention.size() > 0 ){
-            for(Mention mention: tmpMention){
-                String mentionString;
-                if( mention.getAcct().contains("@"))
-                    mentionString = "@" + mention.getAcct().split("@")[0];
-                else
-                    mentionString = "@" + mention.getAcct();
-                if( content.contains(mentionString)){
-                    content = content.replaceAll(mentionString,"@"+mention.getAcct());
-                }
-            }
+        Pattern mentionLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
+        Matcher matcher = mentionLink.matcher(content);
+        if (matcher.find()) {
+            content = matcher.replaceAll("$3@$2");
         }
         if( attachments != null && attachments.size() > 0){
             toot_picture_container.setVisibility(View.VISIBLE);
