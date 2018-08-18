@@ -337,8 +337,8 @@
   </string-array>
   <string-array name="settings_translation">
     <item>Яндекс</item>
+    <item>DeepL</item>
     <item>Нет</item>
-    <item>No</item>
   </string-array>
   <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
