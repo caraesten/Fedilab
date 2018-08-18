@@ -335,7 +335,7 @@
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
-    <item>Nein</item>
+    <item>DeepL</item>
     <item>Nein</item>
   </string-array>
   <string name="your_api_key">Ihr API-Schlüssel, Sie können ihn leer lassen für Yandex</string>
