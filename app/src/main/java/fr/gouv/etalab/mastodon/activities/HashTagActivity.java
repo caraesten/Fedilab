@@ -16,7 +16,9 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -25,6 +27,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -40,7 +43,12 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
+import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_KEYWORD;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_TAG;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 
 
@@ -156,12 +164,31 @@ public class HashTagActivity extends BaseActivity implements OnRetrieveFeedsInte
         new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.TAG, tag,null, max_id, HashTagActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        SQLiteDatabase db = Sqlite.getInstance(HashTagActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        List<String> searchInDb = new SearchDAO(HashTagActivity.this, db).getSearchByKeyword(tag.trim());
+        if( searchInDb == null || searchInDb.size() == 0){
+            menu.clear();
+            menu.add(0, 777, Menu.NONE, R.string.pin_add).setIcon(R.drawable.ic_add).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case 777:
+                SQLiteDatabase db = Sqlite.getInstance(HashTagActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                new SearchDAO(HashTagActivity.this, db).insertSearch(tag);
+                Intent intent = new Intent(HashTagActivity.this, MainActivity.class);
+                intent.putExtra(INTENT_ACTION, SEARCH_TAG);
+                intent.putExtra(SEARCH_KEYWORD, tag);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
