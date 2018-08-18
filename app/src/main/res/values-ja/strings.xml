@@ -328,7 +328,7 @@
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
-    <item>いいえ</item>
+    <item>DeepL</item>
     <item>いいえ</item>
   </string-array>
   <string name="your_api_key">あなたのAPIキーを入力するか、Yandex向けに空欄にすることもできます</string>
