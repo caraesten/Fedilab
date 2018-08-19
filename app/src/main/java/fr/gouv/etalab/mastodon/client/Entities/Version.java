@@ -1,9 +1,7 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import fr.gouv.etalab.mastodon.helper.Helper;
 
 
 /**

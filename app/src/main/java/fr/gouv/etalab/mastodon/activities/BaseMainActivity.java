@@ -33,7 +33,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -105,7 +104,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.BackupStatusService;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
-import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -261,12 +259,15 @@ public abstract class BaseMainActivity extends BaseActivity
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
+
         tabLayout.addTab(tabHome);
         tabLayout.addTab(tabNotif);
         if( display_local)
             tabLayout.addTab(tabLocal);
         if( display_global)
             tabLayout.addTab(tabPublic);
+
+
         //Display filter for notification when long pressing the tab
         final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
         tabStrip.getChildAt(1).setOnLongClickListener(new View.OnLongClickListener() {
@@ -473,7 +474,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         });
-
+        refreshSearchTab();
         final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -921,7 +922,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         };
-        refreshSearchTab();
+
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
 
         // Retrieves instance
@@ -1157,8 +1158,11 @@ public abstract class BaseMainActivity extends BaseActivity
                             (getSupportFragmentManager(), tabLayout.getTabCount());
                     viewPager.setAdapter(adapter);
                     for(int i = 0; i < tabLayout.getTabCount() ; i++ ){
-                        if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(keyword))
+                        if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(keyword.trim())){
                             tabLayout.getTabAt(i).select();
+                            break;
+                        }
+
                     }
                 }
             }
@@ -1607,9 +1611,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 tabLayout.setVisibility(View.VISIBLE);
                 toolbar_search.setIconified(true);
             }
-            SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            List<String> searches = new SearchDAO(BaseMainActivity.this, db).getAllSearch();
-            int sizeSearches = (searches ==null)?0:searches.size();
             //Selection comes from another menu, no action to do
             DisplayStatusFragment statusFragment;
             Bundle bundle = new Bundle();
