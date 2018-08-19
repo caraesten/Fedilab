@@ -703,12 +703,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     hashAcct = Pattern.compile("\\s(@"+status.getReblog().getAccount().getAcct()+")");
                 else
                     hashAcct = Pattern.compile("\\s(@"+status.getAccount().getAcct()+")");
-                Matcher matcherAcct = hashAcct.matcher(wordtoSpan);
-                while (matcherAcct.find()){
-                    int matchStart = matcherAcct.start(1);
-                    int matchEnd = matcherAcct.end();
-                    if( wordtoSpan.length() >= matchEnd && matchStart < matchEnd)
-                        wordtoSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_icon)), matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                if( wordtoSpan != null && hashAcct != null){
+                    Matcher matcherAcct = hashAcct.matcher(wordtoSpan);
+                    while (matcherAcct.find()){
+                        int matchStart = matcherAcct.start(1);
+                        int matchEnd = matcherAcct.end();
+                        if( wordtoSpan.length() >= matchEnd && matchStart < matchEnd)
+                            wordtoSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_icon)), matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    }
                 }
             }
             holder.status_account_username.setText(wordtoSpan);

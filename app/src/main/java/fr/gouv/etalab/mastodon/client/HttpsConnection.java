@@ -155,7 +155,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
                 throw new HttpsConnectionException(responseCode, error);
@@ -204,7 +204,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
                 throw new HttpsConnectionException(responseCode, error);
@@ -243,7 +243,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
                 throw new HttpsConnectionException(responseCode, error);
@@ -275,7 +275,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
                 throw new HttpsConnectionException(responseCode, error);
@@ -338,7 +338,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
                 throw new HttpsConnectionException(responseCode, error);
@@ -393,7 +393,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
                 throw new HttpsConnectionException(responseCode, error);
@@ -767,7 +767,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
                 try {
@@ -877,7 +877,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
                 try {
@@ -956,7 +956,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
                 try {
@@ -1022,7 +1022,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
                 try {
@@ -1408,7 +1408,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
                 throw new HttpsConnectionException(responseCode, error);
@@ -1465,7 +1465,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
                 throw new HttpsConnectionException(responseCode, error);
@@ -1533,7 +1533,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpsURLConnection.getResponseCode();
                 throw new HttpsConnectionException(responseCode, error);
@@ -1587,7 +1587,7 @@ public class HttpsConnection {
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
                         error = scanner.next();
-                    }
+                    }catch (Exception e){e.printStackTrace();}
                 }
                 int responseCode = httpURLConnection.getResponseCode();
                 throw new HttpsConnectionException(responseCode, error);

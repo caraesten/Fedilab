@@ -412,10 +412,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
         }
         String urlHeader = account.getHeader();
-        if (urlHeader.startsWith("/")) {
+        if (urlHeader != null && urlHeader.startsWith("/")) {
             urlHeader = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + account.getHeader();
         }
-        if (!urlHeader.contains("missing.png")) {
+        if (urlHeader != null && !urlHeader.contains("missing.png")) {
 
             Glide.with(getApplicationContext())
                     .asBitmap()
