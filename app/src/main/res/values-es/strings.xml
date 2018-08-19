@@ -490,4 +490,5 @@ Gracias a:    </string>
   <string name="set_share_details">Agregar datos del toot al compartir</string>
   <string name="support_the_app_on_liberapay">Apoya la aplicación en Liberapay</string>
   <string name="alert_regex">Hay un error en la expresión regular!</string>
+  <string name="no_account_yet">No account yet?</string>
 </resources>
