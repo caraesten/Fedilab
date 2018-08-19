@@ -311,7 +311,7 @@
   <string name="set_preview_reply_pp">Прикажи профилну слику?</string>
   <string name="set_multiaccount_actions">Дозволи интеракције између налога?</string>
   <string name="set_fit_preview">Прилагоди преглед слике да стане</string>
-  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+  <string name="set_automatically_split_toot">Аутоматски подели тутове преко 500 карактера у одговору</string>
   <string name="note_no_space">Достигли сте дозвољених 160 карактера!</string>
   <string name="username_no_space">Достигли сте дозвољених 30 карактера!</string>
   <string name="settings_title_hour">Термин за обавештења:</string>
@@ -498,5 +498,5 @@
   <string name="set_share_details">Додај детаље тута приликом дељења</string>
   <string name="support_the_app_on_liberapay">Подржи апликацију на Liberapay-у</string>
   <string name="alert_regex">Постоји грешка у регуларном изразу!</string>
-  <string name="no_account_yet">No account yet?</string>
+  <string name="no_account_yet">Још немате налог?</string>
 </resources>
