@@ -503,4 +503,5 @@
   <string name="set_share_details">إضافة التفاصيل عند مشاركة تبويق ما</string>
   <string name="support_the_app_on_liberapay">إدعم التطبيق على ليبيراباي</string>
   <string name="alert_regex">هناك خطأ في العبارة المنطقية !</string>
+  <string name="no_account_yet">No account yet?</string>
 </resources>
