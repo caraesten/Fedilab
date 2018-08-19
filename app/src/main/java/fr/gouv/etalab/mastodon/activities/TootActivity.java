@@ -193,6 +193,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private ArrayList<String> splitToot;
     private int stepSpliToot;
     private boolean removed;
+    private boolean restoredScheduled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,7 +244,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         changeColor();
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
-        boolean restoredScheduled = false;
+        restoredScheduled = false;
 
 
         toot_it = findViewById(R.id.toot_it);
@@ -1228,7 +1229,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             if( itemRestore != null)
                 itemRestore.setVisible(false);
             MenuItem itemSchedule = menu.findItem(R.id.action_schedule);
-            if( itemSchedule != null)
+            if( restoredScheduled )
                 itemSchedule.setVisible(false);
         }
         MenuItem itemViewReply = menu.findItem(R.id.action_view_reply);
