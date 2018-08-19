@@ -172,6 +172,15 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
             }
         });
 
+        Button paypal = findViewById(R.id.about_support_paypal);
+        paypal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.me/Mastalab"));
+                startActivity(browserIntent);
+            }
+        });
+
         setTitle(R.string.action_about);
         lv_contributors.setExpanded(true);
         lv_developers.setExpanded(true);
