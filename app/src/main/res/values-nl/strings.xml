@@ -495,4 +495,5 @@
   <string name="set_share_details">Volledige toot delen</string>
   <string name="support_the_app_on_liberapay">Ondersteun de app op Liberapay</string>
   <string name="alert_regex">Er zit een fout in de reguliere expressie!</string>
+  <string name="no_account_yet">No account yet?</string>
 </resources>
