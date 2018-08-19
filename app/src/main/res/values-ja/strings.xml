@@ -484,4 +484,5 @@
   <string name="set_share_details">共有時にトゥートの詳細を付加する</string>
   <string name="support_the_app_on_liberapay">Liberapayでアプリを支援</string>
   <string name="alert_regex">正規表現に誤りがあります！</string>
+  <string name="no_account_yet">No account yet?</string>
 </resources>

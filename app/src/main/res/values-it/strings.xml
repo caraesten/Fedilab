@@ -495,4 +495,5 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <string name="set_share_details">Aggiungi dettagli del toot quando condividi</string>
   <string name="support_the_app_on_liberapay">Supporta l\'app su Liberapay</string>
   <string name="alert_regex">C\'è un errore nell\'espressione regolare!</string>
+  <string name="no_account_yet">No account yet?</string>
 </resources>
