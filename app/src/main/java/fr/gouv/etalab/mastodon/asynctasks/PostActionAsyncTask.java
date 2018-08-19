@@ -137,7 +137,6 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
             }
         }else {
-
             if (apiAction == API.StatusAction.REPORT)
                 statusCode = api.reportAction(status, comment);
             else if (apiAction == API.StatusAction.CREATESTATUS)
