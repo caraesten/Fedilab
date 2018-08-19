@@ -493,4 +493,5 @@
   <string name="set_share_details">Ajouter les détails du pouet en le partageant</string>
   <string name="support_the_app_on_liberapay">Soutenir l\'app sur Liberpay</string>
   <string name="alert_regex">Il y a une erreur dans l\'expression régulière !</string>
+  <string name="no_account_yet">No account yet?</string>
 </resources>
