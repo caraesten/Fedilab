@@ -39,6 +39,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONArray;
@@ -71,7 +72,6 @@ public class LoginActivity extends BaseActivity {
     private EditText login_uid;
     private EditText login_passwd;
     boolean isLoadingInstance = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,7 +216,14 @@ public class LoginActivity extends BaseActivity {
                     retrievesClientId();
                 }
             });
-
+            TextView instances_social = findViewById(R.id.instances_social);
+            instances_social.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://instances.social"));
+                    startActivity(browserIntent);
+                }
+            });
             login_instance.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
