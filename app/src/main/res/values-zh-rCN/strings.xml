@@ -487,4 +487,5 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
   <string name="set_share_details">在分享时添加嘟文的详细信息</string>
   <string name="support_the_app_on_liberapay">在 Liberapay 上支持这个应用</string>
   <string name="alert_regex">正则表达式中有错误！</string>
+  <string name="no_account_yet">No account yet?</string>
 </resources>
