@@ -1893,6 +1893,11 @@ public class API {
             status.setContent(resobj.get("content").toString());
             status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
             status.setReblogs_count(Integer.valueOf(resobj.get("reblogs_count").toString()));
+            try{
+                status.setReplies_count(Integer.valueOf(resobj.get("replies_count").toString()));
+            }catch (Exception e){
+                status.setReplies_count(0);
+            }
             try {
                 status.setReblogged(Boolean.valueOf(resobj.get("reblogged").toString()));
             }catch (Exception e){
