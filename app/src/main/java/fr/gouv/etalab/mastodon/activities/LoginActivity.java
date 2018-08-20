@@ -34,6 +34,7 @@ import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -72,6 +73,7 @@ public class LoginActivity extends BaseActivity {
     private EditText login_uid;
     private EditText login_passwd;
     boolean isLoadingInstance = false;
+    private String oldSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +143,12 @@ public class LoginActivity extends BaseActivity {
             if (theme == Helper.THEME_LIGHT) {
                 connectionButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             }
+            login_instance.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+                    oldSearch = parent.getItemAtPosition(position).toString().trim();
+                }
+            });
             login_instance.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -157,9 +165,10 @@ public class LoginActivity extends BaseActivity {
                         final String action = "/instances/search";
                         final HashMap<String, String> parameters = new HashMap<>();
                         parameters.put("q", s.toString().trim());
-                        parameters.put("count", String.valueOf(5));
+                        parameters.put("count", String.valueOf(50));
                         parameters.put("name", String.valueOf(true));
                         isLoadingInstance = true;
+                        if( oldSearch == null || !oldSearch.equals(s.toString().trim()))
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -173,9 +182,18 @@ public class LoginActivity extends BaseActivity {
                                                 JSONObject jsonObject = new JSONObject(response);
                                                 JSONArray jsonArray = jsonObject.getJSONArray("instances");
                                                 if (jsonArray != null) {
-                                                    instances = new String[jsonArray.length()];
+                                                    int length = 0;
                                                     for (int i = 0; i < jsonArray.length(); i++) {
-                                                        instances[i] = jsonArray.getJSONObject(i).get("name").toString();
+                                                        if( !jsonArray.getJSONObject(i).get("name").toString().contains("@"))
+                                                            length++;
+                                                    }
+                                                    instances = new String[length];
+                                                    int j = 0;
+                                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                                        if( !jsonArray.getJSONObject(i).get("name").toString().contains("@")) {
+                                                            instances[j] = jsonArray.getJSONObject(i).get("name").toString();
+                                                            j++;
+                                                        }
                                                     }
                                                 } else {
                                                     instances = new String[]{};
@@ -186,6 +204,7 @@ public class LoginActivity extends BaseActivity {
                                                 login_instance.setAdapter(adapter);
                                                 if (login_instance.hasFocus() && !LoginActivity.this.isFinishing())
                                                     login_instance.showDropDown();
+                                                oldSearch = s.toString().trim();
 
                                             } catch (JSONException ignored) {
                                                 isLoadingInstance = false;

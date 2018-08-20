@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 11;
+    public static final int DB_VERSION = 12;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -49,6 +49,8 @@ public class Sqlite extends SQLiteOpenHelper {
     //Table for cached statuses
     static final String TABLE_STATUSES_CACHE = "STATUSES_CACHE";
 
+    //Table for instance names
+    static final String TABLE_INSTANCES = "INSTANCES";
 
     static final String COL_USER_ID = "USER_ID";
     static final String COL_USERNAME = "USERNAME";
@@ -159,6 +161,11 @@ public class Sqlite extends SQLiteOpenHelper {
             + TABLE_STATUSES_CACHE + "(" + COL_INSTANCE +"," + COL_STATUS_ID + ")";
 
 
+    private final String CREATE_TABLE_INSTANCES = "CREATE TABLE " + TABLE_INSTANCES + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL)";
+
+
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -181,6 +188,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TEMP_MUTE);
         db.execSQL(CREATE_TABLE_STATUSES_CACHE);
         db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
+        db.execSQL(CREATE_TABLE_INSTANCES);
     }
 
     @Override
@@ -214,6 +222,8 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUSES_CACHE);
                 db.execSQL(CREATE_TABLE_STATUSES_CACHE);
                 db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
+            case 11:
+                db.execSQL(CREATE_TABLE_INSTANCES);
             default:
                 break;
         }
