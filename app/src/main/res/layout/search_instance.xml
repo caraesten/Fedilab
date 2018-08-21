@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
     <AutoCompleteTextView
         android:id="@+id/search_instance"
-        android:inputType="text"
+        android:inputType="textWebEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/instance"

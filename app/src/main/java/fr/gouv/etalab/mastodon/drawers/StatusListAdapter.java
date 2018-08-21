@@ -1142,20 +1142,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CrossActions.doCrossAction(context, status, null, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, true);
+                    CrossActions.doCrossAction(context, type, status, null, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, true);
                 }
             });
 
             holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CrossActions.doCrossAction(context, status, null, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, true);
+                    CrossActions.doCrossAction(context, type, status, null, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, true);
                 }
             });
             holder.status_pin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CrossActions.doCrossAction(context, status, null, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this, true);
+                    CrossActions.doCrossAction(context, type, status, null, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this, true);
                 }
             });
 
@@ -1163,7 +1163,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_favorite_count.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    CrossActions.doCrossAction(context, status, null, API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, false);
+                    CrossActions.doCrossAction(context, type, status, null, API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, false);
                     return true;
                 }
             });
@@ -1171,7 +1171,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_reblog_count.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    CrossActions.doCrossAction(context, status, null, API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, false);
+                    CrossActions.doCrossAction(context, type, status, null, API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, false);
                     return true;
                 }
             });
