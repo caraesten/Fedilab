@@ -119,7 +119,7 @@ public class CrossActions {
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
-            finalCrossAction(context, currentAccount, targetedAccount, doAction, status, baseAdapter, onPostActionInterface);
+            new PostActionAsyncTask(context, currentAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else if (accounts.size() == 1 || undoAction) {
 
             boolean confirmation = false;
@@ -159,7 +159,35 @@ public class CrossActions {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Account selectedAccount = accountArray[which];
-                    finalCrossAction(context, selectedAccount, targetedAccount, doAction, status, baseAdapter, onPostActionInterface);
+                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    Account loggedAccount = new AccountDAO(context, db).getAccountByID(userId);
+                    if( targetedAccount == null){
+                        if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
+                            new PostActionAsyncTask(context, selectedAccount, doAction, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }else{ //Account is from another instance
+                            new PostActionAsyncTask(context, selectedAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+                        if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
+                            if (doAction == API.StatusAction.REBLOG) {
+                                status.setReblogged(true);
+                            } else if (doAction == API.StatusAction.FAVOURITE) {
+                                status.setFavourited(true);
+                            } else if (doAction == API.StatusAction.PIN) {
+                                status.setPinned(true);
+                            }
+                            baseAdapter.notifyDataSetChanged();
+                        }
+                    }else{
+                        new PostActionAsyncTask(context, selectedAccount, targetedAccount, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
+                            if (doAction == API.StatusAction.FOLLOW) {
+                                targetedAccount.setFollowing(true);
+                            }
+                            baseAdapter.notifyDataSetChanged();
+                        }
+                    }
+
                     dialog.dismiss();
                 }
             });
@@ -168,43 +196,10 @@ public class CrossActions {
     }
 
 
-    private static void finalCrossAction(Context context, Account selectedAccount, Account targetedAccount, API.StatusAction doAction, Status status, RecyclerView.Adapter baseAdapter, final OnPostActionInterface onPostActionInterface ){
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account loggedAccount = new AccountDAO(context, db).getAccountByID(userId);
-        new PostActionAsyncTask(context, selectedAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        if( targetedAccount == null){
-            if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
-                new PostActionAsyncTask(context, selectedAccount, doAction, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }else{ //Account is from another instance
-                new PostActionAsyncTask(context, selectedAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
-            if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
-                if (doAction == API.StatusAction.REBLOG) {
-                    status.setReblogged(true);
-                } else if (doAction == API.StatusAction.FAVOURITE) {
-                    status.setFavourited(true);
-                } else if (doAction == API.StatusAction.PIN) {
-                    status.setPinned(true);
-                }
-                baseAdapter.notifyDataSetChanged();
-            }
-        }else{
-            new PostActionAsyncTask(context, selectedAccount, targetedAccount, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
-                if (doAction == API.StatusAction.FOLLOW) {
-                    targetedAccount.setFollowing(true);
-                }
-                baseAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-
     public static void doCrossReply(final Context context, final Status status, final RetrieveFeedsAsyncTask.Type type, boolean limitedToOwner){
         List<Account> accounts = connectedAccounts(context, status, limitedToOwner);
 
-        if( accounts.size() == 1) {
+        if( accounts.size() == 1 && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
             Intent intent = new Intent(context, TootActivity.class);
             Bundle b = new Bundle();
             if( status.getReblog() != null )
@@ -221,85 +216,138 @@ public class CrossActions {
 
             }
         }else {
-            AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
-            builderSingle.setTitle(context.getString(R.string.choose_accounts));
-            final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
-            final Account[] accountArray = new Account[accounts.size()];
-            int i = 0;
-            for(Account account: accounts){
-                accountArray[i] = account;
-                i++;
-            }
-            builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
+            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE){
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+                builderSingle.setTitle(context.getString(R.string.choose_accounts));
+                final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
+                final Account[] accountArray = new Account[accounts.size()];
+                int i = 0;
+                for(Account account: accounts){
+                    accountArray[i] = account;
+                    i++;
                 }
-            });
-            builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(final DialogInterface dialog, int which) {
-                    final Account account = accountArray[which];
+                builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+                        final Account account = accountArray[which];
+                        new AsyncTask<Void, Void, Void>() {
+                            private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
+                            private WeakReference<Context> contextReference = new WeakReference<>(context);
 
-                    new AsyncTask<Void, Void, Void>() {
-                        private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
-                        private WeakReference<Context> contextReference = new WeakReference<>(context);
+                            @Override
+                            protected Void doInBackground(Void... voids) {
 
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-
-                            API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                            String uri;
-                            if(status.getReblog() != null ){
-                                if( status.getReblog().getUri().startsWith("http"))
-                                    uri = status.getReblog().getUri();
-                                else
-                                    uri = status.getReblog().getUrl();
-                            }else {
-                                if( status.getUri().startsWith("http"))
-                                    uri = status.getUri();
-                                else
-                                    uri = status.getUrl();
+                                API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                                String uri;
+                                if(status.getReblog() != null ){
+                                    if( status.getReblog().getUri().startsWith("http"))
+                                        uri = status.getReblog().getUri();
+                                    else
+                                        uri = status.getReblog().getUrl();
+                                }else {
+                                    if( status.getUri().startsWith("http"))
+                                        uri = status.getUri();
+                                    else
+                                        uri = status.getUrl();
+                                }
+                                Results search = api.search(uri);
+                                if( search != null){
+                                    remoteStatuses = search.getStatuses();
+                                }
+                                return null;
                             }
-                            Results search = api.search(uri);
-                            if( search != null){
-                                remoteStatuses = search.getStatuses();
-                            }
-                            return null;
-                        }
 
-                        @Override
-                        protected void onPostExecute(Void result) {
-                            Intent intent = new Intent(contextReference.get(), TootActivity.class);
-                            Bundle b = new Bundle();
-                            if( remoteStatuses == null || remoteStatuses.size() == 0){
+                            @Override
+                            protected void onPostExecute(Void result) {
+                                Intent intent = new Intent(contextReference.get(), TootActivity.class);
+                                Bundle b = new Bundle();
+                                if( remoteStatuses == null || remoteStatuses.size() == 0){
+                                    dialog.dismiss();
+                                    return;
+                                }
+                                if( remoteStatuses.get(0).getReblog() != null ) {
+                                    b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
+                                    b.putString("idRedirect", status.getReblog().getId());
+                                }else {
+                                    b.putParcelable("tootReply", remoteStatuses.get(0));
+                                    b.putString("idRedirect", status.getId());
+                                }
+                                b.putParcelable("accountReply", account);
+                                intent.putExtras(b); //Put your id to your next Intent
+                                contextReference.get().startActivity(intent);
+                                if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+                                    try {
+                                        //Avoid to open multi activities when replying in a conversation
+                                        ((ShowConversationActivity)contextReference.get()).finish();
+                                    }catch (Exception ignored){}
+
+                                }
                                 dialog.dismiss();
-                                return;
                             }
-                            if( remoteStatuses.get(0).getReblog() != null ) {
-                                b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
-                                b.putString("idRedirect", status.getReblog().getId());
-                            }else {
-                                b.putParcelable("tootReply", remoteStatuses.get(0));
-                                b.putString("idRedirect", status.getId());
-                            }
-                            b.putParcelable("accountReply", account);
-                            intent.putExtras(b); //Put your id to your next Intent
-                            contextReference.get().startActivity(intent);
-                            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
-                                try {
-                                    //Avoid to open multi activities when replying in a conversation
-                                    ((ShowConversationActivity)contextReference.get()).finish();
-                                }catch (Exception ignored){}
+                        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
 
-                            }
-                            dialog.dismiss();
+                    }
+                });
+                builderSingle.show();
+            }else{
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                Account account = new AccountDAO(context, db).getAccountByID(userId);
+
+                new AsyncTask<Void, Void, Void>() {
+                    private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
+                    private WeakReference<Context> contextReference = new WeakReference<>(context);
+
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+
+                        API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                        String uri;
+                        if(status.getReblog() != null ){
+                            if( status.getReblog().getUri().startsWith("http"))
+                                uri = status.getReblog().getUri();
+                            else
+                                uri = status.getReblog().getUrl();
+                        }else {
+                            if( status.getUri().startsWith("http"))
+                                uri = status.getUri();
+                            else
+                                uri = status.getUrl();
                         }
-                    }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+                        Results search = api.search(uri);
+                        if( search != null){
+                            remoteStatuses = search.getStatuses();
+                        }
+                        return null;
+                    }
 
-                }
-            });
-            builderSingle.show();
+                    @Override
+                    protected void onPostExecute(Void result) {
+                        Intent intent = new Intent(contextReference.get(), TootActivity.class);
+                        Bundle b = new Bundle();
+                        if( remoteStatuses == null || remoteStatuses.size() == 0){
+                            return;
+                        }
+                        if( remoteStatuses.get(0).getReblog() != null ) {
+                            b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
+                            b.putString("idRedirect", remoteStatuses.get(0).getReblog().getId());
+                        }else {
+                            b.putParcelable("tootReply", remoteStatuses.get(0));
+                            b.putString("idRedirect", remoteStatuses.get(0).getId());
+                        }
+                        b.putParcelable("accountReply", account);
+                        intent.putExtras(b); //Put your id to your next Intent
+                        contextReference.get().startActivity(intent);
+                    }
+                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+            }
         }
     }
 
@@ -339,7 +387,6 @@ public class CrossActions {
                     context.startActivity(intentToot);
                     ((BaseActivity)context).finish();
                     dialog.dismiss();
-
                 }
             });
             builderSingle.show();

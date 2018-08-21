@@ -16,14 +16,11 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -32,16 +29,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -57,18 +50,14 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
-import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
@@ -87,7 +76,6 @@ public class InstanceFederatedActivity extends BaseActivity {
     public static String currentLocale;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private static BroadcastReceiver receive_data, receive_federated_data, receive_local_data;
     private String userIdService;
     private AppBarLayout appBar;
     private String userId;
@@ -102,9 +90,6 @@ public class InstanceFederatedActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-
-
-
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
@@ -131,8 +116,6 @@ public class InstanceFederatedActivity extends BaseActivity {
                 finish();
             }
         });
-
-
 
         FloatingActionButton add_new_instance = findViewById(R.id.add_new_instance);
         add_new_instance.setOnClickListener(new View.OnClickListener() {
@@ -236,7 +219,7 @@ public class InstanceFederatedActivity extends BaseActivity {
                             final String action = "/instances/search";
                             final HashMap<String, String> parameters = new HashMap<>();
                             parameters.put("q", s.toString().trim());
-                            parameters.put("count", String.valueOf(50));
+                            parameters.put("count", String.valueOf(100));
                             parameters.put("name", String.valueOf(true));
                             isLoadingInstance = true;
 
@@ -256,13 +239,13 @@ public class InstanceFederatedActivity extends BaseActivity {
                                                         if (jsonArray != null) {
                                                             int length = 0;
                                                             for (int i = 0; i < jsonArray.length(); i++) {
-                                                                if( !jsonArray.getJSONObject(i).get("name").toString().contains("@"))
+                                                                if( !jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true"))
                                                                     length++;
                                                             }
                                                             instances = new String[length];
                                                             int j = 0;
                                                             for (int i = 0; i < jsonArray.length(); i++) {
-                                                                if( !jsonArray.getJSONObject(i).get("name").toString().contains("@")) {
+                                                                if( !jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true")) {
                                                                     instances[j] = jsonArray.getJSONObject(i).get("name").toString();
                                                                     j++;
                                                                 }
@@ -384,22 +367,6 @@ public class InstanceFederatedActivity extends BaseActivity {
         Helper.loadPictureIcon(InstanceFederatedActivity.this, account.getAvatar(),iconbar);
 
 
-
-
-        if( receive_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
-        receive_data = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle b = intent.getExtras();
-                Helper.EventStreaming eventStreaming = (Helper.EventStreaming) intent.getSerializableExtra("eventStreaming");
-                assert b != null;
-                userIdService = b.getString("userIdService", null);
-                if( userIdService != null && userIdService.equals(userId)) {
-
-                }
-            }
-        };
         mamageNewIntent(getIntent());
        // LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
     }
@@ -512,44 +479,10 @@ public class InstanceFederatedActivity extends BaseActivity {
     }
 
 
-    @Override
-    public void onStart(){
-        super.onStart();
-        if( receive_federated_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
-        receive_federated_data = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle b = intent.getExtras();
-                assert b != null;
-                userIdService = b.getString("userIdService", null);
-                if( userIdService != null && userIdService.equals(userId)) {
-                    Status status = b.getParcelable("data");
-
-                }
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
-    }
-
-    @Override
-    public void onStop(){
-        super.onStop();
-        if( receive_federated_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
-
-    }
 
     @Override
     protected void onPause() {
         super.onPause();
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        if( receive_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
     }
 
 

@@ -1861,7 +1861,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-
         if( error != null){
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)
