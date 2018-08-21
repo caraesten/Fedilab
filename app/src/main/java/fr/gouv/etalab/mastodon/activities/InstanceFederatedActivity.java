@@ -219,7 +219,7 @@ public class InstanceFederatedActivity extends BaseActivity {
                             final String action = "/instances/search";
                             final HashMap<String, String> parameters = new HashMap<>();
                             parameters.put("q", s.toString().trim());
-                            parameters.put("count", String.valueOf(100));
+                            parameters.put("count", String.valueOf(1000));
                             parameters.put("name", String.valueOf(true));
                             isLoadingInstance = true;
 

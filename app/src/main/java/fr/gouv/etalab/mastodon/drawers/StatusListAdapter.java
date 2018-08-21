@@ -475,7 +475,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
 
-            if( getItemViewType(position) != COMPACT_STATUS  && displayBookmarkButton)
+            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && getItemViewType(position) != COMPACT_STATUS  && displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
             else
                 holder.status_bookmark.setVisibility(View.GONE);
@@ -1025,7 +1025,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });*/
             //Click on a conversation
-            if( getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS) {
+            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && (getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS)) {
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -1232,6 +1232,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
 
 
+            if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+                holder.status_more.setVisibility(View.GONE);
 
             final View attached = holder.status_more;
             holder.status_more.setOnClickListener(new View.OnClickListener() {
