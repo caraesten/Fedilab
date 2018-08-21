@@ -496,4 +496,7 @@
   <string name="support_the_app_on_liberapay">Ondersteun de app op Liberapay</string>
   <string name="alert_regex">Er zit een fout in de reguliere expressie!</string>
   <string name="no_account_yet">Nog geen account?</string>
+  <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+  <string name="delete_instance">Delete this instance?</string>
+  <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
 </resources>
