@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -32,12 +33,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -64,6 +68,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
+import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
@@ -144,15 +149,7 @@ public class InstanceFederatedActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-
                         String instanceName = instance_list.getText().toString().trim();
-                        //Already in db
-                        List<String> s_ = new InstancesDAO(InstanceFederatedActivity.this, db).getInstanceByName(instanceName);
-                        if( s_ == null)
-                            s_ = new ArrayList<>();
-
-
-
                         new Thread(new Runnable(){
                             @Override
                             public void run() {
@@ -161,16 +158,21 @@ public class InstanceFederatedActivity extends BaseActivity {
                                     runOnUiThread(new Runnable() {
                                         public void run() {
                                             JSONObject resobj;
-                                            try {
-                                                new InstancesDAO(InstanceFederatedActivity.this, db).insertInstance(instanceName);
+                                            dialog.dismiss();
+                                            new InstancesDAO(InstanceFederatedActivity.this, db).insertInstance(instanceName);
 
-                                                resobj = new JSONObject(response);
-                                                Intent intent = new Intent(InstanceFederatedActivity.this, InstanceFederatedActivity.class);
-                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                intent.putExtra(INTENT_ACTION, SEARCH_INSTANCE);
-                                                intent.putExtra(INSTANCE_NAME, instanceName);
-                                                startActivity(intent);
-                                            } catch (JSONException ignored) {ignored.printStackTrace();}
+                                            Helper.addTab(tabLayout, adapter, instanceName);
+                                            adapter = new InstanceFederatedActivity.PagerAdapter
+                                                    (getSupportFragmentManager(), tabLayout.getTabCount());
+                                            viewPager.setAdapter(adapter);
+                                            for(int i = 0; i < tabLayout.getTabCount() ; i++ ){
+                                                if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(instanceName.trim())){
+                                                    tabLayout.getTabAt(i).select();
+                                                    attacheDelete(i);
+                                                    break;
+                                                }
+
+                                            }
                                         }
                                     });
                                 } catch (final Exception e) {
@@ -324,11 +326,6 @@ public class InstanceFederatedActivity extends BaseActivity {
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
 
-
-        //Display filter for notification when long pressing the tab
-        final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
-
-
         viewPager = findViewById(R.id.viewpager);
 
         adapter = new PagerAdapter
@@ -336,10 +333,26 @@ public class InstanceFederatedActivity extends BaseActivity {
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
 
 
         refreshInstanceTab();
+
+        int tabCount = tabLayout.getTabCount();
+        for( int j = 0 ; j < tabCount ; j++){
+            attacheDelete(j);
+        }
 
         //Hide the default title
         if( getSupportActionBar() != null) {
@@ -399,6 +412,65 @@ public class InstanceFederatedActivity extends BaseActivity {
     @Override
     public void onResume(){
         super.onResume();
+    }
+
+
+    private void attacheDelete(int position){
+        LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+        String title = tabLayout.getTabAt(position).getText().toString().trim();
+        SQLiteDatabase db = Sqlite.getInstance(InstanceFederatedActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(InstanceFederatedActivity.this);
+                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        new InstancesDAO(InstanceFederatedActivity.this, db).remove(title);
+                        String instanceName;
+                        if( position > 0)
+                            instanceName = tabLayout.getTabAt(position -1).getText().toString();
+                        else if( tabLayout.getTabCount() > 1 )
+                            instanceName = tabLayout.getTabAt(1).getText().toString();
+                        else //Last element
+                            instanceName = "";
+                        Helper.removeTab(tabLayout, adapter, position);
+                        adapter = new InstanceFederatedActivity.PagerAdapter
+                                (getSupportFragmentManager(), tabLayout.getTabCount());
+                        viewPager.setAdapter(adapter);
+                        for(int i = 0; i < tabLayout.getTabCount() ; i++ ){
+                            if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(instanceName.trim())){
+                                tabLayout.getTabAt(i).select();
+                                break;
+                            }
+
+                        }
+                    }
+                });
+                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                dialogBuilder.setTitle(R.string.delete_instance);
+                dialogBuilder.setMessage(getString(R.string.warning_delete_instance, title));
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        //Hide keyboard
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        assert imm != null;
+                        imm.hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
+                    }
+                });
+                if( alertDialog.getWindow() != null )
+                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                alertDialog.show();
+                return false;
+            }
+        });
     }
 
     @Override

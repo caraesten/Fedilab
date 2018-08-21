@@ -545,6 +545,8 @@
     <string name="alert_regex">There is an error in the regular expression!</string>
     <string name="no_account_yet">No account yet?</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+    <string name="delete_instance">Delete this instance?</string>
+    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
     <string-array translatable="false" name="proxy_type_choice">
         <item>HTTP</item>
         <item>SOCKS</item>

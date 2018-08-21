@@ -55,7 +55,7 @@ public class InstancesDAO {
      */
     public void insertInstance(String instanceName) {
         ContentValues values = new ContentValues();
-        values.put(Sqlite.COL_INSTANCE, instanceName);
+        values.put(Sqlite.COL_INSTANCE, instanceName.trim());
         values.put(Sqlite.COL_USER_ID, userId);
         values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
         //Inserts search

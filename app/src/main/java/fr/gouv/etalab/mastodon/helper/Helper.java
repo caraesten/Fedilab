@@ -2188,8 +2188,7 @@ public class Helper {
         }
     }
 
-    public static void removeSearchTab(String keyword, TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter){
-
+    public static void removeInstanceTab(String keyword, TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter){
         int selection = -1;
         for(int i = 0; i < tableLayout.getTabCount() ; i++ ){
             if( tableLayout.getTabAt(i).getText() != null && tableLayout.getTabAt(i).getText().equals(keyword)) {
@@ -2201,14 +2200,15 @@ public class Helper {
             removeTab(tableLayout, pagerAdapter, selection);
     }
 
-    private static void removeTab(TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter, int position) {
-        if (tableLayout.getTabCount() >= position) {
-            tableLayout.removeTabAt(position);
+    public static void removeTab(TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter, int position) {
+        if (tableLayout.getTabCount() >= position  ) {
+            if(tableLayout.getTabCount() > 0)
+                tableLayout.removeTabAt(position);
             pagerAdapter.removeTabPage();
         }
     }
 
-    private static void addTab(TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter, String title) {
+    public static void addTab(TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter, String title) {
         tableLayout.addTab(tableLayout.newTab().setText(title));
         pagerAdapter.addTabPage(title);
     }
