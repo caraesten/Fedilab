@@ -33,10 +33,12 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.BaseActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
@@ -194,6 +196,38 @@ public class CrossActions {
             builderSingle.show();
         }
     }
+
+
+    public static void doCrossProfile(final Context context, Account remoteAccount){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(context, db).getAccountByID(userId);
+        new AsyncTask<Void, Void, Void>() {
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
+            Results response;
+            @Override
+            protected Void doInBackground(Void... voids) {
+                API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                String url = "@" + remoteAccount.getAcct() + "@" + remoteAccount.getInstance();
+                response = api.search(url);
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void result) {
+                List<Account> remoteAccounts = response.getAccounts();
+                if( remoteAccounts != null && remoteAccounts.size() > 0) {
+                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("accountId", remoteAccounts.get(0).getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+    }
+
+
 
 
     public static void doCrossReply(final Context context, final Status status, final RetrieveFeedsAsyncTask.Type type, boolean limitedToOwner){

@@ -1583,32 +1583,68 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
 
 
-            holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                    if( targetedId == null || !targetedId.equals(status.getAccount().getId())){
-                        Intent intent = new Intent(context, ShowAccountActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("accountId", status.getAccount().getId());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                        if (targetedId == null || !targetedId.equals(status.getAccount().getId())) {
+                            Intent intent = new Intent(context, ShowAccountActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("accountId", status.getAccount().getId());
+                            intent.putExtras(b);
+                            context.startActivity(intent);
+                        }
                     }
-                }
-            });
+                });
 
-            holder.status_account_profile_boost.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if( targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())){
-                        Intent intent = new Intent(context, ShowAccountActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("accountId", status.getReblog().getAccount().getId());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                holder.status_account_profile_boost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())) {
+                            Intent intent = new Intent(context, ShowAccountActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("accountId", status.getReblog().getAccount().getId());
+                            intent.putExtras(b);
+                            context.startActivity(intent);
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (targetedId == null || !targetedId.equals(status.getAccount().getId())) {
+                            Account account = status.getAccount();
+                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})");
+                            Matcher matcher = instanceHost.matcher(status.getUrl());
+                            String instance = null;
+                            while (matcher.find()){
+                                instance = matcher.group(1);
+                            }
+                            account.setInstance(instance);
+                            CrossActions.doCrossProfile(context, account);
+                        }
+                    }
+                });
+                holder.status_account_profile_boost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())) {
+                            Account account = status.getReblog().getAccount();
+                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})");
+                            Matcher matcher = instanceHost.matcher(status.getUrl());
+                            String instance = null;
+                            while (matcher.find()){
+                                instance = matcher.group(1);
+                            }
+                            account.setInstance(instance);
+                            CrossActions.doCrossProfile(context, account);
+                        }
+                    }
+                });
+            }
 
             if( status.getApplication() != null && getItemViewType(position) == FOCUSED_STATUS){
                 Application application = status.getApplication();
