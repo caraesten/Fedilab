@@ -2270,12 +2270,12 @@ public class Helper {
      * @return ArrayList<String> split toot
      */
     public static ArrayList<String> splitToots(String content, int maxChars){
-        String[] splitContent = content.split("\\.");
+        String[] splitContent = content.split("(\\.\\s){1}");
         ArrayList<String> splitToot = new ArrayList<>();
         StringBuilder tempContent = new StringBuilder(splitContent[0]);
         for(int i= 0 ; i < splitContent.length ; i++){
             if( i < (splitContent.length-1) && (tempContent.length() + splitContent[i+1].length()) < (maxChars-10)) {
-                tempContent.append(".").append(splitContent[i + 1]);
+                tempContent.append(". ").append(splitContent[i + 1]);
             }else {
                 splitToot.add(tempContent.toString());
                 if( i < (splitContent.length-1) )
