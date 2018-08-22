@@ -774,7 +774,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_follow.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                CrossActions.doCrossAction(ShowAccountActivity.this, null, account, API.StatusAction.FOLLOW , null, ShowAccountActivity.this, false);
+                CrossActions.doCrossAction(ShowAccountActivity.this, null, null, account, API.StatusAction.FOLLOW , null, ShowAccountActivity.this, false);
                 return false;
             }
         });

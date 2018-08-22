@@ -251,6 +251,16 @@ public abstract class BaseMainActivity extends BaseActivity
         iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconGlobal.setImageResource(R.drawable.ic_public);
 
+       FloatingActionButton federatedTimelines = findViewById(R.id.federated_timeline);
+
+        federatedTimelines.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), InstanceFederatedActivity.class);
+                startActivity(intent);
+            }
+        });
+
         changeDrawableColor(getApplicationContext(), R.drawable.ic_home,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_text);

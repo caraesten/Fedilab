@@ -133,23 +133,6 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
             }
         });
 
-
-        if( theme == Helper.THEME_LIGHT) {
-            about_code.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-            about_thekinrar.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-            about_translation.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-            about_license.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-        }
-
-        TextView about_website = findViewById(R.id.about_website);
-        about_website.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tom79.bitbucket.io"));
-                startActivity(browserIntent);
-            }
-        });
-
         TextView about_wiki = findViewById(R.id.about_wiki);
         SpannableString content = new SpannableString(about_wiki.getText().toString());
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
@@ -180,6 +163,28 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                 startActivity(browserIntent);
             }
         });
+
+        if( theme == Helper.THEME_LIGHT) {
+            about_code.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_thekinrar.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_translation.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_license.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_support.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            paypal.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+        }
+
+        TextView about_website = findViewById(R.id.about_website);
+        about_website.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tom79.bitbucket.io"));
+                startActivity(browserIntent);
+            }
+        });
+
+
+
+
 
         setTitle(R.string.action_about);
         lv_contributors.setExpanded(true);

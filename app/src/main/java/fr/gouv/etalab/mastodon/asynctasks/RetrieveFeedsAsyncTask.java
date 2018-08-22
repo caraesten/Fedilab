@@ -47,6 +47,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private boolean showPinned = false;
     private WeakReference<Context> contextReference;
     private FilterToots filterToots;
+    private String instanceName;
 
     public enum Type{
         HOME,
@@ -60,7 +61,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         CONTEXT,
         TAG,
         CACHE_BOOKMARKS,
-        CACHE_STATUS
+        CACHE_STATUS,
+        REMOTE_INSTANCE
     }
 
 
@@ -77,6 +79,14 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
+    }
+
+    public RetrieveFeedsAsyncTask(Context context, Type action, String instanceName, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.action = action;
+        this.max_id = max_id;
+        this.listener = onRetrieveFeedsInterface;
+        this.instanceName = instanceName;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
@@ -110,6 +120,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case PUBLIC:
                 apiResponse = api.getPublicTimeline(false, max_id);
+                break;
+            case REMOTE_INSTANCE:
+                apiResponse = api.getPublicTimeline(this.instanceName,false, max_id);
                 break;
             case FAVOURITES:
                 apiResponse = api.getFavourites(max_id);

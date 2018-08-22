@@ -526,14 +526,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CrossActions.doCrossAction(context, status, null, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, true);
+                    CrossActions.doCrossAction(context, null, status, null, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, true);
                 }
             });
 
             holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CrossActions.doCrossAction(context, status, null, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, true);
+                    CrossActions.doCrossAction(context, null, status, null, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, true);
 
                 }
             });
@@ -549,7 +549,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_favorite_count.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    CrossActions.doCrossAction(context, status, null, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, false);
+                    CrossActions.doCrossAction(context, null, status, null, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, false);
                     return true;
                 }
             });
@@ -565,7 +565,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_reblog_count.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    CrossActions.doCrossAction(context, status, null, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, false);
+                    CrossActions.doCrossAction(context, null, status, null, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, false);
                     return true;
                 }
             });

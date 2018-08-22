@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -536,8 +537,18 @@ public class API {
      * @param max_id String id max
      * @return APIResponse
      */
+    public APIResponse getPublicTimeline(String instanceName, boolean local, String max_id){
+        return getPublicTimeline(local, instanceName, max_id, null, tootPerPage);
+    }
+
+    /**
+     * Retrieves public timeline for the account *synchronously*
+     * @param local boolean only local timeline
+     * @param max_id String id max
+     * @return APIResponse
+     */
     public APIResponse getPublicTimeline(boolean local, String max_id){
-        return getPublicTimeline(local, max_id, null, tootPerPage);
+        return getPublicTimeline(local, null, max_id, null, tootPerPage);
     }
 
     /**
@@ -547,7 +558,7 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getPublicTimelineSinceId(boolean local, String since_id) {
-        return getPublicTimeline(local, null, since_id, tootPerPage);
+        return getPublicTimeline(local, null, null, since_id, tootPerPage);
     }
 
 
@@ -560,7 +571,7 @@ public class API {
      * @param limit int limit  - max value 40
      * @return APIResponse
      */
-    private APIResponse getPublicTimeline(boolean local, String max_id, String since_id, int limit){
+    private APIResponse getPublicTimeline(boolean local, String instanceName, String max_id, String since_id, int limit){
 
         HashMap<String, String> params = new HashMap<>();
         if( local)
@@ -575,7 +586,12 @@ public class API {
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/timelines/public"), 60, params, prefKeyOauthTokenT);
+            String url;
+            if( instanceName == null)
+                url = getAbsoluteUrl("/timelines/public");
+            else
+                url = getAbsoluteUrlRemoteInstance(instanceName);
+            String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(new JSONArray(response));
@@ -1893,6 +1909,11 @@ public class API {
             status.setContent(resobj.get("content").toString());
             status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
             status.setReblogs_count(Integer.valueOf(resobj.get("reblogs_count").toString()));
+            try{
+                status.setReplies_count(Integer.valueOf(resobj.get("replies_count").toString()));
+            }catch (Exception e){
+                status.setReplies_count(0);
+            }
             try {
                 status.setReblogged(Boolean.valueOf(resobj.get("reblogged").toString()));
             }catch (Exception e){
@@ -2286,4 +2307,7 @@ public class API {
     }
 
 
+    private String getAbsoluteUrlRemoteInstance(String instanceName) {
+        return "https://" + instanceName + "/api/v1/timelines/public?local=true";
+    }
 }

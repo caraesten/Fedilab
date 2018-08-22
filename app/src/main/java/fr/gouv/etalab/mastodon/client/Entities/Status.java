@@ -75,6 +75,7 @@ public class Status implements Parcelable{
     private Date created_at;
     private int reblogs_count;
     private int favourites_count;
+    private int replies_count;
     private boolean reblogged;
     private boolean favourited;
     private boolean muted;
@@ -122,6 +123,7 @@ public class Status implements Parcelable{
         contentTranslated = in.readString();
         reblogs_count = in.readInt();
         favourites_count = in.readInt();
+        replies_count = in.readInt();
         reblogged = in.readByte() != 0;
         favourited = in.readByte() != 0;
         muted = in.readByte() != 0;
@@ -354,6 +356,7 @@ public class Status implements Parcelable{
         dest.writeString(contentTranslated);
         dest.writeInt(reblogs_count);
         dest.writeInt(favourites_count);
+        dest.writeInt(replies_count);
         dest.writeByte((byte) (reblogged ? 1 : 0));
         dest.writeByte((byte) (favourited ? 1 : 0));
         dest.writeByte((byte) (muted ? 1 : 0));
@@ -881,5 +884,13 @@ public class Status implements Parcelable{
 
     public void setBookmarked(boolean bookmarked) {
         this.bookmarked = bookmarked;
+    }
+
+    public int getReplies_count() {
+        return replies_count;
+    }
+
+    public void setReplies_count(int replies_count) {
+        this.replies_count = replies_count;
     }
 }

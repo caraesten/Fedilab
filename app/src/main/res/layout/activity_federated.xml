@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2017 Thomas Schneider
+    Copyright 2018 Thomas Schneider
 
     This file is a part of Mastalab
 
@@ -54,16 +54,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:orientation="horizontal">
-                    <TextView
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
-                        android:visibility="gone"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_gravity="center_vertical"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:id="@+id/toolbar_title" />
                     <android.support.design.widget.TabLayout
                         android:id="@+id/tabLayout"
                         android:layout_width="0dp"
@@ -74,13 +64,6 @@
                         android:layout_height="wrap_content"
                         app:tabSelectedTextColor="?attr/colorAccent"
                         />
-                    <android.support.v7.widget.SearchView
-                        android:background="@null"
-                        android:id="@+id/toolbar_search"
-                        android:gravity="end"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
 
@@ -99,37 +82,8 @@
             >
         </android.support.v4.view.ViewPager>
 
-        <!-- Framelayout to display Fragments -->
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:visibility="gone"
-            android:id="@+id/main_app_container"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="fr.gouv.etalab.mastodon.activities.MainActivity"
-            >
-        </RelativeLayout>
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/toot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin_floating"
-            app:srcCompat="@drawable/ic_edit"
-            tools:ignore="VectorDrawableCompat" />
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/delete_all"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin_floating"
-            app:srcCompat="@drawable/ic_delete_floating"
-            tools:ignore="VectorDrawableCompat" />
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_new"
-            android:visibility="gone"
+            android:id="@+id/add_new_instance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -137,24 +91,18 @@
             app:srcCompat="@drawable/ic_action_add_new"
             tools:ignore="VectorDrawableCompat" />
 
+
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/federated_timeline"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:fabSize="mini"
+            android:id="@+id/federated_timeline_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="bottom|start"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_close"
             android:layout_margin="@dimen/fab_margin_floating"
-            app:srcCompat="@drawable/ic_public_world"
             tools:ignore="VectorDrawableCompat" />
+
     </android.support.design.widget.CoordinatorLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="false"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

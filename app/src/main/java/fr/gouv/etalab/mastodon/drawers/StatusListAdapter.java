@@ -475,7 +475,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
 
-            if( getItemViewType(position) != COMPACT_STATUS  && displayBookmarkButton)
+            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && getItemViewType(position) != COMPACT_STATUS  && displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
             else
                 holder.status_bookmark.setVisibility(View.GONE);
@@ -1025,7 +1025,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });*/
             //Click on a conversation
-            if( getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS) {
+            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && (getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS)) {
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -1142,20 +1142,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CrossActions.doCrossAction(context, status, null, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, true);
+                    CrossActions.doCrossAction(context, type, status, null, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, true);
                 }
             });
 
             holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CrossActions.doCrossAction(context, status, null, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, true);
+                    CrossActions.doCrossAction(context, type, status, null, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, true);
                 }
             });
             holder.status_pin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CrossActions.doCrossAction(context, status, null, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this, true);
+                    CrossActions.doCrossAction(context, type, status, null, (status.isPinned()|| (status.getReblog() != null && status.getReblog().isPinned()))? API.StatusAction.UNPIN:API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this, true);
                 }
             });
 
@@ -1163,7 +1163,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_favorite_count.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    CrossActions.doCrossAction(context, status, null, API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, false);
+                    CrossActions.doCrossAction(context, type, status, null, API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, false);
                     return true;
                 }
             });
@@ -1171,7 +1171,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_reblog_count.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    CrossActions.doCrossAction(context, status, null, API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, false);
+                    CrossActions.doCrossAction(context, type, status, null, API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, false);
                     return true;
                 }
             });
@@ -1232,6 +1232,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
 
 
+            if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+                holder.status_more.setVisibility(View.GONE);
 
             final View attached = holder.status_more;
             holder.status_more.setOnClickListener(new View.OnClickListener() {
@@ -1581,32 +1583,68 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
 
 
-            holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-                    if( targetedId == null || !targetedId.equals(status.getAccount().getId())){
-                        Intent intent = new Intent(context, ShowAccountActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("accountId", status.getAccount().getId());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                        if (targetedId == null || !targetedId.equals(status.getAccount().getId())) {
+                            Intent intent = new Intent(context, ShowAccountActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("accountId", status.getAccount().getId());
+                            intent.putExtras(b);
+                            context.startActivity(intent);
+                        }
                     }
-                }
-            });
+                });
 
-            holder.status_account_profile_boost.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if( targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())){
-                        Intent intent = new Intent(context, ShowAccountActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("accountId", status.getReblog().getAccount().getId());
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                holder.status_account_profile_boost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())) {
+                            Intent intent = new Intent(context, ShowAccountActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("accountId", status.getReblog().getAccount().getId());
+                            intent.putExtras(b);
+                            context.startActivity(intent);
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                holder.status_account_profile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (targetedId == null || !targetedId.equals(status.getAccount().getId())) {
+                            Account account = status.getAccount();
+                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})");
+                            Matcher matcher = instanceHost.matcher(status.getUrl());
+                            String instance = null;
+                            while (matcher.find()){
+                                instance = matcher.group(1);
+                            }
+                            account.setInstance(instance);
+                            CrossActions.doCrossProfile(context, account);
+                        }
+                    }
+                });
+                holder.status_account_profile_boost.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())) {
+                            Account account = status.getReblog().getAccount();
+                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})");
+                            Matcher matcher = instanceHost.matcher(status.getUrl());
+                            String instance = null;
+                            while (matcher.find()){
+                                instance = matcher.group(1);
+                            }
+                            account.setInstance(instance);
+                            CrossActions.doCrossProfile(context, account);
+                        }
+                    }
+                });
+            }
 
             if( status.getApplication() != null && getItemViewType(position) == FOCUSED_STATUS){
                 Application application = status.getApplication();
@@ -1861,7 +1899,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-
         if( error != null){
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
             if( show_error_messages)

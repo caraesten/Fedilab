@@ -33,10 +33,12 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.BaseActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
@@ -52,7 +54,6 @@ import fr.gouv.etalab.mastodon.R;
  * Will handle cross actions between accounts boost/favourites/pin and replies
  */
 public class CrossActions {
-
 
 
 
@@ -110,32 +111,37 @@ public class CrossActions {
     }
 
 
-    public static void doCrossAction(final Context context, final Status status, final Account targetedAccount, final API.StatusAction doAction, final RecyclerView.Adapter baseAdapter, final OnPostActionInterface onPostActionInterface, boolean limitedToOwner){
+    public static void doCrossAction(final Context context, RetrieveFeedsAsyncTask.Type type, final Status status, final Account targetedAccount, final API.StatusAction doAction, final RecyclerView.Adapter baseAdapter, final OnPostActionInterface onPostActionInterface, boolean limitedToOwner) {
         List<Account> accounts = connectedAccounts(context, status, limitedToOwner);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-
-        boolean undoAction = (doAction == API.StatusAction.UNPIN || doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.UNFAVOURITE );
+        boolean undoAction = (doAction == API.StatusAction.UNPIN || doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.UNFAVOURITE);
         //Undo actions won't ask for choosing a user
-        if( accounts.size() == 1 || undoAction ) {
+
+        if(type != null && type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && limitedToOwner){
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
+            new PostActionAsyncTask(context, currentAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else if (accounts.size() == 1 || undoAction) {
 
             boolean confirmation = false;
-            if( doAction == API.StatusAction.UNFAVOURITE || doAction == API.StatusAction.FAVOURITE)
+            if (doAction == API.StatusAction.UNFAVOURITE || doAction == API.StatusAction.FAVOURITE)
                 confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
-            else if( doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.REBLOG )
+            else if (doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.REBLOG)
                 confirmation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
-            else if( doAction == API.StatusAction.FOLLOW || doAction == API.StatusAction.UNFOLLOW)
+            else if (doAction == API.StatusAction.FOLLOW || doAction == API.StatusAction.UNFOLLOW)
                 confirmation = false;
             if (confirmation)
                 displayConfirmationDialog(context, doAction, status, baseAdapter, onPostActionInterface);
             else {
-                if( doAction == API.StatusAction.REBLOG || doAction == API.StatusAction.UNREBLOG)
+                if (doAction == API.StatusAction.REBLOG || doAction == API.StatusAction.UNREBLOG)
                     reblogAction(context, status, baseAdapter, onPostActionInterface);
-                else if( doAction == API.StatusAction.FAVOURITE || doAction == API.StatusAction.UNFAVOURITE)
+                else if (doAction == API.StatusAction.FAVOURITE || doAction == API.StatusAction.UNFAVOURITE)
                     favouriteAction(context, status, baseAdapter, onPostActionInterface);
-                else if ( doAction == API.StatusAction.PIN || doAction == API.StatusAction.UNPIN)
+                else if (doAction == API.StatusAction.PIN || doAction == API.StatusAction.UNPIN)
                     pinAction(context, status, baseAdapter, onPostActionInterface);
             }
-        }else {
+        } else {
             AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
             builderSingle.setTitle(context.getString(R.string.choose_accounts));
             final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
@@ -191,10 +197,43 @@ public class CrossActions {
         }
     }
 
+
+    public static void doCrossProfile(final Context context, Account remoteAccount){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(context, db).getAccountByID(userId);
+        new AsyncTask<Void, Void, Void>() {
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
+            Results response;
+            @Override
+            protected Void doInBackground(Void... voids) {
+                API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                String url = "@" + remoteAccount.getAcct() + "@" + remoteAccount.getInstance();
+                response = api.search(url);
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void result) {
+                List<Account> remoteAccounts = response.getAccounts();
+                if( remoteAccounts != null && remoteAccounts.size() > 0) {
+                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("accountId", remoteAccounts.get(0).getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+    }
+
+
+
+
     public static void doCrossReply(final Context context, final Status status, final RetrieveFeedsAsyncTask.Type type, boolean limitedToOwner){
         List<Account> accounts = connectedAccounts(context, status, limitedToOwner);
 
-        if( accounts.size() == 1) {
+        if( accounts.size() == 1 && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
             Intent intent = new Intent(context, TootActivity.class);
             Bundle b = new Bundle();
             if( status.getReblog() != null )
@@ -211,85 +250,138 @@ public class CrossActions {
 
             }
         }else {
-            AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
-            builderSingle.setTitle(context.getString(R.string.choose_accounts));
-            final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
-            final Account[] accountArray = new Account[accounts.size()];
-            int i = 0;
-            for(Account account: accounts){
-                accountArray[i] = account;
-                i++;
-            }
-            builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
+            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE){
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+                builderSingle.setTitle(context.getString(R.string.choose_accounts));
+                final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
+                final Account[] accountArray = new Account[accounts.size()];
+                int i = 0;
+                for(Account account: accounts){
+                    accountArray[i] = account;
+                    i++;
                 }
-            });
-            builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(final DialogInterface dialog, int which) {
-                    final Account account = accountArray[which];
+                builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+                        final Account account = accountArray[which];
+                        new AsyncTask<Void, Void, Void>() {
+                            private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
+                            private WeakReference<Context> contextReference = new WeakReference<>(context);
 
-                    new AsyncTask<Void, Void, Void>() {
-                        private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
-                        private WeakReference<Context> contextReference = new WeakReference<>(context);
+                            @Override
+                            protected Void doInBackground(Void... voids) {
 
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-
-                            API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                            String uri;
-                            if(status.getReblog() != null ){
-                                if( status.getReblog().getUri().startsWith("http"))
-                                    uri = status.getReblog().getUri();
-                                else
-                                    uri = status.getReblog().getUrl();
-                            }else {
-                                if( status.getUri().startsWith("http"))
-                                    uri = status.getUri();
-                                else
-                                    uri = status.getUrl();
+                                API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                                String uri;
+                                if(status.getReblog() != null ){
+                                    if( status.getReblog().getUri().startsWith("http"))
+                                        uri = status.getReblog().getUri();
+                                    else
+                                        uri = status.getReblog().getUrl();
+                                }else {
+                                    if( status.getUri().startsWith("http"))
+                                        uri = status.getUri();
+                                    else
+                                        uri = status.getUrl();
+                                }
+                                Results search = api.search(uri);
+                                if( search != null){
+                                    remoteStatuses = search.getStatuses();
+                                }
+                                return null;
                             }
-                            Results search = api.search(uri);
-                            if( search != null){
-                                remoteStatuses = search.getStatuses();
-                            }
-                            return null;
-                        }
 
-                        @Override
-                        protected void onPostExecute(Void result) {
-                            Intent intent = new Intent(contextReference.get(), TootActivity.class);
-                            Bundle b = new Bundle();
-                            if( remoteStatuses == null || remoteStatuses.size() == 0){
+                            @Override
+                            protected void onPostExecute(Void result) {
+                                Intent intent = new Intent(contextReference.get(), TootActivity.class);
+                                Bundle b = new Bundle();
+                                if( remoteStatuses == null || remoteStatuses.size() == 0){
+                                    dialog.dismiss();
+                                    return;
+                                }
+                                if( remoteStatuses.get(0).getReblog() != null ) {
+                                    b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
+                                    b.putString("idRedirect", status.getReblog().getId());
+                                }else {
+                                    b.putParcelable("tootReply", remoteStatuses.get(0));
+                                    b.putString("idRedirect", status.getId());
+                                }
+                                b.putParcelable("accountReply", account);
+                                intent.putExtras(b); //Put your id to your next Intent
+                                contextReference.get().startActivity(intent);
+                                if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+                                    try {
+                                        //Avoid to open multi activities when replying in a conversation
+                                        ((ShowConversationActivity)contextReference.get()).finish();
+                                    }catch (Exception ignored){}
+
+                                }
                                 dialog.dismiss();
-                                return;
                             }
-                            if( remoteStatuses.get(0).getReblog() != null ) {
-                                b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
-                                b.putString("idRedirect", status.getReblog().getId());
-                            }else {
-                                b.putParcelable("tootReply", remoteStatuses.get(0));
-                                b.putString("idRedirect", status.getId());
-                            }
-                            b.putParcelable("accountReply", account);
-                            intent.putExtras(b); //Put your id to your next Intent
-                            contextReference.get().startActivity(intent);
-                            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
-                                try {
-                                    //Avoid to open multi activities when replying in a conversation
-                                    ((ShowConversationActivity)contextReference.get()).finish();
-                                }catch (Exception ignored){}
+                        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
 
-                            }
-                            dialog.dismiss();
+                    }
+                });
+                builderSingle.show();
+            }else{
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                Account account = new AccountDAO(context, db).getAccountByID(userId);
+
+                new AsyncTask<Void, Void, Void>() {
+                    private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
+                    private WeakReference<Context> contextReference = new WeakReference<>(context);
+
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+
+                        API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                        String uri;
+                        if(status.getReblog() != null ){
+                            if( status.getReblog().getUri().startsWith("http"))
+                                uri = status.getReblog().getUri();
+                            else
+                                uri = status.getReblog().getUrl();
+                        }else {
+                            if( status.getUri().startsWith("http"))
+                                uri = status.getUri();
+                            else
+                                uri = status.getUrl();
                         }
-                    }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+                        Results search = api.search(uri);
+                        if( search != null){
+                            remoteStatuses = search.getStatuses();
+                        }
+                        return null;
+                    }
 
-                }
-            });
-            builderSingle.show();
+                    @Override
+                    protected void onPostExecute(Void result) {
+                        Intent intent = new Intent(contextReference.get(), TootActivity.class);
+                        Bundle b = new Bundle();
+                        if( remoteStatuses == null || remoteStatuses.size() == 0){
+                            return;
+                        }
+                        if( remoteStatuses.get(0).getReblog() != null ) {
+                            b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
+                            b.putString("idRedirect", remoteStatuses.get(0).getReblog().getId());
+                        }else {
+                            b.putParcelable("tootReply", remoteStatuses.get(0));
+                            b.putString("idRedirect", remoteStatuses.get(0).getId());
+                        }
+                        b.putParcelable("accountReply", account);
+                        intent.putExtras(b); //Put your id to your next Intent
+                        contextReference.get().startActivity(intent);
+                    }
+                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+            }
         }
     }
 
@@ -329,7 +421,6 @@ public class CrossActions {
                     context.startActivity(intentToot);
                     ((BaseActivity)context).finish();
                     dialog.dismiss();
-
                 }
             });
             builderSingle.show();

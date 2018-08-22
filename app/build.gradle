@@ -50,6 +50,7 @@ ext.guavaLibraryVersion = '24.1-android'
 ext.photoViewLibraryVersion = '2.0.0'
 ext.swipebackLibraryVersion = '1.0.2'
 ext.ratethisappLibraryVersion = '1.2.0'
+ext.uploadServiceVersion = "3.4.2"
 
 dependencies {
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
@@ -70,7 +71,8 @@ dependencies {
     implementation 'com.github.stom79:country-picker-android:1.2.0'
     implementation 'com.github.stom79:mytransl:1.5'
 
-
+    implementation "net.gotev:uploadservice:$uploadServiceVersion"
+    implementation "net.gotev:uploadservice-okhttp:$uploadServiceVersion"
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
 
 
