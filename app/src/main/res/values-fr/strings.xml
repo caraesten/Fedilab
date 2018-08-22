@@ -494,4 +494,7 @@
   <string name="support_the_app_on_liberapay">Soutenir l\'app sur Liberpay</string>
   <string name="alert_regex">Il y a une erreur dans l\'expression régulière !</string>
   <string name="no_account_yet">No account yet?</string>
+  <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+  <string name="delete_instance">Delete this instance?</string>
+  <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
 </resources>
