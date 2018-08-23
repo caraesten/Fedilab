@@ -38,12 +38,21 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new ArrayList<>();
     private RetrieveFeedsAsyncTask.Type type;
     private WeakReference<Context> contextReference;
+    private String remoteInstance;
 
     public RetrieveMissingFeedsAsyncTask(Context context, String since_id, RetrieveFeedsAsyncTask.Type type, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface){
         this.contextReference = new WeakReference<>(context);
         this.since_id = since_id;
         this.listener = onRetrieveMissingFeedsInterface;
         this.type = type;
+    }
+
+    public RetrieveMissingFeedsAsyncTask(Context context, String remoteInstance, String since_id, RetrieveFeedsAsyncTask.Type type, OnRetrieveMissingFeedsInterface onRetrieveMissingFeedsInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.since_id = since_id;
+        this.listener = onRetrieveMissingFeedsInterface;
+        this.type = type;
+        this.remoteInstance = remoteInstance;
     }
 
 
@@ -58,6 +67,8 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             apiResponse = api.getPublicTimelineSinceId(true, since_id);
         else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC)
             apiResponse = api.getPublicTimelineSinceId(false, since_id);
+        else if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+            apiResponse = api.getInstanceTimelineSinceId(remoteInstance, since_id);
         if (apiResponse != null) {
             tempStatus = apiResponse.getStatuses();
             if( tempStatus != null)

@@ -562,7 +562,15 @@ public class API {
         return getPublicTimeline(local, null, null, since_id, tootPerPage);
     }
 
-
+    /**
+     * Retrieves instance timeline since an Id value *synchronously*
+     * @param instanceName String instance name
+     * @param since_id String id since
+     * @return APIResponse
+     */
+    public APIResponse getInstanceTimelineSinceId(String instanceName, String since_id) {
+        return getPublicTimeline(true, null, null, since_id, tootPerPage);
+    }
 
     /**
      * Retrieves public timeline for the account *synchronously*
