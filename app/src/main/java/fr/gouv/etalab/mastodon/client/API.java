@@ -29,6 +29,7 @@ import java.lang.*;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -1736,17 +1737,15 @@ public class API {
 
         InstanceSocial instanceSocial = new InstanceSocial();
         try {
-            instanceSocial.setAdded_at(Helper.mstStringToDate(context, resobj.get("added_at").toString()));
-            instanceSocial.setChecked_at(Helper.mstStringToDate(context, resobj.get("checked_at").toString()));
-            instanceSocial.setUpdated_at(Helper.mstStringToDate(context, resobj.get("updated_at").toString()));
+
 
             instanceSocial.setUptime(Float.parseFloat(resobj.get("uptime").toString()));
             instanceSocial.setUp(Boolean.parseBoolean(resobj.get("up").toString()));
 
             instanceSocial.setConnections(Long.parseLong(resobj.get("connections").toString()));
             instanceSocial.setDead(Boolean.parseBoolean(resobj.get("dead").toString()));
-            instanceSocial.setHttps_rank(resobj.get("https_rank").toString());
-            instanceSocial.setHttps_score(Integer.parseInt(resobj.get("https_score").toString()));
+
+
             instanceSocial.setId(resobj.get("id").toString());
 
             instanceSocial.setInfo(resobj.get("info").toString());
@@ -1761,7 +1760,15 @@ public class API {
             instanceSocial.setUsers(Long.parseLong(resobj.get("users").toString()));
             instanceSocial.setStatuses(Long.parseLong(resobj.get("statuses").toString()));
 
-        } catch (JSONException ignored) {}
+            instanceSocial.setHttps_rank(resobj.get("https_rank").toString());
+            instanceSocial.setHttps_score(Integer.parseInt(resobj.get("https_score").toString()));
+            instanceSocial.setAdded_at(Helper.mstStringToDate(context, resobj.get("added_at").toString()));
+            instanceSocial.setChecked_at(Helper.mstStringToDate(context, resobj.get("checked_at").toString()));
+            instanceSocial.setUpdated_at(Helper.mstStringToDate(context, resobj.get("updated_at").toString()));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return instanceSocial;
     }
 
@@ -1937,7 +1944,9 @@ public class API {
             try{
                 status.setReblog(parseStatuses(context, resobj.getJSONObject("reblog")));
             }catch (Exception ignored){}
-        } catch (JSONException ignored) {}
+        } catch (JSONException ignored) {} catch (ParseException e) {
+            e.printStackTrace();
+        }
         return status;
     }
 
@@ -2092,7 +2101,9 @@ public class API {
             }catch (Exception e){
                 account.setEmojis(new ArrayList<>());
             }
-        } catch (JSONException ignored) {}
+        } catch (JSONException ignored) {} catch (ParseException e) {
+            e.printStackTrace();
+        }
         return account;
     }
 
@@ -2236,7 +2247,9 @@ public class API {
                 notification.setStatus(parseStatuses(context, resobj.getJSONObject("status")));
             }catch (Exception ignored){}
             notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-        } catch (JSONException ignored) {}
+        } catch (JSONException ignored) {} catch (ParseException e) {
+            e.printStackTrace();
+        }
         return notification;
     }
 

@@ -477,7 +477,7 @@ public class Helper {
      * @param date String
      * @return Date
      */
-    public static Date mstStringToDate(Context context, String date){
+    public static Date mstStringToDate(Context context, String date) throws ParseException {
         Locale userLocale;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             userLocale = context.getResources().getConfiguration().getLocales().get(0);
@@ -489,11 +489,7 @@ public class Helper {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(STRING_DATE_FORMAT, userLocale);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
         simpleDateFormat.setLenient(true);
-        try {
-            return simpleDateFormat.parse(date);
-        } catch (ParseException e) {
-            return null;
-        }
+        return simpleDateFormat.parse(date);
     }
 
 
