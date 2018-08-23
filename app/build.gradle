@@ -71,8 +71,6 @@ dependencies {
     implementation 'com.github.stom79:country-picker-android:1.2.0'
     implementation 'com.github.stom79:mytransl:1.5'
 
-    implementation "net.gotev:uploadservice:$uploadServiceVersion"
-    implementation "net.gotev:uploadservice-okhttp:$uploadServiceVersion"
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
 
 
