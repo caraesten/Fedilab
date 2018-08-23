@@ -271,9 +271,6 @@ public class LiveNotificationService extends Service {
                             } catch (IOException ignored) {
                             }
                         }
-                        if (inputStream != null) {
-                            httpsURLConnection.disconnect();
-                        }
                         SystemClock.sleep(5000);
                         Intent streamingIntent = new Intent(this, LiveNotificationService.class);
                         streamingIntent.putExtra("userId", account.getId());
@@ -359,9 +356,6 @@ public class LiveNotificationService extends Service {
                                 inputStream.close();
                             } catch (IOException ignored) {
                             }
-                        }
-                        if (inputStream != null) {
-                            httpURLConnection.disconnect();
                         }
                         SystemClock.sleep(5000);
                         Intent streamingIntent = new Intent(this, LiveNotificationService.class);

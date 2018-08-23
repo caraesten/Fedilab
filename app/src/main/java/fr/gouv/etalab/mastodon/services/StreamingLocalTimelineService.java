@@ -93,8 +93,6 @@ public class StreamingLocalTimelineService extends IntentService {
         InputStream inputStream;
         BufferedReader reader = null;
         Account accountStream = null;
-        if( httpsURLConnection != null)
-            httpsURLConnection.disconnect();
         if( userId != null) {
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
@@ -118,7 +116,6 @@ public class StreamingLocalTimelineService extends IntentService {
                 String event;
                 while((event = reader.readLine()) != null) {
                     if (!sharedpreferences.getBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + accountStream.getId() + accountStream.getInstance(), true)) {
-                        httpsURLConnection.disconnect();
                         stopSelf();
                         return;
                     }

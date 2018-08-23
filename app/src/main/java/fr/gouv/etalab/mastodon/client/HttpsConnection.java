@@ -499,12 +499,9 @@ public class HttpsConnection {
                                 });
 
                         }
-                        httpsURLConnection.disconnect();
                     } catch (IOException e) {
                         Error error = new Error();
                         error.setError(context.getString(R.string.toast_error));
-                        if (httpsURLConnection != null)
-                            httpsURLConnection.disconnect();
                     }
 
                 } else {
@@ -589,12 +586,9 @@ public class HttpsConnection {
                                 });
 
                         }
-                        httpURLConnection.disconnect();
                     } catch (IOException e) {
                         Error error = new Error();
                         error.setError(context.getString(R.string.toast_error));
-                        if (httpURLConnection != null)
-                            httpURLConnection.disconnect();
                     }
 
                 }
