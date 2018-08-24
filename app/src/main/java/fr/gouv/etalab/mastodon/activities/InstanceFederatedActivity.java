@@ -326,6 +326,11 @@ public class InstanceFederatedActivity extends BaseActivity {
             }
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+                if( viewPager != null && viewPager.getAdapter() != null){
+                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
+                    DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                    displayStatusFragment.scrollToTop();
+                }
             }
         });
 

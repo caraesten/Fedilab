@@ -153,7 +153,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             else if( type == RetrieveFeedsAsyncTask.Type.TAG)
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            else if( remoteInstance != null)
+                            else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             else
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -212,7 +212,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else if (type == RetrieveFeedsAsyncTask.Type.TAG)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else if( remoteInstance != null)
+            else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else {
                 if( type == RetrieveFeedsAsyncTask.Type.HOME ){
@@ -236,7 +236,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         else if (type == RetrieveFeedsAsyncTask.Type.TAG)
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        else if( remoteInstance != null)
+                        else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         else {
                             if( type == RetrieveFeedsAsyncTask.Type.HOME ){
@@ -476,7 +476,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      * @param sinceId String
      */
     public void retrieveMissingToots(String sinceId){
-        asyncTask = new RetrieveMissingFeedsAsyncTask(context, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+            asyncTask = new RetrieveMissingFeedsAsyncTask(context, remoteInstance, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else if( type == RetrieveFeedsAsyncTask.Type.TAG)
+            asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else
+            asyncTask = new RetrieveMissingFeedsAsyncTask(context, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
     }
 
     /**

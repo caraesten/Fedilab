@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 129
-        versionName "1.10.4"
+        versionCode 130
+        versionName "1.10.5"
     }
     flavorDimensions "default"
     buildTypes {
@@ -70,7 +70,7 @@ dependencies {
 
     implementation 'com.github.stom79:country-picker-android:1.2.0'
     implementation 'com.github.stom79:mytransl:1.5'
-    
+
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
 
 

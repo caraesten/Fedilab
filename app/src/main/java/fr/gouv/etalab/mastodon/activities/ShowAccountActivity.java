@@ -450,25 +450,25 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if( account.getAcct() != null)
             actionbar_title.setText(account.getAcct());
         pp_actionBar = findViewById(R.id.pp_actionBar);
-        String url = account.getAvatar();
-        if( url.startsWith("/") ){
-            url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
-        }
-        Glide.with(getApplicationContext())
-                .asBitmap()
-                .load(url)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
-                        if( pp_actionBar != null){
-                            pp_actionBar.setImageDrawable(ppDrawable);
+        if( account.getAvatar() != null){
+            String url = account.getAvatar();
+            if( url.startsWith("/") ){
+                url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
+            }
+            Glide.with(getApplicationContext())
+                    .asBitmap()
+                    .load(url)
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
+                            if( pp_actionBar != null){
+                                pp_actionBar.setImageDrawable(ppDrawable);
+                            }
                         }
-                    }
-                });
+                    });
 
-
-
+        }
         final AppBarLayout appBar = findViewById(R.id.appBar);
         maxScrollSize = appBar.getTotalScrollRange();
 

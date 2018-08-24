@@ -477,7 +477,7 @@ public class Helper {
      * @param date String
      * @return Date
      */
-    public static Date mstStringToDate(Context context, String date){
+    public static Date mstStringToDate(Context context, String date) throws ParseException {
         Locale userLocale;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             userLocale = context.getResources().getConfiguration().getLocales().get(0);
@@ -489,11 +489,7 @@ public class Helper {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(STRING_DATE_FORMAT, userLocale);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
         simpleDateFormat.setLenient(true);
-        try {
-            return simpleDateFormat.parse(date);
-        } catch (ParseException e) {
-            return null;
-        }
+        return simpleDateFormat.parse(date);
     }
 
 
@@ -2208,6 +2204,14 @@ public class Helper {
         }
     }
 
+    public static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
+        if (tableLayout.getTabCount() >= position  ) {
+            if(tableLayout.getTabCount() > 0)
+                tableLayout.removeTabAt(position);
+            pagerAdapter.removeTabPage();
+        }
+    }
+
     public static void addTab(TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter, String title) {
         tableLayout.addTab(tableLayout.newTab().setText(title));
         pagerAdapter.addTabPage(title);
@@ -2250,12 +2254,7 @@ public class Helper {
             removeTab(tableLayout, pagerAdapter, selection);
     }
 
-    private static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
-        if (tableLayout.getTabCount() >= position) {
-            tableLayout.removeTabAt(position);
-            pagerAdapter.removeTabPage();
-        }
-    }
+
 
     private static void addTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, String title) {
         tableLayout.addTab(tableLayout.newTab().setText(title));
