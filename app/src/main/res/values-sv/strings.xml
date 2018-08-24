@@ -52,17 +52,17 @@
   <string name="next">Nästa</string>
   <string name="previous">Föregående</string>
   <string name="open_with">Öppna med</string>
-  <string name="validate">Validate</string>
+  <string name="validate">Bekräfta</string>
   <string name="media">Media</string>
-  <string name="share_with">Share with</string>
-  <string name="shared_via">Shared via Mastalab</string>
-  <string name="replies">Replies</string>
-  <string name="username">User name</string>
-  <string name="drafts">Drafts</string>
-  <string name="new_data">New data are available! Do you want to display them?</string>
-  <string name="favourite">Favourites</string>
-  <string name="follow">New followers</string>
-  <string name="mention">Mentions</string>
+  <string name="share_with">Dela med</string>
+  <string name="shared_via">Delat via Mastalab</string>
+  <string name="replies">Svar</string>
+  <string name="username">Användarnamn</string>
+  <string name="drafts">Utkast</string>
+  <string name="new_data">Det finns nya data! Vill du visa dem?</string>
+  <string name="favourite">Favoriter</string>
+  <string name="follow">Nya följare</string>
+  <string name="mention">Omnämningar</string>
   <string name="reblog">Boosts</string>
   <string name="show_boosts">Show boosts</string>
   <string name="show_replies">Show replies</string>
@@ -499,4 +499,5 @@
   <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
   <string name="delete_instance">Delete this instance?</string>
   <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
+  <string name="which_language">Translate in</string>
 </resources>

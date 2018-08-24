@@ -491,4 +491,5 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
   <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
   <string name="delete_instance">Delete this instance?</string>
   <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
+  <string name="which_language">Translate in</string>
 </resources>
