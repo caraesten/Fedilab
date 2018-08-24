@@ -29,13 +29,12 @@
         tools:ignore="ContentDescription" />
     <TextView
         android:visibility="gone"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:id="@+id/tab_counter"
-        android:layout_alignRight="@+id/tab_icon"
-        android:layout_alignEnd="@+id/tab_icon"
         android:paddingLeft="2dp"
         android:paddingRight="2dp"
+        android:layout_alignBaseline="@+id/tab_icon"
         android:layout_alignParentTop="true"
         android:gravity="center"
         android:textSize="12sp"
