@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
+import android.util.Log;
 
 import com.google.common.io.ByteStreams;
 import org.json.JSONObject;
@@ -1605,12 +1606,14 @@ public class HttpsConnection {
                 return;
             Map<String, List<String>> map = httpsURLConnection.getHeaderFields();
             for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-                if (entry.toString().startsWith("Link")) {
+                Log.v(Helper.TAG, entry.toString() );
+                if (entry.toString().startsWith("Link") || entry.toString().startsWith("link") ) {
                     Pattern patternMaxId = Pattern.compile("max_id=([0-9]{1,}).*");
                     Matcher matcherMaxId = patternMaxId.matcher(entry.toString());
                     if (matcherMaxId.find()) {
                         max_id = matcherMaxId.group(1);
                     }
+                    Log.v(Helper.TAG, "max_id -> " + max_id );
                     if (entry.toString().startsWith("Link")) {
                         Pattern patternSinceId = Pattern.compile("since_id=([0-9]{1,}).*");
                         Matcher matcherSinceId = patternSinceId.matcher(entry.toString());
@@ -1619,6 +1622,7 @@ public class HttpsConnection {
                         }
 
                     }
+                    Log.v(Helper.TAG, "since_id -> " + since_id );
                 }
             }
         }else {
@@ -1626,7 +1630,7 @@ public class HttpsConnection {
                 return;
             Map<String, List<String>> map = httpURLConnection.getHeaderFields();
             for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-                if (entry.toString().startsWith("Link")) {
+                if (entry.toString().startsWith("Link") || entry.toString().startsWith("link")) {
                     Pattern patternMaxId = Pattern.compile("max_id=([0-9]{1,}).*");
                     Matcher matcherMaxId = patternMaxId.matcher(entry.toString());
                     if (matcherMaxId.find()) {
