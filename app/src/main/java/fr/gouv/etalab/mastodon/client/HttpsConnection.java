@@ -1668,11 +1668,15 @@ public class HttpsConnection {
         HttpsConnectionException(int statusCode, String message) {
             this.statusCode = statusCode;
             SpannableString spannableString;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                spannableString = new SpannableString(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
-            else
-                //noinspection deprecation
-                spannableString = new SpannableString(Html.fromHtml(message));
+            if( message != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    spannableString = new SpannableString(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
+                else
+                    //noinspection deprecation
+                    spannableString = new SpannableString(Html.fromHtml(message));
+            }else {
+                spannableString = new SpannableString(context.getString(R.string.toast_error));
+            }
             this.message = spannableString.toString();
         }
 
