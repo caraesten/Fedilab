@@ -2204,6 +2204,14 @@ public class Helper {
         }
     }
 
+    public static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
+        if (tableLayout.getTabCount() >= position  ) {
+            if(tableLayout.getTabCount() > 0)
+                tableLayout.removeTabAt(position);
+            pagerAdapter.removeTabPage();
+        }
+    }
+
     public static void addTab(TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter, String title) {
         tableLayout.addTab(tableLayout.newTab().setText(title));
         pagerAdapter.addTabPage(title);
@@ -2246,12 +2254,7 @@ public class Helper {
             removeTab(tableLayout, pagerAdapter, selection);
     }
 
-    private static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
-        if (tableLayout.getTabCount() >= position) {
-            tableLayout.removeTabAt(position);
-            pagerAdapter.removeTabPage();
-        }
-    }
+
 
     private static void addTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, String title) {
         tableLayout.addTab(tableLayout.newTab().setText(title));

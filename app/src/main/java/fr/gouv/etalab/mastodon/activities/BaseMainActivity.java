@@ -58,6 +58,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -104,6 +105,8 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.BackupStatusService;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
+import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
+import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -480,11 +483,18 @@ public abstract class BaseMainActivity extends BaseActivity
                             updateNotifCounter();
                             displayNotificationsFragment.scrollToTop();
                             break;
+                        default:
+                            displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            displayStatusFragment.scrollToTop();
                     }
                 }
             }
         });
         refreshSearchTab();
+        int tabCount = tabLayout.getTabCount();
+        for( int j = countPage ; j < tabCount ; j++){
+            attacheDelete(j);
+        }
         final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -855,6 +865,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         });
+
+
 
 
         // Asked once for notification opt-in
@@ -1689,6 +1701,63 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
 
+
+    private void attacheDelete(int position){
+        LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+        String title = tabLayout.getTabAt(position).getText().toString().trim();
+        SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this);
+                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        new SearchDAO(BaseMainActivity.this, db).remove(title);
+                        String tag;
+                        if( position > 0)
+                            tag = tabLayout.getTabAt(position -1).getText().toString();
+                        else if( tabLayout.getTabCount() > 1 )
+                            tag = tabLayout.getTabAt(1).getText().toString();
+                        else //Last element
+                            tag = "";
+                        Helper.removeTab(tabLayout, adapter, position);
+                        adapter = new BaseMainActivity.PagerAdapter
+                                (getSupportFragmentManager(), tabLayout.getTabCount());
+                        viewPager.setAdapter(adapter);
+                        for(int i = 0; i < tabLayout.getTabCount() ; i++ ){
+                            if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(tag.trim())){
+                                tabLayout.getTabAt(i).select();
+                                break;
+                            }
+
+                        }
+                    }
+                });
+                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                dialogBuilder.setMessage(getString(R.string.delete) + ": " + title);
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        //Hide keyboard
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        assert imm != null;
+                        imm.hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
+                    }
+                });
+                if( alertDialog.getWindow() != null )
+                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                alertDialog.show();
+                return false;
+            }
+        });
+    }
 
     public void updateHomeCounter(){
         if( tabLayout.getTabAt(0) == null )
