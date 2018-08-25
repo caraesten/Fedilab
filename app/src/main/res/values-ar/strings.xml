@@ -161,9 +161,9 @@
   <string name="toot_delete_media">هل تود حذف هذه الصورة ؟</string>
   <string name="toot_error_no_content">إن تبويقك فارغ !</string>
   <string name="toot_visibility_tilte">طريقة نشر التبويق</string>
-  <string name="toots_visibility_tilte">الطريقة الإفتراضية لنشر التبويقات :</string>
+  <string name="toots_visibility_tilte">أسلوب نشر التبويقات: </string>
   <string name="toot_sent">تم إرسال التبويق !</string>
-  <string name="toot_reply_content_title">بصدد الرد على تبويق :</string>
+  <string name="toot_reply_content_title">بصدد الرد على هذا التبويق:</string>
   <string name="toot_sensitive">محتوى حساس ؟</string>
   <string-array name="toot_visibility">
     <item>أنشر على الخيوط العمومية</item>
@@ -182,15 +182,15 @@
   <string name="instance_no_description">لا يوجد وصف !</string>
   <!-- About -->
   <string name="about_vesrion">الإصدار %1$s</string>
-  <string name="about_developer">المطور :</string>
-  <string name="about_license">الرخصة :</string>
+  <string name="about_developer">المُطوّر:</string>
+  <string name="about_license">الرخصة: </string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">الشفرة المصدرية :</string>
-  <string name="about_yandex">ترجمة التبويقات :</string>
-  <string name="about_thekinrar">البحث عن مثيلات الخوادم :</string>
+  <string name="about_code">الشفرة المصدرية: </string>
+  <string name="about_yandex">ترجمة التبويقات:</string>
+  <string name="about_thekinrar">البحث عن مثيلات الخوادم:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">مصمم الأيقونات :</string>
-  <string name="thanks_text_banner">مصمم الشعار :</string>
+  <string name="thanks_text_logo">مصمم الأيقونات:</string>
+  <string name="thanks_text_banner">مُصمِّم الرأسية:</string>
   <!-- Conversation -->
   <string name="conversation">محادثة</string>
   <!-- Accounts -->
@@ -206,7 +206,7 @@
   <string name="no_scheduled_toots">ليس عندك أية تبويقات مبرمَجة للعرض !</string>
   <string name="no_scheduled_toots_indications">قم بتحرير تبويق ثم إختر <b>برمَجة</b> على القائمة العلوية.</string>
   <string name="remove_scheduled">هل تود حذف التبويق المُبرمَج ؟</string>
-  <string name="media_count">الوسائط : %d</string>
+  <string name="media_count">الوسائط: %d</string>
   <string name="toot_scheduled">تمت برمجة التبويق بنجاح !</string>
   <string name="toot_scheduled_date">يجب أن يكون تاريخ البرمجة أكبر من الساعة الحالية !</string>
   <string name="warning_battery">وضع توفير الطاقة على البطارية مشغَّل ! مِن المحتمل ألا يعمل كالمعتاد.</string>
@@ -293,7 +293,7 @@
   <string name="set_display_local">إظهار الخيط المحلي</string>
   <string name="set_display_global">إظهار الخيط المُوحَّد</string>
   <string name="set_disable_gif">تعطيل الصور الرمزية المتحركة</string>
-  <string name="set_folder_title">المسار :</string>
+  <string name="set_folder_title">المسار: </string>
   <string name="set_auto_store_toot">حفظ تلقائي للمسودات</string>
   <string name="set_bubble_counter">عرض العدادات</string>
   <string name="set_auto_add_media_url">إضافة روابط الوسائط في التبويقات</string>
@@ -323,7 +323,7 @@
   <string name="set_automatically_split_toot">تقسيم التبويقات التي تفوق الـ 500 حرف عند الرد</string>
   <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به !</string>
   <string name="username_no_space">لقد بلغت حد الـ 30 حرف المسموح به !</string>
-  <string name="settings_title_hour">الفترة المتاحة للإخطارات :</string>
+  <string name="settings_title_hour">فترة استقبال الإخطارات:</string>
   <string name="settings_time_from">بين</string>
   <string name="settings_time_to">و</string>
   <string name="settings_time_greater">يجب أن تكون المدة الزمنية أكبر مِن %1$s</string>
@@ -335,7 +335,7 @@
   <string name="use_javascript">تفعيل الجافاسكريبت</string>
   <string name="expand_cw">توسيع نافذة التحذير عن المحتوى تلقائيًا</string>
   <string name="use_cookies">تقبُّل كعكات الطرف الثالث</string>
-  <string name="settings_ui_layout">نسق الخيوط : </string>
+  <string name="settings_ui_layout">نسق الخيوط: </string>
   <string-array name="settings_menu_tabs">
     <item>التبويب</item>
     <item>القائمة</item>
