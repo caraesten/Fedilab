@@ -358,7 +358,7 @@
     <item>1 م.ب</item>
     <item>2 م.ب</item>
   </string-array>
-  <string name="set_led_colour">تحديد لون الإشعار الضوئي :</string>
+  <string name="set_led_colour">اختيار لون الإشعار الضوئي:</string>
   <string-array name="led_colours">
     <item>أزرق</item>
     <item>سماوي</item>
@@ -424,7 +424,7 @@
         إنّ حذف التطبيق يؤدي إلى إزالة هذه البيانات.\n
         &#9888; لا يقوم التطبيق بحفظ إسم المستخدم و الكلمات السرية. يقوم التطبيق باستخدمها و فقط عند الإتصال الآمن و المصادقة عبر (SSL) مع مثيل خادوم.
     </string>
-  <string name="privacy_authorizations_title">التصريحات :</string>
+  <string name="privacy_authorizations_title">التصريحات:</string>
   <string name="privacy_authorizations">
         - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
@@ -433,7 +433,7 @@
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
-  <string name="privacy_API_authorizations_title">تصريحات خدمة برمجة التطبيقات API :</string>
+  <string name="privacy_API_authorizations_title">تصريحات خدمة برمجة التطبيقات API:</string>
   <string name="privacy_API_authorizations">
         - <b>القراءة</b>: قراءة البيانات.\n
         - <b>الكتابة</b>:  نشر المنشورات و رفع الصور الخاصة بالمنسورات .\n
@@ -498,7 +498,7 @@
   <string name="poxy_port">المنفذ</string>
   <string name="poxy_login">إسم المستخدم</string>
   <string name="poxy_password">كلمة السر</string>
-  <string name="set_theme">السمة :</string>
+  <string name="set_theme">السمة:</string>
   <string name="set_compact_mode">الوضع المختصر</string>
   <string name="set_share_details">إضافة التفاصيل عند مشاركة تبويق ما</string>
   <string name="support_the_app_on_liberapay">إدعم التطبيق على ليبيراباي</string>
