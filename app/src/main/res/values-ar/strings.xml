@@ -320,7 +320,7 @@
   <string name="set_preview_reply_pp">هل تود عرض الصور الرمزية للحسابات ؟</string>
   <string name="set_multiaccount_actions">السماح للتفاعلات بين الحسابات ؟</string>
   <string name="set_fit_preview">تكافؤ معاينة الصور</string>
-  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+  <string name="set_automatically_split_toot">تقسيم التبويقات التي تفوق الـ 500 حرف عند الرد</string>
   <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به !</string>
   <string name="username_no_space">لقد بلغت حد الـ 30 حرف المسموح به !</string>
   <string name="settings_title_hour">الفترة المتاحة للإخطارات :</string>
@@ -346,7 +346,7 @@
     <item>لا</item>
     <item>لا</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">مفتاح API، يمكن تركه فارغا عند استخدام ياندكس</string>
   <string-array name="settings_theme">
     <item>مظلمة</item>
     <item>فاتحة</item>
@@ -503,8 +503,8 @@
   <string name="set_share_details">إضافة التفاصيل عند مشاركة تبويق ما</string>
   <string name="support_the_app_on_liberapay">إدعم التطبيق على ليبيراباي</string>
   <string name="alert_regex">هناك خطأ في العبارة المنطقية !</string>
-  <string name="no_account_yet">No account yet?</string>
-  <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+  <string name="no_account_yet">ليس لديك حساب بعد ؟</string>
+  <string name="toast_instance_unavailable">لم يتم العثور على أي خيط زمني في مثيل الخادوم هذا!</string>
   <string name="delete_instance">Delete this instance?</string>
   <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
   <string name="which_language">Translate in</string>
