@@ -19,7 +19,7 @@
   <string name="download_over">إكتمل التنزيل</string>
   <string name="save_file">حفظ %1$s</string>
   <string name="save_over">تم حفظ الصورة</string>
-  <string name="download_from" formatted="false">ملف : %1$s</string>
+  <string name="download_from" formatted="false">ملف: %1$s</string>
   <string name="password">كلمة السر</string>
   <string name="email">البريد الإلكتروني</string>
   <string name="accounts">الحسابات</string>
@@ -32,7 +32,7 @@
   <string name="other_instance">مثيل خادم آخر غير mastodon.etalab.gouv.fr ؟</string>
   <string name="no_result">لم يتم العثور على أية نتيجة !</string>
   <string name="instance">مثيل الخادم</string>
-  <string name="instance_example">مثيل الخادم : mastodon.social</string>
+  <string name="instance_example">مثيل الخادم: mastodon.social</string>
   <string name="toast_account_changed" formatted="false">يعمل الآن بحساب %1$s</string>
   <string name="add_account">إضافة حساب</string>
   <string name="clipboard">تم نسخ محتوى التبويق إلى الحافظة</string>
@@ -47,8 +47,8 @@
   <string name="translate_toot">ترجم هذا التبويق.</string>
   <string name="schedule">برمجة</string>
   <string name="text_size">حجم الخط و الأيقونات</string>
-  <string name="text_size_change">تعديل حجم الخط الحالي :</string>
-  <string name="icon_size_change">تعديل الحجم الحالي للأيقونات :</string>
+  <string name="text_size_change">تعديل حجم الخط الحالي:</string>
+  <string name="icon_size_change">تعديل الحجم الحالي للأيقونات:</string>
   <string name="next">التالي</string>
   <string name="previous">العودة</string>
   <string name="open_with">فتح بواسطة</string>
@@ -301,12 +301,12 @@
   <string name="set_notif_follow">تنبيهي عندما يتبعني أحدهم</string>
   <string name="set_notif_follow_ask">تنبيهي عندما أتلقى طلبا بالمتابعة</string>
   <string name="set_notif_follow_share">تنبيهي عندما يقوم أحدهم بترقية منشوري</string>
-  <string name="set_notif_follow_add">تنبيهي عندما يُعجَب أحدهم بأحد منشوراتي</string>
+  <string name="set_notif_follow_add">إخطاري عندما يُعجَب أحدهم بأحد منشوراتي</string>
   <string name="set_notif_follow_mention">إخطاري عندما يُشار إليّ</string>
   <string name="set_share_validation">عرض مربع حوار للتأكيد قبل ترقية أي تبويق</string>
   <string name="set_share_validation_fav">عرض مربع حوار للتأكيد قبل إضافة أي تبويق إلى المفضلة</string>
   <string name="settings_title_more_options">الإعدادات المتقدمة</string>
-  <string name="set_wifi_only">الإخطار في وضع الواي فاي فقط</string>
+  <string name="set_wifi_only">تفعيل الإخطار في وضع الواي فاي فقط</string>
   <string name="set_notify">هل تود الإخطار ؟</string>
   <string name="set_notif_silent">إخطارت صامتة</string>
   <string name="set_night_mode">الوضع اليلي</string>
@@ -505,7 +505,7 @@
   <string name="alert_regex">هناك خطأ في العبارة المنطقية !</string>
   <string name="no_account_yet">ليس لديك حساب بعد ؟</string>
   <string name="toast_instance_unavailable">لم يتم العثور على أي خيط زمني في مثيل الخادوم هذا!</string>
-  <string name="delete_instance">Delete this instance?</string>
-  <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-  <string name="which_language">Translate in</string>
+  <string name="delete_instance">هل تريد إزالة مثيل الخادوم هذا؟</string>
+  <string name="warning_delete_instance">إنّك بصدد حذف %s مِن قائمة مثيلات الخوادم التي تتبعها.</string>
+  <string name="which_language">ترجِم إلى</string>
 </resources>
