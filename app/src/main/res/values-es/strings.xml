@@ -494,5 +494,5 @@ Gracias a:    </string>
   <string name="toast_instance_unavailable">¡No líneas de tiempo se encontraron en esta instancia!</string>
   <string name="delete_instance">¿Borrar esta instancia?</string>
   <string name="warning_delete_instance">Vas a borrar %s de tus instancias seguidas.</string>
-  <string name="which_language">Translate in</string>
+  <string name="which_language">Traducir en</string>
 </resources>
