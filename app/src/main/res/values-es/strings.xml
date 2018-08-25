@@ -490,9 +490,9 @@ Gracias a:    </string>
   <string name="set_share_details">Agregar datos del toot al compartir</string>
   <string name="support_the_app_on_liberapay">Apoya la aplicación en Liberapay</string>
   <string name="alert_regex">Hay un error en la expresión regular!</string>
-  <string name="no_account_yet">No account yet?</string>
-  <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-  <string name="delete_instance">Delete this instance?</string>
-  <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-  <string name="which_language">Translate in</string>
+  <string name="no_account_yet">¿Sin cuenta todavía?</string>
+  <string name="toast_instance_unavailable">¡No líneas de tiempo se encontraron en esta instancia!</string>
+  <string name="delete_instance">¿Borrar esta instancia?</string>
+  <string name="warning_delete_instance">Vas a borrar %s de tus instancias seguidas.</string>
+  <string name="which_language">Traducir en</string>
 </resources>
