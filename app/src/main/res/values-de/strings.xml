@@ -484,7 +484,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="set_share_details">Toot Details beim Teilen hinzufügen</string>
   <string name="support_the_app_on_liberapay">Unterstütze die app auf Liberapay</string>
   <string name="alert_regex">Es gibt einen Fehler im regulären Ausdruck!</string>
-  <string name="no_account_yet">No account yet?</string>
+  <string name="no_account_yet">Noch ohne Konto?</string>
   <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
   <string name="delete_instance">Delete this instance?</string>
   <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
