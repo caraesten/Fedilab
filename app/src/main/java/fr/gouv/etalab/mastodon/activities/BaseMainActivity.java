@@ -1130,14 +1130,16 @@ public abstract class BaseMainActivity extends BaseActivity
      * @param intent Intent - intent related to a notification in top bar
      */
     private void mamageNewIntent(Intent intent){
-        if( intent == null || intent.getExtras() == null )
+
+        if( intent == null )
             return;
 
         String action = intent.getAction();
         String type = intent.getType();
         Bundle extras = intent.getExtras();
         String userIdIntent;
-        if( extras.containsKey(INTENT_ACTION) ){
+
+        if( extras != null && extras.containsKey(INTENT_ACTION) ){
             final NavigationView navigationView = findViewById(R.id.nav_view);
             userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
