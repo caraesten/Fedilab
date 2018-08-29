@@ -204,7 +204,7 @@ public class Helper {
     public static final String SCOPE = "scope";
     public static final String SCOPES = "scopes";
     public static final String WEBSITE = "website";
-    public static final String WEBSITE_VALUE = "https://tom79.bitbucket.io/";
+    public static final String WEBSITE_VALUE = "https://mastalab.app";
     public static final String SHOW_BATTERY_SAVER_MESSAGE = "show_battery_saver_message";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";

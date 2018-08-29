@@ -185,6 +185,8 @@
             android:text="@string/set_automatically_split_toot"
             android:layout_height="wrap_content" />
 
+
+
         <!-- Resize pictures -->
         <LinearLayout
             android:layout_marginTop="10dp"

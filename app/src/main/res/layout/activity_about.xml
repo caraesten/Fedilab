@@ -101,7 +101,7 @@
             android:textSize="16sp"
             android:padding="10dp"
             android:autoLink="web"
-            android:text="https://tom79.bitbucket.io/"
+            android:text="https://mastalab.app"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="HardcodedText" />

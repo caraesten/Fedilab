@@ -547,6 +547,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
 
+
+
+           /* int status_account_profile = holder.status_account_profile.getWidth();
+            int status_account_profile_boost = holder.status_account_profile_boost.getWidth();
+            int status_account_profile_boost_by = holder.status_account_profile_boost_by.getWidth();
+            RelativeLayout.LayoutParams lp_status_account_profile = new RelativeLayout.LayoutParams(status_account_profile*textSizePercent/110, status_account_profile*textSizePercent/110);
+            holder.status_account_profile.setLayoutParams(lp_status_account_profile);
+            RelativeLayout.LayoutParams lp_status_account_profile_boost = new RelativeLayout.LayoutParams(status_account_profile_boost*textSizePercent/110, status_account_profile*textSizePercent/110);
+            holder.status_account_profile_boost.setLayoutParams(lp_status_account_profile_boost);
+            RelativeLayout.LayoutParams lp_status_account_profile_boost_by = new RelativeLayout.LayoutParams(status_account_profile_boost_by*textSizePercent/110, status_account_profile*textSizePercent/110);
+            holder.status_account_profile_boost_by.setLayoutParams(lp_status_account_profile_boost_by);
+*/
             if( getItemViewType(position) == FOCUSED_STATUS ) {
                 holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16*textSizePercent/100);
                 holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16 * textSizePercent / 100);
@@ -560,6 +572,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_toot_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12*textSizePercent/100);
                 holder.status_content_translated.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
             }
+
             holder.status_spoiler.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14*textSizePercent/100);
 
             switch (translator) {
