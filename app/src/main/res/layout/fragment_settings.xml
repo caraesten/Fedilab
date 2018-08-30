@@ -186,6 +186,12 @@
             android:layout_height="wrap_content" />
 
 
+        <CheckBox
+            android:id="@+id/set_crash_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_crash_report"
+            />
 
         <!-- Resize pictures -->
         <LinearLayout

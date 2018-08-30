@@ -550,6 +550,7 @@
     <string name="which_language">Translate in</string>
     <string name="crash_title">Mastalab has stopped :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
+    <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string-array translatable="false" name="proxy_type_choice">
         <item>HTTP</item>
         <item>SOCKS</item>
