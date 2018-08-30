@@ -37,7 +37,7 @@ import fr.gouv.etalab.mastodon.jobs.NotificationsSyncJob;
  */
 
 @AcraDialog(resText = R.string.crash_title,
-        resCommentPrompt = R.string.crash_message, resTheme = R.style.AlertDialogDark)
+        resCommentPrompt = R.string.crash_message, resTheme = R.style.AlertDialogDark, resIcon = R.mipmap.ic_launcher)
 public class MainApplication extends Application{
 
 
@@ -50,7 +50,7 @@ public class MainApplication extends Application{
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         CoreConfigurationBuilder ACRABuilder = new CoreConfigurationBuilder(this);
-        ACRABuilder.setBuildConfigClass(BuildConfig.class).setReportFormat(StringFormat.JSON);
+        ACRABuilder.setBuildConfigClass(BuildConfig.class).setReportFormat(StringFormat.KEY_VALUE_LIST);
         ACRABuilder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class).setMailTo("support@mastalab.app").setSubject("Bug report for Mastalab").setEnabled(true);
         ACRABuilder.getPluginConfigurationBuilder(LimiterConfigurationBuilder.class).setEnabled(true);
         ACRA.init(this, ACRABuilder);
