@@ -106,24 +106,29 @@ public class LiveNotificationService extends Service {
         int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
         proxy = null;
         if( proxyEnabled ){
-            String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
-            int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
-            if( type == 0 )
-                proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, port));
-            else
-                proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(host, port));
-            final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
-            final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
-            if( login != null) {
-                Authenticator authenticator = new Authenticator() {
-                    public PasswordAuthentication getPasswordAuthentication() {
-                        assert pwd != null;
-                        return (new PasswordAuthentication(login,
-                                pwd.toCharArray()));
-                    }
-                };
-                Authenticator.setDefault(authenticator);
+            try{
+                String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+                int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+                if( type == 0 )
+                    proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, port));
+                else
+                    proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(host, port));
+                final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
+                final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
+                if( login != null) {
+                    Authenticator authenticator = new Authenticator() {
+                        public PasswordAuthentication getPasswordAuthentication() {
+                            assert pwd != null;
+                            return (new PasswordAuthentication(login,
+                                    pwd.toCharArray()));
+                        }
+                    };
+                    Authenticator.setDefault(authenticator);
+                }
+            }catch (Exception e){
+                proxy = null;
             }
+
         }
         if( intent == null || intent.getBooleanExtra("stop", false) ) {
             stop = true;

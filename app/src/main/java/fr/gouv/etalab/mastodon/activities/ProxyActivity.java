@@ -135,7 +135,8 @@ public class ProxyActivity extends BaseActivity {
                 String proxy_passwordVal = proxy_password.getText().toString().trim();
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.SET_PROXY_HOST, hostVal);
-                editor.putInt(Helper.SET_PROXY_PORT, Integer.parseInt(portVal));
+                if( portVal.matches("\\d+") )
+                    editor.putInt(Helper.SET_PROXY_PORT, Integer.parseInt(portVal));
                 editor.putString(Helper.SET_PROXY_LOGIN, proxy_loginVal);
                 editor.putString(Helper.SET_PROXY_PASSWORD, proxy_passwordVal);
                 editor.apply();
