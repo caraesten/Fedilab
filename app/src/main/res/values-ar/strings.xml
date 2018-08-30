@@ -508,4 +508,7 @@
   <string name="delete_instance">هل تريد إزالة مثيل الخادوم هذا؟</string>
   <string name="warning_delete_instance">إنّك بصدد حذف %s مِن قائمة مثيلات الخوادم التي تتبعها.</string>
   <string name="which_language">ترجِم إلى</string>
+  <string name="crash_title">Mastalab has stopped :(</string>
+  <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
+  <string name="send_crash_report">Ask for sending crash reports by email?</string>
 </resources>
