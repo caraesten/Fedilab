@@ -727,7 +727,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             itemShowPined.setChecked(showPinned);
                             itemShowReplies.setChecked(show_replies);
                             itemShowBoosts.setChecked(show_boosts);
-                            return false;
+                            return true;
                         }
                     });
                     popup.show();
