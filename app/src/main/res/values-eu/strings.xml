@@ -494,9 +494,9 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="set_share_details">Gehitu toot-aren xehetasunak partekatzean</string>
   <string name="support_the_app_on_liberapay">Babestu aplikazioa Liberapay bidez</string>
   <string name="alert_regex">Errore bat dago adierazpen erregularrean!</string>
-  <string name="no_account_yet">No account yet?</string>
-  <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-  <string name="delete_instance">Delete this instance?</string>
-  <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-  <string name="which_language">Translate in</string>
+  <string name="no_account_yet">Konturik ez oraindik?</string>
+  <string name="toast_instance_unavailable">Ez da denbora-lerrorik aurkitu instantzia honetan!</string>
+  <string name="delete_instance">Ezabatu instantzia hau?</string>
+  <string name="warning_delete_instance">%s ezabatuko duzu jarraitutako instantzietatik.</string>
+  <string name="which_language">Itzuli</string>
 </resources>
