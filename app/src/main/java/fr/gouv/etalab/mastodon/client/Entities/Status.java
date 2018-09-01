@@ -55,9 +55,14 @@ import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_REMOTE;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_URL;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -695,7 +700,6 @@ public class Status implements Parcelable{
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
         Matcher matcher;
-
         Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,6}[\\/]?[^\"@(\\/tags\\/)]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
         Matcher matcherALink = aLink.matcher(spannableString.toString());
         while (matcherALink.find()){
@@ -778,9 +782,16 @@ public class Status implements Parcelable{
                     @Override
                     public void onClick(View textView) {
                         String finalUrl = url;
-                        if( !url.startsWith("http://") && ! url.startsWith("https://"))
+                        Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\/\\w._-]*[0-9]*)");
+                        if( url.contains("@")){
+                            Intent intent = new Intent(context, MainActivity.class);
+                            intent.putExtra(INTENT_ACTION, SEARCH_REMOTE);
+                            intent.putExtra(SEARCH_URL, url);
+                            context.startActivity(intent);
+                        }else if( !url.startsWith("http://") && ! url.startsWith("https://")) {
                             finalUrl = "http://" + url;
-                        Helper.openBrowser(context, finalUrl);
+                            Helper.openBrowser(context, finalUrl);
+                        }
                     }
                     @Override
                     public void updateDrawState(TextPaint ds) {

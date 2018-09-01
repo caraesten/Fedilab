@@ -214,6 +214,7 @@ public class Helper {
     public static final String SHOULD_CONTINUE_STREAMING_FEDERATED = "should_continue_streaming_federated";
     public static final String SHOULD_CONTINUE_STREAMING_LOCAL = "should_continue_streaming_local";
     public static final String SEARCH_KEYWORD = "search_keyword";
+    public static final String SEARCH_URL = "search_url";
     public static final String CLIP_BOARD = "clipboard";
     public static final String INSTANCE_NAME = "instance_name";
     //Notifications
@@ -225,6 +226,7 @@ public class Helper {
     public static final int BACKUP_INTENT = 6;
     public static final int SEARCH_TAG = 7;
     public static final int SEARCH_INSTANCE = 8;
+    public static final int SEARCH_REMOTE = 9;
 
     //Settings
     public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";

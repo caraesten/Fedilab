@@ -555,7 +555,7 @@
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
     <string name="mastohost_name" translatable="false">masto.host</string>
-    <string name="about_partnership" translatable="false"><b>Masto.host</b> is our Mastodon hosting partner.\nWith this partnership they provide me free hosting for <a href="https://ins.mastalab.app">Mastalab\'s instance</a> and in exchange I promote them in here.\nTo be clear, there is no money involved or tracking of users sent. I needed an instance for testing, we talked and agreed on this.\n\n<a href="https://masto.host">Go check them out</a> if you want to run your own Mastodon instance.</string>
+    <string name="about_partnership" translatable="false"><b>Masto.host</b> is our Mastodon hosting partner.\n\nWith this partnership they provide me free hosting for <a href="https://ins.mastalab.app">Mastalab\'s instance</a> and in exchange I promote them in here.\n\nTo be clear, there is no money involved or tracking of users. I needed an instance for testing, we talked and agreed on this.\n\n<a href="https://masto.host">Go check them out</a> if you want to run your own Mastodon instance.</string>
     <string name="action_partnership" >Partnerships</string>
     <string name="neutral_menu_information">Information</string>
     <string-array translatable="false" name="proxy_type_choice">

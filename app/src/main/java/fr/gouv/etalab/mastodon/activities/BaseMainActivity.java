@@ -125,7 +125,9 @@ import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_TARGETED_ACCOUNT;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_KEYWORD;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_REMOTE;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_TAG;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_URL;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
@@ -1134,7 +1136,6 @@ public abstract class BaseMainActivity extends BaseActivity
         String type = intent.getType();
         Bundle extras = intent.getExtras();
         String userIdIntent;
-
         if( extras != null && extras.containsKey(INTENT_ACTION) ){
             final NavigationView navigationView = findViewById(R.id.nav_view);
             userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
@@ -1171,20 +1172,23 @@ public abstract class BaseMainActivity extends BaseActivity
             }else if( extras.getInt(INTENT_ACTION) == BACKUP_INTENT){
                 Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
                 startActivity(myIntent);
-            }else if(extras.getInt(INTENT_ACTION) == SEARCH_TAG){
-                String keyword = extras.getString(SEARCH_KEYWORD);
-                if( keyword != null){
-                    adapter = new PagerAdapter
-                            (getSupportFragmentManager(), tabLayout.getTabCount());
-                    viewPager.setAdapter(adapter);
-                    for(int i = 0; i < tabLayout.getTabCount() ; i++ ){
-                        if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(keyword.trim())){
-                            tabLayout.getTabAt(i).select();
-                            break;
-                        }
-
-                    }
+            }else if (extras.getInt(INTENT_ACTION) == SEARCH_REMOTE) {
+                String url = extras.getString(SEARCH_URL);
+                if( url == null)
+                    return;
+                Matcher matcher;
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                    matcher = Patterns.WEB_URL.matcher(url);
+                else
+                    matcher = Helper.urlPattern.matcher(url);
+                boolean isUrl = false;
+                while (matcher.find()){
+                    isUrl = true;
                 }
+                if(!isUrl)
+                    return;
+                //Here we know that the intent contains a valid URL
+                new RetrieveRemoteDataAsyncTask(BaseMainActivity.this, url, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
             if ("text/plain".equals(type)) {
