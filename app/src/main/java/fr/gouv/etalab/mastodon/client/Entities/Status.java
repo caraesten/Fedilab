@@ -36,7 +36,6 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -689,6 +688,7 @@ public class Status implements Parcelable{
         for(URLSpan span : urls)
             spannableString.removeSpan(span);
         List<Mention> mentions = this.status.getReblog() != null ? this.status.getReblog().getMentions() : this.status.getMentions();
+
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
@@ -753,10 +753,10 @@ public class Status implements Parcelable{
             //Looping through accounts which are mentioned
             for (final Mention mention : mentions) {
                 String targetedAccount = "@" + mention.getUsername();
-                if (spannableString.toString().contains(targetedAccount)) {
+                if (spannableString.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
 
                     //Accounts can be mentioned several times so we have to loop
-                    for(int startPosition = -1 ; (startPosition = spannableString.toString().indexOf(targetedAccount, startPosition + 1)) != -1 ; startPosition++){
+                    for(int startPosition = -1 ; (startPosition = spannableString.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
                         int endPosition = startPosition + targetedAccount.length();
                         if( endPosition <= spannableString.toString().length() && endPosition >= startPosition)
                             spannableString.setSpan(new ClickableSpan() {
