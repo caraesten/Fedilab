@@ -510,4 +510,6 @@
   <string name="follow_instance">Follow instance</string>
   <string name="toast_instance_already_added">You already follow this instance!</string>
   <string name="toast_instance_followed">The instance is followed!</string>
+  <string name="action_partnership">Partnerships</string>
+  <string name="neutral_menu_information">Information</string>
 </resources>
