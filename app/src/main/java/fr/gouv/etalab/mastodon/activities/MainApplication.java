@@ -16,6 +16,17 @@ package fr.gouv.etalab.mastodon.activities;
 import android.app.Application;
 import android.os.StrictMode;
 import com.evernote.android.job.JobManager;
+
+import org.acra.ACRA;
+import org.acra.BuildConfig;
+import org.acra.annotation.AcraDialog;
+import org.acra.config.CoreConfigurationBuilder;
+
+import org.acra.config.LimiterConfigurationBuilder;
+import org.acra.config.MailSenderConfigurationBuilder;
+import org.acra.data.StringFormat;
+
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.jobs.ApplicationJob;
 import fr.gouv.etalab.mastodon.jobs.HomeTimelineSyncJob;
 import fr.gouv.etalab.mastodon.jobs.NotificationsSyncJob;
@@ -25,6 +36,8 @@ import fr.gouv.etalab.mastodon.jobs.NotificationsSyncJob;
  * Main application, jobs are launched here.
  */
 
+@AcraDialog(resText = R.string.crash_title,
+        resCommentPrompt = R.string.crash_message, resTheme = R.style.AlertDialogDark, resIcon = R.mipmap.ic_launcher)
 public class MainApplication extends Application{
 
 
@@ -36,5 +49,10 @@ public class MainApplication extends Application{
         HomeTimelineSyncJob.schedule(false);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+        CoreConfigurationBuilder ACRABuilder = new CoreConfigurationBuilder(this);
+        ACRABuilder.setBuildConfigClass(BuildConfig.class).setReportFormat(StringFormat.KEY_VALUE_LIST);
+        ACRABuilder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class).setMailTo("support@mastalab.app").setSubject("Bug report for Mastalab").setEnabled(true);
+        ACRABuilder.getPluginConfigurationBuilder(LimiterConfigurationBuilder.class).setEnabled(true);
+        ACRA.init(this, ACRABuilder);
     }
 }

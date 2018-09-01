@@ -19,7 +19,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
-import android.util.Log;
 
 import com.google.common.io.ByteStreams;
 import org.json.JSONObject;
@@ -89,24 +88,29 @@ public class HttpsConnection {
         int type = sharedpreferences.getInt(Helper.SET_PROXY_TYPE, 0);
         proxy = null;
         if( proxyEnabled ){
-            String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
-            int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
-            if( type == 0 )
-                proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, port));
-            else
-                proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(host, port));
-            final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
-            final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
-            if( login != null) {
-                Authenticator authenticator = new Authenticator() {
-                    public PasswordAuthentication getPasswordAuthentication() {
-                        assert pwd != null;
-                        return (new PasswordAuthentication(login,
-                                pwd.toCharArray()));
-                    }
-                };
-                Authenticator.setDefault(authenticator);
+            try {
+                String host = sharedpreferences.getString(Helper.SET_PROXY_HOST, "127.0.0.1");
+                int port = sharedpreferences.getInt(Helper.SET_PROXY_PORT, 8118);
+                if( type == 0 )
+                    proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, port));
+                else
+                    proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(host, port));
+                final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
+                final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
+                if( login != null) {
+                    Authenticator authenticator = new Authenticator() {
+                        public PasswordAuthentication getPasswordAuthentication() {
+                            assert pwd != null;
+                            return (new PasswordAuthentication(login,
+                                    pwd.toCharArray()));
+                        }
+                    };
+                    Authenticator.setDefault(authenticator);
+                }
+            }catch (Exception e){
+                proxy = null;
             }
+
         }
     }
 
@@ -1076,8 +1080,9 @@ public class HttpsConnection {
                         byte[] pixels = ous.toByteArray();
 
                         int lengthSent = pixels.length;
-                        lengthSent += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
-                        lengthSent += ("Content-Disposition: form-data; name=\"file\";filename=\""+fileName+"\"" + lineEnd).getBytes().length;
+                        lengthSent += (twoHyphens + boundary + lineEnd).getBytes().length;
+                        lengthSent += (twoHyphens + boundary + twoHyphens +lineEnd).getBytes().length;
+                        lengthSent += ("Content-Disposition: form-data; name=\"file\"; filename=\""+fileName+"\"" + lineEnd).getBytes().length;
                         lengthSent += 2 * (lineEnd).getBytes().length;
 
                         if (proxy != null)
@@ -1103,8 +1108,8 @@ public class HttpsConnection {
 
                         DataOutputStream request = new DataOutputStream(httpsURLConnection.getOutputStream());
 
-                        request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-                        request.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\""+fileName+"\"" + lineEnd);
+                        request.writeBytes(twoHyphens + boundary  + lineEnd);
+                        request.writeBytes("Content-Disposition: form-data; name=\"file\"; filename=\""+fileName+"\"" + lineEnd);
                         request.writeBytes(lineEnd);
 
                         //request.write(pixels);
@@ -1146,7 +1151,7 @@ public class HttpsConnection {
                                 try (Scanner scanner = new Scanner(stream)) {
                                     scanner.useDelimiter("\\Z");
                                     error = scanner.next();
-                                }
+                                }catch (Exception ignored){}
                             }
                             int responseCode = httpsURLConnection.getResponseCode();
                             throw new HttpsConnectionException(responseCode, error);
@@ -1234,7 +1239,8 @@ public class HttpsConnection {
                         byte[] pixels = ous.toByteArray();
 
                         int lengthSent = pixels.length;
-                        lengthSent += 2 * (twoHyphens + boundary + twoHyphens + lineEnd).getBytes().length;
+                        lengthSent += (twoHyphens + boundary + lineEnd).getBytes().length;
+                        lengthSent += (twoHyphens + boundary + twoHyphens +lineEnd).getBytes().length;
                         lengthSent += ("Content-Disposition: form-data; name=\"file\";filename=\""+fileName+"\"" + lineEnd).getBytes().length;
                         lengthSent += 2 * (lineEnd).getBytes().length;
 
@@ -1260,7 +1266,7 @@ public class HttpsConnection {
 
                         DataOutputStream request = new DataOutputStream(httpURLConnection.getOutputStream());
 
-                        request.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                        request.writeBytes(twoHyphens + boundary + lineEnd);
                         request.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\""+fileName+"\"" + lineEnd);
                         request.writeBytes(lineEnd);
 
@@ -1606,14 +1612,12 @@ public class HttpsConnection {
                 return;
             Map<String, List<String>> map = httpsURLConnection.getHeaderFields();
             for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-                Log.v(Helper.TAG, entry.toString() );
                 if (entry.toString().startsWith("Link") || entry.toString().startsWith("link") ) {
                     Pattern patternMaxId = Pattern.compile("max_id=([0-9]{1,}).*");
                     Matcher matcherMaxId = patternMaxId.matcher(entry.toString());
                     if (matcherMaxId.find()) {
                         max_id = matcherMaxId.group(1);
                     }
-                    Log.v(Helper.TAG, "max_id -> " + max_id );
                     if (entry.toString().startsWith("Link")) {
                         Pattern patternSinceId = Pattern.compile("since_id=([0-9]{1,}).*");
                         Matcher matcherSinceId = patternSinceId.matcher(entry.toString());
@@ -1622,7 +1626,6 @@ public class HttpsConnection {
                         }
 
                     }
-                    Log.v(Helper.TAG, "since_id -> " + since_id );
                 }
             }
         }else {

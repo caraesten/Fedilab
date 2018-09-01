@@ -456,13 +456,7 @@ public class Account implements Parcelable {
         if( ((Activity)context).isFinishing() )
             return;
 
-        if( account.getNote() != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                noteSpan = new SpannableString(Html.fromHtml(account.getNote(), FROM_HTML_MODE_LEGACY));
-            else
-                //noinspection deprecation
-                noteSpan = new SpannableString(Html.fromHtml(account.getNote()));
-        }
+        noteSpan = account.getNoteSpan();
 
         if( account.getDisplay_name() != null)
             displayNameSpan = new SpannableString(account.getDisplay_name());

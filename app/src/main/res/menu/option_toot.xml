@@ -42,6 +42,10 @@
         android:title="@string/bookmark_add"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_open_browser"
+        android:title="@string/action_open_in_web"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/action_translate"
         android:title="@string/translate"
         app:showAsAction="never" />

@@ -4,7 +4,7 @@
   <string name="navigation_drawer_open">Menüyü aç</string>
   <string name="navigation_drawer_close">Menüyü kapat</string>
   <string name="action_about">Hakkında</string>
-  <string name="action_about_instance">Örnek hakkında</string>
+  <string name="action_about_instance">Sunucu hakkında</string>
   <string name="action_privacy">Gizlilik</string>
   <string name="action_cache">Önbellek</string>
   <string name="action_logout">Çıkış</string>
@@ -19,32 +19,32 @@
   <string name="download_over">İndirme tamamlandı</string>
   <string name="save_file">%1$s\'i kaydet</string>
   <string name="save_over">Medya kaydedildi</string>
-  <string name="download_from" formatted="false">Dosya Md5: %1$s</string>
+  <string name="download_from" formatted="false">Dosya: %1$s</string>
   <string name="password">Şifre</string>
   <string name="email">E-posta</string>
   <string name="accounts">Hesaplar</string>
-  <string name="toots">Boru sesleri</string>
+  <string name="toots">Tootlar</string>
   <string name="tags">Etiketler</string>
   <string name="token">Jeton</string>
   <string name="save">Kaydet</string>
   <string name="restore">Geri yükle</string>
   <string name="two_factor_authentification">İki adımlı kimlik doğrulama?</string>
-  <string name="other_instance">Mastodon.etalab.gouv.fr yerine başka örnek?</string>
+  <string name="other_instance">mastodon.etalab.gouv.fr yerine başka örnek?</string>
   <string name="no_result">Sonuç bulunamadı!</string>
   <string name="instance">Örnek</string>
   <string name="instance_example">Örnek: mastodon.social</string>
-  <string name="toast_account_changed" formatted="false">Şimdi hesapla birlikte çalışıyor %1$s</string>
+  <string name="toast_account_changed" formatted="false">Şimdi %1$s hesabın aktif</string>
   <string name="add_account">Hesap ekle</string>
-  <string name="clipboard">Modülün içeriği panoya kopyalanmış</string>
+  <string name="clipboard">Toot içeriği panoya kopyalanmış</string>
   <string name="change">Değiştir</string>
   <string name="choose_picture">Resim seç…</string>
-  <string name="clear">Temiz</string>
+  <string name="clear">Temizle</string>
   <string name="microphone">Mikrofon</string>
   <string name="camera">Kamera</string>
   <string name="speech_prompt">Lütfen birşey söyleyin</string>
-  <string name="speech_not_supported">Üzgünüz! aygıtınız ses girişini desteklemiyor!</string>
+  <string name="speech_not_supported">Üzgünüz! cihazınız ses girişini desteklemiyor!</string>
   <string name="delete_all">Tümünü sil</string>
-  <string name="translate_toot">Bu modülü çevir.</string>
+  <string name="translate_toot">Bu toot\'u çevir.</string>
   <string name="schedule">Zamanlama</string>
   <string name="text_size">Metin ve simge boyutları</string>
   <string name="text_size_change">Geçerli metin boyutunu değiştirin:</string>
@@ -55,19 +55,19 @@
   <string name="validate">Onayla</string>
   <string name="media">Medya</string>
   <string name="share_with">Şununla paylaş</string>
-  <string name="shared_via">Mastalab ile paylaşılan</string>
+  <string name="shared_via">Mastalab ile paylaşıldı</string>
   <string name="replies">Cevaplar</string>
   <string name="username">Kullanıcı adı</string>
   <string name="drafts">Taslaklar</string>
-  <string name="new_data">Yeni veri var! Bunları görüntülemek istiyor musunuz?</string>
+  <string name="new_data">Yeni veri var! Bunları görüntülemek istiyor musun?</string>
   <string name="favourite">Favoriler</string>
   <string name="follow">Yeni Takipçiler</string>
   <string name="mention">Söz edilenler</string>
-  <string name="reblog">Enerji</string>
-  <string name="show_boosts">Enerjileri göster</string>
+  <string name="reblog">Gazlananlar</string>
+  <string name="show_boosts">Gazlananları göster</string>
   <string name="show_replies">Yanıtları göster</string>
   <string name="action_open_in_web">Tarayıcıda aç</string>
-  <string name="translate">Çeviri</string>
+  <string name="translate">Çevir</string>
   <string name="please_wait">Lütfen, bu işlemi yapmadan önce birkaç saniye bekleyin.</string>
   <!--- Menu -->
   <string name="home_menu">Ana Sayfa</string>
@@ -76,7 +76,7 @@
   <string name="neutral_menu_title">Ayarlar</string>
   <string name="favorites_menu">Favoriler</string>
   <string name="communication_menu_title">İletişim</string>
-  <string name="muted_menu">Kullanıcıları sustur</string>
+  <string name="muted_menu">Susturulmuş Kullanıcılar</string>
   <string name="blocked_menu">Engellenen Kullanıcılar</string>
   <string name="remote_follow_menu">Uzaktan takip</string>
   <string name="notifications">Bildirimler</string>
@@ -86,7 +86,7 @@
   <string name="profile">Profil</string>
   <string name="make_a_choice">Ne yapmak istiyorsun?</string>
   <string name="delete_account_title">Hesabı sil</string>
-  <string name="delete_account_message" formatted="false">Hesap %1$s uygulamadan silinsin mi?</string>
+  <string name="delete_account_message" formatted="false">%1$s hesabı uygulamadan silinsin mi?</string>
   <string name="send_email">Bana bir e-posta gönder</string>
   <string name="choose_file">Lütfen bir dosya seçin</string>
   <string name="choose_file_error">Hiçbir dosya keşfedici bulunamadı!</string>
@@ -94,22 +94,22 @@
   <string name="failed">Başarısız!</string>
   <string name="scheduled_toots">Planlanan projeler</string>
   <string name="disclaimer_full">Aşağıdaki bilgiler kullanıcının profilini eksik gösterebilir.</string>
-  <string name="insert_emoji">İfadeleri ekle</string>
-  <string name="no_emoji">Uygulama şu an için özel emoji toplayamadı.</string>
+  <string name="insert_emoji">İfade ekle</string>
+  <string name="no_emoji">Uygulama şu an için özel ifade toplayamadı.</string>
   <string name="live_notif">Anlık Bildirimler</string>
   <!-- Status -->
   <string name="no_status">Görüntülenecek yazı yok</string>
-  <string name="fav_added">Modül favorilere eklendi</string>
-  <string name="fav_removed">Modül favorilerden kaldırıldı!</string>
-  <string name="reblog_added">Modül arttırıldı!</string>
-  <string name="reblog_removed">Modül artık arttırılmış değil!</string>
-  <string name="reblog_by">%1$s hızlandırıldı</string>
-  <string name="favourite_add">Bu modülü favorilere ekleyin?</string>
-  <string name="favourite_remove">Bu modülü favorilerden kaldırın?</string>
-  <string name="reblog_add">Bu modülü arttır?</string>
-  <string name="reblog_remove">Bu modlülü arttırma?</string>
-  <string name="pin_add">Bu toot pin?</string>
-  <string name="pin_remove">Bu modülü çöz?</string>
+  <string name="fav_added">Toot favorilere eklendi</string>
+  <string name="fav_removed">Toot favorilerden kaldırıldı!</string>
+  <string name="reblog_added">Toot arttırıldı!</string>
+  <string name="reblog_removed">Toot artık arttırılmış değil!</string>
+  <string name="reblog_by">%1$s arttırdı</string>
+  <string name="favourite_add">Bu toot\'u favorilere ekleyin?</string>
+  <string name="favourite_remove">Bu toot\'u favorilerden kaldırın?</string>
+  <string name="reblog_add">Bu toot\'u arttır?</string>
+  <string name="reblog_remove">Bu toot\'u arttırma?</string>
+  <string name="pin_add">Bu toot\'u başa tuttur?</string>
+  <string name="pin_remove">Bu toot\'u baştan kaldır?</string>
   <string name="more_action_1">Sustur</string>
   <string name="more_action_2">Engelle</string>
   <string name="more_action_3">Rapor Et</string>
@@ -118,14 +118,14 @@
   <string name="more_action_6">Paylaş</string>
   <string name="more_action_7">Bahset</string>
   <string name="more_action_8">Zamanlanmış susturma</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_9">Sil &amp; yeniden ekle</string>
   <string-array name="more_action_confirm">
     <item>Bu hesabı sustur?</item>
     <item>Bu hesabı engelle?</item>
-    <item>Bu modülü bildir?</item>
+    <item>Bu toot\'u bildir?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Bu modülğ sil?</item>
+    <item>Bu toot\'u sil?</item>
     <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
@@ -150,16 +150,16 @@
   <string name="toot_it">MODÜL!</string>
   <string name="cw">cv</string>
   <string name="toot_title">Bir hikaye yaz</string>
-  <string name="toot_title_reply">Modüle yanıt ver</string>
+  <string name="toot_title_reply">Toot\'a yanıt ver</string>
   <string name="toot_no_space">500 karakter sınırına ulaştınız!</string>
   <string name="toot_select_image">Ortam dosyası seçin</string>
   <string name="toot_select_image_error">Medya dosyasını seçerken bir hata oluştu!</string>
   <string name="toot_delete_media">Bu ortamı sil?</string>
-  <string name="toot_error_no_content">Modülünüz boş!</string>
-  <string name="toot_visibility_tilte">Modül görünürlüğü</string>
-  <string name="toots_visibility_tilte">Varsayılan olarak Modül görüş: </string>
-  <string name="toot_sent">Modül gönderildi!</string>
-  <string name="toot_reply_content_title">Bu Modül yanıtlarken:</string>
+  <string name="toot_error_no_content">Toot boş!</string>
+  <string name="toot_visibility_tilte">Toot görünürlüğü</string>
+  <string name="toots_visibility_tilte">Toot\'ların varsayılan gizliliği: </string>
+  <string name="toot_sent">Toot gönderildi!</string>
+  <string name="toot_reply_content_title">Bu toot\'u yanıtlıyorsun:</string>
   <string name="toot_sensitive">Hassas içerik?</string>
   <string-array name="toot_visibility">
     <item>Herkese açık zaman tüneline gönder</item>
@@ -168,7 +168,7 @@
     <item>Sadece bahsedilen kullanıcılara gönder</item>
   </string-array>
   <string name="no_draft">Taslak Yok!</string>
-  <string name="choose_toot">Modül seçme</string>
+  <string name="choose_toot">Toot seçme</string>
   <string name="choose_accounts">Bir hesap seçin</string>
   <string name="select_accounts">Birden fazla hesap seçin</string>
   <string name="remove_draft">Taslak kaldırılsın mı?</string>
@@ -185,45 +185,45 @@
   <string name="about_yandex">Modül tercümesi:</string>
   <string name="about_thekinrar">Arama örnekleri:</string>
   <string name="about_thekinrar_action">instances.Social</string>
-  <string name="thanks_text_logo">Simge Tararımcısı:</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_logo">İkon tararımcısı:</string>
+  <string name="thanks_text_banner">Afiş tasarımcısı:</string>
   <!-- Conversation -->
   <string name="conversation">Konuşma</string>
   <!-- Accounts -->
   <string name="no_accounts">Gösterilecek hesap yok</string>
   <string name="no_follow_request">Takip İsteği yok</string>
   <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
+  <string name="following_cnt">Takip Edilen \n %1$s</string>
+  <string name="followers_cnt">Takip Eden \n %1$s</string>
   <string name="pins_cnt">Sabitlenmiş \n %d</string>
   <string name="authorize">İzin Ver</string>
   <string name="reject">Reddet</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">Gösterilecek zamanlanmış dışa aktarım yok!</string>
   <string name="no_scheduled_toots_indications">Bir modül yazmak ve üst menüden <b>zamanlamasını</b> seçin.</string>
-  <string name="remove_scheduled">Zamanlanmış modül silinsin mi?</string>
+  <string name="remove_scheduled">Zamanlanmış toot silinsin mi?</string>
   <string name="media_count">Medya: %d</string>
-  <string name="toot_scheduled">Modül gönderildi!</string>
+  <string name="toot_scheduled">Toot zamanlandı!</string>
   <string name="toot_scheduled_date">Planlanan tarih geçerli saatten daha büyük olması gerekir!</string>
   <string name="warning_battery">Enerji tasarrufu aktif! Beklendiği gibi çalışmayabilir.</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">Susturulacak süre, bir dakikadan fazla olmalı.</string>
+  <string name="timed_mute_date">%2$s tarihine kadar %1$s susturuldu.\n Susturmaktan vazgeçmek için kullanıcının profiline git.</string>
+  <string name="timed_mute_profile">%2$s tarihine kadar %1$s susturuldu.\n Vazgeçmek için dokun.</string>
   <!-- Notifications -->
   <string name="no_notifications">Görüntülenecek bildirim yok</string>
-  <string name="notif_mention">sizden bahsetti</string>
-  <string name="notif_reblog">durumunuzu arttırdı</string>
-  <string name="notif_favourite">durumunuzu favorilere ekledi</string>
-  <string name="notif_follow">sizi takip etti</string>
-  <string name="notif_pouet">%1$s\'dan yeni modmail</string>
+  <string name="notif_mention">senden bahsetti</string>
+  <string name="notif_reblog">durumunu arttırdı</string>
+  <string name="notif_favourite">durumunu favorilere ekledi</string>
+  <string name="notif_follow">seni takip etti</string>
+  <string name="notif_pouet">%1$s\'dan yeni toot</string>
   <plurals name="other_notifications">
     <item quantity="one">ve başka bildirim</item>
     <item quantity="other">ve başka bildirim</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">ve keşfetmek için başka bir modül</item>
-    <item quantity="other">ve keşfetmek için başka bir modül</item>
+    <item quantity="one">ve keşfetmek için başka bir toot</item>
+    <item quantity="other">ve keşfetmek için başka bir toot</item>
   </plurals>
   <string name="delete_notification_ask">Bildirimi sil?</string>
   <string name="delete_notification_ask_all">Bildirimleri sil?</string>
@@ -242,49 +242,49 @@
   <string name="toast_unmute">Bu hesap artık susturulmuş değil!</string>
   <string name="toast_follow">Hesap takip edilmiş!</string>
   <string name="toast_unfollow">Bu hesap artık takip edilmiyor!</string>
-  <string name="toast_reblog">Modül arttırıldı!</string>
-  <string name="toast_unreblog">Modül artık arttırılmış değil!</string>
-  <string name="toast_favourite">Modül favorilere eklendi!</string>
-  <string name="toast_unfavourite">Modül favorilerden kaldırıldı!</string>
-  <string name="toast_report">Modül rapor edildi!</string>
-  <string name="toast_unstatus">Modül silindi!</string>
-  <string name="toast_pin">Modül sıkışmış!</string>
-  <string name="toast_unpin">Modül sabitlenmemiş!</string>
+  <string name="toast_reblog">Toot arttırıldı!</string>
+  <string name="toast_unreblog">Toot artık arttırılmış değil!</string>
+  <string name="toast_favourite">Toot favorilere eklendi!</string>
+  <string name="toast_unfavourite">Toot favorilerden kaldırıldı!</string>
+  <string name="toast_report">Toot rapor edildi!</string>
+  <string name="toast_unstatus">Toot silindi!</string>
+  <string name="toast_pin">Toot sıkışmış!</string>
+  <string name="toast_unpin">Toot sabitlenmemiş!</string>
   <string name="toast_error">Üzgünüz ! Bir hata oluştu!</string>
   <string name="toast_code_error">Bir hata oluştu! Örnek bir yetki kodu döndürmedi!</string>
   <string name="toast_error_instance">Örnek etki alanı geçerli gibi gözükmüyor!</string>
   <string name="toast_error_loading_account">Hesaplar arasında geçiş yapılırken bir hata oluştu!</string>
   <string name="toast_error_search">Arama sırasında bir hata oluştu!</string>
-  <string name="toast_error_login">Giriş yapamıyorum!</string>
+  <string name="toast_error_login">Giriş yapılamadı!</string>
   <string name="toast_update_credential_ok">Profil verileri kaydedildi!</string>
-  <string name="nothing_to_do">Hiçbir işlem yapılamaz</string>
-  <string name="toast_saved">Ortam kaydedildi!</string>
+  <string name="nothing_to_do">Yapılabilecek bir işlem yok</string>
+  <string name="toast_saved">Medya kaydedildi!</string>
   <string name="toast_error_translate">Arama sırasında bir hata oluştu!</string>
   <string name="toast_toot_saved">Taslak kaydedildi!</string>
-  <string name="toast_error_char_limit">Bu örnek bu karakter sayısını verir emin misin? Genellikle, bu değer yakın 500 karakter olabilir.</string>
-  <string name="toast_visibility_changed">Toots görünürlüğünü hesap %1$s için değiştirildi</string>
-  <string name="toast_empty_search">Örnek adı ve ekran adı boş olamaz!</string>
+  <string name="toast_error_char_limit">Sunucunun bu kadar karaktere izin verdiğinden emin misin? Genelde, 500 civarı karakter olabilir.</string>
+  <string name="toast_visibility_changed">Toot\'ların görünürlüğünü hesap %1$s için değiştirildi</string>
+  <string name="toast_empty_search">Sunucu adı ve görünen isim boş olamaz!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">Yükleme optimizasyonu</string>
-  <string name="set_toots_page">Yükleme başına hesap</string>
+  <string name="set_toots_page">Yükleme başına toot</string>
   <string name="set_accounts_page">Yükleme başına hesap</string>
-  <string name="set_notifications_page">Bildirim sayısını göster</string>
+  <string name="set_notifications_page">Yükleme bşaına bildirim</string>
   <string name="set_attachment_always">Her zaman</string>
   <string name="set_attachment_wifi">WIFI</string>
   <string name="set_attachment_ask">Sor</string>
   <string name="set_attachment_action">Medya yükle</string>
   <string name="load_attachment">Resimleri yükle</string>
   <string name="load_attachment_spoiler">Daha fazla göster…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler_less">Daha az göster…</string>
   <string name="load_sensitive_attachment">Hassas içerik</string>
   <string name="set_display_reply">Ekran yanıt-e doğru önceki iletide</string>
   <string name="set_display_local">Görüntü yerel zaman çizelgesi</string>
-  <string name="set_display_global">Federasyon zaman çizelgesini görüntülemek</string>
+  <string name="set_display_global">Federasyon zaman çizelgesini göster</string>
   <string name="set_disable_gif">Haraketli Avatarları Devre Dışı Bırak</string>
   <string name="set_folder_title">Yolu: </string>
   <string name="set_auto_store_toot">Otomati̇k olarak kaydet</string>
-  <string name="set_bubble_counter">Sayaçlar görüntü</string>
-  <string name="set_auto_add_media_url">Toots\'daki medyanın URL\'sini ekle</string>
+  <string name="set_bubble_counter">Sayaçları göster</string>
+  <string name="set_auto_add_media_url">Toot\'taki medyanın URL\'sini ekle</string>
   <string name="settings_title_notifications">Bildirimleri yönet</string>
   <string name="set_notif_follow">Biri kullanıcıyı takip ettiğinde bildir</string>
   <string name="set_notif_follow_ask">Biri seni takip etmek istediğinde bildir</string>
@@ -298,32 +298,32 @@
   <string name="set_notify">Bildir?</string>
   <string name="set_notif_silent">Sessiz bildirimler</string>
   <string name="set_night_mode">Gece modu</string>
-  <string name="set_nsfw_timeout">NSFW görünümü zaman aşımı (saniye, kapalı 0 anlamına gelir)</string>
-  <string name="settings_title_profile">Profil düzenleme</string>
+  <string name="set_nsfw_timeout">NSFW görünümü zaman aşımı (saniye, kapatmak için sıfır girin)</string>
+  <string name="settings_title_profile">Profil düzenle</string>
   <string name="set_profile_description">Özgeçmiş…</string>
   <string name="set_lock_account">Hesabı Kilitle</string>
   <string name="set_save_changes">Değişiklikleri kaydet</string>
   <string name="set_header_picture_overlay">Profil fotoğrafı seçin</string>
   <string name="set_preview_reply">Cevaplanma sayısını zaman tünelinde göster</string>
   <string name="set_preview_reply_pp">Profil resimleri görüntülensin mi?</string>
-  <string name="set_multiaccount_actions">Hesapları arasındaki etkileşimler izin verilsin mi?</string>
-  <string name="set_fit_preview">Fit preview images</string>
-  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+  <string name="set_multiaccount_actions">Hesaplar arasındaki etkileşimler izin verilsin mi?</string>
+  <string name="set_fit_preview">Küçük resimler sığdırılsın</string>
+  <string name="set_automatically_split_toot">500 karakterden fazla cevapları otomatik olarak parçala</string>
   <string name="note_no_space">160 karakter sınırına ulaştınız!</string>
   <string name="username_no_space">30 karakter sınırına ulaştınız!</string>
   <string name="settings_title_hour">Bildirimler için zaman aralığı:</string>
   <string name="settings_time_from">Arasında</string>
-  <string name="settings_time_to">ve</string>
-  <string name="settings_time_greater">Zaman %1$s büyük olmalıdır</string>
-  <string name="settings_time_lower">Zaman %1$s düşük olması gerekir</string>
+  <string name="settings_time_to">ila</string>
+  <string name="settings_time_greater">Saat %1$s\'den geç olmalıdır</string>
+  <string name="settings_time_lower">Saat %1$s\'den erken olmalıdır</string>
   <string name="settings_hour_init">Başlama zamanı</string>
   <string name="settings_hour_end">Bitiş zamanı</string>
   <string name="embedded_browser">Gömülü tarayıcı yakınlaştırmasını kullanın</string>
-  <string name="custom_tabs">Custom tabs</string>
+  <string name="custom_tabs">Özel sekmeler</string>
   <string name="use_javascript">JavaScript\'i etkinleştir</string>
-  <string name="expand_cw">Automatically expand cw</string>
+  <string name="expand_cw">cw\'yi otomatik aç</string>
   <string name="use_cookies">Üçünçü parti çerezlere izin ver</string>
-  <string name="settings_ui_layout">Zaman çizelgeleri için Düzen: </string>
+  <string name="settings_ui_layout">Zaman çizelgeleri için düzen: </string>
   <string-array name="settings_menu_tabs">
     <item>Sekmeler</item>
     <item>Menü</item>
@@ -336,9 +336,9 @@
   </string-array>
   <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Koyu</item>
+    <item>Açık</item>
+    <item>Siyah</item>
   </string-array>
   <string-array name="settings_resize_picture">
     <item>Hayır</item>
@@ -349,7 +349,7 @@
   <string name="set_led_colour">LED rengini ayarla:</string>
   <string-array name="led_colours">
     <item>Mavi</item>
-    <item>Mavi</item>
+    <item>Deniz Mavisi</item>
     <item>Eflatun</item>
     <item>Yeşil</item>
     <item>Kırmızı</item>
@@ -357,7 +357,7 @@
     <item>Beyaz</item>
   </string-array>
   <string name="set_title_news">Haberler</string>
-  <string name="set_notification_news">Ana zaman çizelgesi üzerinde yeni toots için bildir</string>
+  <string name="set_notification_news">Ana zaman çizelgesi üzerinde yeni toot için bildir</string>
   <string name="set_show_error_messages">Hata iletilerini göster</string>
   <string name="action_follow">Takip Et</string>
   <string name="action_unfollow">Takip etme</string>
@@ -369,128 +369,136 @@
   <string name="request_sent">İstek gönderildi</string>
   <string name="followed_by">Sizi takip ediyor</string>
   <string name="action_search">Ara</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="set_capitalize">Cevaplarda ilk harf büyük olsun</string>
+  <string name="set_resize_picture">Resimleri yeniden boyutlandır</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Anlık Bildirimler</string>
   <string name="settings_popup_message">
-Lütfen, almak istediğiniz itme bildirimlerini onaylayın.
+Lütfen, almak istediğiniz bildirimleri onaylayın.
          Bu bildirimleri daha sonra ayarlarda etkinleştirebilir veya devre dışı bırakabilirsiniz (Bildirimler sekmesi).    </string>
   <string name="settings_popup_timeline">Evdeki zaman çizgisindeki okunmamış toots için mi?</string>
-  <string name="settings_popup_notification">Okunmamış Bildiriler?</string>
+  <string name="settings_popup_notification">Okunmamış bildirimler için?</string>
   <!-- CACHE -->
   <string name="cache_title">Önbelleği temizle</string>
-  <string name="cache_message">Ekranda bazı öğeler %1$s var.\n\n Onlar da silinsin mi?</string>
+  <string name="cache_message">Önbellekte bazı öğeler %1$s var.\n\n Onlar da silinsin mi?</string>
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">Önbelleği temizlendi! %1$s serbest bırakıldı</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
-  <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
+  <string name="action_sync">Eşitle</string>
+  <string name="action_filter">Filtrele</string>
+  <string name="owner_cached_toots">Senin toot\'ların</string>
   <string name="v_public">Herkese Açık</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="v_unlisted">Listelenmiyor</string>
+  <string name="v_private">Özel</string>
+  <string name="v_direct">Direk</string>
+  <string name="v_keywords">Birkaç anahtar kelime…</string>
+  <string name="show_media">Medyayı göster</string>
+  <string name="show_pinned">Başa tutturulmuşu göster</string>
+  <string name="filter_no_result">Sonuç bulunamadı!</string>
+  <string name="data_backup_toots">%1$s için toot\'ları yedekle</string>
+  <string name="data_backup_success">%1$s yeni toot alındı</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Hayır</item>
+    <item>Sadece</item>
+    <item>Her ikisi de</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Veritabanında toot bulunamadı. Menüdeki eşitle tuşunu kullan.</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">Kaydedilen veri</string>
   <string name="privacy_data">
 Hesaplardan yalnızca temel bilgiler cihazda saklanır.
          Bu veriler kesinlikle gizlidir ve yalnızca uygulama tarafından kullanılabilir.
          Uygulamanın silinmesi, bu verileri derhal kaldırır. \ N
-         ⚠ Oturum açma ve parolalar asla saklanmaz. Yalnızca bir örneğe sahip güvenli bir kimlik doğrulama (SSL) sırasında kullanılırlar.    </string>
+         ⚠ Oturum açma ve parolalar asla saklanmaz. Yalnızca sunucu ile güvenli giriş (SSL) için kullanılırlar.    </string>
   <string name="privacy_authorizations_title">Izinler:</string>
   <string name="privacy_authorizations">
 - <b> ACCESS_NETWORK_STATE </b>: Aygıtın bir WIFI ağına bağlı olup olmadığını saptamak için kullanılır. \n
-         - <b> INTERNET </b>: Bir örneği sorgular için kullanılır. \n
-         - <b> WRITE_EXTERNAL_STORAGE </b>: Ortamı saklamak veya uygulamayı bir SD karta taşımak için kullanılır. \n
-         - <b> READ_EXTERNAL_STORAGE </b>: Toots\'a medya eklemek için kullanılır.\n
+         - <b> INTERNET </b>: Bir sunucuyu sorgulamak için kullanılır. \n
+         - <b> WRITE_EXTERNAL_STORAGE </b>: Medyayı saklamak veya uygulamayı bir SD karta taşımak için kullanılır. \n
+         - <b> READ_EXTERNAL_STORAGE </b>: Toot\'a medya eklemek için kullanılır.\n
          - <b> BOOT_COMPLETED </b>: Bildirim hizmetini başlatmak için kullanılır. \n
          - <b> WAKE_LOCK </b>: Bildirim hizmeti sırasında kullanılır.    </string>
   <string name="privacy_API_authorizations_title">API izinleri:</string>
   <string name="privacy_API_authorizations">
 - <b> Oku </b>: Veri okunur. \n
          - <b> Yaz </b>: Durumu yayınlar ve durumlar için ortam yükler. \n
-         - <b> Takip et </b>: Takip edin, takiplerini uygulayın, engelleyin, engelini kaldırın.\n\n
+         - <b> Takip et </b>: Takip etme, takipten vazgeçme, engelleme, engeli kaldırma.\n\n
          <b> &#9888;  Bu eylemler, yalnızca kullanıcı istekleri üzerine gerçekleşir. </b>    </string>
   <string name="privacy_API_title">İzleme ve kütüphaneler</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        Bu uygulama <b>takip araçları kullanmaz</b> (kitle ölçme, hata raporlama vs.) ve herhangi bir reklam içermez.\n\n
+        Kütüphane kullanımı en aza indirilmiştir: \n
+        - <b>Glide</b>: Medya kontrolü\n
+        - <b>Android-Job</b>: Servis kontrolü\n
+        - <b>PhotoView</b>: Resim kontrolü\n
     </string>
-  <string name="privacy_API_yandex_title">Modül tercümesi</string>
+  <string name="privacy_API_yandex_title">Toot tercümesi</string>
   <string name="privacy_API_yandex_authorizations">
-Uygulama cihazın yerel ayarını ve Yandex API\'sini kullanarak toots çevirme olanağı sunar. \ N
+Uygulama cihazın yerel ayarını ve Yandex API\'sini kullanarak toot tercüme olanağı sunar. \ N
          Yandex\'in şu adreste bulunabilecek uygun gizlilik politikası vardır: https://yandex.ru/legal/confidential/?lang=en    </string>
   <string name="thanks_text">
 Stephane\'a logo için teşekkür ederiz.    </string>
   <string name="thanks_text_dev">
 Teşekkürler:    </string>
   <string name="filter_regex">Düzenli ifadelerle filtreleme</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="search">Ara</string>
+  <string name="delete">Sil</string>
+  <string name="fetch_more_toots">Daha çok toot yükle…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">Listeler</string>
+  <string name="action_lists_confirm_delete">Bu listeyi tamamen silmek istediğinden emin misin?</string>
+  <string name="action_lists_empty_content">Bu listede henüz hiçbir şey yok. Bu listenin üyelerinin yeni gönderileri burada gözükecek.</string>
+  <string name="action_lists_add_to">Listeye ekle</string>
+  <string name="action_lists_remove_from">Listeden çıkar</string>
+  <string name="action_lists_create">Liste ekle</string>
+  <string name="action_lists_delete">Listeyi sil</string>
+  <string name="action_lists_update">Listeyi düzenle</string>
+  <string name="action_lists_title_placeholder">Yeni liste başlığı</string>
+  <string name="action_lists_search_users">Takip ettiklerin arasında ara</string>
+  <string name="action_lists_owner">Listelerin</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s, %2$s\'e taşındı</string>
+  <string name="show_boost_count">Hızlandırmaları göster/Favori sayısı</string>
+  <string name="issue_login_title">Kimlik doğrulama çalışmıyor?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Yardımı olabilecek bazı kontroller:</b>\n\n
+        - Sunucu adını kontrol et\n\n
+        - Sunucunda hata olmadığından emin ol\n\n
+        - İki aşamalı doğrulama (2FA) kullanıyorsan, alttaki bağlantıyı kullan (sunucu adı doldurulduktan sonra)\n\n
+        - Bağlantıyı 2FA olmadan da kullanabilirsin\n\n
+        - Eğer hala çalışmıyorsa, Gitlab üzerinde hata kaydı aç: https://gitlab.com/tom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="media_ready">Medya yüklendi. Görüntülemek için tıkla.</string>
+  <string name="data_export_start">Bu işlem oldukça uzun sürebilir. Bitince haberdar olacaksın.</string>
+  <string name="data_export_running">Hâlâ çalışıyor, lütfen bekle…</string>
+  <string name="data_export">Durumları dışarı aktar</string>
+  <string name="data_export_toots">%1$s için durumları dışarı aktar</string>
+  <string name="data_export_success">%2$s toot\'tan %1$s tanesi dışarı aktarıldı.</string>
+  <string name="data_export_error">%1$s toot\'ları dışarı aktarılırken sorun çıktı</string>
   <!-- Proxy -->
   <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
-  <string name="poxy_host">Host</string>
+  <string name="proxy_type">Tip</string>
+  <string name="proxy_enable">Proxy aç?</string>
+  <string name="poxy_host">Sunucu</string>
   <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
-  <string name="set_theme">Theme:</string>
+  <string name="poxy_login">Giriş</string>
+  <string name="poxy_password">Parola</string>
+  <string name="set_theme">Tema:</string>
   <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
-  <string name="no_account_yet">No account yet?</string>
-  <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-  <string name="delete_instance">Delete this instance?</string>
-  <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-  <string name="which_language">Translate in</string>
+  <string name="set_share_details">Paylaşırken toot detayları ekle</string>
+  <string name="support_the_app_on_liberapay">Uygulamayı Liberapay ile destekle</string>
+  <string name="alert_regex">Düzenli ifadede sorun var!</string>
+  <string name="no_account_yet">Henüz hiç hesap yok?</string>
+  <string name="toast_instance_unavailable">Bu sunucuda hiç zaman tüneli bulunamadı!</string>
+  <string name="delete_instance">Bu sunucuyu sil?</string>
+  <string name="warning_delete_instance">%s\'i takip edilen sunuculardan çıkaracaksın.</string>
+  <string name="which_language">Tercüme et</string>
+  <string name="crash_title">Mastalab has stopped :(</string>
+  <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
+  <string name="send_crash_report">Ask for sending crash reports by email?</string>
+  <string name="follow_instance">Follow instance</string>
+  <string name="toast_instance_already_added">You already follow this instance!</string>
+  <string name="toast_instance_followed">The instance is followed!</string>
+  <string name="action_partnership">Partnerships</string>
+  <string name="neutral_menu_information">Information</string>
 </resources>

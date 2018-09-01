@@ -615,6 +615,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
                 if( popup.getMenu().findItem(R.id.action_redraft) != null)
                     popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
+                if( popup.getMenu().findItem(R.id.action_translate) != null)
+                    popup.getMenu().findItem(R.id.action_translate).setVisible(false);
                 final String[] stringArrayConf;
                 if( isOwner) {
                     popup.getMenu().findItem(R.id.action_block).setVisible(false);
@@ -645,6 +647,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 builderInner.setTitle(stringArrayConf[0]);
                                 doAction = API.StatusAction.MUTE;
                                 break;
+                            case R.id.action_open_browser:
+                                Helper.openBrowser(context, status.getUrl());
+                                return true;
                             case R.id.action_block:
                                 builderInner = new AlertDialog.Builder(context);
                                 builderInner.setTitle(stringArrayConf[1]);
@@ -697,7 +702,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                             file.delete ();
                                         try {
                                             FileOutputStream out = new FileOutputStream(file);
-                                            assert bitmap != null;
                                             assert bitmap != null;
                                             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                                             out.flush();

@@ -484,9 +484,17 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="set_share_details">Toot Details beim Teilen hinzufügen</string>
   <string name="support_the_app_on_liberapay">Unterstütze die app auf Liberapay</string>
   <string name="alert_regex">Es gibt einen Fehler im regulären Ausdruck!</string>
-  <string name="no_account_yet">No account yet?</string>
-  <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-  <string name="delete_instance">Delete this instance?</string>
-  <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
+  <string name="no_account_yet">Noch ohne Konto?</string>
+  <string name="toast_instance_unavailable">Es wurden keine Zeitleisten in dieser Instanz gefunden!</string>
+  <string name="delete_instance">Diese Instanz löschen?</string>
+  <string name="warning_delete_instance">Sie löschen %s aus Ihren folgenden Instanzen.</string>
   <string name="which_language">Translate in</string>
+  <string name="crash_title">Mastalab has stopped :(</string>
+  <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
+  <string name="send_crash_report">Ask for sending crash reports by email?</string>
+  <string name="follow_instance">Follow instance</string>
+  <string name="toast_instance_already_added">You already follow this instance!</string>
+  <string name="toast_instance_followed">The instance is followed!</string>
+  <string name="action_partnership">Partnerships</string>
+  <string name="neutral_menu_information">Information</string>
 </resources>

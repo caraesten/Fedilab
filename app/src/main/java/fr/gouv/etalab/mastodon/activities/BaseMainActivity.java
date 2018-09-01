@@ -105,7 +105,6 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.BackupStatusService;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
-import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
@@ -113,7 +112,6 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-
 import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.BACKUP_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
@@ -124,8 +122,8 @@ import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_TARGETED_ACCOUNT;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
-import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_KEYWORD;
-import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_TAG;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_REMOTE;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_URL;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
@@ -686,12 +684,8 @@ public abstract class BaseMainActivity extends BaseActivity
                                 startActivity(myIntent);
                                 finish();
                                 return true;
-                            case R.id.action_about:
-                                Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
-                                startActivity(intent);
-                                return true;
                             case R.id.action_privacy:
-                                intent = new Intent(getApplicationContext(), PrivacyActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), PrivacyActivity.class);
                                 startActivity(intent);
                                 return true;
                             case R.id.action_about_instance:
@@ -1130,14 +1124,15 @@ public abstract class BaseMainActivity extends BaseActivity
      * @param intent Intent - intent related to a notification in top bar
      */
     private void mamageNewIntent(Intent intent){
-        if( intent == null || intent.getExtras() == null )
+
+        if( intent == null )
             return;
 
         String action = intent.getAction();
         String type = intent.getType();
         Bundle extras = intent.getExtras();
         String userIdIntent;
-        if( extras.containsKey(INTENT_ACTION) ){
+        if( extras != null && extras.containsKey(INTENT_ACTION) ){
             final NavigationView navigationView = findViewById(R.id.nav_view);
             userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
@@ -1173,20 +1168,23 @@ public abstract class BaseMainActivity extends BaseActivity
             }else if( extras.getInt(INTENT_ACTION) == BACKUP_INTENT){
                 Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
                 startActivity(myIntent);
-            }else if(extras.getInt(INTENT_ACTION) == SEARCH_TAG){
-                String keyword = extras.getString(SEARCH_KEYWORD);
-                if( keyword != null){
-                    adapter = new PagerAdapter
-                            (getSupportFragmentManager(), tabLayout.getTabCount());
-                    viewPager.setAdapter(adapter);
-                    for(int i = 0; i < tabLayout.getTabCount() ; i++ ){
-                        if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(keyword.trim())){
-                            tabLayout.getTabAt(i).select();
-                            break;
-                        }
-
-                    }
+            }else if (extras.getInt(INTENT_ACTION) == SEARCH_REMOTE) {
+                String url = extras.getString(SEARCH_URL);
+                if( url == null)
+                    return;
+                Matcher matcher;
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                    matcher = Patterns.WEB_URL.matcher(url);
+                else
+                    matcher = Helper.urlPattern.matcher(url);
+                boolean isUrl = false;
+                while (matcher.find()){
+                    isUrl = true;
                 }
+                if(!isUrl)
+                    return;
+                //Here we know that the intent contains a valid URL
+                new RetrieveRemoteDataAsyncTask(BaseMainActivity.this, url, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }else if( Intent.ACTION_SEND.equals(action) && type != null ) {
             if ("text/plain".equals(type)) {
@@ -1214,14 +1212,24 @@ public abstract class BaseMainActivity extends BaseActivity
 
             } else if (type.startsWith("image/")) {
 
-                Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
-
-                if (imageUri != null) {
-                    Bundle b = new Bundle();
-                    b.putParcelable("sharedUri", imageUri);
-                    b.putInt("uriNumberMast", 1);
-                    CrossActions.doCrossShare(BaseMainActivity.this, b);
+                if( !TootActivity.active){
+                    Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                    if (imageUri != null) {
+                        Bundle b = new Bundle();
+                        b.putParcelable("sharedUri", imageUri);
+                        b.putInt("uriNumberMast", 1);
+                        CrossActions.doCrossShare(BaseMainActivity.this, b);
+                    }
+                }else{
+                    Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                    if (imageUri != null) {
+                        intent = new Intent(getApplicationContext(), TootActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent .putExtra("imageUri", imageUri.toString());
+                        startActivity(intent );
+                    }
                 }
+
             }
         } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null ) {
             if (type.startsWith("image/")) {
@@ -1384,14 +1392,17 @@ public abstract class BaseMainActivity extends BaseActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_remote_follow) {
-            Intent remoteFollow = new Intent(getApplicationContext(), RemoteFollowActivity.class);
-            startActivity(remoteFollow);
-            return false;
-        }
         if( id == R.id.nav_archive) {
             Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
             startActivity(myIntent);
+            return false;
+        } else if( id == R.id.nav_about) {
+            Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
+            startActivity(intent);
+            return false;
+        } else if( id == R.id.nav_partnership) {
+            Intent intent = new Intent(getApplicationContext(), PartnerShipActivity.class);
+            startActivity(intent);
             return false;
         }
         final NavigationView navigationView = findViewById(R.id.nav_view);
@@ -1418,7 +1429,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }else{
             delete_all.setVisibility(View.VISIBLE);
         }
-        if( id != R.id.nav_search && id != R.id.nav_list){
+        if( id != R.id.nav_list){
             add_new.setVisibility(View.GONE);
         }else{
             add_new.setVisibility(View.VISIBLE);
@@ -1430,7 +1441,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, tabLayoutSettingsFragment, fragmentTag).commit();
 
-        } else if (id == R.id.nav_favorites) {
+        }else if (id == R.id.nav_favorites) {
             toot.setVisibility(View.GONE);
             statusFragment = new DisplayStatusFragment();
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.FAVOURITES);
@@ -1471,12 +1482,6 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "BOOKMARKS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayBookmarksFragment, fragmentTag).commit();
-            toot.setVisibility(View.GONE);
-        }else if (id == R.id.nav_search) {
-            DisplaySearchFragment displaySearchFragment = new DisplaySearchFragment();
-            fragmentTag = "SEARCH";
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, displaySearchFragment, fragmentTag).commit();
             toot.setVisibility(View.GONE);
         }else if( id == R.id.nav_follow_request){
             toot.setVisibility(View.GONE);

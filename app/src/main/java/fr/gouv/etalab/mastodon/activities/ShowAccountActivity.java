@@ -58,11 +58,15 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 import fr.gouv.etalab.mastodon.R;
@@ -76,6 +80,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
@@ -89,9 +94,13 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.INSTANCE_NAME;
+import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_INSTANCE;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -301,10 +310,15 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
         final String[] stringArrayConf;
         final boolean isOwner = account.getId().equals(userId);
+        String[] splitAcct = account.getAcct().split("@");
+
+        if( splitAcct.length <= 1)
+            popup.getMenu().findItem(R.id.action_follow_instance).setVisible(false);
         if( isOwner) {
             popup.getMenu().findItem(R.id.action_block).setVisible(false);
             popup.getMenu().findItem(R.id.action_mute).setVisible(false);
             popup.getMenu().findItem(R.id.action_mention).setVisible(false);
+            popup.getMenu().findItem(R.id.action_follow_instance).setVisible(false);
             stringArrayConf =  getResources().getStringArray(R.array.more_action_owner_confirm);
         }else {
             popup.getMenu().findItem(R.id.action_block).setVisible(true);
@@ -316,6 +330,50 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             public boolean onMenuItemClick(MenuItem item) {
                 AlertDialog.Builder builderInner;
                 switch (item.getItemId()) {
+
+                    case R.id.action_follow_instance:
+                        String finalInstanceName = splitAcct[1];
+                        final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                        List<String> instance = new InstancesDAO(ShowAccountActivity.this, db).getInstanceByName(finalInstanceName);
+                        if( instance != null && instance.size() > 0 ){
+                            Toast.makeText(getApplicationContext(), R.string.toast_instance_already_added,Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), InstanceFederatedActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(INTENT_ACTION, SEARCH_INSTANCE);
+                            bundle.putString(INSTANCE_NAME,finalInstanceName);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            return true;
+                        }
+                        new Thread(new Runnable(){
+                            @Override
+                            public void run() {
+                                try {
+                                    String response = new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/timelines/public?local=true", 10, null, null);
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                            new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName);
+                                            Toast.makeText(getApplicationContext(), R.string.toast_instance_followed,Toast.LENGTH_LONG).show();
+                                            Intent intent = new Intent(getApplicationContext(), InstanceFederatedActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putInt(INTENT_ACTION, SEARCH_INSTANCE);
+                                            bundle.putString(INSTANCE_NAME,finalInstanceName);
+                                            intent.putExtras(bundle);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                } catch (final Exception e) {
+                                    e.printStackTrace();
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), R.string.toast_instance_unavailable,Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }
+                        }).start();
+                        return true;
                     case R.id.action_show_pinned:
                         showPinned = !showPinned;
                         if( tabLayout.getTabAt(0) != null)
@@ -727,7 +785,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             itemShowPined.setChecked(showPinned);
                             itemShowReplies.setChecked(show_replies);
                             itemShowBoosts.setChecked(show_boosts);
-                            return false;
+                            return true;
                         }
                     });
                     popup.show();

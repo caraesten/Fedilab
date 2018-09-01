@@ -504,4 +504,12 @@
   <string name="delete_instance">Delete this instance?</string>
   <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
   <string name="which_language">Translate in</string>
+  <string name="crash_title">Mastalab has stopped :(</string>
+  <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
+  <string name="send_crash_report">Ask for sending crash reports by email?</string>
+  <string name="follow_instance">Follow instance</string>
+  <string name="toast_instance_already_added">You already follow this instance!</string>
+  <string name="toast_instance_followed">The instance is followed!</string>
+  <string name="action_partnership">Partnerships</string>
+  <string name="neutral_menu_information">Information</string>
 </resources>
