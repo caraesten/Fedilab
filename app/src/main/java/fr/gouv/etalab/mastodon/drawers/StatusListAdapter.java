@@ -1295,6 +1295,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         //noinspection deprecation
                                         builderInner.setMessage(Html.fromHtml(status.getContent()));
                                 break;
+                                case R.id.action_open_browser:
+                                    Helper.openBrowser(context, status.getUrl());
+                                    return true;
                                 case R.id.action_remove:
                                     builderInner = new AlertDialog.Builder(context);
                                     builderInner.setTitle(stringArrayConf[0]);
