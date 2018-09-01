@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
@@ -475,6 +476,7 @@ public class Status implements Parcelable{
         else
             //noinspection deprecation
             spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()));
+        spannableStringContent = new SpannableString(status.getReblog() != null ?status.getReblog().getContent():status.getContent());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), mode));
         else
@@ -693,10 +695,46 @@ public class Status implements Parcelable{
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
         Matcher matcher;
-        /*if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
-            matcher = Patterns.WEB_URL.matcher(spannableString);
+
+        Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,6}[\\/]?[^\"@(\\/tags\\/)]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
+        Matcher matcherALink = aLink.matcher(spannableString.toString());
+        while (matcherALink.find()){
+            int matchStart = matcherALink.start();
+            int matchEnd = matcherALink.end();
+            final String url = spannableString.toString().substring(matcherALink.start(1), matcherALink.end(1));
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+                spannableString.setSpan(new ClickableSpan() {
+                            @Override
+                            public void onClick(View textView) {
+                                String finalUrl = url;
+                                if( !url.startsWith("http://") && ! url.startsWith("https://"))
+                                    finalUrl = "http://" + url;
+                                Helper.openBrowser(context, finalUrl);
+                            }
+                            @Override
+                            public void updateDrawState(TextPaint ds) {
+                                super.updateDrawState(ds);
+                                ds.setUnderlineText(false);
+                            }
+                        },
+                        matchStart, matchEnd,
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        int mode;
+        if( isCompactMode)
+            mode = Html.FROM_HTML_MODE_COMPACT;
         else
-            matcher = Helper.urlPattern.matcher(spannableString);*/
+            mode = Html.FROM_HTML_MODE_LEGACY;
+        SpannableString spannableStringT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString(), mode));
+        else
+            //noinspection deprecation
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString()));
 
 
         matcher = Helper.twitterPattern.matcher(spannableString);
@@ -704,6 +742,10 @@ public class Status implements Parcelable{
             int matchStart = matcher.start(2);
             int matchEnd = matcher.end();
             final String twittername = spannableString.toString().substring(matchStart, matchEnd);
+            URLSpan[] spans = spannableStringT.getSpans(matchStart, matchEnd, URLSpan.class);
+            for (URLSpan span : spans) {
+                spannableStringT.removeSpan(span);
+            }
             if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
@@ -722,13 +764,17 @@ public class Status implements Parcelable{
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
-        matcher = Patterns.WEB_URL.matcher(spannableString);
+        matcher = Patterns.WEB_URL.matcher(spannableStringT);
         while (matcher.find()){
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
-            final String url = spannableString.toString().substring(matchStart, matchEnd);
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
-                spannableString.setSpan(new ClickableSpan() {
+            final String url = spannableStringT.toString().substring(matchStart, matchEnd);
+            URLSpan[] spans = spannableStringT.getSpans(matchStart, matchEnd, URLSpan.class);
+            for (URLSpan span : spans) {
+                spannableStringT.removeSpan(span);
+            }
+            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
+                spannableStringT.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View textView) {
                         String finalUrl = url;
@@ -744,8 +790,8 @@ public class Status implements Parcelable{
                 },
                 matchStart, matchEnd,
                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
-                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
+            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
+                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         //Deals with mention to make them clickable
@@ -753,13 +799,17 @@ public class Status implements Parcelable{
             //Looping through accounts which are mentioned
             for (final Mention mention : mentions) {
                 String targetedAccount = "@" + mention.getUsername();
-                if (spannableString.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
-
+                if (spannableStringT.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
                     //Accounts can be mentioned several times so we have to loop
-                    for(int startPosition = -1 ; (startPosition = spannableString.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
+                    for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
+
                         int endPosition = startPosition + targetedAccount.length();
-                        if( endPosition <= spannableString.toString().length() && endPosition >= startPosition)
-                            spannableString.setSpan(new ClickableSpan() {
+                        URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
+                        for (URLSpan span : spans) {
+                            spannableStringT.removeSpan(span);
+                        }
+                        if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
+                            spannableStringT.setSpan(new ClickableSpan() {
                                     @Override
                                     public void onClick(View textView) {
                                         Intent intent = new Intent(context, ShowAccountActivity.class);
@@ -776,21 +826,25 @@ public class Status implements Parcelable{
                                 },
                                 startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                        if(endPosition <= spannableString.toString().length() && endPosition >= startPosition)
-                            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
+                        if(endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
+                            spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
                 }
 
             }
         }
-        matcher = Helper.hashtagPattern.matcher(spannableString);
+        matcher = Helper.hashtagPattern.matcher(spannableStringT);
         while (matcher.find()){
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
-            final String tag = spannableString.toString().substring(matchStart, matchEnd);
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
-                spannableString.setSpan(new ClickableSpan() {
+            URLSpan[] spans = spannableStringT.getSpans(matchStart, matchEnd, URLSpan.class);
+            for (URLSpan span : spans) {
+                spannableStringT.removeSpan(span);
+            }
+            final String tag = spannableStringT.toString().substring(matchStart, matchEnd);
+            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
+                spannableStringT.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View textView) {
                         Intent intent = new Intent(context, HashTagActivity.class);
@@ -805,11 +859,11 @@ public class Status implements Parcelable{
                         ds.setUnderlineText(false);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
-                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
+            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
+                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        return spannableString;
+        return spannableStringT;
     }
 
     public SpannableString getContentSpan() {
