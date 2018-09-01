@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 130
-        versionName "1.10.5"
+        versionCode 131
+        versionName "1.11.0"
     }
     flavorDimensions "default"
     buildTypes {
