@@ -686,12 +686,8 @@ public abstract class BaseMainActivity extends BaseActivity
                                 startActivity(myIntent);
                                 finish();
                                 return true;
-                            case R.id.action_about:
-                                Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
-                                startActivity(intent);
-                                return true;
                             case R.id.action_privacy:
-                                intent = new Intent(getApplicationContext(), PrivacyActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), PrivacyActivity.class);
                                 startActivity(intent);
                                 return true;
                             case R.id.action_about_instance:
@@ -1386,14 +1382,17 @@ public abstract class BaseMainActivity extends BaseActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_remote_follow) {
-            Intent remoteFollow = new Intent(getApplicationContext(), RemoteFollowActivity.class);
-            startActivity(remoteFollow);
-            return false;
-        }
         if( id == R.id.nav_archive) {
             Intent myIntent = new Intent(BaseMainActivity.this, OwnerStatusActivity.class);
             startActivity(myIntent);
+            return false;
+        } else if( id == R.id.nav_about) {
+            Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
+            startActivity(intent);
+            return false;
+        } else if( id == R.id.nav_partnership) {
+            Intent intent = new Intent(getApplicationContext(), PartnerShipActivity.class);
+            startActivity(intent);
             return false;
         }
         final NavigationView navigationView = findViewById(R.id.nav_view);
@@ -1420,7 +1419,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }else{
             delete_all.setVisibility(View.VISIBLE);
         }
-        if( id != R.id.nav_search && id != R.id.nav_list){
+        if( id != R.id.nav_list){
             add_new.setVisibility(View.GONE);
         }else{
             add_new.setVisibility(View.VISIBLE);
@@ -1432,7 +1431,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, tabLayoutSettingsFragment, fragmentTag).commit();
 
-        } else if (id == R.id.nav_favorites) {
+        }else if (id == R.id.nav_favorites) {
             toot.setVisibility(View.GONE);
             statusFragment = new DisplayStatusFragment();
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.FAVOURITES);
@@ -1473,12 +1472,6 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "BOOKMARKS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayBookmarksFragment, fragmentTag).commit();
-            toot.setVisibility(View.GONE);
-        }else if (id == R.id.nav_search) {
-            DisplaySearchFragment displaySearchFragment = new DisplaySearchFragment();
-            fragmentTag = "SEARCH";
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, displaySearchFragment, fragmentTag).commit();
             toot.setVisibility(View.GONE);
         }else if( id == R.id.nav_follow_request){
             toot.setVisibility(View.GONE);

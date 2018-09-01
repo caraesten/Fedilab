@@ -32,14 +32,6 @@
                         android:icon="@drawable/ic_bookmark"
                         android:title="@string/bookmarks" />
                     <item
-                        android:id="@+id/nav_search"
-                        android:icon="@drawable/ic_search"
-                        android:title="@string/search" />
-                    <item
-                        android:id="@+id/nav_remote_follow"
-                        android:icon="@drawable/ic_person_add"
-                        android:title="@string/remote_follow_menu" />
-                    <item
                         android:id="@+id/nav_follow_request"
                         android:icon="@drawable/ic_group_add"
                         android:title="@string/follow_request" />
@@ -67,6 +59,22 @@
                         android:id="@+id/nav_muted"
                         android:icon="@drawable/ic_volume_mute"
                         android:title="@string/muted_menu" />
+                </group>
+            </menu>
+        </item>
+        <item
+            android:title="@string/neutral_menu_information"
+            android:id="@+id/nav_main_info">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_about"
+                        android:icon="@drawable/ic_info"
+                        android:title="@string/action_about" />
+                    <item
+                        android:id="@+id/nav_partnership"
+                        android:icon="@drawable/ic_add_circle"
+                        android:title="@string/action_partnership" />
                 </group>
             </menu>
         </item>

@@ -551,6 +551,14 @@
     <string name="crash_title">Mastalab has stopped :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
+    <string name="mastohost_name" translatable="false">masto.host</string>
+    <string name="about_partnership" translatable="false">
+        Mastalab has a partnership with Masto.host\nMasto.host offers hosting for <a href="https://ins.mastalab.app">Mastalab\'s instance</a> for free.\nThis helps me to better understand how to manage an instance. If one day the API is open to moderators,
+        I would be glad to be able to test new features.
+    </string>
+    <string name="about_mastohost" translatable="false"><a href="https://masto.host">Masto.host</a> is a fully managed Mastodon hosting service, meaning that you can create your own instance without having to touch a single line of code or maintain your own server.</string>
+    <string name="action_partnership" >Partnerships</string>
+    <string name="neutral_menu_information">Information</string>
     <string-array translatable="false" name="proxy_type_choice">
         <item>HTTP</item>
         <item>SOCKS</item>
