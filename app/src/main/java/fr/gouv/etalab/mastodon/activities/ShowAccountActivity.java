@@ -98,6 +98,9 @@ import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.INSTANCE_NAME;
+import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_INSTANCE;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -334,6 +337,12 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         List<String> instance = new InstancesDAO(ShowAccountActivity.this, db).getInstanceByName(finalInstanceName);
                         if( instance != null && instance.size() > 0 ){
                             Toast.makeText(getApplicationContext(), R.string.toast_instance_already_added,Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), InstanceFederatedActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(INTENT_ACTION, SEARCH_INSTANCE);
+                            bundle.putString(INSTANCE_NAME,finalInstanceName);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
                             return true;
                         }
                         new Thread(new Runnable(){
@@ -346,6 +355,12 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                             final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                             new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName);
                                             Toast.makeText(getApplicationContext(), R.string.toast_instance_followed,Toast.LENGTH_LONG).show();
+                                            Intent intent = new Intent(getApplicationContext(), InstanceFederatedActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putInt(INTENT_ACTION, SEARCH_INSTANCE);
+                                            bundle.putString(INSTANCE_NAME,finalInstanceName);
+                                            intent.putExtras(bundle);
+                                            startActivity(intent);
                                         }
                                     });
                                 } catch (final Exception e) {
