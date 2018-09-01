@@ -737,17 +737,17 @@ public class Status implements Parcelable{
             spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString()));
 
 
-        matcher = Helper.twitterPattern.matcher(spannableString);
+        matcher = Helper.twitterPattern.matcher(spannableStringT);
         while (matcher.find()){
             int matchStart = matcher.start(2);
             int matchEnd = matcher.end();
-            final String twittername = spannableString.toString().substring(matchStart, matchEnd);
+            final String twittername = matcher.group(2);
             URLSpan[] spans = spannableStringT.getSpans(matchStart, matchEnd, URLSpan.class);
             for (URLSpan span : spans) {
                 spannableStringT.removeSpan(span);
             }
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
-                spannableString.setSpan(new ClickableSpan() {
+            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
+                spannableStringT.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View textView) {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/"+twittername.substring(1).replace("@twitter.com","")));
@@ -759,8 +759,8 @@ public class Status implements Parcelable{
                         ds.setUnderlineText(false);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
-                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
+            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
+                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
