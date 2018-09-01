@@ -49,7 +49,6 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -195,6 +194,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private int stepSpliToot;
     private boolean removed;
     private boolean restoredScheduled;
+    static boolean active = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -739,7 +739,6 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             picture_scrollview.setVisibility(View.VISIBLE);
             if (data == null || data.getData() == null) {
@@ -816,6 +815,39 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             String filename =  Helper.getFileName(this.activityWeakReference.get(), uriFile);
             new HttpsConnection(this.activityWeakReference.get()).upload(bs, filename, accountReply!=null?accountReply.getToken():null, (TootActivity)this.activityWeakReference.get());
         }
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            Uri imageUri = Uri.parse(extras.getString("imageUri"));
+            picture_scrollview.setVisibility(View.VISIBLE);
+            if(  imageUri == null) {
+                Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                return;
+            }
+            try {
+                String filename =  Helper.getFileName(TootActivity.this, imageUri);
+                ContentResolver cr = getContentResolver();
+                String mime = cr.getType(imageUri);
+                if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
+                    InputStream inputStream = getContentResolver().openInputStream(imageUri);
+                    new HttpsConnection(TootActivity.this).upload(inputStream, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+                } else if(mime != null && mime.toLowerCase().contains("image")) {
+                    new asyncPicture(TootActivity.this, accountReply, intent.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else {
+                    Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                }
+            } catch (FileNotFoundException e) {
+                Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                toot_picture.setEnabled(true);
+                toot_it.setEnabled(true);
+            }
+        }
+
     }
 
     @Override
@@ -2163,7 +2195,17 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        active = true;
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        active = false;
+    }
 
 
 }

@@ -114,6 +114,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.BACKUP_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
@@ -1216,14 +1217,24 @@ public abstract class BaseMainActivity extends BaseActivity
 
             } else if (type.startsWith("image/")) {
 
-                Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
-
-                if (imageUri != null) {
-                    Bundle b = new Bundle();
-                    b.putParcelable("sharedUri", imageUri);
-                    b.putInt("uriNumberMast", 1);
-                    CrossActions.doCrossShare(BaseMainActivity.this, b);
+                if( !TootActivity.active){
+                    Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                    if (imageUri != null) {
+                        Bundle b = new Bundle();
+                        b.putParcelable("sharedUri", imageUri);
+                        b.putInt("uriNumberMast", 1);
+                        CrossActions.doCrossShare(BaseMainActivity.this, b);
+                    }
+                }else{
+                    Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                    if (imageUri != null) {
+                        intent = new Intent(getApplicationContext(), TootActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent .putExtra("imageUri", imageUri.toString());
+                        startActivity(intent );
+                    }
                 }
+
             }
         } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null ) {
             if (type.startsWith("image/")) {
