@@ -94,9 +94,6 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
            }
         });
 
-        TextView about_mastohost = findViewById(R.id.about_mastohost);
-        about_mastohost.setMovementMethod(LinkMovementMethod.getInstance());
-
         setTitle(R.string.action_partnership);
         lv_mastohost.setExpanded(true);
 

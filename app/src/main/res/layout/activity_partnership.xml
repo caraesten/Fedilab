@@ -16,10 +16,8 @@
     see <http://www.gnu.org/licenses>.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="10dp"
     android:layout_marginRight="@dimen/fab_margin"
     android:layout_marginEnd="@dimen/fab_margin"
     android:layout_marginLeft="@dimen/fab_margin"
@@ -33,41 +31,35 @@
         >
         <!-- About masto.host -->
         <ImageView
+            android:layout_marginTop="10dp"
             android:id="@+id/mastohost_logo"
-            android:layout_marginBottom="20dp"
             android:layout_gravity="center"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="110dp"
             android:src="@drawable/mastohost"
             />
 
-
         <!-- About partnership -->
         <TextView
-            android:layout_marginTop="10dp"
-            android:textSize="14sp"
+            android:layout_marginTop="30dp"
+            android:textSize="16sp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:id="@+id/about_partnership"
             android:text="@string/about_partnership"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-
         <fr.gouv.etalab.mastodon.helper.ExpandableHeightListView
             android:layout_marginTop="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:id="@+id/lv_mastohost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:divider="@null"/>
 
-        <TextView
-            android:id="@+id/about_mastohost"
-            android:padding="5dp"
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about_mastohost"
-            android:textSize="16sp"/>
 
     </LinearLayout>
 </ScrollView>
