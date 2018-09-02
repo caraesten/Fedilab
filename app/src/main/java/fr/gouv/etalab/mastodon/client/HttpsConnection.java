@@ -624,9 +624,7 @@ public class HttpsConnection {
             if (httpsURLConnection != null)
                 try {
                     httpsURLConnection.getInputStream().close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                } catch (Exception ignored) { }
             return null;
         }else {
             try {
