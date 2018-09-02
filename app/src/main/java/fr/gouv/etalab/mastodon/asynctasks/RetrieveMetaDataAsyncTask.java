@@ -55,6 +55,10 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         String potentialUrl = "";
+        if (url == null) {
+            error = true;
+            return null;
+        }
         try {
             Matcher matcher;
             if (url.startsWith("www."))
