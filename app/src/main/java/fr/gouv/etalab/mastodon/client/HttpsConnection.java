@@ -1190,9 +1190,7 @@ public class HttpsConnection {
                         if (httpsURLConnection != null)
                             try {
                                 httpsURLConnection.getInputStream().close();
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
+                            } catch (Exception ignored) { }
                         ((TootActivity) context).runOnUiThread(new Runnable() {
                             public void run() {
                                 listener.onRetrieveAttachment(null, error);
@@ -1342,10 +1340,8 @@ public class HttpsConnection {
                         error.setError(e.getMessage());
                         if(httpURLConnection != null)
                             try {
-                                httpURLConnection.getInputStream().close();
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
+                                httpsURLConnection.getInputStream().close();
+                            } catch (Exception ignored) { }
                         ((TootActivity)context).runOnUiThread(new Runnable() {
                             public void run() {
                                 listener.onRetrieveAttachment(null, error);
