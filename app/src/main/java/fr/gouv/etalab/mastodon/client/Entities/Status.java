@@ -57,6 +57,8 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 
@@ -110,7 +112,7 @@ public class Status implements Parcelable{
     private Status status;
     private String content, contentCW, contentTranslated;
     private SpannableString contentSpan, displayNameSpan, contentSpanCW, contentSpanTranslated;
-
+    private RetrieveFeedsAsyncTask.Type type;
 
     public Status(){
         this.status = this;
@@ -826,11 +828,28 @@ public class Status implements Parcelable{
                             spannableStringT.setSpan(new ClickableSpan() {
                                     @Override
                                     public void onClick(View textView) {
-                                        Intent intent = new Intent(context, ShowAccountActivity.class);
-                                        Bundle b = new Bundle();
-                                        b.putString("accountId", mention.getId());
-                                        intent.putExtras(b);
-                                        context.startActivity(intent);
+                                        if( type == null || type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                                            Intent intent = new Intent(context, ShowAccountActivity.class);
+                                            Bundle b = new Bundle();
+                                            b.putString("accountId", mention.getId());
+                                            intent.putExtras(b);
+                                            context.startActivity(intent);
+                                        }else {
+                                            String url = mention.getUrl();
+                                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\/\\w._-]*)");
+                                            Matcher matcherAcct = instanceHost.matcher(url);
+                                            String instance = null, acct = null;
+                                            while (matcherAcct.find()){
+                                                instance = matcherAcct.group(1);
+                                                acct = matcherAcct.group(2);
+                                            }
+                                            if( acct != null && instance != null){
+                                                Account account = new Account();
+                                                account.setInstance(instance);
+                                                account.setAcct(acct.replace("@",""));
+                                                CrossActions.doCrossProfile(context, account);
+                                            }
+                                        }
                                     }
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
@@ -961,5 +980,13 @@ public class Status implements Parcelable{
 
     public void setReplies_count(int replies_count) {
         this.replies_count = replies_count;
+    }
+
+    public RetrieveFeedsAsyncTask.Type getType() {
+        return type;
+    }
+
+    public void setType(RetrieveFeedsAsyncTask.Type type) {
+        this.type = type;
     }
 }

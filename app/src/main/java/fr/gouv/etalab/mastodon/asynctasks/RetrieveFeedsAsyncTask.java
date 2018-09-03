@@ -23,6 +23,7 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.FilterToots;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -123,6 +124,12 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case REMOTE_INSTANCE:
                 apiResponse = api.getPublicTimeline(this.instanceName,false, max_id);
+                List<fr.gouv.etalab.mastodon.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
+                if( statusesTemp != null){
+                    for(fr.gouv.etalab.mastodon.client.Entities.Status status: statusesTemp){
+                        status.setType(action);
+                    }
+                }
                 break;
             case FAVOURITES:
                 apiResponse = api.getFavourites(max_id);
