@@ -188,6 +188,10 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
+        if( account.getAvatar() == null){
+            Toast.makeText(ShowConversationActivity.this,R.string.toast_error, Toast.LENGTH_LONG).show();
+            finish();
+        }
         String url = account.getAvatar();
         if( url.startsWith("/") ){
             url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
