@@ -216,7 +216,7 @@
   <string name="no_notifications">Нет уведомлений для отображения</string>
   <string name="notif_mention">вас упомянули</string>
   <string name="notif_reblog">повышен ваш статус</string>
-  <string name="notif_favourite">ваш статус в избранных</string>
+  <string name="notif_favourite">добавил(а) ваш статус в избранные</string>
   <string name="notif_follow">подписался на вас</string>
   <string name="notif_pouet">Новый toot от %1$s</string>
   <plurals name="other_notifications">

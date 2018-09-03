@@ -147,10 +147,10 @@
   <string name="date_hours">%d godz.</string>
   <string name="date_day">%d dni</string>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">CW</string>
+  <string name="toot_cw_placeholder">Ostrzeżenie</string>
   <string name="toot_placeholder">Co Ci chodzi po głowie?</string>
   <string name="toot_it">Wyślij!</string>
-  <string name="cw">Ostrzeżenie o zawartości</string>
+  <string name="cw">cw</string>
   <string name="toot_title">Nowy wpis</string>
   <string name="toot_title_reply">Odpowiedz na wpis</string>
   <string name="toot_no_space">Osiągnąłeś limit 500 znaków!</string>
@@ -340,14 +340,14 @@
     <item>DeepL</item>
     <item>Brak</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">Klucz API, można zostawić puste dla Yandex</string>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Ciemny</item>
+    <item>Jasny</item>
+    <item>Czarny</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
+    <item>Nie</item>
     <item>512 Kb</item>
     <item>1 Mb</item>
     <item>2 Mb</item>
@@ -493,7 +493,7 @@ Podziękowania dla:    </string>
   <string name="poxy_port">Port</string>
   <string name="poxy_login">Login</string>
   <string name="poxy_password">Hasło</string>
-  <string name="set_theme">Theme:</string>
+  <string name="set_theme">Motyw:</string>
   <string name="set_compact_mode">Compact mode</string>
   <string name="set_share_details">Add toot details when sharing</string>
   <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
