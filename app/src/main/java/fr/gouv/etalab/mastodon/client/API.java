@@ -739,6 +739,12 @@ public class API {
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             accounts = parseAccountResponse(new JSONArray(response));
+            if( accounts != null && accounts.size() == 1 ){
+                if(accounts.get(0).getAcct() == null){
+                    Throwable error = new Throwable(context.getString(R.string.toast_error));
+                    setError(500, error);
+                }
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {

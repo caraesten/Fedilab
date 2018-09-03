@@ -822,7 +822,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Bundle extras = intent.getExtras();
-        if (extras != null) {
+        if (extras != null && extras.getString("imageUri") != null) {
             Uri imageUri = Uri.parse(extras.getString("imageUri"));
             picture_scrollview.setVisibility(View.VISIBLE);
             if(  imageUri == null) {

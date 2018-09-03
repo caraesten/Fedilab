@@ -1720,11 +1720,11 @@ public abstract class BaseMainActivity extends BaseActivity
                     public void onClick(DialogInterface dialog, int id) {
                         new SearchDAO(BaseMainActivity.this, db).remove(title);
                         String tag;
-                        if( position > 0)
-                            tag = tabLayout.getTabAt(position -1).getText().toString();
-                        else if( tabLayout.getTabCount() > 1 )
+                        if( position > 0 && tabLayout.getTabAt(position - 1).getText() != null) {
+                            tag = tabLayout.getTabAt(position - 1).getText().toString();
+                        }else if( tabLayout.getTabCount() > 1 && tabLayout.getTabAt(1).getText() != null) {
                             tag = tabLayout.getTabAt(1).getText().toString();
-                        else //Last element
+                        }else //Last element
                             tag = "";
                         Helper.removeTab(tabLayout, adapter, position);
                         adapter = new BaseMainActivity.PagerAdapter
