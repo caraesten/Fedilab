@@ -646,9 +646,7 @@ public class HttpsConnection {
             if (httpURLConnection != null)
                 try {
                     httpURLConnection.getInputStream().close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                } catch (Exception ignored) { }
             return null;
         }
     }

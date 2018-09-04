@@ -28,6 +28,9 @@ public class Relationship {
     private boolean muting;
     private boolean requested;
     private boolean muting_notifications;
+    private boolean endorsed;
+    private boolean showing_reblogs;
+
 
     public String getId() {
         return id;
@@ -83,5 +86,21 @@ public class Relationship {
 
     public void setMuting_notifications(boolean muting_notifications) {
         this.muting_notifications = muting_notifications;
+    }
+
+    public boolean isEndorsed() {
+        return endorsed;
+    }
+
+    public void setEndorsed(boolean endorsed) {
+        this.endorsed = endorsed;
+    }
+
+    public boolean isShowing_reblogs() {
+        return showing_reblogs;
+    }
+
+    public void setShowing_reblogs(boolean showing_reblogs) {
+        this.showing_reblogs = showing_reblogs;
     }
 }

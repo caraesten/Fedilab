@@ -1933,7 +1933,7 @@ public class API {
             try{
                 status.setReplies_count(Integer.valueOf(resobj.get("replies_count").toString()));
             }catch (Exception e){
-                status.setReplies_count(0);
+                status.setReplies_count(-1);
             }
             try {
                 status.setReblogged(Boolean.valueOf(resobj.get("reblogged").toString()));
@@ -2162,6 +2162,16 @@ public class API {
                 relationship.setMuting_notifications(Boolean.valueOf(resobj.get("muting_notifications").toString()));
             }catch (Exception ignored){
                 relationship.setMuting_notifications(true);
+            }
+            try {
+                relationship.setEndorsed(Boolean.valueOf(resobj.get("endorsed").toString()));
+            }catch (Exception ignored){
+                relationship.setMuting_notifications(false);
+            }
+            try {
+                relationship.setShowing_reblogs(Boolean.valueOf(resobj.get("showing_reblogs").toString()));
+            }catch (Exception ignored){
+                relationship.setMuting_notifications(false);
             }
             relationship.setRequested(Boolean.valueOf(resobj.get("requested").toString()));
         } catch (JSONException e) {

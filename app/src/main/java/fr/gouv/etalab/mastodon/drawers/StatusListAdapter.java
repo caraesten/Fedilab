@@ -63,7 +63,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -72,8 +71,6 @@ import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
 import com.github.stom79.mytransl.translate.Translate;
-
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -116,7 +113,6 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
-
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
@@ -227,7 +223,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         if( holder.getItemViewType() == DISPLAYED_STATUS || holder.getItemViewType() == COMPACT_STATUS) {
             final ViewHolder viewHolder = (ViewHolder) holder;
@@ -466,9 +462,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
                 boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
                 //Retrieves attached replies to a toot
-                if (showPreview && status.getReplies() == null) {
+                if (showPreview && status.getReblogs_count() == -1) {
                     new RetrieveRepliesAsyncTask(context, status, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
+
             }
 
 
@@ -483,9 +480,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.status_reply.setText("");
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
+
             if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
                 boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
-                if( showPreview){
+                //All way to deal with replies count
+                if( showPreview  && status.getReblogs_count() == -1){
                     boolean showPreviewPP = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, false);
                     if(  status.getReplies() == null){
                         holder.loader_replies.setVisibility(View.VISIBLE);
@@ -519,6 +518,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_reply.setText(String.valueOf(status.getReplies().size()));
                         holder.status_replies.setVisibility(View.VISIBLE);
                         holder.loader_replies.setVisibility(View.GONE);
+                    }
+                }else if(showPreview && status.getReblogs_count() >= 0) {
+                    if( status.getReblogs_count() > 0 ) {
+                        holder.status_reply.setText(String.valueOf(status.getReblogs_count()));
+                        holder.status_replies.setVisibility(View.VISIBLE);
+                    }
+                    boolean showPreviewPP = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, false);
+                    if (showPreviewPP && status.getReblogs_count() > 0) {
+                        new RetrieveRepliesAsyncTask(context, status, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        status.setReblogs_count(-1);
                     }
                 }else{
                     holder.loader_replies.setVisibility(View.GONE);
