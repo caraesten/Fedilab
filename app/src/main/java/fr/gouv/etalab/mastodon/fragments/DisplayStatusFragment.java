@@ -441,7 +441,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.apply();
                 if(liveNotifications) {
                     streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
-                    context.startService(streamingFederatedIntent);
+                    try {
+                        context.startService(streamingFederatedIntent);
+                    }catch (Exception ignored){}
                 }
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
@@ -454,7 +456,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.apply();
                 if( liveNotifications) {
                     streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
-                    context.startService(streamingLocalIntent);
+                    try {
+                        context.startService(streamingLocalIntent);
+                    }catch (Exception ignored){}
                 }
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
@@ -503,7 +507,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.apply();
                 if(liveNotifications) {
                     streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
-                    context.startService(streamingFederatedIntent);
+                    try {
+                        context.startService(streamingFederatedIntent);
+                    }catch (Exception ignored){}
                 }
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
@@ -522,7 +528,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.apply();
                 if( liveNotifications ) {
                     streamingLocalIntent = new Intent(context, StreamingLocalTimelineService.class);
-                    context.startService(streamingLocalIntent);
+                    try {
+                        context.startService(streamingLocalIntent);
+                    }catch (Exception ignored){}
                 }
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
