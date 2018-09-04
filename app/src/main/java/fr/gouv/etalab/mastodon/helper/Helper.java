@@ -702,7 +702,16 @@ public class Helper {
                 message = context.getString(R.string.toast_report);
             }else if(statusAction == API.StatusAction.UNSTATUS){
                 message = context.getString(R.string.toast_unstatus);
+            }else if(statusAction == API.StatusAction.UNENDORSE){
+                message = context.getString(R.string.toast_unendorse);
+            }else if(statusAction == API.StatusAction.ENDORSE){
+                message = context.getString(R.string.toast_endorse);
+            }else if(statusAction == API.StatusAction.SHOW_BOOST){
+                message = context.getString(R.string.toast_show_boost);
+            }else if(statusAction == API.StatusAction.HIDE_BOOST){
+                message = context.getString(R.string.toast_hide_boost);
             }
+
         }else {
             message = context.getString(R.string.toast_error);
         }

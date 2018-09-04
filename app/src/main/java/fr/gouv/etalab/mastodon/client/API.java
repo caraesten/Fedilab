@@ -84,7 +84,12 @@ public class API {
         REPORT,
         REMOTE_FOLLOW,
         PIN,
-        UNPIN
+        UNPIN,
+        ENDORSE,
+        UNENDORSE,
+        SHOW_BOOST,
+        HIDE_BOOST
+
     }
     public enum accountPrivacy {
         PUBLIC,
@@ -963,6 +968,18 @@ public class API {
                 break;
             case UNPIN:
                 action = String.format("/statuses/%s/unpin", targetedId);
+                break;
+            case ENDORSE:
+                action = String.format("/accounts/%s/pin", targetedId);
+                break;
+            case UNENDORSE:
+                action = String.format("/accounts/%s/unpin", targetedId);
+                break;
+            case SHOW_BOOST:
+                action = String.format("/accounts/%s/follow", targetedId);
+                break;
+            case HIDE_BOOST:
+                action = String.format("/accounts/%s/follow", targetedId);
                 break;
             case UNSTATUS:
                 action = String.format("/statuses/%s", targetedId);

@@ -32,6 +32,21 @@
         android:icon="@drawable/ic_chat_bubble_outline"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/action_hide_boost"
+        android:title="@string/hide_boost"
+        app:showAsAction="ifRoom" />
+
+    <!-- <item
+        android:id="@+id/action_block_domain"
+        android:title="@string/hide_everything"
+        app:showAsAction="ifRoom" /> -->
+
+    <item
+        android:id="@+id/action_endorse"
+        android:title="@string/endorse"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_follow_instance"
         android:title="@string/follow_instance"
         android:icon="@drawable/ic_public_world"

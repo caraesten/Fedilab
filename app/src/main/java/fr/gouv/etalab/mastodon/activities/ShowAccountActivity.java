@@ -42,6 +42,7 @@ import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -319,6 +320,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             popup.getMenu().findItem(R.id.action_mute).setVisible(false);
             popup.getMenu().findItem(R.id.action_mention).setVisible(false);
             popup.getMenu().findItem(R.id.action_follow_instance).setVisible(false);
+            popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
+            popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
             stringArrayConf =  getResources().getStringArray(R.array.more_action_owner_confirm);
         }else {
             popup.getMenu().findItem(R.id.action_block).setVisible(true);
@@ -326,6 +329,23 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             popup.getMenu().findItem(R.id.action_mention).setVisible(true);
             stringArrayConf =  getResources().getStringArray(R.array.more_action_confirm);
         }
+        if( relationship != null){
+            if( !relationship.isFollowing()) {
+                popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
+                popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
+            }
+            if(relationship.isEndorsed()){
+                popup.getMenu().findItem(R.id.action_endorse).setTitle(R.string.unendorse);
+            }else {
+                popup.getMenu().findItem(R.id.action_endorse).setTitle(R.string.endorse);
+            }
+            if(relationship.isShowing_reblogs()){
+                popup.getMenu().findItem(R.id.action_hide_boost).setTitle(getString(R.string.hide_boost, account.getUsername()));
+            }else {
+                popup.getMenu().findItem(R.id.action_hide_boost).setTitle(getString(R.string.show_boost, account.getUsername()));
+            }
+        }
+
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 AlertDialog.Builder builderInner;
@@ -373,6 +393,22 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                 }
                             }
                         }).start();
+                        return true;
+                    case R.id.action_endorse:
+                        if( relationship != null)
+                            if(relationship.isEndorsed()){
+                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNENDORSE, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }else {
+                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.ENDORSE, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
+                        return true;
+                    case R.id.action_hide_boost:
+                        if( relationship != null)
+                            if(relationship.isShowing_reblogs()){
+                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.HIDE_BOOST, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }else {
+                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.SHOW_BOOST, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
                         return true;
                     case R.id.action_show_pinned:
                         showPinned = !showPinned;
@@ -889,6 +925,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             TextView account_followed_by = findViewById(R.id.account_followed_by);
             account_followed_by.setVisibility(View.VISIBLE);
         }
+        invalidateOptionsMenu();
 
     }
 

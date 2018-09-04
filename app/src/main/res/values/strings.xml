@@ -558,6 +558,19 @@
     <string name="about_partnership" translatable="false"><b>Masto.host</b> is our Mastodon hosting partner.\n\nWith this partnership they provide me free hosting for <a href="https://ins.mastalab.app">Mastalab\'s instance</a> and in exchange I promote them in here.\n\nTo be clear, there is no money involved or tracking of users. I needed an instance for testing, we talked and agreed on this.\n\n<a href="https://masto.host">Go check them out</a> if you want to run your own Mastodon instance.</string>
     <string name="action_partnership" >Partnerships</string>
     <string name="neutral_menu_information">Information</string>
+
+    <string name="hide_boost">Hide boosts from %s</string>
+    <string name="endorse">Feature on profile</string>
+    <string name="hide_everything">Hide everything from %s</string>
+    <string name="show_boost">Show boosts from %s</string>
+    <string name="unendorse">Don\'t feature on profile</string>
+    <string name="show_everything">Show everything from %s</string>
+    <string name="toast_endorse">The account is now featured on profile</string>
+    <string name="toast_unendorse">The account is no longer featured on profile</string>
+    <string name="toast_show_boost">Boosts are now shown!</string>
+    <string name="toast_hide_boost">Boosts are now hidden!</string>
+
+
     <string-array translatable="false" name="proxy_type_choice">
         <item>HTTP</item>
         <item>SOCKS</item>
