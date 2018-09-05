@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client.Entities;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Thomas on 05/09/2018.
@@ -30,6 +31,7 @@ public class Filters {
     private boolean irreversible;
     private boolean whole_word;
     private int expires_in;
+    private Date setExpires_at;
 
     public String getPhrase() {
         return phrase;
@@ -77,5 +79,13 @@ public class Filters {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Date getSetExpires_at() {
+        return setExpires_at;
+    }
+
+    public void setSetExpires_at(Date setExpires_at) {
+        this.setExpires_at = setExpires_at;
     }
 }

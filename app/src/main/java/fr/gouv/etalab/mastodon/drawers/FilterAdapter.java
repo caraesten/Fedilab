@@ -26,11 +26,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -89,12 +93,18 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
             holder = new ViewHolder();
             holder.filter_word = convertView.findViewById(R.id.filter_word);
             holder.filter_context = convertView.findViewById(R.id.filter_context);
+            holder.edit_filter = convertView.findViewById(R.id.edit_filter);
+            holder.delete_filter = convertView.findViewById(R.id.delete_filter);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-
+        holder.filter_word.setText(filter.getPhrase());
+        StringBuilder contextString = new StringBuilder();
+        if( filter.getContext() != null)
+            for(String ct: filter.getContext())
+                contextString.append(ct).append(" ");
+        holder.filter_context.setText(contextString.toString());
 
         holder.edit_filter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +121,54 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                 CheckBox context_conversation = dialogView.findViewById(R.id.context_conversation);
                 CheckBox context_whole_word = dialogView.findViewById(R.id.context_whole_word);
                 CheckBox context_drop = dialogView.findViewById(R.id.context_drop);
+                Spinner filter_expire = dialogView.findViewById(R.id.filter_expire);
+                ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(context,
+                        R.array.filter_expire, android.R.layout.simple_spinner_item);
+                filter_expire.setAdapter(adapterResize);
+                final int[] expire = {-1};
+                filter_expire.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        switch (position){
+                            case 0:
+                                expire[0] = -1;
+                                break;
+                            case 1:
+                                expire[0] = 3600;
+                                break;
+                            case 2:
+                                expire[0] = 21600;
+                                break;
+                            case 3:
+                                expire[0] = 43200;
+                                break;
+                            case 4:
+                                expire[0] = 86400;
+                                break;
+                            case 5:
+                                expire[0] = 604800;
+                                break;
+                        }
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+
+                add_phrase.setText(filter.getPhrase());
+                if( filter.getContext() != null)
+                    for(String val: filter.getContext()){
+                        if(val.equals("home"))
+                            context_home.setChecked(true);
+                        else if(val.equals("public"))
+                            context_public.setChecked(true);
+                        else if(val.equals("notifications"))
+                            context_notification.setChecked(true);
+                        else if(val.equals("thread"))
+                            context_conversation.setChecked(true);
+                    }
+                context_whole_word.setChecked(filter.isWhole_word());
+                context_drop.setChecked(filter.isIrreversible());
 
                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @Override
@@ -128,6 +186,7 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                             if( context_conversation.isChecked())
                                 contextFilter.add("thread");
                             filter.setContext(contextFilter);
+                            filter.setExpires_in(expire[0]);
                             filter.setPhrase(add_phrase.getText().toString());
                             filter.setWhole_word(context_whole_word.isChecked());
                             filter.setIrreversible(context_drop.isChecked());

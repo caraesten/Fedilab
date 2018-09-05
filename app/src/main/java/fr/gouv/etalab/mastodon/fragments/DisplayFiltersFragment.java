@@ -29,10 +29,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,7 +107,39 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
                 CheckBox context_conversation = dialogView.findViewById(R.id.context_conversation);
                 CheckBox context_whole_word = dialogView.findViewById(R.id.context_whole_word);
                 CheckBox context_drop = dialogView.findViewById(R.id.context_drop);
-
+                Spinner filter_expire = dialogView.findViewById(R.id.filter_expire);
+                ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(getContext(),
+                        R.array.filter_expire, android.R.layout.simple_spinner_item);
+                filter_expire.setAdapter(adapterResize);
+                final int[] expire = {-1};
+                filter_expire.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                       switch (position){
+                           case 0:
+                               expire[0] = -1;
+                               break;
+                           case 1:
+                               expire[0] = 3600;
+                               break;
+                           case 2:
+                               expire[0] = 21600;
+                               break;
+                           case 3:
+                               expire[0] = 43200;
+                               break;
+                           case 4:
+                               expire[0] = 86400;
+                               break;
+                           case 5:
+                               expire[0] = 604800;
+                               break;
+                       }
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -122,6 +157,7 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
                                 contextFilter.add("thread");
                             filter.setContext(contextFilter);
                             filter.setPhrase(add_phrase.getText().toString());
+                            filter.setExpires_in(expire[0]);
                             filter.setWhole_word(context_whole_word.isChecked());
                             filter.setIrreversible(context_drop.isChecked());
                             new ManageFiltersAsyncTask(context, ManageFiltersAsyncTask.action.CREATE_FILTER, filter, DisplayFiltersFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

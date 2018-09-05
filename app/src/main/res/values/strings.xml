@@ -595,4 +595,15 @@
         <item>HTTP</item>
         <item>SOCKS</item>
     </string-array>
+
+
+    <string-array name="filter_expire">
+        <item>Never</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>6 hours</item>
+        <item>12 hours</item>
+        <item>1 day</item>
+        <item>1 week</item>
+    </string-array>
 </resources>

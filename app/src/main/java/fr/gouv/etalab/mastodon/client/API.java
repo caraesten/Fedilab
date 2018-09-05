@@ -1418,6 +1418,7 @@ public class API {
         List<fr.gouv.etalab.mastodon.client.Entities.Filters> filters = new ArrayList<>();
         try {
             String response = new HttpsConnection(context).get(getAbsoluteUrl("/filters"), 60, null, prefKeyOauthTokenT);
+            Log.v(Helper.TAG,"resp: " + response);
             filters = parseFilters(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1445,6 +1446,7 @@ public class API {
         fr.gouv.etalab.mastodon.client.Entities.Filters filter;
         try {
             String response = new HttpsConnection(context).get(getAbsoluteUrl(String.format("/filters/%s", filterId)), 60, null, prefKeyOauthTokenT);
+            Log.v(Helper.TAG,"resp: " + response);
             filter = parseFilter(new JSONObject(response));
             filters.add(filter);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -2211,16 +2213,17 @@ public class API {
      * @param resobj JSONObject
      * @return Filter
      */
-    private static fr.gouv.etalab.mastodon.client.Entities.Filters parseFilter(JSONObject resobj){
+    private fr.gouv.etalab.mastodon.client.Entities.Filters parseFilter(JSONObject resobj){
         fr.gouv.etalab.mastodon.client.Entities.Filters filter = new fr.gouv.etalab.mastodon.client.Entities.Filters();
         try {
             filter.setPhrase(resobj.get("phrase").toString());
-            filter.setExpires_in(Integer.parseInt(resobj.get("expires_in").toString()));
+            filter.setSetExpires_at(Helper.mstStringToDate(context, resobj.get("expires_at").toString()));
             filter.setWhole_word(Boolean.parseBoolean(resobj.get("whole_word").toString()));
             filter.setIrreversible(Boolean.parseBoolean(resobj.get("irreversible").toString()));
             String contextString = resobj.get("context").toString();
-            contextString = contextString.replace("[","");
-            contextString = contextString.replace("]","");
+            contextString = contextString.replaceAll("\\[","");
+            contextString = contextString.replaceAll("]","");
+            contextString = contextString.replaceAll("\"","");
             if( contextString != null) {
                 String[] context = contextString.split(",");
                 if( contextString.length() > 0 ){

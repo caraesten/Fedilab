@@ -92,6 +92,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayBookmarksFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayFiltersFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
@@ -1495,6 +1496,12 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "LISTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayListsFragment, fragmentTag).commit();
+        }else if(id == R.id.nav_filters){
+            toot.setVisibility(View.GONE);
+            DisplayFiltersFragment displayFiltersFragment = new DisplayFiltersFragment();
+            fragmentTag = "FILTERS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayFiltersFragment, fragmentTag).commit();
         }
 
         populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
