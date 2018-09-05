@@ -308,9 +308,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         final PopupMenu popup = new PopupMenu(ShowAccountActivity.this, account_menu);
         popup.getMenuInflater()
                 .inflate(R.menu.main_showaccount, popup.getMenu());
-        if( !Helper.canPin ) {
-            popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
-        }
+       
         final String[] stringArrayConf;
         final boolean isOwner = account.getId().equals(userId);
         String[] splitAcct = account.getAcct().split("@");
@@ -324,6 +322,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             popup.getMenu().findItem(R.id.action_follow_instance).setVisible(false);
             popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
             popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
+            popup.getMenu().findItem(R.id.action_direct_message).setVisible(false);
             stringArrayConf =  getResources().getStringArray(R.array.more_action_owner_confirm);
         }else {
             popup.getMenu().findItem(R.id.action_block).setVisible(true);
@@ -412,21 +411,13 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                 new PostActionAsyncTask(getApplicationContext(), API.StatusAction.SHOW_BOOST, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             }
                         return true;
-                    case R.id.action_show_pinned:
-                        showPinned = !showPinned;
-                        if( tabLayout.getTabAt(0) != null)
-                            //noinspection ConstantConditions
-                            tabLayout.getTabAt(0).select();
-                        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                        mPager.setAdapter(mPagerAdapter);
-                        return true;
-                    case R.id.action_show_media:
-                        showMediaOnly = !showMediaOnly;
-                        if( tabLayout.getTabAt(0) != null)
-                            //noinspection ConstantConditions
-                            tabLayout.getTabAt(0).select();
-                        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                        mPager.setAdapter(mPagerAdapter);
+                    case R.id.action_direct_message:
+                        Intent intent = new Intent(getApplicationContext(), TootActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("mentionAccount", account.getAcct());
+                        b.putString("visibility", "direct");
+                        intent.putExtras(b);
+                        startActivity(intent);
                         return true;
                     case R.id.action_open_browser:
                         if( accountUrl != null) {
@@ -436,8 +427,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         }
                         return true;
                     case R.id.action_mention:
-                        Intent intent = new Intent(getApplicationContext(), TootActivity.class);
-                        Bundle b = new Bundle();
+                        intent = new Intent(getApplicationContext(), TootActivity.class);
+                        b = new Bundle();
                         b.putString("mentionAccount", account.getAcct());
                         intent.putExtras(b);
                         startActivity(intent);

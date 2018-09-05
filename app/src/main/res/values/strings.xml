@@ -569,6 +569,7 @@
     <string name="toast_unendorse">The account is no longer featured on profile</string>
     <string name="toast_show_boost">Boosts are now shown!</string>
     <string name="toast_hide_boost">Boosts are now hidden!</string>
+    <string name="direct_message">Direct message</string>
 
 
     <string-array translatable="false" name="proxy_type_choice">

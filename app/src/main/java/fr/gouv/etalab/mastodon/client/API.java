@@ -985,9 +985,13 @@ public class API {
                 action = String.format("/accounts/%s/unpin", targetedId);
                 break;
             case SHOW_BOOST:
+                params = new HashMap<>();
+                params.put("reblogs","true");
                 action = String.format("/accounts/%s/follow", targetedId);
                 break;
             case HIDE_BOOST:
+                params = new HashMap<>();
+                params.put("reblogs","false");
                 action = String.format("/accounts/%s/follow", targetedId);
                 break;
             case UNSTATUS:

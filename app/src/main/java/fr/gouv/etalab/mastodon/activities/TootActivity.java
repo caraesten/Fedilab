@@ -295,6 +295,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             mentionAccount = b.getString("mentionAccount", null);
             idRedirect =  b.getString("idRedirect", null);
             removed = b.getBoolean("removed");
+            visibility = b.getString("visibility", null);
             restoredScheduled = b.getBoolean("restoredScheduled", false);
             // ACTION_SEND route
             if (b.getInt("uriNumberMast", 0) == 1) {
@@ -428,8 +429,10 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
 
         if( tootReply == null) {
-            String defaultVisibility = account.isLocked()?"private":"public";
-            visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
+            if( visibility == null) {
+                String defaultVisibility = account.isLocked() ? "private" : "public";
+                visibility = sharedpreferences.getString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), defaultVisibility);
+            }
             switch (visibility) {
                 case "public":
                     toot_visibility.setImageResource(R.drawable.ic_public_toot);
