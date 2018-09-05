@@ -497,8 +497,8 @@
   <string name="alert_regex">Er zit een fout in de reguliere expressie!</string>
   <string name="no_account_yet">Nog geen account?</string>
   <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-  <string name="delete_instance">Delete this instance?</string>
-  <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
+  <string name="delete_instance">Server verwijderen?</string>
+  <string name="warning_delete_instance">Je gaat %s als gevolgde server verwijderen.</string>
   <string name="which_language">Vertalen in</string>
   <string name="crash_title">Mastalab is gestopt :(</string>
   <string name="crash_message">Je kunt mij per e-mail foutrapportages sturen. Dit helpt om het probleem op te lossen :)\n\nJe kunt extra informatie toevoegen. Dank je!</string>
