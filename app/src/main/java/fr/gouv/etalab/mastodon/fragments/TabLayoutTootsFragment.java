@@ -20,14 +20,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.helper.Helper;
 
 
 /**
@@ -93,7 +91,6 @@ public class TabLayoutTootsFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            Log.v(Helper.TAG,"position: " + position);
             switch (position) {
                 case 0:
 
@@ -113,13 +110,11 @@ public class TabLayoutTootsFragment extends Fragment {
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
                 case 2:
-                    displayStatusFragment = new DisplayStatusFragment();
+                    DisplayMediaFragment displayMediaFragment = new DisplayMediaFragment();
                     bundle = new Bundle();
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
                     bundle.putString("targetedId", targetedId);
-                    bundle.putBoolean("showMediaOnly",true);
-                    displayStatusFragment.setArguments(bundle);
-                    return displayStatusFragment;
+                    displayMediaFragment.setArguments(bundle);
+                    return displayMediaFragment;
                 case 3:
                     displayStatusFragment = new DisplayStatusFragment();
                     bundle = new Bundle();
