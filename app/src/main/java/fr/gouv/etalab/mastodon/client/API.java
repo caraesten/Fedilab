@@ -368,6 +368,17 @@ public class API {
     }
 
     /**
+     * Retrieves replies status(es) *synchronously*
+     *
+     * @param accountId String Id of the account
+     * @param max_id    String id max
+     * @return APIResponse
+     */
+    public APIResponse getAccountTLStatuses(String accountId, String max_id, boolean exclude_replies) {
+        return getStatus(accountId, false, false, exclude_replies, max_id, null, tootPerPage);
+    }
+
+    /**
      * Retrieves status for the account *synchronously*
      *
      * @param accountId       String Id of the account
@@ -383,8 +394,6 @@ public class API {
                                   boolean exclude_replies, String max_id, String since_id, int limit) {
 
         HashMap<String, String> params = new HashMap<>();
-        if( exclude_replies)
-            params.put("exclude_replies", Boolean.toString(true));
         if (max_id != null)
             params.put("max_id", max_id);
         if (since_id != null)
@@ -395,9 +404,9 @@ public class API {
             params.put("only_media", Boolean.toString(true));
         if( pinned)
             params.put("pinned", Boolean.toString(true));
+        params.put("exclude_replies", Boolean.toString(exclude_replies));
         params.put("limit", String.valueOf(limit));
         statuses = new ArrayList<>();
-
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/statuses", accountId)), 60, params, prefKeyOauthTokenT);

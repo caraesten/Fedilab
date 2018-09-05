@@ -74,7 +74,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String targetedId;
     private String tag;
     private RecyclerView lv_status;
-    private boolean showMediaOnly, showPinned;
+    private boolean showMediaOnly, showPinned, showReply;
     private Intent streamingFederatedIntent, streamingLocalIntent;
     LinearLayoutManager mLayoutManager;
     boolean firstTootsLoaded;
@@ -96,12 +96,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         //Will allow to load first toots if bookmark != null
         firstTootsLoaded = true;
         showPinned = false;
+        showReply = false;
         if (bundle != null) {
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
             tag = bundle.getString("tag", null);
             showMediaOnly = bundle.getBoolean("showMediaOnly",false);
             showPinned = bundle.getBoolean("showPinned",false);
+            showReply = bundle.getBoolean("showReply",false);
             remoteInstance = bundle.getString("remote_instance", "");
         }
         isSwipped = false;
@@ -150,7 +152,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         if(!flag_loading ) {
                             flag_loading = true;
                             if( type == RetrieveFeedsAsyncTask.Type.USER)
-                                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             else if( type == RetrieveFeedsAsyncTask.Type.TAG)
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
@@ -209,7 +211,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
         if( context != null) {
             if (type == RetrieveFeedsAsyncTask.Type.USER)
-                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else if (type == RetrieveFeedsAsyncTask.Type.TAG)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
@@ -233,7 +235,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 public void run() {
                     if( context != null){
                         if (type == RetrieveFeedsAsyncTask.Type.USER)
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         else if (type == RetrieveFeedsAsyncTask.Type.TAG)
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )

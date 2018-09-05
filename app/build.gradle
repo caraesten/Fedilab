@@ -74,7 +74,7 @@ dependencies {
     implementation "ch.acra:acra-mail:$acraVersion"
     implementation "ch.acra:acra-dialog:$acraVersion"
     implementation "ch.acra:acra-limiter:$acraVersion"
-
+    implementation "com.veinhorn.scrollgalleryview:library:1.0.8"
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
 
 

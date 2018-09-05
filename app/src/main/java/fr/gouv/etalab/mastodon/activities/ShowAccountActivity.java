@@ -79,12 +79,14 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
+import fr.gouv.etalab.mastodon.fragments.TabLayoutTootsFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
@@ -753,7 +755,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, withSuffix(account.getFollowers_count())));
 
             //Allows to filter by long click
-            final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+            /*final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
             tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -827,7 +829,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     popup.show();
                     return true;
                 }
-            });
+            });*/
 
 
         }
@@ -846,7 +848,25 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             account_pp.setImageDrawable(circularBitmapDrawable);
                         }
                     });
-
+        account_pp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShowAccountActivity.this, MediaActivity.class);
+                Bundle b = new Bundle();
+                Attachment attachment = new Attachment();
+                attachment.setDescription(account.getAcct());
+                attachment.setPreview_url(account.getAvatar());
+                attachment.setUrl(account.getAvatar());
+                attachment.setRemote_url(account.getAvatar());
+                attachment.setType("image");
+                ArrayList<Attachment> attachments = new ArrayList<>();
+                attachments.add(attachment);
+                intent.putParcelableArrayListExtra("mediaArray", attachments);
+                b.putInt("position", 1);
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
         //Follow button
         account_follow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -973,13 +993,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             Bundle bundle = new Bundle();
             switch (position){
                 case 0:
-                    displayStatusFragment = new DisplayStatusFragment();
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
+                    TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
                     bundle.putString("targetedId", accountId);
-                    bundle.putBoolean("showMediaOnly",showMediaOnly);
-                    bundle.putBoolean("showPinned",showPinned);
-                    displayStatusFragment.setArguments(bundle);
-                    return displayStatusFragment;
+                    tabLayoutTootsFragment.setArguments(bundle);
+                    return tabLayoutTootsFragment;
                 case 1:
                     DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
@@ -996,7 +1013,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             return null;
         }
 
-        @NonNull
+        /*@NonNull
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
@@ -1007,7 +1024,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     break;
             }
             return createdFragment;
-        }
+        }*/
 
         @Override
         public int getCount() {

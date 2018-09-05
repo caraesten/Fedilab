@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -25,6 +26,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.FilterToots;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
@@ -46,6 +48,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private String tag;
     private boolean showMediaOnly = false;
     private boolean showPinned = false;
+    private boolean showReply = false;
     private WeakReference<Context> contextReference;
     private FilterToots filterToots;
     private String instanceName;
@@ -99,6 +102,16 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.showMediaOnly = showMediaOnly;
         this.showPinned = showPinned;
     }
+    public RetrieveFeedsAsyncTask(Context context, Type action, String targetedID, String max_id, boolean showMediaOnly, boolean showPinned, boolean showReply, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.action = action;
+        this.max_id = max_id;
+        this.listener = onRetrieveFeedsInterface;
+        this.targetedID = targetedID;
+        this.showMediaOnly = showMediaOnly;
+        this.showPinned = showPinned;
+        this.showReply = showReply;
+    }
     public RetrieveFeedsAsyncTask(Context context, Type action, String tag, String targetedID, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
         this.contextReference = new WeakReference<>(context);
         this.action = action;
@@ -140,7 +153,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 else if (showPinned)
                     apiResponse = api.getPinnedStatuses(targetedID, max_id);
                 else
-                    apiResponse = api.getStatus(targetedID, max_id);
+                    apiResponse = api.getAccountTLStatuses(targetedID, max_id, !showReply);
                 break;
             case ONESTATUS:
                 apiResponse = api.getStatusbyId(targetedID);
