@@ -32,6 +32,10 @@
                         android:icon="@drawable/ic_bookmark"
                         android:title="@string/bookmarks" />
                     <item
+                        android:id="@+id/nav_filters"
+                        android:icon="@drawable/ic_filter"
+                        android:title="@string/filters" />
+                    <item
                         android:id="@+id/nav_follow_request"
                         android:icon="@drawable/ic_group_add"
                         android:title="@string/follow_request" />

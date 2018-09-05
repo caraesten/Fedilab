@@ -1495,10 +1495,12 @@ public class API {
      * @param filter Filter
      * @return APIResponse
      */
-    public APIResponse deleteFilters(Filters filter){
+    public int deleteFilters(Filters filter){
 
         try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
             new HttpsConnection(context).delete(getAbsoluteUrl(String.format("/filters/%s", filter.getId())), 60, null, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1508,7 +1510,7 @@ public class API {
         } catch (KeyManagementException e) {
             e.printStackTrace();
         }
-        return apiResponse;
+        return actionCode;
     }
 
     /**
@@ -2228,6 +2230,7 @@ public class API {
                     filter.setContext(finalContext);
                 }
             }
+
         }catch (Exception ignored){}
         return filter;
     }

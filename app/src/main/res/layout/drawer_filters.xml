@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2018 Thomas Schneider
+
+    This file is a part of Mastalab
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Mastalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Mastalab; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/filter_container"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/filter_word"
+        android:layout_width="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/filter_context"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="wrap_content"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="30dp"
+        android:layout_margin="5dp"
+        android:id="@+id/edit_filter"
+        app:fabSize="mini"
+        app:backgroundTint="?colorAccent"
+        app:srcCompat="@drawable/ic_edit"
+        tools:ignore="VectorDrawableCompat"
+        android:layout_height="30dp" />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="30dp"
+        app:fabSize="mini"
+        android:layout_margin="5dp"
+        android:id="@+id/delete_filter"
+        app:backgroundTint="?colorAccent"
+        app:srcCompat="@drawable/ic_delete"
+        tools:ignore="VectorDrawableCompat"
+        android:layout_height="30dp"/>
+</LinearLayout>
