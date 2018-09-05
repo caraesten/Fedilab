@@ -30,6 +30,7 @@ public class APIResponse {
     private List<Context> contexts = null;
     private List<Notification> notifications = null;
     private List<Relationship> relationships = null;
+    private List<Filters> filters = null;
     private List<fr.gouv.etalab.mastodon.client.Entities.List> lists = null;
     private List<Emojis> emojis = null;
     private fr.gouv.etalab.mastodon.client.Entities.Error error = null;
@@ -122,5 +123,13 @@ public class APIResponse {
 
     public void setLists(List<fr.gouv.etalab.mastodon.client.Entities.List> lists) {
         this.lists = lists;
+    }
+
+    public List<Filters> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<Filters> filters) {
+        this.filters = filters;
     }
 }
