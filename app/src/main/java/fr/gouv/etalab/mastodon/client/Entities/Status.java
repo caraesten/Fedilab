@@ -786,8 +786,9 @@ public class Status implements Parcelable{
                     @Override
                     public void onClick(View textView) {
                         String finalUrl = url;
-                        //Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\/\\w._-]*[0-9]*)");
-                        if( url.contains("@")){
+                        Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
+                        Matcher matcherLink = link.matcher(url);
+                        if( matcherLink.find()){
                             Intent intent = new Intent(context, MainActivity.class);
                             intent.putExtra(INTENT_ACTION, SEARCH_REMOTE);
                             intent.putExtra(SEARCH_URL, url);
