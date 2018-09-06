@@ -80,7 +80,7 @@
   <string name="blocked_menu">Blockierte Nutzer</string>
   <string name="remote_follow_menu">Folgen</string>
   <string name="notifications">Benachrichtigungen</string>
-  <string name="follow_request">Anfrage folgen</string>
+  <string name="follow_request">Folgeanfragen</string>
   <string name="optimization">Optimierung</string>
   <string name="settings">Einstellungen</string>
   <string name="profile">Profil</string>
@@ -191,7 +191,7 @@
   <string name="conversation">Unterhaltung</string>
   <!-- Accounts -->
   <string name="no_accounts">Keinen Nutzer gefunden</string>
-  <string name="no_follow_request">Keine Folgen-Anfrage</string>
+  <string name="no_follow_request">Keine Folgeanfragen</string>
   <string name="status_cnt">Toots \n
      %1$s</string>
   <string name="following_cnt">Folgt \n
@@ -291,7 +291,7 @@
   <string name="set_auto_add_media_url">Füge die URL bei Anhängen in Toots hinzu</string>
   <string name="settings_title_notifications">Benachrichtigen wenn ...</string>
   <string name="set_notif_follow">mir jemand folgt</string>
-  <string name="set_notif_follow_ask">ich eine Folgen Anfrage erhalte</string>
+  <string name="set_notif_follow_ask">Ich eine Folgeanfrage erhalte</string>
   <string name="set_notif_follow_share">jemand meinen Beitrag teilt</string>
   <string name="set_notif_follow_add">jemand meinen Beitrag favorisiert</string>
   <string name="set_notif_follow_mention">ich erwähnt werde</string>
