@@ -499,7 +499,7 @@ Gracias a:    </string>
   <string name="crash_message">Me puedes enviar por correo electrónico el informe de fallas. Ayudará a solucionarlo :)\n\n puedes agregar contenido adicional. ¡Gracias!</string>
   <string name="send_crash_report">¿Preguntar para enviar informe de fallas por correo electrónico?</string>
   <string name="follow_instance">Seguir instancia</string>
-  <string name="toast_instance_already_added">You already follow this instance!</string>
+  <string name="toast_instance_already_added">¡Tu ya sigues esta instancia!</string>
   <string name="toast_instance_followed">The instance is followed!</string>
   <string name="action_partnership">Asociaciones</string>
   <string name="neutral_menu_information">Información</string>
