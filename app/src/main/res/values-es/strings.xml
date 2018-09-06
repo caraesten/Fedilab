@@ -501,6 +501,6 @@ Gracias a:    </string>
   <string name="follow_instance">Seguir instancia</string>
   <string name="toast_instance_already_added">You already follow this instance!</string>
   <string name="toast_instance_followed">The instance is followed!</string>
-  <string name="action_partnership">Partnerships</string>
+  <string name="action_partnership">Asociaciones</string>
   <string name="neutral_menu_information">Información</string>
 </resources>
