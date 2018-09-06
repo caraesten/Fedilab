@@ -1103,9 +1103,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         holder.status_cardview_url.setText(status.getCard().getUrl());
                         if( status.getCard().getImage() != null && status.getCard().getImage().length() > 10) {
                             holder.status_cardview_image.setVisibility(View.VISIBLE);
-                            Glide.with(holder.status_cardview_image.getContext())
-                                    .load(status.getCard().getImage())
-                                    .into(holder.status_cardview_image);
+                            if( !((ShowConversationActivity)context).isFinishing())
+                                Glide.with(holder.status_cardview_image.getContext())
+                                        .load(status.getCard().getImage())
+                                        .into(holder.status_cardview_image);
                         }else
                             holder.status_cardview_image.setVisibility(View.GONE);
                         if( !status.getCard().getType().equals("video")) {
