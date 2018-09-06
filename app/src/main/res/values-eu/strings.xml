@@ -501,10 +501,10 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="which_language">Itzuli</string>
   <string name="crash_title">Mastalab gelditu da :(</string>
   <string name="crash_message">Kraskatze txostena e-mail bidez bidali diezadakezu. Konpontzen lagunduko dit :)\n\nEdukia gehitu dezakezu. Eskerrik asko!</string>
-  <string name="send_crash_report">Ask for sending crash reports by email?</string>
-  <string name="follow_instance">Follow instance</string>
-  <string name="toast_instance_already_added">You already follow this instance!</string>
-  <string name="toast_instance_followed">The instance is followed!</string>
-  <string name="action_partnership">Partnerships</string>
-  <string name="neutral_menu_information">Information</string>
+  <string name="send_crash_report">Kraskatze txostenak e-mail bidez bidaltzea eskatzea nahi?</string>
+  <string name="follow_instance">Jarraitu instantzia</string>
+  <string name="toast_instance_already_added">Dagoeneko jarraitzen duzu instantzia hau!</string>
+  <string name="toast_instance_followed">Instantzia jarraituta!</string>
+  <string name="action_partnership">Lankidetzak</string>
+  <string name="neutral_menu_information">Informazioa</string>
 </resources>
