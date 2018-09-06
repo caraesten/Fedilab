@@ -400,9 +400,9 @@ public class InstanceFederatedActivity extends BaseActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         new InstancesDAO(InstanceFederatedActivity.this, db).remove(title);
                         String instanceName;
-                        if( position > 0)
+                        if( position > 0 && tabLayout.getTabAt(position -1) != null)
                             instanceName = tabLayout.getTabAt(position -1).getText().toString();
-                        else if( tabLayout.getTabCount() > 1 )
+                        else if( tabLayout.getTabCount() > 1 && tabLayout.getTabAt(1) != null)
                             instanceName = tabLayout.getTabAt(1).getText().toString();
                         else //Last element
                             instanceName = "";
