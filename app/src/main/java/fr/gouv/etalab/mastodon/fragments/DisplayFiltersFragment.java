@@ -36,11 +36,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -62,10 +62,11 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
     private List<fr.gouv.etalab.mastodon.client.Entities.Filters> filters;
-    private TextView no_action_text;
     private RelativeLayout mainLoader;
     private FloatingActionButton add_new;
     private FilterAdapter filterAdapter;
+    private RelativeLayout textviewNoAction;
+    private ListView lv_filters;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,16 +78,14 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
         filters = new ArrayList<>();
 
 
-        ListView lv_filters = rootView.findViewById(R.id.lv_filters);
-        RelativeLayout textviewNoAction = rootView.findViewById(R.id.no_action);
-        no_action_text = rootView.findViewById(R.id.no_action_text);
+        lv_filters = rootView.findViewById(R.id.lv_filters);
+        textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader = rootView.findViewById(R.id.loader);
         RelativeLayout nextElementLoader = rootView.findViewById(R.id.loading_next_items);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         filterAdapter = new FilterAdapter(context, filters, textviewNoAction);
         lv_filters.setAdapter(filterAdapter);
-        no_action_text.setVisibility(View.GONE);
         asyncTask = new ManageFiltersAsyncTask(context, ManageFiltersAsyncTask.action.GET_ALL_FILTER, null, DisplayFiltersFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         try {
             add_new = ((MainActivity) context).findViewById(R.id.add_new);
@@ -108,7 +107,7 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
                 CheckBox context_whole_word = dialogView.findViewById(R.id.context_whole_word);
                 CheckBox context_drop = dialogView.findViewById(R.id.context_drop);
                 Spinner filter_expire = dialogView.findViewById(R.id.filter_expire);
-                ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(getContext(),
+                ArrayAdapter<CharSequence> adapterResize = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()),
                         R.array.filter_expire, android.R.layout.simple_spinner_item);
                 filter_expire.setAdapter(adapterResize);
                 final int[] expire = {-1};
@@ -230,20 +229,25 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
         }
         if( actionType == ManageFiltersAsyncTask.action.GET_ALL_FILTER) {
             if (apiResponse.getFilters() != null && apiResponse.getFilters().size() > 0) {
+
                 this.filters.addAll(apiResponse.getFilters());
                 filterAdapter.notifyDataSetChanged();
-
+                textviewNoAction.setVisibility(View.GONE);
+                lv_filters.setVisibility(View.VISIBLE);
             } else {
-                no_action_text.setVisibility(View.VISIBLE);
+                textviewNoAction.setVisibility(View.VISIBLE);
+                lv_filters.setVisibility(View.GONE);
             }
         }else if( actionType == ManageFiltersAsyncTask.action.CREATE_FILTER){
             if (apiResponse.getFilters() != null && apiResponse.getFilters().size() > 0) {
-
                 this.filters.add(0, apiResponse.getFilters().get(0));
                 filterAdapter.notifyDataSetChanged();
+                textviewNoAction.setVisibility(View.GONE);
+                lv_filters.setVisibility(View.VISIBLE);
             }else{
-                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+                Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             }
         }
     }
+
 }

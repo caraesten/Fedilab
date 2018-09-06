@@ -18,6 +18,7 @@ package fr.gouv.etalab.mastodon.drawers;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -31,12 +32,10 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import fr.gouv.etalab.mastodon.R;
@@ -44,6 +43,7 @@ import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnFilterActionInterface;
 
 
@@ -158,14 +158,20 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                 add_phrase.setText(filter.getPhrase());
                 if( filter.getContext() != null)
                     for(String val: filter.getContext()){
-                        if(val.equals("home"))
-                            context_home.setChecked(true);
-                        else if(val.equals("public"))
-                            context_public.setChecked(true);
-                        else if(val.equals("notifications"))
-                            context_notification.setChecked(true);
-                        else if(val.equals("thread"))
-                            context_conversation.setChecked(true);
+                        switch (val) {
+                            case "home":
+                                context_home.setChecked(true);
+                                break;
+                            case "public":
+                                context_public.setChecked(true);
+                                break;
+                            case "notifications":
+                                context_notification.setChecked(true);
+                                break;
+                            case "thread":
+                                context_conversation.setChecked(true);
+                                break;
+                        }
                     }
                 context_whole_word.setChecked(filter.isWhole_word());
                 context_drop.setChecked(filter.isIrreversible());
@@ -175,7 +181,8 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                     public void onClick(DialogInterface dialog, int id) {
 
                         if( add_phrase.getText() != null && add_phrase.getText().toString().trim().length() > 0 ) {
-                            Filters filter = new Filters();
+                            Filters filterSent = new Filters();
+                            filterSent.setId(filter.getId());
                             ArrayList<String> contextFilter = new ArrayList<>();
                             if( context_home.isChecked())
                                 contextFilter.add("home");
@@ -185,12 +192,12 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                                 contextFilter.add("notifications");
                             if( context_conversation.isChecked())
                                 contextFilter.add("thread");
-                            filter.setContext(contextFilter);
-                            filter.setExpires_in(expire[0]);
-                            filter.setPhrase(add_phrase.getText().toString());
-                            filter.setWhole_word(context_whole_word.isChecked());
-                            filter.setIrreversible(context_drop.isChecked());
-                            new ManageFiltersAsyncTask(context, ManageFiltersAsyncTask.action.UPDATE_FILTER, filter, FilterAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            filterSent.setContext(contextFilter);
+                            filterSent.setExpires_in(expire[0]);
+                            filterSent.setPhrase(add_phrase.getText().toString());
+                            filterSent.setWhole_word(context_whole_word.isChecked());
+                            filterSent.setIrreversible(context_drop.isChecked());
+                            new ManageFiltersAsyncTask(context, ManageFiltersAsyncTask.action.UPDATE_FILTER, filterSent, FilterAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
                         dialog.dismiss();
                     }
@@ -219,10 +226,9 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                 alertDialog.show();
             }
         });
-
-        holder.delete_filter.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.delete_filter.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
+            public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle(context.getString(R.string.action_filter_delete) );
                 builder.setMessage(context.getString(R.string.action_lists_confirm_delete) );
@@ -245,15 +251,47 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                             }
                         })
                         .show();
-                return false;
             }
         });
         return convertView;
     }
 
+
+    private Filters getItemAt(int position){
+        if( filters.size() > position)
+            return filters.get(position);
+        else
+            return null;
+    }
+
     @Override
     public void onActionDone(ManageFiltersAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
+        if( apiResponse != null) {
+            if (apiResponse.getError() != null) {
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
+                if (show_error_messages)
+                    Toast.makeText(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            }
+            List<Filters> filtersRes = apiResponse.getFilters();
+            if (filtersRes != null && filtersRes.size() > 0) {
+                notifyStatusChanged(filtersRes.get(0));
+            }
+        }
+    }
 
+    private void notifyStatusChanged(Filters filter){
+        for (int i = 0; i < filterAdapter.getCount(); i++) {
+            //noinspection ConstantConditions
+            if (filterAdapter.getItemAt(i) != null && filterAdapter.getItemAt(i).getId().equals(filter.getId())) {
+                filters.set(i, filter);
+                try {
+                    filterAdapter.notifyDataSetChanged();
+                } catch (Exception ignored) {
+                }
+                return;
+            }
+        }
     }
 
     private class ViewHolder {

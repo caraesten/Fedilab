@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +34,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.*;
@@ -1415,10 +1415,9 @@ public class API {
      */
     public APIResponse getFilters(){
 
-        List<fr.gouv.etalab.mastodon.client.Entities.Filters> filters = new ArrayList<>();
+        List<Filters> filters = null;
         try {
             String response = new HttpsConnection(context).get(getAbsoluteUrl("/filters"), 60, null, prefKeyOauthTokenT);
-            Log.v(Helper.TAG,"resp: " + response);
             filters = parseFilters(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1446,7 +1445,6 @@ public class API {
         fr.gouv.etalab.mastodon.client.Entities.Filters filter;
         try {
             String response = new HttpsConnection(context).get(getAbsoluteUrl(String.format("/filters/%s", filterId)), 60, null, prefKeyOauthTokenT);
-            Log.v(Helper.TAG,"resp: " + response);
             filter = parseFilter(new JSONObject(response));
             filters.add(filter);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1472,14 +1470,22 @@ public class API {
      */
     public APIResponse addFilters(Filters filter){
         HashMap<String, String> params = new HashMap<>();
-        params.put("custom_filter[phrase]", filter.getPhrase());
+        params.put("phrase", filter.getPhrase());
+        StringBuilder parameters = new StringBuilder();
         for(String context: filter.getContext())
-            params.put("custom_filter[context]", context);
-        params.put("custom_filter[irreversible]", String.valueOf(filter.isIrreversible()));
-        params.put("custom_filter[whole_word]", String.valueOf(filter.isWhole_word()));
-        params.put("custom_filter[expires_in]", String.valueOf(filter.getExpires_in()));
+            parameters.append("context[]=").append(context).append("&");
+        if( parameters.length() > 0) {
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(10));
+            params.put("context[]", parameters.toString());
+        }
+        params.put("irreversible", String.valueOf(filter.isIrreversible()));
+        params.put("whole_word", String.valueOf(filter.isWhole_word()));
+        params.put("expires_in", String.valueOf(filter.getExpires_in()));
+        ArrayList<Filters> filters = new ArrayList<>();
         try {
-            new HttpsConnection(context).post(getAbsoluteUrl("/filters"), 60, params, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context).post(getAbsoluteUrl("/filters"), 60, params, prefKeyOauthTokenT);
+            Filters resfilter = parseFilter(new JSONObject(response));
+            filters.add(resfilter);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1488,7 +1494,10 @@ public class API {
             e.printStackTrace();
         } catch (KeyManagementException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        apiResponse.setFilters(filters);
         return apiResponse;
     }
 
@@ -1501,7 +1510,7 @@ public class API {
 
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            new HttpsConnection(context).delete(getAbsoluteUrl(String.format("/filters/%s", filter.getId())), 60, null, prefKeyOauthTokenT);
+            httpsConnection.delete(getAbsoluteUrl(String.format("/filters/%s", filter.getId())), 60, null, prefKeyOauthTokenT);
             actionCode = httpsConnection.getActionCode();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -1522,14 +1531,22 @@ public class API {
      */
     public APIResponse updateFilters(Filters filter){
         HashMap<String, String> params = new HashMap<>();
-        params.put("custom_filter[phrase]", filter.getPhrase());
+        params.put("phrase", filter.getPhrase());
+        StringBuilder parameters = new StringBuilder();
         for(String context: filter.getContext())
-            params.put("custom_filter[context]", context);
-        params.put("custom_filter[irreversible]", String.valueOf(filter.isIrreversible()));
-        params.put("custom_filter[whole_word]", String.valueOf(filter.isWhole_word()));
-        params.put("custom_filter[expires_in]", String.valueOf(filter.getExpires_in()));
+            parameters.append("context[]=").append(context).append("&");
+        if( parameters.length() > 0) {
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(10));
+            params.put("context[]", parameters.toString());
+        }
+        params.put("irreversible", String.valueOf(filter.isIrreversible()));
+        params.put("whole_word", String.valueOf(filter.isWhole_word()));
+        params.put("expires_in", String.valueOf(filter.getExpires_in()));
+        ArrayList<Filters> filters = new ArrayList<>();
         try {
-            new HttpsConnection(context).put(getAbsoluteUrl(String.format("/filters/%s", filter.getId())), 60, params, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context).put(getAbsoluteUrl(String.format("/filters/%s", filter.getId())), 60, params, prefKeyOauthTokenT);
+            Filters resfilter = parseFilter(new JSONObject(response));
+            filters.add(resfilter);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1538,7 +1555,10 @@ public class API {
             e.printStackTrace();
         } catch (KeyManagementException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        apiResponse.setFilters(filters);
         return apiResponse;
     }
 
@@ -2192,13 +2212,13 @@ public class API {
      * @param jsonArray JSONArray
      * @return List<Filters> of filters
      */
-    private List<fr.gouv.etalab.mastodon.client.Entities.Filters> parseFilters(JSONArray jsonArray){
-        List<fr.gouv.etalab.mastodon.client.Entities.Filters> filters = new ArrayList<>();
+    private List<Filters> parseFilters(JSONArray jsonArray){
+        List<Filters> filters = new ArrayList<>();
         try {
             int i = 0;
             while (i < jsonArray.length() ) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
-                fr.gouv.etalab.mastodon.client.Entities.Filters filter = parseFilter(resobj);
+                Filters filter = parseFilter(resobj);
                 filters.add(filter);
                 i++;
             }
@@ -2216,6 +2236,7 @@ public class API {
     private fr.gouv.etalab.mastodon.client.Entities.Filters parseFilter(JSONObject resobj){
         fr.gouv.etalab.mastodon.client.Entities.Filters filter = new fr.gouv.etalab.mastodon.client.Entities.Filters();
         try {
+            filter.setId(resobj.get("id").toString());
             filter.setPhrase(resobj.get("phrase").toString());
             filter.setSetExpires_at(Helper.mstStringToDate(context, resobj.get("expires_at").toString()));
             filter.setWhole_word(Boolean.parseBoolean(resobj.get("whole_word").toString()));
@@ -2233,9 +2254,9 @@ public class API {
                     filter.setContext(finalContext);
                 }
             }
+            return filter;
+        }catch (Exception ignored){ return null;}
 
-        }catch (Exception ignored){}
-        return filter;
     }
 
 
