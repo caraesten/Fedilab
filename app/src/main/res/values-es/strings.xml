@@ -500,7 +500,7 @@ Gracias a:    </string>
   <string name="send_crash_report">¿Preguntar para enviar informe de fallas por correo electrónico?</string>
   <string name="follow_instance">Seguir instancia</string>
   <string name="toast_instance_already_added">¡Tu ya sigues esta instancia!</string>
-  <string name="toast_instance_followed">The instance is followed!</string>
+  <string name="toast_instance_followed">¡La instancia esta siendo seguida!</string>
   <string name="action_partnership">Asociaciones</string>
   <string name="neutral_menu_information">Información</string>
   <string name="hide_boost">Hide boosts from %s</string>
