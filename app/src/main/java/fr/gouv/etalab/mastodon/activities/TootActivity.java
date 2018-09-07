@@ -489,10 +489,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
                 int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE, Helper.SPLIT_TOOT_SIZE);
                 String tootContent;
+                if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
+                    split_toot_size -= toot_cw_content.getText().toString().trim().length();
                 if( !split_toot || (toot_content.getText().toString().trim().length()  < split_toot_size)){
                     tootContent = toot_content.getText().toString().trim();
                 }else{
-
                     splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
                     tootContent = splitToot.get(0);
                     stepSpliToot = 1;
@@ -1604,8 +1605,10 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
         int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE, Helper.SPLIT_TOOT_SIZE);
 
+        int cwSize = toot_cw_content.getText().toString().trim().length();
+        int size = toot_content.getText().toString().trim().length() + cwSize;
 
-        if( split_toot && (toot_content.getText().toString().trim().length()  >= split_toot_size) && stepSpliToot < splitToot.size()){
+        if( split_toot && (size  >= split_toot_size) && stepSpliToot < splitToot.size()){
             String tootContent = splitToot.get(stepSpliToot);
             stepSpliToot += 1;
             Status toot = new Status();

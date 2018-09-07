@@ -1149,7 +1149,7 @@ public class Helper {
 
     @SuppressWarnings("SameParameterValue")
     private static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int roundPixelSize) {
-        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.RGB_565);
         Canvas canvas = new Canvas(output);
         final Paint paint = new Paint();
         final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());

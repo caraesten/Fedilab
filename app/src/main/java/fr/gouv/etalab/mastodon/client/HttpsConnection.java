@@ -199,13 +199,13 @@ public class HttpsConnection {
             httpURLConnection.setRequestMethod("GET");
             String response;
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
-                response = converToString(httpsURLConnection.getInputStream());
+                response = converToString(httpURLConnection.getInputStream());
             }else {
                 String error = null;
-                if( httpsURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpsURLConnection.getErrorStream();
+                if( httpURLConnection.getErrorStream() != null) {
+                    InputStream stream = httpURLConnection.getErrorStream();
                     if (stream == null) {
-                        stream = httpsURLConnection.getInputStream();
+                        stream = httpURLConnection.getInputStream();
                     }
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
@@ -270,13 +270,13 @@ public class HttpsConnection {
             String response;
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
                 getSinceMaxId();
-                response = converToString(httpsURLConnection.getInputStream());
+                response = converToString(httpURLConnection.getInputStream());
             }else {
                 String error = null;
-                if( httpsURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpsURLConnection.getErrorStream();
+                if( httpURLConnection.getErrorStream() != null) {
+                    InputStream stream = httpURLConnection.getErrorStream();
                     if (stream == null) {
-                        stream = httpsURLConnection.getInputStream();
+                        stream = httpURLConnection.getInputStream();
                     }
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
@@ -388,13 +388,13 @@ public class HttpsConnection {
             String response;
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
                 getSinceMaxId();
-                response = converToString(httpsURLConnection.getInputStream());
+                response = converToString(httpURLConnection.getInputStream());
             } else {
                 String error = null;
-                if( httpsURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpsURLConnection.getErrorStream();
+                if( httpURLConnection.getErrorStream() != null) {
+                    InputStream stream = httpURLConnection.getErrorStream();
                     if (stream == null) {
-                        stream = httpsURLConnection.getInputStream();
+                        stream = httpURLConnection.getInputStream();
                     }
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
@@ -865,10 +865,10 @@ public class HttpsConnection {
                 new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
             } else {
                 String error = null;
-                if( httpsURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpsURLConnection.getErrorStream();
+                if( httpURLConnection.getErrorStream() != null) {
+                    InputStream stream = httpURLConnection.getErrorStream();
                     if (stream == null) {
-                        stream = httpsURLConnection.getInputStream();
+                        stream = httpURLConnection.getInputStream();
                     }
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
@@ -1010,10 +1010,10 @@ public class HttpsConnection {
                 new String(ByteStreams.toByteArray(httpURLConnection.getInputStream()));
             } else {
                 String error = null;
-                if( httpsURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpsURLConnection.getErrorStream();
+                if( httpURLConnection.getErrorStream() != null) {
+                    InputStream stream = httpURLConnection.getErrorStream();
                     if (stream == null) {
-                        stream = httpsURLConnection.getInputStream();
+                        stream = httpURLConnection.getInputStream();
                     }
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
@@ -1295,10 +1295,10 @@ public class HttpsConnection {
 
                         if (200 != httpURLConnection.getResponseCode()) {
                             String error = null;
-                            if( httpsURLConnection.getErrorStream() != null) {
-                                InputStream stream = httpsURLConnection.getErrorStream();
+                            if( httpURLConnection.getErrorStream() != null) {
+                                InputStream stream = httpURLConnection.getErrorStream();
                                 if (stream == null) {
-                                    stream = httpsURLConnection.getInputStream();
+                                    stream = httpURLConnection.getInputStream();
                                 }
                                 try (Scanner scanner = new Scanner(stream)) {
                                     scanner.useDelimiter("\\Z");
@@ -1448,13 +1448,13 @@ public class HttpsConnection {
             String response;
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
                 getSinceMaxId();
-                response = converToString(httpsURLConnection.getInputStream());
+                response = converToString(httpURLConnection.getInputStream());
             } else {
                 String error = null;
-                if( httpsURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpsURLConnection.getErrorStream();
+                if( httpURLConnection.getErrorStream() != null) {
+                    InputStream stream = httpURLConnection.getErrorStream();
                     if (stream == null) {
-                        stream = httpsURLConnection.getInputStream();
+                        stream = httpURLConnection.getInputStream();
                     }
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");
@@ -1572,10 +1572,10 @@ public class HttpsConnection {
                 return httpURLConnection.getResponseCode();
             }else {
                 String error = null;
-                if( httpsURLConnection.getErrorStream() != null) {
-                    InputStream stream = httpsURLConnection.getErrorStream();
+                if( httpURLConnection.getErrorStream() != null) {
+                    InputStream stream = httpURLConnection.getErrorStream();
                     if (stream == null) {
-                        stream = httpsURLConnection.getInputStream();
+                        stream = httpURLConnection.getInputStream();
                     }
                     try (Scanner scanner = new Scanner(stream)) {
                         scanner.useDelimiter("\\Z");

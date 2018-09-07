@@ -482,10 +482,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
     @Override
     public void onRetrieveAccount(final Account account, Error error) {
-        if( error != null){
+        if( error != null || account.getAcct() == null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
+            if( show_error_messages && error != null)
                 Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
