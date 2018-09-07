@@ -527,6 +527,10 @@ public class Status implements Parcelable{
             return;
         if( status.getAccount() == null)
             return;
+        if(  status.getReblog() != null && status.getReblog().getEmojis() == null)
+            return;
+        if( status.getReblog() == null &&  status.getEmojis() == null)
+            return;
         final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         final List<Emojis> emojisAccounts = status.getAccount().getEmojis();
 

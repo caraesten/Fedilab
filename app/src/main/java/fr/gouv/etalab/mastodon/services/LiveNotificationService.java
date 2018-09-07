@@ -113,6 +113,7 @@ public class LiveNotificationService extends Service {
                     proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, port));
                 else
                     proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(host, port));
+
                 final String login = sharedpreferences.getString(Helper.SET_PROXY_LOGIN, null);
                 final String pwd = sharedpreferences.getString(Helper.SET_PROXY_PASSWORD, null);
                 if( login != null) {
@@ -148,7 +149,8 @@ public class LiveNotificationService extends Service {
                             Thread thread = new Thread() {
                                 @Override
                                 public void run() {
-                                    taks(accountStream);
+                                    if(Helper.isConnectedToInternet(LiveNotificationService.this, accountStream.getInstance()))
+                                        taks(accountStream);
                                 }
                             };
                             thread.start();
@@ -162,7 +164,8 @@ public class LiveNotificationService extends Service {
                         Thread thread = new Thread() {
                             @Override
                             public void run() {
-                                taks(accountStream);
+                                if(Helper.isConnectedToInternet(LiveNotificationService.this, accountStream.getInstance()))
+                                    taks(accountStream);
                             }
                         };
                         thread.start();

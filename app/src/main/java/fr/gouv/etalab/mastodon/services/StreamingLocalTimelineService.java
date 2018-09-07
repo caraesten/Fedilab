@@ -99,7 +99,8 @@ public class StreamingLocalTimelineService extends IntentService {
         }
         if( accountStream != null){
             try {
-
+                if(!Helper.isConnectedToInternet(StreamingLocalTimelineService.this, accountStream.getInstance()))
+                    return;
                 URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/public/local");
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 httpsURLConnection.setRequestProperty("Content-Type", "application/json");

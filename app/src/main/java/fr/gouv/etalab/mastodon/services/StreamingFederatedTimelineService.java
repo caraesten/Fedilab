@@ -100,7 +100,8 @@ public class StreamingFederatedTimelineService extends IntentService {
         }
         if( accountStream != null){
             try {
-
+                if(!Helper.isConnectedToInternet(StreamingFederatedTimelineService.this, accountStream.getInstance()))
+                    return;
                 URL url = new URL("https://" + accountStream.getInstance() + "/api/v1/streaming/public");
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
                 httpsURLConnection.setRequestProperty("Content-Type", "application/json");

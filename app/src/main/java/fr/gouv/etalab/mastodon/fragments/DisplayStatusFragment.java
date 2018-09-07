@@ -27,6 +27,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -407,7 +408,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
 
 
-            } else if (type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+            } else if (type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL) {
 
                 status.setReplies(new ArrayList<Status>());
                 status.setNew(false);
@@ -442,6 +443,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
                 editor.apply();
                 if(liveNotifications) {
+                    Log.v(Helper.TAG,"streamingFederatedIntent: " + streamingFederatedIntent);
                     streamingFederatedIntent = new Intent(context, StreamingFederatedTimelineService.class);
                     try {
                         context.startService(streamingFederatedIntent);
@@ -524,6 +526,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
             }
         }else if (type == RetrieveFeedsAsyncTask.Type.LOCAL){
+            Log.v(Helper.TAG,"visible: " + visible);
             if (visible) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_LOCAL + userId + instance, true);
