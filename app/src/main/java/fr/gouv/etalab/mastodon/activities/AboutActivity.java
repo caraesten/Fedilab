@@ -241,7 +241,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                     developers.add(account);
                     accountSearchWebAdapterDeveloper.notifyDataSetChanged();
                     break;
-                case "lambykun":
+                case "NateLikesSheep":
                     banners.add(account);
                     accountSearchWebAdapterBanners.notifyDataSetChanged();
                     break;
