@@ -14,12 +14,15 @@ package fr.gouv.etalab.mastodon.activities;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 import android.app.Application;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.StrictMode;
 import com.evernote.android.job.JobManager;
 
 import org.acra.ACRA;
 import org.acra.BuildConfig;
 import org.acra.annotation.AcraDialog;
+import org.acra.annotation.AcraMailSender;
 import org.acra.config.CoreConfigurationBuilder;
 
 import org.acra.config.LimiterConfigurationBuilder;
@@ -51,7 +54,12 @@ public class MainApplication extends Application{
         StrictMode.setVmPolicy(builder.build());
         CoreConfigurationBuilder ACRABuilder = new CoreConfigurationBuilder(this);
         ACRABuilder.setBuildConfigClass(BuildConfig.class).setReportFormat(StringFormat.KEY_VALUE_LIST);
-        ACRABuilder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class).setMailTo("support@mastalab.app").setSubject("Bug report for Mastalab").setEnabled(true);
+        String version = "";
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            version = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException ignored) { }
+        ACRABuilder.getPluginConfigurationBuilder(MailSenderConfigurationBuilder.class).setReportAsFile(false).setMailTo("support@mastalab.app").setSubject(" Crash Report for Mastalab " + version).setEnabled(true);
         ACRABuilder.getPluginConfigurationBuilder(LimiterConfigurationBuilder.class).setEnabled(true);
         ACRA.init(this, ACRABuilder);
     }

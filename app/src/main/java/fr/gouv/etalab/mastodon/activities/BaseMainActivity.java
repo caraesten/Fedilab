@@ -947,7 +947,7 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
     public void refreshSearchTab(){
-        Helper.addSearchTag(BaseMainActivity.this, tabLayout, adapter);
+        Helper.refreshSearchTag(BaseMainActivity.this, tabLayout, adapter);
     }
 
     public void removeSearchTab(String tag){

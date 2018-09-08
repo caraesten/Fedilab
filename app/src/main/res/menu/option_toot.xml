@@ -2,6 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_translate"
+        android:title="@string/translate"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_bookmark"
+        android:title="@string/bookmark_add"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_open_browser"
+        android:title="@string/action_open_in_web"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/action_mute"
         android:title="@string/more_action_1"
         app:showAsAction="never" />
@@ -37,16 +49,5 @@
         android:id="@+id/action_mention"
         android:title="@string/more_action_7"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_bookmark"
-        android:title="@string/bookmark_add"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_open_browser"
-        android:title="@string/action_open_in_web"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/action_translate"
-        android:title="@string/translate"
-        app:showAsAction="never" />
+
 </menu>

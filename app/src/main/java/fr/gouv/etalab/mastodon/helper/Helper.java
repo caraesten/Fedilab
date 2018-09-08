@@ -2180,7 +2180,7 @@ public class Helper {
 
 
 
-    public static void addInstanceTab(Context context, TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter){
+    public static void refreshInstanceTab(Context context, TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter){
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         new InstancesDAO(context, db).cleanDoublon();
         List<String> instances = new InstancesDAO(context, db).getAllInstances();
@@ -2200,42 +2200,27 @@ public class Helper {
         }
     }
 
-    public static void removeInstanceTab(String keyword, TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter){
-        int selection = -1;
-        for(int i = 0; i < tableLayout.getTabCount() ; i++ ){
-            if( tableLayout.getTabAt(i).getText() != null && tableLayout.getTabAt(i).getText().equals(keyword)) {
-                selection = i;
-                break;
-            }
-        }
-        if( selection != -1)
-            removeTab(tableLayout, pagerAdapter, selection);
-    }
-
-    public static void removeTab(TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter, int position) {
-        if (tableLayout.getTabCount() >= position  ) {
-            if(tableLayout.getTabCount() > 0)
-                tableLayout.removeTabAt(position);
-            pagerAdapter.removeTabPage();
-        }
-    }
-
-    public static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
-        if (tableLayout.getTabCount() >= position  ) {
-            if(tableLayout.getTabCount() > 0)
-                tableLayout.removeTabAt(position);
-            pagerAdapter.removeTabPage();
-        }
-    }
 
     public static void addTab(TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter, String title) {
         tableLayout.addTab(tableLayout.newTab().setText(title));
         pagerAdapter.addTabPage(title);
     }
 
+    public static void removeTab(TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter, int position) {
+        if (tableLayout.getTabCount() >= position  ) {
+            try {
+                pagerAdapter.removeTabPage();
+                if(tableLayout.getTabCount() > 0)
+                    tableLayout.removeTabAt(position);
+            }catch (Exception ignored){
+                refreshInstanceTab(tableLayout.getContext(), tableLayout, pagerAdapter);
+            }
+
+        }
+    }
 
 
-    public static void addSearchTag(Context context, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
+    public static void refreshSearchTag(Context context, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<String> searches = new SearchDAO(context, db).getAllSearch();
         int countInitialTab = ((BaseMainActivity) context).countPage;
@@ -2256,6 +2241,20 @@ public class Helper {
             }
         }
     }
+
+    public static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
+        if (tableLayout.getTabCount() >= position  ) {
+            try {
+                if(tableLayout.getTabCount() > 0)
+                    tableLayout.removeTabAt(position);
+                pagerAdapter.removeTabPage();
+            }catch (Exception ignored){
+                refreshSearchTag(tableLayout.getContext(), tableLayout, pagerAdapter);
+            }
+
+        }
+    }
+
 
     public static void removeSearchTag(String keyword, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
 

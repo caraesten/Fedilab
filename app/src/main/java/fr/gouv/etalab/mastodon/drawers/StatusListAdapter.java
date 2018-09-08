@@ -380,7 +380,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         status = statuses.get(position);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int HIDDEN_STATUS = 0;
         String filter;
         if( type == RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS)
@@ -560,6 +560,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
+            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
 
 
 
@@ -619,6 +620,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, holder.status_privacy, R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
+                changeDrawableColor(context, R.drawable.ic_plus_one,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
@@ -635,6 +637,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, holder.status_more, R.color.black);
                 changeDrawableColor(context, holder.status_privacy, R.color.black);
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_plus_one,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.black);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
@@ -664,6 +667,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 status.makeClickable(context);
             if( !status.isEmojiFound())
                 status.makeEmojis(context, StatusListAdapter.this);
+
+
+
 
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
@@ -1013,9 +1019,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
             holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
-            holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
 
-
+            if(getItemViewType(position) != FOCUSED_STATUS && isCompactMode && ((status.getReblog() == null && status.getReplies_count() > 0) || (status.getReblog() != null && status.getReblog().getReplies_count() > 0))){
+                Drawable img = context.getResources().getDrawable( R.drawable.ic_plus_one );
+                holder.status_reply.setCompoundDrawablesWithIntrinsicBounds( imgReply, null, img, null);
+            }else{
+                holder.status_reply.setCompoundDrawablesWithIntrinsicBounds( imgReply, null, null, null);
+            }
             boolean isOwner = status.getAccount().getId().equals(userId);
 
             // Pinning toots is only available on Mastodon 1._6_.0 instances.
@@ -1310,7 +1320,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         builderInner.setMessage(Html.fromHtml(status.getContent()));
                                 break;
                                 case R.id.action_open_browser:
-                                    Helper.openBrowser(context, status.getUrl());
+                                    Helper.openBrowser(context, status.getReblog()!=null?status.getReblog().getUrl():status.getUrl());
                                     return true;
                                 case R.id.action_remove:
                                     builderInner = new AlertDialog.Builder(context);

@@ -335,7 +335,7 @@ public class InstanceFederatedActivity extends BaseActivity {
         });
 
 
-        refreshInstanceTab();
+        Helper.refreshInstanceTab(InstanceFederatedActivity.this, tabLayout, adapter);
 
         int tabCount = tabLayout.getTabCount();
         for( int j = 0 ; j < tabCount ; j++){
@@ -376,9 +376,6 @@ public class InstanceFederatedActivity extends BaseActivity {
        // LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
     }
 
-    public void refreshInstanceTab(){
-        Helper.addInstanceTab(InstanceFederatedActivity.this, tabLayout, adapter);
-    }
 
 
     @Override

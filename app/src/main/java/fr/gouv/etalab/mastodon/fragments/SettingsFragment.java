@@ -277,7 +277,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         final CheckBox set_compact_mode = rootView.findViewById(R.id.set_compact_mode);
         set_compact_mode.setChecked(compact_mode);
 
