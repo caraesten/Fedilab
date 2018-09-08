@@ -500,7 +500,7 @@
   <string name="which_language">Tranduire en</string>
   <string name="crash_title">Mastalab s’est arrêté :(</string>
   <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-  <string name="send_crash_report">Ask for sending crash reports by email?</string>
+  <string name="send_crash_report">Demander l’envoi de rapports d’incidents par courriel ?</string>
   <string name="follow_instance">Suivre l’instance</string>
   <string name="toast_instance_already_added">Vous suivez déjà cette instance !</string>
   <string name="toast_instance_followed">Maintenant, vous suivez cette instance !</string>
@@ -513,13 +513,13 @@
   <string name="unendorse">Ne pas recommander</string>
   <string name="show_everything">Show everything from %s</string>
   <string name="toast_endorse">Ce compte est maintenant recommandé sur votre profil</string>
-  <string name="toast_unendorse">The account is no longer featured on profile</string>
+  <string name="toast_unendorse">Ce compte n’est plus recommandé sur votre profil</string>
   <string name="toast_show_boost">Boosts are now shown!</string>
-  <string name="toast_hide_boost">Boosts are now hidden!</string>
+  <string name="toast_hide_boost">Les boosts sont maintenant masqués !</string>
   <string name="direct_message">Direct message</string>
   <string name="filters">Filtres</string>
   <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-  <string name="filter_keyword">Keyword or phrase</string>
+  <string name="filter_keyword">Mot clé ou une expression</string>
   <string name="context_home">Fil principal</string>
   <string name="context_public">Fils publics</string>
   <string name="context_notification">Notifications</string>
