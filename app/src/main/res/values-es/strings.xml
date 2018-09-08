@@ -523,7 +523,7 @@ Gracias a:    </string>
   <string name="context_conversation">Conversaciones</string>
   <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
   <string name="context_drop">Soltar en vez de ocultar</string>
-  <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
+  <string name="context_drop_explanations">Toots filtrados desaparecerán irreversiblemente, aún si el filtro sea removido</string>
   <string name="context_whole_word_explanations">Cuando la palabra clave o frase es solamente alfanumérica, solo aplica si coincide con toda la palabra</string>
   <string name="context_whole_word">Palabra completa</string>
   <string name="filter_context">Filtrar contenido</string>
