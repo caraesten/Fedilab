@@ -503,7 +503,7 @@ Gracias a:    </string>
   <string name="toast_instance_followed">¡La instancia esta siendo seguida!</string>
   <string name="action_partnership">Asociaciones</string>
   <string name="neutral_menu_information">Información</string>
-  <string name="hide_boost">Hide boosts from %s</string>
+  <string name="hide_boost">Ocultar boosts de %s</string>
   <string name="endorse">Feature on profile</string>
   <string name="hide_everything">Hide everything from %s</string>
   <string name="show_boost">Show boosts from %s</string>
