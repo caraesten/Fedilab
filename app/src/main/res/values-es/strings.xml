@@ -514,9 +514,9 @@ Gracias a:    </string>
   <string name="toast_show_boost">¡Ya aparecen los boosts!</string>
   <string name="toast_hide_boost">¡Boosts han sido ocultados!</string>
   <string name="direct_message">Mensaje directo</string>
-  <string name="filters">Filters</string>
-  <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-  <string name="filter_keyword">Keyword or phrase</string>
+  <string name="filters">Filtros</string>
+  <string name="action_filters_empty_content">No hay filtros para mostrar. Se puede crear uno haciendo clic en el botón \"+\".</string>
+  <string name="filter_keyword">Palabra clave o frase</string>
   <string name="context_home">Home timeline</string>
   <string name="context_public">Public timelines</string>
   <string name="context_notification">Notifications</string>
