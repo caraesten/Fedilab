@@ -522,24 +522,24 @@ Gracias a:    </string>
   <string name="context_notification">Notificaciones</string>
   <string name="context_conversation">Conversaciones</string>
   <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-  <string name="context_drop">Drop instead of hide</string>
+  <string name="context_drop">Soltar en vez de ocultar</string>
   <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
-  <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
+  <string name="context_whole_word_explanations">Cuando la palabra clave o frase es solamente alfanumérica, solo aplica si coincide con toda la palabra</string>
   <string name="context_whole_word">Palabra completa</string>
   <string name="filter_context">Filtrar contenido</string>
-  <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-  <string name="filter_expire">Expire after</string>
-  <string name="add_new_filter">Add New Filter</string>
-  <string name="action_filter_delete">Delete filter?</string>
-  <string name="action_update_filter">Update filter</string>
-  <string name="action_filter_create">Create filter</string>
+  <string name="filter_context_explanations">Uno o varios contextos donde el filtro debería aplicar</string>
+  <string name="filter_expire">Expirar después de</string>
+  <string name="add_new_filter">Añadir nuevo filtro</string>
+  <string name="action_filter_delete">¿Eliminar filtro?</string>
+  <string name="action_update_filter">Actualizar filtro</string>
+  <string name="action_filter_create">Crear filtro</string>
   <string-array name="filter_expire">
-    <item>Never</item>
-    <item>30 minutes</item>
-    <item>1 hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>1 day</item>
-    <item>1 week</item>
+    <item>Nunca</item>
+    <item>30 minutos</item>
+    <item>1 hora</item>
+    <item>6 horas</item>
+    <item>12 horas</item>
+    <item>1 día</item>
+    <item>1 semana</item>
   </string-array>
 </resources>
