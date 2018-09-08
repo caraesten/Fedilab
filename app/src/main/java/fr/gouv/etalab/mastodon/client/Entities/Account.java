@@ -30,6 +30,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -209,11 +210,11 @@ public class Account implements Parcelable {
         this.username = username;
     }
 
-    public SpannableString getdisplayNameSpanSpan() {
+    public SpannableString getdisplayNameSpan() {
         return displayNameSpan;
     }
 
-    public void setdisplayNameSpanSpan(SpannableString displayNameSpan) {
+    public void setdisplayNameSpan(SpannableString displayNameSpan) {
         this.displayNameSpan = displayNameSpan;
     }
 
@@ -535,8 +536,6 @@ public class Account implements Parcelable {
                                 if( i[0] ==  (emojis.size())) {
                                     if( noteSpan != null)
                                         account.setNoteSpan(noteSpan);
-                                    if( displayNameSpan != null)
-                                        account.setdisplayNameSpanSpan(displayNameSpan);
                                     account.setFieldsSpan(fieldsSpan);
                                     listener.onRetrieveEmojiAccount(account);
                                 }

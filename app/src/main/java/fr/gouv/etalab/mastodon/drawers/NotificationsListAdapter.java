@@ -34,6 +34,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -66,6 +67,7 @@ import fr.gouv.etalab.mastodon.asynctasks.PostNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -73,6 +75,7 @@ import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.CustomTextView;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -89,7 +92,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
  * Adapter for Status
  */
 
-public class NotificationsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface {
+public class NotificationsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface, OnRetrieveEmojiAccountInterface {
 
     private Context context;
     private List<Notification> notifications;
@@ -97,7 +100,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     private NotificationsListAdapter notificationsListAdapter;
     private int behaviorWithAttachments;
     private boolean isOnWifi;
-
+    private NotificationsListAdapter.ViewHolder holder;
 
     public NotificationsListAdapter(Context context, boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications){
         this.context = context;
@@ -119,7 +122,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
 
-        final NotificationsListAdapter.ViewHolder holder = (NotificationsListAdapter.ViewHolder) viewHolder;
+        holder = (NotificationsListAdapter.ViewHolder) viewHolder;
         final Notification notification = notifications.get(position);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
@@ -221,8 +224,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
         }
 
-
-        holder.notification_type.setText(typeString);
+        notification.getAccount().makeEmojisAccount(context, NotificationsListAdapter.this);
+        if( notification.getAccount().getdisplayNameSpan() == null)
+            holder.notification_type.setText(typeString);
+        else
+            holder.notification_type.setText(notification.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
         if( imgH != null) {
             holder.notification_type.setCompoundDrawablePadding((int)Helper.convertDpToPixel(5, context));
             imgH.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
@@ -1050,6 +1056,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         viewHolder.notification_status_content.setEnabled(true);
         viewHolder.status_spoiler.setEnabled(false);
         viewHolder.status_spoiler.setEnabled(true);
+    }
+
+    @Override
+    public void onRetrieveEmojiAccount(Account account) {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
