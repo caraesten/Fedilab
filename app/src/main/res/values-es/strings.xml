@@ -509,11 +509,11 @@ Gracias a:    </string>
   <string name="show_boost">Mostrar boosts de %s</string>
   <string name="unendorse">No muestre en perfil</string>
   <string name="show_everything">Mostrar todo de %s</string>
-  <string name="toast_endorse">The account is now featured on profile</string>
-  <string name="toast_unendorse">The account is no longer featured on profile</string>
-  <string name="toast_show_boost">Boosts are now shown!</string>
-  <string name="toast_hide_boost">Boosts are now hidden!</string>
-  <string name="direct_message">Direct message</string>
+  <string name="toast_endorse">La cuenta ha sido promocionada en el perfil</string>
+  <string name="toast_unendorse">La cuenta ya no aparece en el perfil</string>
+  <string name="toast_show_boost">¡Ya aparecen los boosts!</string>
+  <string name="toast_hide_boost">¡Boosts han sido ocultados!</string>
+  <string name="direct_message">Mensaje directo</string>
   <string name="filters">Filters</string>
   <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
   <string name="filter_keyword">Keyword or phrase</string>
