@@ -509,7 +509,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="toast_hide_boost">Geteilte Beiträge werden nicht angezeigt!</string>
   <string name="direct_message">Direktnachrichten</string>
   <string name="filters">Filter</string>
-  <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
+  <string name="action_filters_empty_content">Keine Filter vorhanden. Du kannst durch Klicken auf \"+\" neue Filter erstellen.</string>
   <string name="filter_keyword">Keyword or phrase</string>
   <string name="context_home">Home timeline</string>
   <string name="context_public">Public timelines</string>
