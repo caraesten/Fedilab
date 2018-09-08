@@ -542,12 +542,12 @@
   <string name="action_update_filter">Update filter</string>
   <string name="action_filter_create">Create filter</string>
   <string-array name="filter_expire">
-    <item>Never</item>
-    <item>30 minutes</item>
-    <item>1 hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>1 day</item>
-    <item>1 week</item>
+    <item>Никадa</item>
+    <item>30 минута</item>
+    <item>1 сат</item>
+    <item>6 сати</item>
+    <item>12 сати</item>
+    <item>1 дан</item>
+    <item>Недељу дана</item>
   </string-array>
 </resources>
