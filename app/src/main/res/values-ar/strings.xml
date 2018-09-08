@@ -527,32 +527,32 @@
   <string name="toast_show_boost">Boosts are now shown!</string>
   <string name="toast_hide_boost">Boosts are now hidden!</string>
   <string name="direct_message">Direct message</string>
-  <string name="filters">Filters</string>
+  <string name="filters">عوامل التصفية</string>
   <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
   <string name="filter_keyword">Keyword or phrase</string>
-  <string name="context_home">Home timeline</string>
-  <string name="context_public">Public timelines</string>
-  <string name="context_notification">Notifications</string>
-  <string name="context_conversation">Conversations</string>
+  <string name="context_home">الخط الزمني الرئيسي</string>
+  <string name="context_public">الخط الزمني العمومي</string>
+  <string name="context_notification">الإشعارات</string>
+  <string name="context_conversation">المحادثات</string>
   <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
   <string name="context_drop">Drop instead of hide</string>
   <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
   <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-  <string name="context_whole_word">Whole word</string>
-  <string name="filter_context">Filter contexts</string>
+  <string name="context_whole_word">الكلمة كلها</string>
+  <string name="filter_context">سياق عامل التصفية</string>
   <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-  <string name="filter_expire">Expire after</string>
-  <string name="add_new_filter">Add New Filter</string>
-  <string name="action_filter_delete">Delete filter?</string>
-  <string name="action_update_filter">Update filter</string>
-  <string name="action_filter_create">Create filter</string>
+  <string name="filter_expire">تنتهي صلاحيته بعد</string>
+  <string name="add_new_filter">إضافة عامل تصفية جديد</string>
+  <string name="action_filter_delete">متأكد مِن حذف عامل التصفية؟</string>
+  <string name="action_update_filter">تحديث عامل التصفية</string>
+  <string name="action_filter_create">إنشاء عامل تصفية</string>
   <string-array name="filter_expire">
-    <item>Never</item>
-    <item>30 minutes</item>
-    <item>1 hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>1 day</item>
+    <item>أبدًا</item>
+    <item>30 دقيقة</item>
+    <item>ساعة واحدة</item>
+    <item>6 ساعات</item>
+    <item>12 ساعة</item>
+    <item>يوم واحد</item>
     <item>1 week</item>
   </string-array>
 </resources>
