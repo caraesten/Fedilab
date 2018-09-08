@@ -1178,8 +1178,7 @@ public class Helper {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                         Resources res = activity.getResources();
-                        BitmapDrawable icon = new BitmapDrawable(res, getRoundedCornerBitmap(resource, 20));
-                        imageView.setImageDrawable(icon);
+                        imageView.setImageBitmap(resource);
                     }
                 });
     }
