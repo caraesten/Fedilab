@@ -42,7 +42,7 @@ allprojects {
     }
 }
 ext.supportLibraryVersion = '27.1.1'
-ext.glideLibraryVersion = '4.8.0'
+ext.glideLibraryVersion = '4.6.1'
 ext.conscryptLibraryVersion = '1.2.0'
 ext.evernoteLibraryVersion = '1.3.0-alpha06'
 ext.gsonLibraryVersion = '2.8.2'

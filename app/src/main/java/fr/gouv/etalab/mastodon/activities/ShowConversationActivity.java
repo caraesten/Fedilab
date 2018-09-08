@@ -58,6 +58,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Context;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.drawers.ConversationDecoration;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveCardInterface;
@@ -337,18 +338,20 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                 statuses.addAll(context.getDescendants());
             }
         }
-
-        statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
-        lv_status.setAdapter(statusListAdapter);
-        statusListAdapter.notifyDataSetChanged();
-        loader.setVisibility(View.GONE);
-        lv_status.setVisibility(View.VISIBLE);
         if( isRefreshed){
             position = statuses.size()-1;
             lv_status.scrollToPosition(position);
         }else {
             lv_status.smoothScrollToPosition(position);
         }
+        statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+       // lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this,position), DividerItemDecoration.VERTICAL);
+        lv_status.setAdapter(statusListAdapter);
+        statusListAdapter.notifyDataSetChanged();
+        loader.setVisibility(View.GONE);
+        lv_status.setVisibility(View.VISIBLE);
+
+
         new RetrieveCardAsyncTask(getApplicationContext(), initialStatus.getId(), ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }

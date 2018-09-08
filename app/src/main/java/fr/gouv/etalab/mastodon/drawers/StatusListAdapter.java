@@ -371,6 +371,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
+    public Status getItem(int position){
+        return statuses.get(position);
+    }
+
     @Override
     public int getItemViewType(int position) {
 

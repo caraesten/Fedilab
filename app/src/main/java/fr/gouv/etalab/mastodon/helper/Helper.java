@@ -2024,7 +2024,12 @@ public class Helper {
             }else{
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
-                context.startActivity(intent);
+                try {
+                    context.startActivity(intent);
+                }catch (Exception e){
+                    Toast.makeText(context, R.string.toast_error, Toast.LENGTH_SHORT).show();
+                }
+
             }
         }
     }

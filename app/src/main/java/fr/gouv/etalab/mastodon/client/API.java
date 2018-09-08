@@ -583,7 +583,7 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getInstanceTimelineSinceId(String instanceName, String since_id) {
-        return getPublicTimeline(true, null, null, since_id, tootPerPage);
+        return getPublicTimeline(true, instanceName, null, since_id, tootPerPage);
     }
 
     /**
