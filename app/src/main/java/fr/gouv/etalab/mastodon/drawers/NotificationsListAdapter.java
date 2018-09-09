@@ -211,7 +211,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.main_container_trans.setVisibility(View.GONE);
                 break;
         }
-
+        notification.getAccount().setDisplay_name(typeString);
         if( theme == THEME_BLACK){
             changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_repeat_head,R.color.dark_icon);
