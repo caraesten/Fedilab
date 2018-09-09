@@ -294,7 +294,6 @@ public class Helper {
     public static final String SET_WIFI_ONLY = "set_wifi_only";
     public static final String SET_NOTIF_HOMETIMELINE = "set_notif_hometimeline";
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
-    public static final String SET_SHOW_ERROR_MESSAGES = "set_show_error_messages";
     public static final String SET_EXPAND_CW = "set_expand_cw";
     public static final String SET_EMBEDDED_BROWSER = "set_embedded_browser";
     public static final String SET_CUSTOM_TABS = "set_custom_tabs";
@@ -304,7 +303,6 @@ public class Helper {
     public static final String SET_TOOT_VISIBILITY = "set_toot_visibility";
     public static final String SET_DISPLAY_LOCAL = "set_display_local";
     public static final String SET_DISPLAY_GLOBAL = "set_display_global";
-    public static final String SET_ALLOW_CROSS_ACTIONS = "set_allow_cross_actions";
     public static final String SET_DISPLAY_BOOST_COUNT = "set_display_boost_count";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS = "set_automatically_split_toots";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";

@@ -849,10 +849,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
         if( error != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);

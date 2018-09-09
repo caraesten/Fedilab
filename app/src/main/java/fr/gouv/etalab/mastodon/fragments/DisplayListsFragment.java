@@ -163,10 +163,7 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
         mainLoader.setVisibility(View.GONE);
         add_new.setEnabled(true);
         if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
         if( actionType == ManageListsAsyncTask.action.GET_LIST) {

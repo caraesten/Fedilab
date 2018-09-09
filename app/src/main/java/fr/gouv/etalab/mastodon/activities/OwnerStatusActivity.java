@@ -431,9 +431,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
         if( apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 ){
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages )
-                Toast.makeText(OwnerStatusActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(OwnerStatusActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;

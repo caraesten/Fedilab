@@ -104,20 +104,7 @@ public class SettingsFragment extends Fragment {
 
 
 
-        boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-        final CheckBox set_show_error_messages = rootView.findViewById(R.id.set_show_error_messages);
-        set_show_error_messages.setChecked(show_error_messages);
-
-        set_show_error_messages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_SHOW_ERROR_MESSAGES, set_show_error_messages.isChecked());
-                editor.apply();
-            }
-        });
-
-        boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
+        boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
         final CheckBox set_auto_add_media_url = rootView.findViewById(R.id.set_auto_add_media_url);
         set_auto_add_media_url.setChecked(show_media_urls);
 
@@ -304,18 +291,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        boolean multiaccount_actions = sharedpreferences.getBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, true);
-        final CheckBox set_multiaccount_actions = rootView.findViewById(R.id.set_multiaccount_actions);
-        set_multiaccount_actions.setChecked(multiaccount_actions);
-
-        set_multiaccount_actions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_ALLOW_CROSS_ACTIONS, set_multiaccount_actions.isChecked());
-                editor.apply();
-            }
-        });
 
         boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
         final CheckBox set_display_local = rootView.findViewById(R.id.set_display_local);

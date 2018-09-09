@@ -270,10 +270,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
         if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
@@ -288,10 +285,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         swipeRefreshLayout.setRefreshing(false);
         RelativeLayout loader = findViewById(R.id.loader);
         if( error != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());

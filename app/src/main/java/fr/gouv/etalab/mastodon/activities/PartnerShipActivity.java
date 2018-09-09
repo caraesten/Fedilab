@@ -121,9 +121,7 @@ public class PartnerShipActivity extends BaseActivity implements OnRetrieveRemot
     public void onRetrieveRemoteAccount(Results results) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         if( results == null){
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), R.string.toast_error,Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.toast_error,Toast.LENGTH_LONG).show();
             return;
         }
         List<Account> accounts = results.getAccounts();

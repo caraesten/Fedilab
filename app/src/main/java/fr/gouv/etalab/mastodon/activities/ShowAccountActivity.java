@@ -468,10 +468,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     @Override
     public void onPostAction(int statusCode,API.StatusAction statusAction, String targetedId, Error error) {
         if( error != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(getApplicationContext(), statusCode, statusAction);
@@ -483,10 +480,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     @Override
     public void onRetrieveAccount(final Account account, Error error) {
         if( error != null || account.getAcct() == null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages && error != null)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         this.account = account;
@@ -898,10 +892,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
         if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = getApplicationContext().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -921,10 +912,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     public void onRetrieveRelationship(Relationship relationship, Error error) {
 
         if( error != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         this.relationship = relationship;
