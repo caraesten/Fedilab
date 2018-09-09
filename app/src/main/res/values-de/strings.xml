@@ -514,10 +514,10 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="filter_keyword_explanations">Wird unabhängig vom umgebenen Text oder Inhaltswarnung eines Beitrags verglichen</string>
   <string name="context_drop">Drop instead of hide</string>
   <string name="context_drop_explanations">Gefilterte Beiträge werden unwiderruflich gefiltert, selbst wenn der Filter später entfernt wurde</string>
-  <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
+  <string name="context_whole_word_explanations">Wenn das Schlüsselwort oder -phrase nur Buchstaben und Zahlen enthält, wird es nur angewendet werden, wenn es dem ganzen Wort entspricht</string>
   <string name="context_whole_word">Ganzes Wort</string>
   <string name="filter_context">Kontext filtern</string>
-  <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
+  <string name="filter_context_explanations">Ein oder mehrere Aspekte, wo der Filter greifen soll</string>
   <string name="filter_expire">Verfällt nach</string>
   <string name="add_new_filter">Neuen Filter hinzufügen</string>
   <string name="action_filter_delete">Filter löschen?</string>
