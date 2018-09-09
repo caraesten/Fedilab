@@ -94,7 +94,7 @@
   <string name="failed">Ошибка!</string>
   <string name="scheduled_toots">Запланированные toots</string>
   <string name="disclaimer_full">Информация, представленная ниже, не может отражать профиль пользователя полностью.</string>
-  <string name="insert_emoji">Вставить эмодзи</string>
+  <string name="insert_emoji">Добавить эмодзи</string>
   <string name="no_emoji">Приложение не собирает пользовательские эмодзи.</string>
   <string name="live_notif">Пуш-уведомления</string>
   <!-- Status -->
