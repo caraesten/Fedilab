@@ -395,7 +395,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( !statuses.contains(status)){
                     //Update the id of the last toot retrieved
                     MainActivity.lastHomeId = status.getId();
-                    status.setReplies(new ArrayList<Status>());
                     statuses.add(0, status);
                     if (!status.getAccount().getId().equals(userId))
                         MainActivity.countNewStatus++;
@@ -407,7 +406,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
             } else if (type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL) {
 
-                status.setReplies(new ArrayList<Status>());
                 status.setNew(false);
                 statuses.add(0, status);
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
@@ -589,7 +587,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     if (type == RetrieveFeedsAsyncTask.Type.HOME)
                         statuses.get(i).setNew(true);
                     inserted++;
-                    statuses.get(i).setReplies(new ArrayList<Status>());
                     this.statuses.add(0, statuses.get(i));
                     if (type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
                         MainActivity.countNewStatus++;

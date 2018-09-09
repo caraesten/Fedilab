@@ -961,10 +961,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             if( isCompactMode){
                 if( ((status.getReblog() == null && status.getReplies_count() == 1) || (status.getReblog() != null && status.getReblog().getReplies_count() == 1)))
-                    holder.status_reply.setText(String.valueOf( status.getReblog() != null? status.getReblog().getReplies_count():status.getReblog().getReplies_count()));
+                    holder.status_reply.setText(String.valueOf( status.getReblog() != null? status.getReblog().getReplies_count():status.getReplies_count()));
             }else {
                 if( status.getReplies_count() > 0 || (status.getReblog() != null && status.getReblog().getReplies_count() > 0 ) )
-                    holder.status_reply.setText(String.valueOf( status.getReblog() != null? status.getReblog().getReplies_count():status.getReblog().getReplies_count()));
+                    holder.status_reply.setText(String.valueOf( status.getReblog() != null? status.getReblog().getReplies_count():status.getReplies_count()));
             }
 
             boolean isOwner = status.getAccount().getId().equals(userId);
