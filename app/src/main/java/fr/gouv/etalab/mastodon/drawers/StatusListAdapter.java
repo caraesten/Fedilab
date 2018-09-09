@@ -564,7 +564,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                if( status.getReblog() != null)
+                    holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                else
+                    holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.black);
@@ -592,9 +595,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 assert img != null;
                 img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
-                holder.status_account_displayname.setVisibility(View.VISIBLE);
-            }else{
-                holder.status_account_displayname.setVisibility(View.GONE);
             }
 
             if( !status.isClickable())
@@ -607,7 +607,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
-            holder.status_account_displayname.setText(status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
+
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -655,21 +655,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             final String ppurl;
             if( status.getReblog() != null){
                 ppurl = status.getReblog().getAccount().getAvatar();
-                holder.status_account_displayname.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
             }else {
                 ppurl = status.getAccount().getAvatar();
+                holder.status_account_displayname.setText(Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true));
             }
             //-------- END -> Displays name & emoji in toot header
 
             //Change the color in gray for accounts in DARK Theme only
             Spannable wordtoSpan = status.getDisplayNameSpan();
+
             if( theme == THEME_DARK || theme == Helper.THEME_BLACK) {
                 Pattern hashAcct;
                 if( status.getReblog() != null)
                     hashAcct = Pattern.compile("\\s(@"+status.getReblog().getAccount().getAcct()+")");
                 else
-                    hashAcct = Pattern.compile("\\s(@"+status.getAccount().getAcct()+")");
+                    hashAcct = Pattern.compile("(@"+status.getAccount().getAcct()+")");
                 if( wordtoSpan != null && hashAcct != null){
                     Matcher matcherAcct = hashAcct.matcher(wordtoSpan);
                     while (matcherAcct.find()){

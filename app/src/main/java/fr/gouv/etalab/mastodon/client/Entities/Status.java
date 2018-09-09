@@ -531,8 +531,7 @@ public class Status implements Parcelable{
             displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
             displayName = String.format("%s @%s",displayName,status.getReblog().getAccount().getAcct());
         }else {
-            displayName = Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
-            displayName = String.format("%s @%s",displayName,status.getAccount().getAcct());
+            displayName = String.format("@%s",status.getAccount().getAcct());
         }
         displayNameSpan = new SpannableString(displayName);
 

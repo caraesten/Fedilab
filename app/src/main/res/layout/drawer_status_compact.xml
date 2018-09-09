@@ -77,11 +77,11 @@
             android:layout_marginLeft="5dp"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/status_account_displayname"
-                android:visibility="gone"
                 android:maxLines="1"
                 android:drawablePadding="2dp"
                 android:layout_width="wrap_content"
