@@ -211,7 +211,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.main_container_trans.setVisibility(View.GONE);
                 break;
         }
-        notification.getAccount().setDisplay_name(typeString);
+
         if( theme == THEME_BLACK){
             changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_repeat_head,R.color.dark_icon);
@@ -224,11 +224,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
         }
 
-        notification.getAccount().makeEmojisAccount(context, NotificationsListAdapter.this);
-        if( notification.getAccount().getdisplayNameSpan() == null)
+
+        if( notification.getAccount().getdisplayNameSpan() == null) {
             holder.notification_type.setText(typeString);
-        else
+            notification.getAccount().setDisplay_name(typeString);
+        }else
             holder.notification_type.setText(notification.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+        notification.getAccount().makeEmojisAccount(context, NotificationsListAdapter.this);
         if( imgH != null) {
             holder.notification_type.setCompoundDrawablePadding((int)Helper.convertDpToPixel(5, context));
             imgH.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
