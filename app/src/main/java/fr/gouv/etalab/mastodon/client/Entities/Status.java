@@ -94,7 +94,6 @@ public class Status implements Parcelable{
     private boolean attachmentShown = false;
     private boolean spoilerShown = false;
     private ArrayList<Attachment> media_attachments;
-    private List<Status> replies;
     private List<Mention> mentions;
     private List<Emojis> emojis;
     private List<Tag> tags;
@@ -418,14 +417,6 @@ public class Status implements Parcelable{
 
     public void setContentTranslated(String content_translated) {
         this.contentTranslated = content_translated;
-    }
-
-    public List<Status> getReplies() {
-        return replies;
-    }
-
-    public void setReplies(List<Status> replies) {
-        this.replies = replies;
     }
 
     public boolean isNew() {

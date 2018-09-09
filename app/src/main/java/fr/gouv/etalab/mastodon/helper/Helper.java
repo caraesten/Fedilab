@@ -242,8 +242,6 @@ public class Helper {
     public static final String SET_MEDIA_URLS = "set_media_urls";
     public static final String SET_TEXT_SIZE = "set_text_size";
     public static final String SET_ICON_SIZE = "set_icon_size";
-    public static final String SET_PREVIEW_REPLIES = "set_preview_replies_";
-    public static final String SET_PREVIEW_REPLIES_PP = "set_preview_replies_pp";
     public static final String SET_TRANSLATOR = "set_translator";
     public static final String SET_LED_COLOUR = "set_led_colour";
     public static final String SET_SHOW_BOOSTS = "set_show_boost";
@@ -303,7 +301,6 @@ public class Helper {
     public static final String SET_TOOT_VISIBILITY = "set_toot_visibility";
     public static final String SET_DISPLAY_LOCAL = "set_display_local";
     public static final String SET_DISPLAY_GLOBAL = "set_display_global";
-    public static final String SET_DISPLAY_BOOST_COUNT = "set_display_boost_count";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS = "set_automatically_split_toots";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";
     //End points

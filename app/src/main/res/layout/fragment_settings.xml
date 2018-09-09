@@ -59,36 +59,6 @@
             android:layout_height="wrap_content" />
 
 
-        <CheckBox
-            android:id="@+id/set_preview_reply"
-            android:layout_width="wrap_content"
-            android:text="@string/set_preview_reply"
-            android:layout_height="wrap_content" />
-
-
-
-        <LinearLayout
-            android:id="@+id/set_preview_reply_pp_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/set_preview_reply_pp"/>
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/set_preview_reply_pp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-        </LinearLayout>
         
         <CheckBox
             android:id="@+id/set_display_local"
@@ -123,13 +93,6 @@
             android:text="@string/set_disable_gif"
             android:layout_height="wrap_content" />
 
-
-        <!-- BOOST/FAVOURITE COUNT -->
-        <CheckBox
-            android:id="@+id/set_disable_counts"
-            android:layout_width="wrap_content"
-            android:text="@string/show_boost_count"
-            android:layout_height="wrap_content" />
 
         <!-- EXPAND CW -->
         <CheckBox
