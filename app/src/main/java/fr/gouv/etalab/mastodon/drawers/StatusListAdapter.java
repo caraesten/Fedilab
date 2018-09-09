@@ -382,6 +382,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int HIDDEN_STATUS = 0;
+        //If account related to status is null, the toot is hidden
+        if( status.getAccount() == null )
+            return HIDDEN_STATUS;
         String filter;
         if( type == RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS)
             return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;

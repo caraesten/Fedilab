@@ -229,7 +229,6 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
         }
         if( actionType == ManageFiltersAsyncTask.action.GET_ALL_FILTER) {
             if (apiResponse.getFilters() != null && apiResponse.getFilters().size() > 0) {
-
                 this.filters.addAll(apiResponse.getFilters());
                 filterAdapter.notifyDataSetChanged();
                 textviewNoAction.setVisibility(View.GONE);

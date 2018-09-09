@@ -2219,7 +2219,8 @@ public class API {
             while (i < jsonArray.length() ) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Filters filter = parseFilter(resobj);
-                filters.add(filter);
+                if( filter != null)
+                    filters.add(filter);
                 i++;
             }
         } catch (JSONException e) {
@@ -2233,10 +2234,12 @@ public class API {
      * @param resobj JSONObject
      * @return Filter
      */
-    private fr.gouv.etalab.mastodon.client.Entities.Filters parseFilter(JSONObject resobj){
-        fr.gouv.etalab.mastodon.client.Entities.Filters filter = new fr.gouv.etalab.mastodon.client.Entities.Filters();
+    private Filters parseFilter(JSONObject resobj){
+        Filters filter = new fr.gouv.etalab.mastodon.client.Entities.Filters();
         try {
             filter.setId(resobj.get("id").toString());
+            if( resobj.get("phrase").toString() == null)
+                return null;
             filter.setPhrase(resobj.get("phrase").toString());
             filter.setSetExpires_at(Helper.mstStringToDate(context, resobj.get("expires_at").toString()));
             filter.setWhole_word(Boolean.parseBoolean(resobj.get("whole_word").toString()));
