@@ -303,9 +303,6 @@ và %d toots khác để khám phá</item>
   <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">Lưu thay đổi</string>
   <string name="set_header_picture_overlay">Chọn một hình ảnh tiêu đề</string>
-  <string name="set_preview_reply">Hiển thị số lượng bài trả lời trong dòng thời gian</string>
-  <string name="set_preview_reply_pp">Hiển thị ảnh tiểu sử?</string>
-  <string name="set_multiaccount_actions">Cho phép tương tác giữa các tài khoản?</string>
   <string name="set_fit_preview">Fit preview images</string>
   <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Bạn đã đạt đến 160 ký tự cho phép!</string>
@@ -357,7 +354,6 @@ và %d toots khác để khám phá</item>
   </string-array>
   <string name="set_title_news">Tin tức</string>
   <string name="set_notification_news">Thông báo cho những con rết mới trên dòng thời gian nhà</string>
-  <string name="set_show_error_messages">Hiển thị thông báo lỗi</string>
   <string name="action_follow">Theo</string>
   <string name="action_unfollow">Hủy theo dõi</string>
   <string name="action_block">Khối</string>
