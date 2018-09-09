@@ -531,8 +531,8 @@
   <string name="context_notification">الإشعارات</string>
   <string name="context_conversation">المحادثات</string>
   <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-  <string name="context_drop">Drop instead of hide</string>
-  <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
+  <string name="context_drop">حذف بدلًا مِن الإخفاء</string>
+  <string name="context_drop_explanations">سوف تختفي التبويقات المُصفّاة إلى الأبد، حتى و إن تم حذف عامل التصفية لاحقًا</string>
   <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
   <string name="context_whole_word">الكلمة كلها</string>
   <string name="filter_context">سياق عامل التصفية</string>
