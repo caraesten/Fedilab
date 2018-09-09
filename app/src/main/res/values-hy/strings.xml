@@ -304,9 +304,6 @@
   <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">Պահել փոփոխությունները</string>
   <string name="set_header_picture_overlay">Ընտրել գլխավոր նկար</string>
-  <string name="set_preview_reply">Ցուցադրել արձագանքների քանակը հարազատ հոսքում</string>
-  <string name="set_preview_reply_pp">Ցուցադրե՞լ անձնանկարները</string>
-  <string name="set_multiaccount_actions">Թույլատրե՞լ հաշիվների միջև փոխհարաբերությունները</string>
   <string name="set_fit_preview">Fit preview images</string>
   <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Դու հատե՛լ ես թույլատրված 160 նիշերի սահմանը</string>
@@ -358,7 +355,6 @@
   </string-array>
   <string name="set_title_news">Նորություններ</string>
   <string name="set_notification_news">Ծանուցել հարազատ հոսքում նոր թթերի դեպքում</string>
-  <string name="set_show_error_messages">Ցուցադրել սխալների հաղորդումները</string>
   <string name="action_follow">Հետևել</string>
   <string name="action_unfollow">Չհետևել</string>
   <string name="action_block">Արգելափակել</string>
