@@ -118,7 +118,7 @@
   <string name="more_action_6">Compartilhar</string>
   <string name="more_action_7">Mencionar</string>
   <string name="more_action_8">Mudo cronometrado</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_9">Excluir &amp; redigir</string>
   <string-array name="more_action_confirm">
     <item>Silenciar esta conta?</item>
     <item>Bloquear esta conta?</item>
@@ -126,7 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Excluir este toot?</item>
-    <item>Delete &amp; re-draft this toot?</item>
+    <item>Excluir &amp; re-elaborar este toot?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d resposta</item>
@@ -305,7 +305,7 @@
   <string name="set_save_changes">Salvar mudanças</string>
   <string name="set_header_picture_overlay">Escolher cabeçalho</string>
   <string name="set_fit_preview">Ajuste da visualização de imagens</string>
-  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+  <string name="set_automatically_split_toot">Automaticamente dividir toots com mais de 500 caracteres em respostas</string>
   <string name="note_no_space">Você já usou os 160 caracteres permitidos!</string>
   <string name="username_no_space">Você já usou os 30 caracteres permitidos!</string>
   <string name="settings_title_hour">Horário das notificações:</string>
@@ -331,7 +331,7 @@
     <item>DeepL</item>
     <item>Não</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">Sua chave de API, você pode deixar em branco para Yandex</string>
   <string-array name="settings_theme">
     <item>Escuro</item>
     <item>Claro</item>
@@ -491,16 +491,16 @@
   <string name="set_share_details">Adicionar detalhes do toot quando compartilhar</string>
   <string name="support_the_app_on_liberapay">Suporte a app na Liberapay</string>
   <string name="alert_regex">Há um erro na expressão regular!</string>
-  <string name="no_account_yet">No account yet?</string>
-  <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-  <string name="delete_instance">Delete this instance?</string>
-  <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-  <string name="which_language">Translate in</string>
-  <string name="crash_title">Mastalab has stopped :(</string>
-  <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-  <string name="send_crash_report">Ask for sending crash reports by email?</string>
-  <string name="follow_instance">Follow instance</string>
-  <string name="toast_instance_already_added">You already follow this instance!</string>
+  <string name="no_account_yet">Sem conta ainda?</string>
+  <string name="toast_instance_unavailable">Nenhuma timeline foi encontrada nesta instância!</string>
+  <string name="delete_instance">Excluir esta instância?</string>
+  <string name="warning_delete_instance">Você vai excluir %s de suas instâncias seguidas.</string>
+  <string name="which_language">Traduzir em %s</string>
+  <string name="crash_title">Mastalab parou :(</string>
+  <string name="crash_message">Você pode me enviar por e-mail o relatório de acidente. Vai ajudar a corrigi-lo:) \n\nVocê pode adicionar conteúdo adicional. Obrigado!</string>
+  <string name="send_crash_report">Perguntar para enviar relatórios de erros por e-mail?</string>
+  <string name="follow_instance">Seguir a instância</string>
+  <string name="toast_instance_already_added">Você já seguir esta instância!</string>
   <string name="toast_instance_followed">The instance is followed!</string>
   <string name="action_partnership">Partnerships</string>
   <string name="neutral_menu_information">Information</string>
