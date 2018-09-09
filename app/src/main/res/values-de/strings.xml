@@ -308,9 +308,6 @@
   <string name="set_lock_account">Konto sperren</string>
   <string name="set_save_changes">Änderungen speichern</string>
   <string name="set_header_picture_overlay">Wähle ein Profilbild</string>
-  <string name="set_preview_reply">Zeige die Anzahl der Antworten in der home Zeitlinie an</string>
-  <string name="set_preview_reply_pp">Profilbilder anzeigen?</string>
-  <string name="set_multiaccount_actions">Interaktionen zwischen deinen Konten erlauben?</string>
   <string name="set_fit_preview">Vorschaubilder anpassen</string>
   <string name="set_automatically_split_toot">In Antworten Toots über 500 Zeichen automatisch unterteilen</string>
   <string name="note_no_space">Du hast die Grenze von 160 Zeichen erreicht!</string>
@@ -362,7 +359,6 @@
   </string-array>
   <string name="set_title_news">Neuigkeiten</string>
   <string name="set_notification_news">Benachrichtigung für neue Toots auf der Startleiste</string>
-  <string name="set_show_error_messages">Zeige Fehlermeldungen</string>
   <string name="action_follow">Folgen</string>
   <string name="action_unfollow">Entfolgen</string>
   <string name="action_block">Blockieren</string>
