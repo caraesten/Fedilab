@@ -595,6 +595,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 assert img != null;
                 img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
+            }else{
+                holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
             }
 
             if( !status.isClickable())
