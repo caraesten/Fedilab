@@ -304,9 +304,6 @@
   <string name="set_lock_account">Blokeatu kontua</string>
   <string name="set_save_changes">Gorde aldaketak</string>
   <string name="set_header_picture_overlay">Hautatu goibururako irudi bat</string>
-  <string name="set_preview_reply">Erakutsi erantzun kopurua hasierako denbora-lerroan</string>
-  <string name="set_preview_reply_pp">Bistaratu profileko argazkiak?</string>
-  <string name="set_multiaccount_actions">Baimendu kontuen arteko interakzioa?</string>
   <string name="set_fit_preview">Doitu irudien aurrebistak</string>
   <string name="set_automatically_split_toot">Automatikoki zatitu 500 karakteretik gorako toot-ak erantzunetan</string>
   <string name="note_no_space">Baimendutako 160 karaktereetara heldu zara!</string>
@@ -358,7 +355,6 @@
   </string-array>
   <string name="set_title_news">Berriak</string>
   <string name="set_notification_news">Jakinarazi hasierako denbora-lerroan toot berriak daudenean</string>
-  <string name="set_show_error_messages">Erakutsi errore mezuak</string>
   <string name="action_follow">Jarraitu</string>
   <string name="action_unfollow">Utzi jarraitzeari</string>
   <string name="action_block">Blokeatu</string>
