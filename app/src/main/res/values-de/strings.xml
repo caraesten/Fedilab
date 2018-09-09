@@ -511,8 +511,8 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="filters">Filter</string>
   <string name="action_filters_empty_content">Keine Filter vorhanden. Du kannst durch Klicken auf \"+\" neue Filter erstellen.</string>
   <string name="filter_keyword">Keyword or phrase</string>
-  <string name="context_home">Home timeline</string>
-  <string name="context_public">Public timelines</string>
+  <string name="context_home">Lokale Timeline</string>
+  <string name="context_public">Öffentliche Zeitleiste</string>
   <string name="context_notification">Benachrichtigungen</string>
   <string name="context_conversation">Unterhaltungen</string>
   <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
@@ -522,7 +522,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="context_whole_word">Ganzes Wort</string>
   <string name="filter_context">Kontext filtern</string>
   <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-  <string name="filter_expire">Expire after</string>
+  <string name="filter_expire">Verfällt nach</string>
   <string name="add_new_filter">Neuen Filter hinzufügen</string>
   <string name="action_filter_delete">Filter löschen?</string>
   <string name="action_update_filter">Filter aktualisieren</string>
