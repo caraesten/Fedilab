@@ -304,9 +304,6 @@
   <string name="set_lock_account">Verrouiller le compte</string>
   <string name="set_save_changes">Enregistrer les modifications</string>
   <string name="set_header_picture_overlay">Choisissez une image d\'entête</string>
-  <string name="set_preview_reply">Afficher le nombre de réponses sur la page d\'accueil</string>
-  <string name="set_preview_reply_pp">Afficher les images de profil ?</string>
-  <string name="set_multiaccount_actions">Permettre les interactions entre comptes ?</string>
   <string name="set_fit_preview">Voir l\'aperçu d\'image en entier</string>
   <string name="set_automatically_split_toot">Fractionnement automatique au-delà de 500 caractères</string>
   <string name="note_no_space">Vous avez atteint les 160 caractères autorisés !</string>
@@ -358,7 +355,6 @@
   </string-array>
   <string name="set_title_news">Actualités</string>
   <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d\'accueil</string>
-  <string name="set_show_error_messages">Afficher les messages d\'erreur</string>
   <string name="action_follow">Suivre</string>
   <string name="action_unfollow">Se désabonner</string>
   <string name="action_block">Bloquer</string>
