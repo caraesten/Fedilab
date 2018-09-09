@@ -310,9 +310,6 @@
   <string name="set_lock_account">Zablokuj konto</string>
   <string name="set_save_changes">Zapisz zmiany</string>
   <string name="set_header_picture_overlay">Wybierz zdjęcie nagłówka</string>
-  <string name="set_preview_reply">Wyświetl liczbę odpowiedzi na lokalnej osi czasu</string>
-  <string name="set_preview_reply_pp">Wyświetlać obrazy profilowe?</string>
-  <string name="set_multiaccount_actions">Zezwalać na interakcje między kontami?</string>
   <string name="set_fit_preview">Pokaż całość</string>
   <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Przekroczono limit 160 dozwolonych znaków!</string>
@@ -364,7 +361,6 @@
   </string-array>
   <string name="set_title_news">Aktualności</string>
   <string name="set_notification_news">Powiadom mnie o nowych wpisach na lokalnej osi czasu</string>
-  <string name="set_show_error_messages">Wyświetlaj komunikaty o błędach</string>
   <string name="action_follow">Śledź</string>
   <string name="action_unfollow">Przestań śledzić</string>
   <string name="action_block">Zablokuj</string>
