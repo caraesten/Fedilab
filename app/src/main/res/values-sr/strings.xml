@@ -307,9 +307,6 @@
   <string name="set_lock_account">Закључај налог</string>
   <string name="set_save_changes">Сачувај промене</string>
   <string name="set_header_picture_overlay">Одаберите слику заглавља</string>
-  <string name="set_preview_reply">Прикажи број одговора у сопственој лајни</string>
-  <string name="set_preview_reply_pp">Прикажи профилну слику?</string>
-  <string name="set_multiaccount_actions">Дозволи интеракције између налога?</string>
   <string name="set_fit_preview">Прилагоди преглед слике да стане</string>
   <string name="set_automatically_split_toot">Аутоматски подели тутове преко 500 карактера у одговору</string>
   <string name="note_no_space">Достигли сте дозвољених 160 карактера!</string>
@@ -361,7 +358,6 @@
   </string-array>
   <string name="set_title_news">Вести</string>
   <string name="set_notification_news">Обавести за нове тутове на сопственој лајни</string>
-  <string name="set_show_error_messages">Прикажи поруке о грешкама</string>
   <string name="action_follow">Запрати</string>
   <string name="action_unfollow">Престани да пратиш</string>
   <string name="action_block">Блокирај</string>
