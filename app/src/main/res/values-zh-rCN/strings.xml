@@ -301,9 +301,6 @@
   <string name="set_lock_account">锁定账户</string>
   <string name="set_save_changes">保存修改</string>
   <string name="set_header_picture_overlay">选择页眉图片</string>
-  <string name="set_preview_reply">在首页时间线中显示回复的数量</string>
-  <string name="set_preview_reply_pp">显示配置文件图片吗？</string>
-  <string name="set_multiaccount_actions">允许客户之间的交互？</string>
   <string name="set_fit_preview">Fit preview images</string>
   <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">您已达到允许的 160 字符上限！</string>
@@ -355,7 +352,6 @@
   </string-array>
   <string name="set_title_news">新闻</string>
   <string name="set_notification_news">当首页时间线上有新的嘟文时通知您</string>
-  <string name="set_show_error_messages">显示错误消息</string>
   <string name="action_follow">关注</string>
   <string name="action_unfollow">取消关注</string>
   <string name="action_block">屏蔽</string>

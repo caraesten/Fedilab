@@ -310,9 +310,6 @@
   <string name="set_lock_account">Блокування облікового запису</string>
   <string name="set_save_changes">Зберегти зміни</string>
   <string name="set_header_picture_overlay">Вибрати малюнок обкладинки</string>
-  <string name="set_preview_reply">Відображати кількість відповідей у домашній стрічці</string>
-  <string name="set_preview_reply_pp">Показувати зображення профілів?</string>
-  <string name="set_multiaccount_actions">Дозволити взаємодію між обліковими записами?</string>
   <string name="set_fit_preview">Fit preview images</string>
   <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Ви досягли ліміту в 160 символів!</string>
@@ -364,7 +361,6 @@
   </string-array>
   <string name="set_title_news">Новини</string>
   <string name="set_notification_news">Сповістити про нові дмухи на домашній стрічці</string>
-  <string name="set_show_error_messages">Показати повідомлення про помилки</string>
   <string name="action_follow">Підписатися</string>
   <string name="action_unfollow">Відписатися</string>
   <string name="action_block">Заблокувати</string>

@@ -304,9 +304,6 @@
   <string name="set_lock_account">Blokeatu kontua</string>
   <string name="set_save_changes">Gorde aldaketak</string>
   <string name="set_header_picture_overlay">Hautatu goibururako irudi bat</string>
-  <string name="set_preview_reply">Erakutsi erantzun kopurua hasierako denbora-lerroan</string>
-  <string name="set_preview_reply_pp">Bistaratu profileko argazkiak?</string>
-  <string name="set_multiaccount_actions">Baimendu kontuen arteko interakzioa?</string>
   <string name="set_fit_preview">Doitu irudien aurrebistak</string>
   <string name="set_automatically_split_toot">Automatikoki zatitu 500 karakteretik gorako toot-ak erantzunetan</string>
   <string name="note_no_space">Baimendutako 160 karaktereetara heldu zara!</string>
@@ -358,7 +355,6 @@
   </string-array>
   <string name="set_title_news">Berriak</string>
   <string name="set_notification_news">Jakinarazi hasierako denbora-lerroan toot berriak daudenean</string>
-  <string name="set_show_error_messages">Erakutsi errore mezuak</string>
   <string name="action_follow">Jarraitu</string>
   <string name="action_unfollow">Utzi jarraitzeari</string>
   <string name="action_block">Blokeatu</string>
@@ -507,43 +503,43 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="toast_instance_followed">Instantzia jarraituta!</string>
   <string name="action_partnership">Lankidetzak</string>
   <string name="neutral_menu_information">Informazioa</string>
-  <string name="hide_boost">Hide boosts from %s</string>
-  <string name="endorse">Feature on profile</string>
-  <string name="hide_everything">Hide everything from %s</string>
-  <string name="show_boost">Show boosts from %s</string>
-  <string name="unendorse">Don\'t feature on profile</string>
-  <string name="show_everything">Show everything from %s</string>
-  <string name="toast_endorse">The account is now featured on profile</string>
-  <string name="toast_unendorse">The account is no longer featured on profile</string>
-  <string name="toast_show_boost">Boosts are now shown!</string>
-  <string name="toast_hide_boost">Boosts are now hidden!</string>
-  <string name="direct_message">Direct message</string>
-  <string name="filters">Filters</string>
-  <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-  <string name="filter_keyword">Keyword or phrase</string>
-  <string name="context_home">Home timeline</string>
-  <string name="context_public">Public timelines</string>
-  <string name="context_notification">Notifications</string>
-  <string name="context_conversation">Conversations</string>
-  <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-  <string name="context_drop">Drop instead of hide</string>
-  <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
-  <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-  <string name="context_whole_word">Whole word</string>
-  <string name="filter_context">Filter contexts</string>
-  <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-  <string name="filter_expire">Expire after</string>
-  <string name="add_new_filter">Add New Filter</string>
-  <string name="action_filter_delete">Delete filter?</string>
-  <string name="action_update_filter">Update filter</string>
-  <string name="action_filter_create">Create filter</string>
+  <string name="hide_boost">Ezkutatu %s(r)en bultzadak</string>
+  <string name="endorse">Nabarmendu profilean</string>
+  <string name="hide_everything">Ezkutatu %s(r) guztia</string>
+  <string name="show_boost">Erakutzi %s(r)en bultzadak</string>
+  <string name="unendorse">Ez nabarmendu profilean</string>
+  <string name="show_everything">Erakutsi %s(r) guztia</string>
+  <string name="toast_endorse">Kontu hau orain profilean nabarmentzen da</string>
+  <string name="toast_unendorse">Kontu hau ez da jada profilean nabarmentzen</string>
+  <string name="toast_show_boost">Bultzadak orain erakusten dira!</string>
+  <string name="toast_hide_boost">Bultzadak orain ezkutatzen dira!</string>
+  <string name="direct_message">Mezu zuzena</string>
+  <string name="filters">Iragazkiak</string>
+  <string name="action_filters_empty_content">Ez dago iragazkirik bistaratzeko. Bat sortu dezakezu \"+\" botoia sakatuz.</string>
+  <string name="filter_keyword">Hitz gakoa edo esaldia</string>
+  <string name="context_home">Hasierako denbora-lerroa</string>
+  <string name="context_public">Denbora-lerro publikoak</string>
+  <string name="context_notification">Jakinarazpenak</string>
+  <string name="context_conversation">Elkarrizketak</string>
+  <string name="filter_keyword_explanations">Bat egingo du testua eta toot-aren eduki abisua maiuskulak zein minuskulak erabiltzen baditu</string>
+  <string name="context_drop">Bota ezkutatu ordez</string>
+  <string name="context_drop_explanations">Iragazitako toot-ak behin betiko desagertuko dira, gero iragazkia kentzen bada ere</string>
+  <string name="context_whole_word_explanations">Hitz gakoa edo esaldia soilik alfanumerikoa bada, bakarrik hitz osoarekin bat datorrenean aplikatuko da</string>
+  <string name="context_whole_word">Hitz osoa</string>
+  <string name="filter_context">Iragazkien testuinguruak</string>
+  <string name="filter_context_explanations">Iragazkia aplikatzeko testuinguru bat edo gehiago</string>
+  <string name="filter_expire">Iraungitze data</string>
+  <string name="add_new_filter">Gehitu iragazki berria</string>
+  <string name="action_filter_delete">Ezabatu iragazkia?</string>
+  <string name="action_update_filter">Eguneratu iragazkia</string>
+  <string name="action_filter_create">Sortu iragazkia</string>
   <string-array name="filter_expire">
-    <item>Never</item>
-    <item>30 minutes</item>
-    <item>1 hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>1 day</item>
-    <item>1 week</item>
+    <item>Inoiz ez</item>
+    <item>30 minutu</item>
+    <item>ordu 1</item>
+    <item>6 ordu</item>
+    <item>12 ordu</item>
+    <item>egun 1</item>
+    <item>aste 1</item>
   </string-array>
 </resources>

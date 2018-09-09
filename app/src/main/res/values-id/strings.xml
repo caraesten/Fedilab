@@ -301,9 +301,6 @@
   <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">Simpan perubahan</string>
   <string name="set_header_picture_overlay">Pilih gambar header</string>
-  <string name="set_preview_reply">Tampilkan jumlah balasan di kronologi beranda</string>
-  <string name="set_preview_reply_pp">Tampilkan gambar profil?</string>
-  <string name="set_multiaccount_actions">Izinkan interaksi antar akun?</string>
   <string name="set_fit_preview">Fit preview images</string>
   <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Kamu telah mencapai 160 karakter yang diizinkan!</string>
@@ -355,7 +352,6 @@
   </string-array>
   <string name="set_title_news">Berita</string>
   <string name="set_notification_news">Beritahu kutipan baru di beranda kronologi</string>
-  <string name="set_show_error_messages">Tampilkan pesan kesalahan</string>
   <string name="action_follow">Ikuti</string>
   <string name="action_unfollow">Berhenti mengikuti</string>
   <string name="action_block">Blokir</string>

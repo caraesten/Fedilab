@@ -304,9 +304,6 @@
   <string name="set_lock_account">Bloquear conta</string>
   <string name="set_save_changes">Salvar mudanças</string>
   <string name="set_header_picture_overlay">Escolher cabeçalho</string>
-  <string name="set_preview_reply">Exibir número de respostas na página inicial</string>
-  <string name="set_preview_reply_pp">Exibir imagens de perfil?</string>
-  <string name="set_multiaccount_actions">Permitir interações entre contas?</string>
   <string name="set_fit_preview">Ajuste da visualização de imagens</string>
   <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Você já usou os 160 caracteres permitidos!</string>
@@ -358,7 +355,6 @@
   </string-array>
   <string name="set_title_news">Novidades</string>
   <string name="set_notification_news">Notificar sobre novos toots na página inicial</string>
-  <string name="set_show_error_messages">Exibir mensagens de erro?</string>
   <string name="action_follow">Seguir</string>
   <string name="action_unfollow">Deixar de seguir</string>
   <string name="action_block">Bloquear</string>

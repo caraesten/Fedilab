@@ -304,9 +304,6 @@
   <string name="set_lock_account">Blocca account</string>
   <string name="set_save_changes">Salva modifiche</string>
   <string name="set_header_picture_overlay">Seleziona una foto per l\'header</string>
-  <string name="set_preview_reply">Visualizza il numero di risposte nella timeline home</string>
-  <string name="set_preview_reply_pp">Visualizzare la foto del profilo?</string>
-  <string name="set_multiaccount_actions">Permetti interazioni tra gli account?</string>
   <string name="set_fit_preview">Adatta anteprima immagini</string>
   <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Hai raggiunto i 160 caratteri permessi!</string>
@@ -358,7 +355,6 @@
   </string-array>
   <string name="set_title_news">Notizie</string>
   <string name="set_notification_news">Notifica nuovi toot nella timeline home</string>
-  <string name="set_show_error_messages">Visualizza messaggi di errore</string>
   <string name="action_follow">Segui</string>
   <string name="action_unfollow">Smetti di seguire</string>
   <string name="action_block">Blocca</string>

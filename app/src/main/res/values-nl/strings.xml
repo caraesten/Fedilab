@@ -304,9 +304,6 @@
   <string name="set_lock_account">Account vergrendelen</string>
   <string name="set_save_changes">Wijzigingen opslaan</string>
   <string name="set_header_picture_overlay">Omslagfoto kiezen</string>
-  <string name="set_preview_reply">Aantal reacties per toot op jouw start-tijdlijn tonen</string>
-  <string name="set_preview_reply_pp">Avatars bij aantal reacties tonen?</string>
-  <string name="set_multiaccount_actions">Interactie tussen ingestelde accounts toestaan?</string>
   <string name="set_fit_preview">Voorbeeldafbeeldingen passend maken</string>
   <string name="set_automatically_split_toot">Toots met meer dan 500 tekens automatisch als reacties opsplitsen</string>
   <string name="note_no_space">Je hebt het limiet van 160 karakters bereikt!</string>
@@ -358,7 +355,6 @@
   </string-array>
   <string name="set_title_news">Nieuwe toots</string>
   <string name="set_notification_news">Geef een melding van nieuwe toots op jouw start-tijdlijn</string>
-  <string name="set_show_error_messages">Toon foutmeldingen</string>
   <string name="action_follow">Volgen</string>
   <string name="action_unfollow">Ontvolgen</string>
   <string name="action_block">Blokkeren</string>
