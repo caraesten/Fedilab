@@ -380,7 +380,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         status = statuses.get(position);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         int HIDDEN_STATUS = 0;
         //If account related to status is null, the toot is hidden
         if( status.getAccount() == null )
@@ -469,7 +469,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
                 boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
                 //Retrieves attached replies to a toot
-                if (showPreview && status.getReblogs_count() == -1) {
+                if (showPreview && status.getReplies_count() == -1) {
                     new RetrieveRepliesAsyncTask(context, status, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
 
@@ -491,7 +491,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
                 boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
                 //All way to deal with replies count
-                if( showPreview  && status.getReblogs_count() == -1){
+                if( showPreview  && status.getReplies_count() == -1){
                     boolean showPreviewPP = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, false);
                     if(  status.getReplies() == null){
                         holder.loader_replies.setVisibility(View.VISIBLE);
@@ -526,13 +526,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         holder.status_replies.setVisibility(View.VISIBLE);
                         holder.loader_replies.setVisibility(View.GONE);
                     }
-                }else if(showPreview && status.getReblogs_count() >= 0) {
-                    if( status.getReblogs_count() > 0 ) {
-                        holder.status_reply.setText(String.valueOf(status.getReblogs_count()));
+                }else if(showPreview && status.getReplies_count() >= 0) {
+                    if( status.getReplies_count() > 0 ) {
+                        holder.status_reply.setText(String.valueOf(status.getReplies_count()));
                         holder.status_replies.setVisibility(View.VISIBLE);
                     }
                     boolean showPreviewPP = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, false);
-                    if (showPreviewPP && status.getReblogs_count() > 0) {
+                    if (showPreviewPP && status.getReplies_count() > 0) {
                         new RetrieveRepliesAsyncTask(context, status, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         status.setReblogs_count(-1);
                     }
@@ -563,7 +563,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
+            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
 
 
 
