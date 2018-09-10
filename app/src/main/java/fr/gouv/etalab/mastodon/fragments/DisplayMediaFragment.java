@@ -173,6 +173,8 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         }
         List<Status> statuses = apiResponse.getStatuses();
         max_id = apiResponse.getMax_id();
+        if( attachments == null)
+            attachments = new ArrayList<>();
         int previousPosition = this.attachments.size();
         flag_loading = (max_id == null );
         if( firstLoad && (statuses == null || statuses.size() == 0))
@@ -181,8 +183,10 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
             textviewNoAction.setVisibility(View.GONE);
         if( statuses != null && statuses.size() > 0) {
             for(Status status: statuses){
-                attachments.addAll(status.getMedia_attachments());
-                gridAdaper.notifyItemRangeInserted(previousPosition, attachments.size());
+                if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0) {
+                    attachments.addAll(status.getMedia_attachments());
+                    gridAdaper.notifyItemRangeInserted(previousPosition, attachments.size());
+                }
             }
         }
         firstLoad = false;
