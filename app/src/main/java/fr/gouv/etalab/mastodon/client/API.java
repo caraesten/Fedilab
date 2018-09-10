@@ -1893,7 +1893,7 @@ public class API {
      * Retrieves list from Communitywiki *synchronously*
      * @return APIResponse
      */
-    private ArrayList<String> getCommunitywikiList() {
+    public ArrayList<String> getCommunitywikiList() {
         ArrayList<String> list = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
@@ -1923,7 +1923,7 @@ public class API {
      * Retrieves list from Communitywiki *synchronously*
      * @return APIResponse
      */
-    private ArrayList<String> getCommunitywikiList(String name) {
+    public ArrayList<String> getCommunitywikiList(String name) {
         ArrayList<String> list = new ArrayList<>();
         try {
             name = URLEncoder.encode(name, "UTF-8");
@@ -1935,7 +1935,7 @@ public class API {
             JSONArray jsonArray = new JSONArray(response);
             for(int i = 0; i < jsonArray.length(); i++){
                 try {
-                    list.add(jsonArray.getString(i));
+                    list.add(jsonArray.getJSONObject(i).getString("acct"));
                 } catch (JSONException ignored) {}
             }
         } catch (HttpsConnection.HttpsConnectionException e) {

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2018 Thomas Schneider
+
+    This file is a part of Mastalab
+
+    This program is free software; you can redistribute it and/or modify it under the terms of the
+    GNU General Public License as published by the Free Software Foundation; either version 3 of the
+    License, or (at your option) any later version.
+
+    Mastalab is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+    Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with Mastalab; if not,
+    see <http://www.gnu.org/licenses>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/search_container"
+    android:divider="?android:dividerHorizontal"
+    android:showDividers="end"
+    android:paddingTop="5dp"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
+    android:paddingBottom="5dp"
+    android:orientation="horizontal">
+    <CheckBox
+        android:id="@+id/account_to_follow_check"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:id="@+id/account_to_follow"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp" />
+</LinearLayout>

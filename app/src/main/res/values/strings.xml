@@ -585,6 +585,7 @@
     <string name="action_filter_delete">Delete filter?</string>
     <string name="action_update_filter">Update filter</string>
     <string name="action_filter_create">Create filter</string>
+    <string name="how_to_follow">Who to follow</string>
 
 
     <string-array translatable="false" name="proxy_type_choice">

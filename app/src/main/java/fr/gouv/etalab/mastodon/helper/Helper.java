@@ -217,6 +217,11 @@ public class Helper {
     public static final String SEARCH_URL = "search_url";
     public static final String CLIP_BOARD = "clipboard";
     public static final String INSTANCE_NAME = "instance_name";
+    public static final String LAST_DATE_LIST_REFRESH = "last_date_list_refresh";
+    public static final String LAST_DATE_LIST_NAME_REFRESH = "last_date_list_name_refresh";
+    public static final String LAST_LIST = "last_list";
+    public static final String LAST_LIST_NAME = "last_list_name";
+
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
     public static final int HOME_TIMELINE_INTENT = 2;
@@ -1656,6 +1661,30 @@ public class Helper {
         }
     }
 
+
+    /**
+     * Serialized a List<String>
+     * @param list List<String> to serialize
+     * @return String serialized List
+     */
+    public static String arrayToStringStorage(List<String> list){
+        Gson gson = new Gson();
+        return gson.toJson(list);
+    }
+
+    /**
+     * Unserialized a List<String>
+     * @param serializedArray String serialized array
+     * @return List<String> list
+     */
+    public static List<String> restoreArrayFromString(String serializedArray){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedArray, List.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
 
     /**
      * Serialized an Application class
