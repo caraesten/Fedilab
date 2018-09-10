@@ -352,8 +352,6 @@ public class Helper {
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_À-ú-]+)");
     public static final Pattern twitterPattern = Pattern.compile("((@[\\w]+)@twitter\\.com)");
     private static final Pattern mentionPattern = Pattern.compile("(@[\\w]+)");
-    public static final Pattern communitywikiListPattern = Pattern.compile("(<\\s?a\\s?href=\"\\/trunk\\/grab\\/(([\\/\\w._, -]|%20|&amp;)*)\"\\s?>([^\"]*)<\\s?\\/\\s?a\\s?>)");
-    public static final Pattern communitywikiAccountPattern = Pattern.compile("(\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/users\\/([\\/\\w._-][^\\/]*)\")");
 
     //Event Type
     public enum EventStreaming{

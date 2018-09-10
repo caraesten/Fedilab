@@ -17,6 +17,8 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.JsonArray;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1885,6 +1887,73 @@ public class API {
         return actionCode;
     }
 
+
+
+    /**
+     * Retrieves list from Communitywiki *synchronously*
+     * @return APIResponse
+     */
+    private ArrayList<String> getCommunitywikiList() {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUrlCommunitywiki("/list"), 60, null, prefKeyOauthTokenT);
+
+            JSONArray jsonArray = new JSONArray(response);
+            int len = jsonArray.length();
+            for (int i=0;i<len;i++){
+                list.add(jsonArray.get(i).toString());
+            }
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return list;
+    }
+
+    /**
+     * Retrieves list from Communitywiki *synchronously*
+     * @return APIResponse
+     */
+    private ArrayList<String> getCommunitywikiList(String name) {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            name = URLEncoder.encode(name, "UTF-8");
+        } catch (UnsupportedEncodingException ignored) {}
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUrlCommunitywiki(String.format("/list/%s", name)), 60, null, prefKeyOauthTokenT);
+
+            JSONArray jsonArray = new JSONArray(response);
+            for(int i = 0; i < jsonArray.length(); i++){
+                try {
+                    list.add(jsonArray.getString(i));
+                } catch (JSONException ignored) {}
+            }
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return list;
+    }
+
+
     /**
      * Parse json response an unique account
      * @param resobj JSONObject
@@ -2584,5 +2653,9 @@ public class API {
 
     private String getAbsoluteUrlRemoteInstance(String instanceName) {
         return "https://" + instanceName + "/api/v1/timelines/public?local=true";
+    }
+
+    private String getAbsoluteUrlCommunitywiki(String action) {
+        return "https://communitywiki.org/trunk/api/v1"  + action;
     }
 }
