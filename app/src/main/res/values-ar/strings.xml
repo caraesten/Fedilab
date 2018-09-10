@@ -517,7 +517,7 @@
   <string name="hide_everything">إخفاء كل شيء مِن %s</string>
   <string name="show_boost">إظهار ترقياته</string>
   <string name="unendorse">إلغاء التوصية مِن صفحتك</string>
-  <string name="show_everything">Show everything from %s</string>
+  <string name="show_everything">إظهار كل شيء قادم مِن %s</string>
   <string name="toast_endorse">تمت توصية الحساب على صفحتك الشخصية</string>
   <string name="toast_unendorse">تم إلغاء توصية هذا الحساب مِن صفحتك</string>
   <string name="toast_show_boost">سيتم إظهار الترقيات الآن!</string>
