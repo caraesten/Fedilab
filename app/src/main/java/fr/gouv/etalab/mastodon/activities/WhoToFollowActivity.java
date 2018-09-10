@@ -84,14 +84,15 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
         cal.setTime(new Date( ));
         cal.add(Calendar.MINUTE, -5);
         Date dateAllowed = cal.getTime();
-        if( lastDateListNameRefresh == null || Helper.stringToDate(WhoToFollowActivity.this, lastDateListNameRefresh).after(dateAllowed))
+        if( lastDateListNameRefresh == null || Helper.stringToDate(WhoToFollowActivity.this, lastDateListNameRefresh).before(dateAllowed)) {
             new WhoToFollowAsyncTask(WhoToFollowActivity.this, item, WhoToFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        else {
+            mainLoader.setVisibility(View.VISIBLE);
+        }else {
             String lastList = sharedpreferences.getString(Helper.LAST_LIST_NAME + item, null);
             List<String> list = Helper.restoreArrayFromString(lastList);
             displayResults(list);
         }
-        mainLoader.setVisibility(View.VISIBLE);
+
         setTitle(item);
     }
 

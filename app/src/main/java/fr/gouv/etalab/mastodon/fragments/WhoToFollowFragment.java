@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,17 +59,18 @@ public class WhoToFollowFragment extends Fragment implements OnRetrieveWhoToFoll
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String lastDateListRefresh = sharedpreferences.getString(Helper.LAST_DATE_LIST_REFRESH, null);
         Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date( ));
+        cal.setTime(new Date());
         cal.add(Calendar.MINUTE, -15);
         Date dateAllowed = cal.getTime();
-        if( lastDateListRefresh == null || Helper.stringToDate(context, lastDateListRefresh).after(dateAllowed))
+        if (lastDateListRefresh == null || Helper.stringToDate(context, lastDateListRefresh).before(dateAllowed)){
+            mainLoader.setVisibility(View.VISIBLE);
             new WhoToFollowAsyncTask(context, null, WhoToFollowFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        else {
+        }else {
             String lastList = sharedpreferences.getString(Helper.LAST_LIST, null);
             List<String> list = Helper.restoreArrayFromString(lastList);
             displayResults(list);
         }
-        mainLoader.setVisibility(View.VISIBLE);
+
         return rootView;
     }
 
