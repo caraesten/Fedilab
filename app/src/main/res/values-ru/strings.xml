@@ -310,9 +310,6 @@
   <string name="set_lock_account">Заблокировать аккаунт</string>
   <string name="set_save_changes">Сохранить изменения</string>
   <string name="set_header_picture_overlay">Выбор изображения профиля</string>
-  <string name="set_preview_reply">Отображать количество ответов в домашней ленте</string>
-  <string name="set_preview_reply_pp">Отображение изображения профиля?</string>
-  <string name="set_multiaccount_actions">Разрешить взаимодействие между аккаунтами?</string>
   <string name="set_fit_preview">Показ масштабируемых изображений</string>
   <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Вы достигли 160 символов!</string>
@@ -364,7 +361,6 @@
   </string-array>
   <string name="set_title_news">Новости</string>
   <string name="set_notification_news">Уведомлять о новых toots в домашней ленте</string>
-  <string name="set_show_error_messages">Отображать сообщения об ошибках</string>
   <string name="action_follow">Подписаться</string>
   <string name="action_unfollow">Отписаться</string>
   <string name="action_block">Заблокировать</string>

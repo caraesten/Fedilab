@@ -1312,14 +1312,10 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     @Override
     public void onRetrieveAttachment(final Attachment attachment, Error error) {
         if( error != null || attachment == null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages) {
-                if( error != null)
-                    Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
-            }
+            if( error != null)
+                Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
             if( attachments.size() == 0 )
                 toot_picture_container.setVisibility(View.GONE);
             toot_picture.setEnabled(true);
@@ -1359,7 +1355,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             imageView.setAdjustViewBounds(true);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
+            boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
             if (show_media_urls) {
                 //Adds the shorter text_url of attachment at the end of the toot 
                 int selectionBefore = toot_content.getSelectionStart();
@@ -1509,7 +1505,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     if( Integer.valueOf(attachment.getId()) == viewId){
                         attachments.remove(attachment);
                         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                        boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, true);
+                        boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
                         if( show_media_urls) {
                             //Clears the text_url at the end of the toot  for this attachment
                             int selectionBefore = toot_content.getSelectionStart();

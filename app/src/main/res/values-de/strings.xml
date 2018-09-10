@@ -308,9 +308,6 @@
   <string name="set_lock_account">Konto sperren</string>
   <string name="set_save_changes">Änderungen speichern</string>
   <string name="set_header_picture_overlay">Wähle ein Profilbild</string>
-  <string name="set_preview_reply">Zeige die Anzahl der Antworten in der home Zeitlinie an</string>
-  <string name="set_preview_reply_pp">Profilbilder anzeigen?</string>
-  <string name="set_multiaccount_actions">Interaktionen zwischen deinen Konten erlauben?</string>
   <string name="set_fit_preview">Vorschaubilder anpassen</string>
   <string name="set_automatically_split_toot">In Antworten Toots über 500 Zeichen automatisch unterteilen</string>
   <string name="note_no_space">Du hast die Grenze von 160 Zeichen erreicht!</string>
@@ -362,7 +359,6 @@
   </string-array>
   <string name="set_title_news">Neuigkeiten</string>
   <string name="set_notification_news">Benachrichtigung für neue Toots auf der Startleiste</string>
-  <string name="set_show_error_messages">Zeige Fehlermeldungen</string>
   <string name="action_follow">Folgen</string>
   <string name="action_unfollow">Entfolgen</string>
   <string name="action_block">Blockieren</string>
@@ -497,43 +493,43 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="toast_instance_followed">Der Instanz wird gefolgt!</string>
   <string name="action_partnership">Partnerschaften</string>
   <string name="neutral_menu_information">Information</string>
-  <string name="hide_boost">Hide boosts from %s</string>
-  <string name="endorse">Feature on profile</string>
-  <string name="hide_everything">Hide everything from %s</string>
-  <string name="show_boost">Show boosts from %s</string>
-  <string name="unendorse">Don\'t feature on profile</string>
-  <string name="show_everything">Show everything from %s</string>
-  <string name="toast_endorse">The account is now featured on profile</string>
-  <string name="toast_unendorse">The account is no longer featured on profile</string>
-  <string name="toast_show_boost">Boosts are now shown!</string>
-  <string name="toast_hide_boost">Boosts are now hidden!</string>
-  <string name="direct_message">Direct message</string>
-  <string name="filters">Filters</string>
-  <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
+  <string name="hide_boost">Verstecke geteilte Beiträge von %s</string>
+  <string name="endorse">Auf Profil hervorheben</string>
+  <string name="hide_everything">Verberge alles von %s</string>
+  <string name="show_boost">Zeige geteilte Beiträge von %s</string>
+  <string name="unendorse">Nicht mehr im Profil hervorheben</string>
+  <string name="show_everything">Alles von %s anzeigen</string>
+  <string name="toast_endorse">Dieser Benutzer wird nun in deinem Profil hervorgehoben</string>
+  <string name="toast_unendorse">Dieser Benutzer wird nicht mehr in deinem Profil hervorgehoben</string>
+  <string name="toast_show_boost">Geteilte Beiträge werden nun angezeigt!</string>
+  <string name="toast_hide_boost">Geteilte Beiträge werden nicht angezeigt!</string>
+  <string name="direct_message">Direktnachrichten</string>
+  <string name="filters">Filter</string>
+  <string name="action_filters_empty_content">Keine Filter vorhanden. Du kannst durch Klicken auf \"+\" neue Filter erstellen.</string>
   <string name="filter_keyword">Keyword or phrase</string>
-  <string name="context_home">Home timeline</string>
-  <string name="context_public">Public timelines</string>
-  <string name="context_notification">Notifications</string>
-  <string name="context_conversation">Conversations</string>
+  <string name="context_home">Lokale Timeline</string>
+  <string name="context_public">Öffentliche Zeitleiste</string>
+  <string name="context_notification">Benachrichtigungen</string>
+  <string name="context_conversation">Unterhaltungen</string>
   <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
   <string name="context_drop">Drop instead of hide</string>
   <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
   <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-  <string name="context_whole_word">Whole word</string>
-  <string name="filter_context">Filter contexts</string>
+  <string name="context_whole_word">Ganzes Wort</string>
+  <string name="filter_context">Kontext filtern</string>
   <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-  <string name="filter_expire">Expire after</string>
-  <string name="add_new_filter">Add New Filter</string>
-  <string name="action_filter_delete">Delete filter?</string>
-  <string name="action_update_filter">Update filter</string>
-  <string name="action_filter_create">Create filter</string>
+  <string name="filter_expire">Verfällt nach</string>
+  <string name="add_new_filter">Neuen Filter hinzufügen</string>
+  <string name="action_filter_delete">Filter löschen?</string>
+  <string name="action_update_filter">Filter aktualisieren</string>
+  <string name="action_filter_create">Filter erstellen</string>
   <string-array name="filter_expire">
-    <item>Never</item>
-    <item>30 minutes</item>
-    <item>1 hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>1 day</item>
-    <item>1 week</item>
+    <item>Nie</item>
+    <item>30 Minuten</item>
+    <item>1 Stunde</item>
+    <item>6 Stunden</item>
+    <item>12 Stunden</item>
+    <item>1 Tag</item>
+    <item>1 Woche</item>
   </string-array>
 </resources>

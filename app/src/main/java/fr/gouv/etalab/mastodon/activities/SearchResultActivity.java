@@ -112,10 +112,7 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
     public void onRetrieveSearch(Results results, Error error) {
         loader.setVisibility(View.GONE);
         if( error != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         if( results == null || (results.getAccounts().size() == 0 && results.getStatuses().size() == 0 && results.getHashtags().size() == 0)){
@@ -139,10 +136,7 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
     public void onRetrieveSearchStatus(APIResponse apiResponse, Error error) {
         loader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         lv_search.setVisibility(View.VISIBLE);

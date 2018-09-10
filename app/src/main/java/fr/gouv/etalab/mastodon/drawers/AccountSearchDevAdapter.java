@@ -157,10 +157,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
         if( error != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
             holder.account_follow.setEnabled(true);
             return;
         }

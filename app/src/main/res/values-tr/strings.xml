@@ -304,9 +304,6 @@
   <string name="set_lock_account">Hesabı Kilitle</string>
   <string name="set_save_changes">Değişiklikleri kaydet</string>
   <string name="set_header_picture_overlay">Profil fotoğrafı seçin</string>
-  <string name="set_preview_reply">Cevaplanma sayısını zaman tünelinde göster</string>
-  <string name="set_preview_reply_pp">Profil resimleri görüntülensin mi?</string>
-  <string name="set_multiaccount_actions">Hesaplar arasındaki etkileşimler izin verilsin mi?</string>
   <string name="set_fit_preview">Küçük resimler sığdırılsın</string>
   <string name="set_automatically_split_toot">500 karakterden fazla cevapları otomatik olarak parçala</string>
   <string name="note_no_space">160 karakter sınırına ulaştınız!</string>
@@ -358,7 +355,6 @@
   </string-array>
   <string name="set_title_news">Haberler</string>
   <string name="set_notification_news">Ana zaman çizelgesi üzerinde yeni toot için bildir</string>
-  <string name="set_show_error_messages">Hata iletilerini göster</string>
   <string name="action_follow">Takip Et</string>
   <string name="action_unfollow">Takip etme</string>
   <string name="action_block">Engelle</string>

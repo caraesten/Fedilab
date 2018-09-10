@@ -273,9 +273,7 @@ public class RemoteFollowActivity extends BaseActivity implements OnRetrieveRemo
         rf_search.setEnabled(true);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         if( results == null){
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), R.string.toast_error,Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.toast_error,Toast.LENGTH_LONG).show();
             return;
         }
         List<Account> accounts = results.getAccounts();
@@ -295,9 +293,8 @@ public class RemoteFollowActivity extends BaseActivity implements OnRetrieveRemo
     public void onRetrieveRelationship(Relationship relationship, Error error) {
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( error != null){
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+
             return;
         }
         if( relationship == null)
@@ -351,9 +348,8 @@ public class RemoteFollowActivity extends BaseActivity implements OnRetrieveRemo
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
         if( error != null){
             final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+
             return;
         }
         Helper.manageMessageStatusCode(getApplicationContext(), statusCode, statusAction);

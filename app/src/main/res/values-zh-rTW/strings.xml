@@ -301,9 +301,6 @@
   <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">保存修改</string>
   <string name="set_header_picture_overlay">选择页眉图片</string>
-  <string name="set_preview_reply">显示家庭时间线中答复的数量</string>
-  <string name="set_preview_reply_pp">是否显示配置文件图片？</string>
-  <string name="set_multiaccount_actions">允许客户之间的交互？</string>
   <string name="set_fit_preview">Fit preview images</string>
   <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">您已达到允许的160字符!</string>
@@ -355,7 +352,6 @@
   </string-array>
   <string name="set_title_news">新闻</string>
   <string name="set_notification_news">在家庭时间线上通知新的toots</string>
-  <string name="set_show_error_messages">显示错误消息</string>
   <string name="action_follow">关注</string>
   <string name="action_unfollow">取消关注</string>
   <string name="action_block">阻止</string>

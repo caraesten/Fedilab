@@ -316,9 +316,6 @@
   <string name="set_lock_account">تأمين الحساب</string>
   <string name="set_save_changes">حفظ التغييرات</string>
   <string name="set_header_picture_overlay">إختيار الصورة الرأسية</string>
-  <string name="set_preview_reply">إظهار عدد الردود على الخيط الرئيسي</string>
-  <string name="set_preview_reply_pp">هل تود عرض الصور الرمزية للحسابات ؟</string>
-  <string name="set_multiaccount_actions">السماح للتفاعلات بين الحسابات ؟</string>
   <string name="set_fit_preview">تكافؤ معاينة الصور</string>
   <string name="set_automatically_split_toot">تقسيم التبويقات التي تفوق الـ 500 حرف عند الرد</string>
   <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به !</string>
@@ -370,7 +367,6 @@
   </string-array>
   <string name="set_title_news">الجديد</string>
   <string name="set_notification_news">الإخطار عن التبويقات الجديدة على الخط الرئيسي</string>
-  <string name="set_show_error_messages">عرض رسائل الأخطاء</string>
   <string name="action_follow">إتبع</string>
   <string name="action_unfollow">إلغاء المتابعة</string>
   <string name="action_block">حظر</string>

@@ -307,9 +307,6 @@
   <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">Salvează modificările</string>
   <string name="set_header_picture_overlay">Alege poză de profil</string>
-  <string name="set_preview_reply">Afişează numărul de răspunsuri în cronologie de acasă</string>
-  <string name="set_preview_reply_pp">Afișează poze de profil?</string>
-  <string name="set_multiaccount_actions">Permite interacțiuni între conturi?</string>
   <string name="set_fit_preview">Fit preview images</string>
   <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
   <string name="note_no_space">Ai atins 160 de caractere permise!</string>
@@ -361,7 +358,6 @@
   </string-array>
   <string name="set_title_news">Ştiri</string>
   <string name="set_notification_news">Notifică pentru noi notițe pe cronologia de acasă</string>
-  <string name="set_show_error_messages">Afişează mesajele de eroare</string>
   <string name="action_follow">Urmărește</string>
   <string name="action_unfollow">Nu mai urmări</string>
   <string name="action_block">Blochează</string>

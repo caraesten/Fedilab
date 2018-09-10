@@ -182,10 +182,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
         loader.setVisibility(View.GONE);
         main_account_container.setVisibility(View.VISIBLE);
         if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(ManageAccountsInListActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(ManageAccountsInListActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
         if( actionType == ManageListsAsyncTask.action.GET_LIST_ACCOUNT){

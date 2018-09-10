@@ -58,7 +58,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -89,7 +88,6 @@ import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveRepliesAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -283,9 +281,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout main_container;
         TextView yandex_translate;
         LinearLayout status_action_container;
-        LinearLayout status_replies;
-        LinearLayout status_replies_profile_pictures;
-        ProgressBar loader_replies;
         Button fetch_more;
         ImageView new_element;
         LinearLayout status_spoiler_mention_container;
@@ -305,7 +300,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         ViewHolder(View itemView) {
             super(itemView);
-            loader_replies = itemView.findViewById(R.id.loader_replies);
             fetch_more = itemView.findViewById(R.id.fetch_more);
             status_document_container = itemView.findViewById(R.id.status_document_container);
             status_horizontal_document_container = itemView.findViewById(R.id.status_horizontal_document_container);
@@ -352,8 +346,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_spoiler = itemView.findViewById(R.id.status_spoiler);
             status_spoiler_button = itemView.findViewById(R.id.status_spoiler_button);
             yandex_translate = itemView.findViewById(R.id.yandex_translate);
-            status_replies = itemView.findViewById(R.id.status_replies);
-            status_replies_profile_pictures = itemView.findViewById(R.id.status_replies_profile_pictures);
             new_element = itemView.findViewById(R.id.new_element);
             status_action_container = itemView.findViewById(R.id.status_action_container);
             status_spoiler_mention_container = itemView.findViewById(R.id.status_spoiler_mention_container);
@@ -380,7 +372,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         status = statuses.get(position);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         int HIDDEN_STATUS = 0;
         //If account related to status is null, the toot is hidden
         if( status.getAccount() == null )
@@ -465,15 +457,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             final Status status = statuses.get(position);
 
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            //Retrieves replies
-            if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
-                boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
-                //Retrieves attached replies to a toot
-                if (showPreview && status.getReblogs_count() == -1) {
-                    new RetrieveRepliesAsyncTask(context, status, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-
-            }
 
 
             final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -488,59 +471,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_reply.setText("");
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
 
-            if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
-                boolean showPreview = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES, false);
-                //All way to deal with replies count
-                if( showPreview  && status.getReblogs_count() == -1){
-                    boolean showPreviewPP = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, false);
-                    if(  status.getReplies() == null){
-                        holder.loader_replies.setVisibility(View.VISIBLE);
-                    }else if(status.getReplies().size() == 0){
-                        holder.status_replies.setVisibility(View.GONE);
-                        holder.loader_replies.setVisibility(View.GONE);
-                    }else if(status.getReplies().size() > 0 ){
-                        if(showPreviewPP) {
-                            ArrayList<String> addedPictures = new ArrayList<>();
-                            holder.status_replies_profile_pictures.removeAllViews();
-                            int i = 0;
-                            for (Status replies : status.getReplies()) {
-                                if (i > 10)
-                                    break;
-                                if (!addedPictures.contains(replies.getAccount().getAcct())) {
-                                    ImageView imageView = new ImageView(context);
-                                    imageView.setMaxHeight((int) Helper.convertDpToPixel(30, context));
-                                    imageView.setMaxWidth((int) Helper.convertDpToPixel(30, context));
-                                    LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                                    imParams.setMargins(10, 5, 10, 5);
-                                    imParams.height = (int) Helper.convertDpToPixel(30, context);
-                                    imParams.width = (int) Helper.convertDpToPixel(30, context);
-                                    holder.status_replies_profile_pictures.addView(imageView, imParams);
-                                    Helper.loadGiF(context, replies.getAccount().getAvatar(), imageView);
-                                    i++;
-                                    addedPictures.add(replies.getAccount().getAcct());
-                                }
-                            }
-                        }
-                        if( status.getReplies() != null && status.getReplies().size() > 0 )
-                            holder.status_reply.setText(String.valueOf(status.getReplies().size()));
-                        holder.status_replies.setVisibility(View.VISIBLE);
-                        holder.loader_replies.setVisibility(View.GONE);
-                    }
-                }else if(showPreview && status.getReblogs_count() >= 0) {
-                    if( status.getReblogs_count() > 0 ) {
-                        holder.status_reply.setText(String.valueOf(status.getReblogs_count()));
-                        holder.status_replies.setVisibility(View.VISIBLE);
-                    }
-                    boolean showPreviewPP = sharedpreferences.getBoolean(Helper.SET_PREVIEW_REPLIES_PP, false);
-                    if (showPreviewPP && status.getReblogs_count() > 0) {
-                        new RetrieveRepliesAsyncTask(context, status, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        status.setReblogs_count(-1);
-                    }
-                }else{
-                    holder.loader_replies.setVisibility(View.GONE);
-                    holder.status_replies.setVisibility(View.GONE);
-                }
-            }
+
             final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Status statusBookmarked = new StatusCacheDAO(context, db).getStatus(StatusCacheDAO.BOOKMARK_CACHE, status.getId());
             if( statusBookmarked != null)
@@ -563,7 +494,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
+            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
 
 
 
@@ -633,7 +564,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                if( status.getReblog() != null)
+                    holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                else
+                    holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.black);
@@ -661,9 +595,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 assert img != null;
                 img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
                 holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
-                holder.status_account_displayname.setVisibility(View.VISIBLE);
             }else{
-                holder.status_account_displayname.setVisibility(View.GONE);
+                holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
             }
 
             if( !status.isClickable())
@@ -676,7 +609,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
-            holder.status_account_displayname.setText(status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
+
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -724,21 +657,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             final String ppurl;
             if( status.getReblog() != null){
                 ppurl = status.getReblog().getAccount().getAvatar();
-                holder.status_account_displayname.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
             }else {
                 ppurl = status.getAccount().getAvatar();
+                holder.status_account_displayname.setText(Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true));
             }
             //-------- END -> Displays name & emoji in toot header
 
             //Change the color in gray for accounts in DARK Theme only
             Spannable wordtoSpan = status.getDisplayNameSpan();
+
             if( theme == THEME_DARK || theme == Helper.THEME_BLACK) {
                 Pattern hashAcct;
                 if( status.getReblog() != null)
                     hashAcct = Pattern.compile("\\s(@"+status.getReblog().getAccount().getAcct()+")");
                 else
-                    hashAcct = Pattern.compile("\\s(@"+status.getAccount().getAcct()+")");
+                    hashAcct = Pattern.compile("(@"+status.getAccount().getAcct()+")");
                 if( wordtoSpan != null && hashAcct != null){
                     Matcher matcherAcct = hashAcct.matcher(wordtoSpan);
                     while (matcherAcct.find()){
@@ -776,8 +710,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context,status.getMentions()), TextView.BufferType.SPANNABLE);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
-            boolean displayBoost = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOOST_COUNT, true);
-            if( getItemViewType(position) != COMPACT_STATUS  && displayBoost) {
+            if( getItemViewType(position) != COMPACT_STATUS ) {
                 if( status.getReblog() == null)
                     holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
                 else
@@ -1023,12 +956,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
             holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
 
-            if(getItemViewType(position) != FOCUSED_STATUS && isCompactMode && ((status.getReblog() == null && status.getReplies_count() > 0) || (status.getReblog() != null && status.getReblog().getReplies_count() > 0))){
+            if(isCompactMode && ((status.getReblog() == null && status.getReplies_count() > 1) || (status.getReblog() != null && status.getReblog().getReplies_count() > 1))){
                 Drawable img = context.getResources().getDrawable( R.drawable.ic_plus_one );
                 holder.status_reply.setCompoundDrawablesWithIntrinsicBounds( imgReply, null, img, null);
             }else{
                 holder.status_reply.setCompoundDrawablesWithIntrinsicBounds( imgReply, null, null, null);
             }
+            if( isCompactMode){
+                if( ((status.getReblog() == null && status.getReplies_count() == 1) || (status.getReblog() != null && status.getReblog().getReplies_count() == 1)))
+                    holder.status_reply.setText(String.valueOf( status.getReblog() != null? status.getReblog().getReplies_count():status.getReplies_count()));
+            }else {
+                if( status.getReplies_count() > 0 || (status.getReblog() != null && status.getReblog().getReplies_count() > 0 ) )
+                    holder.status_reply.setText(String.valueOf( status.getReblog() != null? status.getReblog().getReplies_count():status.getReplies_count()));
+            }
+
             boolean isOwner = status.getAccount().getId().equals(userId);
 
             // Pinning toots is only available on Mastodon 1._6_.0 instances.
@@ -1944,9 +1885,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( error != null){
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);

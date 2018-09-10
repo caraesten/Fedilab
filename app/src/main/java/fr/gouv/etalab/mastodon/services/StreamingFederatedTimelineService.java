@@ -156,7 +156,6 @@ public class StreamingFederatedTimelineService extends IntentService {
         Status status ;
         Bundle b = new Bundle();
         status = API.parseStatuses(getApplicationContext(), response);
-        status.setReplies(new ArrayList<Status>());
         status.setNew(true);
         b.putParcelable("data", status);
         if( account != null)

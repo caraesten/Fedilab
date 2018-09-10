@@ -94,7 +94,6 @@ public class Status implements Parcelable{
     private boolean attachmentShown = false;
     private boolean spoilerShown = false;
     private ArrayList<Attachment> media_attachments;
-    private List<Status> replies;
     private List<Mention> mentions;
     private List<Emojis> emojis;
     private List<Tag> tags;
@@ -420,14 +419,6 @@ public class Status implements Parcelable{
         this.contentTranslated = content_translated;
     }
 
-    public List<Status> getReplies() {
-        return replies;
-    }
-
-    public void setReplies(List<Status> replies) {
-        this.replies = replies;
-    }
-
     public boolean isNew() {
         return isNew;
     }
@@ -471,7 +462,7 @@ public class Status implements Parcelable{
             return;
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         int mode;
         if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
@@ -503,7 +494,7 @@ public class Status implements Parcelable{
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         int mode;
         if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
@@ -540,8 +531,7 @@ public class Status implements Parcelable{
             displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
             displayName = String.format("%s @%s",displayName,status.getReblog().getAccount().getAcct());
         }else {
-            displayName = Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true);
-            displayName = String.format("%s @%s",displayName,status.getAccount().getAcct());
+            displayName = String.format("@%s",status.getAccount().getAcct());
         }
         displayNameSpan = new SpannableString(displayName);
 
@@ -626,7 +616,7 @@ public class Status implements Parcelable{
             return;
         SpannableString spannableStringTranslated = null;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         int mode;
         if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
@@ -735,7 +725,7 @@ public class Status implements Parcelable{
                 spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         int mode;
         if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;

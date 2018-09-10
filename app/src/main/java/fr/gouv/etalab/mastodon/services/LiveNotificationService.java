@@ -512,7 +512,6 @@ public class LiveNotificationService extends Service {
             }
         }else if ( event ==  Helper.EventStreaming.UPDATE){
             status = API.parseStatuses(getApplicationContext(), response);
-            status.setReplies(new ArrayList<Status>());
             status.setNew(true);
             b.putParcelable("data", status);
         }else if( event == Helper.EventStreaming.DELETE){

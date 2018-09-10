@@ -224,11 +224,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
         }
 
-        notification.getAccount().makeEmojisAccount(context, NotificationsListAdapter.this);
-        if( notification.getAccount().getdisplayNameSpan() == null)
+
+        if( notification.getAccount().getdisplayNameSpan() == null) {
             holder.notification_type.setText(typeString);
-        else
+            notification.getAccount().setDisplay_name(typeString);
+        }else
             holder.notification_type.setText(notification.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+        notification.getAccount().makeEmojisAccount(context, NotificationsListAdapter.this);
         if( imgH != null) {
             holder.notification_type.setCompoundDrawablePadding((int)Helper.convertDpToPixel(5, context));
             imgH.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
@@ -283,11 +285,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
             holder.notification_status_content.setMovementMethod(LinkMovementMethod.getInstance());
-            boolean displayBoost = sharedpreferences.getBoolean(Helper.SET_DISPLAY_BOOST_COUNT, true);
-            if( displayBoost) {
-                holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
-                holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
-            }
+            holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
+            holder.status_reblog_count.setText(String.valueOf(status.getReblogs_count()));
             holder.status_date.setText(Helper.dateDiff(context, status.getCreated_at()));
 
             Helper.absoluteDateTimeReveal(context, holder.status_date, status.getCreated_at());
@@ -849,10 +848,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
         if( error != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);

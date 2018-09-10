@@ -304,9 +304,6 @@
   <string name="set_lock_account">Bloquear cuenta</string>
   <string name="set_save_changes">Guardar cambios</string>
   <string name="set_header_picture_overlay">Elegir una imagen de encabezado</string>
-  <string name="set_preview_reply">Mostrar el número de respuesta en la cronología del inicio</string>
-  <string name="set_preview_reply_pp">¿Mostrar imágenes de perfil?</string>
-  <string name="set_multiaccount_actions">¿Permitir interacciones entre cuentas?</string>
   <string name="set_fit_preview">Ajustar vista previa de imágenes</string>
   <string name="set_automatically_split_toot">Automáticamente divide Toots de más de 500 caracteres en respuestas</string>
   <string name="note_no_space">¡Has alcanzado los 160 caracteres permitidos!</string>
@@ -358,7 +355,6 @@
   </string-array>
   <string name="set_title_news">Noticias</string>
   <string name="set_notification_news">Notificar para nuevos toots en la cronología de inicio</string>
-  <string name="set_show_error_messages">Mostrar mensajes de error</string>
   <string name="action_follow">Seguir</string>
   <string name="action_unfollow">Dejar de Seguir</string>
   <string name="action_block">Bloquear</string>
@@ -523,7 +519,7 @@ Gracias a:    </string>
   <string name="context_conversation">Conversaciones</string>
   <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
   <string name="context_drop">Soltar en vez de ocultar</string>
-  <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
+  <string name="context_drop_explanations">Toots filtrados desaparecerán irreversiblemente, aún si el filtro sea removido</string>
   <string name="context_whole_word_explanations">Cuando la palabra clave o frase es solamente alfanumérica, solo aplica si coincide con toda la palabra</string>
   <string name="context_whole_word">Palabra completa</string>
   <string name="filter_context">Filtrar contenido</string>

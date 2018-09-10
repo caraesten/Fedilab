@@ -167,14 +167,14 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
         if( apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 ){
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages )
-                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             flag_loading = false;
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
         max_id = apiResponse.getMax_id();
+        if( attachments == null)
+            attachments = new ArrayList<>();
         int previousPosition = this.attachments.size();
         flag_loading = (max_id == null );
         if( firstLoad && (statuses == null || statuses.size() == 0))
@@ -183,8 +183,10 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
             textviewNoAction.setVisibility(View.GONE);
         if( statuses != null && statuses.size() > 0) {
             for(Status status: statuses){
-                attachments.addAll(status.getMedia_attachments());
-                gridAdaper.notifyItemRangeInserted(previousPosition, attachments.size());
+                if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0) {
+                    attachments.addAll(status.getMedia_attachments());
+                    gridAdaper.notifyItemRangeInserted(previousPosition, attachments.size());
+                }
             }
         }
         firstLoad = false;

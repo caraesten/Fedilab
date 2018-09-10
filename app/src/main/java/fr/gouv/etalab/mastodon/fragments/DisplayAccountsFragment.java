@@ -195,10 +195,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
@@ -229,10 +226,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     @Override
     public void onRetrieveRelationship(APIResponse apiResponse) {
         if( apiResponse.getError() != null){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean show_error_messages = sharedpreferences.getBoolean(Helper.SET_SHOW_ERROR_MESSAGES, true);
-            if( show_error_messages)
-                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
