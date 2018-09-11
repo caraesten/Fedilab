@@ -480,7 +480,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     @Override
     public void onRetrieveAccount(final Account account, Error error) {
         if( error != null || account.getAcct() == null){
-            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            if( error == null)
+                Toast.makeText(ShowAccountActivity.this, R.string.toast_error,Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(ShowAccountActivity.this, error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         this.account = account;
