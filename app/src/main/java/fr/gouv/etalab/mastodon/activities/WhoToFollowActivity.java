@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -120,5 +121,13 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
         }else{
             Toast.makeText(WhoToFollowActivity.this, R.string.toast_error, Toast.LENGTH_SHORT).show();
         }
+
+        Button follow_accounts_select = findViewById(R.id.follow_accounts_select);
+        follow_accounts_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }

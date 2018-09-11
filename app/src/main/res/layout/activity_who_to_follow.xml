@@ -93,6 +93,15 @@
             </RelativeLayout>
         </RelativeLayout>
         <Button
+            android:id="@+id/follow_accounts_select"
+            android:layout_gravity="bottom|end"
+            android:gravity="center"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:text="@string/select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
             android:id="@+id/follow_accounts"
             android:layout_gravity="bottom|end"
             android:gravity="center"
