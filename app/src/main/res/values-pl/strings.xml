@@ -521,7 +521,7 @@ Podziękowania dla:    </string>
   <string name="filters">Filters</string>
   <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
   <string name="filter_keyword">Keyword or phrase</string>
-  <string name="context_home">Home timeline</string>
+  <string name="context_home">Lokalna oś czasu</string>
   <string name="context_public">Public timelines</string>
   <string name="context_notification">Powiadomienia</string>
   <string name="context_conversation">Conversations</string>
