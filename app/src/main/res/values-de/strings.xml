@@ -512,7 +512,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="context_notification">Benachrichtigungen</string>
   <string name="context_conversation">Unterhaltungen</string>
   <string name="filter_keyword_explanations">Wird unabhängig vom umgebenen Text oder Inhaltswarnung eines Beitrags verglichen</string>
-  <string name="context_drop">Entfernen anstatt es zu verstecken</string>
+  <string name="context_drop">Entfernen anstatt zu verstecken</string>
   <string name="context_drop_explanations">Gefilterte Beiträge werden unwiderruflich gefiltert, selbst wenn der Filter später entfernt wurde</string>
   <string name="context_whole_word_explanations">Wenn das Schlüsselwort oder -phrase nur Buchstaben und Zahlen enthält, wird es nur angewendet werden, wenn es dem ganzen Wort entspricht</string>
   <string name="context_whole_word">Ganzes Wort</string>
