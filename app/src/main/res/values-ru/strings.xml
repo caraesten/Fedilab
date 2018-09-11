@@ -94,7 +94,7 @@
   <string name="failed">Ошибка!</string>
   <string name="scheduled_toots">Запланированные toots</string>
   <string name="disclaimer_full">Информация, представленная ниже, не может отражать профиль пользователя полностью.</string>
-  <string name="insert_emoji">Вставить эмодзи</string>
+  <string name="insert_emoji">Добавить эмодзи</string>
   <string name="no_emoji">Приложение не собирает пользовательские эмодзи.</string>
   <string name="live_notif">Пуш-уведомления</string>
   <!-- Status -->
@@ -519,7 +519,7 @@
   <string name="toast_show_boost">Boosts are now shown!</string>
   <string name="toast_hide_boost">Boosts are now hidden!</string>
   <string name="direct_message">Direct message</string>
-  <string name="filters">Filters</string>
+  <string name="filters">Фильтры</string>
   <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
   <string name="filter_keyword">Keyword or phrase</string>
   <string name="context_home">Home timeline</string>
@@ -535,15 +535,15 @@
   <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
   <string name="filter_expire">Expire after</string>
   <string name="add_new_filter">Add New Filter</string>
-  <string name="action_filter_delete">Delete filter?</string>
-  <string name="action_update_filter">Update filter</string>
+  <string name="action_filter_delete">Удалить фильтр?</string>
+  <string name="action_update_filter">Обновить фильтр</string>
   <string name="action_filter_create">Create filter</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
     <item>1 hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
+    <item>6 часов</item>
+    <item>12 часов</item>
     <item>1 day</item>
     <item>1 week</item>
   </string-array>

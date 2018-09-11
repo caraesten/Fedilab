@@ -118,7 +118,7 @@
   <string name="more_action_6">Udostępnij</string>
   <string name="more_action_7">Wspomnij</string>
   <string name="more_action_8">Czasowe wyciszenie</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_9">Usuń i przeredaguj</string>
   <string-array name="more_action_confirm">
     <item>Wyciszyć?</item>
     <item>Zablokować?</item>
@@ -487,10 +487,10 @@ Podziękowania dla:    </string>
   <string name="proxy_enable">Włączyć proxy?</string>
   <string name="poxy_host">Host</string>
   <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
+  <string name="poxy_login">Zaloguj</string>
   <string name="poxy_password">Hasło</string>
   <string name="set_theme">Motyw:</string>
-  <string name="set_compact_mode">Compact mode</string>
+  <string name="set_compact_mode">Tryb kompaktowy</string>
   <string name="set_share_details">Add toot details when sharing</string>
   <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
   <string name="alert_regex">There is an error in the regular expression!</string>
@@ -505,12 +505,12 @@ Podziękowania dla:    </string>
   <string name="follow_instance">Follow instance</string>
   <string name="toast_instance_already_added">You already follow this instance!</string>
   <string name="toast_instance_followed">The instance is followed!</string>
-  <string name="action_partnership">Partnerships</string>
+  <string name="action_partnership">Partnerstwa</string>
   <string name="neutral_menu_information">Information</string>
-  <string name="hide_boost">Hide boosts from %s</string>
-  <string name="endorse">Feature on profile</string>
+  <string name="hide_boost">Ukryj podbicia od %s</string>
+  <string name="endorse">Polecaj na profilu</string>
   <string name="hide_everything">Hide everything from %s</string>
-  <string name="show_boost">Show boosts from %s</string>
+  <string name="show_boost">Pokazuj podbicia od %s</string>
   <string name="unendorse">Don\'t feature on profile</string>
   <string name="show_everything">Show everything from %s</string>
   <string name="toast_endorse">The account is now featured on profile</string>
@@ -521,9 +521,9 @@ Podziękowania dla:    </string>
   <string name="filters">Filters</string>
   <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
   <string name="filter_keyword">Keyword or phrase</string>
-  <string name="context_home">Home timeline</string>
+  <string name="context_home">Lokalna oś czasu</string>
   <string name="context_public">Public timelines</string>
-  <string name="context_notification">Notifications</string>
+  <string name="context_notification">Powiadomienia</string>
   <string name="context_conversation">Conversations</string>
   <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
   <string name="context_drop">Drop instead of hide</string>
@@ -538,12 +538,12 @@ Podziękowania dla:    </string>
   <string name="action_update_filter">Update filter</string>
   <string name="action_filter_create">Create filter</string>
   <string-array name="filter_expire">
-    <item>Never</item>
-    <item>30 minutes</item>
-    <item>1 hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>1 day</item>
-    <item>1 week</item>
+    <item>Nigdy</item>
+    <item>30 minut</item>
+    <item>1 godzina</item>
+    <item>6 godzin</item>
+    <item>12 godzin</item>
+    <item>1 dzień</item>
+    <item>1 tydzień</item>
   </string-array>
 </resources>
