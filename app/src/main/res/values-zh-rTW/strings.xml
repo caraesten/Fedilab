@@ -301,8 +301,8 @@
   <string name="set_lock_account">鎖定帳號</string>
   <string name="set_save_changes">保存修改</string>
   <string name="set_header_picture_overlay">选择页眉图片</string>
-  <string name="set_fit_preview">Fit preview images</string>
-  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+  <string name="set_fit_preview">適當的預覽圖片</string>
+  <string name="set_automatically_split_toot">自動分離超過 500 個字元的嘟文到回覆中</string>
   <string name="note_no_space">您已达到允许的160字符!</string>
   <string name="username_no_space">您已达到允许的30字符!</string>
   <string name="settings_title_hour">通知的时间段:</string>
@@ -540,6 +540,7 @@
   <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
   <string name="about_trunk">Who to follow</string>
   <string name="about_trunk_action">Trunk API</string>
+  <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
