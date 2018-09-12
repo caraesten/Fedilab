@@ -42,7 +42,7 @@
             android:layout_gravity="center"
             android:textStyle="italic|bold"
             android:typeface="serif"
-            android:text="@string/action_lists_empty_content"
+            android:text="@string/action_list_add"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </RelativeLayout>

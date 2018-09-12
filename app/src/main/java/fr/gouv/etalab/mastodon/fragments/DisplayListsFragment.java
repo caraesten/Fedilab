@@ -60,10 +60,10 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
     private List<fr.gouv.etalab.mastodon.client.Entities.List> lists;
-    private TextView no_action_text;
     private RelativeLayout mainLoader;
     private FloatingActionButton add_new;
     private ListAdapter listAdapter;
+    private RelativeLayout textviewNoAction;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,8 +76,7 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
 
 
         ListView lv_lists = rootView.findViewById(R.id.lv_lists);
-        RelativeLayout textviewNoAction = rootView.findViewById(R.id.no_action);
-        no_action_text = rootView.findViewById(R.id.no_action_text);
+        textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader = rootView.findViewById(R.id.loader);
         RelativeLayout nextElementLoader = rootView.findViewById(R.id.loading_next_items);
         mainLoader.setVisibility(View.VISIBLE);
@@ -85,7 +84,6 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
         lists = new ArrayList<>();
         listAdapter = new ListAdapter(context, lists, textviewNoAction);
         lv_lists.setAdapter(listAdapter);
-        no_action_text.setVisibility(View.GONE);
         asyncTask = new ManageListsAsyncTask(context, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, DisplayListsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         try {
             add_new = ((MainActivity) context).findViewById(R.id.add_new);
@@ -170,9 +168,9 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
             if (apiResponse.getLists() != null && apiResponse.getLists().size() > 0) {
                 this.lists.addAll(apiResponse.getLists());
                 listAdapter.notifyDataSetChanged();
-
+                textviewNoAction.setVisibility(View.GONE);
             } else {
-                no_action_text.setVisibility(View.VISIBLE);
+                textviewNoAction.setVisibility(View.VISIBLE);
             }
         }else if( actionType == ManageListsAsyncTask.action.CREATE_LIST){
             if (apiResponse.getLists() != null && apiResponse.getLists().size() > 0) {
@@ -186,9 +184,13 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
                 context.startActivity(intent);
                 this.lists.add(0, apiResponse.getLists().get(0));
                 listAdapter.notifyDataSetChanged();
+                textviewNoAction.setVisibility(View.GONE);
             }else{
                 Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             }
+        }else if( actionType == ManageListsAsyncTask.action.DELETE_LIST){
+            if( this.lists.size() == 0)
+                textviewNoAction.setVisibility(View.VISIBLE);
         }
     }
 }
