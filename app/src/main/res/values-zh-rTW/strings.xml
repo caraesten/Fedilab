@@ -313,9 +313,9 @@
   <string name="settings_hour_init">起始时间</string>
   <string name="settings_hour_end">结束时间</string>
   <string name="embedded_browser">使用内置浏览器</string>
-  <string name="custom_tabs">Custom tabs</string>
+  <string name="custom_tabs">自訂分頁</string>
   <string name="use_javascript">启用 Javascript</string>
-  <string name="expand_cw">Automatically expand cw</string>
+  <string name="expand_cw">自動延伸 cw</string>
   <string name="use_cookies">允许使用第三方cookies</string>
   <string name="settings_ui_layout">时间线布局: </string>
   <string-array name="settings_menu_tabs">
@@ -328,14 +328,14 @@
     <item>DeepL</item>
     <item>否　</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">您的 API 金鑰，若為 Yandex 則可留空</string>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>暗</item>
+    <item>亮</item>
+    <item>黑</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
+    <item>否</item>
     <item>512 Kb</item>
     <item>1 Mb</item>
     <item>2 Mb</item>
@@ -362,8 +362,8 @@
   <string name="request_sent">请求已发送</string>
   <string name="followed_by">关注你</string>
   <string name="action_search">搜索</string>
-  <string name="set_capitalize">First letter in capital for replies</string>
-  <string name="set_resize_picture">Resize pictures</string>
+  <string name="set_capitalize">回覆的第一個字母大寫</string>
+  <string name="set_resize_picture">調整圖片大小</string>
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">推送通知</string>
   <string name="settings_popup_message">
@@ -378,13 +378,13 @@
   <string name="cache_units">Mb</string>
   <string name="toast_cache_clear">缓存已清除! %1$s被释放</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
-  <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
+  <string name="action_sync">同步</string>
+  <string name="action_filter">過濾</string>
+  <string name="owner_cached_toots">您的嘟文</string>
+  <string name="v_public">公開</string>
+  <string name="v_unlisted">不列出</string>
+  <string name="v_private">私人</string>
+  <string name="v_direct">直接</string>
   <string name="v_keywords">Some keywords…</string>
   <string name="show_media">Show media</string>
   <string name="show_pinned">Show pinned</string>
