@@ -40,7 +40,7 @@
   <string name="choose_picture">选择图片…</string>
   <string name="clear">清理</string>
   <string name="microphone">麦克风</string>
-  <string name="camera">Camera</string>
+  <string name="camera">相機</string>
   <string name="speech_prompt">请说点什么</string>
   <string name="speech_not_supported">抱歉! 您的设备不支持语音输入!</string>
   <string name="delete_all">删除全部</string>
@@ -117,8 +117,8 @@
   <string name="more_action_5">复制</string>
   <string name="more_action_6">共享</string>
   <string name="more_action_7">提及</string>
-  <string name="more_action_8">Timed mute</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_8">定時靜音</string>
+  <string name="more_action_9">刪除 &amp; 重新變為草稿</string>
   <string-array name="more_action_confirm">
     <item>是否将此帐户静音？</item>
     <item>是否将此帐户屏蔽？</item>
@@ -126,23 +126,23 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>移除这个toot？</item>
-    <item>Delete &amp; re-draft this toot?</item>
+    <item>刪除 &amp; 將此嘟文重新變為草稿</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d 回复</item>
   </plurals>
-  <string name="set_display_bookmark_button">Display the bookmark button</string>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmark_add">Add to bookmarks</string>
-  <string name="bookmark_remove">Remove bookmark</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="set_display_bookmark_button">顯示書籤按鈕</string>
+  <string name="bookmarks">書籤</string>
+  <string name="bookmark_add">新增至書籤</string>
+  <string name="bookmark_remove">移除書籤</string>
+  <string name="bookmarks_empty">沒有書籤可以顯示</string>
+  <string name="status_bookmarked">已將狀態加入書籤中！</string>
+  <string name="status_unbookmarked">狀態已從書籤中移除！</string>
   <!-- Date -->
-  <string name="date_seconds">%d s</string>
-  <string name="date_minutes">%d m</string>
-  <string name="date_hours">%d h</string>
-  <string name="date_day">%d d</string>
+  <string name="date_seconds">%d 秒</string>
+  <string name="date_minutes">%d 分鐘</string>
+  <string name="date_hours">%d 小時</string>
+  <string name="date_day">%d 天</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">警告</string>
   <string name="toot_placeholder">你在想什么？</string>
@@ -185,15 +185,15 @@
   <string name="about_thekinrar">搜索实例:</string>
   <string name="about_thekinrar_action">实例. 社会</string>
   <string name="thanks_text_logo">图标设计者:</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_banner">橫幅設計師：</string>
   <!-- Conversation -->
   <string name="conversation">会话</string>
   <!-- Accounts -->
   <string name="no_accounts">没有要显示的帐户</string>
   <string name="no_follow_request">无关注请求</string>
-  <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
+  <string name="status_cnt">嘟文\n%1$s</string>
+  <string name="following_cnt">正在關注\n %1$s</string>
+  <string name="followers_cnt">關注者\n %1$s</string>
   <string name="pins_cnt">前端显示的 \n %d</string>
   <string name="authorize">授权</string>
   <string name="reject">拒绝</string>
@@ -206,9 +206,9 @@
   <string name="toot_scheduled_date">计划日期必须大于当前小时!</string>
   <string name="warning_battery">已启用电池保护程序! 它可能无法按预期方式工作。</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">靜音時間應該大於一分鐘。</string>
+  <string name="timed_mute_date">%1$s 已經靜音到 %2$s。\n 您可以從他／她的個人資料頁面解除靜音該帳號。</string>
+  <string name="timed_mute_profile">%1$s 被靜音到 %2$s。\n 點選這裡以取消靜音此帳號。</string>
   <!-- Notifications -->
   <string name="no_notifications">没有要显示的通知</string>
   <string name="notif_mention">提到你</string>
@@ -272,12 +272,12 @@
   <string name="set_attachment_action">加载媒体</string>
   <string name="load_attachment">加载图片</string>
   <string name="load_attachment_spoiler">显示更多…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler_less">顯示較少……</string>
   <string name="load_sensitive_attachment">敏感内容</string>
   <string name="set_display_reply">在回复中显示上一条消息</string>
   <string name="set_display_local">显示本地时间线</string>
   <string name="set_display_global">显示联邦时间线</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">停用 GIF 大頭貼</string>
   <string name="set_folder_title">路径: </string>
   <string name="set_auto_store_toot">自动保存草稿</string>
   <string name="set_bubble_counter">显示计数器</string>
@@ -298,7 +298,7 @@
   <string name="set_nsfw_timeout">NSFW 查看超时 (秒, 0 表示关闭)</string>
   <string name="settings_title_profile">编辑个人资料</string>
   <string name="set_profile_description">简介…</string>
-  <string name="set_lock_account">Lock account</string>
+  <string name="set_lock_account">鎖定帳號</string>
   <string name="set_save_changes">保存修改</string>
   <string name="set_header_picture_overlay">选择页眉图片</string>
   <string name="set_fit_preview">Fit preview images</string>
@@ -526,6 +526,16 @@
   <string name="action_filter_delete">Delete filter?</string>
   <string name="action_update_filter">Update filter</string>
   <string name="action_filter_create">Create filter</string>
+  <string name="how_to_follow">Who to follow</string>
+  <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
+  <string name="follow_account">Follow</string>
+  <string name="select_all">Select all</string>
+  <string name="unselect_all">Unselect all</string>
+  <string name="follow_trunk">%s is followed!</string>
+  <string name="create_list_trunk">Creating the list %s</string>
+  <string name="add_account_list_trunk">Adding accounts to the list</string>
+  <string name="account_added_list_trunk">Accounts were added to the list</string>
+  <string name="adding_account_list_trunk">Adding accounts to the list</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
