@@ -67,6 +67,7 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
     private List<TrunkAccount> trunkAccounts;
     private RelativeLayout mainLoader;
     private String listId, listTitle;
+    private RelativeLayout no_action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
                 setTheme(R.style.AppThemeDark_NoActionBar);
         }
         setContentView(R.layout.activity_who_to_follow);
+        no_action = findViewById(R.id.no_action);
         Toolbar toolbar = findViewById(R.id.toolbar);
         progess_action = findViewById(R.id.progess_action);
         if( theme == THEME_BLACK)
@@ -130,9 +132,14 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
         mainLoader.setVisibility(View.GONE);
         WhoToFollowAccountsAdapter whoToFollowAccountsAdapter;
         if( trunkAccounts != null){
-            ListView lv_list = findViewById(R.id.lv_list);
-            whoToFollowAccountsAdapter = new WhoToFollowAccountsAdapter(WhoToFollowActivity.this, trunkAccounts);
-            lv_list.setAdapter(whoToFollowAccountsAdapter);
+            if( trunkAccounts.size() > 0) {
+                ListView lv_list = findViewById(R.id.lv_list);
+                whoToFollowAccountsAdapter = new WhoToFollowAccountsAdapter(WhoToFollowActivity.this, trunkAccounts);
+                lv_list.setAdapter(whoToFollowAccountsAdapter);
+            }else {
+                no_action.setVisibility(View.VISIBLE);
+                return;
+            }
         }else{
             Toast.makeText(WhoToFollowActivity.this, R.string.toast_error, Toast.LENGTH_SHORT).show();
             return;
@@ -178,6 +185,11 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
                         account.setAcct(val[0]);
                         account.setInstance(val[1]);
                         new PostActionAsyncTask(WhoToFollowActivity.this, null, account, API.StatusAction.FOLLOW, WhoToFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }else {
+                        Toast.makeText(WhoToFollowActivity.this,R.string.toast_impossible_to_follow, Toast.LENGTH_LONG).show();
+                        follow_accounts.setEnabled(true);
+                        follow_accounts_select.setEnabled(true);
+                        progess_action.setVisibility(View.GONE);
                     }
                 }
 
