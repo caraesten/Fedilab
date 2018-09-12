@@ -126,7 +126,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>移除这个toot？</item>
-    <item>Delete &amp; re-draft this toot?</item>
+    <item>刪除 &amp; 將此嘟文重新變為草稿</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="other">%d 回复</item>
