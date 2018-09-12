@@ -385,18 +385,18 @@
   <string name="v_unlisted">不列出</string>
   <string name="v_private">私人</string>
   <string name="v_direct">直接</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="v_keywords">一些關鍵字……</string>
+  <string name="show_media">顯示媒體</string>
+  <string name="show_pinned">顯示已釘選的</string>
+  <string name="filter_no_result">找不到符合的結果！</string>
+  <string name="data_backup_toots">%1$s 的嘟文備份</string>
+  <string name="data_backup_success">%1$s 的新嘟文已匯入</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>否</item>
+    <item>僅</item>
+    <item>兩者</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">在資料庫中找不到嘟文。請從選單中使用同步按鈕以擷取它們。</string>
   <!-- PRIVACY -->
   <string name="privacy_data_title">记录的数据</string>
   <string name="privacy_data">
@@ -421,11 +421,11 @@
         <b>&#9888; 这些操作仅在用户请求时执行. </b>    </string>
   <string name="privacy_API_title">跟踪和库</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        本應用程式<b>不使用追蹤工具</b>（粉絲追蹤、錯誤回報等等）且不包含任何廣告。\n\n
+        使用的函式庫也盡量減到最少：\n
+        - <b>Glide</b>：管理媒體\n
+        - <b>Android-Job</b>：管理服務\n
+        - <b>PhotoView</b>：管理圖片\n
     </string>
   <string name="privacy_API_yandex_title">Toots 的翻译</string>
   <string name="privacy_API_yandex_authorizations">        该应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的能力. \n
@@ -436,25 +436,25 @@
   <string name="thanks_text_dev">
 感谢致以:    </string>
   <string name="filter_regex">按正则表达式进行筛选</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="search">搜尋</string>
+  <string name="delete">刪除</string>
+  <string name="fetch_more_toots">擷取更多嘟文……</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists">列表</string>
+  <string name="action_lists_confirm_delete">您確定您想要永久刪除此列表嗎？</string>
+  <string name="action_lists_empty_content">這份清單裡沒有東西。當此清單的成員張貼新的狀態時，它們將會出現在這裡。</string>
+  <string name="action_lists_add_to">新增到列表</string>
+  <string name="action_lists_remove_from">從列表中移除</string>
+  <string name="action_lists_create">新增列表</string>
+  <string name="action_lists_delete">刪除列表</string>
+  <string name="action_lists_update">編輯列表</string>
+  <string name="action_lists_title_placeholder">新列表標題</string>
+  <string name="action_lists_search_users">搜尋您追蹤的人們</string>
+  <string name="action_lists_owner">您的列表</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s 已經移動到 %2$s</string>
+  <string name="show_boost_count">顯示嘟文／最愛計數</string>
+  <string name="issue_login_title">身份驗證無法運作？</string>
   <string name="issue_login_message">
         <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
