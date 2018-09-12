@@ -98,6 +98,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplaySearchFragment;
+import fr.gouv.etalab.mastodon.fragments.WhoToFollowFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
@@ -1502,6 +1503,12 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "FILTERS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayFiltersFragment, fragmentTag).commit();
+        }else if(id == R.id.nav_who_to_follow){
+            toot.setVisibility(View.GONE);
+            WhoToFollowFragment whoToFollowFragment = new WhoToFollowFragment();
+            fragmentTag = "WHO_TO_FOLLOW";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, whoToFollowFragment, fragmentTag).commit();
         }
 
         populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
@@ -1511,7 +1518,7 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
 
-    private void populateTitleWithTag(String tag, String title, int index){
+    public void populateTitleWithTag(String tag, String title, int index){
         if( tag == null)
             return;
         if ( tagTile.get(tag) == null)
