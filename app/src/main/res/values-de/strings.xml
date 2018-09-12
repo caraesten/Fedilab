@@ -537,6 +537,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
   <string name="about_trunk">Who to follow</string>
   <string name="about_trunk_action">Trunk API</string>
+  <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>
