@@ -206,9 +206,9 @@
   <string name="toot_scheduled_date">计划日期必须大于当前小时!</string>
   <string name="warning_battery">已启用电池保护程序! 它可能无法按预期方式工作。</string>
   <!-- timed mute -->
-  <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-  <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date_error">靜音時間應該大於一分鐘。</string>
+  <string name="timed_mute_date">%1$s 已經靜音到 %2$s。\n 您可以從他／她的個人資料頁面解除靜音該帳號。</string>
+  <string name="timed_mute_profile">%1$s 被靜音到 %2$s。\n 點選這裡以取消靜音此帳號。</string>
   <!-- Notifications -->
   <string name="no_notifications">没有要显示的通知</string>
   <string name="notif_mention">提到你</string>
