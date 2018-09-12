@@ -131,18 +131,18 @@
   <plurals name="preview_replies">
     <item quantity="other">%d 回复</item>
   </plurals>
-  <string name="set_display_bookmark_button">Display the bookmark button</string>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmark_add">Add to bookmarks</string>
-  <string name="bookmark_remove">Remove bookmark</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="set_display_bookmark_button">顯示書籤按鈕</string>
+  <string name="bookmarks">書籤</string>
+  <string name="bookmark_add">新增至書籤</string>
+  <string name="bookmark_remove">移除書籤</string>
+  <string name="bookmarks_empty">沒有書籤可以顯示</string>
+  <string name="status_bookmarked">已將狀態加入書籤中！</string>
+  <string name="status_unbookmarked">狀態已從書籤中移除！</string>
   <!-- Date -->
-  <string name="date_seconds">%d s</string>
-  <string name="date_minutes">%d m</string>
-  <string name="date_hours">%d h</string>
-  <string name="date_day">%d d</string>
+  <string name="date_seconds">%d 秒</string>
+  <string name="date_minutes">%d 分鐘</string>
+  <string name="date_hours">%d 小時</string>
+  <string name="date_day">%d 天</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">警告</string>
   <string name="toot_placeholder">你在想什么？</string>
@@ -185,13 +185,13 @@
   <string name="about_thekinrar">搜索实例:</string>
   <string name="about_thekinrar_action">实例. 社会</string>
   <string name="thanks_text_logo">图标设计者:</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_banner">橫幅設計師：</string>
   <!-- Conversation -->
   <string name="conversation">会话</string>
   <!-- Accounts -->
   <string name="no_accounts">没有要显示的帐户</string>
   <string name="no_follow_request">无关注请求</string>
-  <string name="status_cnt">Toots \n %1$s</string>
+  <string name="status_cnt">嘟文\n%1$s</string>
   <string name="following_cnt">Following \n %1$s</string>
   <string name="followers_cnt">Followers \n %1$s</string>
   <string name="pins_cnt">前端显示的 \n %d</string>
