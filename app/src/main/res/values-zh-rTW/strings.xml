@@ -192,8 +192,8 @@
   <string name="no_accounts">没有要显示的帐户</string>
   <string name="no_follow_request">无关注请求</string>
   <string name="status_cnt">嘟文\n%1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
+  <string name="following_cnt">正在關注\n %1$s</string>
+  <string name="followers_cnt">關注者\n %1$s</string>
   <string name="pins_cnt">前端显示的 \n %d</string>
   <string name="authorize">授权</string>
   <string name="reject">拒绝</string>
