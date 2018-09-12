@@ -456,14 +456,14 @@
   <string name="show_boost_count">顯示嘟文／最愛計數</string>
   <string name="issue_login_title">身份驗證無法運作？</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>這裡有一些可能會有幫助的檢查：</b>\n\n
+        - 檢查實體名稱沒有拼字錯誤\n\n
+        - 檢查您的實體是否仍在運行\n\n
+        - 若您使用雙因素驗證 (2FA)，請使用下方的連結（填寫實體名稱後）\n\n
+        - 您也可以在不使用 2FA 的狀況下使用此連結\n\n
+        - 若還是無法運作，請在 GitHub 上回報問題，網址為 https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
+  <string name="media_ready">媒體已載入。點選這裡以顯示。</string>
   <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
   <string name="data_export_running">Still running, please wait…</string>
   <string name="data_export">Export statuses</string>
