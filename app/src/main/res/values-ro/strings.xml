@@ -544,6 +544,10 @@ Vă mulțumesc:
   <string name="add_account_list_trunk">Adding accounts to the list</string>
   <string name="account_added_list_trunk">Accounts were added to the list</string>
   <string name="adding_account_list_trunk">Adding accounts to the list</string>
+  <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
+  <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
+  <string name="about_trunk">Who to follow</string>
+  <string name="about_trunk_action">Trunk API</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
