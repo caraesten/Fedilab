@@ -272,12 +272,12 @@
   <string name="set_attachment_action">加载媒体</string>
   <string name="load_attachment">加载图片</string>
   <string name="load_attachment_spoiler">显示更多…</string>
-  <string name="load_attachment_spoiler_less">Show less…</string>
+  <string name="load_attachment_spoiler_less">顯示較少……</string>
   <string name="load_sensitive_attachment">敏感内容</string>
   <string name="set_display_reply">在回复中显示上一条消息</string>
   <string name="set_display_local">显示本地时间线</string>
   <string name="set_display_global">显示联邦时间线</string>
-  <string name="set_disable_gif">Disable GIF avatars</string>
+  <string name="set_disable_gif">停用 GIF 大頭貼</string>
   <string name="set_folder_title">路径: </string>
   <string name="set_auto_store_toot">自动保存草稿</string>
   <string name="set_bubble_counter">显示计数器</string>
@@ -298,7 +298,7 @@
   <string name="set_nsfw_timeout">NSFW 查看超时 (秒, 0 表示关闭)</string>
   <string name="settings_title_profile">编辑个人资料</string>
   <string name="set_profile_description">简介…</string>
-  <string name="set_lock_account">Lock account</string>
+  <string name="set_lock_account">鎖定帳號</string>
   <string name="set_save_changes">保存修改</string>
   <string name="set_header_picture_overlay">选择页眉图片</string>
   <string name="set_fit_preview">Fit preview images</string>
