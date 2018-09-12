@@ -20,7 +20,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.WhoToFollowAsyncTask;
+import fr.gouv.etalab.mastodon.client.Entities.TrunkAccount;
 import fr.gouv.etalab.mastodon.drawers.WhoToFollowAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveWhoToFollowInterface;
@@ -49,13 +49,14 @@ public class WhoToFollowFragment extends Fragment implements OnRetrieveWhoToFoll
 
     private Context context;
     private View rootView;
+    private RelativeLayout mainLoader;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_who_to_follow, container, false);
         context = getContext();
-        RelativeLayout mainLoader = rootView.findViewById(R.id.loader);
+        mainLoader = rootView.findViewById(R.id.loader);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String lastDateListRefresh = sharedpreferences.getString(Helper.LAST_DATE_LIST_REFRESH, null);
         Calendar cal = Calendar.getInstance();
@@ -86,22 +87,9 @@ public class WhoToFollowFragment extends Fragment implements OnRetrieveWhoToFoll
         this.context = context;
     }
 
-    @Override
-    public void onRetrieveWhoToFollow(List<String> list) {
-
-        if( list != null){
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_DATE_LIST_REFRESH, Helper.dateToString(new Date()));
-            editor.putString(Helper.LAST_LIST, Helper.arrayToStringStorage(list));
-            editor.apply();
-        }
-        displayResults(list);
-    }
 
     private void displayResults(List<String> list){
 
-        RelativeLayout mainLoader = rootView.findViewById(R.id.loader);
         mainLoader.setVisibility(View.GONE);
         if( list != null){
             ListView lv_list = rootView.findViewById(R.id.lv_list);
@@ -112,4 +100,19 @@ public class WhoToFollowFragment extends Fragment implements OnRetrieveWhoToFoll
         }
     }
 
+    @Override
+    public void onRetrieveWhoToFollowList(List<String> list) {
+        if( list != null){
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.LAST_DATE_LIST_REFRESH, Helper.dateToString(new Date()));
+            editor.putString(Helper.LAST_LIST, Helper.arrayToStringStorage(list));
+            editor.apply();
+        }
+        displayResults(list);
+    }
+
+    @Override
+    public void onRetrieveWhoToFollowAccount(List<TrunkAccount> trunkAccounts) {
+    }
 }

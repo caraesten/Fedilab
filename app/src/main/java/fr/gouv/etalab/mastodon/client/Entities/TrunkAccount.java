@@ -1,3 +1,4 @@
+package fr.gouv.etalab.mastodon.client.Entities;
 /* Copyright 2018 Thomas Schneider
  *
  * This file is a part of Mastalab
@@ -12,18 +13,30 @@
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
-package fr.gouv.etalab.mastodon.interfaces;
-
-
-import java.util.List;
-
-import fr.gouv.etalab.mastodon.client.Entities.TrunkAccount;
 
 /**
- * Created by Thomas on 10/09/2018.
- * Interface for who to follow
+ * Created by Thomas on 11/09/2018.
+ * Adapter for Trunk accounts
  */
-public interface OnRetrieveWhoToFollowInterface {
-    void onRetrieveWhoToFollowList(List<String> list);
-    void onRetrieveWhoToFollowAccount(List<TrunkAccount> trunkAccounts);
+public class TrunkAccount {
+
+    private String acct;
+    private boolean isChecked = false;
+
+    public String getAcct() {
+        return acct;
+    }
+
+    public void setAcct(String acct) {
+        this.acct = acct;
+    }
+
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 }

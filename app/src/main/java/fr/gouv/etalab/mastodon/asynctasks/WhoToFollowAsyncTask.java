@@ -16,8 +16,10 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.TrunkAccount;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveWhoToFollowInterface;
 
 
@@ -52,7 +54,21 @@ public class WhoToFollowAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveWhoToFollow(response);
+        if( name == null)
+            listener.onRetrieveWhoToFollowList(response);
+        else {
+            List<TrunkAccount> trunkAccounts = null;
+            if(response != null) {
+                trunkAccounts = new ArrayList<>();
+                for (String res : response) {
+                    TrunkAccount trunkAccount = new TrunkAccount();
+                    trunkAccount.setAcct(res);
+                    trunkAccounts.add(trunkAccount);
+                }
+            }
+            listener.onRetrieveWhoToFollowAccount(trunkAccounts);
+        }
+
     }
 
 }

@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.drawers;
 
 
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import java.util.List;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.TrunkAccount;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 
 
@@ -34,11 +36,11 @@ import fr.gouv.etalab.mastodon.helper.CrossActions;
  */
 public class WhoToFollowAccountsAdapter extends BaseAdapter {
 
-    private List<String> lists;
+    private List<TrunkAccount> lists;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public WhoToFollowAccountsAdapter(Context context, List<String> lists){
+    public WhoToFollowAccountsAdapter(Context context, List<TrunkAccount> lists){
         this.lists = lists;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
@@ -63,25 +65,35 @@ public class WhoToFollowAccountsAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        String item = lists.get(position);
+        TrunkAccount trunkAccount = lists.get(position);
         final ViewHolder holder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_who_to_follow_account, parent, false);
             holder = new ViewHolder();
+            holder.account_to_follow_check = convertView.findViewById(R.id.account_to_follow_check);
             holder.account_to_follow = convertView.findViewById(R.id.account_to_follow);
-            holder.account_to_follow = convertView.findViewById(R.id.account_to_follow);
+            holder.account_to_follow_profile = convertView.findViewById(R.id.account_to_follow_profile);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.account_to_follow.setText(item);
+        holder.account_to_follow.setText(trunkAccount.getAcct());
 
+        holder.account_to_follow_check.setChecked(trunkAccount.isChecked());
         holder.account_to_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                trunkAccount.setChecked(!trunkAccount.isChecked());
+                notifyDataSetChanged();
+            }
+        });
+
+        holder.account_to_follow_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Account account = new Account();
-                String[] val = item.split("@");
+                String[] val = trunkAccount.getAcct().split("@");
                 if( val.length > 1){
                     account.setAcct(val[0]);
                     account.setInstance(val[1]);
@@ -97,6 +109,7 @@ public class WhoToFollowAccountsAdapter extends BaseAdapter {
     private class ViewHolder {
         CheckBox account_to_follow_check;
         TextView account_to_follow;
+        FloatingActionButton account_to_follow_profile;
     }
 
 
