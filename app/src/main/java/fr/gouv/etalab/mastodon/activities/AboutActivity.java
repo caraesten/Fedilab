@@ -100,6 +100,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         Button about_code = findViewById(R.id.about_code);
         Button about_license = findViewById(R.id.about_license);
         Button about_thekinrar = findViewById(R.id.about_thekinrar);
+        Button about_trunk = findViewById(R.id.about_trunk);
 
         about_code.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -113,6 +114,14 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
             @Override
             public void onClick(View v) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://instances.social/"));
+                startActivity(browserIntent);
+            }
+        });
+
+        about_trunk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://communitywiki.org/trunk"));
                 startActivity(browserIntent);
             }
         });
@@ -167,6 +176,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         if( theme == Helper.THEME_LIGHT) {
             about_code.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             about_thekinrar.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            about_trunk.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             about_translation.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             about_license.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
             about_support.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
