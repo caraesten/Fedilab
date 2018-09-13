@@ -35,11 +35,11 @@
   <string name="instance_example">實體：mastodon.social</string>
   <string name="toast_account_changed" formatted="false">現在使用帳號 %1$s</string>
   <string name="add_account">新增帳號</string>
-  <string name="clipboard">已将toot 的内容复制到剪贴板</string>
-  <string name="change">变更</string>
-  <string name="choose_picture">选择图片…</string>
+  <string name="clipboard">已將嘟文的內容複製到剪貼簿</string>
+  <string name="change">變更</string>
+  <string name="choose_picture">選取圖片……</string>
   <string name="clear">清理</string>
-  <string name="microphone">麦克风</string>
+  <string name="microphone">麥克風</string>
   <string name="camera">相機</string>
   <string name="speech_prompt">请说点什么</string>
   <string name="speech_not_supported">抱歉! 您的设备不支持语音输入!</string>
