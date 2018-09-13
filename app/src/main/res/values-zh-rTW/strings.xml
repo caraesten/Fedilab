@@ -517,8 +517,8 @@
   <string name="filter_keyword_explanations">不論是文字框中或在嘟文中的內容警告都將會符合</string>
   <string name="context_drop">丟棄而非隱藏</string>
   <string name="context_drop_explanations">已過濾的嘟文將會不可逆地消失，即便過濾移除後也一樣</string>
-  <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-  <string name="context_whole_word">Whole word</string>
+  <string name="context_whole_word_explanations">當關鍵字與詞組僅包含字母與數字時，它只會在整個單字都符合時才會套用</string>
+  <string name="context_whole_word">整個單字</string>
   <string name="filter_context">Filter contexts</string>
   <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
   <string name="filter_expire">Expire after</string>
