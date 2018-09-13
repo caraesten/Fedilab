@@ -113,23 +113,23 @@
   <string name="more_action_1">靜音</string>
   <string name="more_action_2">封鎖</string>
   <string name="more_action_3">回報</string>
-  <string name="more_action_4">移出</string>
-  <string name="more_action_5">复制</string>
-  <string name="more_action_6">共享</string>
+  <string name="more_action_4">移除</string>
+  <string name="more_action_5">複製</string>
+  <string name="more_action_6">分享</string>
   <string name="more_action_7">提及</string>
   <string name="more_action_8">定時靜音</string>
   <string name="more_action_9">刪除 &amp; 重新變為草稿</string>
   <string-array name="more_action_confirm">
-    <item>是否将此帐户静音？</item>
-    <item>是否将此帐户屏蔽？</item>
-    <item>报告这个toot？</item>
+    <item>將此帳號設為靜音？</item>
+    <item>封鎖此帳號？</item>
+    <item>回報此嘟文？</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>移除这个toot？</item>
+    <item>移除此嘟文？</item>
     <item>刪除 &amp; 將此嘟文重新變為草稿</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="other">%d 回复</item>
+    <item quantity="other">%d 回覆</item>
   </plurals>
   <string name="set_display_bookmark_button">顯示書籤按鈕</string>
   <string name="bookmarks">書籤</string>
@@ -145,23 +145,23 @@
   <string name="date_day">%d 天</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">警告</string>
-  <string name="toot_placeholder">你在想什么？</string>
-  <string name="toot_it">TOOT!</string>
-  <string name="cw">顺时针</string>
-  <string name="toot_title">写一个toot</string>
-  <string name="toot_title_reply">回复一个toot</string>
-  <string name="toot_no_space">您已达到允许的500字符!</string>
-  <string name="toot_select_image">选择媒体</string>
-  <string name="toot_select_image_error">选择介质时出错!</string>
-  <string name="toot_delete_media">是否删除此媒体？</string>
-  <string name="toot_error_no_content">你的toot是空的!</string>
-  <string name="toot_visibility_tilte">Toot可见性</string>
-  <string name="toots_visibility_tilte">默认情况下, toot的可见性: </string>
-  <string name="toot_sent">Toot已被发送!</string>
-  <string name="toot_reply_content_title">您正在回复此toot:</string>
-  <string name="toot_sensitive">敏感内容？</string>
+  <string name="toot_placeholder">你在想什麼？</string>
+  <string name="toot_it">嘟文！</string>
+  <string name="cw">cw</string>
+  <string name="toot_title">撰寫一則嘟文</string>
+  <string name="toot_title_reply">回覆一則嘟文</string>
+  <string name="toot_no_space">您已經到達允許的 500 字元！</string>
+  <string name="toot_select_image">選取媒體</string>
+  <string name="toot_select_image_error">選擇媒體時出錯!</string>
+  <string name="toot_delete_media">刪除此媒體？</string>
+  <string name="toot_error_no_content">您的嘟文是空的！</string>
+  <string name="toot_visibility_tilte">嘟文的能見度</string>
+  <string name="toots_visibility_tilte">預設情況下的嘟文可見度：</string>
+  <string name="toot_sent">嘟文已傳送！</string>
+  <string name="toot_reply_content_title">您正在回覆到此嘟文：</string>
+  <string name="toot_sensitive">敏感內容？</string>
   <string-array name="toot_visibility">
-    <item>张贴到公共时间线</item>
+    <item>張貼到公共時間表</item>
     <item>不张贴到公共时间线</item>
     <item>仅张贴给关注者</item>
     <item>仅张贴给所述用户</item>
