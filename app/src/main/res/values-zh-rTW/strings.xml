@@ -162,11 +162,11 @@
   <string name="toot_sensitive">敏感內容？</string>
   <string-array name="toot_visibility">
     <item>張貼到公共時間表</item>
-    <item>不张贴到公共时间线</item>
-    <item>仅张贴给关注者</item>
-    <item>仅张贴给所述用户</item>
+    <item>不要張貼到公開時間軸</item>
+    <item>僅張貼給關注者</item>
+    <item>僅張貼給提及的使用者</item>
   </string-array>
-  <string name="no_draft">没有草稿!</string>
+  <string name="no_draft">沒有草稿！</string>
   <string name="choose_toot">选择一个toot</string>
   <string name="choose_accounts">选择帐号</string>
   <string name="select_accounts">选择一些帐户</string>
