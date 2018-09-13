@@ -22,19 +22,19 @@
   <string name="download_from" formatted="false">檔案：%1$s</string>
   <string name="password">密碼</string>
   <string name="email">電子郵件</string>
-  <string name="accounts">帐户</string>
-  <string name="toots">Toots</string>
-  <string name="tags">标签</string>
-  <string name="token">代币</string>
-  <string name="save">保存</string>
+  <string name="accounts">帳號</string>
+  <string name="toots">嘟文</string>
+  <string name="tags">標籤</string>
+  <string name="token">標記</string>
+  <string name="save">儲存</string>
   <string name="restore">還原</string>
-  <string name="two_factor_authentification">两步验证？</string>
-  <string name="other_instance">其他实例比 mastodon.etalab.gouv.fr 更...？</string>
-  <string name="no_result">没有结果!</string>
-  <string name="instance">实例</string>
-  <string name="instance_example">實例: mastodon.social</string>
-  <string name="toast_account_changed" formatted="false">现在使用 %1$s 这个帐户</string>
-  <string name="add_account">添加帐户</string>
+  <string name="two_factor_authentification">兩步驟驗證？</string>
+  <string name="other_instance">除了 mastodon.etalab.gouv.fr 以外的實體？</string>
+  <string name="no_result">沒有結果！</string>
+  <string name="instance">實體</string>
+  <string name="instance_example">實體：mastodon.social</string>
+  <string name="toast_account_changed" formatted="false">現在使用帳號 %1$s</string>
+  <string name="add_account">新增帳號</string>
   <string name="clipboard">已将toot 的内容复制到剪贴板</string>
   <string name="change">变更</string>
   <string name="choose_picture">选择图片…</string>
