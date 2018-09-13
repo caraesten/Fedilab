@@ -2116,7 +2116,11 @@ public class Helper {
                         (int) (takenImage.getHeight() / resize), true);
                 Bitmap adjustedBitmap;
                 if( matrix != null)
-                    adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
+                    try {
+                        adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
+                    }catch (Exception e){
+                        adjustedBitmap = newBitmap;
+                    }
                 else
                     adjustedBitmap = newBitmap;
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
