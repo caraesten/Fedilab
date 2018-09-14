@@ -182,12 +182,12 @@
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">原始碼：</string>
   <string name="about_yandex">嘟文的翻譯：</string>
-  <string name="about_thekinrar">搜索实例:</string>
-  <string name="about_thekinrar_action">实例. 社会</string>
-  <string name="thanks_text_logo">图标设计者:</string>
+  <string name="about_thekinrar">搜尋實體：</string>
+  <string name="about_thekinrar_action">instances.social</string>
+  <string name="thanks_text_logo">圖示設計者：</string>
   <string name="thanks_text_banner">橫幅設計師：</string>
   <!-- Conversation -->
-  <string name="conversation">会话</string>
+  <string name="conversation">對話</string>
   <!-- Accounts -->
   <string name="no_accounts">没有要显示的帐户</string>
   <string name="no_follow_request">无关注请求</string>
