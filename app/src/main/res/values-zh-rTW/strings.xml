@@ -176,12 +176,12 @@
   <!-- Instance -->
   <string name="instance_no_description">沒有可用的描述！</string>
   <!-- About -->
-  <string name="about_vesrion">发布 %1$s</string>
-  <string name="about_developer">开发者:</string>
-  <string name="about_license">许可证: </string>
+  <string name="about_vesrion">釋出 %1$s</string>
+  <string name="about_developer">開發者：</string>
+  <string name="about_license">授權條款：</string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">源代码: </string>
-  <string name="about_yandex">Toot的翻译:</string>
+  <string name="about_code">原始碼：</string>
+  <string name="about_yandex">嘟文的翻譯：</string>
   <string name="about_thekinrar">搜索实例:</string>
   <string name="about_thekinrar_action">实例. 社会</string>
   <string name="thanks_text_logo">图标设计者:</string>
