@@ -407,13 +407,14 @@
     </string>
   <string name="privacy_authorizations_title">權限：</string>
   <string name="privacy_authorizations">
-- <b>ACCESS_NETWORK_STATE</b>: 用于检测设备是否连接到 WIFI 网络.\n
-        - <b>INTERNET</b>: 用于查询实例..\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: 用于存储媒体或将应用程序移动到 SD 卡上。\n
-        - <b>READ_EXTERNAL_STORAGE</b>:  用于将媒体添加到toots.\n
-        - <b>BOOT_COMPLETED</b>: 用于启动通知服务.\n
-        - <b>WAKE_LOCK</b>: 在通知服务期间使用。    </string>
-  <string name="privacy_API_authorizations_title">API 权限:</string>
+        - <b>ACCESS_NETWORK_STATE</b>：用於偵測裝置是否連線至 WIFI 網路。\n
+        - <b>INTERNET</b>：用於查詢實體。\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>：用於儲存媒體或將應用程式移動到記憶卡上。\n
+        - <b>READ_EXTERNAL_STORAGE</b>：用於將媒體新增到嘟文中。\n
+        - <b>BOOT_COMPLETED</b>：用於啟動通知服務。\n
+        - <b>WAKE_LOCK</b>：在通知服務期間使用。
+    </string>
+  <string name="privacy_API_authorizations_title">API 權限：</string>
   <string name="privacy_API_authorizations">
         - <b>Read</b>: 读取数据.\n
         - <b>Write</b>: 开机自检状态和上载状态的媒体. \n
