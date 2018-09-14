@@ -1056,6 +1056,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     @Override
     public void onRetrieveEmojiAccount(Account account) {
+        for( Notification notification: notifications){
+            if( notification.getAccount().equals(account)){
+                notifyNotificationChanged(notification);
+            }
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

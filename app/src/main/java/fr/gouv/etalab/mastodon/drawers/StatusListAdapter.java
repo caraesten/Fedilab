@@ -123,7 +123,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnRetrieveEmojiAccountInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -215,10 +215,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         notifyStatusChanged(modifiedStatus.get(0));
     }
 
-    @Override
-    public void onRetrieveEmojiAccount(Account account) {
-
-    }
 
     private class ViewHolderEmpty extends RecyclerView.ViewHolder{
         ViewHolderEmpty(View itemView) {
@@ -658,7 +654,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //-------- END -> Manages translations
 
 
-            status.getAccount().makeEmojisAccount(context, StatusListAdapter.this);
             //Displays name & emoji in toot header
             final String ppurl;
             if( status.getReblog() != null){

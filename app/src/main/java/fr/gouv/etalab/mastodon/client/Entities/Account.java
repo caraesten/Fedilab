@@ -537,7 +537,8 @@ public class Account implements Parcelable {
                                     if( noteSpan != null)
                                         account.setNoteSpan(noteSpan);
                                     account.setFieldsSpan(fieldsSpan);
-                                    listener.onRetrieveEmojiAccount(account);
+                                    if( listener != null)
+                                        listener.onRetrieveEmojiAccount(account);
                                 }
                             }
                         });
