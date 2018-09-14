@@ -232,7 +232,7 @@
   <string name="pinned_toots">已釘選</string>
   <!-- TOAST -->
   <string name="client_error">無法取得客戶端 id！</string>
-  <string name="no_internet">没有互联网连接!</string>
+  <string name="no_internet">沒有網路連線！</string>
   <string name="toast_block">帐户被阻止!</string>
   <string name="toast_unblock">帐户不再被阻止!</string>
   <string name="toast_mute">帐户被静音!</string>
