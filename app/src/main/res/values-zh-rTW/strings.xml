@@ -189,40 +189,40 @@
   <!-- Conversation -->
   <string name="conversation">對話</string>
   <!-- Accounts -->
-  <string name="no_accounts">没有要显示的帐户</string>
-  <string name="no_follow_request">无关注请求</string>
+  <string name="no_accounts">沒有要顯示的帳號</string>
+  <string name="no_follow_request">無關注請求</string>
   <string name="status_cnt">嘟文\n%1$s</string>
   <string name="following_cnt">正在關注\n %1$s</string>
   <string name="followers_cnt">關注者\n %1$s</string>
-  <string name="pins_cnt">前端显示的 \n %d</string>
-  <string name="authorize">授权</string>
-  <string name="reject">拒绝</string>
+  <string name="pins_cnt">已釘選\n %d</string>
+  <string name="authorize">授權</string>
+  <string name="reject">拒絕</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">没有预定的toot显示!</string>
-  <string name="no_scheduled_toots_indications">编写一个toot, 然后从顶部菜单中选择 <b> 计划 </b>。</string>
-  <string name="remove_scheduled">删除计划的toot？</string>
-  <string name="media_count">媒体: %d</string>
-  <string name="toot_scheduled">Toot已经安排好了!</string>
-  <string name="toot_scheduled_date">计划日期必须大于当前小时!</string>
-  <string name="warning_battery">已启用电池保护程序! 它可能无法按预期方式工作。</string>
+  <string name="no_scheduled_toots">沒有已排定的嘟文可供顯示！</string>
+  <string name="no_scheduled_toots_indications">編寫嘟文，然後在頂端的選單中選擇<b>排程</b>。</string>
+  <string name="remove_scheduled">刪除排定的嘟文？</string>
+  <string name="media_count">媒體：%d</string>
+  <string name="toot_scheduled">嘟文已經安排好了！</string>
+  <string name="toot_scheduled_date">嘟文排定的時間必須大於目前的小時！</string>
+  <string name="warning_battery">已啟用電池保護程式！它可能無法正常運作。</string>
   <!-- timed mute -->
   <string name="timed_mute_date_error">靜音時間應該大於一分鐘。</string>
   <string name="timed_mute_date">%1$s 已經靜音到 %2$s。\n 您可以從他／她的個人資料頁面解除靜音該帳號。</string>
   <string name="timed_mute_profile">%1$s 被靜音到 %2$s。\n 點選這裡以取消靜音此帳號。</string>
   <!-- Notifications -->
-  <string name="no_notifications">没有要显示的通知</string>
-  <string name="notif_mention">提到你</string>
-  <string name="notif_reblog">更新您的状态</string>
-  <string name="notif_favourite">收藏您的状态</string>
-  <string name="notif_follow">关注了您</string>
-  <string name="notif_pouet">来自 %1$s 的新toot</string>
+  <string name="no_notifications">沒有要顯示的通知</string>
+  <string name="notif_mention">提及您</string>
+  <string name="notif_reblog">更新您的狀態</string>
+  <string name="notif_favourite">收藏您的狀態</string>
+  <string name="notif_follow">關注了您</string>
+  <string name="notif_pouet">來自 %1$s 的新嘟文</string>
   <plurals name="other_notifications">
-    <item quantity="other">和另外一个通知</item>
+    <item quantity="other">和另外 %d 個通知</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="other">和 %d 其他的toot等待发现</item>
+    <item quantity="other">和 %d 個其他的嘟文待發現</item>
   </plurals>
-  <string name="delete_notification_ask">是否删除通知？</string>
+  <string name="delete_notification_ask">刪除通知？</string>
   <string name="delete_notification_ask_all">是否删除所有通知？</string>
   <string name="delete_notification">通知已被删除!</string>
   <string name="delete_notification_all">所有通知都已删除!</string>
