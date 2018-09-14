@@ -103,6 +103,7 @@ import fr.gouv.etalab.mastodon.helper.CustomTextView;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveCardInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
@@ -122,7 +123,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
  * Created by Thomas on 24/04/2017.
  * Adapter for Status
  */
-public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface {
+public class StatusListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveFeedsInterface, OnRetrieveEmojiInterface, OnRetrieveRepliesInterface, OnRetrieveCardInterface, OnRetrieveEmojiAccountInterface {
 
     private Context context;
     private List<Status> statuses;
@@ -212,6 +213,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
         List<Status> modifiedStatus = apiResponse.getStatuses();
         notifyStatusChanged(modifiedStatus.get(0));
+    }
+
+    @Override
+    public void onRetrieveEmojiAccount(Account account) {
+
     }
 
     private class ViewHolderEmpty extends RecyclerView.ViewHolder{
@@ -652,7 +658,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //-------- END -> Manages translations
 
 
-
+            status.getAccount().makeEmojisAccount(context, StatusListAdapter.this);
             //Displays name & emoji in toot header
             final String ppurl;
             if( status.getReblog() != null){
@@ -660,7 +666,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
             }else {
                 ppurl = status.getAccount().getAvatar();
-                holder.status_account_displayname.setText(Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true));
+                holder.status_account_displayname.setText(status.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
             }
             //-------- END -> Displays name & emoji in toot header
 

@@ -192,7 +192,6 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
                         progess_action.setVisibility(View.GONE);
                     }
                 }
-
             }
         });
     }

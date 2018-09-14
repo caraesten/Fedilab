@@ -1924,9 +1924,6 @@ public class API {
     public ArrayList<String> getCommunitywikiList(String name) {
         ArrayList<String> list = new ArrayList<>();
         try {
-            name = URLEncoder.encode(name, "UTF-8");
-        } catch (UnsupportedEncodingException ignored) {}
-        try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrlCommunitywiki(String.format("/list/%s", name)), 60, null, prefKeyOauthTokenT);
 

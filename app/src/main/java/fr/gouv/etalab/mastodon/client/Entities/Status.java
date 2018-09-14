@@ -36,6 +36,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -58,6 +59,8 @@ import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
+import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
@@ -533,6 +536,7 @@ public class Status implements Parcelable{
         }else {
             displayName = String.format("@%s",status.getAccount().getAcct());
         }
+        Log.v(Helper.TAG,"displayName: " + displayName);
         displayNameSpan = new SpannableString(displayName);
 
         if( emojisAccounts != null)
@@ -727,16 +731,16 @@ public class Status implements Parcelable{
         }
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         int mode;
-        if( isCompactMode)
+        /*if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
-        else
+        else*/
             mode = Html.FROM_HTML_MODE_LEGACY;
         SpannableString spannableStringT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString(), mode));
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>",""), mode));
         else
             //noinspection deprecation
-            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString()));
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","")));
 
 
         matcher = Helper.twitterPattern.matcher(spannableStringT);
