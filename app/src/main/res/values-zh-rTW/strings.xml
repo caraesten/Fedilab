@@ -299,34 +299,34 @@
   <string name="settings_title_profile">編輯個人資料</string>
   <string name="set_profile_description">簡介……</string>
   <string name="set_lock_account">鎖定帳號</string>
-  <string name="set_save_changes">保存修改</string>
-  <string name="set_header_picture_overlay">选择页眉图片</string>
+  <string name="set_save_changes">儲存變更</string>
+  <string name="set_header_picture_overlay">選擇頁首圖片</string>
   <string name="set_fit_preview">適當的預覽圖片</string>
   <string name="set_automatically_split_toot">自動分離超過 500 個字元的嘟文到回覆中</string>
-  <string name="note_no_space">您已达到允许的160字符!</string>
-  <string name="username_no_space">您已达到允许的30字符!</string>
-  <string name="settings_title_hour">通知的时间段:</string>
-  <string name="settings_time_from">介于</string>
-  <string name="settings_time_to">和</string>
-  <string name="settings_time_greater">时间必须大于%1$s</string>
-  <string name="settings_time_lower">时间必须低于%1$s</string>
-  <string name="settings_hour_init">起始时间</string>
-  <string name="settings_hour_end">结束时间</string>
-  <string name="embedded_browser">使用内置浏览器</string>
+  <string name="note_no_space">您已經到達允許的 160 個字元！</string>
+  <string name="username_no_space">您已經到達允許的 30 個字元！</string>
+  <string name="settings_title_hour">通知的時間帶：</string>
+  <string name="settings_time_from">介於</string>
+  <string name="settings_time_to">以及</string>
+  <string name="settings_time_greater">時間必須大於 %1$s</string>
+  <string name="settings_time_lower">時間必須低於 %1$s</string>
+  <string name="settings_hour_init">開始時間</string>
+  <string name="settings_hour_end">結束時間</string>
+  <string name="embedded_browser">使用內建瀏覽器</string>
   <string name="custom_tabs">自訂分頁</string>
-  <string name="use_javascript">启用 Javascript</string>
+  <string name="use_javascript">啟用 Javascript</string>
   <string name="expand_cw">自動延伸 cw</string>
-  <string name="use_cookies">允许使用第三方cookies</string>
-  <string name="settings_ui_layout">时间线布局: </string>
+  <string name="use_cookies">允許第三方 cookies</string>
+  <string name="settings_ui_layout">時間軸佈局：</string>
   <string-array name="settings_menu_tabs">
-    <item>标签</item>
-    <item>菜单</item>
-    <item>选项卡和菜单</item>
+    <item>分頁</item>
+    <item>選單</item>
+    <item>分頁與選單</item>
   </string-array>
   <string-array name="settings_translation">
     <item>Yandex</item>
     <item>DeepL</item>
-    <item>否　</item>
+    <item>否</item>
   </string-array>
   <string name="your_api_key">您的 API 金鑰，若為 Yandex 則可留空</string>
   <string-array name="settings_theme">
