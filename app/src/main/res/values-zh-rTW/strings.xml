@@ -340,43 +340,43 @@
     <item>1 Mb</item>
     <item>2 Mb</item>
   </string-array>
-  <string name="set_led_colour">设置 LED 颜色:</string>
+  <string name="set_led_colour">設定 LED 顏色：</string>
   <string-array name="led_colours">
-    <item>蓝色</item>
-    <item>蓝绿色</item>
-    <item>洋红色</item>
-    <item>绿色</item>
-    <item>红色</item>
-    <item>黄色</item>
+    <item>藍色</item>
+    <item>青色</item>
+    <item>洋紅色</item>
+    <item>綠色</item>
+    <item>紅色</item>
+    <item>黃色</item>
     <item>白色</item>
   </string-array>
-  <string name="set_title_news">新闻</string>
-  <string name="set_notification_news">在家庭时间线上通知新的toots</string>
-  <string name="action_follow">关注</string>
-  <string name="action_unfollow">取消关注</string>
-  <string name="action_block">阻止</string>
-  <string name="action_unblock">取消阻止</string>
-  <string name="action_mute">静音</string>
-  <string name="action_no_action">无动作</string>
-  <string name="action_unmute">取消静音</string>
-  <string name="request_sent">请求已发送</string>
-  <string name="followed_by">关注你</string>
-  <string name="action_search">搜索</string>
+  <string name="set_title_news">新聞</string>
+  <string name="set_notification_news">在家時間軸上通知新嘟文</string>
+  <string name="action_follow">關注</string>
+  <string name="action_unfollow">取消關注</string>
+  <string name="action_block">封鎖</string>
+  <string name="action_unblock">解除封鎖</string>
+  <string name="action_mute">靜音</string>
+  <string name="action_no_action">沒有動作</string>
+  <string name="action_unmute">取消靜音</string>
+  <string name="request_sent">已發送請求</string>
+  <string name="followed_by">關注您</string>
+  <string name="action_search">搜尋</string>
   <string name="set_capitalize">回覆的第一個字母大寫</string>
   <string name="set_resize_picture">調整圖片大小</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">推送通知</string>
+  <string name="settings_popup_title">推播通知</string>
   <string name="settings_popup_message">
-请确认要接收的推送通知。
-         您可以稍后在设置 (通知选项卡) 中启用或禁用这些通知。   
+        請確認要接收的推播通知。
+        您稍後可以在設定（通知分頁）中啟用或停用這些通知。
     </string>
-  <string name="settings_popup_timeline">针对国内时间线的未读toots?</string>
-  <string name="settings_popup_notification">针对未读通知？</string>
+  <string name="settings_popup_timeline">針對家時間軸的未讀嘟文？</string>
+  <string name="settings_popup_notification">針對未讀通知？</string>
   <!-- CACHE -->
-  <string name="cache_title">清除缓存</string>
-  <string name="cache_message">缓存中有 %1$s 的数据. \n\n是否要删除它们吗？</string>
+  <string name="cache_title">清除快取</string>
+  <string name="cache_message">快取中有 %1$s 的資料。\n\n 您要刪除它們嗎？</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">缓存已清除! %1$s被释放</string>
+  <string name="toast_cache_clear">快取已清除！%1$s 被釋放</string>
   <!-- ACTIVITY CACHE -->
   <string name="action_sync">同步</string>
   <string name="action_filter">過濾</string>
@@ -398,14 +398,14 @@
   </string-array>
   <string name="owner_cached_toots_empty">在資料庫中找不到嘟文。請從選單中使用同步按鈕以擷取它們。</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">记录的数据</string>
+  <string name="privacy_data_title">已記錄的資料</string>
   <string name="privacy_data">
-        只有帐户中的基本信息才会存储在设备上。
-        这些数据是严格保密的, 只能由应用程序使用。
-        删除应用程序将立即删除这些数据.
-        &#9888; 从不存储登录和密码。它们仅在具有实例的安全身份验证 (SSL) 期间使用。  
+        只有帳號中的基本資訊才會儲存在裝置上。
+        這些資料嚴格保密，僅能由應用程式使用。
+        刪除應用程式將會立即移除這些資料。\n
+        &#9888; 不會儲存密碼與登入資訊。它們僅會在有安全驗證 (SSL) 的實體上使用。
     </string>
-  <string name="privacy_authorizations_title">权限:</string>
+  <string name="privacy_authorizations_title">權限：</string>
   <string name="privacy_authorizations">
 - <b>ACCESS_NETWORK_STATE</b>: 用于检测设备是否连接到 WIFI 网络.\n
         - <b>INTERNET</b>: 用于查询实例..\n
