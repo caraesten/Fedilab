@@ -440,7 +440,7 @@
   <string name="thanks_text_dev">
         感謝您：
     </string>
-  <string name="filter_regex">按正则表达式进行筛选</string>
+  <string name="filter_regex">按正規表達式進行過濾</string>
   <string name="search">搜尋</string>
   <string name="delete">刪除</string>
   <string name="fetch_more_toots">擷取更多嘟文……</string>
