@@ -167,14 +167,14 @@
     <item>僅張貼給提及的使用者</item>
   </string-array>
   <string name="no_draft">沒有草稿！</string>
-  <string name="choose_toot">选择一个toot</string>
-  <string name="choose_accounts">选择帐号</string>
-  <string name="select_accounts">选择一些帐户</string>
-  <string name="remove_draft">删除草稿？</string>
-  <string name="show_reply">点击按钮显示初始toot</string>
-  <string name="upload_form_description">为视觉障碍人士描述</string>
+  <string name="choose_toot">選擇一個嘟文</string>
+  <string name="choose_accounts">選擇一個帳號</string>
+  <string name="select_accounts">選取一些帳號</string>
+  <string name="remove_draft">移除草稿？</string>
+  <string name="show_reply">點選按鈕以顯示原始嘟文</string>
+  <string name="upload_form_description">為視力障礙者提供描述</string>
   <!-- Instance -->
-  <string name="instance_no_description">没有可用的描述!</string>
+  <string name="instance_no_description">沒有可用的描述！</string>
   <!-- About -->
   <string name="about_vesrion">发布 %1$s</string>
   <string name="about_developer">开发者:</string>
