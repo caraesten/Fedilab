@@ -416,11 +416,12 @@
     </string>
   <string name="privacy_API_authorizations_title">API 權限：</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: 读取数据.\n
-        - <b>Write</b>: 开机自检状态和上载状态的媒体. \n
-        - <b>Follow</b>: 跟踪、追随、阻止、取消阻止. \n\n
-        <b>&#9888; 这些操作仅在用户请求时执行. </b>    </string>
-  <string name="privacy_API_title">跟踪和库</string>
+        - <b>Read</b>：讀取資料。\n
+        - <b>Write</b>：貼出狀態與為狀態上傳媒體。\n
+        - <b>Follow</b>：關注、取消關注、阻擋、取消阻擋。\n\n
+        <b>&#9888; 這些動作僅在使用者要求執行時才會執行。</b>
+    </string>
+  <string name="privacy_API_title">追蹤與函式庫</string>
   <string name="privacy_API">
         本應用程式<b>不使用追蹤工具</b>（粉絲追蹤、錯誤回報等等）且不包含任何廣告。\n\n
         使用的函式庫也盡量減到最少：\n
@@ -428,14 +429,17 @@
         - <b>Android-Job</b>：管理服務\n
         - <b>PhotoView</b>：管理圖片\n
     </string>
-  <string name="privacy_API_yandex_title">Toots 的翻译</string>
-  <string name="privacy_API_yandex_authorizations">        该应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的能力. \n
-        Yandex 有适当的隐私政策, 可以在这里找到: https://yandex.ru/legal/confidential/？lang=en
+  <string name="privacy_API_yandex_title">嘟文翻譯</string>
+  <string name="privacy_API_yandex_authorizations">
+        該應用程式提供了使用裝置的語系設定與 Yandex API 進行翻譯的功能。\n
+        Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-谢谢 Stéphane 的商标设计。    </string>
+        謝謝 Stéphane 的圖示設計。
+    </string>
   <string name="thanks_text_dev">
-感谢致以:    </string>
+        感謝您：
+    </string>
   <string name="filter_regex">按正则表达式进行筛选</string>
   <string name="search">搜尋</string>
   <string name="delete">刪除</string>
