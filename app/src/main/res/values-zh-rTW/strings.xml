@@ -223,15 +223,15 @@
     <item quantity="other">和 %d 個其他的嘟文待發現</item>
   </plurals>
   <string name="delete_notification_ask">刪除通知？</string>
-  <string name="delete_notification_ask_all">是否删除所有通知？</string>
-  <string name="delete_notification">通知已被删除!</string>
-  <string name="delete_notification_all">所有通知都已删除!</string>
+  <string name="delete_notification_ask_all">刪除全部通知？</string>
+  <string name="delete_notification">通知已被刪除！</string>
+  <string name="delete_notification_all">所有通知都已刪除！</string>
   <!-- HEADER -->
-  <string name="following">关注中</string>
-  <string name="followers">粉丝</string>
-  <string name="pinned_toots">已置顶</string>
+  <string name="following">正在關注</string>
+  <string name="followers">關注者</string>
+  <string name="pinned_toots">已釘選</string>
   <!-- TOAST -->
-  <string name="client_error">无法获取客户端 id!</string>
+  <string name="client_error">無法取得客戶端 id！</string>
   <string name="no_internet">没有互联网连接!</string>
   <string name="toast_block">帐户被阻止!</string>
   <string name="toast_unblock">帐户不再被阻止!</string>
