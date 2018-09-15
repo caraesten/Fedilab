@@ -32,13 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.BaseActivity;
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
@@ -209,7 +207,7 @@ public class CrossActions {
             @Override
             protected Void doInBackground(Void... voids) {
                 API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                String url = "@" + remoteAccount.getAcct() + "@" + remoteAccount.getInstance();
+                String url = "https://" + remoteAccount.getInstance() + "/@" + remoteAccount.getAcct();
                 response = api.search(url);
                 return null;
             }

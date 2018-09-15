@@ -36,7 +36,6 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 
@@ -59,8 +58,6 @@ import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
-import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
@@ -621,9 +618,9 @@ public class Status implements Parcelable{
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         int mode;
-        if( isCompactMode)
+        /*if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
-        else
+        else*/
             mode = Html.FROM_HTML_MODE_LEGACY;
         if( status.getContentTranslated() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -701,8 +698,22 @@ public class Status implements Parcelable{
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
         Matcher matcher;
-        Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,6}[\\/]?[^\"@(\\/tags\\/)]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
+
+        //Get url to account that are unknown
+        Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
         Matcher matcherALink = aLink.matcher(spannableString.toString());
+        ArrayList<Account> accountsMentionUnknown = new ArrayList<>();
+        while (matcherALink.find()){
+            String acct = matcherALink.group(3).replace("@","");
+            String instance = matcherALink.group(2);
+            Account account = new Account();
+            account.setAcct(acct);
+            account.setInstance(instance);
+            accountsMentionUnknown.add(account);
+        }
+        aLink = Pattern.compile("(<\\s?a\\s?href=\"(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,6}[\\/]?[^\"@(\\/tags\\/)]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
+        matcherALink = aLink.matcher(spannableString.toString());
+
         while (matcherALink.find()){
             int matchStart = matcherALink.start();
             int matchEnd = matcherALink.end();
@@ -807,6 +818,39 @@ public class Status implements Parcelable{
             if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
                 spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+        if( accountsMentionUnknown.size() > 0 ) {
+            for(Account account: accountsMentionUnknown){
+                String targetedAccount = "@" + account.getAcct();
+                if (spannableStringT.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
+                    //Accounts can be mentioned several times so we have to loop
+                    for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
+
+                        int endPosition = startPosition + targetedAccount.length();
+                        URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
+                        for (URLSpan span : spans) {
+                            spannableStringT.removeSpan(span);
+                        }
+                        if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
+                            spannableStringT.setSpan(new ClickableSpan() {
+                                 @Override
+                                 public void onClick(View textView) {
+                                     CrossActions.doCrossProfile(context,account);
+                                 }
+                                 @Override
+                                 public void updateDrawState(TextPaint ds) {
+                                     super.updateDrawState(ds);
+                                     ds.setUnderlineText(false);
+                                 }
+                             },
+                                    startPosition, endPosition,
+                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        if(endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
+                            spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
+                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    }
+                }
+            }
         }
         //Deals with mention to make them clickable
         if( mentions != null && mentions.size() > 0 ) {
