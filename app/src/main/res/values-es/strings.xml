@@ -531,9 +531,9 @@ Gracias a:    </string>
   <string name="action_filter_create">Crear filtro</string>
   <string name="how_to_follow">Who to follow</string>
   <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
-  <string name="follow_account">Follow</string>
-  <string name="select_all">Select all</string>
-  <string name="unselect_all">Unselect all</string>
+  <string name="follow_account">Seguir</string>
+  <string name="select_all">Seleccionar todo</string>
+  <string name="unselect_all">Deseleccionar todo</string>
   <string name="follow_trunk">%s is followed!</string>
   <string name="create_list_trunk">Creando la lista %s</string>
   <string name="add_account_list_trunk">Adding accounts to the list</string>
