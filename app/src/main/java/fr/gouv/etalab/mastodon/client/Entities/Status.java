@@ -36,7 +36,6 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
-import android.util.Patterns;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -49,7 +48,10 @@ import com.bumptech.glide.request.transition.Transition;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -464,9 +466,9 @@ public class Status implements Parcelable{
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int mode;
-        if( isCompactMode)
+        /*if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
-        else
+        else*/
             mode = Html.FROM_HTML_MODE_LEGACY;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -496,9 +498,9 @@ public class Status implements Parcelable{
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int mode;
-        if( isCompactMode)
+        /*if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
-        else
+        else*/
             mode = Html.FROM_HTML_MODE_LEGACY;
         SpannableString spannableStringTranslated;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -698,7 +700,20 @@ public class Status implements Parcelable{
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
         Matcher matcher;
-
+        Pattern linkPattern = Pattern.compile("<a href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
+        matcher = linkPattern.matcher(spannableString);
+        HashMap<String, String> targetedURL = new HashMap<>();
+        while (matcher.find()){
+            String key;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                key = new SpannableString(Html.fromHtml(matcher.group(2), Html.FROM_HTML_MODE_LEGACY)).toString();
+            else
+                //noinspection deprecation
+                key = new SpannableString(Html.fromHtml(matcher.group(2))).toString();
+            key = key.substring(1);
+            if( !key.startsWith("#") && !key.startsWith("@"))
+                targetedURL.put(key, matcher.group(1));
+        }
         //Get url to account that are unknown
         Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
         Matcher matcherALink = aLink.matcher(spannableString.toString());
@@ -780,45 +795,7 @@ public class Status implements Parcelable{
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
-        matcher = Patterns.WEB_URL.matcher(spannableStringT);
-        while (matcher.find()){
-            int matchStart = matcher.start(1);
-            int matchEnd = matcher.end();
-            final String url = spannableStringT.toString().substring(matchStart, matchEnd);
-            URLSpan[] spans = spannableStringT.getSpans(matchStart, matchEnd, URLSpan.class);
-            for (URLSpan span : spans) {
-                spannableStringT.removeSpan(span);
-            }
-            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
-                spannableStringT.setSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(View textView) {
-                        String finalUrl = url;
-                        Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
-                        Matcher matcherLink = link.matcher(url);
-                        if( matcherLink.find()){
-                            Intent intent = new Intent(context, MainActivity.class);
-                            intent.putExtra(INTENT_ACTION, SEARCH_REMOTE);
-                            intent.putExtra(SEARCH_URL, url);
-                            context.startActivity(intent);
-                        }else  {
-                            if( !url.startsWith("http://") && ! url.startsWith("https://"))
-                                finalUrl = "http://" + url;
-                            Helper.openBrowser(context, finalUrl);
-                        }
-                    }
-                    @Override
-                    public void updateDrawState(TextPaint ds) {
-                        super.updateDrawState(ds);
-                        ds.setUnderlineText(false);
-                    }
-                },
-                matchStart, matchEnd,
-                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
-                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        }
+
         if( accountsMentionUnknown.size() > 0 ) {
             for(Account account: accountsMentionUnknown){
                 String targetedAccount = "@" + account.getAcct();
@@ -849,6 +826,55 @@ public class Status implements Parcelable{
                                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
                 }
+            }
+        }
+        if( targetedURL.size() > 0 ){
+            Iterator it = targetedURL.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                String key = (String) pair.getKey();
+                String url = (String) pair.getValue();
+                if (spannableStringT.toString().toLowerCase().contains(key.toLowerCase())) {
+                    //Accounts can be mentioned several times so we have to loop
+                    for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(key.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
+
+                        int endPosition = startPosition + key.length();
+                        URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
+                        for (URLSpan span : spans) {
+                            spannableStringT.removeSpan(span);
+                        }
+                        if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
+                            spannableStringT.setSpan(new ClickableSpan() {
+                                 @Override
+                                 public void onClick(View textView) {
+                                     String finalUrl = url;
+                                     Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
+                                     Matcher matcherLink = link.matcher(url);
+                                     if( matcherLink.find()){
+                                         Intent intent = new Intent(context, MainActivity.class);
+                                         intent.putExtra(INTENT_ACTION, SEARCH_REMOTE);
+                                         intent.putExtra(SEARCH_URL, url);
+                                         context.startActivity(intent);
+                                     }else  {
+                                         if( !url.startsWith("http://") && ! url.startsWith("https://"))
+                                             finalUrl = "http://" + url;
+                                         Helper.openBrowser(context, finalUrl);
+                                     }
+                                 }
+                                 @Override
+                                 public void updateDrawState(TextPaint ds) {
+                                     super.updateDrawState(ds);
+                                     ds.setUnderlineText(false);
+                                 }
+                             },
+                                    startPosition, endPosition,
+                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        if(endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
+                            spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
+                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    }
+                }
+                it.remove();
             }
         }
         //Deals with mention to make them clickable
