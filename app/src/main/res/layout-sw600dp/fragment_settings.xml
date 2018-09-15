@@ -102,6 +102,12 @@
             android:text="@string/expand_cw"
             android:layout_height="wrap_content" />
 
+        <!-- EXPAND Images -->
+        <CheckBox
+            android:id="@+id/set_expand_image"
+            android:layout_width="wrap_content"
+            android:text="@string/expand_image"
+            android:layout_height="wrap_content" />
 
         <!-- DISPLAY BOOKMARK BUTTON -->
         <CheckBox

@@ -200,6 +200,18 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
+        final CheckBox set_expand_media = rootView.findViewById(R.id.set_expand_image);
+        set_expand_media.setChecked(expand_media);
+
+        set_expand_media.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_EXPAND_MEDIA, set_expand_media.isChecked());
+                editor.apply();
+            }
+        });
 
         boolean display_bookmark = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
         final CheckBox set_display_bookmark = rootView.findViewById(R.id.set_display_bookmarks);

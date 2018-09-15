@@ -550,6 +550,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_privacy.setVisibility(View.VISIBLE);
 
             boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
+            boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
             if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
                 changeDrawableColor(context, holder.status_more, R.color.dark_icon);
@@ -792,7 +793,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_show_more.setVisibility(View.GONE);
                 } else {
                     //If medias are loaded without any conditions or if device is on wifi
-                    if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                    if (expand_media || !status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                         loadAttachments(status, holder);
                         holder.status_show_more.setVisibility(View.GONE);
                         status.setAttachmentShown(true);
