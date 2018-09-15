@@ -546,9 +546,11 @@
   <string name="adding_account_list_trunk">Adding accounts to the list</string>
   <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
   <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
-  <string name="about_trunk">Who to follow</string>
-  <string name="about_trunk_action">Trunk API</string>
-  <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
+  <string name="about_trunk">Wie te volgen</string>
+  <string name="about_trunk_action">Trunk-API</string>
+  <string name="toast_impossible_to_follow">Account(s) kunnen niet worden gevolgd</string>
+  <string name="retrieve_remote_account">Fetching remote account</string>
+  <string name="expand_image">Automatically expand hidden media</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
