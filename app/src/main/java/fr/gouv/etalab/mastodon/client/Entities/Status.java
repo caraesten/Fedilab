@@ -825,7 +825,6 @@ public class Status implements Parcelable{
                 if (spannableStringT.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
                     //Accounts can be mentioned several times so we have to loop
                     for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
-
                         int endPosition = startPosition + targetedAccount.length();
                         URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
                         for (URLSpan span : spans) {

@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -201,9 +202,16 @@ public class CrossActions {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(context, db).getAccountByID(userId);
+
         new AsyncTask<Void, Void, Void>() {
             private WeakReference<Context> contextReference = new WeakReference<>(context);
             Results response;
+
+            @Override
+            protected void onPreExecute() {
+                Toast.makeText(contextReference.get(), R.string.retrieve_remote_account, Toast.LENGTH_SHORT).show();
+            }
+
             @Override
             protected Void doInBackground(Void... voids) {
                 API api = new API(contextReference.get(), account.getInstance(), account.getToken());
