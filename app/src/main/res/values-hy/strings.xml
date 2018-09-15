@@ -549,6 +549,7 @@
   <string name="about_trunk_action">Trunk API</string>
   <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
   <string name="retrieve_remote_account">Fetching remote account</string>
+  <string name="expand_image">Automatically expand hidden media</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
