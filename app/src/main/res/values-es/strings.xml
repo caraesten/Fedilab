@@ -535,7 +535,7 @@ Gracias a:    </string>
   <string name="select_all">Select all</string>
   <string name="unselect_all">Unselect all</string>
   <string name="follow_trunk">%s is followed!</string>
-  <string name="create_list_trunk">Creating the list %s</string>
+  <string name="create_list_trunk">Creando la lista %s</string>
   <string name="add_account_list_trunk">Adding accounts to the list</string>
   <string name="account_added_list_trunk">Accounts were added to the list</string>
   <string name="adding_account_list_trunk">Adding accounts to the list</string>
