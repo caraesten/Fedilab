@@ -462,7 +462,7 @@ public class Status implements Parcelable{
             return;
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int mode;
         if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
@@ -494,7 +494,7 @@ public class Status implements Parcelable{
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int mode;
         if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
@@ -616,7 +616,7 @@ public class Status implements Parcelable{
             return;
         SpannableString spannableStringTranslated = null;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int mode;
         /*if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
@@ -739,7 +739,7 @@ public class Status implements Parcelable{
                 spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int mode;
         /*if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;

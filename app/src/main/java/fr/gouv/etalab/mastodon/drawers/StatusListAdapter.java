@@ -374,7 +374,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         status = statuses.get(position);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int HIDDEN_STATUS = 0;
         //If account related to status is null, the toot is hidden
         if( status.getAccount() == null )
@@ -496,7 +496,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
 
 
 
