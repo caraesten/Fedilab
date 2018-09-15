@@ -299,6 +299,7 @@ public class Helper {
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
     public static final String SET_EXPAND_CW = "set_expand_cw";
     public static final String SET_EXPAND_MEDIA = "set_expand_media";
+    public static final String SET_DISPLAY_FOLLOW_INSTANCE = "set_display_follow_instance";
     public static final String SET_EMBEDDED_BROWSER = "set_embedded_browser";
     public static final String SET_CUSTOM_TABS = "set_custom_tabs";
     public static final String SET_JAVASCRIPT = "set_javascript";

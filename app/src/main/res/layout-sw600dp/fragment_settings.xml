@@ -130,6 +130,13 @@
             android:text="@string/set_compact_mode"
             android:layout_height="wrap_content" />
 
+        <!-- HIDE FOLLOW INSTANCE BUTTON  -->
+        <CheckBox
+            android:id="@+id/set_display_follow_instance"
+            android:layout_width="wrap_content"
+            android:text="@string/set_display_follow_instance"
+            android:layout_height="wrap_content" />
+
         <!-- PUT THE WHOLE CONTENT WHEN SHARING  -->
         <CheckBox
             android:id="@+id/set_share_details"

@@ -256,6 +256,10 @@ public abstract class BaseMainActivity extends BaseActivity
 
        FloatingActionButton federatedTimelines = findViewById(R.id.federated_timeline);
 
+
+        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
+        if( !displayFollowInstance)
+            federatedTimelines.setVisibility(View.GONE);
         federatedTimelines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1881,6 +1885,15 @@ public abstract class BaseMainActivity extends BaseActivity
 
     }
 
+    public void refreshButton(){
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        FloatingActionButton federatedTimelines = findViewById(R.id.federated_timeline);
+        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
+        if( !displayFollowInstance)
+            federatedTimelines.setVisibility(View.GONE);
+        else
+            federatedTimelines.setVisibility(View.VISIBLE);
+    }
     public DisplayStatusFragment getHomeFragment(){
         return homeFragment;
     }

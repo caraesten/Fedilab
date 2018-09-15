@@ -213,6 +213,21 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
+        boolean follow_instance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
+        final CheckBox set_follow_instance = rootView.findViewById(R.id.set_display_follow_instance);
+        set_follow_instance.setChecked(follow_instance);
+
+        set_follow_instance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, set_follow_instance.isChecked());
+                editor.apply();
+                ((MainActivity) context).refreshButton();
+            }
+        });
+
         boolean display_bookmark = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
         final CheckBox set_display_bookmark = rootView.findViewById(R.id.set_display_bookmarks);
         set_display_bookmark.setChecked(display_bookmark);
