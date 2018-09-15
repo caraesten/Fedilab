@@ -34,9 +34,11 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -767,6 +769,15 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             }
         });
 
+        holder.notification_status_content.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP && !view.hasFocus()) {
+                    try{view.requestFocus();}catch (Exception ignored){}
+                }
+                return false;
+            }
+        });
         if( theme == Helper.THEME_LIGHT) {
             holder.status_show_more.setTextColor(ContextCompat.getColor(context, R.color.white));
         }
