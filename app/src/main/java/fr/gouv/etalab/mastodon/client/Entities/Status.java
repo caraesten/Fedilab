@@ -714,6 +714,7 @@ public class Status implements Parcelable{
             if( !key.startsWith("#") && !key.startsWith("@"))
                 targetedURL.put(key, matcher.group(1));
         }
+        String currentInstance = Helper.getLiveInstance(context);
         //Get url to account that are unknown
         Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
         Matcher matcherALink = aLink.matcher(spannableString.toString());
@@ -721,10 +722,25 @@ public class Status implements Parcelable{
         while (matcherALink.find()){
             String acct = matcherALink.group(3).replace("@","");
             String instance = matcherALink.group(2);
-            Account account = new Account();
-            account.setAcct(acct);
-            account.setInstance(instance);
-            accountsMentionUnknown.add(account);
+            boolean addAccount = true;
+            for(Mention mention: mentions){
+                String[] accountMentionAcct = mention.getAcct().split("@");
+                //Different isntance
+                if( accountMentionAcct.length > 1){
+                    if( mention.getAcct().equals(acct+"@"+instance))
+                        addAccount = false;
+                }else {
+                    if( (mention.getUsername()+"@"+currentInstance).equals(acct+"@"+instance))
+                        addAccount = false;
+                }
+                if( addAccount) {
+                    Account account = new Account();
+                    account.setAcct(acct);
+                    account.setInstance(instance);
+                    accountsMentionUnknown.add(account);
+                }
+            }
+
         }
         aLink = Pattern.compile("(<\\s?a\\s?href=\"(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,6}[\\/]?[^\"@(\\/tags\\/)]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
         matcherALink = aLink.matcher(spannableString.toString());
@@ -895,28 +911,11 @@ public class Status implements Parcelable{
                             spannableStringT.setSpan(new ClickableSpan() {
                                     @Override
                                     public void onClick(View textView) {
-                                        if( type == null || type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
-                                            Intent intent = new Intent(context, ShowAccountActivity.class);
-                                            Bundle b = new Bundle();
-                                            b.putString("accountId", mention.getId());
-                                            intent.putExtras(b);
-                                            context.startActivity(intent);
-                                        }else {
-                                            String url = mention.getUrl();
-                                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\/\\w._-]*)");
-                                            Matcher matcherAcct = instanceHost.matcher(url);
-                                            String instance = null, acct = null;
-                                            while (matcherAcct.find()){
-                                                instance = matcherAcct.group(1);
-                                                acct = matcherAcct.group(2);
-                                            }
-                                            if( acct != null && instance != null){
-                                                Account account = new Account();
-                                                account.setInstance(instance);
-                                                account.setAcct(acct.replace("@",""));
-                                                CrossActions.doCrossProfile(context, account);
-                                            }
-                                        }
+                                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                                        Bundle b = new Bundle();
+                                        b.putString("accountId", mention.getId());
+                                        intent.putExtras(b);
+                                        context.startActivity(intent);
                                     }
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
