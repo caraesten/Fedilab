@@ -559,6 +559,7 @@
   <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
   <string name="retrieve_remote_account">Fetching remote account</string>
   <string name="expand_image">Automatically expand hidden media</string>
+  <string name="set_display_follow_instance">Display follow instances button</string>
   <string-array name="filter_expire">
     <item>أبدًا</item>
     <item>30 دقيقة</item>
