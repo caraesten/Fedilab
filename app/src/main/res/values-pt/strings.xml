@@ -534,7 +534,7 @@
   <string name="action_filter_delete">Eliminar filtro?</string>
   <string name="action_update_filter">Atualizar Filtro</string>
   <string name="action_filter_create">Criar Filtro</string>
-  <string name="how_to_follow">Who to follow</string>
+  <string name="how_to_follow">Whom to follow</string>
   <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
   <string name="follow_account">Follow</string>
   <string name="select_all">Select all</string>
