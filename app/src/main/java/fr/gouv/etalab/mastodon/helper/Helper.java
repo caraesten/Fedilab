@@ -1240,8 +1240,9 @@ public class Helper {
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
+            account.makeEmojisAccount(activity, ((BaseMainActivity)activity));
             username.setText(String.format("@%s",account.getUsername() + "@" + account.getInstance()));
-            displayedName.setText(account.getDisplay_name());
+            displayedName.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
             String url = account.getAvatar();
             if( url.startsWith("/") ){
                 url = Helper.getLiveInstanceWithProtocol(activity) + account.getAvatar();
@@ -1638,6 +1639,8 @@ public class Helper {
             return true;
         }
     }
+
+
 
     /**
      * Serialized a Status class

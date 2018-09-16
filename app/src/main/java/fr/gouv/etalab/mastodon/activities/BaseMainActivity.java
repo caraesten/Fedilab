@@ -101,6 +101,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplaySearchFragment;
 import fr.gouv.etalab.mastodon.fragments.WhoToFollowFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
@@ -136,7 +137,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public abstract class BaseMainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface {
 
     private FloatingActionButton toot, delete_all, add_new;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -1622,6 +1623,12 @@ public abstract class BaseMainActivity extends BaseActivity
             intent.putExtras(b);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onRetrieveEmojiAccount(Account account) {
+        TextView displayedName = headerLayout.findViewById(R.id.displayedName);
+        displayedName.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
     }
 
 
