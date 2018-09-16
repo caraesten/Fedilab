@@ -542,8 +542,8 @@
   <string name="action_filter_delete">متأكد مِن حذف عامل التصفية؟</string>
   <string name="action_update_filter">تحديث عامل التصفية</string>
   <string name="action_filter_create">إنشاء عامل تصفية</string>
-  <string name="how_to_follow">Whom to follow</string>
-  <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
+  <string name="how_to_follow">حسابات للمتابَعة</string>
+  <string name="action_who_to_follow_empty_content">حاليًا ليس هناك أي حساب في القائمة!</string>
   <string name="follow_account">إتبع</string>
   <string name="select_all">اختيار الكلّ</string>
   <string name="unselect_all">إلغاء اختيار الكلّ</string>
@@ -557,18 +557,18 @@
   <string name="about_trunk">Who to follow</string>
   <string name="about_trunk_action">Trunk API</string>
   <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
-  <string name="retrieve_remote_account">Fetching remote account</string>
-  <string name="expand_image">Automatically expand hidden media</string>
-  <string name="set_display_follow_instance">Display follow instances button</string>
-  <string name="channel_notif_follow">New follow</string>
-  <string name="channel_notif_boost">New Boost</string>
-  <string name="channel_notif_fav">New Favourite</string>
-  <string name="channel_notif_mention">New Mention</string>
-  <string name="channel_notif_toot">New Toot</string>
-  <string name="channel_notif_backup">Toots Backup</string>
-  <string name="channel_notif_media">Media Download</string>
-  <string name="set_notif_sound">Change notification sound</string>
-  <string name="select_sound">Select Tone</string>
+  <string name="retrieve_remote_account">جلب الحسابات عن بُعد</string>
+  <string name="expand_image">توسيع الوسائط المخفية تلقائيًا</string>
+  <string name="set_display_follow_instance">إظهار زر متابَعة مثيلات الخوادم</string>
+  <string name="channel_notif_follow">مُتابِع جديد</string>
+  <string name="channel_notif_boost">ترقية جديدة</string>
+  <string name="channel_notif_fav">مفضلة جديدة</string>
+  <string name="channel_notif_mention">إشارة جديدة</string>
+  <string name="channel_notif_toot">تبويق جديد</string>
+  <string name="channel_notif_backup">النسخ الإحتياطي للتبويقات</string>
+  <string name="channel_notif_media">تنزيل الوسائط</string>
+  <string name="set_notif_sound">تغيير الإشعار الصوتي</string>
+  <string name="select_sound">اختيار نغمة</string>
   <string-array name="filter_expire">
     <item>أبدًا</item>
     <item>30 دقيقة</item>
