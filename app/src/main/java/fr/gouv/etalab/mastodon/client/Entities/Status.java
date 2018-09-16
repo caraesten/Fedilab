@@ -36,7 +36,6 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
-import android.util.Patterns;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -49,7 +48,10 @@ import com.bumptech.glide.request.transition.Transition;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -462,11 +464,11 @@ public class Status implements Parcelable{
             return;
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int mode;
-        if( isCompactMode)
+        /*if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
-        else
+        else*/
             mode = Html.FROM_HTML_MODE_LEGACY;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -494,11 +496,11 @@ public class Status implements Parcelable{
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int mode;
-        if( isCompactMode)
+        /*if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
-        else
+        else*/
             mode = Html.FROM_HTML_MODE_LEGACY;
         SpannableString spannableStringTranslated;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -525,7 +527,7 @@ public class Status implements Parcelable{
         final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         final List<Emojis> emojisAccounts = status.getReblog() != null ?status.getReblog().getAccount().getEmojis():status.getAccount().getEmojis();
 
-
+        status.getAccount().makeEmojisAccount(context, null);
         String displayName;
         if( status.getReblog() != null){
             displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
@@ -616,11 +618,11 @@ public class Status implements Parcelable{
             return;
         SpannableString spannableStringTranslated = null;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int mode;
-        if( isCompactMode)
+        /*if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
-        else
+        else*/
             mode = Html.FROM_HTML_MODE_LEGACY;
         if( status.getContentTranslated() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -698,8 +700,50 @@ public class Status implements Parcelable{
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
         Matcher matcher;
-        Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,6}[\\/]?[^\"@(\\/tags\\/)]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
+        Pattern linkPattern = Pattern.compile("<a href=\"([^\"]*)\"[^>]*(((?!<\\/a).)*)<\\/a>");
+        matcher = linkPattern.matcher(spannableString);
+        HashMap<String, String> targetedURL = new HashMap<>();
+        while (matcher.find()){
+            String key;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                key = new SpannableString(Html.fromHtml(matcher.group(2), Html.FROM_HTML_MODE_LEGACY)).toString();
+            else
+                //noinspection deprecation
+                key = new SpannableString(Html.fromHtml(matcher.group(2))).toString();
+            key = key.substring(1);
+            if( !key.startsWith("#") && !key.startsWith("@"))
+                targetedURL.put(key, matcher.group(1));
+        }
+        String currentInstance = Helper.getLiveInstance(context);
+        //Get url to account that are unknown
+        Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
         Matcher matcherALink = aLink.matcher(spannableString.toString());
+        ArrayList<Account> accountsMentionUnknown = new ArrayList<>();
+        while (matcherALink.find()){
+            String acct = matcherALink.group(3).replace("@","");
+            String instance = matcherALink.group(2);
+            boolean addAccount = true;
+            for(Mention mention: mentions){
+                String[] accountMentionAcct = mention.getAcct().split("@");
+                //Different isntance
+                if( accountMentionAcct.length > 1){
+                    if( mention.getAcct().equals(acct+"@"+instance))
+                        addAccount = false;
+                }else {
+                    if( (mention.getUsername()+"@"+currentInstance).equals(acct+"@"+instance))
+                        addAccount = false;
+                }
+            }
+            if( addAccount) {
+                Account account = new Account();
+                account.setAcct(acct);
+                account.setInstance(instance);
+                accountsMentionUnknown.add(account);
+            }
+        }
+        aLink = Pattern.compile("(<\\s?a\\s?href=\"(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,6}[\\/]?[^\"@(\\/tags\\/)]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
+        matcherALink = aLink.matcher(spannableString.toString());
+
         while (matcherALink.find()){
             int matchStart = matcherALink.start();
             int matchEnd = matcherALink.end();
@@ -725,18 +769,18 @@ public class Status implements Parcelable{
                 spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int mode;
-        if( isCompactMode)
+        /*if( isCompactMode)
             mode = Html.FROM_HTML_MODE_COMPACT;
-        else
+        else*/
             mode = Html.FROM_HTML_MODE_LEGACY;
         SpannableString spannableStringT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString(), mode));
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>",""), mode));
         else
             //noinspection deprecation
-            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString()));
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","")));
 
 
         matcher = Helper.twitterPattern.matcher(spannableStringT);
@@ -766,44 +810,86 @@ public class Status implements Parcelable{
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
-        matcher = Patterns.WEB_URL.matcher(spannableStringT);
-        while (matcher.find()){
-            int matchStart = matcher.start(1);
-            int matchEnd = matcher.end();
-            final String url = spannableStringT.toString().substring(matchStart, matchEnd);
-            URLSpan[] spans = spannableStringT.getSpans(matchStart, matchEnd, URLSpan.class);
-            for (URLSpan span : spans) {
-                spannableStringT.removeSpan(span);
-            }
-            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
-                spannableStringT.setSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(View textView) {
-                        String finalUrl = url;
-                        Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
-                        Matcher matcherLink = link.matcher(url);
-                        if( matcherLink.find()){
-                            Intent intent = new Intent(context, MainActivity.class);
-                            intent.putExtra(INTENT_ACTION, SEARCH_REMOTE);
-                            intent.putExtra(SEARCH_URL, url);
-                            context.startActivity(intent);
-                        }else  {
-                            if( !url.startsWith("http://") && ! url.startsWith("https://"))
-                                finalUrl = "http://" + url;
-                            Helper.openBrowser(context, finalUrl);
+        if( accountsMentionUnknown.size() > 0 ) {
+            for(Account account: accountsMentionUnknown){
+                String targetedAccount = "@" + account.getAcct();
+                if (spannableStringT.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
+                    //Accounts can be mentioned several times so we have to loop
+                    for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
+                        int endPosition = startPosition + targetedAccount.length();
+                        URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
+                        for (URLSpan span : spans) {
+                            spannableStringT.removeSpan(span);
                         }
+                        if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
+                            spannableStringT.setSpan(new ClickableSpan() {
+                                 @Override
+                                 public void onClick(View textView) {
+                                     CrossActions.doCrossProfile(context,account);
+                                 }
+                                 @Override
+                                 public void updateDrawState(TextPaint ds) {
+                                     super.updateDrawState(ds);
+                                     ds.setUnderlineText(false);
+                                 }
+                             },
+                                    startPosition, endPosition,
+                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        if(endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
+                            spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
+                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
-                    @Override
-                    public void updateDrawState(TextPaint ds) {
-                        super.updateDrawState(ds);
-                        ds.setUnderlineText(false);
+                }
+            }
+        }
+        if( targetedURL.size() > 0 ){
+            Iterator it = targetedURL.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                String key = (String) pair.getKey();
+                String url = (String) pair.getValue();
+                if (spannableStringT.toString().toLowerCase().contains(key.toLowerCase())) {
+                    //Accounts can be mentioned several times so we have to loop
+                    for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(key.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
+
+                        int endPosition = startPosition + key.length();
+                        URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
+                        for (URLSpan span : spans) {
+                            spannableStringT.removeSpan(span);
+                        }
+                        if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
+                            spannableStringT.setSpan(new ClickableSpan() {
+                                 @Override
+                                 public void onClick(View textView) {
+                                     String finalUrl = url;
+                                     Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
+                                     Matcher matcherLink = link.matcher(url);
+                                     if( matcherLink.find()){
+                                         Intent intent = new Intent(context, MainActivity.class);
+                                         intent.putExtra(INTENT_ACTION, SEARCH_REMOTE);
+                                         intent.putExtra(SEARCH_URL, url);
+                                         context.startActivity(intent);
+                                     }else  {
+                                         if( !url.startsWith("http://") && ! url.startsWith("https://"))
+                                             finalUrl = "http://" + url;
+                                         Helper.openBrowser(context, finalUrl);
+                                     }
+                                 }
+                                 @Override
+                                 public void updateDrawState(TextPaint ds) {
+                                     super.updateDrawState(ds);
+                                     ds.setUnderlineText(false);
+                                 }
+                             },
+                                    startPosition, endPosition,
+                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        if(endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
+                            spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
+                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
-                },
-                matchStart, matchEnd,
-                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
-                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
+                it.remove();
+            }
         }
         //Deals with mention to make them clickable
         if( mentions != null && mentions.size() > 0 ) {
@@ -823,28 +909,11 @@ public class Status implements Parcelable{
                             spannableStringT.setSpan(new ClickableSpan() {
                                     @Override
                                     public void onClick(View textView) {
-                                        if( type == null || type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
-                                            Intent intent = new Intent(context, ShowAccountActivity.class);
-                                            Bundle b = new Bundle();
-                                            b.putString("accountId", mention.getId());
-                                            intent.putExtras(b);
-                                            context.startActivity(intent);
-                                        }else {
-                                            String url = mention.getUrl();
-                                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\/\\w._-]*)");
-                                            Matcher matcherAcct = instanceHost.matcher(url);
-                                            String instance = null, acct = null;
-                                            while (matcherAcct.find()){
-                                                instance = matcherAcct.group(1);
-                                                acct = matcherAcct.group(2);
-                                            }
-                                            if( acct != null && instance != null){
-                                                Account account = new Account();
-                                                account.setInstance(instance);
-                                                account.setAcct(acct.replace("@",""));
-                                                CrossActions.doCrossProfile(context, account);
-                                            }
-                                        }
+                                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                                        Bundle b = new Bundle();
+                                        b.putString("accountId", mention.getId());
+                                        intent.putExtras(b);
+                                        context.startActivity(intent);
                                     }
                                     @Override
                                     public void updateDrawState(TextPaint ds) {

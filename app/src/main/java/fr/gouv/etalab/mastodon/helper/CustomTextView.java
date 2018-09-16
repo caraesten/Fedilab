@@ -41,7 +41,8 @@ public class CustomTextView extends android.support.v7.widget.AppCompatTextView 
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
+    //TODO: sounds no longer needed, commented but might be removed in a next release
+    /*@Override
     public boolean dispatchTouchEvent(final MotionEvent event) {
         // FIXME simple workaround to https://code.google.com/p/android/issues/detail?id=191430
         int startSelection = getSelectionStart();
@@ -56,5 +57,5 @@ public class CustomTextView extends android.support.v7.widget.AppCompatTextView 
             }
         }
         return super.dispatchTouchEvent(event);
-    }
+    }*/
 }

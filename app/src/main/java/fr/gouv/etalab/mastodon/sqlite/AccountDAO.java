@@ -68,6 +68,7 @@ public class AccountDAO {
         values.put(Sqlite.COL_HEADER_STATIC,account.getHeader_static());
         values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
         values.put(Sqlite.COL_INSTANCE, account.getInstance());
+        values.put(Sqlite.COL_EMOJIS, Helper.emojisToStringStorage(account.getEmojis()));
         if( account.getToken() != null)
             values.put(Sqlite.COL_OAUTHTOKEN, account.getToken());
 
@@ -104,6 +105,7 @@ public class AccountDAO {
         values.put(Sqlite.COL_HEADER_STATIC,account.getHeader_static());
         values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
         values.put(Sqlite.COL_INSTANCE, account.getInstance());
+        values.put(Sqlite.COL_EMOJIS, Helper.emojisToStringStorage(account.getEmojis()));
         if( account.getToken() != null)
             values.put(Sqlite.COL_OAUTHTOKEN, account.getToken());
 
@@ -239,6 +241,7 @@ public class AccountDAO {
         account.setHeader_static(c.getString(c.getColumnIndex(Sqlite.COL_HEADER_STATIC)));
         account.setCreated_at(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_CREATED_AT))));
         account.setInstance(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
+        account.setEmojis(Helper.restoreEmojisFromString(c.getString(c.getColumnIndex(Sqlite.COL_EMOJIS))));
         account.setToken(c.getString(c.getColumnIndex(Sqlite.COL_OAUTHTOKEN)));
 
         //Close the cursor

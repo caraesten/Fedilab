@@ -32,6 +32,7 @@ import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.webview.MastalabWebChromeClient;
@@ -144,7 +145,11 @@ public class WebviewActivity extends BaseActivity {
                 return true;
             case R.id.action_go:
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(browserIntent);
+                try {
+                    startActivity(browserIntent);
+                }catch (Exception e){
+                    Toast.makeText(WebviewActivity.this, R.string.toast_error, Toast.LENGTH_LONG).show();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

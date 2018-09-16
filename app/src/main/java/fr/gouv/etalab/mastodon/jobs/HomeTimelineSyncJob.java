@@ -193,7 +193,7 @@ public class HomeTimelineSyncJob extends Job {
                                 @Override
                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                     notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
-                                            R.drawable.mastodonlogo), finalTitle, finalMessage);
+                                            R.drawable.mastodonlogo), Helper.NotifType.TOOT, finalTitle, finalMessage);
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());
                                     editor.apply();
@@ -203,7 +203,7 @@ public class HomeTimelineSyncJob extends Job {
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                    notify_user(getContext(), intent, notificationId, resource, finalTitle, finalMessage);
+                                    notify_user(getContext(), intent, notificationId, resource, Helper.NotifType.TOOT, finalTitle, finalMessage);
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     editor.putString(Helper.LAST_HOMETIMELINE_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), statuses.get(0).getId());
                                     editor.apply();

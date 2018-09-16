@@ -167,9 +167,12 @@ public class NotificationsSyncJob extends Job {
         String title = null;
         final String message;
         String targeted_account = null;
+        Helper.NotifType notifType = Helper.NotifType.MENTION;
+
         for(Notification notification: notifications){
             switch (notification.getType()){
                 case "mention":
+                    notifType = Helper.NotifType.MENTION;
                     if(notif_mention){
                         newMentions++;
                         if( notificationUrl == null){
@@ -182,6 +185,7 @@ public class NotificationsSyncJob extends Job {
                     }
                     break;
                 case "reblog":
+                    notifType = Helper.NotifType.BOOST;
                     if(notif_share){
                         newShare++;
                         if( notificationUrl == null){
@@ -195,6 +199,7 @@ public class NotificationsSyncJob extends Job {
                     }
                     break;
                 case "favourite":
+                    notifType = Helper.NotifType.FAV;
                     if(notif_add){
                         newAdds++;
                         if( notificationUrl == null){
@@ -207,6 +212,7 @@ public class NotificationsSyncJob extends Job {
                     }
                     break;
                 case "follow":
+                    notifType = Helper.NotifType.FOLLLOW;
                     if(notif_follow){
                         newFollows++;
                         if( notificationUrl == null){
@@ -247,6 +253,7 @@ public class NotificationsSyncJob extends Job {
                 Handler mainHandler = new Handler(Looper.getMainLooper());
 
                 final String finalNotificationUrl = notificationUrl;
+                Helper.NotifType finalNotifType = notifType;
                 Runnable myRunnable = new Runnable() {
                     @Override
                     public void run() {
@@ -263,7 +270,7 @@ public class NotificationsSyncJob extends Job {
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                         notify_user(getContext(), intent, notificationId, BitmapFactory.decodeResource(getContext().getResources(),
-                                                R.drawable.mastodonlogo), finalTitle, message);
+                                                R.drawable.mastodonlogo), finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                         if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
                                             SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -276,7 +283,7 @@ public class NotificationsSyncJob extends Job {
                                 .into(new SimpleTarget<Bitmap>() {
                                     @Override
                                     public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                        notify_user(getContext(), intent, notificationId, resource, finalTitle, message);
+                                        notify_user(getContext(), intent, notificationId, resource, finalNotifType, finalTitle, message);
                                         String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                         if( lastNotif == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(lastNotif)){
                                             SharedPreferences.Editor editor = sharedpreferences.edit();

@@ -28,6 +28,7 @@ import android.graphics.Matrix;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.media.AudioAttributes;
 import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
@@ -217,6 +218,11 @@ public class Helper {
     public static final String SEARCH_URL = "search_url";
     public static final String CLIP_BOARD = "clipboard";
     public static final String INSTANCE_NAME = "instance_name";
+    public static final String LAST_DATE_LIST_REFRESH = "last_date_list_refresh";
+    public static final String LAST_DATE_LIST_NAME_REFRESH = "last_date_list_name_refresh";
+    public static final String LAST_LIST = "last_list";
+    public static final String LAST_LIST_NAME = "last_list_name";
+
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
     public static final int HOME_TIMELINE_INTENT = 2;
@@ -255,6 +261,7 @@ public class Helper {
     public static final String SET_FULL_PREVIEW = "set_full_preview";
     public static final String SET_COMPACT_MODE = "set_compact_mode";
     public static final String SET_SHARE_DETAILS = "set_share_details";
+    public static final String SET_NOTIF_SOUND = "set_notif_sound";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
@@ -293,6 +300,8 @@ public class Helper {
     public static final String SET_NOTIF_HOMETIMELINE = "set_notif_hometimeline";
     public static final String SET_NOTIF_SILENT = "set_notif_silent";
     public static final String SET_EXPAND_CW = "set_expand_cw";
+    public static final String SET_EXPAND_MEDIA = "set_expand_media";
+    public static final String SET_DISPLAY_FOLLOW_INSTANCE = "set_display_follow_instance";
     public static final String SET_EMBEDDED_BROWSER = "set_embedded_browser";
     public static final String SET_CUSTOM_TABS = "set_custom_tabs";
     public static final String SET_JAVASCRIPT = "set_javascript";
@@ -353,7 +362,6 @@ public class Helper {
     public static final Pattern twitterPattern = Pattern.compile("((@[\\w]+)@twitter\\.com)");
     private static final Pattern mentionPattern = Pattern.compile("(@[\\w]+)");
 
-
     //Event Type
     public enum EventStreaming{
         UPDATE,
@@ -362,6 +370,15 @@ public class Helper {
         NONE
     }
 
+    public enum NotifType{
+        FOLLLOW,
+        MENTION,
+        BOOST,
+        FAV,
+        BACKUP,
+        STORE,
+        TOOT
+    }
     private static boolean isPerformingSearch = false;
 
     /**
@@ -778,7 +795,7 @@ public class Helper {
      * @param title String title of the notification
      * @param message String message for the notification
      */
-    public static void notify_user(Context context, Intent intent, int notificationId, Bitmap icon, String title, String message ) {
+    public static void notify_user(Context context, Intent intent, int notificationId, Bitmap icon, NotifType notifType, String title, String message ) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         // prepare intent which is triggered if the user click on the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
@@ -786,11 +803,51 @@ public class Helper {
         intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         // build notification
-        String channelId = "channel_"+ String.valueOf(notificationId);
+        String channelId;
+        String channelTitle;
+        switch(notifType){
+            case BOOST:
+                channelId = "channel_boost";
+                channelTitle = context.getString(R.string.channel_notif_boost);
+                break;
+            case FAV:
+                channelId = "channel_fav";
+                channelTitle = context.getString(R.string.channel_notif_fav);
+                break;
+            case FOLLLOW:
+                channelId = "channel_follow";
+                channelTitle = context.getString(R.string.channel_notif_follow);
+                break;
+            case MENTION:
+                channelId = "channel_mention";
+                channelTitle = context.getString(R.string.channel_notif_mention);
+                break;
+            case BACKUP:
+                channelId = "channel_backup";
+                channelTitle = context.getString(R.string.channel_notif_backup);
+                break;
+            case STORE:
+                channelId = "channel_store";
+                channelTitle = context.getString(R.string.channel_notif_media);
+                break;
+            case TOOT:
+                channelId = "channel_toot";
+                channelTitle = context.getString(R.string.channel_notif_toot);
+                break;
+            default:
+                channelId = "channel_boost";
+                channelTitle = context.getString(R.string.channel_notif_boost);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId, title, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_HIGH);
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .build();
             assert mNotificationManager != null;
+            String soundUri =sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/"+ R.raw.boop);
+            channel.setSound(Uri.parse(soundUri), audioAttributes);
             mNotificationManager.createNotificationChannel(channel);
         }
 
@@ -803,9 +860,9 @@ public class Helper {
                 .setContentText(message);
         if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
             notificationBuilder.setVibrate(new long[] { 500, 500, 500});
-        }else {
-            String soundUri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/";
-            notificationBuilder.setSound(Uri.parse(soundUri + R.raw.boop));
+        }else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+            String soundUri =sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/"+ R.raw.boop);
+            notificationBuilder.setSound(Uri.parse(soundUri));
         }
 
         int ledColour = Color.BLUE;
@@ -893,7 +950,7 @@ public class Helper {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                             notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
-                                    R.mipmap.ic_launcher), context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                                    R.mipmap.ic_launcher),  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                             Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
                             return false;
                         }
@@ -901,7 +958,7 @@ public class Helper {
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                            notify_user(context, intent, notificationIdTmp, resource, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                            notify_user(context, intent, notificationIdTmp, resource,  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                             Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
                         }
                     });
@@ -1234,8 +1291,9 @@ public class Helper {
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
+            account.makeEmojisAccount(activity, ((BaseMainActivity)activity));
             username.setText(String.format("@%s",account.getUsername() + "@" + account.getInstance()));
-            displayedName.setText(account.getDisplay_name());
+            displayedName.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
             String url = account.getAvatar();
             if( url.startsWith("/") ){
                 url = Helper.getLiveInstanceWithProtocol(activity) + account.getAvatar();
@@ -1633,6 +1691,8 @@ public class Helper {
         }
     }
 
+
+
     /**
      * Serialized a Status class
      * @param status Status to serialize
@@ -1657,6 +1717,30 @@ public class Helper {
         }
     }
 
+
+    /**
+     * Serialized a List<String>
+     * @param list List<String> to serialize
+     * @return String serialized List
+     */
+    public static String arrayToStringStorage(List<String> list){
+        Gson gson = new Gson();
+        return gson.toJson(list);
+    }
+
+    /**
+     * Unserialized a List<String>
+     * @param serializedArray String serialized array
+     * @return List<String> list
+     */
+    public static List<String> restoreArrayFromString(String serializedArray){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedArray, List.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
 
     /**
      * Serialized an Application class
@@ -1956,13 +2040,10 @@ public class Helper {
         boolean disableGif = sharedpreferences.getBoolean(SET_DISABLE_GIF, false);
 
         if (context instanceof FragmentActivity) {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && ((FragmentActivity) context).isDestroyed())
-            {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && ((FragmentActivity) context).isDestroyed()) {
                 return;
             }
         }
-
         if( !disableGif)
             Glide.with(imageView.getContext())
                 .load(url)
@@ -1973,22 +2054,7 @@ public class Helper {
                     .asBitmap()
                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                     .load(url)
-                    .listener(new RequestListener<Bitmap>(){
-                        @Override
-                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                            return false;
-                        }
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                            return false;
-                        }
-                    })
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                            imageView.setImageBitmap(resource);
-                        }
-                    });
+                    .into(imageView);
     }
 
     /**
@@ -2088,7 +2154,11 @@ public class Helper {
                         (int) (takenImage.getHeight() / resize), true);
                 Bitmap adjustedBitmap;
                 if( matrix != null)
-                    adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
+                    try {
+                        adjustedBitmap = Bitmap.createBitmap(newBitmap, 0, 0, newBitmap.getWidth(), newBitmap.getHeight(), matrix, true);
+                    }catch (Exception e){
+                        adjustedBitmap = newBitmap;
+                    }
                 else
                     adjustedBitmap = newBitmap;
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();

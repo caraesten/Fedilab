@@ -453,7 +453,6 @@ public class Account implements Parcelable {
 
 
     public void makeEmojisAccount(final Context context, final OnRetrieveEmojiAccountInterface listener){
-
         if( ((Activity)context).isFinishing() )
             return;
 
@@ -461,7 +460,6 @@ public class Account implements Parcelable {
 
         if( account.getDisplay_name() != null)
             displayNameSpan = new SpannableString(account.getDisplay_name());
-
         if( account.getFields() != null && account.getFields().size() > 0) {
             Iterator it = account.getFields().entrySet().iterator();
             while (it.hasNext()) {
@@ -537,7 +535,8 @@ public class Account implements Parcelable {
                                     if( noteSpan != null)
                                         account.setNoteSpan(noteSpan);
                                     account.setFieldsSpan(fieldsSpan);
-                                    listener.onRetrieveEmojiAccount(account);
+                                    if( listener != null)
+                                        listener.onRetrieveEmojiAccount(account);
                                 }
                             }
                         });

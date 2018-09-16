@@ -1646,14 +1646,10 @@ public class HttpsConnection {
     }
 
     private String converToString(InputStream inputStream) throws IOException {
-        BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder total = new StringBuilder(inputStream.available());
-        String line;
-        while ((line = r.readLine()) != null) {
-            total.append(line).append('\n');
-        }
-        return total.toString();
+        java.util.Scanner s = new java.util.Scanner(inputStream).useDelimiter("\\A");
+        return s.hasNext() ? s.next() : "";
     }
+
 
     int getActionCode() {
         if( Helper.getLiveInstanceWithProtocol(context).startsWith("https://")) {

@@ -44,6 +44,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +85,7 @@ public class InstanceFederatedActivity extends BaseActivity {
     boolean isLoadingInstance = false;
     private AutoCompleteTextView instance_list;
     private String oldSearch;
+    private RelativeLayout no_action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +110,7 @@ public class InstanceFederatedActivity extends BaseActivity {
         setContentView(R.layout.activity_federated);
 
 
+        no_action = findViewById(R.id.no_action);
         FloatingActionButton federated_timeline_close = findViewById(R.id.federated_timeline_close);
 
         federated_timeline_close.setOnClickListener(new View.OnClickListener() {
@@ -341,7 +344,9 @@ public class InstanceFederatedActivity extends BaseActivity {
         for( int j = 0 ; j < tabCount ; j++){
             attacheDelete(j);
         }
-
+        if( tabCount == 0){
+            no_action.setVisibility(View.VISIBLE);
+        }
         //Hide the default title
         if( getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -521,6 +526,7 @@ public class InstanceFederatedActivity extends BaseActivity {
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
             bundle.putString("remote_instance", tabLayout.getTabAt(position).getText().toString());
             statusFragment.setArguments(bundle);
+            no_action.setVisibility(View.GONE);
             return statusFragment;
 
         }
@@ -532,39 +538,5 @@ public class InstanceFederatedActivity extends BaseActivity {
         }
     }
 
-
-
-
-    @SuppressWarnings("ConstantConditions")
-    public void updateTimeLine(RetrieveFeedsAsyncTask.Type type, int value){
-        int position = tabLayout.getSelectedTabPosition();
-        View tabLocal = tabLayout.getTabAt(position).getCustomView();
-        assert tabLocal != null;
-        TextView tabCounter = tabLocal.findViewById(R.id.tab_counter);
-        tabCounter.setText(String.valueOf(value));
-        if( value > 0){
-            tabCounter.setVisibility(View.VISIBLE);
-        }else {
-            tabCounter.setVisibility(View.GONE);
-        }
-    }
-
-
-    public void startSreaming(){
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-        if( liveNotifications) {
-            ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-            assert manager != null;
-            for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-                if (LiveNotificationService.class.getName().equals(service.service.getClassName())) {
-                    return;
-                }
-            }
-            Intent streamingIntent = new Intent(this, LiveNotificationService.class);
-            startService(streamingIntent);
-        }
-
-    }
 
 }

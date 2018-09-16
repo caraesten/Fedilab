@@ -186,7 +186,7 @@ public class BackupStatusService extends IntentService {
             int notificationId = ((notif_id + 3) > 2147483647) ? (int) (2147483647 - notif_id - 3) : (int) (notif_id + 3);
             String title = getString(R.string.data_export_toots, account.getAcct());
             notify_user(getApplicationContext(), intentOpen, notificationId, BitmapFactory.decodeResource(getResources(),
-                    R.drawable.mastodonlogo), title, message);
+                    R.drawable.mastodonlogo),Helper.NotifType.BACKUP, title, message);
         } catch (Exception e) {
             e.printStackTrace();
             message = getString(R.string.data_export_error, account.getAcct());

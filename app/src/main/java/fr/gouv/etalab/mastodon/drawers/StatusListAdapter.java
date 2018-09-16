@@ -103,6 +103,7 @@ import fr.gouv.etalab.mastodon.helper.CustomTextView;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveCardInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
@@ -213,6 +214,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         List<Status> modifiedStatus = apiResponse.getStatuses();
         notifyStatusChanged(modifiedStatus.get(0));
     }
+
 
     private class ViewHolderEmpty extends RecyclerView.ViewHolder{
         ViewHolderEmpty(View itemView) {
@@ -372,7 +374,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         status = statuses.get(position);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         int HIDDEN_STATUS = 0;
         //If account related to status is null, the toot is hidden
         if( status.getAccount() == null )
@@ -494,7 +496,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
 
 
 
@@ -548,6 +550,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_privacy.setVisibility(View.VISIBLE);
 
             boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
+            boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
             if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
                 changeDrawableColor(context, holder.status_more, R.color.dark_icon);
@@ -604,7 +607,48 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( !status.isEmojiFound())
                 status.makeEmojis(context, StatusListAdapter.this);
 
-
+            holder.status_content.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP && !view.hasFocus()) {
+                        try{view.requestFocus();}catch (Exception ignored){}
+                    }
+                    return false;
+                }
+            });
+            //Click on a conversation
+            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && (getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS)) {
+                holder.status_content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ShowConversationActivity.class);
+                        Bundle b = new Bundle();
+                        if (status.getReblog() == null)
+                            b.putString("statusId", status.getId());
+                        else
+                            b.putString("statusId", status.getReblog().getId());
+                        intent.putExtras(b);
+                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                            ((Activity) context).finish();
+                        context.startActivity(intent);
+                    }
+                });
+                holder.main_container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ShowConversationActivity.class);
+                        Bundle b = new Bundle();
+                        if (status.getReblog() == null)
+                            b.putString("statusId", status.getId());
+                        else
+                            b.putString("statusId", status.getReblog().getId());
+                        intent.putExtras(b);
+                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                            ((Activity) context).finish();
+                        context.startActivity(intent);
+                    }
+                });
+            }
 
 
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
@@ -652,7 +696,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //-------- END -> Manages translations
 
 
-
             //Displays name & emoji in toot header
             final String ppurl;
             if( status.getReblog() != null){
@@ -660,7 +703,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
             }else {
                 ppurl = status.getAccount().getAvatar();
-                holder.status_account_displayname.setText(Helper.shortnameToUnicode(status.getAccount().getDisplay_name(), true));
+                holder.status_account_displayname.setText(status.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
             }
             //-------- END -> Displays name & emoji in toot header
 
@@ -791,7 +834,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_show_more.setVisibility(View.GONE);
                 } else {
                     //If medias are loaded without any conditions or if device is on wifi
-                    if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                    if (expand_media || !status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                         loadAttachments(status, holder);
                         holder.status_show_more.setVisibility(View.GONE);
                         status.setAttachmentShown(true);
@@ -996,48 +1039,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
 
-            holder.status_content.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_UP && !view.hasFocus()) {
-                        try{view.requestFocus();}catch (Exception ignored){}
-                    }
-                    return false;
-                }
-            });
-            //Click on a conversation
-            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && (getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS)) {
-                holder.status_content.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        if (status.getReblog() == null)
-                            b.putString("statusId", status.getId());
-                        else
-                            b.putString("statusId", status.getReblog().getId());
-                        intent.putExtras(b);
-                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                            ((Activity) context).finish();
-                        context.startActivity(intent);
-                    }
-                });
-                holder.main_container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        if (status.getReblog() == null)
-                            b.putString("statusId", status.getId());
-                        else
-                            b.putString("statusId", status.getReblog().getId());
-                        intent.putExtras(b);
-                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                            ((Activity) context).finish();
-                        context.startActivity(intent);
-                    }
-                });
-            }
+
             if( theme == Helper.THEME_LIGHT){
                 holder.main_container.setBackgroundResource(R.color.mastodonC3__);
             }else if (theme == Helper.THEME_DARK){

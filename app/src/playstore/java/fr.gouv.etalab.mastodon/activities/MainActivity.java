@@ -18,6 +18,7 @@ package fr.gouv.etalab.mastodon.activities;
 import com.kobakei.ratethisapp.RateThisApp;
 
 
+
 public class MainActivity extends BaseMainActivity {
 
     @Override

@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 12;
+    public static final int DB_VERSION = 13;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -69,7 +69,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_HEADER_STATIC = "HEADER_STATIC";
     static final String COL_INSTANCE = "INSTANCE";
     static final String COL_OAUTHTOKEN = "OAUTH_TOKEN";
-
+    static final String COL_EMOJIS = "EMOJIS";
 
 
     private static final String CREATE_TABLE_USER_ACCOUNT = "CREATE TABLE " + TABLE_USER_ACCOUNT + " ("
@@ -79,6 +79,7 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_NOTE + " TEXT NOT NULL, "+ COL_URL + " TEXT NOT NULL, "
             + COL_AVATAR + " TEXT NOT NULL, "+ COL_AVATAR_STATIC + " TEXT NOT NULL, "
             + COL_HEADER + " TEXT NOT NULL, "+ COL_HEADER_STATIC + " TEXT NOT NULL, "
+            + COL_EMOJIS + " TEXT, "
             + COL_INSTANCE + " TEXT NOT NULL, " + COL_OAUTHTOKEN + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL)";
 
 
@@ -127,7 +128,6 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_IN_REPLY_TO_ACCOUNT_ID = "IN_REPLY_TO_ACCOUNT_ID";
     static final String COL_REBLOG = "REBLOG";
     static final String COL_CONTENT = "CONTENT";
-    static final String COL_EMOJIS = "EMOJIS";
     static final String COL_REBLOGS_COUNT = "REBLOGS_COUNT";
     static final String COL_FAVOURITES_COUNT = "FAVOURITES_COUNT";
     static final String COL_REBLOGGED = "REBLOGGED";
@@ -224,6 +224,8 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
             case 11:
                 db.execSQL(CREATE_TABLE_INSTANCES);
+            case 12:
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN "+ COL_EMOJIS + " TEXT");
             default:
                 break;
         }

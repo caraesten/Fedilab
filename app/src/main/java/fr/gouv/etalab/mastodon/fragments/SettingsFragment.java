@@ -16,6 +16,9 @@ package fr.gouv.etalab.mastodon.fragments;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.media.RingtoneManager;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.content.ContentUris;
@@ -40,6 +43,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -75,6 +79,7 @@ public class SettingsFragment extends Fragment {
 
     private Context context;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
+    private static final int ACTIVITY_CHOOSE_SOUND = 412;
     private TextView set_folder;
     int count1, count2, count3 = 0;
     private EditText your_api_key;
@@ -200,6 +205,33 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
+        final CheckBox set_expand_media = rootView.findViewById(R.id.set_expand_image);
+        set_expand_media.setChecked(expand_media);
+
+        set_expand_media.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_EXPAND_MEDIA, set_expand_media.isChecked());
+                editor.apply();
+            }
+        });
+
+
+        boolean follow_instance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
+        final CheckBox set_follow_instance = rootView.findViewById(R.id.set_display_follow_instance);
+        set_follow_instance.setChecked(follow_instance);
+
+        set_follow_instance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, set_follow_instance.isChecked());
+                editor.apply();
+                ((MainActivity) context).refreshButton();
+            }
+        });
 
         boolean display_bookmark = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
         final CheckBox set_display_bookmark = rootView.findViewById(R.id.set_display_bookmarks);
@@ -227,7 +259,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         final CheckBox set_compact_mode = rootView.findViewById(R.id.set_compact_mode);
         set_compact_mode.setChecked(compact_mode);
 
@@ -512,6 +544,18 @@ public class SettingsFragment extends Fragment {
         });
 
 
+        Button set_notif_sound = rootView.findViewById(R.id.set_notif_sound);
+        set_notif_sound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, context.getString(R.string.select_sound));
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
+                startActivityForResult(intent, ACTIVITY_CHOOSE_SOUND);
+            }
+        });
+
 
         LinearLayout toot_visibility_container = rootView.findViewById(R.id.toot_visibility_container);
         String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
@@ -724,18 +768,35 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) return;
+
+
         if(requestCode == ACTIVITY_CHOOSE_FILE) {
             Uri treeUri = data.getData();
             Uri docUri = DocumentsContract.buildDocumentUriUsingTree(treeUri,
                     DocumentsContract.getTreeDocumentId(treeUri));
-            String path = getPath(context, docUri);
-            if( path == null )
-                path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.SET_FOLDER_RECORD, path);
-            editor.apply();
-            set_folder.setText(path);
+            try{
+                String path = getPath(context, docUri);
+                if( path == null )
+                    path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.SET_FOLDER_RECORD, path);
+                editor.apply();
+                set_folder.setText(path);
+            }catch (Exception e){
+                Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
+            }
+
+        }else if (requestCode == ACTIVITY_CHOOSE_SOUND){
+            try{
+                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.SET_NOTIF_SOUND,  uri.toString());
+                editor.apply();
+            }catch (Exception e){
+                Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
+            }
         }
     }
 

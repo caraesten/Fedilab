@@ -98,8 +98,10 @@ import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplaySearchFragment;
+import fr.gouv.etalab.mastodon.fragments.WhoToFollowFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
@@ -135,7 +137,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public abstract class BaseMainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface {
 
     private FloatingActionButton toot, delete_all, add_new;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -255,6 +257,10 @@ public abstract class BaseMainActivity extends BaseActivity
 
        FloatingActionButton federatedTimelines = findViewById(R.id.federated_timeline);
 
+
+        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
+        if( !displayFollowInstance)
+            federatedTimelines.setVisibility(View.GONE);
         federatedTimelines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -633,6 +639,13 @@ public abstract class BaseMainActivity extends BaseActivity
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), TootActivity.class);
                 startActivity(intent);
+            }
+        });
+        toot.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CrossActions.doCrossReply(BaseMainActivity.this, null, null, false);
+                return false;
             }
         });
 
@@ -1502,6 +1515,12 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "FILTERS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayFiltersFragment, fragmentTag).commit();
+        }else if(id == R.id.nav_who_to_follow){
+            toot.setVisibility(View.GONE);
+            WhoToFollowFragment whoToFollowFragment = new WhoToFollowFragment();
+            fragmentTag = "WHO_TO_FOLLOW";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, whoToFollowFragment, fragmentTag).commit();
         }
 
         populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());
@@ -1511,7 +1530,7 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
 
-    private void populateTitleWithTag(String tag, String title, int index){
+    public void populateTitleWithTag(String tag, String title, int index){
         if( tag == null)
             return;
         if ( tagTile.get(tag) == null)
@@ -1611,6 +1630,12 @@ public abstract class BaseMainActivity extends BaseActivity
             intent.putExtras(b);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onRetrieveEmojiAccount(Account account) {
+        TextView displayedName = headerLayout.findViewById(R.id.displayedName);
+        displayedName.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
     }
 
 
@@ -1874,6 +1899,15 @@ public abstract class BaseMainActivity extends BaseActivity
 
     }
 
+    public void refreshButton(){
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        FloatingActionButton federatedTimelines = findViewById(R.id.federated_timeline);
+        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
+        if( !displayFollowInstance)
+            federatedTimelines.setVisibility(View.GONE);
+        else
+            federatedTimelines.setVisibility(View.VISIBLE);
+    }
     public DisplayStatusFragment getHomeFragment(){
         return homeFragment;
     }

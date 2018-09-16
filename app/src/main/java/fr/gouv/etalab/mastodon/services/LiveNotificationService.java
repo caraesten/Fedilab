@@ -403,6 +403,7 @@ public class LiveNotificationService extends Service {
             boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String targeted_account = null;
+            Helper.NotifType notifType = Helper.NotifType.MENTION;
             if((userId == null || !userId.equals(account.getId()) || activityPaused) && liveNotifications && canNotify && notify) {
                 boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
                 boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
@@ -413,6 +414,7 @@ public class LiveNotificationService extends Service {
                 if( somethingToPush && notification != null){
                     switch (notification.getType()){
                         case "mention":
+                            notifType = Helper.NotifType.MENTION;
                             if(notif_mention){
                                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
                                     title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_mention));
@@ -421,6 +423,7 @@ public class LiveNotificationService extends Service {
                             }
                             break;
                         case "reblog":
+                            notifType = Helper.NotifType.BOOST;
                             if(notif_share){
                                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
                                     title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_reblog));
@@ -429,6 +432,7 @@ public class LiveNotificationService extends Service {
                             }
                             break;
                         case "favourite":
+                            notifType = Helper.NotifType.FAV;
                             if(notif_add){
                                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
                                     title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_favourite));
@@ -437,6 +441,7 @@ public class LiveNotificationService extends Service {
                             }
                             break;
                         case "follow":
+                            notifType = Helper.NotifType.FOLLLOW;
                             if(notif_follow){
                                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
                                     title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_follow));
@@ -463,6 +468,7 @@ public class LiveNotificationService extends Service {
 
                         Handler mainHandler = new Handler(Looper.getMainLooper());
 
+                        Helper.NotifType finalNotifType = notifType;
                         Runnable myRunnable = new Runnable() {
                             @Override
                             public void run() {
@@ -481,7 +487,7 @@ public class LiveNotificationService extends Service {
                                                 @Override
                                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                                     notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getResources(),
-                                                            R.drawable.mastodonlogo), finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
+                                                            R.drawable.mastodonlogo), finalNotifType, finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
                                                     String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                                     if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
                                                         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -494,7 +500,7 @@ public class LiveNotificationService extends Service {
                                             .into(new SimpleTarget<Bitmap>() {
                                                 @Override
                                                 public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                                    notify_user(getApplicationContext(), intent, notificationId, resource, finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
+                                                    notify_user(getApplicationContext(), intent, notificationId, resource, finalNotifType, finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
                                                     String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                                     if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
                                                         SharedPreferences.Editor editor = sharedpreferences.edit();
