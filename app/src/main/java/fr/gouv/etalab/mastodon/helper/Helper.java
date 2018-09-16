@@ -368,6 +368,15 @@ public class Helper {
         NONE
     }
 
+    public enum NotifType{
+        FOLLLOW,
+        MENTION,
+        BOOST,
+        FAV,
+        BACKUP,
+        STORE,
+        TOOT
+    }
     private static boolean isPerformingSearch = false;
 
     /**
@@ -784,7 +793,7 @@ public class Helper {
      * @param title String title of the notification
      * @param message String message for the notification
      */
-    public static void notify_user(Context context, Intent intent, int notificationId, Bitmap icon, String title, String message ) {
+    public static void notify_user(Context context, Intent intent, int notificationId, Bitmap icon, NotifType notifType, String title, String message ) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         // prepare intent which is triggered if the user click on the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
@@ -792,9 +801,43 @@ public class Helper {
         intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         // build notification
-        String channelId = "channel_"+ String.valueOf(notificationId);
+        String channelId;
+        String channelTitle;
+        switch(notifType){
+            case BOOST:
+                channelId = "channel_boost";
+                channelTitle = context.getString(R.string.channel_notif_boost);
+                break;
+            case FAV:
+                channelId = "channel_fav";
+                channelTitle = context.getString(R.string.channel_notif_fav);
+                break;
+            case FOLLLOW:
+                channelId = "channel_follow";
+                channelTitle = context.getString(R.string.channel_notif_follow);
+                break;
+            case MENTION:
+                channelId = "channel_mention";
+                channelTitle = context.getString(R.string.channel_notif_mention);
+                break;
+            case BACKUP:
+                channelId = "channel_backup";
+                channelTitle = context.getString(R.string.channel_notif_backup);
+                break;
+            case STORE:
+                channelId = "channel_store";
+                channelTitle = context.getString(R.string.channel_notif_media);
+                break;
+            case TOOT:
+                channelId = "channel_toot";
+                channelTitle = context.getString(R.string.channel_notif_toot);
+                break;
+            default:
+                channelId = "channel_boost";
+                channelTitle = context.getString(R.string.channel_notif_boost);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId, title, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             assert mNotificationManager != null;
             mNotificationManager.createNotificationChannel(channel);
@@ -899,7 +942,7 @@ public class Helper {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                             notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
-                                    R.mipmap.ic_launcher), context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                                    R.mipmap.ic_launcher),  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                             Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
                             return false;
                         }
@@ -907,7 +950,7 @@ public class Helper {
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                            notify_user(context, intent, notificationIdTmp, resource, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                            notify_user(context, intent, notificationIdTmp, resource,  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
                             Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
                         }
                     });

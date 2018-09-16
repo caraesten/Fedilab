@@ -610,6 +610,13 @@
         <item>SOCKS</item>
     </string-array>
 
+    <string name="channel_notif_follow">New follow</string>
+    <string name="channel_notif_boost">New Boost</string>
+    <string name="channel_notif_fav">New Favourite</string>
+    <string name="channel_notif_mention">New Mention</string>
+    <string name="channel_notif_toot">New Toot</string>
+    <string name="channel_notif_backup">Toots Backup</string>
+    <string name="channel_notif_media">Media Download</string>
 
     <string-array name="filter_expire">
         <item>Never</item>
