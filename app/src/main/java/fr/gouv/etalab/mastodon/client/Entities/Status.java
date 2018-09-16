@@ -733,14 +733,13 @@ public class Status implements Parcelable{
                     if( (mention.getUsername()+"@"+currentInstance).equals(acct+"@"+instance))
                         addAccount = false;
                 }
-                if( addAccount) {
-                    Account account = new Account();
-                    account.setAcct(acct);
-                    account.setInstance(instance);
-                    accountsMentionUnknown.add(account);
-                }
             }
-
+            if( addAccount) {
+                Account account = new Account();
+                account.setAcct(acct);
+                account.setInstance(instance);
+                accountsMentionUnknown.add(account);
+            }
         }
         aLink = Pattern.compile("(<\\s?a\\s?href=\"(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,6}[\\/]?[^\"@(\\/tags\\/)]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
         matcherALink = aLink.matcher(spannableString.toString());
@@ -810,7 +809,6 @@ public class Status implements Parcelable{
                 spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-
 
         if( accountsMentionUnknown.size() > 0 ) {
             for(Account account: accountsMentionUnknown){

@@ -1989,13 +1989,10 @@ public class Helper {
         boolean disableGif = sharedpreferences.getBoolean(SET_DISABLE_GIF, false);
 
         if (context instanceof FragmentActivity) {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && ((FragmentActivity) context).isDestroyed())
-            {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && ((FragmentActivity) context).isDestroyed()) {
                 return;
             }
         }
-
         if( !disableGif)
             Glide.with(imageView.getContext())
                 .load(url)
@@ -2006,22 +2003,7 @@ public class Helper {
                     .asBitmap()
                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                     .load(url)
-                    .listener(new RequestListener<Bitmap>(){
-                        @Override
-                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                            return false;
-                        }
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                            return false;
-                        }
-                    })
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                            imageView.setImageBitmap(resource);
-                        }
-                    });
+                    .into(imageView);
     }
 
     /**
