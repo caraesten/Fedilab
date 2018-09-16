@@ -51,6 +51,7 @@
         android:layout_margin="5dp"
         android:id="@+id/account_to_follow_profile"
         app:backgroundTint="?colorAccent"
+        android:tint="@android:color/white"
         app:srcCompat="@drawable/ic_remove_red_eye"
         tools:ignore="VectorDrawableCompat"
         android:layout_height="30dp"/>

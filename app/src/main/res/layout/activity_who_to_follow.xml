@@ -50,6 +50,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:paddingLeft="@dimen/fab_margin"
             android:paddingRight="@dimen/fab_margin"
+            android:layout_marginBottom="100dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <!-- Listview who to follow  -->
@@ -102,6 +103,7 @@
                 android:id="@+id/follow_accounts_select"
                 android:gravity="center"
                 style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:tint="@android:color/white"
                 android:text="@string/select_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,6 +111,7 @@
             <Button
                 android:id="@+id/follow_accounts"
                 android:gravity="center"
+                android:tint="@android:color/white"
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:text="@string/follow_account"
                 android:layout_width="wrap_content"
