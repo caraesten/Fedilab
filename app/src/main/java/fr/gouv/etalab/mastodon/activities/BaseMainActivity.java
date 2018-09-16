@@ -641,6 +641,13 @@ public abstract class BaseMainActivity extends BaseActivity
                 startActivity(intent);
             }
         });
+        toot.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CrossActions.doCrossReply(BaseMainActivity.this, null, null, false);
+                return false;
+            }
+        });
 
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));

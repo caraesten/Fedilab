@@ -286,22 +286,24 @@ public class CrossActions {
                             @Override
                             protected Void doInBackground(Void... voids) {
 
-                                API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                                String uri;
-                                if(status.getReblog() != null ){
-                                    if( status.getReblog().getUri().startsWith("http"))
-                                        uri = status.getReblog().getUri();
-                                    else
-                                        uri = status.getReblog().getUrl();
-                                }else {
-                                    if( status.getUri().startsWith("http"))
-                                        uri = status.getUri();
-                                    else
-                                        uri = status.getUrl();
-                                }
-                                Results search = api.search(uri);
-                                if( search != null){
-                                    remoteStatuses = search.getStatuses();
+                                if(status != null) {
+                                    API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                                    String uri;
+                                    if (status.getReblog() != null) {
+                                        if (status.getReblog().getUri().startsWith("http"))
+                                            uri = status.getReblog().getUri();
+                                        else
+                                            uri = status.getReblog().getUrl();
+                                    } else {
+                                        if (status.getUri().startsWith("http"))
+                                            uri = status.getUri();
+                                        else
+                                            uri = status.getUrl();
+                                    }
+                                    Results search = api.search(uri);
+                                    if (search != null) {
+                                        remoteStatuses = search.getStatuses();
+                                    }
                                 }
                                 return null;
                             }
@@ -312,6 +314,9 @@ public class CrossActions {
                                 Bundle b = new Bundle();
                                 if( remoteStatuses == null || remoteStatuses.size() == 0){
                                     dialog.dismiss();
+                                    b.putParcelable("accountReply", account);
+                                    intent.putExtras(b); //Put your id to your next Intent
+                                    contextReference.get().startActivity(intent);
                                     return;
                                 }
                                 if( remoteStatuses.get(0).getReblog() != null ) {
