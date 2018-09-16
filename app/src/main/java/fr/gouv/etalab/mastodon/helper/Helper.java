@@ -28,6 +28,7 @@ import android.graphics.Matrix;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.media.AudioAttributes;
 import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
@@ -260,6 +261,7 @@ public class Helper {
     public static final String SET_FULL_PREVIEW = "set_full_preview";
     public static final String SET_COMPACT_MODE = "set_compact_mode";
     public static final String SET_SHARE_DETAILS = "set_share_details";
+    public static final String SET_NOTIF_SOUND = "set_notif_sound";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
@@ -837,9 +839,15 @@ public class Helper {
                 channelTitle = context.getString(R.string.channel_notif_boost);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_HIGH);
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .build();
             assert mNotificationManager != null;
+            String soundUri =sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/"+ R.raw.boop);
+            channel.setSound(Uri.parse(soundUri), audioAttributes);
             mNotificationManager.createNotificationChannel(channel);
         }
 
@@ -852,9 +860,9 @@ public class Helper {
                 .setContentText(message);
         if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
             notificationBuilder.setVibrate(new long[] { 500, 500, 500});
-        }else {
-            String soundUri = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/";
-            notificationBuilder.setSound(Uri.parse(soundUri + R.raw.boop));
+        }else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+            String soundUri =sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/"+ R.raw.boop);
+            notificationBuilder.setSound(Uri.parse(soundUri));
         }
 
         int ledColour = Color.BLUE;

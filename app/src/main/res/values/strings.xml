@@ -617,6 +617,8 @@
     <string name="channel_notif_toot">New Toot</string>
     <string name="channel_notif_backup">Toots Backup</string>
     <string name="channel_notif_media">Media Download</string>
+    <string name="set_notif_sound">Change notification sound</string>
+    <string name="select_sound">Select Tone</string>
 
     <string-array name="filter_expire">
         <item>Never</item>

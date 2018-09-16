@@ -551,6 +551,8 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="retrieve_remote_account">Urruneko kontua eskuratzen</string>
   <string name="expand_image">Automatikoki hedatu ezkutatutako multimedia</string>
   <string name="set_display_follow_instance">Display follow instances button</string>
+  <string name="set_notif_sound">Change notification sound</string>
+  <string name="select_sound">Select Tone</string>
   <string-array name="filter_expire">
     <item>Inoiz ez</item>
     <item>30 minutu</item>

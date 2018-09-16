@@ -549,6 +549,8 @@
   <string name="retrieve_remote_account">正在擷取遠端帳號</string>
   <string name="expand_image">自動展開隱藏的媒體</string>
   <string name="set_display_follow_instance">顯示關注實體按鈕</string>
+  <string name="set_notif_sound">Change notification sound</string>
+  <string name="select_sound">Select Tone</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
