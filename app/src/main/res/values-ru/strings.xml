@@ -538,7 +538,7 @@
   <string name="action_filter_delete">Удалить фильтр?</string>
   <string name="action_update_filter">Обновить фильтр</string>
   <string name="action_filter_create">Create filter</string>
-  <string name="how_to_follow">Who to follow</string>
+  <string name="how_to_follow">Whom to follow</string>
   <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
   <string name="follow_account">Follow</string>
   <string name="select_all">Select all</string>
