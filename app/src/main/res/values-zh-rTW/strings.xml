@@ -552,12 +552,12 @@
   <string name="channel_notif_follow">新關注</string>
   <string name="channel_notif_boost">新加速</string>
   <string name="channel_notif_fav">新最愛</string>
-  <string name="channel_notif_mention">New Mention</string>
-  <string name="channel_notif_toot">New Toot</string>
-  <string name="channel_notif_backup">Toots Backup</string>
-  <string name="channel_notif_media">Media Download</string>
-  <string name="set_notif_sound">Change notification sound</string>
-  <string name="select_sound">Select Tone</string>
+  <string name="channel_notif_mention">新提及</string>
+  <string name="channel_notif_toot">新嘟文</string>
+  <string name="channel_notif_backup">嘟文備份</string>
+  <string name="channel_notif_media">媒體下載</string>
+  <string name="set_notif_sound">變更通知音效</string>
+  <string name="select_sound">選取鈴聲</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
