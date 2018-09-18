@@ -518,7 +518,7 @@ Podziękowania dla:    </string>
   <string name="toast_show_boost">Boosts are now shown!</string>
   <string name="toast_hide_boost">Boosts are now hidden!</string>
   <string name="direct_message">Direct message</string>
-  <string name="filters">Filters</string>
+  <string name="filters">Filtry</string>
   <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
   <string name="filter_keyword">Keyword or phrase</string>
   <string name="context_home">Lokalna oś czasu</string>
@@ -529,7 +529,7 @@ Podziękowania dla:    </string>
   <string name="context_drop">Drop instead of hide</string>
   <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
   <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-  <string name="context_whole_word">Whole word</string>
+  <string name="context_whole_word">Cały wyraz</string>
   <string name="filter_context">Filter contexts</string>
   <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
   <string name="filter_expire">Expire after</string>
