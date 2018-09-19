@@ -569,6 +569,8 @@
   <string name="channel_notif_media">تنزيل الوسائط</string>
   <string name="set_notif_sound">تغيير الإشعار الصوتي</string>
   <string name="select_sound">اختيار نغمة</string>
+  <string name="set_enable_time_slot">Enable time slot</string>
+  <string name="how_to_videos">How To Videos</string>
   <string-array name="filter_expire">
     <item>أبدًا</item>
     <item>30 دقيقة</item>
