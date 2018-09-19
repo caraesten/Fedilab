@@ -196,7 +196,7 @@
     <string name="about_license">License: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Source code: </string>
-    <string name="about_code_action" translatable="false">Github</string>
+    <string name="about_code_action" translatable="false">GitLab</string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_yandex_action" translatable="false">Powered by Yandex.Translate</string>
     <string name="about_thekinrar">Search instances:</string>
@@ -620,6 +620,7 @@
     <string name="set_notif_sound">Change notification sound</string>
     <string name="select_sound">Select Tone</string>
     <string name="set_enable_time_slot">Enable time slot</string>
+    <string name="how_to_videos">How To Videos</string>
 
     <string-array name="filter_expire">
         <item>Never</item>

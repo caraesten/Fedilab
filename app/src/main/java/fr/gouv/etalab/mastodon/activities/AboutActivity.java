@@ -105,7 +105,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         about_code.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/stom79/mastalab"));
+               Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://gitlab.com/tom79/mastalab"));
                startActivity(browserIntent);
            }
         });
@@ -149,7 +149,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         about_wiki.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/stom79/mastalab/wiki"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://mastalab.app/how-to-in-short-videos/"));
                 startActivity(browserIntent);
             }
         });
