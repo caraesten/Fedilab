@@ -59,6 +59,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <Button
+                android:id="@+id/set_notif_sound"
+                android:gravity="center"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:tint="@android:color/white"
+                android:textColor="@color/white"
+                android:text="@string/set_notif_sound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <!-- NOTIFICATIONS SETTINGS -->
             <TextView
                 android:text="@string/settings_title_notifications"
@@ -117,6 +127,11 @@
                 android:paddingTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <CheckBox
+                android:id="@+id/set_enable_time_slot"
+                android:layout_width="wrap_content"
+                android:text="@string/set_enable_time_slot"
                 android:layout_height="wrap_content" />
             <LinearLayout
                 style="?attr/shapeBorder"

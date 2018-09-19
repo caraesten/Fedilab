@@ -619,6 +619,7 @@
     <string name="channel_notif_media">Media Download</string>
     <string name="set_notif_sound">Change notification sound</string>
     <string name="select_sound">Select Tone</string>
+    <string name="set_enable_time_slot">Enable time slot</string>
 
     <string-array name="filter_expire">
         <item>Never</item>

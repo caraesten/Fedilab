@@ -157,14 +157,6 @@
             android:text="@string/send_crash_report"
             />
 
-        <Button
-            android:id="@+id/set_notif_sound"
-            android:gravity="center"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:tint="@android:color/white"
-            android:text="@string/set_notif_sound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
         <!-- Resize pictures -->
         <LinearLayout
             android:layout_marginTop="10dp"

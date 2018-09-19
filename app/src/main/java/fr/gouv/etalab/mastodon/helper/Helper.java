@@ -224,6 +224,7 @@ public class Helper {
     public static final String LAST_LIST = "last_list";
     public static final String LAST_LIST_NAME = "last_list_name";
 
+
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
     public static final int HOME_TIMELINE_INTENT = 2;
@@ -263,6 +264,7 @@ public class Helper {
     public static final String SET_COMPACT_MODE = "set_compact_mode";
     public static final String SET_SHARE_DETAILS = "set_share_details";
     public static final String SET_NOTIF_SOUND = "set_notif_sound";
+    public static final String SET_ENABLE_TIME_SLOT = "set_enable_time_slot";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
@@ -1674,6 +1676,9 @@ public class Helper {
         boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
         if( !notify)
             return false;
+        boolean enable_time_slot = sharedpreferences.getBoolean(Helper.SET_ENABLE_TIME_SLOT, true);
+        if( ! enable_time_slot)
+            return true;
         String dateIni = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
         String dateEnd = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
         Calendar now = Calendar.getInstance();

@@ -79,7 +79,6 @@ public class SettingsFragment extends Fragment {
 
     private Context context;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
-    private static final int ACTIVITY_CHOOSE_SOUND = 412;
     private TextView set_folder;
     int count1, count2, count3 = 0;
     private EditText your_api_key;
@@ -544,17 +543,7 @@ public class SettingsFragment extends Fragment {
         });
 
 
-        Button set_notif_sound = rootView.findViewById(R.id.set_notif_sound);
-        set_notif_sound.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, context.getString(R.string.select_sound));
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
-                startActivityForResult(intent, ACTIVITY_CHOOSE_SOUND);
-            }
-        });
+
 
 
         LinearLayout toot_visibility_container = rootView.findViewById(R.id.toot_visibility_container);
@@ -764,16 +753,18 @@ public class SettingsFragment extends Fragment {
     }
 
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) return;
 
-
         if(requestCode == ACTIVITY_CHOOSE_FILE) {
             Uri treeUri = data.getData();
-            Uri docUri = DocumentsContract.buildDocumentUriUsingTree(treeUri,
-                    DocumentsContract.getTreeDocumentId(treeUri));
+            Uri docUri = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                docUri = DocumentsContract.buildDocumentUriUsingTree(treeUri,
+                        DocumentsContract.getTreeDocumentId(treeUri));
+            }
             try{
                 String path = getPath(context, docUri);
                 if( path == null )
@@ -787,16 +778,6 @@ public class SettingsFragment extends Fragment {
                 Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
             }
 
-        }else if (requestCode == ACTIVITY_CHOOSE_SOUND){
-            try{
-                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString(Helper.SET_NOTIF_SOUND,  uri.toString());
-                editor.apply();
-            }catch (Exception e){
-                Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
-            }
         }
     }
 

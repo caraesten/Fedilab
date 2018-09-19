@@ -16,9 +16,14 @@ package fr.gouv.etalab.mastodon.fragments;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
@@ -42,6 +47,7 @@ import android.widget.Toast;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.R;
 
+import static android.app.Activity.RESULT_OK;
 import static fr.gouv.etalab.mastodon.helper.Helper.compareDate;
 
 
@@ -54,7 +60,7 @@ public class SettingsNotificationsFragment extends Fragment {
 
     private Context context;
     private int style;
-
+    private static final int ACTIVITY_CHOOSE_SOUND = 412;
     int count = 0;
 
     @Override
@@ -127,6 +133,33 @@ public class SettingsNotificationsFragment extends Fragment {
 
         settings_time_from.setText(time_from);
         settings_time_to.setText(time_to);
+
+
+        Button set_notif_sound = rootView.findViewById(R.id.set_notif_sound);
+        set_notif_sound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, context.getString(R.string.select_sound));
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
+                startActivityForResult(intent, ACTIVITY_CHOOSE_SOUND);
+            }
+        });
+
+
+        boolean enable_time_slot = sharedpreferences.getBoolean(Helper.SET_ENABLE_TIME_SLOT, true);
+        final CheckBox set_enable_time_slot = rootView.findViewById(R.id.set_enable_time_slot);
+        set_enable_time_slot.setChecked(enable_time_slot);
+
+        set_enable_time_slot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_ENABLE_TIME_SLOT, set_enable_time_slot.isChecked());
+                editor.apply();
+            }
+        });
 
 
         settings_time_from.setOnClickListener(new View.OnClickListener() {
@@ -314,7 +347,22 @@ public class SettingsNotificationsFragment extends Fragment {
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) return;
 
+       if (requestCode == ACTIVITY_CHOOSE_SOUND){
+            try{
+                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.SET_NOTIF_SOUND,  uri.toString());
+                editor.apply();
+            }catch (Exception e){
+                Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
     @Override
     public void onCreate(Bundle saveInstance) {
         super.onCreate(saveInstance);
