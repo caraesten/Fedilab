@@ -221,10 +221,10 @@ public class CrossActions {
             }
             @Override
             protected void onPostExecute(Void result) {
-                List<Account> remoteAccounts = response.getAccounts();
                 if( response == null){
                     return;
                 }
+                List<Account> remoteAccounts = response.getAccounts();
                 if( remoteAccounts != null && remoteAccounts.size() > 0) {
                     Intent intent = new Intent(context, ShowAccountActivity.class);
                     Bundle b = new Bundle();

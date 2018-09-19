@@ -1286,14 +1286,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 case R.id.action_bookmark:
                                     if( type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
                                         status.setBookmarked(!status.isBookmarked());
-                                        if (status.isBookmarked()) {
-                                            new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
-                                            Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
-                                        } else {
-                                            new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
-                                            Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                        try {
+                                            if (status.isBookmarked()) {
+                                                new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
+                                                Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                                            } else {
+                                                new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
+                                                Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                            }
+                                            notifyStatusChanged(status);
+                                        }catch (Exception e){
+                                            Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
                                         }
-                                        notifyStatusChanged(status);
                                     }else {
                                         int position = 0;
                                         for (Status statustmp : statuses) {
