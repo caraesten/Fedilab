@@ -462,23 +462,9 @@ public class Status implements Parcelable{
         SpannableString spannableStringContent, spannableStringCW;
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
-
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
-        int mode;
-        /*if( isCompactMode)
-            mode = Html.FROM_HTML_MODE_COMPACT;
-        else*/
-            mode = Html.FROM_HTML_MODE_LEGACY;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent(), mode));
-        else
-            //noinspection deprecation
-            spannableStringContent = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getContent():status.getContent()));
         spannableStringContent = new SpannableString(status.getReblog() != null ?status.getReblog().getContent():status.getContent());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), mode));
+            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text()));
@@ -496,15 +482,9 @@ public class Status implements Parcelable{
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
-        int mode;
-        /*if( isCompactMode)
-            mode = Html.FROM_HTML_MODE_COMPACT;
-        else*/
-            mode = Html.FROM_HTML_MODE_LEGACY;
         SpannableString spannableStringTranslated;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), mode));
+            spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated()));
@@ -618,15 +598,9 @@ public class Status implements Parcelable{
             return;
         SpannableString spannableStringTranslated = null;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
-        int mode;
-        /*if( isCompactMode)
-            mode = Html.FROM_HTML_MODE_COMPACT;
-        else*/
-            mode = Html.FROM_HTML_MODE_LEGACY;
         if( status.getContentTranslated() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), mode));
+                spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY));
             else
                 //noinspection deprecation
                 spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated()));
@@ -711,7 +685,7 @@ public class Status implements Parcelable{
                 //noinspection deprecation
                 key = new SpannableString(Html.fromHtml(matcher.group(2))).toString();
             key = key.substring(1);
-            if( !key.startsWith("#") && !key.startsWith("@"))
+            if( !key.startsWith("#") && !key.startsWith("@") && !matcher.group(1).contains("search?tag="))
                 targetedURL.put(key, matcher.group(1));
         }
         String currentInstance = Helper.getLiveInstance(context);
@@ -769,15 +743,9 @@ public class Status implements Parcelable{
                 spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
-        int mode;
-        /*if( isCompactMode)
-            mode = Html.FROM_HTML_MODE_COMPACT;
-        else*/
-            mode = Html.FROM_HTML_MODE_LEGACY;
         SpannableString spannableStringT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>",""), mode));
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>",""), Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
             spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","")));
