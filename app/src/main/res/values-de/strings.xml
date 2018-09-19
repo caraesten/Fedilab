@@ -551,7 +551,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="set_notif_sound">Ändere Ton für Benachrichtigungen</string>
   <string name="select_sound">Klingelton auswählen</string>
   <string name="set_enable_time_slot">Enable time slot</string>
-  <string name="how_to_videos">How To Videos</string>
+  <string name="how_to_videos">Video Anleitungen</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>
