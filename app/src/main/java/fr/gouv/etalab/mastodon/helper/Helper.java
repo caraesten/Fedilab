@@ -19,6 +19,7 @@ package fr.gouv.etalab.mastodon.helper;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.database.Cursor;
@@ -838,19 +839,6 @@ public class Helper {
                 channelId = "channel_boost";
                 channelTitle = context.getString(R.string.channel_notif_boost);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_HIGH);
-            NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .build();
-            assert mNotificationManager != null;
-            String soundUri =sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/"+ R.raw.boop);
-            channel.setSound(Uri.parse(soundUri), audioAttributes);
-            mNotificationManager.createNotificationChannel(channel);
-        }
-
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.notification_icon)
                 .setTicker(message)
@@ -858,15 +846,7 @@ public class Helper {
                 .setAutoCancel(true)
                 .setContentIntent(pIntent)
                 .setContentText(message);
-        if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
-            notificationBuilder.setVibrate(new long[] { 500, 500, 500});
-        }else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
-            String soundUri =sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/"+ R.raw.boop);
-            notificationBuilder.setSound(Uri.parse(soundUri));
-        }
-
         int ledColour = Color.BLUE;
-
         switch (sharedpreferences.getInt(Helper.SET_LED_COLOUR, Helper.LED_COLOUR)) {
             case 0: // BLUE
                 ledColour = Color.BLUE;
@@ -891,7 +871,36 @@ public class Helper {
                 break;
         }
 
-        notificationBuilder.setLights(ledColour, 500, 1000);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel;
+            NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
+                channel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_LOW);
+                channel.setSound(null, null);
+                channel.setVibrationPattern(new long[] { 500, 500, 500});
+                channel.enableVibration(true);
+                channel.setLightColor(ledColour);
+            }else {
+                channel = new NotificationChannel(channelId, channelTitle, NotificationManager.IMPORTANCE_HIGH);
+                String soundUri = sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/"+ R.raw.boop);
+                AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .build();
+                channel.setSound(Uri.parse(soundUri), audioAttributes);
+            }
+            assert mNotificationManager != null;
+            mNotificationManager.createNotificationChannel(channel);
+        }else{
+            if( sharedpreferences.getBoolean(Helper.SET_NOTIF_SILENT,false) ) {
+                notificationBuilder.setVibrate(new long[] { 500, 500, 500});
+            }else {
+                String soundUri =sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/"+ R.raw.boop);
+                notificationBuilder.setSound(Uri.parse(soundUri));
+            }
+            notificationBuilder.setLights(ledColour, 500, 1000);
+        }
         notificationBuilder.setContentTitle(title);
         notificationBuilder.setLargeIcon(icon);
         notificationManager.notify(notificationId, notificationBuilder.build());
