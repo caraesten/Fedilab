@@ -564,6 +564,8 @@ Podziękowania dla:    </string>
   <string name="channel_notif_media">Pobrane Media</string>
   <string name="set_notif_sound">Zmień dźwięk powiadomień</string>
   <string name="select_sound">Wybierz Dźwięk</string>
+  <string name="set_enable_time_slot">Enable time slot</string>
+  <string name="how_to_videos">How To Videos</string>
   <string-array name="filter_expire">
     <item>Nigdy</item>
     <item>30 minut</item>
