@@ -523,7 +523,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="action_filter_delete">Filter löschen?</string>
   <string name="action_update_filter">Filter aktualisieren</string>
   <string name="action_filter_create">Filter erstellen</string>
-  <string name="how_to_follow">Wem folgen</string>
+  <string name="how_to_follow">Folgen</string>
   <string name="action_who_to_follow_empty_content">Momentan sind keine Konten vorhanden!</string>
   <string name="follow_account">Folgen</string>
   <string name="select_all">Alle auswählen</string>
@@ -535,21 +535,21 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="adding_account_list_trunk">Füge Konten der Liste hinzu</string>
   <string name="action_list_add">Du hast noch keine Liste erstellt. Drücke auf den \"+\" Knopf um eine anzulegen.</string>
   <string name="action_remote_instance_add">Du folgst keiner entfernten Instanz. Drücke auf den \"+\" Knopf um eine hinzuzufügen.</string>
-  <string name="about_trunk">Wem folgen</string>
+  <string name="about_trunk">Folgen</string>
   <string name="about_trunk_action">Trunk API</string>
   <string name="toast_impossible_to_follow">Dem Konto oder den Konten kann nicht gefolgt werden</string>
-  <string name="retrieve_remote_account">Fetching remote account</string>
-  <string name="expand_image">Automatically expand hidden media</string>
-  <string name="set_display_follow_instance">Display follow instances button</string>
-  <string name="channel_notif_follow">New follow</string>
-  <string name="channel_notif_boost">New Boost</string>
-  <string name="channel_notif_fav">New Favourite</string>
-  <string name="channel_notif_mention">New Mention</string>
-  <string name="channel_notif_toot">New Toot</string>
+  <string name="retrieve_remote_account">Abruf des Remote-Accounts</string>
+  <string name="expand_image">Versteckte Medien automatisch erweitern</string>
+  <string name="set_display_follow_instance">Schaltfläche Folge Instanzen anzeigen</string>
+  <string name="channel_notif_follow">Neuer Folgender</string>
+  <string name="channel_notif_boost">Neu geteilt</string>
+  <string name="channel_notif_fav">Neuer Favorit</string>
+  <string name="channel_notif_mention">Neue Erwähnung</string>
+  <string name="channel_notif_toot">Neuer Toot</string>
   <string name="channel_notif_backup">Toots Backup</string>
-  <string name="channel_notif_media">Media Download</string>
-  <string name="set_notif_sound">Change notification sound</string>
-  <string name="select_sound">Select Tone</string>
+  <string name="channel_notif_media">Medien Download</string>
+  <string name="set_notif_sound">Ändere Ton für Benachrichtigungen</string>
+  <string name="select_sound">Klingelton auswählen</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>
