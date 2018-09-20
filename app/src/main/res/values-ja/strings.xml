@@ -302,7 +302,7 @@
   <string name="set_save_changes">変更内容を保存</string>
   <string name="set_header_picture_overlay">ヘッダー画像を選択</string>
   <string name="set_fit_preview">プレビュー画像をフィットさせる</string>
-  <string name="set_automatically_split_toot">500文字以上のトゥートは自動で返信に分割されます。</string>
+  <string name="set_automatically_split_toot">500文字を超える返信のトゥートを自動的に分割する</string>
   <string name="note_no_space">160文字の制限に達しました！</string>
   <string name="username_no_space">30文字の制限に達しました。</string>
   <string name="settings_title_hour">通知のタイムスロット：</string>
@@ -487,7 +487,7 @@
   <string name="which_language">Translate in</string>
   <string name="crash_title">Mastalabは停止しました :(</string>
   <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-  <string name="send_crash_report">Ask for sending crash reports by email?</string>
+  <string name="send_crash_report">クラッシュレポートをメールで送信するか尋ねる？</string>
   <string name="follow_instance">Follow instance</string>
   <string name="toast_instance_already_added">You already follow this instance!</string>
   <string name="toast_instance_followed">The instance is followed!</string>
@@ -533,7 +533,7 @@
   <string name="add_account_list_trunk">Adding accounts to the list</string>
   <string name="account_added_list_trunk">Accounts were added to the list</string>
   <string name="adding_account_list_trunk">Adding accounts to the list</string>
-  <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
+  <string name="action_list_add">まだリストを作成していません。新規に追加するには \"+\" ボタンをクリックします。</string>
   <string name="action_remote_instance_add">リモートインスタンスをフォローしていません。新規に追加するには、 \"+\" ボタンをクリックします。</string>
   <string name="about_trunk">Who to follow</string>
   <string name="about_trunk_action">Trunk API</string>
@@ -546,19 +546,19 @@
   <string name="channel_notif_fav">New Favourite</string>
   <string name="channel_notif_mention">New Mention</string>
   <string name="channel_notif_toot">New Toot</string>
-  <string name="channel_notif_backup">Toots Backup</string>
+  <string name="channel_notif_backup">トゥート バックアップ</string>
   <string name="channel_notif_media">Media Download</string>
-  <string name="set_notif_sound">Change notification sound</string>
-  <string name="select_sound">Select Tone</string>
-  <string name="set_enable_time_slot">Enable time slot</string>
+  <string name="set_notif_sound">通知サウンドを変更</string>
+  <string name="select_sound">音の選択</string>
+  <string name="set_enable_time_slot">タイムスロットを有効化</string>
   <string name="how_to_videos">How To Videos</string>
   <string-array name="filter_expire">
-    <item>Never</item>
-    <item>30 minutes</item>
-    <item>1 hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>1 day</item>
-    <item>1 week</item>
+    <item>無し</item>
+    <item>30 分</item>
+    <item>1 時間</item>
+    <item>6 時間</item>
+    <item>12 時間</item>
+    <item>1 日</item>
+    <item>1 週間</item>
   </string-array>
 </resources>
