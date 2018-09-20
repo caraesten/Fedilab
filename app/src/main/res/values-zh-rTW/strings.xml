@@ -558,8 +558,8 @@
   <string name="channel_notif_media">媒體下載</string>
   <string name="set_notif_sound">變更通知音效</string>
   <string name="select_sound">選取鈴聲</string>
-  <string name="set_enable_time_slot">Enable time slot</string>
-  <string name="how_to_videos">How To Videos</string>
+  <string name="set_enable_time_slot">啟用時間帶</string>
+  <string name="how_to_videos">操作方法影片</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
