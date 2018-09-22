@@ -690,7 +690,7 @@ public class Status implements Parcelable{
         }
         String currentInstance = Helper.getLiveInstance(context);
         //Get url to account that are unknown
-        Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
+        Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
         Matcher matcherALink = aLink.matcher(spannableString.toString());
         ArrayList<Account> accountsMentionUnknown = new ArrayList<>();
         while (matcherALink.find()){
@@ -715,7 +715,7 @@ public class Status implements Parcelable{
                 accountsMentionUnknown.add(account);
             }
         }
-        aLink = Pattern.compile("(<\\s?a\\s?href=\"(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,6}[\\/]?[^\"@(\\/tags\\/)]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
+        aLink = Pattern.compile("(<\\s?a\\s?href=\"(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10}[\\/]?[^\"@(\\/tags\\/)]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
         matcherALink = aLink.matcher(spannableString.toString());
 
         while (matcherALink.find()){
@@ -830,7 +830,7 @@ public class Status implements Parcelable{
                                  @Override
                                  public void onClick(View textView) {
                                      String finalUrl = url;
-                                     Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
+                                     Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
                                      Matcher matcherLink = link.matcher(url);
                                      if( matcherLink.find()){
                                          Intent intent = new Intent(context, MainActivity.class);

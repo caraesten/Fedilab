@@ -1296,6 +1296,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                             }
                                             notifyStatusChanged(status);
                                         }catch (Exception e){
+                                            e.printStackTrace();
                                             Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
                                         }
                                     }else {
@@ -1608,7 +1609,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                         if (targetedId == null || !targetedId.equals(status.getAccount().getId())) {
                             Account account = status.getAccount();
-                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})");
+                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})");
                             Matcher matcher = instanceHost.matcher(status.getUrl());
                             String instance = null;
                             while (matcher.find()){
@@ -1624,7 +1625,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     public void onClick(View v) {
                         if (targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())) {
                             Account account = status.getReblog().getAccount();
-                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})");
+                            Pattern instanceHost = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})");
                             Matcher matcher = instanceHost.matcher(status.getUrl());
                             String instance = null;
                             while (matcher.find()){

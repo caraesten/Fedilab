@@ -2300,11 +2300,13 @@ public class API {
     private Filters parseFilter(JSONObject resobj){
         Filters filter = new fr.gouv.etalab.mastodon.client.Entities.Filters();
         try {
+
             filter.setId(resobj.get("id").toString());
             if( resobj.get("phrase").toString() == null)
                 return null;
             filter.setPhrase(resobj.get("phrase").toString());
-            filter.setSetExpires_at(Helper.mstStringToDate(context, resobj.get("expires_at").toString()));
+            if( resobj.get("expires_at") != null &&  !resobj.get("expires_at").toString().equals("null"))
+                filter.setSetExpires_at(Helper.mstStringToDate(context, resobj.get("expires_at").toString()));
             filter.setWhole_word(Boolean.parseBoolean(resobj.get("whole_word").toString()));
             filter.setIrreversible(Boolean.parseBoolean(resobj.get("irreversible").toString()));
             String contextString = resobj.get("context").toString();

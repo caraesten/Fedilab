@@ -1846,7 +1846,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             toRemove.clear();
         }
         String content = status.getContent();
-        Pattern mentionLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,6})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
+        Pattern mentionLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
         Matcher matcher = mentionLink.matcher(content);
         if (matcher.find()) {
             content = matcher.replaceAll("$3@$2");

@@ -440,15 +440,17 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     @Override
     public void onDownloaded(String path, String originUrl, Error error) {
 
-        File response = new File(path);
-        File dir = getCacheDir();
-        File from = new File(dir, response.getName());
-        File to = new File(dir, Helper.md5(originUrl) + ".mp4");
-        if (from.exists())
-            //noinspection ResultOfMethodCallIgnored
-            from.renameTo(to);
-        fileVideo = to;
-        downloadedImage = null;
+        if( path != null) {
+            File response = new File(path);
+            File dir = getCacheDir();
+            File from = new File(dir, response.getName());
+            File to = new File(dir, Helper.md5(originUrl) + ".mp4");
+            if (from.exists())
+                //noinspection ResultOfMethodCallIgnored
+                from.renameTo(to);
+            fileVideo = to;
+            downloadedImage = null;
+        }
         if( progress != null)
             progress.setVisibility(View.GONE);
         if( loader != null)
