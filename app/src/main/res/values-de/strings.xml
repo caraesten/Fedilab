@@ -475,7 +475,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="poxy_port">Port</string>
   <string name="poxy_login">Login</string>
   <string name="poxy_password">Passwort</string>
-  <string name="set_theme">Layout:</string>
+  <string name="set_theme">Thema:</string>
   <string name="set_compact_mode">Kompakte Darstellung</string>
   <string name="set_share_details">Toot Details beim Teilen hinzufügen</string>
   <string name="support_the_app_on_liberapay">Unterstütze die app auf Liberapay</string>
@@ -550,8 +550,8 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="channel_notif_media">Medien Download</string>
   <string name="set_notif_sound">Ändere Ton für Benachrichtigungen</string>
   <string name="select_sound">Klingelton auswählen</string>
-  <string name="set_enable_time_slot">Enable time slot</string>
-  <string name="how_to_videos">How To Videos</string>
+  <string name="set_enable_time_slot">Zeitfenster aktivieren</string>
+  <string name="how_to_videos">Video Anleitungen</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>

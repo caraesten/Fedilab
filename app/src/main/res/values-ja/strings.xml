@@ -302,7 +302,7 @@
   <string name="set_save_changes">変更内容を保存</string>
   <string name="set_header_picture_overlay">ヘッダー画像を選択</string>
   <string name="set_fit_preview">プレビュー画像をフィットさせる</string>
-  <string name="set_automatically_split_toot">500文字以上のトゥートは自動で返信に分割されます。</string>
+  <string name="set_automatically_split_toot">500文字を超える返信のトゥートを自動的に分割する</string>
   <string name="note_no_space">160文字の制限に達しました！</string>
   <string name="username_no_space">30文字の制限に達しました。</string>
   <string name="settings_title_hour">通知のタイムスロット：</string>
@@ -480,85 +480,85 @@
   <string name="set_share_details">共有時にトゥートの詳細を付加する</string>
   <string name="support_the_app_on_liberapay">Liberapayでアプリを支援</string>
   <string name="alert_regex">正規表現に誤りがあります！</string>
-  <string name="no_account_yet">No account yet?</string>
-  <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-  <string name="delete_instance">Delete this instance?</string>
-  <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
+  <string name="no_account_yet">まだアカウントがありませんか？</string>
+  <string name="toast_instance_unavailable">このインスタンスにタイムラインが見つかりませんでした！</string>
+  <string name="delete_instance">このインスタンスを削除しますか？</string>
+  <string name="warning_delete_instance">%s をフォローインスタンスから削除しようとしています。</string>
   <string name="which_language">Translate in</string>
-  <string name="crash_title">Mastalab has stopped :(</string>
-  <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-  <string name="send_crash_report">Ask for sending crash reports by email?</string>
-  <string name="follow_instance">Follow instance</string>
-  <string name="toast_instance_already_added">You already follow this instance!</string>
-  <string name="toast_instance_followed">The instance is followed!</string>
-  <string name="action_partnership">Partnerships</string>
-  <string name="neutral_menu_information">Information</string>
-  <string name="hide_boost">Hide boosts from %s</string>
-  <string name="endorse">Feature on profile</string>
-  <string name="hide_everything">Hide everything from %s</string>
-  <string name="show_boost">Show boosts from %s</string>
-  <string name="unendorse">Don\'t feature on profile</string>
-  <string name="show_everything">Show everything from %s</string>
-  <string name="toast_endorse">The account is now featured on profile</string>
-  <string name="toast_unendorse">The account is no longer featured on profile</string>
-  <string name="toast_show_boost">Boosts are now shown!</string>
-  <string name="toast_hide_boost">Boosts are now hidden!</string>
-  <string name="direct_message">Direct message</string>
-  <string name="filters">Filters</string>
-  <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-  <string name="filter_keyword">Keyword or phrase</string>
-  <string name="context_home">Home timeline</string>
-  <string name="context_public">Public timelines</string>
-  <string name="context_notification">Notifications</string>
-  <string name="context_conversation">Conversations</string>
-  <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-  <string name="context_drop">Drop instead of hide</string>
-  <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
-  <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-  <string name="context_whole_word">Whole word</string>
-  <string name="filter_context">Filter contexts</string>
-  <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-  <string name="filter_expire">Expire after</string>
-  <string name="add_new_filter">Add New Filter</string>
-  <string name="action_filter_delete">Delete filter?</string>
-  <string name="action_update_filter">Update filter</string>
-  <string name="action_filter_create">Create filter</string>
+  <string name="crash_title">Mastalabは停止しました :(</string>
+  <string name="crash_message">メールでクラッシュレポートを送ることができます。これは、問題の修正に役立ちます :)\n\n追加のコンテンツを付加することもできます。ありがとうございます！</string>
+  <string name="send_crash_report">クラッシュレポートをメールで送信するか尋ねる？</string>
+  <string name="follow_instance">インスタンスをフォロー</string>
+  <string name="toast_instance_already_added">既にこのインスタンスをフォローしています！</string>
+  <string name="toast_instance_followed">インスタンスがフォローされました！</string>
+  <string name="action_partnership">パートナーシップ</string>
+  <string name="neutral_menu_information">情報</string>
+  <string name="hide_boost">%s からのブーストを非表示</string>
+  <string name="endorse">プロフィールで紹介</string>
+  <string name="hide_everything">%s からの全てを非表示</string>
+  <string name="show_boost">%s からのブーストを表示</string>
+  <string name="unendorse">プロフィールから外す</string>
+  <string name="show_everything">%s からの全てを表示</string>
+  <string name="toast_endorse">アカウントはプロフィールで紹介されています</string>
+  <string name="toast_unendorse">アカウントはプロフィールで紹介されません</string>
+  <string name="toast_show_boost">ブーストが表示されます！</string>
+  <string name="toast_hide_boost">ブーストは表示されません！</string>
+  <string name="direct_message">ダイレクトメッセージ</string>
+  <string name="filters">フィルター</string>
+  <string name="action_filters_empty_content">フィルターはありません。 \"+\" ボタンをクリックして作成できます。</string>
+  <string name="filter_keyword">キーワードまたはフレーズ</string>
+  <string name="context_home">ホームタイムライン</string>
+  <string name="context_public">公開タイムライン</string>
+  <string name="context_notification">通知</string>
+  <string name="context_conversation">会話</string>
+  <string name="filter_keyword_explanations">テキストの大文字/小文字や、トゥートの閲覧注意に関係なくマッチングされます</string>
+  <string name="context_drop">非表示ではなく除外</string>
+  <string name="context_drop_explanations">フィルターが後で削除されても、除外されたトゥートは元に戻せなくなります</string>
+  <string name="context_whole_word_explanations">キーワードまたはフレーズが英数字のみの場合、単語全体と一致する場合のみ適用されるようになります</string>
+  <string name="context_whole_word">単語全体</string>
+  <string name="filter_context">フィルター対象</string>
+  <string name="filter_context_explanations">フィルターを適用する1つ以上の対象</string>
+  <string name="filter_expire">期限</string>
+  <string name="add_new_filter">新しいフィルターを追加</string>
+  <string name="action_filter_delete">フィルターを削除しますか？</string>
+  <string name="action_update_filter">フィルターの更新</string>
+  <string name="action_filter_create">フィルターの作成</string>
   <string name="how_to_follow">Whom to follow</string>
   <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
-  <string name="follow_account">Follow</string>
-  <string name="select_all">Select all</string>
-  <string name="unselect_all">Unselect all</string>
+  <string name="follow_account">フォロー</string>
+  <string name="select_all">全て選択</string>
+  <string name="unselect_all">全て選択解除</string>
   <string name="follow_trunk">%s is followed!</string>
   <string name="create_list_trunk">Creating the list %s</string>
   <string name="add_account_list_trunk">Adding accounts to the list</string>
   <string name="account_added_list_trunk">Accounts were added to the list</string>
   <string name="adding_account_list_trunk">Adding accounts to the list</string>
-  <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-  <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
+  <string name="action_list_add">まだリストを作成していません。新規に追加するには \"+\" ボタンをクリックします。</string>
+  <string name="action_remote_instance_add">リモートインスタンスをフォローしていません。新規に追加するには、 \"+\" ボタンをクリックします。</string>
   <string name="about_trunk">Who to follow</string>
   <string name="about_trunk_action">Trunk API</string>
   <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
-  <string name="retrieve_remote_account">Fetching remote account</string>
-  <string name="expand_image">Automatically expand hidden media</string>
-  <string name="set_display_follow_instance">Display follow instances button</string>
+  <string name="retrieve_remote_account">リモートアカウントを取得中です</string>
+  <string name="expand_image">非表示のメディアを自動的に展開する</string>
+  <string name="set_display_follow_instance">フォローインスタンス ボタンを表示する</string>
   <string name="channel_notif_follow">New follow</string>
   <string name="channel_notif_boost">New Boost</string>
   <string name="channel_notif_fav">New Favourite</string>
   <string name="channel_notif_mention">New Mention</string>
   <string name="channel_notif_toot">New Toot</string>
-  <string name="channel_notif_backup">Toots Backup</string>
+  <string name="channel_notif_backup">トゥート バックアップ</string>
   <string name="channel_notif_media">Media Download</string>
-  <string name="set_notif_sound">Change notification sound</string>
-  <string name="select_sound">Select Tone</string>
-  <string name="set_enable_time_slot">Enable time slot</string>
+  <string name="set_notif_sound">通知サウンドを変更</string>
+  <string name="select_sound">音の選択</string>
+  <string name="set_enable_time_slot">タイムスロットを有効化</string>
   <string name="how_to_videos">How To Videos</string>
   <string-array name="filter_expire">
-    <item>Never</item>
-    <item>30 minutes</item>
-    <item>1 hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>1 day</item>
-    <item>1 week</item>
+    <item>無し</item>
+    <item>30 分</item>
+    <item>1 時間</item>
+    <item>6 時間</item>
+    <item>12 時間</item>
+    <item>1 日</item>
+    <item>1 週間</item>
   </string-array>
 </resources>

@@ -550,18 +550,18 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="toast_impossible_to_follow">Ezin da/dira kontua/k jarraitu</string>
   <string name="retrieve_remote_account">Urruneko kontua eskuratzen</string>
   <string name="expand_image">Automatikoki hedatu ezkutatutako multimedia</string>
-  <string name="set_display_follow_instance">Display follow instances button</string>
-  <string name="channel_notif_follow">New follow</string>
-  <string name="channel_notif_boost">New Boost</string>
-  <string name="channel_notif_fav">New Favourite</string>
-  <string name="channel_notif_mention">New Mention</string>
-  <string name="channel_notif_toot">New Toot</string>
-  <string name="channel_notif_backup">Toots Backup</string>
-  <string name="channel_notif_media">Media Download</string>
-  <string name="set_notif_sound">Change notification sound</string>
-  <string name="select_sound">Select Tone</string>
-  <string name="set_enable_time_slot">Enable time slot</string>
-  <string name="how_to_videos">How To Videos</string>
+  <string name="set_display_follow_instance">Erakutsi instantziak jarraitzeko botoia</string>
+  <string name="channel_notif_follow">Jarraipen berria</string>
+  <string name="channel_notif_boost">Bultzada berria</string>
+  <string name="channel_notif_fav">Gogoko berria</string>
+  <string name="channel_notif_mention">Aipamen berria</string>
+  <string name="channel_notif_toot">Toot berria</string>
+  <string name="channel_notif_backup">Toot-en babes-kopia</string>
+  <string name="channel_notif_media">Multimediaren deskarga</string>
+  <string name="set_notif_sound">Aldatu jakinarazpenaren soinua</string>
+  <string name="select_sound">Hautatu doinua</string>
+  <string name="set_enable_time_slot">Gaitu denbora-tartea</string>
+  <string name="how_to_videos">Laguntza bideoak</string>
   <string-array name="filter_expire">
     <item>Inoiz ez</item>
     <item>30 minutu</item>
