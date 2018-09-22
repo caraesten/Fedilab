@@ -529,8 +529,8 @@ Gracias a:    </string>
   <string name="action_filter_delete">¿Eliminar filtro?</string>
   <string name="action_update_filter">Actualizar filtro</string>
   <string name="action_filter_create">Crear filtro</string>
-  <string name="how_to_follow">Whom to follow</string>
-  <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
+  <string name="how_to_follow">A quiénes seguir</string>
+  <string name="action_who_to_follow_empty_content">¡Por el momento no hay cuentas listadas!</string>
   <string name="follow_account">Seguir</string>
   <string name="select_all">Seleccionar todo</string>
   <string name="unselect_all">Deseleccionar todo</string>
