@@ -129,11 +129,11 @@
     <item>هل تريد حقا حذف و إعادة صياغة هذا التبويق ؟</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="zero">%d replies</item>
+    <item quantity="zero">%d رد</item>
     <item quantity="one">ردّ واحد %d</item>
-    <item quantity="two">%d replies</item>
-    <item quantity="few">%d replies</item>
-    <item quantity="many">%d replies</item>
+    <item quantity="two">ردّين</item>
+    <item quantity="few">%d ردود</item>
+    <item quantity="many">%d ردود</item>
     <item quantity="other">%d ردود</item>
   </plurals>
   <string name="set_display_bookmark_button">إظهار زر الفواصل المرجعية</string>
@@ -222,15 +222,15 @@
   <string name="notif_follow">يتابعك</string>
   <string name="notif_pouet">تبويق حديث مِن %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="zero">and %d other notifications</item>
+    <item quantity="zero">و اشعار آخَر</item>
     <item quantity="one">و إشعار آخر</item>
-    <item quantity="two">and %d other notifications</item>
-    <item quantity="few">and %d other notifications</item>
-    <item quantity="many">and %d other notifications</item>
-    <item quantity="other">و %d إشعارات أخرى</item>
+    <item quantity="two">و إشعارين</item>
+    <item quantity="few">و %d اشعارات</item>
+    <item quantity="many">و %d اشعارات</item>
+    <item quantity="other">و %d اشعارات</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="zero">and %d other toots to discover</item>
+    <item quantity="zero">و تبويق آخر لاكتشافه</item>
     <item quantity="one">and another toot to discover</item>
     <item quantity="two">and %d other toots to discover</item>
     <item quantity="few">and %d other toots to discover</item>
@@ -530,7 +530,7 @@
   <string name="context_public">الخط الزمني العمومي</string>
   <string name="context_notification">الإشعارات</string>
   <string name="context_conversation">المحادثات</string>
-  <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
+  <string name="filter_keyword_explanations">سوف يتم العثور عليه مهما كانت حالة الأحرف في النص أو حتى و إن كان داخل الويب و فيه تحذير عن المحتوى</string>
   <string name="context_drop">حذف بدلًا مِن الإخفاء</string>
   <string name="context_drop_explanations">سوف تختفي التبويقات المُصفّاة إلى الأبد، حتى و إن تم حذف عامل التصفية لاحقًا</string>
   <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
@@ -548,15 +548,15 @@
   <string name="select_all">اختيار الكلّ</string>
   <string name="unselect_all">إلغاء اختيار الكلّ</string>
   <string name="follow_trunk">%s مُتابَع الآن!</string>
-  <string name="create_list_trunk">Creating the list %s</string>
+  <string name="create_list_trunk">جارٍ انشاء القائمة %s</string>
   <string name="add_account_list_trunk">إضافة الحسابات إلى القائمة</string>
   <string name="account_added_list_trunk">تمت عملية إضافة الحسابات إلى القائمة</string>
   <string name="adding_account_list_trunk">إضافة الحسابات إلى القائمة</string>
   <string name="action_list_add">لم تقم بعد بانشاء قائمة. اضغط على زر \"+\" لإنشاء قائمة.</string>
   <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
-  <string name="about_trunk">Who to follow</string>
-  <string name="about_trunk_action">Trunk API</string>
-  <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
+  <string name="about_trunk">حسابات للمُتابَعة</string>
+  <string name="about_trunk_action">جذع API</string>
+  <string name="toast_impossible_to_follow">لا يمكن متابعة الحساب·ات</string>
   <string name="retrieve_remote_account">جلب الحسابات عن بُعد</string>
   <string name="expand_image">توسيع الوسائط المخفية تلقائيًا</string>
   <string name="set_display_follow_instance">إظهار زر متابَعة مثيلات الخوادم</string>
@@ -569,8 +569,8 @@
   <string name="channel_notif_media">تنزيل الوسائط</string>
   <string name="set_notif_sound">تغيير الإشعار الصوتي</string>
   <string name="select_sound">اختيار نغمة</string>
-  <string name="set_enable_time_slot">Enable time slot</string>
-  <string name="how_to_videos">How To Videos</string>
+  <string name="set_enable_time_slot">تفعيل الفترة الزمنية</string>
+  <string name="how_to_videos">الفيديوهات التوضيحية</string>
   <string-array name="filter_expire">
     <item>أبدًا</item>
     <item>30 دقيقة</item>
