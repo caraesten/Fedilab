@@ -232,8 +232,8 @@
   <plurals name="other_notif_hometimeline">
     <item quantity="zero">و تبويق آخر لاكتشافه</item>
     <item quantity="one">and another toot to discover</item>
-    <item quantity="two">and %d other toots to discover</item>
-    <item quantity="few">and %d other toots to discover</item>
+    <item quantity="two">و تبويقين آخرين لاكتشافهما</item>
+    <item quantity="few">و %d تبويقات لاكتشافها</item>
     <item quantity="many">and %d other toots to discover</item>
     <item quantity="other">و %d تبويقات أخرى إكتشفها</item>
   </plurals>
@@ -553,7 +553,7 @@
   <string name="account_added_list_trunk">تمت عملية إضافة الحسابات إلى القائمة</string>
   <string name="adding_account_list_trunk">إضافة الحسابات إلى القائمة</string>
   <string name="action_list_add">لم تقم بعد بانشاء قائمة. اضغط على زر \"+\" لإنشاء قائمة.</string>
-  <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
+  <string name="action_remote_instance_add">إنك لا تتابع حاليا أي مثيل خادوم عن بُعد. اضغط على زر \"+\" لإضافة واحد.</string>
   <string name="about_trunk">حسابات للمُتابَعة</string>
   <string name="about_trunk_action">جذع API</string>
   <string name="toast_impossible_to_follow">لا يمكن متابعة الحساب·ات</string>
