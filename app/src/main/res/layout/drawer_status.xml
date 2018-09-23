@@ -280,12 +280,14 @@
                 <RelativeLayout
                     android:id="@+id/status_horizontal_document_container"
                     android:visibility="gone"
+                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="wrap_content">
 
-                    <HorizontalScrollView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
                         >
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -293,14 +295,15 @@
                             android:layout_gravity="center_vertical"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            >
+                            android:baselineAligned="false">
                             <RelativeLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="match_parent"
                                 >
                                 <ImageView
                                     android:id="@+id/status_prev1_h"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:scaleType="fitCenter"
                                     android:adjustViewBounds="true"
                                     android:layout_height="match_parent"
@@ -315,7 +318,8 @@
                                     tools:ignore="ContentDescription" />
                             </RelativeLayout>
                             <RelativeLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginStart="1dp"
@@ -323,7 +327,7 @@
                                 <ImageView
                                     android:id="@+id/status_prev2_h"
                                     android:scaleType="fitCenter"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:adjustViewBounds="true"
                                     android:layout_height="match_parent"
                                     tools:ignore="ContentDescription" />
@@ -336,18 +340,26 @@
                                     android:layout_height="20dp"
                                     tools:ignore="ContentDescription" />
                             </RelativeLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="1dp"
+                            android:baselineAligned="false">
                             <RelativeLayout
-                                android:layout_marginLeft="1dp"
-                                android:layout_marginStart="1dp"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="match_parent"
                                 >
                                 <ImageView
                                     android:id="@+id/status_prev3_h"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:scaleType="fitCenter"
                                     android:adjustViewBounds="true"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     tools:ignore="ContentDescription" />
                                 <ImageView
                                     android:id="@+id/status_prev3_play_h"
@@ -359,17 +371,18 @@
                                     tools:ignore="ContentDescription" />
                             </RelativeLayout>
                             <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"
                                 android:layout_marginLeft="1dp"
                                 android:layout_marginStart="1dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
                                 >
                                 <ImageView
                                     android:id="@+id/status_prev4_h"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:scaleType="fitCenter"
                                     android:adjustViewBounds="true"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     tools:ignore="ContentDescription" />
                                 <ImageView
                                     android:id="@+id/status_prev4_play_h"
@@ -381,7 +394,7 @@
                                     tools:ignore="ContentDescription" />
                             </RelativeLayout>
                         </LinearLayout>
-                    </HorizontalScrollView>
+                    </LinearLayout>
                     <ImageView
                         android:id="@+id/hide_preview_h"
                         android:layout_alignParentStart="true"
