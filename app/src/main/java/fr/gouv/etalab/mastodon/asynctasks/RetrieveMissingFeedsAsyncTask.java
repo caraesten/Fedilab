@@ -59,9 +59,6 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        boolean connectectedToInternet = Helper.isConnectedToInternet(contextReference.get(),Helper.getLiveInstance(contextReference.get()));
-        if(!connectectedToInternet)
-            return null;
         API api = new API(this.contextReference.get());
         List<fr.gouv.etalab.mastodon.client.Entities.Status> tempStatus;
         APIResponse apiResponse = null;

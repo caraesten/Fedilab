@@ -1161,6 +1161,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     b.putString("accountId", extras.getString(INTENT_TARGETED_ACCOUNT));
                     intentShow.putExtras(b);
                     startActivity(intentShow);
+
                 }
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
                 changeUser(BaseMainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
@@ -1184,6 +1185,10 @@ public abstract class BaseMainActivity extends BaseActivity
                 startActivity(myIntent);
             }else if (extras.getInt(INTENT_ACTION) == SEARCH_REMOTE) {
                 String url = extras.getString(SEARCH_URL);
+                intent.replaceExtras(new Bundle());
+                intent.setAction("");
+                intent.setData(null);
+                intent.setFlags(0);
                 if( url == null)
                     return;
                 Matcher matcher;
@@ -1258,6 +1263,10 @@ public abstract class BaseMainActivity extends BaseActivity
             }
         }else if (Intent.ACTION_VIEW.equals(action)) {
             String url = intent.getDataString();
+            intent.replaceExtras(new Bundle());
+            intent.setAction("");
+            intent.setData(null);
+            intent.setFlags(0);
             if( url == null)
                 return;
             Matcher matcher;

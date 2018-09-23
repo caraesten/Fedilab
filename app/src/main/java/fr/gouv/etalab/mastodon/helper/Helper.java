@@ -442,7 +442,6 @@ public class Helper {
      *  Check if the user is connected to Internet
      * @return boolean
      */
-    @SuppressWarnings("unused")
     public static boolean isConnectedToInternet(Context context, String instance) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if( cm == null)
