@@ -538,9 +538,9 @@
   <string name="select_all">Tout sélectionner</string>
   <string name="unselect_all">Tout déselectionner</string>
   <string name="follow_trunk">%s est suivi !</string>
-  <string name="create_list_trunk">Creating the list %s</string>
-  <string name="add_account_list_trunk">Adding accounts to the list</string>
-  <string name="account_added_list_trunk">Accounts were added to the list</string>
+  <string name="create_list_trunk">Création de la liste %s</string>
+  <string name="add_account_list_trunk">Rajout des comptes à la liste</string>
+  <string name="account_added_list_trunk">Les comptes ont été ajoutés à la liste</string>
   <string name="adding_account_list_trunk">Adding accounts to the list</string>
   <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
   <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
