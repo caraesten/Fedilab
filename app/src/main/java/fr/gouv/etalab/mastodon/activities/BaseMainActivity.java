@@ -79,12 +79,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Filters;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -101,6 +103,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplaySearchFragment;
 import fr.gouv.etalab.mastodon.fragments.WhoToFollowFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnFilterActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
@@ -115,6 +118,8 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+
+import static fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
 import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.BACKUP_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
@@ -137,7 +142,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public abstract class BaseMainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface {
 
     private FloatingActionButton toot, delete_all, add_new;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -150,7 +155,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private ViewPager viewPager;
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
-
+    public static List<Filters> filters = new ArrayList<>();
     private DisplayStatusFragment homeFragment, federatedFragment, localFragment;
     private DisplayNotificationsFragment notificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
@@ -1336,8 +1341,10 @@ public abstract class BaseMainActivity extends BaseActivity
         updateNotifCounter();
         updateHomeCounter();
         //Proceeds to update of the authenticated account
-        if(Helper.isLoggedIn(getApplicationContext()))
+        if(Helper.isLoggedIn(getApplicationContext())) {
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new ManageFiltersAsyncTask(getApplicationContext(), GET_ALL_FILTER, null,BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
         if( lastHomeId != null && homeFragment != null){
             homeFragment.retrieveMissingToots(lastHomeId);
         }
@@ -1645,6 +1652,13 @@ public abstract class BaseMainActivity extends BaseActivity
     public void onRetrieveEmojiAccount(Account account) {
         TextView displayedName = headerLayout.findViewById(R.id.displayedName);
         displayedName.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+    }
+
+    @Override
+    public void onActionDone(ManageFiltersAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
+        if( apiResponse != null && apiResponse.getFilters() != null && apiResponse.getFilters().size() > 0){
+            filters = apiResponse.getFilters();
+        }
     }
 
 
