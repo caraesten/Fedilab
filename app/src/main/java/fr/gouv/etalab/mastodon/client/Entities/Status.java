@@ -670,7 +670,7 @@ public class Status implements Parcelable{
             spannableString.removeSpan(span);
         List<Mention> mentions = this.status.getReblog() != null ? this.status.getReblog().getMentions() : this.status.getMentions();
 
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
         Matcher matcher;
@@ -685,8 +685,13 @@ public class Status implements Parcelable{
                 //noinspection deprecation
                 key = new SpannableString(Html.fromHtml(matcher.group(2))).toString();
             key = key.substring(1);
-            if( !key.startsWith("#") && !key.startsWith("@") && !matcher.group(1).contains("search?tag="))
-                targetedURL.put(key, matcher.group(1));
+            if( !key.startsWith("#") && !key.startsWith("@") && !matcher.group(1).contains("search?tag=")) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    targetedURL.put(key, Html.fromHtml(matcher.group(1), Html.FROM_HTML_MODE_LEGACY).toString());
+                }
+                else
+                    targetedURL.put(key, Html.fromHtml(matcher.group(1)).toString());
+            }
         }
         String currentInstance = Helper.getLiveInstance(context);
         //Get url to account that are unknown
@@ -722,6 +727,7 @@ public class Status implements Parcelable{
             int matchStart = matcherALink.start();
             int matchEnd = matcherALink.end();
             final String url = spannableString.toString().substring(matcherALink.start(1), matcherALink.end(1));
+
             if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ClickableSpan() {
                             @Override
