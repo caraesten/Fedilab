@@ -159,7 +159,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         about_support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://liberapay.com/tom79/donate"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://liberapay.com/tom79"));
                 startActivity(browserIntent);
             }
         });
