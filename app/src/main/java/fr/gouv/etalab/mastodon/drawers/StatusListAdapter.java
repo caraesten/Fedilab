@@ -617,35 +617,43 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
             //Click on a conversation
-            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && (getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS)) {
+            if(  (getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS)) {
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        if (status.getReblog() == null)
-                            b.putString("statusId", status.getId());
-                        else
-                            b.putString("statusId", status.getReblog().getId());
-                        intent.putExtras(b);
-                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                            ((Activity) context).finish();
-                        context.startActivity(intent);
+                        if(type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                            Intent intent = new Intent(context, ShowConversationActivity.class);
+                            Bundle b = new Bundle();
+                            if (status.getReblog() == null)
+                                b.putString("statusId", status.getId());
+                            else
+                                b.putString("statusId", status.getReblog().getId());
+                            intent.putExtras(b);
+                            if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                                ((Activity) context).finish();
+                            context.startActivity(intent);
+                        }else {
+                            CrossActions.doCrossConversation(context,status);
+                        }
                     }
                 });
                 holder.main_container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        if (status.getReblog() == null)
-                            b.putString("statusId", status.getId());
-                        else
-                            b.putString("statusId", status.getReblog().getId());
-                        intent.putExtras(b);
-                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                            ((Activity) context).finish();
-                        context.startActivity(intent);
+                        if(type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                            Intent intent = new Intent(context, ShowConversationActivity.class);
+                            Bundle b = new Bundle();
+                            if (status.getReblog() == null)
+                                b.putString("statusId", status.getId());
+                            else
+                                b.putString("statusId", status.getReblog().getId());
+                            intent.putExtras(b);
+                            if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                                ((Activity) context).finish();
+                            context.startActivity(intent);
+                        }else {
+                            CrossActions.doCrossConversation(context,status);
+                        }
                     }
                 });
             }
