@@ -82,6 +82,7 @@ import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -96,6 +97,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Filters;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
@@ -112,7 +114,10 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
+
+import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.filters;
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
+import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -390,16 +395,39 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
         else
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
+        String content;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+        else
+            //noinspection deprecation
+            content = Html.fromHtml(status.getContent()).toString();
+        if(MainActivity.filters != null){
+            for(Filters mfilter: filters){
+                ArrayList<String> filterContext = mfilter.getContext();
+                if(
+                    (type == RetrieveFeedsAsyncTask.Type.HOME && filterContext.contains("home")) ||
+                    (type == RetrieveFeedsAsyncTask.Type.LOCAL && filterContext.contains("local")) ||
+                    (type == RetrieveFeedsAsyncTask.Type.PUBLIC && filterContext.contains("public"))
 
+                ) {
+                    if (mfilter.isWhole_word() && content.contains(mfilter.getPhrase())) {
+                        return HIDDEN_STATUS;
+                    } else {
+                        try {
+                            Pattern filterPattern = Pattern.compile("(" + mfilter.getPhrase() + ")", Pattern.CASE_INSENSITIVE);
+                            Matcher matcher = filterPattern.matcher(content);
+                            if (matcher.find())
+                                return HIDDEN_STATUS;
+                        } catch (Exception e) {
+                            return DISPLAYED_STATUS;
+                        }
+                    }
+                }
+            }
+        }
         if( filter != null && filter.length() > 0){
             try {
                 Pattern filterPattern = Pattern.compile("(" + filter + ")", Pattern.CASE_INSENSITIVE);
-                String content;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
-                else
-                    //noinspection deprecation
-                    content = Html.fromHtml(status.getContent()).toString();
                 Matcher matcher = filterPattern.matcher(content);
                 if (matcher.find())
                     return HIDDEN_STATUS;
@@ -499,17 +527,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
 
 
-
-           /* int status_account_profile = holder.status_account_profile.getWidth();
-            int status_account_profile_boost = holder.status_account_profile_boost.getWidth();
-            int status_account_profile_boost_by = holder.status_account_profile_boost_by.getWidth();
-            RelativeLayout.LayoutParams lp_status_account_profile = new RelativeLayout.LayoutParams(status_account_profile*textSizePercent/110, status_account_profile*textSizePercent/110);
-            holder.status_account_profile.setLayoutParams(lp_status_account_profile);
-            RelativeLayout.LayoutParams lp_status_account_profile_boost = new RelativeLayout.LayoutParams(status_account_profile_boost*textSizePercent/110, status_account_profile*textSizePercent/110);
-            holder.status_account_profile_boost.setLayoutParams(lp_status_account_profile_boost);
-            RelativeLayout.LayoutParams lp_status_account_profile_boost_by = new RelativeLayout.LayoutParams(status_account_profile_boost_by*textSizePercent/110, status_account_profile*textSizePercent/110);
-            holder.status_account_profile_boost_by.setLayoutParams(lp_status_account_profile_boost_by);
-*/
             if( getItemViewType(position) == FOCUSED_STATUS ) {
                 holder.status_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16*textSizePercent/100);
                 holder.status_account_displayname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16 * textSizePercent / 100);
@@ -617,35 +634,43 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
             //Click on a conversation
-            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && (getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS)) {
+            if(  (getItemViewType(position) == DISPLAYED_STATUS || getItemViewType(position) == COMPACT_STATUS)) {
                 holder.status_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        if (status.getReblog() == null)
-                            b.putString("statusId", status.getId());
-                        else
-                            b.putString("statusId", status.getReblog().getId());
-                        intent.putExtras(b);
-                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                            ((Activity) context).finish();
-                        context.startActivity(intent);
+                        if(type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                            Intent intent = new Intent(context, ShowConversationActivity.class);
+                            Bundle b = new Bundle();
+                            if (status.getReblog() == null)
+                                b.putString("statusId", status.getId());
+                            else
+                                b.putString("statusId", status.getReblog().getId());
+                            intent.putExtras(b);
+                            if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                                ((Activity) context).finish();
+                            context.startActivity(intent);
+                        }else {
+                            CrossActions.doCrossConversation(context,status);
+                        }
                     }
                 });
                 holder.main_container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, ShowConversationActivity.class);
-                        Bundle b = new Bundle();
-                        if (status.getReblog() == null)
-                            b.putString("statusId", status.getId());
-                        else
-                            b.putString("statusId", status.getReblog().getId());
-                        intent.putExtras(b);
-                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                            ((Activity) context).finish();
-                        context.startActivity(intent);
+                        if(type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                            Intent intent = new Intent(context, ShowConversationActivity.class);
+                            Bundle b = new Bundle();
+                            if (status.getReblog() == null)
+                                b.putString("statusId", status.getId());
+                            else
+                                b.putString("statusId", status.getReblog().getId());
+                            intent.putExtras(b);
+                            if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                                ((Activity) context).finish();
+                            context.startActivity(intent);
+                        }else {
+                            CrossActions.doCrossConversation(context,status);
+                        }
                     }
                 });
             }

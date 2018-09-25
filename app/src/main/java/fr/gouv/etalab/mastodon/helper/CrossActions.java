@@ -236,6 +236,43 @@ public class CrossActions {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
     }
 
+    public static void doCrossConversation(final Context context, Status remoteStatus){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(context, db).getAccountByID(userId);
+
+        new AsyncTask<Void, Void, Void>() {
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
+            Results response;
+
+            @Override
+            protected void onPreExecute() {
+                Toast.makeText(contextReference.get(), R.string.retrieve_remote_conversation, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                response = api.search(remoteStatus.getUrl());
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void result) {
+                if( response == null){
+                    return;
+                }
+                List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = response.getStatuses();
+                if( statuses != null && statuses.size() > 0) {
+                    Intent intent = new Intent(context, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("statusId", statuses.get(0).getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+    }
 
 
 

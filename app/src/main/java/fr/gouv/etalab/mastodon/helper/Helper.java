@@ -442,7 +442,6 @@ public class Helper {
      *  Check if the user is connected to Internet
      * @return boolean
      */
-    @SuppressWarnings("unused")
     public static boolean isConnectedToInternet(Context context, String instance) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if( cm == null)
@@ -888,7 +887,7 @@ public class Helper {
                 String soundUri = sharedpreferences.getString(Helper.SET_NOTIF_SOUND, ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() +"/"+ R.raw.boop);
                 AudioAttributes audioAttributes = new AudioAttributes.Builder()
                         .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                         .build();
                 channel.setSound(Uri.parse(soundUri), audioAttributes);
             }
