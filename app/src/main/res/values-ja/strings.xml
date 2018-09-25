@@ -552,6 +552,7 @@
   <string name="select_sound">音の選択</string>
   <string name="set_enable_time_slot">タイムスロットを有効化</string>
   <string name="how_to_videos">How To Videos</string>
+  <string name="retrieve_remote_conversation">Fetching remote thread!</string>
   <string-array name="filter_expire">
     <item>無し</item>
     <item>30 分</item>
