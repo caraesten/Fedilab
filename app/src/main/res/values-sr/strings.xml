@@ -566,6 +566,7 @@
   <string name="select_sound">Изаберите тон</string>
   <string name="set_enable_time_slot">Омогући термин</string>
   <string name="how_to_videos">Видео упутства</string>
+  <string name="retrieve_remote_conversation">Fetching remote thread!</string>
   <string-array name="filter_expire">
     <item>Никадa</item>
     <item>30 минута</item>

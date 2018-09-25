@@ -563,6 +563,7 @@
   <string name="select_sound">Select Tone</string>
   <string name="set_enable_time_slot">Enable time slot</string>
   <string name="how_to_videos">How To Videos</string>
+  <string name="retrieve_remote_conversation">Fetching remote thread!</string>
   <string-array name="filter_expire">
     <item>Nunca</item>
     <item>30 minutos</item>

@@ -562,6 +562,7 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="select_sound">Hautatu doinua</string>
   <string name="set_enable_time_slot">Gaitu denbora-tartea</string>
   <string name="how_to_videos">Laguntza bideoak</string>
+  <string name="retrieve_remote_conversation">Fetching remote thread!</string>
   <string-array name="filter_expire">
     <item>Inoiz ez</item>
     <item>30 minutu</item>

@@ -555,6 +555,7 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
   <string name="select_sound">Select Tone</string>
   <string name="set_enable_time_slot">Enable time slot</string>
   <string name="how_to_videos">How To Videos</string>
+  <string name="retrieve_remote_conversation">Fetching remote thread!</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>

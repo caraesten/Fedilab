@@ -571,6 +571,7 @@
   <string name="select_sound">اختيار نغمة</string>
   <string name="set_enable_time_slot">تفعيل الفترة الزمنية</string>
   <string name="how_to_videos">الفيديوهات التوضيحية</string>
+  <string name="retrieve_remote_conversation">Fetching remote thread!</string>
   <string-array name="filter_expire">
     <item>أبدًا</item>
     <item>30 دقيقة</item>
