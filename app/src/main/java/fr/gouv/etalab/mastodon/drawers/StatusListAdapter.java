@@ -43,6 +43,7 @@ import android.text.Spannable;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -1193,7 +1194,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
                         popup.getMenu().findItem(R.id.action_remove).setVisible(false);
                         //Same instance
-                        if(status.getAccount().getAcct().split("#").length <2 )
+                        if(status.getAccount().getAcct().split("@").length <2 )
                             popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
                         stringArrayConf =  context.getResources().getStringArray(R.array.more_action_confirm);
                         if( type != RetrieveFeedsAsyncTask.Type.HOME){

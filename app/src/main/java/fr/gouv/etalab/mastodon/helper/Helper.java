@@ -727,6 +727,8 @@ public class Helper {
                 message = context.getString(R.string.toast_show_boost);
             }else if(statusAction == API.StatusAction.HIDE_BOOST){
                 message = context.getString(R.string.toast_hide_boost);
+            }else if(statusAction == API.StatusAction.BLOCK_DOMAIN){
+                message = context.getString(R.string.toast_block_domain);
             }
 
         }else {

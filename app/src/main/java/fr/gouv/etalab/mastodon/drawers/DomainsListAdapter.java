@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -26,12 +27,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.DeleteDomainsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveDomainsInterface;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -65,7 +71,13 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         final DomainsListAdapter.ViewHolder holder = (DomainsListAdapter.ViewHolder) viewHolder;
         final String domain = domains.get(position);
-
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_DARK){
+            changeDrawableColor(context, holder.domain_delete, R.color.dark_text);
+        }else{
+            changeDrawableColor(context, holder.domain_delete, R.color.black);
+        }
         holder.domain_name.setText(domain);
         holder.domain_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +129,13 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
 
     @Override
     public void onRetrieveDomainsDeleted(int response) {
-
+        String message;
+        if( response == 200){
+            message = context.getString(R.string.toast_unblock_domain);
+        }else{
+            message = context.getString(R.string.toast_error);
+        }
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder{

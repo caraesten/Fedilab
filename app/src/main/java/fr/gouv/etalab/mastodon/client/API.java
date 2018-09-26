@@ -1029,7 +1029,9 @@ public class API {
                 action = String.format("/accounts/%s/block", targetedId);
                 break;
             case BLOCK_DOMAIN:
-                action = String.format("/domain_blocks/%s", targetedId);
+                action = "/domain_blocks";
+                params = new HashMap<>();
+                params.put("domain", targetedId);
                 break;
             case UNBLOCK:
                 action = String.format("/accounts/%s/unblock", targetedId);
