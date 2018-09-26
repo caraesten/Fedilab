@@ -123,6 +123,7 @@
     <item>Ућуткај овај налог?</item>
     <item>Блокирај овај налог?</item>
     <item>Пријави овaj тут?</item>
+    <item>Block this domain?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Уклони овај тут?</item>
@@ -567,6 +568,12 @@
   <string name="set_enable_time_slot">Омогући термин</string>
   <string name="how_to_videos">Видео упутства</string>
   <string name="retrieve_remote_conversation">Fetching remote thread!</string>
+  <string name="no_blocked_domain">No blocked domains!</string>
+  <string name="unblock_domain_confirm">Unblock domain</string>
+  <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
+  <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+  <string name="blocked_domains">Blocked domains</string>
+  <string name="block_domain">Block domain</string>
   <string-array name="filter_expire">
     <item>Никадa</item>
     <item>30 минута</item>
