@@ -265,7 +265,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
         if( !displayFollowInstance)
-            federatedTimelines.setVisibility(View.GONE);
+            federatedTimelines.hide();
         federatedTimelines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -427,9 +427,9 @@ public abstract class BaseMainActivity extends BaseActivity
                 viewPager.setVisibility(View.VISIBLE);
                 Helper.switchLayout(BaseMainActivity.this);
                 if( tab.getPosition() != 1 )
-                    toot.setVisibility(View.VISIBLE);
+                    toot.show();
                 else
-                    toot.setVisibility(View.GONE);
+                    toot.hide();
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 if( tab.getCustomView() != null) {
@@ -462,9 +462,9 @@ public abstract class BaseMainActivity extends BaseActivity
                     drawer.closeDrawer(GravityCompat.START);
                 }
                 if( tab.getPosition() != 1 )
-                    toot.setVisibility(View.VISIBLE);
+                    toot.show();
                 else
-                    toot.setVisibility(View.GONE);
+                    toot.hide();
                 if( viewPager.getAdapter() != null) {
                     Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
                     switch (tab.getPosition()) {
@@ -1318,14 +1318,14 @@ public abstract class BaseMainActivity extends BaseActivity
                 viewPager.setVisibility(View.VISIBLE);
                 tabLayout.setVisibility(View.VISIBLE);
                 toolbarTitle.setVisibility(View.GONE);
-                delete_all.setVisibility(View.GONE);
-                add_new.setVisibility(View.GONE);
+                delete_all.hide();
+                add_new.hide();
                 final NavigationView navigationView = findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
-                toot.setVisibility(View.VISIBLE);
+                toot.show();
                 switch (viewPager.getCurrentItem()){
                     case 1:
-                        toot.setVisibility(View.GONE);
+                        toot.hide();
                         break;
                 }
             }
@@ -1455,24 +1455,24 @@ public abstract class BaseMainActivity extends BaseActivity
         toolbarTitle.setVisibility(View.VISIBLE);
         appBar.setExpanded(true);
         if (id != R.id.nav_drafts && id != R.id.nav_bookmarks ) {
-            delete_all.setVisibility(View.GONE);
+            delete_all.hide();
         }else{
-            delete_all.setVisibility(View.VISIBLE);
+            delete_all.show();
         }
         if( id != R.id.nav_list && id != R.id.nav_filters){
-            add_new.setVisibility(View.GONE);
+            add_new.hide();
         }else{
-            add_new.setVisibility(View.VISIBLE);
+            add_new.show();
         }
         if (id == R.id.nav_settings) {
-            toot.setVisibility(View.GONE);
+            toot.hide();
             TabLayoutSettingsFragment tabLayoutSettingsFragment= new TabLayoutSettingsFragment();
             fragmentTag = "TABLAYOUT_SETTINGS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, tabLayoutSettingsFragment, fragmentTag).commit();
 
         }else if (id == R.id.nav_favorites) {
-            toot.setVisibility(View.GONE);
+            toot.hide();
             statusFragment = new DisplayStatusFragment();
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.FAVOURITES);
             statusFragment.setArguments(bundle);
@@ -1480,7 +1480,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
         } else if (id == R.id.nav_blocked) {
-            toot.setVisibility(View.GONE);
+            toot.hide();
             accountsFragment = new DisplayAccountsFragment();
             bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.BLOCKED);
             accountsFragment.setArguments(bundle);
@@ -1488,7 +1488,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, accountsFragment, fragmentTag).commit();
         }else if (id == R.id.nav_muted) {
-            toot.setVisibility(View.GONE);
+            toot.hide();
             accountsFragment = new DisplayAccountsFragment();
             bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.MUTED);
             accountsFragment.setArguments(bundle);
@@ -1496,7 +1496,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, accountsFragment, fragmentTag).commit();
         }else if (id == R.id.nav_scheduled) {
-            toot.setVisibility(View.VISIBLE);
+            toot.show();
             DisplayScheduledTootsFragment displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
             fragmentTag = "SCHEDULED";
             fragmentManager.beginTransaction()
@@ -1506,33 +1506,33 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "DRAFTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayDraftsFragment, fragmentTag).commit();
-            toot.setVisibility(View.GONE);
+            toot.hide();
         }else if (id == R.id.nav_bookmarks) {
             DisplayBookmarksFragment displayBookmarksFragment = new DisplayBookmarksFragment();
             fragmentTag = "BOOKMARKS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayBookmarksFragment, fragmentTag).commit();
-            toot.setVisibility(View.GONE);
+            toot.hide();
         }else if( id == R.id.nav_follow_request){
-            toot.setVisibility(View.GONE);
+            toot.hide();
             DisplayFollowRequestSentFragment followRequestSentFragment = new DisplayFollowRequestSentFragment();
             fragmentTag = "FOLLOW_REQUEST_SENT";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, followRequestSentFragment, fragmentTag).commit();
         }else if(id == R.id.nav_list){
-            toot.setVisibility(View.GONE);
+            toot.hide();
             DisplayListsFragment displayListsFragment = new DisplayListsFragment();
             fragmentTag = "LISTS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayListsFragment, fragmentTag).commit();
         }else if(id == R.id.nav_filters){
-            toot.setVisibility(View.GONE);
+            toot.hide();
             DisplayFiltersFragment displayFiltersFragment = new DisplayFiltersFragment();
             fragmentTag = "FILTERS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayFiltersFragment, fragmentTag).commit();
         }else if(id == R.id.nav_who_to_follow){
-            toot.setVisibility(View.GONE);
+            toot.hide();
             WhoToFollowFragment whoToFollowFragment = new WhoToFollowFragment();
             fragmentTag = "WHO_TO_FOLLOW";
             fragmentManager.beginTransaction()
@@ -1927,9 +1927,9 @@ public abstract class BaseMainActivity extends BaseActivity
         FloatingActionButton federatedTimelines = findViewById(R.id.federated_timeline);
         boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
         if( !displayFollowInstance)
-            federatedTimelines.setVisibility(View.GONE);
+            federatedTimelines.hide();
         else
-            federatedTimelines.setVisibility(View.VISIBLE);
+            federatedTimelines.show();
     }
     public DisplayStatusFragment getHomeFragment(){
         return homeFragment;

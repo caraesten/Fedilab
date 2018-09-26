@@ -181,8 +181,8 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             @Override
             public void run() {
                 // DO DELAYED STUFF
-                media_close.setVisibility(View.GONE);
-                media_save.setVisibility(View.GONE);
+                media_close.hide();
+                media_save.hide();
                 media_description.setVisibility(View.GONE);
                 scheduleHidden = false;
             }
@@ -243,8 +243,8 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
 
         if( event.getAction() == MotionEvent.ACTION_DOWN && !scheduleHidden){
             scheduleHidden = true;
-            media_close.setVisibility(View.VISIBLE);
-            media_save.setVisibility(View.VISIBLE);
+            media_close.show();
+            media_save.show();
             if( attachment != null && attachment.getDescription() != null && !attachment.getDescription().equals("null")){
                 media_description.setText(attachment.getDescription());
                 media_description.setVisibility(View.VISIBLE);
@@ -256,8 +256,8 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    media_close.setVisibility(View.GONE);
-                    media_save.setVisibility(View.GONE);
+                    media_close.hide();
+                    media_save.hide();
                     media_description.setVisibility(View.GONE);
                     scheduleHidden = false;
                 }

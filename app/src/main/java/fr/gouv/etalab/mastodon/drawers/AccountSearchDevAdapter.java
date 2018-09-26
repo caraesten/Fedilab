@@ -128,9 +128,9 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
                 .load(account.getAvatar())
                 .into(holder.account_pp);
         if( account.isFollowing()){
-            holder.account_follow.setVisibility(View.GONE);
+            holder.account_follow.hide();
         }else{
-            holder.account_follow.setVisibility(View.VISIBLE);
+            holder.account_follow.show();
         }
 
         holder.account_follow.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +168,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
                 break;
             }
         }
-        holder.account_follow.setVisibility(View.GONE);
+        holder.account_follow.hide();
         Toast.makeText(context, R.string.toast_follow, Toast.LENGTH_LONG).show();
     }
 

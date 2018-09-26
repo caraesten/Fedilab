@@ -139,8 +139,8 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/federated_timeline"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:fabSize="mini"
             android:layout_gravity="bottom|start"
             android:layout_margin="@dimen/fab_margin_floating"

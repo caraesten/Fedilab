@@ -164,22 +164,28 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
-            <android.support.design.widget.FloatingActionButton
-                android:visibility="gone"
+            <ImageButton
                 android:id="@+id/status_translate"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
-                app:fabSize="mini"
+                android:gravity="center"
+                android:tint="@android:color/white"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_translate"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/ic_translate" />
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/status_bookmark"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
-                app:fabSize="mini"
-                android:src="@drawable/ic_bookmark_border" />
+                />
+            <ImageButton
+                android:id="@+id/status_bookmark"
+                android:gravity="center"
+                android:tint="@android:color/white"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_bookmark_border"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/status_content_translated_container"

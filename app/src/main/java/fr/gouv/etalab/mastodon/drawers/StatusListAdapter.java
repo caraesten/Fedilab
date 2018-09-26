@@ -282,7 +282,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_reply;
         ImageView status_pin;
         ImageView status_privacy;
-        FloatingActionButton status_translate, status_bookmark;
+        ImageButton status_translate, status_bookmark;
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout main_container;
