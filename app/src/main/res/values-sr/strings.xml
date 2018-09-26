@@ -574,6 +574,8 @@
   <string name="block_domain_confirm_message">Are you sure to block %s?</string>
   <string name="blocked_domains">Blocked domains</string>
   <string name="block_domain">Block domain</string>
+  <string name="toast_block_domain">The domain is blocked</string>
+  <string name="toast_unblock_domain">The domain is no longer blocked!</string>
   <string-array name="filter_expire">
     <item>Никадa</item>
     <item>30 минута</item>
