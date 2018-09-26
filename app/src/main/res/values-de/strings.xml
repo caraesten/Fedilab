@@ -123,6 +123,7 @@
     <item>Nutzer stummschalten?</item>
     <item>Diesen Nutzer blockieren?</item>
     <item>Diesen Toot melden?</item>
+    <item>Block this domain?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Entferne diesen Toot?</item>
@@ -553,6 +554,12 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="set_enable_time_slot">Zeitfenster aktivieren</string>
   <string name="how_to_videos">Video Anleitungen</string>
   <string name="retrieve_remote_conversation">Fetching remote thread!</string>
+  <string name="no_blocked_domain">No blocked domains!</string>
+  <string name="unblock_domain_confirm">Unblock domain</string>
+  <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
+  <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+  <string name="blocked_domains">Blocked domains</string>
+  <string name="block_domain">Block domain</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>
