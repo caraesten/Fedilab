@@ -33,6 +33,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
@@ -103,8 +104,8 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         POP
     }
 
-    private FloatingActionButton media_save, media_close;
-    private boolean scheduleHidden;
+    private ImageButton media_save, media_close;
+    private boolean scheduleHidden, scheduleHiddenDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,18 +176,26 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             }
         });
         Handler h = new Handler();
-        scheduleHidden = true;
+        scheduleHidden = scheduleHiddenDescription = true;
         h.postDelayed(new Runnable() {
 
             @Override
             public void run() {
                 // DO DELAYED STUFF
-                media_close.hide();
-                media_save.hide();
-                media_description.setVisibility(View.GONE);
+                media_close.setVisibility(View.GONE);
+                media_save.setVisibility(View.GONE);
                 scheduleHidden = false;
             }
         }, 2000);
+        h.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                // DO DELAYED STUFF
+                media_description.setVisibility(View.GONE);
+                scheduleHiddenDescription = false;
+            }
+        }, 6000);
         canSwipe = true;
         loader = findViewById(R.id.loader);
         imageView = findViewById(R.id.media_picture);
@@ -243,8 +252,20 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
 
         if( event.getAction() == MotionEvent.ACTION_DOWN && !scheduleHidden){
             scheduleHidden = true;
-            media_close.show();
-            media_save.show();
+            media_close.setVisibility(View.VISIBLE);
+            media_save.setVisibility(View.VISIBLE);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    media_close.setVisibility(View.GONE);
+                    media_save.setVisibility(View.GONE);
+                    scheduleHidden = false;
+                }
+            }, 2000);
+        }
+        if( event.getAction() == MotionEvent.ACTION_DOWN && !scheduleHiddenDescription){
+            scheduleHiddenDescription = true;
             if( attachment != null && attachment.getDescription() != null && !attachment.getDescription().equals("null")){
                 media_description.setText(attachment.getDescription());
                 media_description.setVisibility(View.VISIBLE);
@@ -256,12 +277,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    media_close.hide();
-                    media_save.hide();
                     media_description.setVisibility(View.GONE);
-                    scheduleHidden = false;
+                    scheduleHiddenDescription = false;
                 }
-            }, 2000);
+            }, 6000);
         }
         if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
             return super.dispatchTouchEvent(event);

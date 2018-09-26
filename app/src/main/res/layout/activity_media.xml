@@ -116,32 +116,31 @@
 
 
 
-        <android.support.design.widget.FloatingActionButton
+        <ImageButton
             android:id="@+id/media_close"
-            app:fabSize="mini"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             app:layout_anchorGravity="top|left"
             android:layout_marginStart="10dp"
+            android:background="@color/transparent"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:backgroundTint="?colorAccent"
             android:src="@drawable/ic_close"
             />
 
-        <android.support.design.widget.FloatingActionButton
+        <ImageButton
             android:id="@+id/media_save"
-            app:fabSize="mini"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
+            app:layout_anchorGravity="top|left"
+            android:layout_marginStart="10dp"
+            android:background="@color/transparent"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            app:backgroundTint="?colorAccent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_save_white"
