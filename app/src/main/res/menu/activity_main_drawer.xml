@@ -67,6 +67,10 @@
                         android:id="@+id/nav_muted"
                         android:icon="@drawable/ic_volume_mute"
                         android:title="@string/muted_menu" />
+                    <item
+                        android:id="@+id/nav_blocked_domains"
+                        android:icon="@drawable/ic_block"
+                        android:title="@string/blocked_domains" />
                 </group>
             </menu>
         </item>

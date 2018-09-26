@@ -31,6 +31,7 @@ public class APIResponse {
     private List<Notification> notifications = null;
     private List<Relationship> relationships = null;
     private List<Filters> filters = null;
+    private List<String> domains = null;
     private List<fr.gouv.etalab.mastodon.client.Entities.List> lists = null;
     private List<Emojis> emojis = null;
     private fr.gouv.etalab.mastodon.client.Entities.Error error = null;
@@ -131,5 +132,13 @@ public class APIResponse {
 
     public void setFilters(List<Filters> filters) {
         this.filters = filters;
+    }
+
+    public List<String> getDomains() {
+        return domains;
+    }
+
+    public void setDomains(List<String> domains) {
+        this.domains = domains;
     }
 }

@@ -97,6 +97,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFiltersFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayMutedInstanceFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplaySearchFragment;
@@ -1487,6 +1488,12 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "BLOCKS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, accountsFragment, fragmentTag).commit();
+        }else if (id == R.id.nav_blocked_domains) {
+            toot.hide();
+            DisplayMutedInstanceFragment displayMutedInstanceFragment = new DisplayMutedInstanceFragment();
+            fragmentTag = "BLOCKED_DOMAINS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayMutedInstanceFragment, fragmentTag).commit();
         }else if (id == R.id.nav_muted) {
             toot.hide();
             accountsFragment = new DisplayAccountsFragment();
