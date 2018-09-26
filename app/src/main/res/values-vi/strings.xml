@@ -123,6 +123,7 @@
     <item>Ẩn tài khoản này?</item>
     <item>Chặn tài khoản này?</item>
     <item>Báo cáo này thổi còi?</item>
+    <item>Block this domain?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Hủy bỏ thổi còi này?</item>
@@ -559,6 +560,12 @@ Cảm ơn bạn:    </string>
   <string name="set_enable_time_slot">Enable time slot</string>
   <string name="how_to_videos">How To Videos</string>
   <string name="retrieve_remote_conversation">Fetching remote thread!</string>
+  <string name="no_blocked_domain">No blocked domains!</string>
+  <string name="unblock_domain_confirm">Unblock domain</string>
+  <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
+  <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+  <string name="blocked_domains">Blocked domains</string>
+  <string name="block_domain">Block domain</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
