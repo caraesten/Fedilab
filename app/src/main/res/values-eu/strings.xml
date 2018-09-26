@@ -123,6 +123,7 @@
     <item>Mututu kontu hau?</item>
     <item>Blokeatu kontu hau?</item>
     <item>Salatu toot hau?</item>
+    <item>Block this domain?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Kendu toot hau?</item>
@@ -563,6 +564,12 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="set_enable_time_slot">Gaitu denbora-tartea</string>
   <string name="how_to_videos">Laguntza bideoak</string>
   <string name="retrieve_remote_conversation">Fetching remote thread!</string>
+  <string name="no_blocked_domain">No blocked domains!</string>
+  <string name="unblock_domain_confirm">Unblock domain</string>
+  <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
+  <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+  <string name="blocked_domains">Blocked domains</string>
+  <string name="block_domain">Block domain</string>
   <string-array name="filter_expire">
     <item>Inoiz ez</item>
     <item>30 minutu</item>
