@@ -380,88 +380,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         status = statuses.get(position);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
-        int HIDDEN_STATUS = 0;
-        //If account related to status is null, the toot is hidden
-        if( status.getAccount() == null )
-            return HIDDEN_STATUS;
-        String filter;
-        if( type == RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS)
-            return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
-        else if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
+        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
             return FOCUSED_STATUS;
-        else if( type == RetrieveFeedsAsyncTask.Type.HOME)
-            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
-        else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
-            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
         else
-            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
-        String content;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
-        else
-            //noinspection deprecation
-            content = Html.fromHtml(status.getContent()).toString();
-        if(MainActivity.filters != null){
-            for(Filters mfilter: filters){
-                ArrayList<String> filterContext = mfilter.getContext();
-                if(
-                    (type == RetrieveFeedsAsyncTask.Type.HOME && filterContext.contains("home")) ||
-                    (type == RetrieveFeedsAsyncTask.Type.LOCAL && filterContext.contains("local")) ||
-                    (type == RetrieveFeedsAsyncTask.Type.PUBLIC && filterContext.contains("public"))
-
-                ) {
-                    if (mfilter.isWhole_word() && content.contains(mfilter.getPhrase())) {
-                        return HIDDEN_STATUS;
-                    } else {
-                        try {
-                            Pattern filterPattern = Pattern.compile("(" + mfilter.getPhrase() + ")", Pattern.CASE_INSENSITIVE);
-                            Matcher matcher = filterPattern.matcher(content);
-                            if (matcher.find())
-                                return HIDDEN_STATUS;
-                        } catch (Exception e) {
-                            return DISPLAYED_STATUS;
-                        }
-                    }
-                }
-            }
-        }
-        if( filter != null && filter.length() > 0){
-            try {
-                Pattern filterPattern = Pattern.compile("(" + filter + ")", Pattern.CASE_INSENSITIVE);
-                Matcher matcher = filterPattern.matcher(content);
-                if (matcher.find())
-                    return HIDDEN_STATUS;
-            }catch (Exception e){
-                return DISPLAYED_STATUS;
-            }
-        }
-        if( type == RetrieveFeedsAsyncTask.Type.HOME) {
-            if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
-                return HIDDEN_STATUS;
-            else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
-                return HIDDEN_STATUS;
-            }else {
-                if( timedMute != null && timedMute.size() > 0) {
-
-                    if (timedMute.contains(status.getAccount().getId()))
-                        return HIDDEN_STATUS;
-                    else
-                        return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
-                }else {
-                    return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
-                }
-            }
-        }else {
-            if( context instanceof ShowAccountActivity){
-                if (status.getReblog() != null && !((ShowAccountActivity)context).showBoosts())
-                    return HIDDEN_STATUS;
-                else if( status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !((ShowAccountActivity)context).showReplies())
-                    return HIDDEN_STATUS;
-                else
-                    return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
-            }else
             return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
-        }
     }
 
     @NonNull

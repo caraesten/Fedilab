@@ -82,6 +82,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private SharedPreferences sharedpreferences;
     private boolean isSwipped;
     private String remoteInstance;
+    private List<String> mutedAccount;
 
     public DisplayStatusFragment(){
     }
@@ -123,15 +124,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
 
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(context, db).getAccountByID(userId);
+        mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
+
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        if( type == RetrieveFeedsAsyncTask.Type.HOME) {
-            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            Account account = new AccountDAO(context, db).getAccountByID(userId);
-            List<String> mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
-            statusListAdapter = new StatusListAdapter(context,mutedAccount, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
-        }else{
-            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
-        }
+        statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+
 
 
         lv_status.setAdapter(statusListAdapter);
@@ -296,7 +295,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
         int previousPosition = this.statuses.size();
-        List<Status> statuses = apiResponse.getStatuses();
+        List<Status> statuses = Helper.filterToots(context, apiResponse.getStatuses(), mutedAccount, type);
+
         if( type == RetrieveFeedsAsyncTask.Type.HOME) {
             if (max_id == null || (apiResponse.getMax_id() != null && Long.parseLong(max_id) > Long.parseLong(apiResponse.getMax_id())))
                 max_id = apiResponse.getMax_id();
@@ -389,6 +389,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         if( status.getId() != null && statuses != null && statuses.size() > 0 && statuses.get(0)!= null
                 && Long.parseLong(status.getId()) > Long.parseLong(statuses.get(0).getId())) {
+            List<Status> tempToot = new ArrayList();
+            tempToot.add(status);
+            List<Status> tempTootResult = Helper.filterToots(context, tempToot, mutedAccount, type);
+            if( tempToot.size() > 0)
+                status = tempTootResult.get(0);
             if (type == RetrieveFeedsAsyncTask.Type.HOME) {
 
                 //Makes sure the status is not already displayed
@@ -570,8 +575,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     @Override
-    public void onRetrieveMissingFeeds(List<Status> statuses) {
+    public void onRetrieveMissingFeeds(List<Status> statusesMissing) {
         swipeRefreshLayout.setRefreshing(false);
+        List<Status> statuses = Helper.filterToots(context, statusesMissing, mutedAccount, type);
         if( isSwipped && this.statuses != null && this.statuses.size() > 0) {
             for (Status status : this.statuses) {
                 status.setNew(false);
@@ -582,14 +588,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if( statuses != null && statuses.size() > 0) {
             int inserted = 0;
             for (int i = statuses.size() - 1; i >= 0; i--) {
-                if (this.statuses.size() == 0 ||
-                        Long.parseLong(statuses.get(i).getId()) > Long.parseLong(this.statuses.get(0).getId())) {
-                    if (type == RetrieveFeedsAsyncTask.Type.HOME)
-                        statuses.get(i).setNew(true);
-                    inserted++;
-                    this.statuses.add(0, statuses.get(i));
-                    if (type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
-                        MainActivity.countNewStatus++;
+                if( this.statuses != null) {
+                    if (this.statuses.size() == 0 ||
+                            Long.parseLong(statuses.get(i).getId()) > Long.parseLong(this.statuses.get(0).getId())) {
+                        if (type == RetrieveFeedsAsyncTask.Type.HOME)
+                            statuses.get(i).setNew(true);
+                        inserted++;
+                        this.statuses.add(0, statuses.get(i));
+                        if (type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
+                            MainActivity.countNewStatus++;
+                    }
                 }
             }
             statusListAdapter.notifyItemRangeInserted(0, inserted);
