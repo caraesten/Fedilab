@@ -123,6 +123,7 @@
     <item>هل تود كتم هذا الحساب ؟</item>
     <item>هل تود حجب هذا الحساب ؟</item>
     <item>هل تود الإبلاغ عن هذا التبويق ؟</item>
+    <item>Block this domain?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>هل تود حذف هذا التبويق ؟</item>
@@ -572,6 +573,12 @@
   <string name="set_enable_time_slot">تفعيل الفترة الزمنية</string>
   <string name="how_to_videos">الفيديوهات التوضيحية</string>
   <string name="retrieve_remote_conversation">Fetching remote thread!</string>
+  <string name="no_blocked_domain">No blocked domains!</string>
+  <string name="unblock_domain_confirm">Unblock domain</string>
+  <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
+  <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+  <string name="blocked_domains">Blocked domains</string>
+  <string name="block_domain">Block domain</string>
   <string-array name="filter_expire">
     <item>أبدًا</item>
     <item>30 دقيقة</item>
