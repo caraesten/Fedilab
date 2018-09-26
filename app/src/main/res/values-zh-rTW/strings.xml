@@ -123,6 +123,7 @@
     <item>將此帳號設為靜音？</item>
     <item>封鎖此帳號？</item>
     <item>回報此嘟文？</item>
+    <item>Block this domain?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>移除此嘟文？</item>
@@ -561,6 +562,12 @@
   <string name="set_enable_time_slot">啟用時間帶</string>
   <string name="how_to_videos">操作方法影片</string>
   <string name="retrieve_remote_conversation">正在擷取遠端嘟文串！</string>
+  <string name="no_blocked_domain">No blocked domains!</string>
+  <string name="unblock_domain_confirm">Unblock domain</string>
+  <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
+  <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+  <string name="blocked_domains">Blocked domains</string>
+  <string name="block_domain">Block domain</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
