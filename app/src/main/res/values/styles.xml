@@ -348,4 +348,5 @@
     <style name="Shape.Dark" parent="AppThemeDark">
         <item name="android:background">@drawable/shape_border_bottom_settings_dark</item>
     </style>
+
 </resources>

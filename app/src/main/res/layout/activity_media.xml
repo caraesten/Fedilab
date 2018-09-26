@@ -20,7 +20,7 @@
     android:id="@+id/swipeBackLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:directionMode="top"
+    app:directionMode="bottom"
     app:isSwipeFromEdge="true"
     app:maskAlpha="125"
     app:swipeBackFactor="0.5">
