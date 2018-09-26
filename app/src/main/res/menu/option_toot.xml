@@ -30,6 +30,10 @@
         android:title="@string/more_action_3"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_block_domain"
+        android:title="@string/block_domain"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_redraft"
         android:title="@string/more_action_9"
         app:showAsAction="never" />

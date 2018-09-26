@@ -200,6 +200,10 @@ public class DisplayMutedInstanceFragment extends Fragment implements OnRetrieve
         firstLoad = false;
     }
 
+    @Override
+    public void onRetrieveDomainsDeleted(int response) {
+
+    }
 
 
 }

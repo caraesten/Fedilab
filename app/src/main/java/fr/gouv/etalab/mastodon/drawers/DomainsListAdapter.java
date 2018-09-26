@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.asynctasks.DeleteDomainsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveDomainsInterface;
 
@@ -77,6 +79,7 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
                             public void onClick(DialogInterface dialog, int which) {
                                 domains.remove(domain);
                                 domainsListAdapter.notifyItemRemoved(holder.getAdapterPosition());
+                                new DeleteDomainsAsyncTask(context, domain, DomainsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 if( domains.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
                                     textviewNoAction.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
@@ -109,6 +112,11 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
 
     @Override
     public void onRetrieveDomains(APIResponse apiResponse) {
+
+    }
+
+    @Override
+    public void onRetrieveDomainsDeleted(int response) {
 
     }
 

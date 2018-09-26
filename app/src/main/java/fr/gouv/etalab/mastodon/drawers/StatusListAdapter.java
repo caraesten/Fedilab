@@ -1187,10 +1187,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_mute).setVisible(false);
                         popup.getMenu().findItem(R.id.action_report).setVisible(false);
                         popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
                         stringArrayConf =  context.getResources().getStringArray(R.array.more_action_owner_confirm);
                     }else {
                         popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
                         popup.getMenu().findItem(R.id.action_remove).setVisible(false);
+                        //Same instance
+                        if(status.getAccount().getAcct().split("#").length <2 )
+                            popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
                         stringArrayConf =  context.getResources().getStringArray(R.array.more_action_confirm);
                         if( type != RetrieveFeedsAsyncTask.Type.HOME){
                             popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
@@ -1224,6 +1228,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     else
                                         //noinspection deprecation
                                         builderInner.setMessage(Html.fromHtml(status.getContent()));
+                                    break;
+                                case R.id.action_block_domain:
+                                    builderInner = new AlertDialog.Builder(context);
+                                    builderInner.setTitle(stringArrayConf[3]);
+                                    doAction = API.StatusAction.BLOCK_DOMAIN;
+                                    String domain = status.getAccount().getAcct().split("@")[1];
+                                    builderInner.setMessage(context.getString(R.string.block_domain_confirm_message, domain));
                                     break;
                                 case R.id.action_mute:
                                     builderInner = new AlertDialog.Builder(context);
@@ -1507,7 +1518,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                             comment = finalInput.getText().toString();
                                         new PostActionAsyncTask(context, doAction, status.getId(), status, comment, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     }else{
-                                        String targetedId = status.getAccount().getId();
+                                        String targetedId;
+                                        if( item.getItemId() == R.id.action_block_domain){
+                                            targetedId = status.getAccount().getAcct().split("@")[1];
+                                        }else {
+                                            targetedId = status.getAccount().getId();
+                                        }
                                         new PostActionAsyncTask(context, doAction, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     }
                                     dialog.dismiss();

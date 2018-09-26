@@ -129,6 +129,7 @@
         <item>Mute this account?</item>
         <item>Block this account?</item>
         <item>Report this toot?</item>
+        <item>Block this domain?</item>
     </string-array>
 
     <string-array name="more_action_owner_confirm">
@@ -625,7 +626,9 @@
     <string name="no_blocked_domain">No blocked domains!</string>
     <string name="unblock_domain_confirm">Unblock domain</string>
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
+    <string name="block_domain_confirm_message">Are you sure to block %s?</string>
     <string name="blocked_domains">Blocked domains</string>
+    <string name="block_domain">Block domain</string>
 
     <string-array name="filter_expire">
         <item>Never</item>

@@ -23,4 +23,5 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
  */
 public interface OnRetrieveDomainsInterface {
     void onRetrieveDomains(APIResponse apiResponse);
+    void onRetrieveDomainsDeleted(int response);
 }

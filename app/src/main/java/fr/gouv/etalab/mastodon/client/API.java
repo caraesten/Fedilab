@@ -89,7 +89,8 @@ public class API {
         ENDORSE,
         UNENDORSE,
         SHOW_BOOST,
-        HIDE_BOOST
+        HIDE_BOOST,
+        BLOCK_DOMAIN
 
     }
     public enum accountPrivacy {
@@ -811,32 +812,6 @@ public class API {
         return apiResponse;
     }
 
-    /**
-     * Add a blocked domains for the authenticated account *synchronously*
-     * @param domain String domain name
-     */
-    @SuppressWarnings("SameParameterValue")
-    public int addBlockedDomain(String domain){
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("domain",domain);
-        domains = new ArrayList<>();
-        HttpsConnection httpsConnection;
-        try {
-            httpsConnection = new HttpsConnection(context);
-            httpsConnection.post(getAbsoluteUrl("/domain_blocks"), 60, params, prefKeyOauthTokenT);
-            actionCode = httpsConnection.getActionCode();
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-        return actionCode;
-    }
 
     /**
      * Delete a blocked domains for the authenticated account *synchronously*
@@ -1052,6 +1027,9 @@ public class API {
                 break;
             case BLOCK:
                 action = String.format("/accounts/%s/block", targetedId);
+                break;
+            case BLOCK_DOMAIN:
+                action = String.format("/domain_blocks/%s", targetedId);
                 break;
             case UNBLOCK:
                 action = String.format("/accounts/%s/unblock", targetedId);
