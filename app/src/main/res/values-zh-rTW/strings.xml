@@ -560,7 +560,7 @@
   <string name="select_sound">選取鈴聲</string>
   <string name="set_enable_time_slot">啟用時間帶</string>
   <string name="how_to_videos">操作方法影片</string>
-  <string name="retrieve_remote_conversation">正在取得遠端嘟文串！</string>
+  <string name="retrieve_remote_conversation">正在擷取遠端嘟文串！</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
