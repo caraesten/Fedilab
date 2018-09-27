@@ -85,7 +85,9 @@ public class Account implements Parcelable {
     private Account moved_to_account;
     private boolean muting_notifications;
     private int metaDataSize;
+    private int metaDataSizeVerified;
     private HashMap<String, String> fields = new HashMap<>();
+    private HashMap<String, Boolean> fieldsVerified = new HashMap<>();
     private HashMap<String, SpannableString> fieldsSpan = new HashMap<>();
     private List<Emojis> emojis;
     private Account account;
@@ -141,6 +143,13 @@ public class Account implements Parcelable {
         return fieldsSpan;
     }
 
+    public HashMap<String, Boolean> getFieldsVerified() {
+        return fieldsVerified;
+    }
+
+    public void setFieldsVerified(HashMap<String, Boolean> fieldsVerified) {
+        this.fieldsVerified = fieldsVerified;
+    }
 
 
     public enum followAction{
@@ -175,6 +184,12 @@ public class Account implements Parcelable {
             String key = in.readString();
             String value = in.readString();
             fields.put(key,value);
+        }
+        metaDataSizeVerified = in.readInt();
+        for(int i = 0; i < metaDataSizeVerified; i++){
+            String key = in.readString();
+            Boolean value = in.readByte() != 0;
+            fieldsVerified.put(key,value);
         }
     }
 
@@ -379,12 +394,18 @@ public class Account implements Parcelable {
         dest.writeString(instance);
 
         metaDataSize = fields.size();
+        metaDataSizeVerified = fieldsVerified.size();
         dest.writeInt(metaDataSize);
         for (Map.Entry<String, String> entry : fields.entrySet()) {
             dest.writeString(entry.getKey());
             dest.writeString(entry.getValue());
         }
 
+        dest.writeInt(metaDataSizeVerified);
+        for (Map.Entry<String, Boolean> entry : fieldsVerified.entrySet()) {
+            dest.writeString(entry.getKey());
+            dest.writeByte((byte) (entry.getValue() ? 1 : 0));
+        }
     }
 
     public boolean isFollowing() {

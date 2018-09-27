@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -2482,12 +2483,15 @@ public class API {
             try {
                 JSONArray fields = resobj.getJSONArray("fields");
                 HashMap<String, String> fieldsMap = new HashMap<>();
+                HashMap<String, Boolean> fieldsMapVerified = new HashMap<>();
                 if( fields != null){
                     for(int j = 0 ; j < fields.length() ; j++){
                         fieldsMap.put(fields.getJSONObject(j).getString("name"),fields.getJSONObject(j).getString("value"));
+                        fieldsMapVerified.put(fields.getJSONObject(j).getString("name"),(fields.getJSONObject(j).getString("verified_at")!= null && !fields.getJSONObject(j).getString("verified_at").equals("null")));
                     }
                 }
                 account.setFields(fieldsMap);
+                account.setFieldsVerified(fieldsMapVerified);
             }catch (Exception ignored){}
 
             //Retrieves emjis

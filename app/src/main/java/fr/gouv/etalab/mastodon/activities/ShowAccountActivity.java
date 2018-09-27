@@ -22,6 +22,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,8 +40,10 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
@@ -50,6 +53,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -659,6 +663,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         if ( account.getFields() != null && account.getFields().size() > 0){
             HashMap<String, String> fields = account.getFields();
+            HashMap<String, Boolean> fieldsVerified = account.getFieldsVerified();
             Iterator it = fields.entrySet().iterator();
             int i = 1;
             LinearLayout fields_container = findViewById(R.id.fields_container);
@@ -668,34 +673,42 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 Map.Entry pair = (Map.Entry)it.next();
                 String label = (String)pair.getKey();
                 String value = (String)pair.getValue();
+                boolean verified = fieldsVerified.get(label);
+
                 LinearLayout field;
                 TextView labelView;
                 TextView valueView;
+                LinearLayout verifiedView;
                 switch(i){
                     case 1:
                         field = findViewById(R.id.field1);
                         labelView = findViewById(R.id.label1);
                         valueView = findViewById(R.id.value1);
+                        verifiedView = findViewById(R.id.value1BG);
                         break;
                     case 2:
                         field = findViewById(R.id.field2);
                         labelView = findViewById(R.id.label2);
                         valueView = findViewById(R.id.value2);
+                        verifiedView = findViewById(R.id.value2BG);
                         break;
                     case 3:
                         field = findViewById(R.id.field3);
                         labelView = findViewById(R.id.label3);
                         valueView = findViewById(R.id.value3);
+                        verifiedView = findViewById(R.id.value3BG);
                         break;
                     case 4:
                         field = findViewById(R.id.field4);
                         labelView = findViewById(R.id.label4);
                         valueView = findViewById(R.id.value4);
+                        verifiedView = findViewById(R.id.value4BG);
                         break;
                     default:
                         field = findViewById(R.id.field1);
                         labelView = findViewById(R.id.label1);
                         valueView = findViewById(R.id.value1);
+                        verifiedView = findViewById(R.id.value1BG);
                         break;
                 }
                 if( field != null && labelView != null && valueView != null) {
@@ -717,13 +730,24 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
                     }
                     field.setVisibility(View.VISIBLE);
-                    SpannableString spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value, account.getEmojis());
+                    SpannableString spannableValueString;
+                    if( verified ){
+                        value =  "✓ " + value;
+                        verifiedView.setBackgroundResource(R.drawable.verified);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            valueView.setBackground(null);
+                        }
+                        spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value, account.getEmojis());
+                        spannableValueString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.verified_text)), 0, spannableValueString.toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }else {
+                        spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value, account.getEmojis());
+                    }
+
                     valueView.setText(spannableValueString, TextView.BufferType.SPANNABLE);
                     valueView.setMovementMethod(LinkMovementMethod.getInstance());
                     labelView.setText(label);
                 }
                 i++;
-               // it.remove();
             }
         }
 
@@ -937,27 +961,27 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             return;
         account_follow.setEnabled(true);
         if( accountId != null && accountId.equals(userId)){
-            account_follow.setVisibility(View.GONE);
-            header_edit_profile.setVisibility(View.VISIBLE);
+            account_follow.hide();
+            header_edit_profile.show();
             header_edit_profile.bringToFront();
         }else if( relationship.isBlocking()){
             account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = action.UNBLOCK;
-            account_follow.setVisibility(View.VISIBLE);
+            account_follow.show();
         }else if( relationship.isRequested()){
             account_follow_request.setVisibility(View.VISIBLE);
-            account_follow.setVisibility(View.GONE);
+            account_follow.hide();
             doAction = action.NOTHING;
         }else if( relationship.isFollowing()){
             account_follow.setImageResource(R.drawable.ic_user_times);
             doAction = action.UNFOLLOW;
-            account_follow.setVisibility(View.VISIBLE);
+            account_follow.show();
         }else if( !relationship.isFollowing()){
             account_follow.setImageResource(R.drawable.ic_user_plus);
             doAction = action.FOLLOW;
-            account_follow.setVisibility(View.VISIBLE);
+            account_follow.show();
         }else{
-            account_follow.setVisibility(View.GONE);
+            account_follow.hide();
             doAction = action.NOTHING;
         }
     }
