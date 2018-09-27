@@ -123,7 +123,7 @@
     <item>將此帳號設為靜音？</item>
     <item>封鎖此帳號？</item>
     <item>回報此嘟文？</item>
-    <item>Block this domain?</item>
+    <item>是否封鎖該網域？</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>移除此嘟文？</item>
@@ -564,8 +564,8 @@
   <string name="retrieve_remote_conversation">正在擷取遠端嘟文串！</string>
   <string name="no_blocked_domain">No blocked domains!</string>
   <string name="unblock_domain_confirm">Unblock domain</string>
-  <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-  <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+  <string name="unblock_domain_confirm_message">您確定要解除封鎖 %s？</string>
+  <string name="block_domain_confirm_message">您確定要封鎖 %s？</string>
   <string name="blocked_domains">Blocked domains</string>
   <string name="block_domain">Block domain</string>
   <string name="toast_block_domain">The domain is blocked</string>
