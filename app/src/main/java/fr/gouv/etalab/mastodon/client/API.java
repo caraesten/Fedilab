@@ -2487,7 +2487,12 @@ public class API {
                 if( fields != null){
                     for(int j = 0 ; j < fields.length() ; j++){
                         fieldsMap.put(fields.getJSONObject(j).getString("name"),fields.getJSONObject(j).getString("value"));
-                        fieldsMapVerified.put(fields.getJSONObject(j).getString("name"),(fields.getJSONObject(j).getString("verified_at")!= null && !fields.getJSONObject(j).getString("verified_at").equals("null")));
+                        try {
+                            fieldsMapVerified.put(fields.getJSONObject(j).getString("name"),(fields.getJSONObject(j).getString("verified_at")!= null && !fields.getJSONObject(j).getString("verified_at").equals("null")));
+                        }catch (Exception e){
+                            fieldsMapVerified.put(fields.getJSONObject(j).getString("name"),false);
+                        }
+
                     }
                 }
                 account.setFields(fieldsMap);

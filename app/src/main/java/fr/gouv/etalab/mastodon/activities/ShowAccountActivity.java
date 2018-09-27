@@ -742,7 +742,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     }else {
                         spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value, account.getEmojis());
                     }
-
                     valueView.setText(spannableValueString, TextView.BufferType.SPANNABLE);
                     valueView.setMovementMethod(LinkMovementMethod.getInstance());
                     labelView.setText(label);
