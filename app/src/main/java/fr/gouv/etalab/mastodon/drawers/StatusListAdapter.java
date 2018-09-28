@@ -43,7 +43,6 @@ import android.text.Spannable;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -640,6 +639,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 }
             });
+            holder.status_bookmark.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    CrossActions.doCrossBookmark(context, status, statusListAdapter);
+                    return false;
+                }
+            });
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
             //-------- END -> Manages translations
 
@@ -1201,6 +1207,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
                         }
                     }
+
+                    MenuItem itemBookmark = popup.getMenu().findItem(R.id.action_bookmark);
+                    if( itemBookmark.getActionView() != null)
+                        itemBookmark.getActionView().setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                CrossActions.doCrossBookmark(context, status, statusListAdapter);
+                                return true;
+                            }
+                        });
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builderInner;
@@ -1951,7 +1967,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
-    private void notifyStatusChanged(Status status){
+    public void notifyStatusChanged(Status status){
         for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {

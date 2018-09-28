@@ -50,6 +50,53 @@ public class StatusCacheDAO {
 
 
     //------- INSERTIONS  -------
+    /**
+     * Insert a status in database
+     * @param cacheType int cache type
+     * @param status Status
+     * @param userId String
+     * @return boolean
+     */
+    public long insertStatus(int cacheType, Status status, String userId, String instance) {
+        ContentValues values = new ContentValues();
+        values.put(Sqlite.COL_USER_ID, userId);
+        values.put(Sqlite.COL_CACHED_ACTION, cacheType);
+        values.put(Sqlite.COL_INSTANCE, instance);
+        values.put(Sqlite.COL_STATUS_ID, status.getId());
+        values.put(Sqlite.COL_URI, status.getUri());
+        values.put(Sqlite.COL_URL, status.getUrl());
+        values.put(Sqlite.COL_ACCOUNT, Helper.accountToStringStorage(status.getAccount()));
+        values.put(Sqlite.COL_IN_REPLY_TO_ID, status.getIn_reply_to_id());
+        values.put(Sqlite.COL_IN_REPLY_TO_ACCOUNT_ID, status.getIn_reply_to_account_id());
+        values.put(Sqlite.COL_REBLOG, status.getReblog()!=null?Helper.statusToStringStorage(status.getReblog()):null);
+        values.put(Sqlite.COL_CONTENT, status.getContent());
+        values.put(Sqlite.COL_EMOJIS, status.getEmojis()!=null?Helper.emojisToStringStorage(status.getEmojis()):null);
+        values.put(Sqlite.COL_REBLOGS_COUNT, status.getReblogs_count());
+        values.put(Sqlite.COL_FAVOURITES_COUNT, status.getFavourites_count());
+        values.put(Sqlite.COL_REBLOGGED, status.isReblogged());
+        values.put(Sqlite.COL_FAVOURITED, status.isFavourited());
+        values.put(Sqlite.COL_MUTED, status.isMuted());
+        values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(status.getCreated_at()));
+        values.put(Sqlite.COL_DATE_BACKUP, Helper.dateToString(new Date()));
+        values.put(Sqlite.COL_SENSITIVE, status.isSensitive());
+        values.put(Sqlite.COL_SPOILER_TEXT, status.getSpoiler_text());
+        values.put(Sqlite.COL_VISIBILITY, status.getVisibility());
+        values.put(Sqlite.COL_MEDIA_ATTACHMENTS, status.getMedia_attachments()!=null?Helper.attachmentToStringStorage(status.getMedia_attachments()):null);
+        values.put(Sqlite.COL_MENTIONS, status.getMentions()!=null?Helper.mentionToStringStorage(status.getMentions()):null);
+        values.put(Sqlite.COL_TAGS, status.getTags()!=null?Helper.tagToStringStorage(status.getTags()):null);
+        values.put(Sqlite.COL_APPLICATION, status.getApplication()!=null?Helper.applicationToStringStorage(status.getApplication()):null);
+        values.put(Sqlite.COL_LANGUAGE, status.getLanguage());
+        values.put(Sqlite.COL_PINNED, status.isPinned());
+
+        //Inserts cached status
+        long last_id;
+        try{
+            last_id = db.insert(Sqlite.TABLE_STATUSES_CACHE, null, values);
+        }catch (Exception e) {
+            last_id =  -1;
+        }
+        return last_id;
+    }
 
     /**
      * Insert a status in database
@@ -133,6 +180,14 @@ public class StatusCacheDAO {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
+        return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_STATUS_ID + " = \"" + status.getId() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null);
+    }
+
+    /***
+     * Remove stored status
+     * @return int
+     */
+    public int remove(int cacheType, Status status, String userId, String instance){
         return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_STATUS_ID + " = \"" + status.getId() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null);
     }
 
@@ -343,6 +398,19 @@ public class StatusCacheDAO {
         }
     }
 
+
+    /**
+     * Returns a cached status by id in db
+     * @return stored status StoredStatus
+     */
+    public Status getStatus(int cacheType, String id, String userId, String instance){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_STATUS_ID + " = '" + id + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, null, null);
+            return cursorToStoredStatus(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     /***
      * Method to hydrate statuses from database

@@ -44,10 +44,12 @@ import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
+import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 
 /**
  * Will handle cross actions between accounts boost/favourites/pin and replies
@@ -275,6 +277,89 @@ public class CrossActions {
     }
 
 
+    public static void doCrossBookmark(final Context context, final Status status, StatusListAdapter statusListAdapter ){
+        List<Account> accounts = connectedAccounts(context, status, false);
+
+        if( accounts.size() == 1) {
+            status.setBookmarked(!status.isBookmarked());
+            try {
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                if (status.isBookmarked()) {
+                    new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
+                    Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                } else {
+                    new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
+                    Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                }
+                statusListAdapter.notifyStatusChanged(status);
+            }catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
+            }
+        }else {
+            AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+            builderSingle.setTitle(context.getString(R.string.choose_accounts));
+            final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
+            final Account[] accountArray = new Account[accounts.size()];
+            int i = 0;
+            for(Account account: accounts){
+                accountArray[i] = account;
+                i++;
+            }
+            builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(final DialogInterface dialog, int which) {
+                    final Account account = accountArray[which];
+                    new AsyncTask<Void, Void, Void>() {
+                        private WeakReference<Context> contextReference = new WeakReference<>(context);
+                        Results response;
+
+                        @Override
+                        protected void onPreExecute() {
+                            Toast.makeText(contextReference.get(), R.string.retrieve_remote_status, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            API api = new API(contextReference.get(), account.getInstance(), account.getToken());
+                            response = api.search(status.getUrl());
+                            return null;
+                        }
+                        @Override
+                        protected void onPostExecute(Void result) {
+                            if( response == null){
+                                Toast.makeText(contextReference.get(),R.string.toast_error,Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                            List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = response.getStatuses();
+                            if( statuses != null && statuses.size() > 0) {
+                                final SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                fr.gouv.etalab.mastodon.client.Entities.Status statusBookmarked = new StatusCacheDAO(contextReference.get(), db).getStatus(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0).getId(), account.getId(), account.getInstance());
+                                if (statusBookmarked == null) {
+                                    new StatusCacheDAO(contextReference.get(), db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0), account.getId(), account.getInstance());
+                                    Toast.makeText(contextReference.get(), R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                                } else {
+                                    new StatusCacheDAO(contextReference.get(), db).remove(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0), account.getId(), account.getInstance());
+                                    Toast.makeText(contextReference.get(), R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                }
+                                statusListAdapter.notifyStatusChanged(statuses.get(0));
+                            }
+                        }
+                    }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+
+                }
+            });
+            builderSingle.show();
+        }
+    }
+
+
 
     public static void doCrossReply(final Context context, final Status status, final RetrieveFeedsAsyncTask.Type type, boolean limitedToOwner){
         List<Account> accounts = connectedAccounts(context, status, limitedToOwner);
@@ -282,7 +367,7 @@ public class CrossActions {
         if( accounts.size() == 1 && type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
             Intent intent = new Intent(context, TootActivity.class);
             Bundle b = new Bundle();
-            if( status.getReblog() != null )
+            if( status != null && status.getReblog() != null )
                 b.putParcelable("tootReply", status.getReblog());
             else
                 b.putParcelable("tootReply", status);
