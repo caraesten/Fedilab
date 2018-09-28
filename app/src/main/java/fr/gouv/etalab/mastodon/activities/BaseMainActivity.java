@@ -1235,7 +1235,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     new RetrieveMetaDataAsyncTask(BaseMainActivity.this, sharedSubject, sharedText, url,BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
 
-            } else if (type.startsWith("image/")) {
+            } else if (type.startsWith("image/") || type.startsWith("video/")) {
 
                 if( !TootActivity.active){
                     Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
@@ -1257,7 +1257,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
             }
         } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null ) {
-            if (type.startsWith("image/")) {
+            if (type.startsWith("image/")  || type.startsWith("video/")) {
 
                 ArrayList<Uri> imageList = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
                 if (imageList != null) {
