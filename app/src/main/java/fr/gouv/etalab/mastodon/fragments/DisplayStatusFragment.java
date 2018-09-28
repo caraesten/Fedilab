@@ -392,7 +392,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             List<Status> tempToot = new ArrayList();
             tempToot.add(status);
             List<Status> tempTootResult = Helper.filterToots(context, tempToot, mutedAccount, type);
-            if( tempToot.size() > 0)
+            if( tempTootResult != null && tempTootResult.size() > 0)
                 status = tempTootResult.get(0);
             if (type == RetrieveFeedsAsyncTask.Type.HOME) {
 
