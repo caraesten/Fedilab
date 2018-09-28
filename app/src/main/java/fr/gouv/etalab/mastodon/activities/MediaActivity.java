@@ -27,12 +27,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
@@ -103,8 +103,8 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         POP
     }
 
-    private FloatingActionButton media_save, media_close;
-    private boolean scheduleHidden;
+    private ImageButton media_save, media_close;
+    private boolean scheduleHidden, scheduleHiddenDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,7 +175,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             }
         });
         Handler h = new Handler();
-        scheduleHidden = true;
+        scheduleHidden = scheduleHiddenDescription = true;
         h.postDelayed(new Runnable() {
 
             @Override
@@ -183,10 +183,18 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 // DO DELAYED STUFF
                 media_close.setVisibility(View.GONE);
                 media_save.setVisibility(View.GONE);
-                media_description.setVisibility(View.GONE);
                 scheduleHidden = false;
             }
         }, 2000);
+        h.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                // DO DELAYED STUFF
+                media_description.setVisibility(View.GONE);
+                scheduleHiddenDescription = false;
+            }
+        }, 6000);
         canSwipe = true;
         loader = findViewById(R.id.loader);
         imageView = findViewById(R.id.media_picture);
@@ -245,6 +253,18 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             scheduleHidden = true;
             media_close.setVisibility(View.VISIBLE);
             media_save.setVisibility(View.VISIBLE);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    media_close.setVisibility(View.GONE);
+                    media_save.setVisibility(View.GONE);
+                    scheduleHidden = false;
+                }
+            }, 2000);
+        }
+        if( event.getAction() == MotionEvent.ACTION_DOWN && !scheduleHiddenDescription){
+            scheduleHiddenDescription = true;
             if( attachment != null && attachment.getDescription() != null && !attachment.getDescription().equals("null")){
                 media_description.setText(attachment.getDescription());
                 media_description.setVisibility(View.VISIBLE);
@@ -256,12 +276,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    media_close.setVisibility(View.GONE);
-                    media_save.setVisibility(View.GONE);
                     media_description.setVisibility(View.GONE);
-                    scheduleHidden = false;
+                    scheduleHiddenDescription = false;
                 }
-            }, 2000);
+            }, 6000);
         }
         if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
             return super.dispatchTouchEvent(event);
@@ -466,7 +484,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         if(Build.VERSION.SDK_INT < 19) {
             View v = this.getWindow().getDecorView();
             v.setSystemUiVisibility(View.GONE);
-        } else if(Build.VERSION.SDK_INT >= 19) {
+        } else {
             View decorView = getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
             decorView.setSystemUiVisibility(uiOptions);

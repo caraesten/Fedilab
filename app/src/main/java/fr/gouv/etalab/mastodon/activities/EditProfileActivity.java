@@ -108,7 +108,6 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_HEADER = 754;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE_PICTURE = 755;
     private String avatarName, headerName;
-    private HashMap<String, String> fields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -267,7 +266,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             }
         });
         if ( account.getFields() != null && account.getFields().size() > 0){
-            fields = account.getFields();
+            HashMap<String, String> fields = account.getFields();
             Iterator it = fields.entrySet().iterator();
             int i = 1;
             while (it.hasNext()) {

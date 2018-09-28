@@ -40,21 +40,21 @@
         android:layout_height="wrap_content"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:layout_width="30dp"
         android:layout_margin="5dp"
         android:id="@+id/edit_filter"
         app:fabSize="mini"
         app:backgroundTint="?colorAccent"
         app:srcCompat="@drawable/ic_edit"
         tools:ignore="VectorDrawableCompat"
-        android:layout_height="30dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <android.support.design.widget.FloatingActionButton
-        android:layout_width="30dp"
         app:fabSize="mini"
         android:layout_margin="5dp"
         android:id="@+id/delete_filter"
         app:backgroundTint="?colorAccent"
         app:srcCompat="@drawable/ic_delete"
         tools:ignore="VectorDrawableCompat"
-        android:layout_height="30dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

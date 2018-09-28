@@ -304,24 +304,24 @@ public class RemoteFollowActivity extends BaseActivity implements OnRetrieveRemo
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         final String accountId = relationship.getId();
         if( accountId != null && accountId.equals(userId)){
-            account_follow.setVisibility(View.GONE);
+            account_follow.hide();
         }else if( relationship.isBlocking()){
             account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = ShowAccountActivity.action.UNBLOCK;
-            account_follow.setVisibility(View.VISIBLE);
+            account_follow.show();
         }else if( relationship.isRequested()){
-            account_follow.setVisibility(View.GONE);
+            account_follow.hide();
             doAction = ShowAccountActivity.action.NOTHING;
         }else if( relationship.isFollowing()){
             account_follow.setImageResource(R.drawable.ic_user_times);
             doAction = ShowAccountActivity.action.UNFOLLOW;
-            account_follow.setVisibility(View.VISIBLE);
+            account_follow.show();
         }else if( !relationship.isFollowing()){
             account_follow.setImageResource(R.drawable.ic_user_plus);
             doAction = ShowAccountActivity.action.FOLLOW;
-            account_follow.setVisibility(View.VISIBLE);
+            account_follow.show();
         }else{
-            account_follow.setVisibility(View.GONE);
+            account_follow.hide();
             doAction = ShowAccountActivity.action.NOTHING;
         }
         final ShowAccountActivity.action finalDoAction = doAction;

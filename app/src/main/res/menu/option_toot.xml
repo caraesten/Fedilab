@@ -8,6 +8,7 @@
     <item
         android:id="@+id/action_bookmark"
         android:title="@string/bookmark_add"
+        android:actionLayout="@layout/bookmark_layout"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_open_browser"
@@ -28,6 +29,10 @@
     <item
         android:id="@+id/action_report"
         android:title="@string/more_action_3"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_block_domain"
+        android:title="@string/block_domain"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_redraft"

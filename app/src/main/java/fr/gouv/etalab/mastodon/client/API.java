@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +65,7 @@ public class API {
     private String prefKeyOauthTokenT;
     private APIResponse apiResponse;
     private Error APIError;
+    private List<String> domains;
 
     public enum StatusAction{
         FAVOURITE,
@@ -88,7 +90,8 @@ public class API {
         ENDORSE,
         UNENDORSE,
         SHOW_BOOST,
-        HIDE_BOOST
+        HIDE_BOOST,
+        BLOCK_DOMAIN
 
     }
     public enum accountPrivacy {
@@ -775,6 +778,69 @@ public class API {
     }
 
 
+
+    /**
+     * Retrieves blocked domains for the authenticated account *synchronously*
+     * @param max_id String id max
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    public APIResponse getBlockedDomain(String max_id){
+
+        HashMap<String, String> params = new HashMap<>();
+        if( max_id != null )
+            params.put("max_id", max_id);
+        params.put("limit","80");
+        domains = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUrl("/domain_blocks"), 60, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            domains = parseDomains(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setDomains(domains);
+        return apiResponse;
+    }
+
+
+    /**
+     * Delete a blocked domains for the authenticated account *synchronously*
+     * @param domain String domain name
+     */
+    @SuppressWarnings("SameParameterValue")
+    public int deleteBlockedDomain(String domain){
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("domain",domain);
+        domains = new ArrayList<>();
+        HttpsConnection httpsConnection;
+        try {
+            httpsConnection = new HttpsConnection(context);
+            httpsConnection.delete(getAbsoluteUrl("/domain_blocks"), 60, params, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return actionCode;
+    }
+
     /**
      * Retrieves follow requests for the authenticated account *synchronously*
      * @param max_id String id max
@@ -962,6 +1028,11 @@ public class API {
                 break;
             case BLOCK:
                 action = String.format("/accounts/%s/block", targetedId);
+                break;
+            case BLOCK_DOMAIN:
+                action = "/domain_blocks";
+                params = new HashMap<>();
+                params.put("domain", targetedId);
                 break;
             case UNBLOCK:
                 action = String.format("/accounts/%s/unblock", targetedId);
@@ -2034,6 +2105,22 @@ public class API {
 
 
     /**
+     * Parse Domains
+     * @param jsonArray JSONArray
+     * @return List<String> of domains
+     */
+    private List<String> parseDomains(JSONArray jsonArray){
+        List<String> list_tmp = new ArrayList<>();
+        for(int i = 0; i < jsonArray.length(); i++){
+            try {
+                list_tmp.add(jsonArray.getString(i));
+            } catch (JSONException ignored) {}
+        }
+        return  list_tmp;
+    }
+
+
+    /**
      * Parse Tags
      * @param jsonArray JSONArray
      * @return List<String> of tags
@@ -2396,12 +2483,20 @@ public class API {
             try {
                 JSONArray fields = resobj.getJSONArray("fields");
                 HashMap<String, String> fieldsMap = new HashMap<>();
+                HashMap<String, Boolean> fieldsMapVerified = new HashMap<>();
                 if( fields != null){
                     for(int j = 0 ; j < fields.length() ; j++){
                         fieldsMap.put(fields.getJSONObject(j).getString("name"),fields.getJSONObject(j).getString("value"));
+                        try {
+                            fieldsMapVerified.put(fields.getJSONObject(j).getString("name"),(fields.getJSONObject(j).getString("verified_at")!= null && !fields.getJSONObject(j).getString("verified_at").equals("null")));
+                        }catch (Exception e){
+                            fieldsMapVerified.put(fields.getJSONObject(j).getString("name"),false);
+                        }
+
                     }
                 }
                 account.setFields(fieldsMap);
+                account.setFieldsVerified(fieldsMapVerified);
             }catch (Exception ignored){}
 
             //Retrieves emjis

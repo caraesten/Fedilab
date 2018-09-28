@@ -282,7 +282,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_reply;
         ImageView status_pin;
         ImageView status_privacy;
-        FloatingActionButton status_translate, status_bookmark;
+        ImageButton status_translate, status_bookmark;
         LinearLayout status_container2;
         LinearLayout status_container3;
         LinearLayout main_container;
@@ -380,88 +380,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         status = statuses.get(position);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
-        int HIDDEN_STATUS = 0;
-        //If account related to status is null, the toot is hidden
-        if( status.getAccount() == null )
-            return HIDDEN_STATUS;
-        String filter;
-        if( type == RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS)
-            return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
-        else if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
+        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
             return FOCUSED_STATUS;
-        else if( type == RetrieveFeedsAsyncTask.Type.HOME)
-            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
-        else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
-            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
         else
-            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
-        String content;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
-        else
-            //noinspection deprecation
-            content = Html.fromHtml(status.getContent()).toString();
-        if(MainActivity.filters != null){
-            for(Filters mfilter: filters){
-                ArrayList<String> filterContext = mfilter.getContext();
-                if(
-                    (type == RetrieveFeedsAsyncTask.Type.HOME && filterContext.contains("home")) ||
-                    (type == RetrieveFeedsAsyncTask.Type.LOCAL && filterContext.contains("local")) ||
-                    (type == RetrieveFeedsAsyncTask.Type.PUBLIC && filterContext.contains("public"))
-
-                ) {
-                    if (mfilter.isWhole_word() && content.contains(mfilter.getPhrase())) {
-                        return HIDDEN_STATUS;
-                    } else {
-                        try {
-                            Pattern filterPattern = Pattern.compile("(" + mfilter.getPhrase() + ")", Pattern.CASE_INSENSITIVE);
-                            Matcher matcher = filterPattern.matcher(content);
-                            if (matcher.find())
-                                return HIDDEN_STATUS;
-                        } catch (Exception e) {
-                            return DISPLAYED_STATUS;
-                        }
-                    }
-                }
-            }
-        }
-        if( filter != null && filter.length() > 0){
-            try {
-                Pattern filterPattern = Pattern.compile("(" + filter + ")", Pattern.CASE_INSENSITIVE);
-                Matcher matcher = filterPattern.matcher(content);
-                if (matcher.find())
-                    return HIDDEN_STATUS;
-            }catch (Exception e){
-                return DISPLAYED_STATUS;
-            }
-        }
-        if( type == RetrieveFeedsAsyncTask.Type.HOME) {
-            if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
-                return HIDDEN_STATUS;
-            else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
-                return HIDDEN_STATUS;
-            }else {
-                if( timedMute != null && timedMute.size() > 0) {
-
-                    if (timedMute.contains(status.getAccount().getId()))
-                        return HIDDEN_STATUS;
-                    else
-                        return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
-                }else {
-                    return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
-                }
-            }
-        }else {
-            if( context instanceof ShowAccountActivity){
-                if (status.getReblog() != null && !((ShowAccountActivity)context).showBoosts())
-                    return HIDDEN_STATUS;
-                else if( status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !((ShowAccountActivity)context).showReplies())
-                    return HIDDEN_STATUS;
-                else
-                    return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
-            }else
             return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
-        }
     }
 
     @NonNull
@@ -715,6 +637,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             position++;
                         }
                     }
+                }
+            });
+            holder.status_bookmark.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    CrossActions.doCrossBookmark(context, status, statusListAdapter);
+                    return false;
                 }
             });
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
@@ -1265,15 +1194,29 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_mute).setVisible(false);
                         popup.getMenu().findItem(R.id.action_report).setVisible(false);
                         popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
                         stringArrayConf =  context.getResources().getStringArray(R.array.more_action_owner_confirm);
                     }else {
                         popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
                         popup.getMenu().findItem(R.id.action_remove).setVisible(false);
+                        //Same instance
+                        if(status.getAccount().getAcct().split("@").length <2 )
+                            popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
                         stringArrayConf =  context.getResources().getStringArray(R.array.more_action_confirm);
                         if( type != RetrieveFeedsAsyncTask.Type.HOME){
                             popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
                         }
                     }
+
+                    MenuItem itemBookmark = popup.getMenu().findItem(R.id.action_bookmark);
+                    if( itemBookmark.getActionView() != null)
+                        itemBookmark.getActionView().setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                CrossActions.doCrossBookmark(context, status, statusListAdapter);
+                                return true;
+                            }
+                        });
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
                             AlertDialog.Builder builderInner;
@@ -1302,6 +1245,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     else
                                         //noinspection deprecation
                                         builderInner.setMessage(Html.fromHtml(status.getContent()));
+                                    break;
+                                case R.id.action_block_domain:
+                                    builderInner = new AlertDialog.Builder(context);
+                                    builderInner.setTitle(stringArrayConf[3]);
+                                    doAction = API.StatusAction.BLOCK_DOMAIN;
+                                    String domain = status.getAccount().getAcct().split("@")[1];
+                                    builderInner.setMessage(context.getString(R.string.block_domain_confirm_message, domain));
                                     break;
                                 case R.id.action_mute:
                                     builderInner = new AlertDialog.Builder(context);
@@ -1585,7 +1535,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                             comment = finalInput.getText().toString();
                                         new PostActionAsyncTask(context, doAction, status.getId(), status, comment, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     }else{
-                                        String targetedId = status.getAccount().getId();
+                                        String targetedId;
+                                        if( item.getItemId() == R.id.action_block_domain){
+                                            targetedId = status.getAccount().getAcct().split("@")[1];
+                                        }else {
+                                            targetedId = status.getAccount().getId();
+                                        }
                                         new PostActionAsyncTask(context, doAction, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     }
                                     dialog.dismiss();
@@ -2012,7 +1967,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
-    private void notifyStatusChanged(Status status){
+    public void notifyStatusChanged(Status status){
         for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {

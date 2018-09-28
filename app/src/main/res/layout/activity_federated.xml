@@ -110,8 +110,9 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/federated_timeline_close"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
             android:layout_gravity="bottom|start"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_close"

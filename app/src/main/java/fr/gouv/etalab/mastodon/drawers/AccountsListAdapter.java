@@ -91,27 +91,27 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             account.setFollowType(Account.followAction.MUTE);
 
         if (account.getFollowType() == Account.followAction.NOTHING){
-            holder.account_follow.setVisibility(View.GONE);
+            holder.account_follow.hide();
             holder.account_follow_request.setVisibility(View.GONE);
             doAction = null;
         }else if( account.getFollowType() == Account.followAction.REQUEST_SENT){
-            holder.account_follow.setVisibility(View.GONE);
+            holder.account_follow.hide();
             holder.account_follow_request.setVisibility(View.VISIBLE);
             doAction = null;
         }else if( account.getFollowType() == Account.followAction.FOLLOW){
             holder.account_follow.setImageResource(R.drawable.ic_user_times);
             doAction = API.StatusAction.UNFOLLOW;
-            holder.account_follow.setVisibility(View.VISIBLE);
+            holder.account_follow.show();
             holder.account_follow_request.setVisibility(View.GONE);
         }else if( account.getFollowType() == Account.followAction.NOT_FOLLOW){
             holder.account_follow.setImageResource(R.drawable.ic_user_plus);
             doAction = API.StatusAction.FOLLOW;
-            holder.account_follow.setVisibility(View.VISIBLE);
+            holder.account_follow.show();
             holder.account_follow_request.setVisibility(View.GONE);
         }else if( account.getFollowType() == Account.followAction.BLOCK){
             holder.account_follow.setImageResource(R.drawable.ic_lock_open);
             doAction = API.StatusAction.UNBLOCK;
-            holder.account_follow.setVisibility(View.VISIBLE);
+            holder.account_follow.show();
             holder.account_follow_request.setVisibility(View.GONE);
         }else if( account.getFollowType() == Account.followAction.MUTE){
 
@@ -120,10 +120,10 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             else
                 holder.account_mute_notification.setImageResource(R.drawable.ic_notifications_off);
 
-            holder.account_mute_notification.setVisibility(View.VISIBLE);
+            holder.account_mute_notification.show();
             holder.account_follow.setImageResource(R.drawable.ic_volume_up);
             doAction = API.StatusAction.UNMUTE;
-            holder.account_follow.setVisibility(View.VISIBLE);
+            holder.account_follow.show();
             holder.account_follow_request.setVisibility(View.GONE);
             final int positionFinal = position;
             holder.account_mute_notification.setOnClickListener(new View.OnClickListener() {

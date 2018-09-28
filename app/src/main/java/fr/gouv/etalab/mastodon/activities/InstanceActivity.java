@@ -122,7 +122,7 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
         instance_version.setText(instance.getVersion());
         instance_uri.setText(instance.getUri());
         if( instance.getEmail() == null){
-            instance_contact.setVisibility(View.GONE);
+            instance_contact.hide();
         }
 
         instance_contact.setOnClickListener(new View.OnClickListener() {
