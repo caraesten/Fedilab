@@ -33,6 +33,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ListActivity;
@@ -125,6 +127,13 @@ public class HowToVideosAdapter extends BaseAdapter implements OnListActionInter
                 Bundle b = new Bundle();
                 String finalUrl = "https://peertube.fr" + howToVideo.getEmbedPath();
                 b.putString("url", finalUrl);
+                b.putBoolean("peertubeLink", true);
+                Pattern link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/embed\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
+                Matcher matcherLink = link.matcher(finalUrl);
+                if( matcherLink.find()) {
+                    String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
+                    b.putString("peertubeLinkToFetch", url);
+                }
                 intent.putExtras(b);
                 context.startActivity(intent);
             }

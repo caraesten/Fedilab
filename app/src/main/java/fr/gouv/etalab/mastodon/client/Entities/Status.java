@@ -59,6 +59,7 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
+import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -831,7 +832,7 @@ public class Status implements Parcelable{
                         for (URLSpan span : spans) {
                             spannableStringT.removeSpan(span);
                         }
-                        if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
+                        if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition) {
                             spannableStringT.setSpan(new ClickableSpan() {
                                  @Override
                                  public void onClick(View textView) {
@@ -844,9 +845,23 @@ public class Status implements Parcelable{
                                          intent.putExtra(SEARCH_URL, url);
                                          context.startActivity(intent);
                                      }else  {
-                                         if( !url.startsWith("http://") && ! url.startsWith("https://"))
-                                             finalUrl = "http://" + url;
-                                         Helper.openBrowser(context, finalUrl);
+                                         link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
+                                         matcherLink = link.matcher(url);
+                                         if( matcherLink.find()){ //Peertubee video
+                                             String peertubeUrl = matcherLink.group(1) + "/videos/embed/" + matcherLink.group(2);
+                                             Intent intent = new Intent(context, WebviewActivity.class);
+                                             Bundle b = new Bundle();
+                                             b.putString("url", peertubeUrl);
+                                             b.putString("peertubeLinkToFetch", url);
+                                             b.putBoolean("peertubeLink", true);
+                                             intent.putExtras(b);
+                                             context.startActivity(intent);
+                                         }else {
+                                             if( !url.startsWith("http://") && ! url.startsWith("https://"))
+                                                 finalUrl = "http://" + url;
+                                             Helper.openBrowser(context, finalUrl);
+                                         }
+
                                      }
                                  }
                                  @Override
@@ -857,6 +872,7 @@ public class Status implements Parcelable{
                              },
                                     startPosition, endPosition,
                                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        }
                         if(endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
                             spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
                                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
