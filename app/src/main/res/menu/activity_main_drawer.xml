@@ -71,6 +71,10 @@
                         android:id="@+id/nav_blocked_domains"
                         android:icon="@drawable/ic_block"
                         android:title="@string/blocked_domains" />
+                    <item
+                        android:id="@+id/nav_how_to"
+                        android:icon="@drawable/ic_videocam"
+                        android:title="@string/how_to_videos" />
                 </group>
             </menu>
         </item>

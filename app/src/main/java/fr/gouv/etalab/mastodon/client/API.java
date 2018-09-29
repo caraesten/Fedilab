@@ -549,6 +549,33 @@ public class API {
     }
 
 
+
+    /**
+     * Retrieves home timeline for the account *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getHowTo() {
+
+        List<HowToVideo> howToVideos = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get("https://peertube.fr/api/v1/video-channels/bb32394a-a6d2-4f41-9b8e-ad9514a66009/videos", 60, null, null);
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            howToVideos = parseHowTos(jsonArray);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setHowToVideos(howToVideos);
+        return apiResponse;
+    }
     /**
      * Retrieves public timeline for the account *synchronously*
      * @param local boolean only local timeline
@@ -2135,6 +2162,52 @@ public class API {
         return  list_tmp;
     }
     /**
+     * Parse json response for several howto
+     * @param jsonArray JSONArray
+     * @return List<HowToVideo>
+     */
+    private List<HowToVideo> parseHowTos(JSONArray jsonArray){
+
+        List<HowToVideo> howToVideos = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ){
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                HowToVideo howToVideo = parseHowTo(context, resobj);
+                i++;
+                howToVideos.add(howToVideo);
+            }
+
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return howToVideos;
+    }
+
+    /**
+     * Parse json response for unique how to
+     * @param resobj JSONObject
+     * @return HowToVideo
+     */
+    private static HowToVideo parseHowTo(Context context, JSONObject resobj){
+        HowToVideo howToVideo = new HowToVideo();
+        try {
+            howToVideo.setId(resobj.get("id").toString());
+            howToVideo.setUuid(resobj.get("uuid").toString());
+            howToVideo.setName(resobj.get("name").toString());
+            howToVideo.setDescription(resobj.get("description").toString());
+            howToVideo.setEmbedPath(resobj.get("embedPath").toString());
+            howToVideo.setPreviewPath(resobj.get("previewPath").toString());
+            howToVideo.setThumbnailPath(resobj.get("thumbnailPath").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return howToVideo;
+    }
+
+    /**
      * Parse json response for several status
      * @param jsonArray JSONArray
      * @return List<Status>
@@ -2750,4 +2823,5 @@ public class API {
     private String getAbsoluteUrlCommunitywiki(String action) {
         return "https://communitywiki.org/trunk/api/v1"  + action;
     }
+
 }
