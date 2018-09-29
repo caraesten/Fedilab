@@ -574,6 +574,7 @@
   <string name="toast_block_domain">The domain is blocked</string>
   <string name="toast_unblock_domain">The domain is no longer blocked!</string>
   <string name="retrieve_remote_status">Fetching remote status</string>
+  <string name="comment">Comment</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
