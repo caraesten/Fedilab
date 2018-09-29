@@ -6,4 +6,10 @@
         android:title="@string/open_with"
         android:icon="@drawable/ic_open_with"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_comment"
+        android:title="@string/comment"
+        android:icon="@drawable/ic_comment_peertube"
+        android:visible="false"
+        app:showAsAction="always" />
 </menu>

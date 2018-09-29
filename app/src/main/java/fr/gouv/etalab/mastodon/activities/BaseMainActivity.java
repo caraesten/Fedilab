@@ -96,6 +96,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayBookmarksFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFiltersFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayHowToFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayMutedInstanceFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
@@ -1494,6 +1495,12 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "BLOCKED_DOMAINS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayMutedInstanceFragment, fragmentTag).commit();
+        }else if (id == R.id.nav_how_to) {
+            toot.hide();
+            DisplayHowToFragment displayHowToFragment = new DisplayHowToFragment();
+            fragmentTag = "HOW_TO_VIDEOS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayHowToFragment, fragmentTag).commit();
         }else if (id == R.id.nav_muted) {
             toot.hide();
             accountsFragment = new DisplayAccountsFragment();

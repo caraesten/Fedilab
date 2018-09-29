@@ -30,6 +30,7 @@ public class APIResponse {
     private List<Context> contexts = null;
     private List<Notification> notifications = null;
     private List<Relationship> relationships = null;
+    private List<HowToVideo> howToVideos = null;
     private List<Filters> filters = null;
     private List<String> domains = null;
     private List<fr.gouv.etalab.mastodon.client.Entities.List> lists = null;
@@ -140,5 +141,13 @@ public class APIResponse {
 
     public void setDomains(List<String> domains) {
         this.domains = domains;
+    }
+
+    public List<HowToVideo> getHowToVideos() {
+        return howToVideos;
+    }
+
+    public void setHowToVideos(List<HowToVideo> howToVideos) {
+        this.howToVideos = howToVideos;
     }
 }

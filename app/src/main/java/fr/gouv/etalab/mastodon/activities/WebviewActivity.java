@@ -16,10 +16,12 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -34,6 +36,11 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import java.lang.ref.WeakReference;
+import java.util.List;
+
+import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.webview.MastalabWebChromeClient;
 import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
@@ -51,8 +58,9 @@ import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
 public class WebviewActivity extends BaseActivity {
 
     private String url;
+    private String peertubeLinkToFetch;
+    private boolean peertubeLink;
     private WebView webView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +83,11 @@ public class WebviewActivity extends BaseActivity {
 
         setContentView(R.layout.activity_webview);
         Bundle b = getIntent().getExtras();
-        if(b != null)
+        if(b != null) {
             url = b.getString("url", null);
+            peertubeLinkToFetch = b.getString("peertubeLinkToFetch", null);
+            peertubeLink =  b.getBoolean("peertubeLink", false);
+        }
         if( url == null)
             finish();
         if( getSupportActionBar() != null)
@@ -135,6 +146,10 @@ public class WebviewActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_webview, menu);
+        if( peertubeLink ){
+            menu.findItem(R.id.action_go).setVisible(false);
+            menu.findItem(R.id.action_comment).setVisible(true);
+        }
         return true;
     }
     @Override
@@ -150,6 +165,43 @@ public class WebviewActivity extends BaseActivity {
                 }catch (Exception e){
                     Toast.makeText(WebviewActivity.this, R.string.toast_error, Toast.LENGTH_LONG).show();
                 }
+                return true;
+            case R.id.action_comment:
+                Toast.makeText(WebviewActivity.this, R.string.retrieve_remote_status, Toast.LENGTH_LONG).show();
+                new AsyncTask<Void, Void, Void>() {
+
+                    private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
+                    private WeakReference<Context> contextReference = new WeakReference<>(WebviewActivity.this);
+
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+
+                        if(url != null) {
+                            Results search = new API(contextReference.get()).search(peertubeLinkToFetch);
+                            if (search != null) {
+                                remoteStatuses = search.getStatuses();
+                            }
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void result) {
+                        Intent intent = new Intent(contextReference.get(), TootActivity.class);
+                        Bundle b = new Bundle();
+                        if( remoteStatuses == null || remoteStatuses.size() == 0){
+                            Toast.makeText(contextReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if( remoteStatuses.get(0).getReblog() != null ) {
+                            b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
+                        }else {
+                            b.putParcelable("tootReply", remoteStatuses.get(0));
+                        }
+                        intent.putExtras(b); //Put your id to your next Intent
+                        contextReference.get().startActivity(intent);
+                    }
+                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
