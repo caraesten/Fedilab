@@ -88,6 +88,7 @@ public class HowToVideosAdapter extends BaseAdapter implements OnListActionInter
             convertView = layoutInflater.inflate(R.layout.drawer_how_to_videos, parent, false);
             holder = new ViewHolder();
             holder.how_to_description = convertView.findViewById(R.id.how_to_description);
+            holder.how_to_title = convertView.findViewById(R.id.how_to_title);
             holder.how_to_image = convertView.findViewById(R.id.how_to_image);
             holder.how_to_container = convertView.findViewById(R.id.how_to_container);
             convertView.setTag(holder);
@@ -109,19 +110,20 @@ public class HowToVideosAdapter extends BaseAdapter implements OnListActionInter
         }
         Drawable next = ContextCompat.getDrawable(context, R.drawable.ic_keyboard_arrow_right);
         holder.how_to_description.setText(howToVideo.getDescription());
+        holder.how_to_title.setText(howToVideo.getName());
         assert next != null;
         final float scale = context.getResources().getDisplayMetrics().density;
         next.setBounds(0,0,(int) (30  * scale + 0.5f),(int) (30  * scale + 0.5f));
         holder.how_to_description.setCompoundDrawables(null, null, next, null);
         Glide.with(holder.how_to_image.getContext())
-                .load(howToVideo.getThumbnailPath())
+                .load("https://peertube.fr" + howToVideo.getThumbnailPath())
                 .into(holder.how_to_image);
         holder.how_to_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, WebviewActivity.class);
                 Bundle b = new Bundle();
-                String finalUrl = "https://peertube.fr/" + howToVideo.getEmbedPath();
+                String finalUrl = "https://peertube.fr" + howToVideo.getEmbedPath();
                 b.putString("url", finalUrl);
                 intent.putExtras(b);
                 context.startActivity(intent);
@@ -142,6 +144,7 @@ public class HowToVideosAdapter extends BaseAdapter implements OnListActionInter
         LinearLayout how_to_container;
         ImageView how_to_image;
         TextView how_to_description;
+        TextView how_to_title;
     }
 
 

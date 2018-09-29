@@ -19,6 +19,7 @@
     android:paddingLeft="@dimen/fab_margin"
     android:paddingRight="@dimen/fab_margin"
     android:layout_width="match_parent"
+    android:layout_marginBottom="70dp"
     android:layout_height="match_parent">
     <!-- Listview list -->
     <ListView
@@ -26,7 +27,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:divider="@null"
         />
     <!-- Main Loader -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
