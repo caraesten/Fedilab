@@ -122,7 +122,7 @@ public class SettingsFragment extends Fragment {
         });
 
 
-        boolean enabledCrash = sharedpreferences.getBoolean(ACRA.PREF_ENABLE_ACRA, true);
+        boolean enabledCrash = sharedpreferences.getBoolean(ACRA.PREF_ENABLE_ACRA, false);
         final CheckBox set_crash_report = rootView.findViewById(R.id.set_crash_report);
         set_crash_report.setChecked(enabledCrash);
         set_crash_report.setOnClickListener(new View.OnClickListener() {
