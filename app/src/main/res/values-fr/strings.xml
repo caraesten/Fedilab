@@ -123,7 +123,7 @@
     <item>Masquer ce compte ?</item>
     <item>Bloquer ce compte ?</item>
     <item>Signaler ce pouet ?</item>
-    <item>Block this domain?</item>
+    <item>Désirez-vous bloquer ce domaine ?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Supprimer ce pouet ?</item>
@@ -533,7 +533,7 @@
   <string name="action_filter_delete">Supprimer le filtre ?</string>
   <string name="action_update_filter">Mettre à jour le filtre</string>
   <string name="action_filter_create">Créer un filtre</string>
-  <string name="how_to_follow">Whom to follow</string>
+  <string name="how_to_follow">Suggestion de comptes</string>
   <string name="action_who_to_follow_empty_content">Actuellement, cette liste ne contient aucun compte !</string>
   <string name="follow_account">Suivre</string>
   <string name="select_all">Tout sélectionner</string>
@@ -545,12 +545,12 @@
   <string name="adding_account_list_trunk">Ajout des comptes dans la liste</string>
   <string name="action_list_add">Vous n\'avez pas encore créé de liste. Cliquez sur le bouton \"+\" pour en ajouter une.</string>
   <string name="action_remote_instance_add">Vous ne suivez aucune instance. Cliquez sur le bouton \"+\" pour en ajouter une.</string>
-  <string name="about_trunk">Who to follow</string>
+  <string name="about_trunk">Comptes suggérés</string>
   <string name="about_trunk_action">API Trunk</string>
   <string name="toast_impossible_to_follow">Abonnement impossible au(x) compte(s)</string>
   <string name="retrieve_remote_account">Recherche du compte distant</string>
-  <string name="expand_image">Automatically expand hidden media</string>
-  <string name="set_display_follow_instance">Display follow instances button</string>
+  <string name="expand_image">Étendre automatiquement les médias cachés</string>
+  <string name="set_display_follow_instance">Afficher le bouton de suivi d’instances</string>
   <string name="channel_notif_follow">Nouvel abonnement</string>
   <string name="channel_notif_boost">Nouveau Repouet</string>
   <string name="channel_notif_fav">Nouveau Favori</string>
@@ -560,19 +560,19 @@
   <string name="channel_notif_media">Téléchargement des Médias</string>
   <string name="set_notif_sound">Changer le son des notifications</string>
   <string name="select_sound">Choisir une sonnerie</string>
-  <string name="set_enable_time_slot">Enable time slot</string>
-  <string name="how_to_videos">How To Videos</string>
-  <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-  <string name="no_blocked_domain">No blocked domains!</string>
-  <string name="unblock_domain_confirm">Unblock domain</string>
-  <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-  <string name="block_domain_confirm_message">Are you sure to block %s?</string>
-  <string name="blocked_domains">Blocked domains</string>
-  <string name="block_domain">Block domain</string>
-  <string name="toast_block_domain">The domain is blocked</string>
-  <string name="toast_unblock_domain">The domain is no longer blocked!</string>
-  <string name="retrieve_remote_status">Fetching remote status</string>
-  <string name="comment">Comment</string>
+  <string name="set_enable_time_slot">Activer le créneau horaire</string>
+  <string name="how_to_videos">Tutoriels vidéo</string>
+  <string name="retrieve_remote_conversation">Récupération du fil distant !</string>
+  <string name="no_blocked_domain">Aucun domaine bloqué !</string>
+  <string name="unblock_domain_confirm">Débloquer le domaine</string>
+  <string name="unblock_domain_confirm_message">Confirmez-vous le déblocage de %s ?</string>
+  <string name="block_domain_confirm_message">Êtes-vous sûr de vouloir bloquer %s ?</string>
+  <string name="blocked_domains">Les domaines bloqués</string>
+  <string name="block_domain">Bloquer le domaine</string>
+  <string name="toast_block_domain">Le domaine est bloqué</string>
+  <string name="toast_unblock_domain">Le domaine n\'est plus bloqué !</string>
+  <string name="retrieve_remote_status">Récupération du statut distant</string>
+  <string name="comment">Commenter</string>
   <string-array name="filter_expire">
     <item>Jamais</item>
     <item>30 minutes</item>
