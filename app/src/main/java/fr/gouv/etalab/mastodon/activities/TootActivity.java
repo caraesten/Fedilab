@@ -784,6 +784,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         WeakReference<Activity> activityWeakReference;
         android.net.Uri uriFile;
         Account accountReply;
+
         asyncPicture(Activity activity, Account accountReply, android.net.Uri uri){
             this.activityWeakReference = new WeakReference<>(activity);
             this.uriFile = uri;

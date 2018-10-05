@@ -2413,7 +2413,7 @@ public class Helper {
                     ArrayList<String> filterContext = mfilter.getContext();
                     if(
                             (type == RetrieveFeedsAsyncTask.Type.HOME && filterContext.contains("home")) ||
-                                    (type == RetrieveFeedsAsyncTask.Type.LOCAL && filterContext.contains("local")) ||
+                                    (type == RetrieveFeedsAsyncTask.Type.LOCAL && filterContext.contains("public")) ||
                                     (type == RetrieveFeedsAsyncTask.Type.PUBLIC && filterContext.contains("public"))
 
                             ) {

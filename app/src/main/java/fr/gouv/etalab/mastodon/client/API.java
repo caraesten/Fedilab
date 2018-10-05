@@ -559,7 +559,7 @@ public class API {
         List<HowToVideo> howToVideos = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get("https://peertube.fr/api/v1/video-channels/bb32394a-a6d2-4f41-9b8e-ad9514a66009/videos", 60, null, null);
+            String response = httpsConnection.get("https://peertube.social/api/v1/video-channels/mastalab_channel/videos", 60, null, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             howToVideos = parseHowTos(jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
