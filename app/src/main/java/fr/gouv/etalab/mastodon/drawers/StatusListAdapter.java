@@ -139,22 +139,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private int conversationPosition;
     private List<String> timedMute;
     private boolean redraft;
-    private Status status;
     private Status toot;
-    public StatusListAdapter(Context context, List<String> timedMute, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
-        super();
-        this.context = context;
-        this.statuses = statuses;
-        this.isOnWifi = isOnWifi;
-        this.behaviorWithAttachments = behaviorWithAttachments;
-        layoutInflater = LayoutInflater.from(this.context);
-        statusListAdapter = this;
-        this.type = type;
-        this.targetedId = targetedId;
-        this.translator = translator;
-        this.timedMute = timedMute;
-        redraft = false;
-    }
+
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         super();
@@ -371,7 +357,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public int getItemViewType(int position) {
 
-        status = statuses.get(position);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
