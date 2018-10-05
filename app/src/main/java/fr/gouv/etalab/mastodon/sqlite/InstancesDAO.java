@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
 
@@ -53,10 +54,11 @@ public class InstancesDAO {
      * Insert an instance name in database
      * @param instanceName String
      */
-    public void insertInstance(String instanceName) {
+    public void insertInstance(String instanceName, String type) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_INSTANCE, instanceName.trim());
         values.put(Sqlite.COL_USER_ID, userId);
+        values.put(Sqlite.COL_INSTANCE_TYPE, type);
         values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
         //Inserts search
         try{
@@ -92,9 +94,9 @@ public class InstancesDAO {
 
     /**
      * Returns all instances in db for a user
-     * @return instances List<String>
+     * @return instances List<RemoteInstance>
      */
-    public List<String> getAllInstances(){
+    public List<RemoteInstance> getAllInstances(){
         try {
             Cursor c = db.query(Sqlite.TABLE_INSTANCES, null, Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
             return cursorToListSearch(c);
@@ -107,9 +109,9 @@ public class InstancesDAO {
 
     /**
      * Returns instance by its nale in db
-     * @return instance List<String>
+     * @return instance List<RemoteInstance>
      */
-    public List<String> getInstanceByName(String keyword){
+    public List<RemoteInstance> getInstanceByName(String keyword){
         try {
             Cursor c = db.query(Sqlite.TABLE_INSTANCES, null, Sqlite.COL_INSTANCE + " = \"" + keyword + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, null, null);
             return cursorToListSearch(c);
@@ -122,19 +124,20 @@ public class InstancesDAO {
     /***
      * Method to hydrate stored instances from database
      * @param c Cursor
-     * @return List<String>
+     * @return List<RemoteInstance>
      */
-    private List<String> cursorToListSearch(Cursor c){
+    private List<RemoteInstance> cursorToListSearch(Cursor c){
         //No element found
         if (c.getCount() == 0)
             return null;
-        List<String> instances = new ArrayList<>();
+        List<RemoteInstance> remoteInstances = new ArrayList<>();
         while (c.moveToNext() ) {
-            instances.add(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
+            RemoteInstance remoteInstance = new RemoteInstance();
+            remoteInstance.setHost(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
+            remoteInstance.setType(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)) == null?"MASTODON":c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
         }
         //Close the cursor
         c.close();
-        //Search list is returned
-        return instances;
+        return remoteInstances;
     }
 }
