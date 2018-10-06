@@ -41,6 +41,9 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Peertube;
+import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
+import fr.gouv.etalab.mastodon.drawers.PeertubeAdapter;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
@@ -50,6 +53,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
@@ -65,8 +69,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
     private StatusListAdapter statusListAdapter;
+    private PeertubeAdapter peertubeAdapater;
     private String max_id;
     private List<Status> statuses;
+    private List<Peertube> peertubes;
     private RetrieveFeedsAsyncTask.Type type;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
@@ -83,7 +89,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean isSwipped;
     private String remoteInstance;
     private List<String> mutedAccount;
-
+    private String instanceType;
     public DisplayStatusFragment(){
     }
 
@@ -91,6 +97,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_status, container, false);
         statuses = new ArrayList<>();
+        peertubes = new ArrayList<>();
         context = getContext();
         Bundle bundle = this.getArguments();
         showMediaOnly = false;
@@ -106,6 +113,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             showPinned = bundle.getBoolean("showPinned",false);
             showReply = bundle.getBoolean("showReply",false);
             remoteInstance = bundle.getString("remote_instance", "");
+        }
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        if( !remoteInstance.equals("")){
+            List<RemoteInstance> remoteInstanceObj = new InstancesDAO(context, db).getInstanceByName(remoteInstance);
+            if( remoteInstanceObj != null && remoteInstanceObj.size() > 0)
+                instanceType = remoteInstanceObj.get(0).getType();
         }
         isSwipped = false;
         max_id = null;
@@ -124,16 +137,18 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
 
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+
         Account account = new AccountDAO(context, db).getAccountByID(userId);
         mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
 
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
-
-
-
-        lv_status.setAdapter(statusListAdapter);
+        if( instanceType == null) {
+            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+            lv_status.setAdapter(statusListAdapter);
+        }else {
+            peertubeAdapater = new PeertubeAdapter(context, this.peertubes);
+            lv_status.setAdapter(peertubeAdapater);
+        }
         mLayoutManager = new LinearLayoutManager(context);
         lv_status.setLayoutManager(mLayoutManager);
 
