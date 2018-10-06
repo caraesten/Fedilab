@@ -123,7 +123,7 @@
     <item>Mututu kontu hau?</item>
     <item>Blokeatu kontu hau?</item>
     <item>Salatu toot hau?</item>
-    <item>Block this domain?</item>
+    <item>Blokeatu domeinu hau?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Kendu toot hau?</item>
@@ -563,17 +563,17 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="select_sound">Hautatu doinua</string>
   <string name="set_enable_time_slot">Gaitu denbora-tartea</string>
   <string name="how_to_videos">Laguntza bideoak</string>
-  <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-  <string name="no_blocked_domain">No blocked domains!</string>
-  <string name="unblock_domain_confirm">Unblock domain</string>
-  <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-  <string name="block_domain_confirm_message">Are you sure to block %s?</string>
-  <string name="blocked_domains">Blocked domains</string>
-  <string name="block_domain">Block domain</string>
-  <string name="toast_block_domain">The domain is blocked</string>
-  <string name="toast_unblock_domain">The domain is no longer blocked!</string>
-  <string name="retrieve_remote_status">Fetching remote status</string>
-  <string name="comment">Comment</string>
+  <string name="retrieve_remote_conversation">Urruneko haria eskuratzen!</string>
+  <string name="no_blocked_domain">Ez dago blokeatutako domeinurik!</string>
+  <string name="unblock_domain_confirm">Desblokeatu domeinua</string>
+  <string name="unblock_domain_confirm_message">Ziur al zaude %s desblokeatu nahi duzula?</string>
+  <string name="block_domain_confirm_message">Ziur al zaude %s blokeatu nahi duzula?</string>
+  <string name="blocked_domains">Blokeatutako domeinuak</string>
+  <string name="block_domain">Blokeatu domeinua</string>
+  <string name="toast_block_domain">Domeinu hau blokeatuta dago</string>
+  <string name="toast_unblock_domain">Domeinua ez dago jada blokeatuta!</string>
+  <string name="retrieve_remote_status">Urruneko mezua jasotzen</string>
+  <string name="comment">Iruzkina</string>
   <string-array name="filter_expire">
     <item>Inoiz ez</item>
     <item>30 minutu</item>
