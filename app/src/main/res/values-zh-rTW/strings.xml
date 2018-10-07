@@ -571,7 +571,7 @@
   <string name="toast_block_domain">網域已被封鎖</string>
   <string name="toast_unblock_domain">網域不再被阻擋！</string>
   <string name="retrieve_remote_status">正在擷取遠端狀態</string>
-  <string name="comment">Comment</string>
+  <string name="comment">評論</string>
   <string name="peertube_instance">PeerTube 實體</string>
   <string-array name="filter_expire">
     <item>永不</item>
