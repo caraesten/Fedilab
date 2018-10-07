@@ -572,6 +572,7 @@
   <string name="toast_unblock_domain">網域不再被阻擋！</string>
   <string name="retrieve_remote_status">正在擷取遠端狀態</string>
   <string name="comment">Comment</string>
+  <string name="peertube_instance">Peertube instance</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
