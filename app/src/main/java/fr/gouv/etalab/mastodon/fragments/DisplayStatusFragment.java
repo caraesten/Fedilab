@@ -27,6 +27,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -191,16 +192,33 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         });
 
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if( statuses.size() > 0) {
-                    MainActivity.countNewStatus = 0;
-                    isSwipped = true;
-                    retrieveMissingToots(null);
+        if( instanceType == null || instanceType.equals("MASTODON"))
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    if( statuses.size() > 0) {
+                        if( type == RetrieveFeedsAsyncTask.Type.HOME)
+                            MainActivity.countNewStatus = 0;
+                        isSwipped = true;
+                        retrieveMissingToots(null);
+                    }
                 }
-            }
-        });
+            });
+        else
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    if( peertubes.size() > 0) {
+                        int size = peertubes.size();
+                        isSwipped = true;
+                        peertubes.clear();
+                        peertubes = new ArrayList<>();
+                        max_id = "0";
+                        peertubeAdapater.notifyItemRangeRemoved(0, size);
+                        asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, "0", DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
+                }
+            });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
@@ -315,7 +333,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 max_id = "0";
             max_id = String.valueOf(Integer.valueOf(max_id) + 50);
             this.peertubes.addAll(apiResponse.getPeertubes());
-            peertubeAdapater.notifyItemRangeInserted(previousPosition, apiResponse.getPeertubes().size());
+            if( previousPosition == 0) {
+                peertubeAdapater = new PeertubeAdapter(context, remoteInstance, this.peertubes);
+                lv_status.setAdapter(peertubeAdapater);
+            }else
+                peertubeAdapater.notifyItemRangeInserted(previousPosition, apiResponse.getPeertubes().size());
             swipeRefreshLayout.setRefreshing(false);
             firstLoad = false;
             flag_loading = false;
