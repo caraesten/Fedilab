@@ -98,7 +98,7 @@
   <string name="no_emoji">Die App verfügt derzeit nicht über benutzerdefinierte Emojis.</string>
   <string name="live_notif">Echtzeit-Benachrichtigungen</string>
   <!-- Status -->
-  <string name="no_status">Kein Toot zum anzeigen</string>
+  <string name="no_status">Kein Toot zum Anzeigen</string>
   <string name="fav_added">Der Toot wurde deinen Favoriten hinzugefügt</string>
   <string name="fav_removed">Der Toot wurde aus deinen Favoriten enfernt!</string>
   <string name="reblog_added">Toot wurde geteilt!</string>
@@ -563,7 +563,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="toast_block_domain">The domain is blocked</string>
   <string name="toast_unblock_domain">The domain is no longer blocked!</string>
   <string name="retrieve_remote_status">Fetching remote status</string>
-  <string name="comment">Comment</string>
+  <string name="comment">Kommentar</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>
