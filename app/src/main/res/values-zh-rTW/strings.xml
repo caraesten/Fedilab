@@ -470,7 +470,7 @@
         - 若還是無法運作，請在 GitHub 上回報問題，網址為 https://github.com/stom79/mastalab/issues
     </string>
   <string name="media_ready">媒體已載入。點選這裡以顯示。</string>
-  <string name="data_export_start">此動作可能會很久。您將會在其快結束時被通知。</string>
+  <string name="data_export_start">此動作可能會很久，您將在完成時收到通知。</string>
   <string name="data_export_running">仍在執行中，請稍候……</string>
   <string name="data_export">匯出狀態</string>
   <string name="data_export_toots">%1$s 的匯出狀態</string>
