@@ -574,6 +574,7 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="toast_unblock_domain">Domeinua ez dago jada blokeatuta!</string>
   <string name="retrieve_remote_status">Urruneko mezua jasotzen</string>
   <string name="comment">Iruzkina</string>
+  <string name="peertube_instance">Peertube instance</string>
   <string-array name="filter_expire">
     <item>Inoiz ez</item>
     <item>30 minutu</item>
