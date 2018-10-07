@@ -10,4 +10,9 @@
         android:hint="@string/instance"
         android:maxLines="1"
         />
+    <CheckBox
+        android:text="@string/peertube_instance"
+        android:id="@+id/peertube_instance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -157,7 +157,9 @@ import fr.gouv.etalab.mastodon.client.Entities.Application;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
+import fr.gouv.etalab.mastodon.client.Entities.Instance;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
@@ -2265,17 +2267,17 @@ public class Helper {
     public static void refreshInstanceTab(Context context, TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter){
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         new InstancesDAO(context, db).cleanDoublon();
-        List<String> instances = new InstancesDAO(context, db).getAllInstances();
+        List<RemoteInstance> remoteInstances = new InstancesDAO(context, db).getAllInstances();
         int allTabCount = tableLayout.getTabCount();
         while(allTabCount > 0){
             removeTab(tableLayout, pagerAdapter, allTabCount-1);
             allTabCount -=1;
         }
-        if( instances != null) {
-            for (String instance : instances) {
-                addTab(tableLayout, pagerAdapter, instance);
+        if( remoteInstances != null) {
+            for (RemoteInstance remoteInstance : remoteInstances) {
+                addTab(tableLayout, pagerAdapter, remoteInstance.getHost());
             }
-            if( instances.size() > 0 ){
+            if( remoteInstances.size() > 0 ){
                 tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
                 tableLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
             }

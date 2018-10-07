@@ -31,6 +31,7 @@ public class APIResponse {
     private List<Notification> notifications = null;
     private List<Relationship> relationships = null;
     private List<HowToVideo> howToVideos = null;
+    private List<Peertube> peertubes = null;
     private List<Filters> filters = null;
     private List<String> domains = null;
     private List<fr.gouv.etalab.mastodon.client.Entities.List> lists = null;
@@ -149,5 +150,13 @@ public class APIResponse {
 
     public void setHowToVideos(List<HowToVideo> howToVideos) {
         this.howToVideos = howToVideos;
+    }
+
+    public List<Peertube> getPeertubes() {
+        return peertubes;
+    }
+
+    public void setPeertubes(List<Peertube> peertubes) {
+        this.peertubes = peertubes;
     }
 }

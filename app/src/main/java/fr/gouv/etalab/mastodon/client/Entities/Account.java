@@ -30,7 +30,6 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;

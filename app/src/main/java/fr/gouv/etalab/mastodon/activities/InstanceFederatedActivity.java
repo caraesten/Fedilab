@@ -42,6 +42,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -73,17 +74,13 @@ import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 
 public class InstanceFederatedActivity extends BaseActivity {
 
-    private FloatingActionButton add_new;
     public static String currentLocale;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private String userIdService;
-    private AppBarLayout appBar;
-    private String userId;
-    private String instance;
     private PagerAdapter adapter;
     boolean isLoadingInstance = false;
     private AutoCompleteTextView instance_list;
+    private CheckBox peertube_instance;
     private String oldSearch;
     private RelativeLayout no_action;
 
@@ -130,6 +127,7 @@ public class InstanceFederatedActivity extends BaseActivity {
                 dialogBuilder.setView(dialogView);
 
                 instance_list = dialogView.findViewById(R.id.search_instance);
+                peertube_instance  = dialogView.findViewById(R.id.peertube_instance);
                 instance_list.setFilters(new InputFilter[]{new InputFilter.LengthFilter(60)});
                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @Override
@@ -140,13 +138,18 @@ public class InstanceFederatedActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 try {
-                                    String response = new HttpsConnection(InstanceFederatedActivity.this).get("https://" + instanceName + "/api/v1/timelines/public?local=true", 10, null, null);
+                                    if( !peertube_instance.isChecked())
+                                        new HttpsConnection(InstanceFederatedActivity.this).get("https://" + instanceName + "/api/v1/timelines/public?local=true", 10, null, null);
+                                    else
+                                        new HttpsConnection(InstanceFederatedActivity.this).get("https://" + instanceName + "/api/v1/videos/", 10, null, null);
                                     runOnUiThread(new Runnable() {
                                         public void run() {
                                             JSONObject resobj;
                                             dialog.dismiss();
-                                            new InstancesDAO(InstanceFederatedActivity.this, db).insertInstance(instanceName);
-
+                                            if( peertube_instance.isChecked())
+                                                new InstancesDAO(InstanceFederatedActivity.this, db).insertInstance(instanceName, "PEERTUBE");
+                                            else
+                                                new InstancesDAO(InstanceFederatedActivity.this, db).insertInstance(instanceName, "MASTODON");
                                             Helper.addTab(tabLayout, adapter, instanceName);
                                             adapter = new InstanceFederatedActivity.PagerAdapter
                                                     (getSupportFragmentManager(), tabLayout.getTabCount());
@@ -300,7 +303,6 @@ public class InstanceFederatedActivity extends BaseActivity {
         Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
-        appBar = findViewById(R.id.appBar);
         Toolbar toolbar = findViewById(R.id.toolbar);
         if( theme == THEME_BLACK)
             toolbar.setBackgroundColor(ContextCompat.getColor(InstanceFederatedActivity.this, R.color.black));
@@ -356,11 +358,11 @@ public class InstanceFederatedActivity extends BaseActivity {
         currentLocale = Helper.currentLocale(getApplicationContext());
 
 
-        add_new = findViewById(R.id.add_new);
+        FloatingActionButton add_new = findViewById(R.id.add_new);
 
 
-        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+
 
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
         if( account == null){
