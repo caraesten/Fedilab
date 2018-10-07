@@ -85,6 +85,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
@@ -359,8 +360,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     case R.id.action_follow_instance:
                         String finalInstanceName = splitAcct[1];
                         final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                        List<String> instance = new InstancesDAO(ShowAccountActivity.this, db).getInstanceByName(finalInstanceName);
-                        if( instance != null && instance.size() > 0 ){
+                        List<RemoteInstance> remoteInstances = new InstancesDAO(ShowAccountActivity.this, db).getInstanceByName(finalInstanceName);
+                        if( remoteInstances != null && remoteInstances.size() > 0 ){
                             Toast.makeText(getApplicationContext(), R.string.toast_instance_already_added,Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(), InstanceFederatedActivity.class);
                             Bundle bundle = new Bundle();
@@ -378,7 +379,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                     runOnUiThread(new Runnable() {
                                         public void run() {
                                             final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                                            new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName);
+                                            new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName, "MASTODON");
                                             Toast.makeText(getApplicationContext(), R.string.toast_instance_followed,Toast.LENGTH_LONG).show();
                                             Intent intent = new Intent(getApplicationContext(), InstanceFederatedActivity.class);
                                             Bundle bundle = new Bundle();

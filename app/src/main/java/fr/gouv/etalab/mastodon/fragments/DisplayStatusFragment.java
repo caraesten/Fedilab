@@ -146,7 +146,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
             lv_status.setAdapter(statusListAdapter);
         }else {
-            peertubeAdapater = new PeertubeAdapter(context, this.peertubes);
+            peertubeAdapater = new PeertubeAdapter(context, remoteInstance, this.peertubes);
             lv_status.setAdapter(peertubeAdapater);
         }
         mLayoutManager = new LinearLayoutManager(context);
@@ -307,6 +307,17 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             flag_loading = false;
+            return;
+        }
+        if( apiResponse.getHowToVideos() != null){
+            int previousPosition = this.peertubes.size();
+            if( max_id == null)
+                max_id = "0";
+            max_id = String.valueOf(Integer.valueOf(max_id) + 50);
+            this.peertubes.addAll(apiResponse.getPeertubes());
+            statusListAdapter.notifyItemRangeInserted(previousPosition, apiResponse.getHowToVideos().size());
+            swipeRefreshLayout.setRefreshing(false);
+            firstLoad = false;
             return;
         }
         int previousPosition = this.statuses.size();

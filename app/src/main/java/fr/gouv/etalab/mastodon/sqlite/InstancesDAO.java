@@ -134,7 +134,7 @@ public class InstancesDAO {
         while (c.moveToNext() ) {
             RemoteInstance remoteInstance = new RemoteInstance();
             remoteInstance.setHost(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
-            remoteInstance.setType(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)) == null?"MASTODON":c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
+            remoteInstance.setType(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE_TYPE)) == null?"MASTODON":c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE_TYPE)));
         }
         //Close the cursor
         c.close();

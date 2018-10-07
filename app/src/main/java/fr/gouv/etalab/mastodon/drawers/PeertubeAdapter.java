@@ -56,11 +56,13 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
     private List<Peertube> peertubes;
     private LayoutInflater layoutInflater;
     private Context context;
+    private String instance;
 
-    public PeertubeAdapter(Context context, List<Peertube> peertubes){
+    public PeertubeAdapter(Context context, String instance, List<Peertube> peertubes){
         this.peertubes = peertubes;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
+        this.instance = instance;
 
     }
 
@@ -100,14 +102,14 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         next.setBounds(0,0,(int) (30  * scale + 0.5f),(int) (30  * scale + 0.5f));
         holder.how_to_description.setCompoundDrawables(null, null, next, null);
         Glide.with(holder.how_to_image.getContext())
-                .load("https://peertube.social" + peertube.getThumbnailPath())
+                .load("https://" + instance + peertube.getThumbnailPath())
                 .into(holder.how_to_image);
         holder.how_to_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, WebviewActivity.class);
                 Bundle b = new Bundle();
-                String finalUrl = "https://peertube.social" + peertube.getEmbedPath();
+                String finalUrl = "https://"  + instance + peertube.getEmbedPath();
                 b.putString("url", finalUrl);
                 b.putBoolean("peertubeLink", true);
                 Pattern link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/embed\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
@@ -130,7 +132,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
 
     @Override
     public int getItemCount() {
-        return 0;
+        return peertubes.size();
     }
 
 

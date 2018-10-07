@@ -549,6 +549,37 @@ public class API {
     }
 
 
+    /**
+     * Retrieves Peertube videos from an instance *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getPeertube(String instance, String max_id) {
+
+        List<Peertube> peertubes = new ArrayList<>();
+        HashMap<String, String> params = new HashMap<>();
+        if( max_id == null)
+            max_id = "0";
+        params.put("start", max_id);
+        params.put("count", "50");
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get("https://"+instance+"/api/v1/videos", 60, params, null);
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            peertubes = parsePeertube(jsonArray);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPeertubes(peertubes);
+        return apiResponse;
+    }
 
     /**
      * Retrieves home timeline for the account *synchronously*
@@ -559,7 +590,7 @@ public class API {
         List<HowToVideo> howToVideos = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get("https://peertube.social/api/v1/video-channels/bb32394a-a6d2-4f41-9b8e-ad9514a66009/videos", 60, null, null);
+            String response = httpsConnection.get("https://peertube.social/api/v1/video-channels/mastalab_channel/videos", 60, null, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             howToVideos = parseHowTos(jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -2184,6 +2215,53 @@ public class API {
         }
         return howToVideos;
     }
+
+    /**
+     * Parse json response for several howto
+     * @param jsonArray JSONArray
+     * @return List<Peertube>
+     */
+    private List<Peertube> parsePeertube(JSONArray jsonArray){
+
+        List<Peertube> peertubes = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ){
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Peertube peertube = parsePeertube(context, resobj);
+                i++;
+                peertubes.add(peertube);
+            }
+
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return peertubes;
+    }
+
+    /**
+     * Parse json response for unique how to
+     * @param resobj JSONObject
+     * @return Peertube
+     */
+    private static Peertube parsePeertube(Context context, JSONObject resobj){
+        Peertube peertube = new Peertube();
+        try {
+            peertube.setId(resobj.get("id").toString());
+            peertube.setUuid(resobj.get("uuid").toString());
+            peertube.setName(resobj.get("name").toString());
+            peertube.setDescription(resobj.get("description").toString());
+            peertube.setEmbedPath(resobj.get("embedPath").toString());
+            peertube.setPreviewPath(resobj.get("previewPath").toString());
+            peertube.setThumbnailPath(resobj.get("thumbnailPath").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return peertube;
+    }
+
 
     /**
      * Parse json response for unique how to
