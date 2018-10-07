@@ -142,7 +142,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
 
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        if( instanceType == null) {
+        if( instanceType == null || instanceType.equals("MASTODON")) {
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
             lv_status.setAdapter(statusListAdapter);
         }else {
@@ -156,7 +156,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
 
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
             {
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                 if(dy > 0){
@@ -309,100 +309,100 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
-        if( apiResponse.getHowToVideos() != null){
+        if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && peertubeAdapater != null){
             int previousPosition = this.peertubes.size();
             if( max_id == null)
                 max_id = "0";
             max_id = String.valueOf(Integer.valueOf(max_id) + 50);
             this.peertubes.addAll(apiResponse.getPeertubes());
-            statusListAdapter.notifyItemRangeInserted(previousPosition, apiResponse.getHowToVideos().size());
+            peertubeAdapater.notifyItemRangeInserted(previousPosition, apiResponse.getPeertubes().size());
             swipeRefreshLayout.setRefreshing(false);
             firstLoad = false;
-            return;
-        }
-        int previousPosition = this.statuses.size();
-        List<Status> statuses = Helper.filterToots(context, apiResponse.getStatuses(), mutedAccount, type);
-
-        if( type == RetrieveFeedsAsyncTask.Type.HOME) {
-            if (max_id == null || (apiResponse.getMax_id() != null && Long.parseLong(max_id) > Long.parseLong(apiResponse.getMax_id())))
-                max_id = apiResponse.getMax_id();
+            flag_loading = false;
         }else {
-            max_id = apiResponse.getMax_id();
-        }
-        flag_loading = (max_id == null );
-        if( firstLoad && (statuses == null || statuses.size() == 0))
-            textviewNoAction.setVisibility(View.VISIBLE);
-        else
-            textviewNoAction.setVisibility(View.GONE);
+            int previousPosition = this.statuses.size();
+            List<Status> statuses = Helper.filterToots(context, apiResponse.getStatuses(), mutedAccount, type);
 
-        //First toot are loaded as soon as the bookmark has been retrieved
-        if( type == RetrieveFeedsAsyncTask.Type.HOME && !firstTootsLoaded){
-            asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            firstTootsLoaded = true;
-        }
-        if( statuses != null && statuses.size() > 0) {
-            if (type == RetrieveFeedsAsyncTask.Type.HOME) {
-                String bookmark = null;
-                if( context instanceof BaseMainActivity){
-                    bookmark = ((BaseMainActivity) context).getBookmark();
-                }
-                //Toots are older than the bookmark -> no special treatment with them
-                if( bookmark == null || Long.parseLong(statuses.get(0).getId())+1 < Long.parseLong(bookmark)){
+            if( type == RetrieveFeedsAsyncTask.Type.HOME) {
+                if (max_id == null || (apiResponse.getMax_id() != null && Long.parseLong(max_id) > Long.parseLong(apiResponse.getMax_id())))
+                    max_id = apiResponse.getMax_id();
+            }else {
+                max_id = apiResponse.getMax_id();
+            }
+            flag_loading = (max_id == null );
+            if( firstLoad && (statuses == null || statuses.size() == 0))
+                textviewNoAction.setVisibility(View.VISIBLE);
+            else
+                textviewNoAction.setVisibility(View.GONE);
+
+            //First toot are loaded as soon as the bookmark has been retrieved
+            if( type == RetrieveFeedsAsyncTask.Type.HOME && !firstTootsLoaded){
+                asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                firstTootsLoaded = true;
+            }
+            if( statuses != null && statuses.size() > 0) {
+                if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+                    String bookmark = null;
+                    if( context instanceof BaseMainActivity){
+                        bookmark = ((BaseMainActivity) context).getBookmark();
+                    }
+                    //Toots are older than the bookmark -> no special treatment with them
+                    if( bookmark == null || Long.parseLong(statuses.get(0).getId())+1 < Long.parseLong(bookmark)){
+                        this.statuses.addAll(statuses);
+                        statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
+                    }else { //Toots are younger than the bookmark
+                        String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
+                        int position = 0;
+                        while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
+                            position++;
+                        }
+                        ArrayList<Status> tmpStatuses = new ArrayList<>();
+                        for (Status tmpStatus : statuses) {
+                            //Mark status at new ones when their id is greater than the bookmark id / Also increments counter
+                            if (currentMaxId != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(currentMaxId)) {
+                                tmpStatus.setNew(true);
+                                MainActivity.countNewStatus++;
+                            }
+                            //Put the toot at its place in the list (id desc)
+                            if( !this.statuses.contains(tmpStatus) ) { //Element not already addeds
+                                tmpStatuses.add(tmpStatus);
+                            }
+                        }
+                        int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
+                        if( tmpStatuses.size()  >= tootPerPage) {
+                            if (tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(bookmark)) {
+                                tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
+                            }
+                        }
+                        this.statuses.addAll(position, tmpStatuses);
+                        statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
+                        if( tmpStatuses.size() < 3) //If new toots are only two
+                            lv_status.scrollToPosition(0);
+                        else
+                            lv_status.scrollToPosition(position+tmpStatuses.size());
+                    }
+
+                }else {
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
-                }else { //Toots are younger than the bookmark
-                    String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
-                    int position = 0;
-                    while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
-                        position++;
-                    }
-                    ArrayList<Status> tmpStatuses = new ArrayList<>();
-                    for (Status tmpStatus : statuses) {
-                        //Mark status at new ones when their id is greater than the bookmark id / Also increments counter
-                        if (currentMaxId != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(currentMaxId)) {
-                            tmpStatus.setNew(true);
-                            MainActivity.countNewStatus++;
-                        }
-                        //Put the toot at its place in the list (id desc)
-                        if( !this.statuses.contains(tmpStatus) ) { //Element not already addeds
-                            tmpStatuses.add(tmpStatus);
-                        }
-                    }
-                    int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
-                    if( tmpStatuses.size()  >= tootPerPage) {
-                        if (tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(bookmark)) {
-                            tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
-                        }
-                    }
-                    this.statuses.addAll(position, tmpStatuses);
-                    statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
-                    if( tmpStatuses.size() < 3) //If new toots are only two
-                        lv_status.scrollToPosition(0);
-                    else
-                        lv_status.scrollToPosition(position+tmpStatuses.size());
                 }
+                if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+                    //Update the id of the last toot retrieved
+                    if( MainActivity.lastHomeId == null || Long.parseLong(statuses.get(0).getId()) > Long.parseLong(MainActivity.lastHomeId))
+                        MainActivity.lastHomeId = statuses.get(0).getId();
+                    if( firstLoad )
+                        updateStatusLastId(statuses.get(0).getId());
+                }
+                if( type == RetrieveFeedsAsyncTask.Type.HOME)
+                    //Display new value in counter
+                    try {
+                        ((MainActivity) context).updateHomeCounter();
+                    }catch (Exception ignored){}
+            }
+            swipeRefreshLayout.setRefreshing(false);
+            firstLoad = false;
 
-            }else {
-                this.statuses.addAll(statuses);
-                statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
-            }
-            if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
-                //Update the id of the last toot retrieved
-                if( MainActivity.lastHomeId == null || Long.parseLong(statuses.get(0).getId()) > Long.parseLong(MainActivity.lastHomeId))
-                    MainActivity.lastHomeId = statuses.get(0).getId();
-                if( firstLoad )
-                    updateStatusLastId(statuses.get(0).getId());
-            }
-            if( type == RetrieveFeedsAsyncTask.Type.HOME)
-                //Display new value in counter
-                try {
-                    ((MainActivity) context).updateHomeCounter();
-                }catch (Exception ignored){}
         }
-        swipeRefreshLayout.setRefreshing(false);
-        firstLoad = false;
-
-
     }
 
     /**
