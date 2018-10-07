@@ -763,11 +763,9 @@ public class Status implements Parcelable{
             int matchStart = matcher.start(2);
             int matchEnd = matcher.end();
             final String twittername = matcher.group(2);
-            if( spannableStringT.length() < matchEnd) {
-                URLSpan[] spans = spannableStringT.getSpans(matchStart, matchEnd, URLSpan.class);
-                for (URLSpan span : spans) {
-                    spannableStringT.removeSpan(span);
-                }
+            URLSpan[] spans = spannableStringT.getSpans(matchStart, matchEnd, URLSpan.class);
+            for (URLSpan span : spans) {
+                spannableStringT.removeSpan(span);
             }
             if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
                 spannableStringT.setSpan(new ClickableSpan() {
@@ -830,11 +828,9 @@ public class Status implements Parcelable{
                     for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(key.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
 
                         int endPosition = startPosition + key.length();
-                        if( spannableStringT.length() < endPosition) {
-                            URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
-                            for (URLSpan span : spans) {
-                                spannableStringT.removeSpan(span);
-                            }
+                        URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
+                        for (URLSpan span : spans) {
+                            spannableStringT.removeSpan(span);
                         }
                         if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition) {
                             spannableStringT.setSpan(new ClickableSpan() {
@@ -895,11 +891,9 @@ public class Status implements Parcelable{
                     for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
 
                         int endPosition = startPosition + targetedAccount.length();
-                        if( spannableStringT.length() < endPosition) {
-                            URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
-                            for (URLSpan span : spans) {
-                                spannableStringT.removeSpan(span);
-                            }
+                        URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
+                        for (URLSpan span : spans) {
+                            spannableStringT.removeSpan(span);
                         }
                         if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
                             spannableStringT.setSpan(new ClickableSpan() {
@@ -931,11 +925,9 @@ public class Status implements Parcelable{
         while (matcher.find()){
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
-            if( spannableStringT.length() < matchEnd) {
-                URLSpan[] spans = spannableStringT.getSpans(matchStart, matchEnd, URLSpan.class);
-                for (URLSpan span : spans) {
-                    spannableStringT.removeSpan(span);
-                }
+            URLSpan[] spans = spannableStringT.getSpans(matchStart, matchEnd, URLSpan.class);
+            for (URLSpan span : spans) {
+                spannableStringT.removeSpan(span);
             }
             final String tag = spannableStringT.toString().substring(matchStart, matchEnd);
             if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
