@@ -27,6 +27,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,9 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Peertube;
+import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
+import fr.gouv.etalab.mastodon.drawers.PeertubeAdapter;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
@@ -50,6 +54,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
@@ -65,8 +70,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private Context context;
     private AsyncTask<Void, Void, Void> asyncTask;
     private StatusListAdapter statusListAdapter;
+    private PeertubeAdapter peertubeAdapater;
     private String max_id;
     private List<Status> statuses;
+    private List<Peertube> peertubes;
     private RetrieveFeedsAsyncTask.Type type;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
@@ -83,7 +90,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean isSwipped;
     private String remoteInstance;
     private List<String> mutedAccount;
-
+    private String instanceType;
     public DisplayStatusFragment(){
     }
 
@@ -91,6 +98,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_status, container, false);
         statuses = new ArrayList<>();
+        peertubes = new ArrayList<>();
         context = getContext();
         Bundle bundle = this.getArguments();
         showMediaOnly = false;
@@ -106,6 +114,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             showPinned = bundle.getBoolean("showPinned",false);
             showReply = bundle.getBoolean("showReply",false);
             remoteInstance = bundle.getString("remote_instance", "");
+        }
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        if( !remoteInstance.equals("")){
+            List<RemoteInstance> remoteInstanceObj = new InstancesDAO(context, db).getInstanceByName(remoteInstance);
+            if( remoteInstanceObj != null && remoteInstanceObj.size() > 0)
+                instanceType = remoteInstanceObj.get(0).getType();
         }
         isSwipped = false;
         max_id = null;
@@ -124,16 +138,18 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
 
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+
         Account account = new AccountDAO(context, db).getAccountByID(userId);
         mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
 
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
-
-
-
-        lv_status.setAdapter(statusListAdapter);
+        if( instanceType == null || instanceType.equals("MASTODON")) {
+            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+            lv_status.setAdapter(statusListAdapter);
+        }else {
+            peertubeAdapater = new PeertubeAdapter(context, remoteInstance, this.peertubes);
+            lv_status.setAdapter(peertubeAdapater);
+        }
         mLayoutManager = new LinearLayoutManager(context);
         lv_status.setLayoutManager(mLayoutManager);
 
@@ -141,7 +157,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
 
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
             {
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                 if(dy > 0){
@@ -176,16 +192,33 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         });
 
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if( statuses.size() > 0) {
-                    MainActivity.countNewStatus = 0;
-                    isSwipped = true;
-                    retrieveMissingToots(null);
+        if( instanceType == null || instanceType.equals("MASTODON"))
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    if( statuses.size() > 0) {
+                        if( type == RetrieveFeedsAsyncTask.Type.HOME)
+                            MainActivity.countNewStatus = 0;
+                        isSwipped = true;
+                        retrieveMissingToots(null);
+                    }
                 }
-            }
-        });
+            });
+        else
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    if( peertubes.size() > 0) {
+                        int size = peertubes.size();
+                        isSwipped = true;
+                        peertubes.clear();
+                        peertubes = new ArrayList<>();
+                        max_id = "0";
+                        peertubeAdapater.notifyItemRangeRemoved(0, size);
+                        asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, "0", DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
+                }
+            });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
@@ -294,89 +327,104 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
-        int previousPosition = this.statuses.size();
-        List<Status> statuses = Helper.filterToots(context, apiResponse.getStatuses(), mutedAccount, type);
-
-        if( type == RetrieveFeedsAsyncTask.Type.HOME) {
-            if (max_id == null || (apiResponse.getMax_id() != null && Long.parseLong(max_id) > Long.parseLong(apiResponse.getMax_id())))
-                max_id = apiResponse.getMax_id();
+        if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && peertubeAdapater != null){
+            int previousPosition = this.peertubes.size();
+            if( max_id == null)
+                max_id = "0";
+            max_id = String.valueOf(Integer.valueOf(max_id) + 50);
+            this.peertubes.addAll(apiResponse.getPeertubes());
+            if( previousPosition == 0) {
+                peertubeAdapater = new PeertubeAdapter(context, remoteInstance, this.peertubes);
+                lv_status.setAdapter(peertubeAdapater);
+            }else
+                peertubeAdapater.notifyItemRangeInserted(previousPosition, apiResponse.getPeertubes().size());
+            swipeRefreshLayout.setRefreshing(false);
+            firstLoad = false;
+            flag_loading = false;
         }else {
-            max_id = apiResponse.getMax_id();
-        }
-        flag_loading = (max_id == null );
-        if( firstLoad && (statuses == null || statuses.size() == 0))
-            textviewNoAction.setVisibility(View.VISIBLE);
-        else
-            textviewNoAction.setVisibility(View.GONE);
+            int previousPosition = this.statuses.size();
+            List<Status> statuses = Helper.filterToots(context, apiResponse.getStatuses(), mutedAccount, type);
 
-        //First toot are loaded as soon as the bookmark has been retrieved
-        if( type == RetrieveFeedsAsyncTask.Type.HOME && !firstTootsLoaded){
-            asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            firstTootsLoaded = true;
-        }
-        if( statuses != null && statuses.size() > 0) {
-            if (type == RetrieveFeedsAsyncTask.Type.HOME) {
-                String bookmark = null;
-                if( context instanceof BaseMainActivity){
-                    bookmark = ((BaseMainActivity) context).getBookmark();
-                }
-                //Toots are older than the bookmark -> no special treatment with them
-                if( bookmark == null || Long.parseLong(statuses.get(0).getId())+1 < Long.parseLong(bookmark)){
+            if( type == RetrieveFeedsAsyncTask.Type.HOME) {
+                if (max_id == null || (apiResponse.getMax_id() != null && Long.parseLong(max_id) > Long.parseLong(apiResponse.getMax_id())))
+                    max_id = apiResponse.getMax_id();
+            }else {
+                max_id = apiResponse.getMax_id();
+            }
+            flag_loading = (max_id == null );
+            if( firstLoad && (statuses == null || statuses.size() == 0))
+                textviewNoAction.setVisibility(View.VISIBLE);
+            else
+                textviewNoAction.setVisibility(View.GONE);
+
+            //First toot are loaded as soon as the bookmark has been retrieved
+            if( type == RetrieveFeedsAsyncTask.Type.HOME && !firstTootsLoaded){
+                asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                firstTootsLoaded = true;
+            }
+            if( statuses != null && statuses.size() > 0) {
+                if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+                    String bookmark = null;
+                    if( context instanceof BaseMainActivity){
+                        bookmark = ((BaseMainActivity) context).getBookmark();
+                    }
+                    //Toots are older than the bookmark -> no special treatment with them
+                    if( bookmark == null || Long.parseLong(statuses.get(0).getId())+1 < Long.parseLong(bookmark)){
+                        this.statuses.addAll(statuses);
+                        statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
+                    }else { //Toots are younger than the bookmark
+                        String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
+                        int position = 0;
+                        while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
+                            position++;
+                        }
+                        ArrayList<Status> tmpStatuses = new ArrayList<>();
+                        for (Status tmpStatus : statuses) {
+                            //Mark status at new ones when their id is greater than the bookmark id / Also increments counter
+                            if (currentMaxId != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(currentMaxId)) {
+                                tmpStatus.setNew(true);
+                                MainActivity.countNewStatus++;
+                            }
+                            //Put the toot at its place in the list (id desc)
+                            if( !this.statuses.contains(tmpStatus) ) { //Element not already addeds
+                                tmpStatuses.add(tmpStatus);
+                            }
+                        }
+                        int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
+                        if( tmpStatuses.size()  >= tootPerPage) {
+                            if (tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(bookmark)) {
+                                tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
+                            }
+                        }
+                        this.statuses.addAll(position, tmpStatuses);
+                        statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
+                        if( tmpStatuses.size() < 3) //If new toots are only two
+                            lv_status.scrollToPosition(0);
+                        else
+                            lv_status.scrollToPosition(position+tmpStatuses.size());
+                    }
+
+                }else {
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
-                }else { //Toots are younger than the bookmark
-                    String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
-                    int position = 0;
-                    while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
-                        position++;
-                    }
-                    ArrayList<Status> tmpStatuses = new ArrayList<>();
-                    for (Status tmpStatus : statuses) {
-                        //Mark status at new ones when their id is greater than the bookmark id / Also increments counter
-                        if (currentMaxId != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(currentMaxId)) {
-                            tmpStatus.setNew(true);
-                            MainActivity.countNewStatus++;
-                        }
-                        //Put the toot at its place in the list (id desc)
-                        if( !this.statuses.contains(tmpStatus) ) { //Element not already addeds
-                            tmpStatuses.add(tmpStatus);
-                        }
-                    }
-                    int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
-                    if( tmpStatuses.size()  >= tootPerPage) {
-                        if (tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(bookmark)) {
-                            tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
-                        }
-                    }
-                    this.statuses.addAll(position, tmpStatuses);
-                    statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
-                    if( tmpStatuses.size() < 3) //If new toots are only two
-                        lv_status.scrollToPosition(0);
-                    else
-                        lv_status.scrollToPosition(position+tmpStatuses.size());
                 }
+                if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
+                    //Update the id of the last toot retrieved
+                    if( MainActivity.lastHomeId == null || Long.parseLong(statuses.get(0).getId()) > Long.parseLong(MainActivity.lastHomeId))
+                        MainActivity.lastHomeId = statuses.get(0).getId();
+                    if( firstLoad )
+                        updateStatusLastId(statuses.get(0).getId());
+                }
+                if( type == RetrieveFeedsAsyncTask.Type.HOME)
+                    //Display new value in counter
+                    try {
+                        ((MainActivity) context).updateHomeCounter();
+                    }catch (Exception ignored){}
+            }
+            swipeRefreshLayout.setRefreshing(false);
+            firstLoad = false;
 
-            }else {
-                this.statuses.addAll(statuses);
-                statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
-            }
-            if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
-                //Update the id of the last toot retrieved
-                if( MainActivity.lastHomeId == null || Long.parseLong(statuses.get(0).getId()) > Long.parseLong(MainActivity.lastHomeId))
-                    MainActivity.lastHomeId = statuses.get(0).getId();
-                if( firstLoad )
-                    updateStatusLastId(statuses.get(0).getId());
-            }
-            if( type == RetrieveFeedsAsyncTask.Type.HOME)
-                //Display new value in counter
-                try {
-                    ((MainActivity) context).updateHomeCounter();
-                }catch (Exception ignored){}
         }
-        swipeRefreshLayout.setRefreshing(false);
-        firstLoad = false;
-
-
     }
 
     /**

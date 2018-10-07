@@ -17,17 +17,19 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Peertube;
+import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.FilterToots;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
+import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 
@@ -136,12 +138,18 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getPublicTimeline(false, max_id);
                 break;
             case REMOTE_INSTANCE:
-                apiResponse = api.getPublicTimeline(this.instanceName,false, max_id);
-                List<fr.gouv.etalab.mastodon.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
-                if( statusesTemp != null){
-                    for(fr.gouv.etalab.mastodon.client.Entities.Status status: statusesTemp){
-                        status.setType(action);
+                SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                List<RemoteInstance> remoteInstanceObj = new InstancesDAO(this.contextReference.get(), db).getInstanceByName(this.instanceName);
+                if( remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("MASTODON")) {
+                    apiResponse = api.getPublicTimeline(this.instanceName, false, max_id);
+                    List<fr.gouv.etalab.mastodon.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
+                    if( statusesTemp != null){
+                        for(fr.gouv.etalab.mastodon.client.Entities.Status status: statusesTemp){
+                            status.setType(action);
+                        }
                     }
+                }else {
+                    apiResponse = api.getPeertube(this.instanceName, max_id);
                 }
                 break;
             case FAVOURITES:
@@ -163,7 +171,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case CACHE_BOOKMARKS:
                 apiResponse = new APIResponse();
-                SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new StatusCacheDAO(contextReference.get(), db).getAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
                 apiResponse.setStatuses(statuses);
                 break;

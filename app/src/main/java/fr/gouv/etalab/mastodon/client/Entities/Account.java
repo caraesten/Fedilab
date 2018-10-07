@@ -30,7 +30,6 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -452,22 +451,23 @@ public class Account implements Parcelable {
             int startPositionTar = spannableString.toString().indexOf("@"+this.getMoved_to_account().getAcct());
             int endPositionTar = startPositionTar + ("@"+this.getMoved_to_account().getAcct()).length();
             final String idTar = this.getMoved_to_account().getId();
-            spannableString.setSpan(new ClickableSpan() {
-                        @Override
-                        public void onClick(View textView) {
-                            Intent intent = new Intent(context, ShowAccountActivity.class);
-                            Bundle b = new Bundle();
-                            b.putString("accountId", idTar);
-                            intent.putExtras(b);
-                            context.startActivity(intent);
-                        }
-                        @Override
-                        public void updateDrawState(TextPaint ds) {
-                            super.updateDrawState(ds);
-                        }
-                    },
-                    startPositionTar, endPositionTar,
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            if( endPositionTar <= spannableString.toString().length() && endPositionTar >= startPositionTar)
+                spannableString.setSpan(new ClickableSpan() {
+                            @Override
+                            public void onClick(View textView) {
+                                Intent intent = new Intent(context, ShowAccountActivity.class);
+                                Bundle b = new Bundle();
+                                b.putString("accountId", idTar);
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
+                            @Override
+                            public void updateDrawState(TextPaint ds) {
+                                super.updateDrawState(ds);
+                            }
+                        },
+                        startPositionTar, endPositionTar,
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         return spannableString;
     }

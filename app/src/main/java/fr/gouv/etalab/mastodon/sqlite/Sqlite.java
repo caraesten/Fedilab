@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 13;
+    public static final int DB_VERSION = 14;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -160,10 +160,10 @@ public class Sqlite extends SQLiteOpenHelper {
     private final String CREATE_UNIQUE_CACHE_INDEX = "CREATE UNIQUE INDEX instance_statusid on "
             + TABLE_STATUSES_CACHE + "(" + COL_INSTANCE +"," + COL_STATUS_ID + ")";
 
-
+    static final String COL_INSTANCE_TYPE = "INSTANCE_TYPE";
     private final String CREATE_TABLE_INSTANCES = "CREATE TABLE " + TABLE_INSTANCES + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL)";
+            + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE_TYPE + " TEXT, " + COL_DATE_CREATION + " TEXT NOT NULL)";
 
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -226,6 +226,8 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL(CREATE_TABLE_INSTANCES);
             case 12:
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN "+ COL_EMOJIS + " TEXT");
+            case 13:
+                db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN "+ COL_INSTANCE_TYPE + " TEXT");
             default:
                 break;
         }

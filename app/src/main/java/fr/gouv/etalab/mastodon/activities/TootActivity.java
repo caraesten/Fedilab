@@ -17,9 +17,7 @@ package fr.gouv.etalab.mastodon.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -195,6 +193,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private boolean removed;
     private boolean restoredScheduled;
     static boolean active = false;
+    private static Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,7 +217,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         }
 
         setContentView(R.layout.activity_toot);
-
+        activity = this;
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null ){
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -796,7 +795,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
 
             if( uriFile == null) {
-                Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
+                    }
+                });
                 return null;
             }
             bs = Helper.compressImage(activityWeakReference.get(), uriFile, Helper.MediaType.MEDIA);
@@ -1589,7 +1592,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
     @Override
     public void onPostStatusAction(APIResponse apiResponse) {
-        if( apiResponse.getError() != null){
+        if( apiResponse.getError() != null ){
             toot_it.setEnabled(true);
             if( apiResponse.getError().getError().contains("422")){
                 showAToast(getString(R.string.toast_error_char_limit));
@@ -1614,7 +1617,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             if( toot_cw_content.getText().toString().trim().length() > 0)
                 toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
             toot.setVisibility(visibility);
-            if( apiResponse.getStatuses() != null)
+            if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0)
                 toot.setIn_reply_to_id(apiResponse.getStatuses().get(0).getId());
             toot.setContent(tootContent);
             new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
