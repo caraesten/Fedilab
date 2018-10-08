@@ -54,8 +54,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.acra.ACRA;
-
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -121,18 +119,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-
-        boolean enabledCrash = sharedpreferences.getBoolean(ACRA.PREF_ENABLE_ACRA, false);
-        final CheckBox set_crash_report = rootView.findViewById(R.id.set_crash_report);
-        set_crash_report.setChecked(enabledCrash);
-        set_crash_report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(ACRA.PREF_ENABLE_ACRA, !set_crash_report.isChecked());
-                editor.apply();
-            }
-        });
 
         boolean notif_validation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
         final CheckBox set_share_validation = rootView.findViewById(R.id.set_share_validation);
