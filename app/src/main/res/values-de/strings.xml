@@ -336,7 +336,7 @@
     <item>DeepL</item>
     <item>Nein</item>
   </string-array>
-  <string name="your_api_key">Ihr API-Schlüssel, Sie können ihn leer lassen für Yandex</string>
+  <string name="your_api_key">Dein API-Schlüssel; für Yandex kannst du ihn leer lassen</string>
   <string-array name="settings_theme">
     <item>Dunkel</item>
     <item>Hell</item>
@@ -556,15 +556,15 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="retrieve_remote_conversation">Rufe entferntes Thema ab!</string>
   <string name="no_blocked_domain">Keine blockierten Domänen!</string>
   <string name="unblock_domain_confirm">Domäne nicht mehr blockieren</string>
-  <string name="unblock_domain_confirm_message">Sicher, dass %s nicht mehr gesperrt werden soll?</string>
-  <string name="block_domain_confirm_message">Sicher, dass du %s sperren möchtest?</string>
-  <string name="blocked_domains">Gesperrte Domänen</string>
-  <string name="block_domain">Sperre Domäne</string>
+  <string name="unblock_domain_confirm_message">Sicher, dass %s nicht mehr blockiert werden soll?</string>
+  <string name="block_domain_confirm_message">Sicher, dass du %s blockieren möchtest?</string>
+  <string name="blocked_domains">Blockierte Domänen</string>
+  <string name="block_domain">Blockiere Domäne</string>
   <string name="toast_block_domain">Die Domäne ist blockiert</string>
   <string name="toast_unblock_domain">Die Domäne wird nicht länger blockiert!</string>
-  <string name="retrieve_remote_status">Fetching remote status</string>
+  <string name="retrieve_remote_status">Rufe entfernten Status ab</string>
   <string name="comment">Kommentar</string>
-  <string name="peertube_instance">Peertube instance</string>
+  <string name="peertube_instance">Peertube Instanz</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>
