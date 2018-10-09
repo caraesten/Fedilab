@@ -369,7 +369,7 @@
   <string name="set_capitalize">Première lettre en majuscule pour les réponses</string>
   <string name="set_resize_picture">Redimensionner les images</string>
   <!-- Quick settings for notifications -->
-  <string name="settings_popup_title">Notifications push</string>
+  <string name="settings_popup_title">Notifications poussées</string>
   <string name="settings_popup_message">
         Veuillez confirmer les notifications que vous souhaitez recevoir.
         Vous pourrez les activer ou les désactiver plus tard dans les paramètres (onglet Notifications).
@@ -384,7 +384,7 @@
   <!-- ACTIVITY CACHE -->
   <string name="action_sync">Synchroniser</string>
   <string name="action_filter">Filtrer</string>
-  <string name="owner_cached_toots">Vos pouets</string>
+  <string name="owner_cached_toots">Mes pouets</string>
   <string name="v_public">Public</string>
   <string name="v_unlisted">Non-listé</string>
   <string name="v_private">Privé</string>
