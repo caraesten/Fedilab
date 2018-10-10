@@ -271,6 +271,25 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean display_direct = sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true);
+        final CheckBox set_display_direct = rootView.findViewById(R.id.set_display_direct);
+        set_display_direct.setChecked(display_direct);
+
+        set_display_direct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_DIRECT, set_display_direct.isChecked());
+                editor.apply();
+                if( getActivity() != null)
+                    getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                if(getActivity() != null)
+                    getActivity().finish();
+                startActivity(intent);
+            }
+        });
 
         boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
         final CheckBox set_display_local = rootView.findViewById(R.id.set_display_local);
@@ -286,6 +305,28 @@ public class SettingsFragment extends Fragment {
                     getActivity().recreate();
                 Intent intent = new Intent(context, MainActivity.class);
                 intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                if(getActivity() != null)
+                    getActivity().finish();
+                startActivity(intent);
+            }
+        });
+
+        boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
+        final CheckBox set_display_global = rootView.findViewById(R.id.set_display_global);
+        set_display_global.setChecked(display_global);
+
+        set_display_global.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_GLOBAL, set_display_global.isChecked());
+                editor.apply();
+                if( getActivity() != null)
+                    getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                if(getActivity() != null)
+                    getActivity().finish();
                 startActivity(intent);
             }
         });
@@ -326,24 +367,6 @@ public class SettingsFragment extends Fragment {
         });
 
 
-
-        boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
-        final CheckBox set_display_global = rootView.findViewById(R.id.set_display_global);
-        set_display_global.setChecked(display_global);
-
-        set_display_global.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_DISPLAY_GLOBAL, set_display_global.isChecked());
-                editor.apply();
-                if( getActivity() != null)
-                    getActivity().recreate();
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
-                startActivity(intent);
-            }
-        });
 
 
         boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);

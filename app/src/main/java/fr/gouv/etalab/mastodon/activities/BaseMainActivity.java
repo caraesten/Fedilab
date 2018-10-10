@@ -1771,7 +1771,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            }else if (position == 3 && display_global && display_direct){
+            }else if (position == 3 && display_global && !display_direct){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                 statusFragment.setArguments(bundle);
