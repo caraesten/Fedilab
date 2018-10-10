@@ -123,7 +123,7 @@
     <item>Nutzer stummschalten?</item>
     <item>Diesen Nutzer blockieren?</item>
     <item>Diesen Toot melden?</item>
-    <item>Block this domain?</item>
+    <item>Diese Domäne blockieren?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Entferne diesen Toot?</item>
@@ -336,7 +336,7 @@
     <item>DeepL</item>
     <item>Nein</item>
   </string-array>
-  <string name="your_api_key">Ihr API-Schlüssel, Sie können ihn leer lassen für Yandex</string>
+  <string name="your_api_key">Dein API-Schlüssel; für Yandex kannst du ihn leer lassen</string>
   <string-array name="settings_theme">
     <item>Dunkel</item>
     <item>Hell</item>
@@ -553,18 +553,19 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="select_sound">Klingelton auswählen</string>
   <string name="set_enable_time_slot">Zeitfenster aktivieren</string>
   <string name="how_to_videos">Video Anleitungen</string>
-  <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-  <string name="no_blocked_domain">No blocked domains!</string>
-  <string name="unblock_domain_confirm">Unblock domain</string>
-  <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-  <string name="block_domain_confirm_message">Are you sure to block %s?</string>
-  <string name="blocked_domains">Blocked domains</string>
-  <string name="block_domain">Block domain</string>
-  <string name="toast_block_domain">The domain is blocked</string>
-  <string name="toast_unblock_domain">The domain is no longer blocked!</string>
-  <string name="retrieve_remote_status">Fetching remote status</string>
+  <string name="retrieve_remote_conversation">Rufe entferntes Thema ab!</string>
+  <string name="no_blocked_domain">Keine blockierten Domänen!</string>
+  <string name="unblock_domain_confirm">Domäne nicht mehr blockieren</string>
+  <string name="unblock_domain_confirm_message">Sicher, dass %s nicht mehr blockiert werden soll?</string>
+  <string name="block_domain_confirm_message">Sicher, dass du %s blockieren möchtest?</string>
+  <string name="blocked_domains">Blockierte Domänen</string>
+  <string name="block_domain">Blockiere Domäne</string>
+  <string name="toast_block_domain">Die Domäne ist blockiert</string>
+  <string name="toast_unblock_domain">Die Domäne wird nicht länger blockiert!</string>
+  <string name="retrieve_remote_status">Rufe entfernten Status ab</string>
   <string name="comment">Kommentar</string>
-  <string name="peertube_instance">Peertube instance</string>
+  <string name="peertube_instance">Peertube Instanz</string>
+  <string name="set_display_direct">Display private messages timeline</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>

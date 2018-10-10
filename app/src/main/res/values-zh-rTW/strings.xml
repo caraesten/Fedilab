@@ -162,7 +162,7 @@
   <string name="toot_reply_content_title">您正在回覆到此嘟文：</string>
   <string name="toot_sensitive">敏感內容？</string>
   <string-array name="toot_visibility">
-    <item>張貼到公共時間表</item>
+    <item>張貼到公開時間軸</item>
     <item>不要張貼到公開時間軸</item>
     <item>僅張貼給關注者</item>
     <item>僅張貼給提及的使用者</item>
@@ -470,7 +470,7 @@
         - 若還是無法運作，請在 GitHub 上回報問題，網址為 https://github.com/stom79/mastalab/issues
     </string>
   <string name="media_ready">媒體已載入。點選這裡以顯示。</string>
-  <string name="data_export_start">此動作可能會很久。您將會在其快結束時被通知。</string>
+  <string name="data_export_start">此動作可能會很久，您將在完成時收到通知。</string>
   <string name="data_export_running">仍在執行中，請稍候……</string>
   <string name="data_export">匯出狀態</string>
   <string name="data_export_toots">%1$s 的匯出狀態</string>
@@ -571,8 +571,9 @@
   <string name="toast_block_domain">網域已被封鎖</string>
   <string name="toast_unblock_domain">網域不再被阻擋！</string>
   <string name="retrieve_remote_status">正在擷取遠端狀態</string>
-  <string name="comment">Comment</string>
-  <string name="peertube_instance">Peertube instance</string>
+  <string name="comment">評論</string>
+  <string name="peertube_instance">PeerTube 實體</string>
+  <string name="set_display_direct">Display private messages timeline</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
