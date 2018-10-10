@@ -460,7 +460,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
 
 
-            } else if (type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL) {
+            } else if (type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL|| type == RetrieveFeedsAsyncTask.Type.DIRECT) {
 
                 status.setNew(false);
                 statuses.add(0, status);
