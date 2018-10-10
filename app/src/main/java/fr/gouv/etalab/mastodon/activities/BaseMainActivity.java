@@ -162,7 +162,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private DisplayNotificationsFragment notificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
     private static BroadcastReceiver receive_data, receive_federated_data, receive_local_data;
-    private boolean display_local, display_global;
+    private boolean display_direct, display_local, display_global;
     public static int countNewStatus = 0;
     public static int countNewNotifications = 0;
     private String userIdService;
@@ -200,6 +200,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
         setContentView(R.layout.activity_main);
 
+        display_direct = sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true);
         display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
         display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
 
@@ -228,10 +229,13 @@ public abstract class BaseMainActivity extends BaseActivity
         tabLayout = findViewById(R.id.tabLayout);
         TabLayout.Tab tabHome = tabLayout.newTab();
         TabLayout.Tab tabNotif = tabLayout.newTab();
+        TabLayout.Tab tabDirect = tabLayout.newTab();
         TabLayout.Tab tabLocal = tabLayout.newTab();
         TabLayout.Tab tabPublic = tabLayout.newTab();
+
         tabHome.setCustomView(R.layout.tab_badge);
         tabNotif.setCustomView(R.layout.tab_badge);
+        tabDirect.setCustomView(R.layout.tab_badge);
         tabLocal.setCustomView(R.layout.tab_badge);
         tabPublic.setCustomView(R.layout.tab_badge);
 
@@ -251,6 +255,11 @@ public abstract class BaseMainActivity extends BaseActivity
         iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconNotif.setImageResource(R.drawable.ic_notifications);
 
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconDirect = tabDirect.getCustomView().findViewById(R.id.tab_icon);
+        iconDirect.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+        iconDirect.setImageResource(R.drawable.ic_direct_messages);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconLocal = tabLocal.getCustomView().findViewById(R.id.tab_icon);
@@ -278,8 +287,10 @@ public abstract class BaseMainActivity extends BaseActivity
 
         changeDrawableColor(getApplicationContext(), R.drawable.ic_home,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_text);
+        changeDrawableColor(getApplicationContext(), R.drawable.ic_direct_messages,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_text);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_text);
+
         startSreaming();
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
@@ -287,6 +298,8 @@ public abstract class BaseMainActivity extends BaseActivity
 
         tabLayout.addTab(tabHome);
         tabLayout.addTab(tabNotif);
+        if( display_direct)
+            tabLayout.addTab(tabDirect);
         if( display_local)
             tabLayout.addTab(tabLocal);
         if( display_global)
@@ -385,15 +398,22 @@ public abstract class BaseMainActivity extends BaseActivity
             }
         });
 
-        if( tabStrip.getChildCount() > 2)
-        tabStrip.getChildAt(2).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return manageFilters(tabStrip, sharedpreferences);
-            }
-        });
-        if( tabStrip.getChildCount() == 4)
-        tabStrip.getChildAt(3).setOnLongClickListener(new View.OnLongClickListener() {
+        if( tabStrip.getChildCount() > 2 && !display_direct)
+            tabStrip.getChildAt(2).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return manageFilters(tabStrip, sharedpreferences);
+                }
+            });
+        else if ( tabStrip.getChildCount() > 3 && display_direct)
+            tabStrip.getChildAt(3).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return manageFilters(tabStrip, sharedpreferences);
+                }
+            });
+        if( tabStrip.getChildCount() == 5)
+        tabStrip.getChildAt(4).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 return manageFilters(tabStrip, sharedpreferences);
@@ -403,6 +423,8 @@ public abstract class BaseMainActivity extends BaseActivity
 
         viewPager = findViewById(R.id.viewpager);
         countPage = 2;
+        if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true))
+            countPage++;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true))
             countPage++;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true))
@@ -477,7 +499,9 @@ public abstract class BaseMainActivity extends BaseActivity
                             displayStatusFragment.scrollToTop();
                             break;
                         case 2:
-                            if (display_local)
+                            if (display_direct)
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.DIRECT, 0);
+                            else if (display_local)
                                 updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL, 0);
                             else if (display_global)
                                 updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
@@ -485,6 +509,14 @@ public abstract class BaseMainActivity extends BaseActivity
                             displayStatusFragment.scrollToTop();
                             break;
                         case 3:
+                            if (display_direct && display_local)
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL, 0);
+                            else
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                            displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            displayStatusFragment.scrollToTop();
+                            break;
+                        case 4:
                             displayStatusFragment = ((DisplayStatusFragment) fragment);
                             displayStatusFragment.scrollToTop();
                             updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
@@ -541,6 +573,7 @@ public abstract class BaseMainActivity extends BaseActivity
                             case 0:
                             case 2:
                             case 3:
+                            case 4:
                                 DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
                                 displayStatusFragment.scrollToTop();
                                 break;
@@ -1853,8 +1886,22 @@ public abstract class BaseMainActivity extends BaseActivity
 
     @SuppressWarnings("ConstantConditions")
     public void updateTimeLine(RetrieveFeedsAsyncTask.Type type, int value){
-        if( type == RetrieveFeedsAsyncTask.Type.LOCAL){
-            if( tabLayout.getTabAt(2) != null && display_local){
+
+
+        if( type == RetrieveFeedsAsyncTask.Type.DIRECT && display_direct){
+            if( tabLayout.getTabAt(2) != null ){
+                View tabDirect = tabLayout.getTabAt(2).getCustomView();
+                assert tabDirect != null;
+                TextView tabCounterDirect = tabDirect.findViewById(R.id.tab_counter);
+                tabCounterDirect.setText(String.valueOf(value));
+                if( value > 0){
+                    tabCounterDirect.setVisibility(View.VISIBLE);
+                }else {
+                    tabCounterDirect.setVisibility(View.GONE);
+                }
+            }
+        }else if( type == RetrieveFeedsAsyncTask.Type.LOCAL && display_local){
+            if( tabLayout.getTabAt(2) != null && !display_direct){
                 View tabLocal = tabLayout.getTabAt(2).getCustomView();
                 assert tabLocal != null;
                 TextView tabCounterLocal = tabLocal.findViewById(R.id.tab_counter);
@@ -1864,10 +1911,20 @@ public abstract class BaseMainActivity extends BaseActivity
                 }else {
                     tabCounterLocal.setVisibility(View.GONE);
                 }
+            }else if( tabLayout.getTabAt(3) != null && display_direct){
+                View tabLocal = tabLayout.getTabAt(3).getCustomView();
+                assert tabLocal != null;
+                TextView tabCounterLocal = tabLocal.findViewById(R.id.tab_counter);
+                tabCounterLocal.setText(String.valueOf(value));
+                if( value > 0){
+                    tabCounterLocal.setVisibility(View.VISIBLE);
+                }else {
+                    tabCounterLocal.setVisibility(View.GONE);
+                }
             }
-        }else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
-            if( tabLayout.getTabAt(3) != null && display_local){
-                View tabPublic = tabLayout.getTabAt(3).getCustomView();
+        }else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && display_global){
+            if( tabLayout.getTabAt(4) != null && display_local && display_direct){
+                View tabPublic = tabLayout.getTabAt(4).getCustomView();
                 assert tabPublic != null;
                 TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
                 tabCounterPublic.setText(String.valueOf(value));
@@ -1876,7 +1933,17 @@ public abstract class BaseMainActivity extends BaseActivity
                 }else {
                     tabCounterPublic.setVisibility(View.GONE);
                 }
-            }else if( tabLayout.getTabAt(2) != null && !display_local && display_global){
+            }else if( tabLayout.getTabAt(2) != null && !display_local && !display_direct){
+                View tabPublic = tabLayout.getTabAt(2).getCustomView();
+                assert tabPublic != null;
+                TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
+                tabCounterPublic.setText(String.valueOf(value));
+                if( value > 0){
+                    tabCounterPublic.setVisibility(View.VISIBLE);
+                }else {
+                    tabCounterPublic.setVisibility(View.GONE);
+                }
+            }else if( tabLayout.getTabAt(3) != null && ((!display_local && display_direct) || (display_local && !display_direct) )){
                 View tabPublic = tabLayout.getTabAt(2).getCustomView();
                 assert tabPublic != null;
                 TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);

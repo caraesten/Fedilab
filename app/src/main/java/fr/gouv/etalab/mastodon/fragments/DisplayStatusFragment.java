@@ -321,8 +321,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
-        if( apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 ){
-            Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if( apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
+            if( apiResponse == null)
+                Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             flag_loading = false;
             return;

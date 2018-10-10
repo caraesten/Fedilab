@@ -58,6 +58,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     public enum Type{
         HOME,
         LOCAL,
+        DIRECT,
         PUBLIC,
         HASHTAG,
         LIST,
@@ -136,6 +137,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case PUBLIC:
                 apiResponse = api.getPublicTimeline(false, max_id);
+                break;
+            case DIRECT:
+                apiResponse = api.getDirectTimeline(max_id);
                 break;
             case REMOTE_INSTANCE:
                 SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();

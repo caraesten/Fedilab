@@ -316,6 +316,7 @@ public class Helper {
     public static final String SET_COOKIES = "set_cookies";
     public static final String SET_FOLDER_RECORD = "set_folder_record";
     public static final String SET_TOOT_VISIBILITY = "set_toot_visibility";
+    public static final String SET_DISPLAY_DIRECT = "set_display_direct";
     public static final String SET_DISPLAY_LOCAL = "set_display_local";
     public static final String SET_DISPLAY_GLOBAL = "set_display_global";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS = "set_automatically_split_toots";
