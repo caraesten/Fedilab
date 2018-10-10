@@ -565,6 +565,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="retrieve_remote_status">Rufe entfernten Status ab</string>
   <string name="comment">Kommentar</string>
   <string name="peertube_instance">Peertube Instanz</string>
+  <string name="set_display_direct">Display private messages timeline</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>
