@@ -584,6 +584,7 @@
   <string name="retrieve_remote_status">جلب المنشور عن بُعد</string>
   <string name="comment">تعليق</string>
   <string name="peertube_instance">مثيل خادوم بير تيوب</string>
+  <string name="set_display_direct">Display private messages timeline</string>
   <string-array name="filter_expire">
     <item>أبدًا</item>
     <item>30 دقيقة</item>
