@@ -572,6 +572,7 @@
   <string name="retrieve_remote_status">Fetching remote status</string>
   <string name="comment">Comment</string>
   <string name="peertube_instance">Peertube instance</string>
+  <string name="set_display_direct">Display private messages timeline</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
