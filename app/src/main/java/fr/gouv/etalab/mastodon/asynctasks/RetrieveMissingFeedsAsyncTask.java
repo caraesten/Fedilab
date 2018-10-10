@@ -64,6 +64,8 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         APIResponse apiResponse = null;
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
             apiResponse = api.getHomeTimeline(since_id);
+        else if( type == RetrieveFeedsAsyncTask.Type.DIRECT)
+            apiResponse = api.getDirectTimelineSinceId(since_id);
         else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
             apiResponse = api.getPublicTimelineSinceId(true, since_id);
         else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC)

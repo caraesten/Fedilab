@@ -498,6 +498,13 @@ public class API {
         return getDirectTimeline(max_id, null, tootPerPage);
     }
 
+    /**
+     * Retrieves direct timeline for the account since an Id value *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getDirectTimelineSinceId(String since_id) {
+        return getDirectTimeline(null, since_id, tootPerPage);
+    }
 
     /**
      * Retrieves direct timeline for the account *synchronously*
