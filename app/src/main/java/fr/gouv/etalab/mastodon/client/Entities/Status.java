@@ -757,16 +757,16 @@ public class Status implements Parcelable{
             //noinspection deprecation
             spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","")));
 
+        URLSpan[] spans = spannableStringT.getSpans(0, spannableStringT.length(), URLSpan.class);
+        for (URLSpan span : spans) {
+            spannableStringT.removeSpan(span);
+        }
 
         matcher = Helper.twitterPattern.matcher(spannableStringT);
         while (matcher.find()){
             int matchStart = matcher.start(2);
             int matchEnd = matcher.end();
             final String twittername = matcher.group(2);
-            URLSpan[] spans = spannableStringT.getSpans(matchStart, matchEnd, URLSpan.class);
-            for (URLSpan span : spans) {
-                spannableStringT.removeSpan(span);
-            }
             if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
                 spannableStringT.setSpan(new ClickableSpan() {
                     @Override
@@ -792,10 +792,6 @@ public class Status implements Parcelable{
                     //Accounts can be mentioned several times so we have to loop
                     for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
                         int endPosition = startPosition + targetedAccount.length();
-                        URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
-                        for (URLSpan span : spans) {
-                            spannableStringT.removeSpan(span);
-                        }
                         if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
                             spannableStringT.setSpan(new ClickableSpan() {
                                  @Override
@@ -828,10 +824,7 @@ public class Status implements Parcelable{
                     for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(key.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
 
                         int endPosition = startPosition + key.length();
-                        URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
-                        for (URLSpan span : spans) {
-                            spannableStringT.removeSpan(span);
-                        }
+
                         if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition) {
                             spannableStringT.setSpan(new ClickableSpan() {
                                  @Override
@@ -891,10 +884,6 @@ public class Status implements Parcelable{
                     for(int startPosition = -1 ; (startPosition = spannableStringT.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
 
                         int endPosition = startPosition + targetedAccount.length();
-                        URLSpan[] spans = spannableStringT.getSpans(startPosition, endPosition, URLSpan.class);
-                        for (URLSpan span : spans) {
-                            spannableStringT.removeSpan(span);
-                        }
                         if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
                             spannableStringT.setSpan(new ClickableSpan() {
                                     @Override
@@ -925,10 +914,6 @@ public class Status implements Parcelable{
         while (matcher.find()){
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
-            URLSpan[] spans = spannableStringT.getSpans(matchStart, matchEnd, URLSpan.class);
-            for (URLSpan span : spans) {
-                spannableStringT.removeSpan(span);
-            }
             final String tag = spannableStringT.toString().substring(matchStart, matchEnd);
             if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
                 spannableStringT.setSpan(new ClickableSpan() {
