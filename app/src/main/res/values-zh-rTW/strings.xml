@@ -162,7 +162,7 @@
   <string name="toot_reply_content_title">您正在回覆到此嘟文：</string>
   <string name="toot_sensitive">敏感內容？</string>
   <string-array name="toot_visibility">
-    <item>張貼到公共時間表</item>
+    <item>張貼到公開時間軸</item>
     <item>不要張貼到公開時間軸</item>
     <item>僅張貼給關注者</item>
     <item>僅張貼給提及的使用者</item>
@@ -573,6 +573,7 @@
   <string name="retrieve_remote_status">正在擷取遠端狀態</string>
   <string name="comment">評論</string>
   <string name="peertube_instance">PeerTube 實體</string>
+  <string name="set_display_direct">Display private messages timeline</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
