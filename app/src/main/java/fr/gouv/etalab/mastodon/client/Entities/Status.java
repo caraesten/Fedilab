@@ -686,7 +686,7 @@ public class Status implements Parcelable{
                 //noinspection deprecation
                 key = new SpannableString(Html.fromHtml(matcher.group(2))).toString();
             key = key.substring(1);
-            if( !key.startsWith("#") && !key.startsWith("@") && !matcher.group(1).contains("search?tag=")) {
+            if( !key.startsWith("#") && !key.startsWith("@") && !key.trim().equals("") && !matcher.group(1).contains("search?tag=")) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     targetedURL.put(key, Html.fromHtml(matcher.group(1), Html.FROM_HTML_MODE_LEGACY).toString());
                 }
