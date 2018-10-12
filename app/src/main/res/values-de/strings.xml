@@ -287,7 +287,7 @@
   <string name="set_display_global">Öffentliche Zeitleiste anzeigen</string>
   <string name="set_disable_gif">GIF Avatare deaktvieren</string>
   <string name="set_folder_title">Pfad:</string>
-  <string name="set_auto_store_toot">Speichere Entwürfe automatisch</string>
+  <string name="set_auto_store_toot">Entwürfe automatisch speichern</string>
   <string name="set_bubble_counter">Anzahl neuer Beiträge anzeigen</string>
   <string name="set_auto_add_media_url">Füge die URL bei Anhängen in Toots hinzu</string>
   <string name="settings_title_notifications">Benachrichtigen wenn ...</string>
@@ -296,8 +296,8 @@
   <string name="set_notif_follow_share">jemand meinen Beitrag teilt</string>
   <string name="set_notif_follow_add">jemand meinen Beitrag favorisiert</string>
   <string name="set_notif_follow_mention">ich erwähnt werde</string>
-  <string name="set_share_validation">Zeige Bestätigungsdialog vor dem Teilen</string>
-  <string name="set_share_validation_fav">Bestätigungsdialog vor dem Favorisieren</string>
+  <string name="set_share_validation">Bestätigungsdialog vor dem Teilen anzeigen</string>
+  <string name="set_share_validation_fav">Bestätigungsdialog vor dem Favorisieren anzeigen</string>
   <string name="settings_title_more_options">Erweiterte Einstellungen</string>
   <string name="set_wifi_only">Nur bei WLAN benachrichtigen</string>
   <string name="set_notify">Benachrichtigen?</string>
@@ -541,7 +541,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="toast_impossible_to_follow">Dem Konto oder den Konten kann nicht gefolgt werden</string>
   <string name="retrieve_remote_account">Abruf des Remote-Accounts</string>
   <string name="expand_image">Versteckte Medien automatisch einblenden</string>
-  <string name="set_display_follow_instance">Schaltfläche Folge Instanzen anzeigen</string>
+  <string name="set_display_follow_instance">Menüpunkt \"Folge Instanzen\" anzeigen</string>
   <string name="channel_notif_follow">Neuer Folgender</string>
   <string name="channel_notif_boost">Neu geteilt</string>
   <string name="channel_notif_fav">Neuer Favorit</string>
