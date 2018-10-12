@@ -579,7 +579,7 @@
   <string name="retrieve_remote_status">Дохватам удаљени статус</string>
   <string name="comment">Коментар</string>
   <string name="peertube_instance">Peertube инстанца</string>
-  <string name="set_display_direct">Прикази временску лајну приватних порука</string>
+  <string name="set_display_direct">Прикажи временску лајну приватних порука</string>
   <string-array name="filter_expire">
     <item>Никадa</item>
     <item>30 минута</item>
