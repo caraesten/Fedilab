@@ -1793,7 +1793,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         @NonNull
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
             Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
             // save the appropriate reference depending on position
             switch (position) {
@@ -1804,13 +1804,18 @@ public abstract class BaseMainActivity extends BaseActivity
                     notificationsFragment = (DisplayNotificationsFragment) createdFragment;
                     break;
                 case 2:
-                    if ( !display_local && display_global)
-                        federatedFragment = (DisplayStatusFragment) createdFragment;
-                    if( display_local)
+                    if( !display_direct && display_local)
                         localFragment = (DisplayStatusFragment) createdFragment;
-                    break;
+                    else if ( !display_direct && display_global)
+                        federatedFragment = (DisplayStatusFragment) createdFragment;
                 case 3:
-                    if( display_local && display_global)
+                    if( display_direct && display_local)
+                        localFragment = (DisplayStatusFragment) createdFragment;
+                    else if( !display_direct && display_local && display_global)
+                        federatedFragment = (DisplayStatusFragment) createdFragment;
+                    break;
+                case 4:
+                    if( display_direct && display_local && display_global)
                         federatedFragment = (DisplayStatusFragment) createdFragment;
                     break;
             }
