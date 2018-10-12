@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
@@ -51,7 +52,6 @@ import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,7 +63,6 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -388,6 +387,7 @@ public class LiveNotificationService extends Service {
         final Notification notification;
         String dataId = null;
         Bundle b = new Bundle();
+        boolean canSendBroadCast = true;
         if( event == Helper.EventStreaming.NOTIFICATION){
             notification = API.parseNotificationResponse(getApplicationContext(), response);
             b.putParcelable("data", notification);
@@ -420,6 +420,8 @@ public class LiveNotificationService extends Service {
                                     title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_mention));
                                 else
                                     title = String.format("@%s %s", notification.getAccount().getAcct(),getString(R.string.notif_mention));
+                            }else{
+                                canSendBroadCast = false;
                             }
                             break;
                         case "reblog":
@@ -429,6 +431,8 @@ public class LiveNotificationService extends Service {
                                     title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_reblog));
                                 else
                                     title = String.format("@%s %s", notification.getAccount().getAcct(),getString(R.string.notif_reblog));
+                            }else{
+                                canSendBroadCast = false;
                             }
                             break;
                         case "favourite":
@@ -438,6 +442,8 @@ public class LiveNotificationService extends Service {
                                     title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_favourite));
                                 else
                                     title = String.format("@%s %s", notification.getAccount().getAcct(),getString(R.string.notif_favourite));
+                            }else{
+                                canSendBroadCast = false;
                             }
                             break;
                         case "follow":
@@ -448,6 +454,8 @@ public class LiveNotificationService extends Service {
                                 else
                                     title = String.format("@%s %s", notification.getAccount().getAcct(),getString(R.string.notif_follow));
                                 targeted_account = notification.getAccount().getId();
+                            }else{
+                                canSendBroadCast = false;
                             }
                             break;
                         default:
@@ -462,28 +470,21 @@ public class LiveNotificationService extends Service {
                     long notif_id = Long.parseLong(account.getId());
                     final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
                     if( notification.getAccount().getAvatar() != null ) {
-
-
                         final String finalTitle = title;
-
                         Handler mainHandler = new Handler(Looper.getMainLooper());
-
                         Helper.NotifType finalNotifType = notifType;
                         Runnable myRunnable = new Runnable() {
                             @Override
                             public void run() {
                                 if( finalTitle != null) {
-
                                     Glide.with(getApplicationContext())
                                             .asBitmap()
                                             .load(notification.getAccount().getAvatar())
                                             .listener(new RequestListener<Bitmap>() {
-
                                                 @Override
                                                 public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
                                                     return false;
                                                 }
-
                                                 @Override
                                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                                                     notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getResources(),
@@ -499,7 +500,7 @@ public class LiveNotificationService extends Service {
                                             })
                                             .into(new SimpleTarget<Bitmap>() {
                                                 @Override
-                                                public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                                     notify_user(getApplicationContext(), intent, notificationId, resource, finalNotifType, finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
                                                     String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
                                                     if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
@@ -525,12 +526,14 @@ public class LiveNotificationService extends Service {
                 dataId = response.getString("id");
             } catch (JSONException ignored) {}
         }
-        if( account != null)
-            b.putString("userIdService",account.getId());
-        Intent intentBC = new Intent(Helper.RECEIVE_DATA);
-        intentBC.putExtra("eventStreaming", event);
-        intentBC.putExtras(b);
-        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
+        if( canSendBroadCast) {
+            if (account != null)
+                b.putString("userIdService", account.getId());
+            Intent intentBC = new Intent(Helper.RECEIVE_DATA);
+            intentBC.putExtra("eventStreaming", event);
+            intentBC.putExtras(b);
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
+        }
     }
 
 }
