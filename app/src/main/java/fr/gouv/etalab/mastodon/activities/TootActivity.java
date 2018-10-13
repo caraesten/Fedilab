@@ -47,6 +47,7 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -142,6 +143,7 @@ import fr.gouv.etalab.mastodon.R;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.convertDpToPixel;
 
 /**
  * Created by Thomas on 01/05/2017.
@@ -1368,6 +1370,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 //Moves the cursor
                 toot_content.setSelection(selectionBefore);
             }
+            imageView.setTag(attachment.getId());
             toot_picture_container.addView(imageView, attachments.size(), imParams);
             imageView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -1390,6 +1393,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 }
             }
             attachments.add(attachment);
+            addBorder();
             if (attachments.size() < 4)
                 toot_picture.setEnabled(true);
             toot_it.setEnabled(true);
@@ -1479,6 +1483,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 new UpdateDescriptionAttachmentAsyncTask(getApplicationContext(), attachment.getId(), input.getText().toString(), TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                attachment.setDescription(input.getText().toString());
+                addBorder();
                 dialog.dismiss();
             }
         });
@@ -1890,6 +1896,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                                 imageView.setImageBitmap(resource);
                             }
                         });
+                imageView.setTag(attachment.getId());
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -1916,6 +1923,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         return false;
                     }
                 });
+                addBorder();
                 if( attachments.size() < 4)
                     toot_picture.setEnabled(true);
                 toot_sensitive.setVisibility(View.VISIBLE);
@@ -2215,5 +2223,27 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         active = false;
     }
 
+    private void addBorder(){
+        for (int i = 0; i < toot_picture_container.getChildCount(); i++) {
+            View v = toot_picture_container.getChildAt(i);
+            if (v instanceof ImageView) {
+                for(Attachment attachment: attachments){
+                    if(attachment.getType().equals("image"))
+                    if( v.getTag().toString().trim().equals(attachment.getId().trim())){
+                        int borderSize = (int)convertDpToPixel(1, TootActivity.this);
+                        int borderSizeTop = (int)convertDpToPixel(6, TootActivity.this);
+                        v.setPadding(borderSize,borderSizeTop,borderSize,borderSizeTop);
+                        if( attachment.getDescription() == null ||attachment.getDescription().trim().equals("null") || attachment.getDescription().trim().equals("")) {
+                            v.setBackgroundColor( ContextCompat.getColor(TootActivity.this, R.color.red_1));
+                        }else
+                            v.setBackgroundColor(ContextCompat.getColor(TootActivity.this, R.color.green_1));
+                    }
+                }
+
+            }
+        }
+
+
+    }
 
 }
