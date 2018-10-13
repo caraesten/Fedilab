@@ -1849,7 +1849,15 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             }
             toRemove.clear();
         }
-        String content = status.getContent();
+        String content;
+        if( !removed )
+            content = status.getContent();
+        else
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                content = Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+            else
+                //noinspection deprecation
+                content = Html.fromHtml(status.getContent()).toString();
         Pattern mentionLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
         Matcher matcher = mentionLink.matcher(content);
         if (matcher.find()) {
