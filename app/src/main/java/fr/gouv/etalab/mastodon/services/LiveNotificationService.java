@@ -133,19 +133,12 @@ public class LiveNotificationService extends Service {
         return START_STICKY;
     }
 
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if( !stop)
-            sendBroadcast(new Intent("RestartLiveNotificationService"));
-    }
 
     private void taks(Account account) {
 
@@ -158,24 +151,29 @@ public class LiveNotificationService extends Service {
             headers.add("scheme", "https");
             Uri url = Uri.parse("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken());
             AsyncHttpRequest.setDefaultHeaders(headers, url);
-            AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
-                @Override
-                public void onCompleted(Exception ex, WebSocket webSocket) {
-                    if (ex != null) {
-                        ex.printStackTrace();
-                        return;
-                    }
-                    webSocket.setStringCallback(new WebSocket.StringCallback() {
-                        public void onStringAvailable(String s) {
-                            try {
-                                JSONObject eventJson = new JSONObject(s);
-                                onRetrieveStreaming(account, eventJson);
-                            } catch (JSONException ignored) {
-                            }
+            try {
+                AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
+                    @Override
+                    public void onCompleted(Exception ex, WebSocket webSocket) {
+                        if (ex != null) {
+                            ex.printStackTrace();
+                            return;
                         }
-                    });
-                }
-            });
+                        webSocket.setStringCallback(new WebSocket.StringCallback() {
+                            public void onStringAvailable(String s) {
+                                try {
+                                    JSONObject eventJson = new JSONObject(s);
+                                    onRetrieveStreaming(account, eventJson);
+                                } catch (JSONException ignored) {
+                                }
+                            }
+                        });
+                    }
+                });
+            }catch (Exception e){
+                sendBroadcast(new Intent("RestartLiveNotificationService"));
+            }
+
         }
     }
 
