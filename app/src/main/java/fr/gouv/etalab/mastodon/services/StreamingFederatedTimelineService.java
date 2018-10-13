@@ -23,7 +23,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.AsyncHttpRequest;
 import com.koushikdutta.async.http.Headers;
@@ -135,7 +134,6 @@ public class StreamingFederatedTimelineService extends IntentService {
             if( response.get("event").toString().equals("update")){
                 status = API.parseStatuses(getApplicationContext(), new JSONObject(response.get("payload").toString()));
                 status.setNew(true);
-                Log.v(Helper.TAG,"status: " + status);
                 b.putParcelable("data", status);
                 if( account != null)
                     b.putString("userIdService",account.getId());
