@@ -284,7 +284,6 @@ public class SettingsFragment extends Fragment {
                 if( getActivity() != null)
                     getActivity().recreate();
                 Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
                 if(getActivity() != null)
                     getActivity().finish();
                 startActivity(intent);
@@ -304,7 +303,6 @@ public class SettingsFragment extends Fragment {
                 if( getActivity() != null)
                     getActivity().recreate();
                 Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
                 if(getActivity() != null)
                     getActivity().finish();
                 startActivity(intent);

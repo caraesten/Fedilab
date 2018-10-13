@@ -114,6 +114,7 @@ import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
 
@@ -409,10 +410,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 status.setBookmarked(true);
             else
                 status.setBookmarked(false);
-            if( status.isBookmarked())
-                holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark));
-            else
-                holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_border));
 
             if( status.isNew())
                 holder.new_element.setVisibility(View.VISIBLE);
@@ -500,14 +497,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.black);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.mastodonC4);
-                changeDrawableColor(context, R.drawable.ic_translate,R.color.white);
-
+                changeDrawableColor(context, R.drawable.ic_translate,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_bookmark,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_bookmark_border,R.color.black);
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.black));
             }
+
+            if( status.isBookmarked())
+                holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark));
+            else
+                holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_border));
+
 
             //Redraws top icons (boost/reply)
             final float scale = context.getResources().getDisplayMetrics().density;
