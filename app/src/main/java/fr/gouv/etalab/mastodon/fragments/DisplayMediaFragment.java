@@ -99,6 +99,7 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         GridLayoutManager gvLayout = new GridLayoutManager(context, 3);
         gridview.setLayoutManager(gvLayout);
 
+
         gridview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int firstVisibleItem = gvLayout.findFirstVisibleItemPosition();

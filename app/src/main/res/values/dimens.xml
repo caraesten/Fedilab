@@ -11,4 +11,5 @@
     <bool name="isTablet">false</bool>
     <dimen name="layout_height_header">180dp</dimen>
     <dimen name="fab_margin_floating">16dp</dimen>
+    <dimen name="item_offset">5dp</dimen>
 </resources>

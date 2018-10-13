@@ -16,7 +16,7 @@
     see <http://www.gnu.org/licenses>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="110dp"
+    android:layout_width="wrap_content"
     android:layout_height="110dp"
     android:id="@+id/main_container"
     android:divider="?android:dividerHorizontal"
