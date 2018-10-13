@@ -76,8 +76,8 @@
   <string name="neutral_menu_title">Опции</string>
   <string name="favorites_menu">Избранное</string>
   <string name="communication_menu_title">Общение</string>
-  <string name="muted_menu">Беззвучные пользователи</string>
-  <string name="blocked_menu">Блокированные пользователи</string>
+  <string name="muted_menu">Приглушенные</string>
+  <string name="blocked_menu">Чёрный список</string>
   <string name="remote_follow_menu">Удалённая подписка</string>
   <string name="notifications">Уведомления</string>
   <string name="follow_request">Запросы на подписку</string>
@@ -298,8 +298,8 @@
   <string name="set_notif_follow_share">Уведомлять, когда кто-то повышает ваш статус</string>
   <string name="set_notif_follow_add">Уведомлять, когда кто-то добавил вас в избранные</string>
   <string name="set_notif_follow_mention">Уведомлять, когда кто-то вас упоминает</string>
-  <string name="set_share_validation">Диалоговое окно подтверждения перед повышением</string>
-  <string name="set_share_validation_fav">Показывать диалоговое окно подтверждения перед добавлением в избранные</string>
+  <string name="set_share_validation">Показывать диалоговое окно подтверждения перед повышением</string>
+  <string name="set_share_validation_fav">Предупреждать перед добавлением в избранные</string>
   <string name="settings_title_more_options">Расширенные настройки</string>
   <string name="set_wifi_only">Уведомлять только в сети WiFi</string>
   <string name="set_notify">Уведомлять?</string>
@@ -570,11 +570,11 @@
   <string name="how_to_videos">How To Videos</string>
   <string name="retrieve_remote_conversation">Fetching remote thread!</string>
   <string name="no_blocked_domain">No blocked domains!</string>
-  <string name="unblock_domain_confirm">Unblock domain</string>
+  <string name="unblock_domain_confirm">Разблокировать домен</string>
   <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
   <string name="block_domain_confirm_message">Are you sure to block %s?</string>
   <string name="blocked_domains">Blocked domains</string>
-  <string name="block_domain">Block domain</string>
+  <string name="block_domain">Заблокировать домен</string>
   <string name="toast_block_domain">The domain is blocked</string>
   <string name="toast_unblock_domain">The domain is no longer blocked!</string>
   <string name="retrieve_remote_status">Fetching remote status</string>
