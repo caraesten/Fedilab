@@ -21,11 +21,11 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -37,25 +37,20 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.koushikdutta.async.http.AsyncHttpClient;
+import com.koushikdutta.async.http.AsyncHttpRequest;
+import com.koushikdutta.async.http.Headers;
+import com.koushikdutta.async.http.WebSocket;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.Authenticator;
-import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
@@ -63,7 +58,6 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
-import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -189,342 +183,192 @@ public class LiveNotificationService extends Service {
             sendBroadcast(new Intent("RestartLiveNotificationService"));
     }
 
-    private void taks(Account account){
-        InputStream inputStream = null;
-        HttpsURLConnection httpsURLConnection = null;
-        HttpURLConnection httpURLConnection = null;
-        BufferedReader reader = null;
-        Helper.EventStreaming lastEvent = null;
+    private void taks(Account account) {
 
-        if( account != null){
-            isRunning.get(account.getAcct()+account.getInstance());
-            if(!isRunning.containsKey(account.getAcct()+account.getInstance()) || ! isRunning.get(account.getAcct()+account.getInstance())) {
-                if (Helper.instanceWithProtocol(account.getInstance()).startsWith("https")) {
-                    try {
-                        URL url = new URL("https://" + account.getInstance() + "/api/v1/streaming/user");
-                        if( proxy != null)
-                            httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
-                        else
-                            httpsURLConnection = (HttpsURLConnection) url.openConnection();
-                        httpsURLConnection.setRequestProperty("Content-Type", "application/json");
-                        httpsURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
-                        httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
-                        httpsURLConnection.setRequestProperty("Keep-Alive", "header");
-                        httpsURLConnection.setRequestProperty("Connection", "close");
-                        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
-                        httpsURLConnection.setRequestMethod("GET");
-                        if (httpsURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                            inputStream = new BufferedInputStream(httpsURLConnection.getInputStream());
-                            reader = new BufferedReader(new InputStreamReader(inputStream));
-                            String event;
-                            Helper.EventStreaming eventStreaming;
-                            while ((event = reader.readLine()) != null) {
-                                isRunning.put(account.getAcct() + account.getInstance(), true);
-                                if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
-                                    switch (event.trim()) {
-                                        case "event: update":
-                                            lastEvent = Helper.EventStreaming.UPDATE;
-                                            break;
-                                        case "event: notification":
-                                            lastEvent = Helper.EventStreaming.NOTIFICATION;
-                                            break;
-                                        case "event: delete":
-                                            lastEvent = Helper.EventStreaming.DELETE;
-                                            break;
-                                        default:
-                                            lastEvent = Helper.EventStreaming.NONE;
-                                    }
-                                } else {
-                                    if (!event.startsWith("data: ")) {
-                                        lastEvent = Helper.EventStreaming.NONE;
-                                        continue;
-                                    }
-                                    event = event.substring(6);
-                                    if (lastEvent == Helper.EventStreaming.UPDATE) {
-                                        eventStreaming = Helper.EventStreaming.UPDATE;
-                                    } else if (lastEvent == Helper.EventStreaming.NOTIFICATION) {
-                                        eventStreaming = Helper.EventStreaming.NOTIFICATION;
-                                    } else if (lastEvent == Helper.EventStreaming.DELETE) {
-                                        eventStreaming = Helper.EventStreaming.DELETE;
-                                        event = "{id:" + event + "}";
-                                    } else {
-                                        eventStreaming = Helper.EventStreaming.UPDATE;
-                                    }
-                                    lastEvent = Helper.EventStreaming.NONE;
-                                    try {
-                                        JSONObject eventJson = new JSONObject(event);
-                                        onRetrieveStreaming(eventStreaming, account, eventJson);
-                                    } catch (JSONException ignored) {
-                                        ignored.printStackTrace();
-                                    }
-                                }
-                            }
-                            isRunning.put(account.getAcct() + account.getInstance(), false);
-                        }
 
-                    } catch (Exception ignored) {
-                        isRunning.put(account.getAcct() + account.getInstance(), false);
-                        ignored.printStackTrace();
-                    } finally {
-                        if (reader != null) {
-                            try {
-                                reader.close();
-                            } catch (IOException ignored) {
-                            }
-                        }
-                        if (inputStream != null) {
-                            try {
-                                inputStream.close();
-                            } catch (IOException ignored) {
-                            }
-                        }
-                        SystemClock.sleep(5000);
-                        Intent streamingIntent = new Intent(this, LiveNotificationService.class);
-                        streamingIntent.putExtra("userId", account.getId());
-                        try {
-                            startService(streamingIntent);
-                        } catch (Exception ignored) {
-                        }
+        if (account != null) {
+            Headers headers = new Headers();
+            headers.add("Authorization", "Bearer " + account.getToken());
+            headers.add("Connection", "Keep-Alive");
+            headers.add("method", "GET");
+            headers.add("scheme", "https");
+            Uri url = Uri.parse("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken());
+            AsyncHttpRequest.setDefaultHeaders(headers, url);
+            AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
+                @Override
+                public void onCompleted(Exception ex, WebSocket webSocket) {
+                    if (ex != null) {
+                        ex.printStackTrace();
+                        return;
                     }
-                }else {
-                    try {
-                        URL url = new URL("http://" + account.getInstance() + "/api/v1/streaming/user");
-                        if( proxy != null)
-                            httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
-                        else
-                            httpURLConnection = (HttpURLConnection) url.openConnection();
-                        httpURLConnection.setRequestProperty("Content-Type", "application/json");
-                        httpURLConnection.setRequestProperty("Authorization", "Bearer " + account.getToken());
-                        httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
-                        httpURLConnection.setRequestProperty("Keep-Alive", "header");
-                        httpURLConnection.setRequestProperty("Connection", "close");
-                        httpURLConnection.setRequestMethod("GET");
-                        if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                            inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
-                            reader = new BufferedReader(new InputStreamReader(inputStream));
-                            String event;
-                            Helper.EventStreaming eventStreaming;
-                            while ((event = reader.readLine()) != null) {
-                                isRunning.put(account.getAcct() + account.getInstance(), true);
-                                if ((lastEvent == Helper.EventStreaming.NONE || lastEvent == null) && !event.startsWith("data: ")) {
-                                    switch (event.trim()) {
-                                        case "event: update":
-                                            lastEvent = Helper.EventStreaming.UPDATE;
-                                            break;
-                                        case "event: notification":
-                                            lastEvent = Helper.EventStreaming.NOTIFICATION;
-                                            break;
-                                        case "event: delete":
-                                            lastEvent = Helper.EventStreaming.DELETE;
-                                            break;
-                                        default:
-                                            lastEvent = Helper.EventStreaming.NONE;
-                                    }
-                                } else {
-                                    if (!event.startsWith("data: ")) {
-                                        lastEvent = Helper.EventStreaming.NONE;
-                                        continue;
-                                    }
-                                    event = event.substring(6);
-                                    if (lastEvent == Helper.EventStreaming.UPDATE) {
-                                        eventStreaming = Helper.EventStreaming.UPDATE;
-                                    } else if (lastEvent == Helper.EventStreaming.NOTIFICATION) {
-                                        eventStreaming = Helper.EventStreaming.NOTIFICATION;
-                                    } else if (lastEvent == Helper.EventStreaming.DELETE) {
-                                        eventStreaming = Helper.EventStreaming.DELETE;
-                                        event = "{id:" + event + "}";
-                                    } else {
-                                        eventStreaming = Helper.EventStreaming.UPDATE;
-                                    }
-                                    lastEvent = Helper.EventStreaming.NONE;
-                                    try {
-                                        JSONObject eventJson = new JSONObject(event);
-                                        onRetrieveStreaming(eventStreaming, account, eventJson);
-                                    } catch (JSONException ignored) {
-                                        ignored.printStackTrace();
-                                    }
-                                }
-                            }
-                            isRunning.put(account.getAcct() + account.getInstance(), false);
-                        }
-
-                    } catch (Exception ignored) {
-                        isRunning.put(account.getAcct() + account.getInstance(), false);
-                        ignored.printStackTrace();
-                    } finally {
-                        if (reader != null) {
+                    webSocket.setStringCallback(new WebSocket.StringCallback() {
+                        public void onStringAvailable(String s) {
                             try {
-                                reader.close();
-                            } catch (IOException ignored) {
+                                JSONObject eventJson = new JSONObject(s);
+                                onRetrieveStreaming(account, eventJson);
+                            } catch (JSONException ignored) {
                             }
                         }
-                        if (inputStream != null) {
-                            try {
-                                inputStream.close();
-                            } catch (IOException ignored) {
-                            }
-                        }
-                        SystemClock.sleep(5000);
-                        Intent streamingIntent = new Intent(this, LiveNotificationService.class);
-                        streamingIntent.putExtra("userId", account.getId());
-                        try {
-                            startService(streamingIntent);
-                        } catch (Exception ignored) {
-                        }
-                    }
+                    });
                 }
-            }
+            });
         }
     }
 
 
-
-    private void onRetrieveStreaming(Helper.EventStreaming event, final Account account, JSONObject response) {
+    private void onRetrieveStreaming(Account account, JSONObject response) {
         if(  response == null )
             return;
-        //No previous notifications in cache, so no notification will be sent
         fr.gouv.etalab.mastodon.client.Entities.Status status ;
         final Notification notification;
         String dataId = null;
         Bundle b = new Bundle();
         boolean canSendBroadCast = true;
-        if( event == Helper.EventStreaming.NOTIFICATION){
-            notification = API.parseNotificationResponse(getApplicationContext(), response);
-            b.putParcelable("data", notification);
-            boolean activityPaused;
-            try {
-                activityPaused = BaseMainActivity.activityState();
-            }catch (Exception e){
-                activityPaused = true;
-            }
-            final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-            boolean canNotify = Helper.canNotify(getApplicationContext());
-            boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            String targeted_account = null;
-            Helper.NotifType notifType = Helper.NotifType.MENTION;
-            if((userId == null || !userId.equals(account.getId()) || activityPaused) && liveNotifications && canNotify && notify) {
-                boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
-                boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-                boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
-                boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
-                boolean somethingToPush = (notif_follow || notif_add || notif_mention || notif_share);
-                String title = null;
-                if( somethingToPush && notification != null){
-                    switch (notification.getType()){
-                        case "mention":
-                            notifType = Helper.NotifType.MENTION;
-                            if(notif_mention){
-                                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                    title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_mention));
-                                else
-                                    title = String.format("@%s %s", notification.getAccount().getAcct(),getString(R.string.notif_mention));
-                            }else{
-                                canSendBroadCast = false;
-                            }
-                            break;
-                        case "reblog":
-                            notifType = Helper.NotifType.BOOST;
-                            if(notif_share){
-                                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                    title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_reblog));
-                                else
-                                    title = String.format("@%s %s", notification.getAccount().getAcct(),getString(R.string.notif_reblog));
-                            }else{
-                                canSendBroadCast = false;
-                            }
-                            break;
-                        case "favourite":
-                            notifType = Helper.NotifType.FAV;
-                            if(notif_add){
-                                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                    title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_favourite));
-                                else
-                                    title = String.format("@%s %s", notification.getAccount().getAcct(),getString(R.string.notif_favourite));
-                            }else{
-                                canSendBroadCast = false;
-                            }
-                            break;
-                        case "follow":
-                            notifType = Helper.NotifType.FOLLLOW;
-                            if(notif_follow){
-                                if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
-                                    title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_follow));
-                                else
-                                    title = String.format("@%s %s", notification.getAccount().getAcct(),getString(R.string.notif_follow));
-                                targeted_account = notification.getAccount().getId();
-                            }else{
-                                canSendBroadCast = false;
-                            }
-                            break;
-                        default:
-                    }
-                    //Some others notification
-                    final Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
-                    intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
-                    intent.putExtra(PREF_KEY_ID, account.getId());
-                    if( targeted_account != null )
-                        intent.putExtra(INTENT_TARGETED_ACCOUNT, targeted_account);
-                    long notif_id = Long.parseLong(account.getId());
-                    final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
-                    if( notification.getAccount().getAvatar() != null ) {
-                        final String finalTitle = title;
-                        Handler mainHandler = new Handler(Looper.getMainLooper());
-                        Helper.NotifType finalNotifType = notifType;
-                        Runnable myRunnable = new Runnable() {
-                            @Override
-                            public void run() {
-                                if( finalTitle != null) {
-                                    Glide.with(getApplicationContext())
-                                            .asBitmap()
-                                            .load(notification.getAccount().getAvatar())
-                                            .listener(new RequestListener<Bitmap>() {
-                                                @Override
-                                                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                                    return false;
-                                                }
-                                                @Override
-                                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                                    notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getResources(),
-                                                            R.drawable.mastodonlogo), finalNotifType, finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
-                                                    String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                                    if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
-                                                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                                                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
-                                                        editor.apply();
-                                                    }
-                                                    return false;
-                                                }
-                                            })
-                                            .into(new SimpleTarget<Bitmap>() {
-                                                @Override
-                                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                                    notify_user(getApplicationContext(), intent, notificationId, resource, finalNotifType, finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
-                                                    String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                                    if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
-                                                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                                                        editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
-                                                        editor.apply();
-                                                    }
-                                                }
-                                            });
+        Helper.EventStreaming event = null;
+        try {
+            if( response.get("event").toString().equals("notification")){
+                event = Helper.EventStreaming.NOTIFICATION;
+                notification = API.parseNotificationResponse(getApplicationContext(), response);
+                b.putParcelable("data", notification);
+                boolean activityPaused;
+                try {
+                    activityPaused = BaseMainActivity.activityState();
+                }catch (Exception e){
+                    activityPaused = true;
+                }
+                final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+                boolean canNotify = Helper.canNotify(getApplicationContext());
+                boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                String targeted_account = null;
+                Helper.NotifType notifType = Helper.NotifType.MENTION;
+                if((userId == null || !userId.equals(account.getId()) || activityPaused) && liveNotifications && canNotify && notify) {
+                    boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
+                    boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
+                    boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
+                    boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+                    boolean somethingToPush = (notif_follow || notif_add || notif_mention || notif_share);
+                    String title = null;
+                    if( somethingToPush && notification != null){
+                        switch (notification.getType()){
+                            case "mention":
+                                notifType = Helper.NotifType.MENTION;
+                                if(notif_mention){
+                                    if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
+                                        title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_mention));
+                                    else
+                                        title = String.format("@%s %s", notification.getAccount().getAcct(),getString(R.string.notif_mention));
+                                }else{
+                                    canSendBroadCast = false;
                                 }
-                            }
-                        };
-                        mainHandler.post(myRunnable);
+                                break;
+                            case "reblog":
+                                notifType = Helper.NotifType.BOOST;
+                                if(notif_share){
+                                    if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
+                                        title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_reblog));
+                                    else
+                                        title = String.format("@%s %s", notification.getAccount().getAcct(),getString(R.string.notif_reblog));
+                                }else{
+                                    canSendBroadCast = false;
+                                }
+                                break;
+                            case "favourite":
+                                notifType = Helper.NotifType.FAV;
+                                if(notif_add){
+                                    if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
+                                        title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_favourite));
+                                    else
+                                        title = String.format("@%s %s", notification.getAccount().getAcct(),getString(R.string.notif_favourite));
+                                }else{
+                                    canSendBroadCast = false;
+                                }
+                                break;
+                            case "follow":
+                                notifType = Helper.NotifType.FOLLLOW;
+                                if(notif_follow){
+                                    if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0 )
+                                        title = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),getString(R.string.notif_follow));
+                                    else
+                                        title = String.format("@%s %s", notification.getAccount().getAcct(),getString(R.string.notif_follow));
+                                    targeted_account = notification.getAccount().getId();
+                                }else{
+                                    canSendBroadCast = false;
+                                }
+                                break;
+                            default:
+                        }
+                        //Some others notification
+                        final Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
+                        intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
+                        intent.putExtra(PREF_KEY_ID, account.getId());
+                        if( targeted_account != null )
+                            intent.putExtra(INTENT_TARGETED_ACCOUNT, targeted_account);
+                        long notif_id = Long.parseLong(account.getId());
+                        final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
+                        if( notification.getAccount().getAvatar() != null ) {
+                            final String finalTitle = title;
+                            Handler mainHandler = new Handler(Looper.getMainLooper());
+                            Helper.NotifType finalNotifType = notifType;
+                            Runnable myRunnable = new Runnable() {
+                                @Override
+                                public void run() {
+                                    if( finalTitle != null) {
+                                        Glide.with(getApplicationContext())
+                                                .asBitmap()
+                                                .load(notification.getAccount().getAvatar())
+                                                .listener(new RequestListener<Bitmap>() {
+                                                    @Override
+                                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                                        return false;
+                                                    }
+                                                    @Override
+                                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                                        notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getResources(),
+                                                                R.drawable.mastodonlogo), finalNotifType, finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
+                                                        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
+                                                        if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
+                                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
+                                                            editor.apply();
+                                                        }
+                                                        return false;
+                                                    }
+                                                })
+                                                .into(new SimpleTarget<Bitmap>() {
+                                                    @Override
+                                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                                        notify_user(getApplicationContext(), intent, notificationId, resource, finalNotifType, finalTitle, "@"+account.getAcct()+"@"+account.getInstance());
+                                                        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
+                                                        if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
+                                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
+                                                            editor.apply();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                }
+                            };
+                            mainHandler.post(myRunnable);
+                        }
                     }
                 }
+            }else if (response.get("event").toString().equals("update")){
+                event = Helper.EventStreaming.UPDATE;
+                status = API.parseStatuses(getApplicationContext(), response);
+                status.setNew(true);
+                b.putParcelable("data", status);
+            }else if (response.get("event").toString().equals("delete")){
+                event = Helper.EventStreaming.DELETE;
+                try {
+                    dataId = response.getString("id");
+                } catch (JSONException ignored) {}
             }
-        }else if ( event ==  Helper.EventStreaming.UPDATE){
-            status = API.parseStatuses(getApplicationContext(), response);
-            status.setNew(true);
-            b.putParcelable("data", status);
-        }else if( event == Helper.EventStreaming.DELETE){
-            try {
-                dataId = response.getString("id");
-            } catch (JSONException ignored) {}
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         if( canSendBroadCast) {
             if (account != null)
