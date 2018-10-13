@@ -180,7 +180,7 @@
   <!-- Instance -->
   <string name="instance_no_description">Описание недоступно!</string>
   <!-- About -->
-  <string name="about_vesrion">Освобождено %1$s</string>
+  <string name="about_vesrion">Версия %1$s</string>
   <string name="about_developer">Разработчик:</string>
   <string name="about_license">Лицензия: </string>
   <string name="about_license_action">Лицензия GNU GPL V3</string>
@@ -312,7 +312,7 @@
   <string name="set_save_changes">Сохранить изменения</string>
   <string name="set_header_picture_overlay">Выбор изображения профиля</string>
   <string name="set_fit_preview">Показ масштабируемых изображений</string>
-  <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+  <string name="set_automatically_split_toot">Автоматически разделять toots содержащие более 500 символов</string>
   <string name="note_no_space">Вы достигли 160 символов!</string>
   <string name="username_no_space">Вы достигли 30 символов!</string>
   <string name="settings_title_hour">Промежутки времени для уведомлений:</string>
@@ -522,7 +522,7 @@
   <string name="direct_message">Direct message</string>
   <string name="filters">Фильтры</string>
   <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-  <string name="filter_keyword">Keyword or phrase</string>
+  <string name="filter_keyword">Ключевое слово или фраза</string>
   <string name="context_home">Home timeline</string>
   <string name="context_public">Public timelines</string>
   <string name="context_notification">Notifications</string>
