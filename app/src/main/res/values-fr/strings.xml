@@ -574,7 +574,7 @@
   <string name="retrieve_remote_status">Récupération du statut distant</string>
   <string name="comment">Commenter</string>
   <string name="peertube_instance">Instance PeerTube</string>
-  <string name="set_display_direct">Display private messages timeline</string>
+  <string name="set_display_direct">Afficher le fil des messages privés</string>
   <string-array name="filter_expire">
     <item>Jamais</item>
     <item>30 minutes</item>
