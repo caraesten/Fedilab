@@ -158,7 +158,6 @@
             <ImageButton
                 android:id="@+id/status_translate"
                 android:gravity="center"
-                android:tint="@android:color/white"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -169,7 +168,6 @@
             <ImageButton
                 android:id="@+id/status_bookmark"
                 android:gravity="center"
-                android:tint="@android:color/white"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
