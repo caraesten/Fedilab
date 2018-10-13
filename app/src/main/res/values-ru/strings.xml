@@ -285,8 +285,8 @@
   <string name="load_attachment_spoiler_less">Показать меньше…</string>
   <string name="load_sensitive_attachment">Чувствительный контент</string>
   <string name="set_display_reply">Отображать предыдущее сообщение в ответах</string>
-  <string name="set_display_local">Отображать локальную ленту</string>
-  <string name="set_display_global">Отображать ленту федерации</string>
+  <string name="set_display_local">Локальная лента</string>
+  <string name="set_display_global">Лента федерации</string>
   <string name="set_disable_gif">Использовать GIF-аватары</string>
   <string name="set_folder_title">Путь: </string>
   <string name="set_auto_store_toot">Сохранять черновики автоматически</string>
@@ -298,7 +298,7 @@
   <string name="set_notif_follow_share">Уведомлять, когда кто-то повышает ваш статус</string>
   <string name="set_notif_follow_add">Уведомлять, когда кто-то добавил вас в избранные</string>
   <string name="set_notif_follow_mention">Уведомлять, когда кто-то вас упоминает</string>
-  <string name="set_share_validation">Показывать диалоговое окно подтверждения перед повышением</string>
+  <string name="set_share_validation">Диалоговое окно подтверждения перед повышением</string>
   <string name="set_share_validation_fav">Показывать диалоговое окно подтверждения перед добавлением в избранные</string>
   <string name="settings_title_more_options">Расширенные настройки</string>
   <string name="set_wifi_only">Уведомлять только в сети WiFi</string>
@@ -311,7 +311,7 @@
   <string name="set_lock_account">Заблокировать аккаунт</string>
   <string name="set_save_changes">Сохранить изменения</string>
   <string name="set_header_picture_overlay">Выбор изображения профиля</string>
-  <string name="set_fit_preview">Показ масштабируемых изображений</string>
+  <string name="set_fit_preview">Показывать масштабируемых изображений</string>
   <string name="set_automatically_split_toot">Автоматически разделять toots содержащие более 500 символов</string>
   <string name="note_no_space">Вы достигли 160 символов!</string>
   <string name="username_no_space">Вы достигли 30 символов!</string>
@@ -580,7 +580,7 @@
   <string name="retrieve_remote_status">Fetching remote status</string>
   <string name="comment">Comment</string>
   <string name="peertube_instance">Peertube instance</string>
-  <string name="set_display_direct">Display private messages timeline</string>
+  <string name="set_display_direct">Показывать приватные сообщения в ленте</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
