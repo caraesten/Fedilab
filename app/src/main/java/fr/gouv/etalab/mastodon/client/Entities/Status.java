@@ -58,6 +58,7 @@ import java.util.regex.Pattern;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -841,12 +842,12 @@ public class Status implements Parcelable{
                                          link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
                                          matcherLink = link.matcher(url);
                                          if( matcherLink.find()){ //Peertubee video
-                                             String peertubeUrl = matcherLink.group(1) + "/videos/embed/" + matcherLink.group(2);
-                                             Intent intent = new Intent(context, WebviewActivity.class);
+                                             Intent intent = new Intent(context, PeertubeActivity.class);
                                              Bundle b = new Bundle();
-                                             b.putString("url", peertubeUrl);
+                                             String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
                                              b.putString("peertubeLinkToFetch", url);
-                                             b.putBoolean("peertubeLink", true);
+                                             b.putString("peertube_instance", matcherLink.group(1).replace("https://","").replace("http://",""));
+                                             b.putString("video_id", matcherLink.group(2));
                                              intent.putExtras(b);
                                              context.startActivity(intent);
                                          }else {

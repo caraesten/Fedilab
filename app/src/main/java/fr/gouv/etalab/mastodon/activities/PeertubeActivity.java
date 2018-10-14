@@ -22,7 +22,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +42,6 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSingleAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.FullScreenMediaController;
@@ -58,9 +56,8 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 
 public class PeertubeActivity extends BaseActivity implements OnRetrievePeertubeInterface {
 
-    private String url, stream_url, peertubeInstance, videoId;
+    private String peertubeInstance, videoId;
     private String peertubeLinkToFetch;
-    private boolean peertubeLink;
     private FullScreenMediaController.fullscreen fullscreen;
     private VideoView videoView;
     private RelativeLayout loader;
@@ -92,29 +89,17 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         if(b != null) {
             peertubeInstance = b.getString("peertube_instance", null);
             videoId = b.getString("video_id", null);
-            stream_url = b.getString("stream_url", null);
             peertubeLinkToFetch = b.getString("peertubeLinkToFetch", null);
-            peertubeLink = b.getBoolean("peertubeLink", true);
-            url = b.getString("url", null);
         }
 
 
-        if( url == null)
+        if( peertubeLinkToFetch == null)
             finish();
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         videoView = findViewById(R.id.media_video);
         new RetrievePeertubeSingleAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        /*if(fullscreen == FullScreenMediaController.fullscreen.ON){
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            getSupportActionBar().hide();
-        }else{
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
-                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
-            getSupportActionBar().show();
-        }*/
     }
 
     public void change(){
@@ -132,10 +117,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_webview, menu);
-        if( peertubeLink ){
-            menu.findItem(R.id.action_go).setVisible(false);
-            menu.findItem(R.id.action_comment).setVisible(true);
-        }
+        menu.findItem(R.id.action_go).setVisible(false);
+        menu.findItem(R.id.action_comment).setVisible(true);
         return true;
     }
     @Override
@@ -143,14 +126,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                return true;
-            case R.id.action_go:
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                try {
-                    startActivity(browserIntent);
-                }catch (Exception e){
-                    Toast.makeText(PeertubeActivity.this, R.string.toast_error, Toast.LENGTH_LONG).show();
-                }
                 return true;
             case R.id.action_comment:
                 Toast.makeText(PeertubeActivity.this, R.string.retrieve_remote_status, Toast.LENGTH_LONG).show();
@@ -162,7 +137,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     @Override
                     protected Void doInBackground(Void... voids) {
 
-                        if(url != null) {
+                        if(peertubeLinkToFetch != null) {
                             Results search = new API(contextReference.get()).search(peertubeLinkToFetch);
                             if (search != null) {
                                 remoteStatuses = search.getStatuses();
