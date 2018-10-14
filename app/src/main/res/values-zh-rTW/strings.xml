@@ -573,8 +573,8 @@
   <string name="retrieve_remote_status">正在擷取遠端狀態</string>
   <string name="comment">評論</string>
   <string name="peertube_instance">PeerTube 實體</string>
-  <string name="set_display_direct">Display private messages timeline</string>
-  <string name="set_keep_background_process">Keep background process when app is closed</string>
+  <string name="set_display_direct">顯示私人訊息時間軸</string>
+  <string name="set_keep_background_process">當應用程式關閉時，保留背景處理程序</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
