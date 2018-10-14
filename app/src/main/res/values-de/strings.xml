@@ -566,6 +566,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="comment">Kommentar</string>
   <string name="peertube_instance">Peertube Instanz</string>
   <string name="set_display_direct">Private Nachrichten als eigene Zeitleiste anzeigen</string>
+  <string name="set_keep_background_process">Keep background process when app is closed</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>

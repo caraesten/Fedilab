@@ -574,6 +574,7 @@
   <string name="comment">評論</string>
   <string name="peertube_instance">PeerTube 實體</string>
   <string name="set_display_direct">Display private messages timeline</string>
+  <string name="set_keep_background_process">Keep background process when app is closed</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
