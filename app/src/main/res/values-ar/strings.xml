@@ -585,6 +585,7 @@
   <string name="comment">تعليق</string>
   <string name="peertube_instance">مثيل خادوم بير تيوب</string>
   <string name="set_display_direct">Display private messages timeline</string>
+  <string name="set_keep_background_process">Keep background process when app is closed</string>
   <string-array name="filter_expire">
     <item>أبدًا</item>
     <item>30 دقيقة</item>
