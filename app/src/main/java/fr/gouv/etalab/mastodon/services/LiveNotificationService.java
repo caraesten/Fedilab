@@ -74,7 +74,6 @@ public class LiveNotificationService extends Service {
 
 
     protected Account account;
-    private boolean stop = false;
 
     public void onCreate() {
         super.onCreate();
@@ -89,7 +88,6 @@ public class LiveNotificationService extends Service {
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( intent == null || intent.getBooleanExtra("stop", false) ) {
-            stop = true;
             stopSelf();
         }
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
@@ -103,30 +101,14 @@ public class LiveNotificationService extends Service {
                 List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
                 if (accountStreams != null){
                     for (final Account accountStream : accountStreams) {
-                            Thread thread = new Thread() {
-                                @Override
-                                public void run() {
-                                    if(Helper.isConnectedToInternet(LiveNotificationService.this, accountStream.getInstance()))
-                                        taks(accountStream);
-                                }
-                            };
-                            thread.start();
-
+                        taks(accountStream);
                     }
                 }
             }else {
                 userId = intent.getStringExtra("userId");
                 final Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
                 if (accountStream != null) {
-                        Thread thread = new Thread() {
-                            @Override
-                            public void run() {
-                                if(Helper.isConnectedToInternet(LiveNotificationService.this, accountStream.getInstance()))
-                                    taks(accountStream);
-                            }
-                        };
-                        thread.start();
-
+                    taks(accountStream);
                 }
             }
         }

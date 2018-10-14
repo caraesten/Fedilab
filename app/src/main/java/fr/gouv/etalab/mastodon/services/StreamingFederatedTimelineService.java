@@ -84,8 +84,6 @@ public class StreamingFederatedTimelineService extends IntentService {
     protected void onHandleIntent(@Nullable Intent intent) {
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        InputStream inputStream;
-        BufferedReader reader = null;
         Account accountStream = null;
         if( userId != null) {
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
