@@ -638,6 +638,37 @@ public class API {
     }
 
     /**
+     * Retrieves Peertube videos from an instance *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getSinglePeertube(String instance, String videoId) {
+
+
+        Peertube peertube = null;
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/videos/%s", videoId), 60, null, null);
+            JSONObject jsonObject = new JSONObject(response);
+            peertube = parseSinglePeertube(jsonObject);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        List<Peertube> peertubes = new ArrayList<>();
+        peertubes.add(peertube);
+        apiResponse.setPeertubes(peertubes);
+        return apiResponse;
+    }
+
+
+    /**
      * Retrieves home timeline for the account *synchronously*
      * @return APIResponse
      */
@@ -2285,7 +2316,6 @@ public class API {
         try {
             int i = 0;
             while (i < jsonArray.length() ){
-
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Peertube peertube = parsePeertube(context, resobj);
                 i++;
@@ -2320,6 +2350,33 @@ public class API {
         return peertube;
     }
 
+    /**
+     * Parse json response for unique how to
+     * @param resobj JSONObject
+     * @return Peertube
+     */
+    private static Peertube parseSinglePeertube(JSONObject resobj){
+        Peertube peertube = new Peertube();
+        try {
+            peertube.setId(resobj.get("id").toString());
+            peertube.setUuid(resobj.get("uuid").toString());
+            peertube.setName(resobj.get("name").toString());
+            peertube.setDescription(resobj.get("description").toString());
+            peertube.setEmbedPath(resobj.get("embedPath").toString());
+            peertube.setPreviewPath(resobj.get("previewPath").toString());
+            peertube.setThumbnailPath(resobj.get("thumbnailPath").toString());
+
+            JSONArray files = resobj.getJSONArray("files");
+            for(int j = 0 ; j < files.length() ; j++){
+                JSONObject attObj = files.getJSONObject(j);
+                peertube.setStreamURL(attObj.get("fileDownloadUrl").toString());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return peertube;
+    }
 
     /**
      * Parse json response for unique how to
