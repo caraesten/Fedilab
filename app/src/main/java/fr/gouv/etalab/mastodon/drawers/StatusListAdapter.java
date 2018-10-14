@@ -732,6 +732,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }else {
                 holder.status_translate.setVisibility(View.GONE);
             }
+            if( expand_cw)
+                holder.status_spoiler_button.setVisibility(View.GONE);
             if( status.getReblog() == null) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 ) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
@@ -805,7 +807,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_show_more.setVisibility(View.GONE);
                 } else {
                     //If medias are loaded without any conditions or if device is on wifi
-                    if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                    if (expand_media || !status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
                         loadAttachments(status.getReblog(), holder);
                         holder.status_show_more.setVisibility(View.GONE);
                         status.setAttachmentShown(true);
