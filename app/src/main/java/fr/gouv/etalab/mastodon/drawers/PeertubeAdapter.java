@@ -37,6 +37,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -107,7 +108,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         holder.how_to_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, WebviewActivity.class);
+                Intent intent = new Intent(context, PeertubeActivity.class);
                 Bundle b = new Bundle();
                 String finalUrl = "https://"  + instance + peertube.getEmbedPath();
                 b.putString("url", finalUrl);
@@ -116,7 +117,9 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
                 Matcher matcherLink = link.matcher(finalUrl);
                 if( matcherLink.find()) {
                     String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
+                    String stream_url = matcherLink.group(1) + "/static/webseed/" + matcherLink.group(2) + "-360.mp4";
                     b.putString("peertubeLinkToFetch", url);
+                    b.putString("stream_url", stream_url);
                 }
                 intent.putExtras(b);
                 context.startActivity(intent);
