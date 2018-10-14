@@ -27,6 +27,7 @@ public class Peertube {
     private String thumbnailPath;
     private String previewPath;
     private String embedPath;
+    private String streamURL;
 
     public String getId() {
         return id;
@@ -84,4 +85,11 @@ public class Peertube {
         this.embedPath = embedPath;
     }
 
+    public String getStreamURL() {
+        return streamURL;
+    }
+
+    public void setStreamURL(String streamURL) {
+        this.streamURL = streamURL;
+    }
 }

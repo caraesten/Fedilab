@@ -18,13 +18,16 @@ package fr.gouv.etalab.mastodon.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -37,11 +40,15 @@ import java.util.Objects;
 import javax.net.ssl.HttpsURLConnection;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSingleAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.FullScreenMediaController;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 
 
 /**
@@ -49,12 +56,14 @@ import fr.gouv.etalab.mastodon.helper.Helper;
  * Peertube activity
  */
 
-public class PeertubeActivity extends BaseActivity {
+public class PeertubeActivity extends BaseActivity implements OnRetrievePeertubeInterface {
 
-    private String url, stream_url;
+    private String url, stream_url, peertubeInstance, videoId;
     private String peertubeLinkToFetch;
     private boolean peertubeLink;
     private FullScreenMediaController.fullscreen fullscreen;
+    private VideoView videoView;
+    private RelativeLayout loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,43 +86,35 @@ public class PeertubeActivity extends BaseActivity {
         }
 
         setContentView(R.layout.activity_peertube);
+        loader = findViewById(R.id.loader);
+        loader.setVisibility(View.VISIBLE);
         Bundle b = getIntent().getExtras();
         if(b != null) {
+            peertubeInstance = b.getString("peertube_instance", null);
+            videoId = b.getString("video_id", null);
             stream_url = b.getString("stream_url", null);
             peertubeLinkToFetch = b.getString("peertubeLinkToFetch", null);
             peertubeLink = b.getBoolean("peertubeLink", true);
             url = b.getString("url", null);
         }
+
+
         if( url == null)
             finish();
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        VideoView videoView = findViewById(R.id.media_video);
-        if(fullscreen == FullScreenMediaController.fullscreen.ON){
+        videoView = findViewById(R.id.media_video);
+        new RetrievePeertubeSingleAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        /*if(fullscreen == FullScreenMediaController.fullscreen.ON){
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getSupportActionBar().hide();
-            Log.v(Helper.TAG,"ici");
         }else{
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
                     WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
             getSupportActionBar().show();
-        }
-
-        Uri uri = Uri.parse(stream_url);
-        try {
-            HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        videoView.setVideoURI(uri);
-        FullScreenMediaController mc = new FullScreenMediaController(PeertubeActivity.this);
-        mc.setAnchorView(videoView);
-        videoView.setMediaController(mc);
-        videoView.start();
+        }*/
     }
 
     public void change(){
@@ -199,5 +200,41 @@ public class PeertubeActivity extends BaseActivity {
 
     public void setFullscreen(FullScreenMediaController.fullscreen fullscreen) {
         this.fullscreen = fullscreen;
+    }
+
+    @Override
+    public void onRetrievePeertube(APIResponse apiResponse) {
+
+        if( apiResponse == null || (apiResponse.getError() != null) || apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0){
+            Toast.makeText(PeertubeActivity.this, R.string.toast_error,Toast.LENGTH_LONG).show();
+            loader.setVisibility(View.GONE);
+            return;
+        }
+        if( apiResponse.getPeertubes().get(0).getStreamURL() == null){
+            Toast.makeText(PeertubeActivity.this, R.string.toast_error,Toast.LENGTH_LONG).show();
+            loader.setVisibility(View.GONE);
+            return;
+        }
+
+        Uri uri = Uri.parse(apiResponse.getPeertubes().get(0).getStreamURL());
+        try {
+            HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        videoView.setVideoURI(uri);
+        FullScreenMediaController mc = new FullScreenMediaController(PeertubeActivity.this);
+        mc.setAnchorView(videoView);
+        videoView.setMediaController(mc);
+        videoView.start();
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                loader.setVisibility(View.GONE);
+                mp.start();
+            }
+        });
     }
 }

@@ -117,9 +117,11 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
                 Matcher matcherLink = link.matcher(finalUrl);
                 if( matcherLink.find()) {
                     String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
-                    String stream_url = matcherLink.group(1) + "/static/webseed/" + matcherLink.group(2) + "-360.mp4";
+                    String stream_url = peertube.getStreamURL();
                     b.putString("peertubeLinkToFetch", url);
                     b.putString("stream_url", stream_url);
+                    b.putString("peertube_instance", matcherLink.group(1).replace("https://","").replace("http://",""));
+                    b.putString("video_id", matcherLink.group(2));
                 }
                 intent.putExtras(b);
                 context.startActivity(intent);
