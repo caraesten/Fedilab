@@ -635,6 +635,7 @@
     <string name="comment">Comment</string>
     <string name="peertube_instance">Peertube instance</string>
     <string name="set_display_direct">Display private messages timeline</string>
+    <string name="set_keep_background_process">Keep background process when app is closed</string>
 
     <string-array name="filter_expire">
         <item>Never</item>

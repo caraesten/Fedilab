@@ -270,6 +270,7 @@ public class Helper {
     public static final String SET_SHARE_DETAILS = "set_share_details";
     public static final String SET_NOTIF_SOUND = "set_notif_sound";
     public static final String SET_ENABLE_TIME_SLOT = "set_enable_time_slot";
+    public static final String SET_KEEP_BACKGROUND_PROCESS = "set_keep_background_process";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;

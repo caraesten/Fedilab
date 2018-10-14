@@ -74,9 +74,12 @@ public class LiveNotificationService extends Service {
 
 
     protected Account account;
+    boolean backgroundProcess;
 
     public void onCreate() {
         super.onCreate();
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
     }
 
     static {
@@ -153,7 +156,8 @@ public class LiveNotificationService extends Service {
                     }
                 });
             }catch (Exception e){
-                sendBroadcast(new Intent("RestartLiveNotificationService"));
+                if(backgroundProcess)
+                    sendBroadcast(new Intent("RestartLiveNotificationService"));
             }
 
         }

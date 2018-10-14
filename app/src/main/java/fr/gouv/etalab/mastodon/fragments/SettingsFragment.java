@@ -364,7 +364,17 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-
+        boolean keep_background_process = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
+        final CheckBox set_keep_background_process = rootView.findViewById(R.id.set_keep_background_process);
+        set_keep_background_process.setChecked(keep_background_process);
+        set_keep_background_process.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, set_keep_background_process.isChecked());
+                editor.apply();
+            }
+        });
 
 
         boolean capitalize = sharedpreferences.getBoolean(Helper.SET_CAPITALIZE, true);
