@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -170,7 +171,6 @@ public abstract class BaseMainActivity extends BaseActivity
     boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies;
     String show_filtered;
     private AppBarLayout appBar;
-    private static boolean activityPaused;
     private String bookmark;
     private String userId;
     private String instance;
@@ -1372,7 +1372,7 @@ public abstract class BaseMainActivity extends BaseActivity
     @Override
     public void onResume(){
         super.onResume();
-        BaseMainActivity.activityResumed();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", true).apply();
         updateNotifCounter();
         updateHomeCounter();
         //Proceeds to update of the authenticated account
@@ -1442,7 +1442,7 @@ public abstract class BaseMainActivity extends BaseActivity
     @Override
     protected void onPause() {
         super.onPause();
-        BaseMainActivity.activityPaused();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", false).apply();
     }
 
     @Override
@@ -1450,6 +1450,11 @@ public abstract class BaseMainActivity extends BaseActivity
         super.onDestroy();
         if( receive_data != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
+        if(!backgroundProcess)
+            sendBroadcast(new Intent("StopLiveNotificationService"));
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", false).apply();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -1991,18 +1996,6 @@ public abstract class BaseMainActivity extends BaseActivity
         }else {
             tabCounterNotif.setVisibility(View.GONE);
         }
-    }
-
-    private static void activityResumed() {
-        activityPaused = false;
-    }
-
-    private static void activityPaused() {
-        activityPaused = true;
-    }
-
-    public static boolean activityState(){
-        return activityPaused;
     }
 
 

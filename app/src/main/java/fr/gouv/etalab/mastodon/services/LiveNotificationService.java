@@ -14,6 +14,8 @@ package fr.gouv.etalab.mastodon.services;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -26,10 +28,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -48,7 +51,6 @@ import org.json.JSONObject;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
-import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -75,11 +77,29 @@ public class LiveNotificationService extends Service {
 
     protected Account account;
     boolean backgroundProcess;
+    private static Thread thread;
 
     public void onCreate() {
         super.onCreate();
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
+        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        if( liveNotifications ){
+            if( thread == null || !thread.isAlive())
+                thread = new Thread() {
+                    @Override
+                    public void run() {
+                        List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
+                        if (accountStreams != null){
+                            for (final Account accountStream : accountStreams) {
+                                taks(accountStream);
+                            }
+                        }
+                    }
+                };
+            thread.start();
+        }
     }
 
     static {
@@ -88,32 +108,8 @@ public class LiveNotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( intent == null || intent.getBooleanExtra("stop", false) ) {
             stopSelf();
-        }
-        boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
-
-        String userId;
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        if( liveNotifications ){
-
-            if( intent == null || intent.getStringExtra("userId") == null) {
-
-                List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
-                if (accountStreams != null){
-                    for (final Account accountStream : accountStreams) {
-                        taks(accountStream);
-                    }
-                }
-            }else {
-                userId = intent.getStringExtra("userId");
-                final Account accountStream = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-                if (accountStream != null) {
-                    taks(accountStream);
-                }
-            }
         }
         return START_STICKY;
     }
@@ -124,6 +120,24 @@ public class LiveNotificationService extends Service {
         return null;
     }
 
+    @Override
+    public void onTaskRemoved(Intent rootIntent){
+        if(backgroundProcess){
+            restart();
+        }
+        super.onTaskRemoved(rootIntent);
+    }
+
+    private void restart(){
+        Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
+        restartServiceIntent.setPackage(getPackageName());
+        PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        alarmService.set(
+                AlarmManager.ELAPSED_REALTIME,
+                SystemClock.elapsedRealtime() + 1000,
+                restartServicePendingIntent);
+    }
 
     private void taks(Account account) {
 
@@ -149,15 +163,15 @@ public class LiveNotificationService extends Service {
                                 try {
                                     JSONObject eventJson = new JSONObject(s);
                                     onRetrieveStreaming(account, eventJson);
-                                } catch (JSONException ignored) {
+                                } catch (JSONException ignored) { ignored.printStackTrace();
                                 }
                             }
                         });
                     }
                 });
             }catch (Exception e){
-                if(backgroundProcess)
-                    sendBroadcast(new Intent("RestartLiveNotificationService"));
+                e.printStackTrace();
+                restart();
             }
 
         }
@@ -179,12 +193,7 @@ public class LiveNotificationService extends Service {
                     event = Helper.EventStreaming.NOTIFICATION;
                     notification = API.parseNotificationResponse(getApplicationContext(), new JSONObject(response.get("payload").toString()));
                     b.putParcelable("data", notification);
-                    boolean activityPaused;
-                    try {
-                        activityPaused = BaseMainActivity.activityState();
-                    } catch (Exception e) {
-                        activityPaused = true;
-                    }
+
                     final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                     boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
                     boolean canNotify = Helper.canNotify(getApplicationContext());
@@ -192,7 +201,9 @@ public class LiveNotificationService extends Service {
                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     String targeted_account = null;
                     Helper.NotifType notifType = Helper.NotifType.MENTION;
-                    if ((userId == null || !userId.equals(account.getId()) || activityPaused) && liveNotifications && canNotify && notify) {
+                    boolean activityRunning = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("isMainActivityRunning", false);
+                    if( userId != null)
+                    if ((userId == null || !userId.equals(account.getId()) || !activityRunning) && liveNotifications && canNotify && notify) {
                         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
                         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
                         boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
