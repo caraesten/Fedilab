@@ -19,6 +19,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -71,16 +72,24 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
  * Manage service for streaming api and new notifications
  */
 
-public class LiveNotificationService extends Service {
+public class LiveNotificationService extends Service implements NetworkStateReceiver.NetworkStateReceiverListener {
 
 
 
     protected Account account;
     boolean backgroundProcess;
     private static Thread thread;
+    private NetworkStateReceiver networkStateReceiver;
 
     public void onCreate() {
         super.onCreate();
+        networkStateReceiver = new NetworkStateReceiver();
+        networkStateReceiver.addListener(this);
+        startStream();
+        this.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    private void startStream(){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
@@ -112,6 +121,13 @@ public class LiveNotificationService extends Service {
             stopSelf();
         }
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        networkStateReceiver.removeListener(this);
+        this.unregisterReceiver(networkStateReceiver);
     }
 
     @Nullable
@@ -171,7 +187,7 @@ public class LiveNotificationService extends Service {
                 });
             }catch (Exception e){
                 e.printStackTrace();
-                restart();
+                startStream();
             }
 
         }
@@ -202,7 +218,6 @@ public class LiveNotificationService extends Service {
                     String targeted_account = null;
                     Helper.NotifType notifType = Helper.NotifType.MENTION;
                     boolean activityRunning = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("isMainActivityRunning", false);
-                    if( userId != null)
                     if ((userId == null || !userId.equals(account.getId()) || !activityRunning) && liveNotifications && canNotify && notify) {
                         boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
                         boolean notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
@@ -346,4 +361,12 @@ public class LiveNotificationService extends Service {
         }
     }
 
+    @Override
+    public void networkAvailable() {
+        startStream();
+    }
+
+    @Override
+    public void networkUnavailable() {
+    }
 }
