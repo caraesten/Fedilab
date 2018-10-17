@@ -18,7 +18,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/how_to_container"
+    android:id="@+id/main_container"
     android:divider="?android:dividerHorizontal"
     android:showDividers="end"
     android:paddingBottom="10dp"

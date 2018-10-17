@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -77,6 +78,15 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
 
         final PeertubeAdapter.ViewHolder holder = (PeertubeAdapter.ViewHolder) viewHolder;
         final Peertube peertube = peertubes.get(position);
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == Helper.THEME_LIGHT){
+            holder.main_container.setBackgroundResource(R.color.mastodonC3__);
+        }else if (theme == Helper.THEME_DARK){
+            holder.main_container.setBackgroundResource(R.color.mastodonC1_);
+        }else if (theme == Helper.THEME_BLACK){
+            holder.main_container.setBackgroundResource(R.color.black);
+        }
 
         Account account = peertube.getAccount();
 
@@ -96,7 +106,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
                 .load("https://" + peertube.getInstance() + peertube.getThumbnailPath())
                 .into(holder.peertube_video_image);
         Helper.loadGiF(context, account.getAvatar(), holder.peertube_profile);
-        holder.how_to_container.setOnClickListener(new View.OnClickListener() {
+        holder.main_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, PeertubeActivity.class);
@@ -134,20 +144,21 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-        LinearLayout how_to_container;
+        LinearLayout main_container;
         ImageView peertube_profile, peertube_video_image;
         TextView peertube_account_name, peertube_views, peertube_duration;
         TextView peertube_title, peertube_date;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             peertube_account_name = itemView.findViewById(R.id.peertube_account_name);
             peertube_title = itemView.findViewById(R.id.peertube_title);
             peertube_video_image = itemView.findViewById(R.id.peertube_video_image);
             peertube_profile = itemView.findViewById(R.id.peertube_profile);
-            how_to_container = itemView.findViewById(R.id.how_to_container);
             peertube_date = itemView.findViewById(R.id.peertube_date);
             peertube_views = itemView.findViewById(R.id.peertube_views);
             peertube_duration = itemView.findViewById(R.id.peertube_duration);
+            main_container = itemView.findViewById(R.id.main_container);
         }
     }
 

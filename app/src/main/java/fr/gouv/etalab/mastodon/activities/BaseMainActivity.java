@@ -46,7 +46,10 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
+import android.text.Html;
+import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -61,7 +64,12 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -71,6 +79,7 @@ import android.widget.Toast;
 
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -85,13 +94,16 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayBookmarksFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
@@ -114,6 +126,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.BackupStatusService;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
+import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
@@ -142,6 +155,11 @@ import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
 import static fr.gouv.etalab.mastodon.helper.Helper.unCheckAllMenuItems;
 import static fr.gouv.etalab.mastodon.helper.Helper.updateHeaderAccountInfo;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 
 public abstract class BaseMainActivity extends BaseActivity
@@ -176,6 +194,9 @@ public abstract class BaseMainActivity extends BaseActivity
     private String instance;
     public int countPage;
     private PagerAdapter adapter;
+    private String oldSearch;
+    boolean isLoadingInstance = false;
+    private ImageView delete_instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,6 +248,7 @@ public abstract class BaseMainActivity extends BaseActivity
         toolbarTitle  = toolbar.findViewById(R.id.toolbar_title);
         toolbar_search = toolbar.findViewById(R.id.toolbar_search);
         tabLayout = findViewById(R.id.tabLayout);
+        delete_instance = findViewById(R.id.delete_instance);
         TabLayout.Tab tabHome = tabLayout.newTab();
         TabLayout.Tab tabNotif = tabLayout.newTab();
         TabLayout.Tab tabDirect = tabLayout.newTab();
@@ -273,6 +295,35 @@ public abstract class BaseMainActivity extends BaseActivity
 
        FloatingActionButton federatedTimelines = findViewById(R.id.federated_timeline);
 
+        delete_instance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    String title = toolbarTitle.getText().toString();
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this);
+                    dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            new InstancesDAO(BaseMainActivity.this, db).remove(title);
+                            BaseMainActivity.this.onBackPressed();
+                        }
+                    });
+                    dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialogBuilder.setTitle(R.string.delete_instance);
+                    dialogBuilder.setMessage(getString(R.string.warning_delete_instance, title));
+                    AlertDialog alertDialog = dialogBuilder.create();
+                    alertDialog.show();
+
+                }catch (Exception e){
+                    Toast.makeText(BaseMainActivity.this, R.string.toast_error, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
         if( !displayFollowInstance)
@@ -280,8 +331,227 @@ public abstract class BaseMainActivity extends BaseActivity
         federatedTimelines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), InstanceFederatedActivity.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(getApplicationContext(), InstanceFederatedActivity.class);
+                startActivity(intent);*/
+                SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                new InstancesDAO(BaseMainActivity.this, db).cleanDoublon();
+                List<RemoteInstance> remoteInstances = new InstancesDAO(BaseMainActivity.this, db).getAllInstances();
+                PopupMenu popup = new PopupMenu(BaseMainActivity.this, federatedTimelines);
+                popup.getMenuInflater()
+                        .inflate(R.menu.remote_instances, popup.getMenu());
+                try {
+                    @SuppressLint("PrivateApi") Method method = popup.getMenu().getClass().getDeclaredMethod("setOptionalIconsVisible", boolean.class);
+                    method.setAccessible(true);
+                    method.invoke(popup.getMenu(), true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                int i = 0;
+                for(RemoteInstance remoteInstance: remoteInstances) {
+                    MenuItem item = popup.getMenu().add(0, i, Menu.NONE, remoteInstance.getHost());
+                    if(remoteInstance.getType() == null || remoteInstance.getType().equals("MASTODON"))
+                        item.setIcon(R.drawable.mastodon_icon_item);
+                    else
+                        item.setIcon(R.drawable.peertube_icon);
+                    i++;
+                    item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            DisplayStatusFragment statusFragment;
+                            Bundle bundle = new Bundle();
+                            statusFragment = new DisplayStatusFragment();
+                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                            bundle.putString("remote_instance", remoteInstance.getHost());
+                            statusFragment.setArguments(bundle);
+                            String fragmentTag = "REMOTE_INSTANCE";
+                            FragmentManager fragmentManager = getSupportFragmentManager();
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                            main_app_container.setVisibility(View.VISIBLE);
+                            viewPager.setVisibility(View.GONE);
+                            tabLayout.setVisibility(View.GONE);
+                            toolbarTitle.setVisibility(View.VISIBLE);
+                            delete_instance.setVisibility(View.VISIBLE);
+                            toolbarTitle.setText(remoteInstance.getHost());
+                            return false;
+                        }
+                    });
+                }
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_add_instance:
+                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this);
+                                LayoutInflater inflater = getLayoutInflater();
+                                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.search_instance, null);
+                                dialogBuilder.setView(dialogView);
+
+                                AutoCompleteTextView instance_list = dialogView.findViewById(R.id.search_instance);
+                                CheckBox peertube_instance  = dialogView.findViewById(R.id.peertube_instance);
+                                instance_list.setFilters(new InputFilter[]{new InputFilter.LengthFilter(60)});
+                                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                        String instanceName = instance_list.getText().toString().trim();
+                                        new Thread(new Runnable(){
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    if( !peertube_instance.isChecked())
+                                                        new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/timelines/public?local=true", 10, null, null);
+                                                    else
+                                                        new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/videos/", 10, null, null);
+                                                    runOnUiThread(new Runnable() {
+                                                        public void run() {
+                                                            JSONObject resobj;
+                                                            dialog.dismiss();
+                                                            if( peertube_instance.isChecked())
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PEERTUBE");
+                                                            else
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MASTODON");
+                                                            DisplayStatusFragment statusFragment;
+                                                            Bundle bundle = new Bundle();
+                                                            statusFragment = new DisplayStatusFragment();
+                                                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                                                            bundle.putString("remote_instance", instanceName);
+                                                            statusFragment.setArguments(bundle);
+                                                            String fragmentTag = "REMOTE_INSTANCE";
+                                                            FragmentManager fragmentManager = getSupportFragmentManager();
+                                                            fragmentManager.beginTransaction()
+                                                                    .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                                                            main_app_container.setVisibility(View.VISIBLE);
+                                                            viewPager.setVisibility(View.GONE);
+                                                            delete_instance.setVisibility(View.VISIBLE);
+                                                            tabLayout.setVisibility(View.GONE);
+                                                            toolbarTitle.setVisibility(View.VISIBLE);
+                                                            toolbarTitle.setText(instanceName);
+                                                        }
+                                                    });
+                                                } catch (final Exception e) {
+                                                    e.printStackTrace();
+                                                    runOnUiThread(new Runnable() {
+                                                        public void run() {
+                                                            Toast.makeText(getApplicationContext(), R.string.toast_instance_unavailable,Toast.LENGTH_LONG).show();
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        }).start();
+                                    }
+                                });
+                                AlertDialog alertDialog = dialogBuilder.create();
+                                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialogInterface) {
+                                        //Hide keyboard
+                                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                        assert imm != null;
+                                        imm.hideSoftInputFromWindow(instance_list.getWindowToken(), 0);
+                                    }
+                                });
+                                if( alertDialog.getWindow() != null )
+                                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                                alertDialog.show();
+
+                                instance_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+                                        oldSearch = parent.getItemAtPosition(position).toString().trim();
+                                    }
+                                });
+                                instance_list.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+                                        Pattern host = Pattern.compile("([\\da-z\\.-]+\\.[a-z\\.]{2,12})");
+                                        Matcher matcher = host.matcher(s.toString().trim());
+                                        if( s.toString().trim().length() == 0 || !matcher.find()) {
+                                            alertDialog.getButton(
+                                                    AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                                        } else {
+                                            // Something into edit text. Enable the button.
+                                            alertDialog.getButton(
+                                                    AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                                        }
+                                        if (s.length() > 2 && !isLoadingInstance) {
+                                            final String action = "/instances/search";
+                                            final HashMap<String, String> parameters = new HashMap<>();
+                                            parameters.put("q", s.toString().trim());
+                                            parameters.put("count", String.valueOf(1000));
+                                            parameters.put("name", String.valueOf(true));
+                                            isLoadingInstance = true;
+
+                                            if( oldSearch == null || !oldSearch.equals(s.toString().trim()))
+                                                new Thread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        try {
+                                                            final String response = new HttpsConnection(BaseMainActivity.this).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                                                            runOnUiThread(new Runnable() {
+                                                                public void run() {
+                                                                    isLoadingInstance = false;
+                                                                    String[] instances;
+                                                                    try {
+                                                                        JSONObject jsonObject = new JSONObject(response);
+                                                                        JSONArray jsonArray = jsonObject.getJSONArray("instances");
+                                                                        if (jsonArray != null) {
+                                                                            int length = 0;
+                                                                            for (int i = 0; i < jsonArray.length(); i++) {
+                                                                                if( !jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true"))
+                                                                                    length++;
+                                                                            }
+                                                                            instances = new String[length];
+                                                                            int j = 0;
+                                                                            for (int i = 0; i < jsonArray.length(); i++) {
+                                                                                if( !jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true")) {
+                                                                                    instances[j] = jsonArray.getJSONObject(i).get("name").toString();
+                                                                                    j++;
+                                                                                }
+                                                                            }
+                                                                        } else {
+                                                                            instances = new String[]{};
+                                                                        }
+                                                                        instance_list.setAdapter(null);
+                                                                        ArrayAdapter<String> adapter =
+                                                                                new ArrayAdapter<>(BaseMainActivity.this, android.R.layout.simple_list_item_1, instances);
+                                                                        instance_list.setAdapter(adapter);
+                                                                        if (instance_list.hasFocus() && !BaseMainActivity.this.isFinishing())
+                                                                            instance_list.showDropDown();
+                                                                        oldSearch = s.toString().trim();
+
+                                                                    } catch (JSONException ignored) {
+                                                                        isLoadingInstance = false;
+                                                                    }
+                                                                }
+                                                            });
+
+                                                        } catch (HttpsConnection.HttpsConnectionException e) {
+                                                            isLoadingInstance = false;
+                                                        } catch (Exception e) {
+                                                            isLoadingInstance = false;
+                                                        }
+                                                    }
+                                                }).start();
+                                            else
+                                                isLoadingInstance = false;
+                                        }
+                                    }
+                                });
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popup.show();
             }
         });
 
@@ -449,6 +719,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
                 main_app_container.setVisibility(View.GONE);
                 viewPager.setVisibility(View.VISIBLE);
+                delete_instance.setVisibility(View.GONE);
                 Helper.switchLayout(BaseMainActivity.this);
                 if( tab.getPosition() != 1 )
                     toot.show();
@@ -480,6 +751,7 @@ public abstract class BaseMainActivity extends BaseActivity
             public void onTabReselected(TabLayout.Tab tab) {
                 if( viewPager.getVisibility() == View.GONE){
                     viewPager.setVisibility(View.VISIBLE);
+                    delete_instance.setVisibility(View.GONE);
                     Helper.switchLayout(BaseMainActivity.this);
                     main_app_container.setVisibility(View.GONE);
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -605,12 +877,14 @@ public abstract class BaseMainActivity extends BaseActivity
                 if( main_app_container.getVisibility() == View.VISIBLE){
                     main_app_container.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
+                    delete_instance.setVisibility(View.GONE);
                     tabLayout.setVisibility(View.GONE);
                     toolbarTitle.setVisibility(View.VISIBLE);
                 }else {
                     main_app_container.setVisibility(View.GONE);
                     viewPager.setVisibility(View.VISIBLE);
                     tabLayout.setVisibility(View.VISIBLE);
+                    delete_instance.setVisibility(View.GONE);
                     toolbarTitle.setVisibility(View.GONE);
                 }
                 return false;
@@ -637,6 +911,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     tabLayout.setVisibility(View.VISIBLE);
                     toolbarTitle.setVisibility(View.GONE);
                 }
+                delete_instance.setVisibility(View.GONE);
                 //your code here
                 return false;
             }
@@ -660,6 +935,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     toolbarTitle.setVisibility(View.GONE);
                     tabLayout.setVisibility(View.GONE);
                 }
+                delete_instance.setVisibility(View.GONE);
             }
         });
 
@@ -911,6 +1187,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     tabLayout.setVisibility(View.VISIBLE);
                     toolbarTitle.setVisibility(View.GONE);
                 }
+                delete_instance.setVisibility(View.GONE);
             }
         });
 
@@ -1011,6 +1288,7 @@ public abstract class BaseMainActivity extends BaseActivity
             viewPager.setVisibility(View.VISIBLE);
             tabLayout.setVisibility(View.VISIBLE);
             toolbarTitle.setVisibility(View.GONE);
+            delete_instance.setVisibility(View.GONE);
         }
     }
 
@@ -1347,12 +1625,14 @@ public abstract class BaseMainActivity extends BaseActivity
                 }else {
                     super.onBackPressed();
                 }
-            }else {
+            } else {
                 Helper.switchLayout(BaseMainActivity.this);
                 main_app_container.setVisibility(View.GONE);
+
                 viewPager.setVisibility(View.VISIBLE);
                 tabLayout.setVisibility(View.VISIBLE);
                 toolbarTitle.setVisibility(View.GONE);
+                delete_instance.setVisibility(View.GONE);
                 delete_all.hide();
                 add_new.hide();
                 final NavigationView navigationView = findViewById(R.id.nav_view);
@@ -1490,9 +1770,11 @@ public abstract class BaseMainActivity extends BaseActivity
         String fragmentTag = null;
 
         main_app_container.setVisibility(View.VISIBLE);
+
         viewPager.setVisibility(View.GONE);
         tabLayout.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.VISIBLE);
+        delete_instance.setVisibility(View.GONE);
         appBar.setExpanded(true);
         if (id != R.id.nav_drafts && id != R.id.nav_bookmarks ) {
             delete_all.hide();
