@@ -41,7 +41,7 @@
   <string name="clear">Bereinigen</string>
   <string name="microphone">Mikrofon</string>
   <string name="camera">Kamera</string>
-  <string name="speech_prompt">Bitte, sag etwas.</string>
+  <string name="speech_prompt">Bitte sag etwas</string>
   <string name="speech_not_supported">Es tut uns leid! Ihr Gerät unterstützt keine Spracheingabe!</string>
   <string name="delete_all">Alles löschen</string>
   <string name="translate_toot">Toot übersetzen</string>
@@ -87,7 +87,7 @@
   <string name="make_a_choice">Was möchten Sie tun?</string>
   <string name="delete_account_title">Konto löschen</string>
   <string name="delete_account_message" formatted="false">Konto %1$s aus der Anwendung löschen?</string>
-  <string name="send_email">Nachricht senden</string>
+  <string name="send_email">E-Mail senden</string>
   <string name="choose_file">Datei wählen</string>
   <string name="choose_file_error">Kein Dateimanager gefunden!</string>
   <string name="click_to_change">Pfad anklicken, um ihn zu ändern</string>
@@ -487,7 +487,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="warning_delete_instance">Sie löschen %s aus Ihren folgenden Instanzen.</string>
   <string name="which_language">Übersetzen in</string>
   <string name="crash_title">Mastalab ist abgestürzt :(</string>
-  <string name="crash_message">Du kannst mir den Fehlerreport per Mail senden. Dies hilft mir bei der Fehlerbehebung:)\n\nDu kannst weitere Inhalte hinzufügen. Danke!</string>
+  <string name="crash_message">Du kannst mir den Fehlerreport per E-Mail senden. Dies hilft mir bei der Fehlerbehebung:)\n\nDu kannst weitere Inhalte hinzufügen. Danke!</string>
   <string name="send_crash_report">Nachfragen, ob Fehlerbericht per E-Mail versendet werden soll?</string>
   <string name="follow_instance">Folge Instanz</string>
   <string name="toast_instance_already_added">Du folgst dieser Instanz bereits!</string>
@@ -566,7 +566,10 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="comment">Kommentar</string>
   <string name="peertube_instance">Peertube Instanz</string>
   <string name="set_display_direct">Private Nachrichten als eigene Zeitleiste anzeigen</string>
-  <string name="set_keep_background_process">Keep background process when app is closed</string>
+  <string name="set_keep_background_process">Im Hintergrund ausführen</string>
+  <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
+  <string name="number_view_video">%s views</string>
+  <string name="duration_video">Duration: %s</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>
