@@ -578,6 +578,8 @@
   <string name="peertube_instance">Peertube instantie</string>
   <string name="set_display_direct">Toon prive berichten tijdlijn</string>
   <string name="set_keep_background_process">Keep background process when app is closed</string>
+  <string name="download_wait">Downloading file. Please wait...</string>
+  <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
   <string-array name="filter_expire">
     <item>Nooit</item>
     <item>30 minuten</item>
