@@ -35,6 +35,9 @@ public class Peertube {
     private int dislike;
     private Date created_at;
     private int duration;
+    private String instance;
+    private Account account;
+
 
     public String getId() {
         return id;
@@ -138,5 +141,21 @@ public class Peertube {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public String getInstance() {
+        return instance;
+    }
+
+    public void setInstance(String instance) {
+        this.instance = instance;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

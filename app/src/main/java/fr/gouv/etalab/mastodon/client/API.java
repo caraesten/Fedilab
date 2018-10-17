@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,9 +30,11 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -621,7 +622,7 @@ public class API {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get("https://"+instance+"/api/v1/videos", 60, params, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
-            peertubes = parsePeertube(jsonArray);
+            peertubes = parsePeertube(instance, jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -649,7 +650,7 @@ public class API {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/videos/%s", videoId), 60, null, null);
             JSONObject jsonObject = new JSONObject(response);
-            peertube = parseSinglePeertube(context, jsonObject);
+            peertube = parseSinglePeertube(context, instance, jsonObject);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1546,6 +1547,9 @@ public class API {
      */
     public Results search(String query) {
 
+        //A fix for peertube and account
+        if( query.startsWith("http") && query.split("@").length > 2)
+            query =  "@"+query.split("@")[1] +"@"+ query.split("@")[2];
         HashMap<String, String> params = new HashMap<>();
         params.put("q", query);
         try {
@@ -2335,14 +2339,14 @@ public class API {
      * @param jsonArray JSONArray
      * @return List<Peertube>
      */
-    private List<Peertube> parsePeertube(JSONArray jsonArray){
+    private List<Peertube> parsePeertube(String instance, JSONArray jsonArray){
 
         List<Peertube> peertubes = new ArrayList<>();
         try {
             int i = 0;
             while (i < jsonArray.length() ){
                 JSONObject resobj = jsonArray.getJSONObject(i);
-                Peertube peertube = parsePeertube(context, resobj);
+                Peertube peertube = parsePeertube(context, instance, resobj);
                 i++;
                 peertubes.add(peertube);
             }
@@ -2358,7 +2362,7 @@ public class API {
      * @param resobj JSONObject
      * @return Peertube
      */
-    private static Peertube parsePeertube(Context context, JSONObject resobj){
+    private static Peertube parsePeertube(Context context, String instance, JSONObject resobj){
         Peertube peertube = new Peertube();
         try {
             peertube.setId(resobj.get("id").toString());
@@ -2368,6 +2372,17 @@ public class API {
             peertube.setEmbedPath(resobj.get("embedPath").toString());
             peertube.setPreviewPath(resobj.get("previewPath").toString());
             peertube.setThumbnailPath(resobj.get("thumbnailPath").toString());
+            peertube.setAccount(parseAccountResponsePeertube(context, instance, resobj.getJSONObject("account")));
+            peertube.setInstance(instance);
+            peertube.setView(Integer.parseInt(resobj.get("views").toString()));
+            peertube.setLike(Integer.parseInt(resobj.get("likes").toString()));
+            peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
+            peertube.setDuration(Integer.parseInt(resobj.get("duration").toString()));
+            try {
+                peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -2380,13 +2395,13 @@ public class API {
      * @param resobj JSONObject
      * @return Peertube
      */
-    private static Peertube parseSinglePeertube(Context context, JSONObject resobj){
+    private static Peertube parseSinglePeertube(Context context, String instance, JSONObject resobj){
         Peertube peertube = new Peertube();
         try {
-            Log.v(Helper.TAG,"resobj= " + resobj);
             peertube.setId(resobj.get("id").toString());
             peertube.setUuid(resobj.get("uuid").toString());
             peertube.setName(resobj.get("name").toString());
+            peertube.setInstance(instance);
             peertube.setDescription(resobj.get("description").toString());
             peertube.setEmbedPath(resobj.get("embedPath").toString());
             peertube.setPreviewPath(resobj.get("previewPath").toString());
@@ -2395,6 +2410,7 @@ public class API {
             peertube.setLike(Integer.parseInt(resobj.get("likes").toString()));
             peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
             peertube.setDuration(Integer.parseInt(resobj.get("duration").toString()));
+            peertube.setAccount(parseAccountResponsePeertube(context, instance, resobj.getJSONObject("account")));
             try {
                 peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
             } catch (ParseException e) {
@@ -2419,7 +2435,6 @@ public class API {
      * @return Peertube
      */
     private static List<Status> parseSinglePeertubeComments(Context context, String instance, JSONObject resobj){
-        Peertube peertube = new Peertube();
         List<Status> statuses = new ArrayList<>();
         try {
             JSONArray jsonArray = resobj.getJSONArray("data");
@@ -2796,22 +2811,33 @@ public class API {
      * @param resobj JSONObject
      * @return Account
      */
-    @SuppressWarnings("InfiniteRecursion")
     private static Account parseAccountResponsePeertube(Context context, String instance, JSONObject resobj){
-
         Account account = new Account();
         try {
             account.setId(resobj.get("id").toString());
             account.setUsername(resobj.get("name").toString());
             account.setAcct(resobj.get("name").toString() + "@"+ resobj.get("host").toString());
             account.setDisplay_name(resobj.get("displayName").toString());
-            account.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
-            account.setFollowers_count(Integer.valueOf(resobj.get("followersCount").toString()));
-            account.setFollowing_count(Integer.valueOf(resobj.get("followingCount").toString()));
+            if( resobj.has("createdAt") )
+                account.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
+            else
+                account.setCreated_at(new Date());
+
+            if( resobj.has("followersCount") )
+                account.setFollowers_count(Integer.valueOf(resobj.get("followersCount").toString()));
+            else
+                account.setFollowers_count(0);
+            if( resobj.has("followingCount"))
+                account.setFollowing_count(Integer.valueOf(resobj.get("followingCount").toString()));
+            else
+                account.setFollowing_count(0);
             account.setStatuses_count(0);
-            account.setNote(resobj.get("description").toString());
+            if( resobj.has("description") )
+                account.setNote(resobj.get("description").toString());
+            else
+                account.setNote("");
             account.setUrl(resobj.get("url").toString());
-            if( resobj.get("avatar").toString() != null && !resobj.get("avatar").toString().equals("null")){
+            if( resobj.has("avatar") && !resobj.get("avatar").toString().equals("null")){
                 account.setAvatar("https://" + instance + resobj.getJSONObject("avatar").get("path"));
             }else
                 account.setAvatar(null);

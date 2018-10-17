@@ -2056,6 +2056,23 @@ public class Helper {
         return output;
     }
 
+    public static String secondsToString(int pTime) {
+
+        int hour = pTime/3660;
+        int min = pTime/60;
+        int sec = pTime-(min*60);
+        String strHour="0", strMin="0", strSec="0";
+
+        if( hour > 0 )
+            strHour = String.format(Locale.getDefault(), "%02d", hour);
+        if( min > 0 )
+            strMin = String.format(Locale.getDefault(), "%02d", min);
+        strSec = String.format(Locale.getDefault(), "%02d", sec);
+        if( hour > 0 )
+            return String.format(Locale.getDefault(),"%s:%s:%s",strHour, strMin,strSec);
+        else
+            return String.format(Locale.getDefault(), "%s:%s",strMin,strSec);
+    }
 
     public static void loadGiF(final Context context, String url, final ImageView imageView){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

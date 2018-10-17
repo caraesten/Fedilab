@@ -15,20 +15,22 @@
 package fr.gouv.etalab.mastodon.activities;
 
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,14 +40,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
-
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.ref.WeakReference;
-import java.net.URL;
-import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -68,7 +63,8 @@ import fr.gouv.etalab.mastodon.helper.FullScreenMediaController;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 
-import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
+import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
 
 
 /**
@@ -259,7 +255,45 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DownloadFileFromURL().execute(peertube.getStreamURL());
+                if(Build.VERSION.SDK_INT >= 23 ){
+                    if (ContextCompat.checkSelfPermission(PeertubeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(PeertubeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(PeertubeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
+                    } else {
+                        manageDownloads(PeertubeActivity.this, peertube.getStreamURL());
+                    }
+                }else{
+                    manageDownloads(PeertubeActivity.this, peertube.getStreamURL());
+                }
+            }
+        });
+
+        peertube_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shared_via));
+                String url;
+
+                url = "https://" +peertube.getInstance() + "/videos/watch/"+ peertube.getUuid();
+                boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
+                String extra_text;
+                if( share_details) {
+                    extra_text  = "@" +peertube.getAccount().getAcct();
+                    extra_text += "\r\n\r\n" + peertube.getName();
+                    extra_text += "\n\n" + Helper.shortnameToUnicode(":link:", true) + " " + url + "\r\n-\n";
+                    final String contentToot;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                        contentToot = Html.fromHtml(peertube.getDescription(), Html.FROM_HTML_MODE_LEGACY).toString();
+                    else
+                        //noinspection deprecation
+                        contentToot = Html.fromHtml(peertube.getDescription()).toString();
+                    extra_text += contentToot;
+                }else {
+                    extra_text = url;
+                }
+                sendIntent.putExtra(Intent.EXTRA_TEXT, extra_text);
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent, getString(R.string.share_with)));
             }
         });
     }
@@ -274,9 +308,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
-        Log.v(Helper.TAG,"statuses " + statuses);
-        if( statuses != null)
-            Log.v(Helper.TAG,"size " + statuses.size());
         if( statuses == null || statuses.size() == 0){
             RelativeLayout no_action = findViewById(R.id.no_action);
             no_action.setVisibility(View.VISIBLE);
@@ -296,74 +327,5 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             lv_comments.setAdapter(statusListAdapter);
 
         }
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case progress_bar_type: // we set this to 0
-                pDialog = new ProgressDialog(PeertubeActivity.this);
-                pDialog.setMessage(getString(R.string.download_wait));
-                pDialog.setIndeterminate(false);
-                pDialog.setMax(100);
-                pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                pDialog.setCancelable(true);
-                pDialog.show();
-                return pDialog;
-            default:
-                return null;
-        }
-    }
-
-
-    /**
-     * https://stackoverflow.com/a/15758953
-     */
-    @SuppressLint("StaticFieldLeak")
-    class DownloadFileFromURL extends AsyncTask<String, String, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            showDialog(progress_bar_type);
-        }
-        @Override
-        protected String doInBackground(String... f_url) {
-            int count;
-            try {
-                URL url = new URL(f_url[0]);
-                URLConnection conection = url.openConnection();
-                conection.connect();
-                int lenghtOfFile = conection.getContentLength();
-                InputStream input = new BufferedInputStream(url.openStream(),
-                        8192);
-                OutputStream output = new FileOutputStream(Environment
-                        .getExternalStorageDirectory().toString()
-                        + "/2011.kml");
-                byte data[] = new byte[1024];
-                long total = 0;
-                while ((count = input.read(data)) != -1) {
-                    total += count;
-                    publishProgress("" + (int) ((total * 100) / lenghtOfFile));
-                    output.write(data, 0, count);
-                }
-                output.flush();
-                output.close();
-                input.close();
-
-            } catch (Exception e) {
-            }
-
-            return null;
-        }
-        protected void onProgressUpdate(String... progress) {
-            pDialog.setProgress(Integer.parseInt(progress[0]));
-        }
-
-        @Override
-        protected void onPostExecute(String file_url) {
-            dismissDialog(progress_bar_type);
-        }
-
     }
 }
