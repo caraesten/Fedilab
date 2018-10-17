@@ -142,10 +142,12 @@ import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.INSTANCE_NAME;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_TARGETED_ACCOUNT;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_INSTANCE;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_REMOTE;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_URL;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
@@ -249,6 +251,7 @@ public abstract class BaseMainActivity extends BaseActivity
         toolbar_search = toolbar.findViewById(R.id.toolbar_search);
         tabLayout = findViewById(R.id.tabLayout);
         delete_instance = findViewById(R.id.delete_instance);
+        viewPager = findViewById(R.id.viewpager);
         TabLayout.Tab tabHome = tabLayout.newTab();
         TabLayout.Tab tabNotif = tabLayout.newTab();
         TabLayout.Tab tabDirect = tabLayout.newTab();
@@ -331,8 +334,6 @@ public abstract class BaseMainActivity extends BaseActivity
         federatedTimelines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(getApplicationContext(), InstanceFederatedActivity.class);
-                startActivity(intent);*/
                 SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new InstancesDAO(BaseMainActivity.this, db).cleanDoublon();
                 List<RemoteInstance> remoteInstances = new InstancesDAO(BaseMainActivity.this, db).getAllInstances();
@@ -691,7 +692,7 @@ public abstract class BaseMainActivity extends BaseActivity
         });
 
 
-        viewPager = findViewById(R.id.viewpager);
+
         countPage = 2;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true))
             countPage++;
@@ -996,7 +997,7 @@ public abstract class BaseMainActivity extends BaseActivity
         });
         Helper.loadPictureIcon(BaseMainActivity.this, account.getAvatar(),iconbar);
         headerLayout = navigationView.getHeaderView(0);
-        mamageNewIntent(getIntent());
+
         final ImageView menuMore = headerLayout.findViewById(R.id.header_option_menu);
         menuMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1269,7 +1270,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         };
-
+        mamageNewIntent(getIntent());
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
 
         // Retrieves instance
@@ -1481,6 +1482,24 @@ public abstract class BaseMainActivity extends BaseActivity
                     startActivity(intentShow);
 
                 }
+            }else if( extras.getInt(INTENT_ACTION) == SEARCH_INSTANCE){
+                String instance = extras.getString(INSTANCE_NAME);
+                DisplayStatusFragment statusFragment;
+                Bundle bundle = new Bundle();
+                statusFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                bundle.putString("remote_instance", instance);
+                statusFragment.setArguments(bundle);
+                String fragmentTag = "REMOTE_INSTANCE";
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                main_app_container.setVisibility(View.VISIBLE);
+                toolbarTitle.setVisibility(View.VISIBLE);
+                delete_instance.setVisibility(View.VISIBLE);
+                viewPager.setVisibility(View.GONE);
+                tabLayout.setVisibility(View.GONE);
+                toolbarTitle.setText(instance);
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
                 changeUser(BaseMainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
             }else if( extras.getInt(INTENT_ACTION) == CHANGE_THEME_INTENT){

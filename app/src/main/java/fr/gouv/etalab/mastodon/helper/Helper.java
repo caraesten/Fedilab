@@ -144,7 +144,6 @@ import fr.gouv.etalab.mastodon.BuildConfig;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
-import fr.gouv.etalab.mastodon.activities.InstanceFederatedActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -157,7 +156,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Application;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
-import fr.gouv.etalab.mastodon.client.Entities.Instance;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
@@ -2285,47 +2283,6 @@ public class Helper {
             largeLog(content.substring(4000));
         } else {
             Log.v(Helper.TAG, content);
-        }
-    }
-
-
-
-    public static void refreshInstanceTab(Context context, TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter){
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        new InstancesDAO(context, db).cleanDoublon();
-        List<RemoteInstance> remoteInstances = new InstancesDAO(context, db).getAllInstances();
-        int allTabCount = tableLayout.getTabCount();
-        while(allTabCount > 0){
-            removeTab(tableLayout, pagerAdapter, allTabCount-1);
-            allTabCount -=1;
-        }
-        if( remoteInstances != null) {
-            for (RemoteInstance remoteInstance : remoteInstances) {
-                addTab(tableLayout, pagerAdapter, remoteInstance.getHost());
-            }
-            if( remoteInstances.size() > 0 ){
-                tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-                tableLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-            }
-        }
-    }
-
-
-    public static void addTab(TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter, String title) {
-        tableLayout.addTab(tableLayout.newTab().setText(title));
-        pagerAdapter.addTabPage(title);
-    }
-
-    public static void removeTab(TabLayout tableLayout, InstanceFederatedActivity.PagerAdapter pagerAdapter, int position) {
-        if (tableLayout.getTabCount() >= position  ) {
-            try {
-                pagerAdapter.removeTabPage();
-                if(tableLayout.getTabCount() > 0)
-                    tableLayout.removeTabAt(position);
-            }catch (Exception ignored){
-                refreshInstanceTab(tableLayout.getContext(), tableLayout, pagerAdapter);
-            }
-
         }
     }
 

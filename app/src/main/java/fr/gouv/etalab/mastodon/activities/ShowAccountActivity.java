@@ -133,7 +133,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private TextView account_note, account_follow_request;
     private String userId;
     private Relationship relationship;
-    private boolean showMediaOnly, showPinned;
     private ImageView pp_actionBar;
     private FloatingActionButton header_edit_profile;
     private List<Status> pins;
@@ -199,8 +198,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             Toast.makeText(this,R.string.toast_error_loading_account,Toast.LENGTH_LONG).show();
         }
         accountUrl = null;
-        showMediaOnly = false;
-        showPinned = false;
         show_boosts = true;
         show_replies = true;
 
@@ -362,7 +359,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         List<RemoteInstance> remoteInstances = new InstancesDAO(ShowAccountActivity.this, db).getInstanceByName(finalInstanceName);
                         if( remoteInstances != null && remoteInstances.size() > 0 ){
                             Toast.makeText(getApplicationContext(), R.string.toast_instance_already_added,Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(), InstanceFederatedActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putInt(INTENT_ACTION, SEARCH_INSTANCE);
                             bundle.putString(INSTANCE_NAME,finalInstanceName);
@@ -380,7 +377,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                             final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                             new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName, "MASTODON");
                                             Toast.makeText(getApplicationContext(), R.string.toast_instance_followed,Toast.LENGTH_LONG).show();
-                                            Intent intent = new Intent(getApplicationContext(), InstanceFederatedActivity.class);
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             Bundle bundle = new Bundle();
                                             bundle.putInt(INTENT_ACTION, SEARCH_INSTANCE);
                                             bundle.putString(INSTANCE_NAME,finalInstanceName);
