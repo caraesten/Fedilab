@@ -217,7 +217,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             loader.setVisibility(View.GONE);
             return;
         }
-        if( apiResponse.getPeertubes().get(0).getStreamURL() == null){
+        if( apiResponse.getPeertubes().get(0).getFileUrl() == null){
             Toast.makeText(PeertubeActivity.this, R.string.toast_error,Toast.LENGTH_LONG).show();
             loader.setVisibility(View.GONE);
             return;
@@ -232,7 +232,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube_like_count.setText(String.valueOf(peertube.getLike()));
         peertube_view_count.setText(String.valueOf(peertube.getView()));
 
-        Uri uri = Uri.parse(apiResponse.getPeertubes().get(0).getStreamURL());
+        Uri uri = Uri.parse(apiResponse.getPeertubes().get(0).getFileUrl());
         try {
             HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
         } catch (KeyManagementException e) {
@@ -259,10 +259,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     if (ContextCompat.checkSelfPermission(PeertubeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(PeertubeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(PeertubeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
                     } else {
-                        manageDownloads(PeertubeActivity.this, peertube.getStreamURL());
+                        manageDownloads(PeertubeActivity.this, peertube.getFileDownloadUrl());
                     }
                 }else{
-                    manageDownloads(PeertubeActivity.this, peertube.getStreamURL());
+                    manageDownloads(PeertubeActivity.this, peertube.getFileDownloadUrl());
                 }
             }
         });

@@ -2420,7 +2420,9 @@ public class API {
             JSONArray files = resobj.getJSONArray("files");
             for(int j = 0 ; j < files.length() ; j++){
                 JSONObject attObj = files.getJSONObject(j);
-                peertube.setStreamURL(attObj.get("fileDownloadUrl").toString());
+                peertube.setFileDownloadUrl(attObj.get("fileDownloadUrl").toString());
+                peertube.setFileUrl(attObj.get("fileUrl").toString());
+                peertube.setTorrentDownloadUrl(attObj.get("torrentDownloadUrl").toString());
             }
         } catch (JSONException e) {
             e.printStackTrace();

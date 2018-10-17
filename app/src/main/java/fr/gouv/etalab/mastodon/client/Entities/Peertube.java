@@ -29,7 +29,7 @@ public class Peertube {
     private String thumbnailPath;
     private String previewPath;
     private String embedPath;
-    private String streamURL;
+    private String fileDownloadUrl;
     private int view;
     private int like;
     private int dislike;
@@ -37,6 +37,11 @@ public class Peertube {
     private int duration;
     private String instance;
     private Account account;
+    private String fileUrl;
+    private String torrentDownloadUrl;
+
+    public Peertube() {
+    }
 
 
     public String getId() {
@@ -95,13 +100,6 @@ public class Peertube {
         this.embedPath = embedPath;
     }
 
-    public String getStreamURL() {
-        return streamURL;
-    }
-
-    public void setStreamURL(String streamURL) {
-        this.streamURL = streamURL;
-    }
 
     public int getView() {
         return view;
@@ -157,5 +155,29 @@ public class Peertube {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
+    public String getTorrentDownloadUrl() {
+        return torrentDownloadUrl;
+    }
+
+    public void setTorrentDownloadUrl(String torrentDownloadUrl) {
+        this.torrentDownloadUrl = torrentDownloadUrl;
+    }
+
+    public String getFileDownloadUrl() {
+        return fileDownloadUrl;
+    }
+
+    public void setFileDownloadUrl(String fileDownloadUrl) {
+        this.fileDownloadUrl = fileDownloadUrl;
     }
 }
