@@ -41,7 +41,7 @@
   <string name="clear">Bereinigen</string>
   <string name="microphone">Mikrofon</string>
   <string name="camera">Kamera</string>
-  <string name="speech_prompt">Bitte, sag etwas.</string>
+  <string name="speech_prompt">Bitte sag etwas</string>
   <string name="speech_not_supported">Es tut uns leid! Ihr Gerät unterstützt keine Spracheingabe!</string>
   <string name="delete_all">Alles löschen</string>
   <string name="translate_toot">Toot übersetzen</string>
@@ -567,6 +567,8 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="peertube_instance">Peertube Instanz</string>
   <string name="set_display_direct">Private Nachrichten als eigene Zeitleiste anzeigen</string>
   <string name="set_keep_background_process">Im Hintergrund ausführen</string>
+  <string name="download_wait">Downloading file. Please wait...</string>
+  <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>
