@@ -567,8 +567,9 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="peertube_instance">Peertube Instanz</string>
   <string name="set_display_direct">Private Nachrichten als eigene Zeitleiste anzeigen</string>
   <string name="set_keep_background_process">Im Hintergrund ausführen</string>
-  <string name="download_wait">Downloading file. Please wait...</string>
   <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
+  <string name="number_view_video">%s views</string>
+  <string name="duration_video">Duration: %s</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>
