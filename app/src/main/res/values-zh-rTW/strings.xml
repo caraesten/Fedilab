@@ -575,6 +575,8 @@
   <string name="peertube_instance">PeerTube 實體</string>
   <string name="set_display_direct">顯示私人訊息時間軸</string>
   <string name="set_keep_background_process">當應用程式關閉時，保留背景處理程序</string>
+  <string name="download_wait">Downloading file. Please wait...</string>
+  <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
