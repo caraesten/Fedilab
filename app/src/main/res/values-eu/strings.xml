@@ -574,12 +574,12 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="toast_unblock_domain">Domeinua ez dago jada blokeatuta!</string>
   <string name="retrieve_remote_status">Urruneko mezua jasotzen</string>
   <string name="comment">Iruzkina</string>
-  <string name="peertube_instance">Peertube instance</string>
-  <string name="set_display_direct">Display private messages timeline</string>
-  <string name="set_keep_background_process">Keep background process when app is closed</string>
-  <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-  <string name="number_view_video">%s views</string>
-  <string name="duration_video">Duration: %s</string>
+  <string name="peertube_instance">Peertube instantzia</string>
+  <string name="set_display_direct">Bistaratu mezu pribatuen denbora-lerroa</string>
+  <string name="set_keep_background_process">Mantendu atzeko planoko prozesua aplikazioa iztean</string>
+  <string name="no_comments">Izan bideo honetan iruzkin bat uzten lehena goian eskuinean dagoen botoiarekin!</string>
+  <string name="number_view_video">%s ikustaldi</string>
+  <string name="duration_video">Iraupena: %s</string>
   <string-array name="filter_expire">
     <item>Inoiz ez</item>
     <item>30 minutu</item>
