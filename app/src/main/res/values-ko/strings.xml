@@ -578,6 +578,7 @@
   <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
   <string name="number_view_video">%s views</string>
   <string name="duration_video">Duration: %s</string>
+  <string name="add_remote_instance">Add an instance</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
