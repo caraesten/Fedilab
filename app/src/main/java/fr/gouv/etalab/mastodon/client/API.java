@@ -649,7 +649,7 @@ public class API {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/videos/%s", videoId), 60, null, null);
             JSONObject jsonObject = new JSONObject(response);
-            peertube = parseSinglePeertube(jsonObject);
+            peertube = parseSinglePeertube(context, jsonObject);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -667,6 +667,31 @@ public class API {
         return apiResponse;
     }
 
+    /**
+     * Retrieves Peertube videos from an instance *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getSinglePeertubeComments(String instance, String videoId) {
+        statuses = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/videos/%s/comment-threads", videoId), 60, null, null);
+            JSONObject jsonObject = new JSONObject(response);
+            statuses = parseSinglePeertubeComments(context, instance, jsonObject);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
 
     /**
      * Retrieves home timeline for the account *synchronously*
@@ -2355,9 +2380,10 @@ public class API {
      * @param resobj JSONObject
      * @return Peertube
      */
-    private static Peertube parseSinglePeertube(JSONObject resobj){
+    private static Peertube parseSinglePeertube(Context context, JSONObject resobj){
         Peertube peertube = new Peertube();
         try {
+            Log.v(Helper.TAG,"resobj= " + resobj);
             peertube.setId(resobj.get("id").toString());
             peertube.setUuid(resobj.get("uuid").toString());
             peertube.setName(resobj.get("name").toString());
@@ -2365,6 +2391,15 @@ public class API {
             peertube.setEmbedPath(resobj.get("embedPath").toString());
             peertube.setPreviewPath(resobj.get("previewPath").toString());
             peertube.setThumbnailPath(resobj.get("thumbnailPath").toString());
+            peertube.setView(Integer.parseInt(resobj.get("views").toString()));
+            peertube.setLike(Integer.parseInt(resobj.get("likes").toString()));
+            peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
+            peertube.setDuration(Integer.parseInt(resobj.get("duration").toString()));
+            try {
+                peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             JSONArray files = resobj.getJSONArray("files");
             for(int j = 0 ; j < files.length() ; j++){
@@ -2376,6 +2411,44 @@ public class API {
         }
 
         return peertube;
+    }
+
+    /**
+     * Parse json response for peertube comments
+     * @param resobj JSONObject
+     * @return Peertube
+     */
+    private static List<Status> parseSinglePeertubeComments(Context context, String instance, JSONObject resobj){
+        Peertube peertube = new Peertube();
+        List<Status> statuses = new ArrayList<>();
+        try {
+            JSONArray jsonArray = resobj.getJSONArray("data");
+                int i = 0;
+                while (i < jsonArray.length() ){
+                    Status status = new Status();
+                    JSONObject comment = jsonArray.getJSONObject(i);
+                    status.setId(comment.get("id").toString());
+                    status.setUri(comment.get("url").toString());
+                    status.setUrl(comment.get("url").toString());
+                    status.setSensitive(false);
+                    status.setSpoiler_text("");
+                    status.setContent(comment.get("text").toString());
+                    status.setIn_reply_to_id(comment.get("inReplyToCommentId").toString());
+                    status.setAccount(parseAccountResponsePeertube(context, instance, comment.getJSONObject("account")));
+                    status.setCreated_at(Helper.mstStringToDate(context, comment.get("createdAt").toString()));
+                    status.setMentions(new ArrayList<>());
+                    status.setEmojis(new ArrayList<>());
+                    status.setMedia_attachments(new ArrayList<>());
+                    status.setVisibility("public");
+                    i++;
+                    statuses.add(status);
+                }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return statuses;
     }
 
     /**
@@ -2717,6 +2790,37 @@ public class API {
         return list;
     }
 
+
+    /**
+     * Parse json response an unique peertube account
+     * @param resobj JSONObject
+     * @return Account
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    private static Account parseAccountResponsePeertube(Context context, String instance, JSONObject resobj){
+
+        Account account = new Account();
+        try {
+            account.setId(resobj.get("id").toString());
+            account.setUsername(resobj.get("name").toString());
+            account.setAcct(resobj.get("name").toString() + "@"+ resobj.get("host").toString());
+            account.setDisplay_name(resobj.get("displayName").toString());
+            account.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
+            account.setFollowers_count(Integer.valueOf(resobj.get("followersCount").toString()));
+            account.setFollowing_count(Integer.valueOf(resobj.get("followingCount").toString()));
+            account.setStatuses_count(0);
+            account.setNote(resobj.get("description").toString());
+            account.setUrl(resobj.get("url").toString());
+            if( resobj.get("avatar").toString() != null && !resobj.get("avatar").toString().equals("null")){
+                account.setAvatar("https://" + instance + resobj.getJSONObject("avatar").get("path"));
+            }else
+                account.setAvatar(null);
+            account.setAvatar_static(resobj.get("avatar").toString());
+        } catch (JSONException ignored) {} catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return account;
+    }
 
     /**
      * Parse json response an unique account

@@ -141,7 +141,6 @@
             />
         <activity android:name=".activities.PeertubeActivity"
             android:label="@string/app_name"
-            android:noHistory="true"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
         <activity android:name=".activities.WebviewActivity"

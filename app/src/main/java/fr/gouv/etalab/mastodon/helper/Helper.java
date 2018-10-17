@@ -2066,6 +2066,13 @@ public class Helper {
                 return;
             }
         }
+        if( url == null) {
+            Glide.with(imageView.getContext())
+                    .load(R.drawable.missing)
+                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                    .into(imageView);
+                    return;
+        }
         if( !disableGif)
             Glide.with(imageView.getContext())
                 .load(url)

@@ -14,6 +14,8 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+import java.util.Date;
+
 /**
  * Created by Thomas on 29/09/2018.
  * Manage how to videos
@@ -28,6 +30,11 @@ public class Peertube {
     private String previewPath;
     private String embedPath;
     private String streamURL;
+    private int view;
+    private int like;
+    private int dislike;
+    private Date created_at;
+    private int duration;
 
     public String getId() {
         return id;
@@ -91,5 +98,45 @@ public class Peertube {
 
     public void setStreamURL(String streamURL) {
         this.streamURL = streamURL;
+    }
+
+    public int getView() {
+        return view;
+    }
+
+    public void setView(int view) {
+        this.view = view;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
+
+    public int getDislike() {
+        return dislike;
+    }
+
+    public void setDislike(int dislike) {
+        this.dislike = dislike;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }
