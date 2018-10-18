@@ -348,6 +348,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     e.printStackTrace();
                 }
                 int i = 0;
+                if(remoteInstances != null)
                 for(RemoteInstance remoteInstance: remoteInstances) {
                     MenuItem item = popup.getMenu().add(0, i, Menu.NONE, remoteInstance.getHost());
                     if(remoteInstance.getType() == null || remoteInstance.getType().equals("MASTODON"))
