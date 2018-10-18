@@ -95,19 +95,20 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if( liveNotifications ){
-            if( thread == null || !thread.isAlive())
+            if( thread == null || !thread.isAlive()) {
                 thread = new Thread() {
                     @Override
                     public void run() {
                         List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
-                        if (accountStreams != null){
+                        if (accountStreams != null) {
                             for (final Account accountStream : accountStreams) {
                                 taks(accountStream);
                             }
                         }
                     }
                 };
-            thread.start();
+                thread.start();
+            }
         }
     }
 
@@ -368,5 +369,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     @Override
     public void networkUnavailable() {
+        if( thread != null && thread.isAlive())
+            thread.interrupt();
     }
 }
