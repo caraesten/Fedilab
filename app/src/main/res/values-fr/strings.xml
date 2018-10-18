@@ -118,7 +118,7 @@
   <string name="more_action_6">Partager</string>
   <string name="more_action_7">Mentionner</string>
   <string name="more_action_8">Temporairement muet</string>
-  <string name="more_action_9">Supprimer &amp; réécrire</string>
+  <string name="more_action_9">Supprimer &amp; reformuler</string>
   <string-array name="more_action_confirm">
     <item>Masquer ce compte ?</item>
     <item>Bloquer ce compte ?</item>
@@ -576,10 +576,10 @@
   <string name="peertube_instance">Instance PeerTube</string>
   <string name="set_display_direct">Afficher le fil des messages privés</string>
   <string name="set_keep_background_process">Keep background process when app is closed</string>
-  <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-  <string name="number_view_video">%s views</string>
-  <string name="duration_video">Duration: %s</string>
-  <string name="add_remote_instance">Add an instance</string>
+  <string name="no_comments">Soyez le·a premier·ère à laisser un commentaire sur cette vidéo en utilisant le bouton supérieur droit !</string>
+  <string name="number_view_video">%s vues</string>
+  <string name="duration_video">Durée : %s</string>
+  <string name="add_remote_instance">Ajouter une instance</string>
   <string-array name="filter_expire">
     <item>Jamais</item>
     <item>30 minutes</item>
