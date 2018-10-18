@@ -46,10 +46,8 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
-import android.text.Html;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -114,7 +112,6 @@ import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayMutedInstanceFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
-import fr.gouv.etalab.mastodon.fragments.DisplaySearchFragment;
 import fr.gouv.etalab.mastodon.fragments.WhoToFollowFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -161,7 +158,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 
 public abstract class BaseMainActivity extends BaseActivity
@@ -701,7 +697,8 @@ public abstract class BaseMainActivity extends BaseActivity
             countPage++;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true))
             countPage++;
-        viewPager.setOffscreenPageLimit(countPage);
+
+        viewPager.setOffscreenPageLimit(countPage<=4?countPage:4);
         main_app_container = findViewById(R.id.main_app_container);
         adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
@@ -791,9 +788,11 @@ public abstract class BaseMainActivity extends BaseActivity
                             displayStatusFragment.scrollToTop();
                             break;
                         case 4:
-                            displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            displayStatusFragment.scrollToTop();
-                            updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                            if( countPage == 5) {
+                                displayStatusFragment = ((DisplayStatusFragment) fragment);
+                                displayStatusFragment.scrollToTop();
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                            }
                             break;
                         case 1:
                             DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
@@ -808,7 +807,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         });
-        refreshSearchTab();
+        Helper.refreshSearchTag(BaseMainActivity.this, tabLayout, adapter);
         int tabCount = tabLayout.getTabCount();
         for( int j = countPage ; j < tabCount ; j++){
             attacheDelete(j);
@@ -1278,9 +1277,6 @@ public abstract class BaseMainActivity extends BaseActivity
         new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public void refreshSearchTab(){
-        Helper.refreshSearchTag(BaseMainActivity.this, tabLayout, adapter);
-    }
 
     public void removeSearchTab(String tag){
         Helper.removeSearchTag(tag, tabLayout, adapter);
@@ -2083,7 +2079,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            } else if (position == 4 && display_global){
+            } else if (position == 4 && display_global && countPage == 5){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                 statusFragment.setArguments(bundle);
