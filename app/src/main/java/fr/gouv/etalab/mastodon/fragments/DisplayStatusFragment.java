@@ -13,6 +13,7 @@ package fr.gouv.etalab.mastodon.fragments;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -148,11 +149,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         if( search_peertube == null && (instanceType == null || instanceType.equals("MASTODON"))) {
-            BaseMainActivity.displayPeertube = false;
+            BaseMainActivity.displayPeertube = null;
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
             lv_status.setAdapter(statusListAdapter);
         }else {
-            BaseMainActivity.displayPeertube = true;
+            BaseMainActivity.displayPeertube = remoteInstance;
             peertubeAdapater = new PeertubeAdapter(context, remoteInstance, this.peertubes);
             lv_status.setAdapter(peertubeAdapater);
         }
@@ -161,6 +162,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
+
+        if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE  && search_peertube != null)
+            ((Activity)context).setTitle(remoteInstance + " - " + search_peertube);
 
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)

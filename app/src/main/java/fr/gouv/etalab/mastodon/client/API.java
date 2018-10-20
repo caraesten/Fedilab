@@ -650,6 +650,7 @@ public class API {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/videos/%s", videoId), 60, null, null);
+            Log.v(Helper.TAG,"response: " + response);
             JSONObject jsonObject = new JSONObject(response);
             peertube = parseSinglePeertube(context, instance, jsonObject);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -2434,6 +2435,7 @@ public class API {
             peertube.setUuid(resobj.get("uuid").toString());
             peertube.setName(resobj.get("name").toString());
             peertube.setInstance(instance);
+            peertube.setHost(resobj.getJSONObject("account").get("host").toString());
             peertube.setDescription(resobj.get("description").toString());
             peertube.setEmbedPath(resobj.get("embedPath").toString());
             peertube.setPreviewPath(resobj.get("previewPath").toString());

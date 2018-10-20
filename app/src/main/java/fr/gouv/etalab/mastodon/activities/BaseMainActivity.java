@@ -196,7 +196,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private String oldSearch;
     boolean isLoadingInstance = false;
     private ImageView delete_instance;
-    public static boolean displayPeertube = false;
+    public static String displayPeertube = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -874,7 +874,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
                 query= query.replaceAll("^#+", "");
                 //It's not a peertube search
-                if(!displayPeertube){
+                if(displayPeertube == null){
                     Intent intent = new Intent(BaseMainActivity.this, SearchResultActivity.class);
                     intent.putExtra("search", query);
                     startActivity(intent);
@@ -884,7 +884,7 @@ public abstract class BaseMainActivity extends BaseActivity
                         Bundle bundle = new Bundle();
                         statusFragment = new DisplayStatusFragment();
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                        bundle.putString("remote_instance", toolbarTitle.getText().toString().trim());
+                        bundle.putString("remote_instance", displayPeertube);
                         bundle.putString("search_peertube", query);
                         statusFragment.setArguments(bundle);
                         String fragmentTag = "REMOTE_INSTANCE";
@@ -896,13 +896,12 @@ public abstract class BaseMainActivity extends BaseActivity
                         delete_instance.setVisibility(View.VISIBLE);
                         viewPager.setVisibility(View.GONE);
                         tabLayout.setVisibility(View.GONE);
-                        toolbarTitle.setText(instance);
                     }else{
                         DisplayStatusFragment statusFragment;
                         Bundle bundle = new Bundle();
                         statusFragment = new DisplayStatusFragment();
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                        bundle.putString("remote_instance", toolbarTitle.getText().toString().trim());
+                        bundle.putString("remote_instance", displayPeertube);
                         bundle.putString("search_peertube", query);
                         statusFragment.setArguments(bundle);
                         String fragmentTag = "REMOTE_INSTANCE";
@@ -910,7 +909,6 @@ public abstract class BaseMainActivity extends BaseActivity
                         fragmentManager.beginTransaction()
                                 .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
                     }
-                    toolbarTitle.setText(query + " - " + instance);
                 }
                 toolbar_search.setQuery("", false);
                 toolbar_search.setIconified(true);
@@ -1668,7 +1666,7 @@ public abstract class BaseMainActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            displayPeertube = false;
+            displayPeertube = null;
             //Hide search bar on back pressed
             if( !toolbar_search.isIconified()){
                 toolbar_search.setIconified(true);

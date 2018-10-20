@@ -219,7 +219,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             loader.setVisibility(View.GONE);
             return;
         }
-        if( apiResponse.getPeertubes().get(0).getFileUrl(null) == null){
+        if( apiResponse.getPeertubes() == null || apiResponse.getPeertubes().get(0) == null || apiResponse.getPeertubes().get(0).getFileUrl(null) == null){
             Toast.makeText(PeertubeActivity.this, R.string.toast_error,Toast.LENGTH_LONG).show();
             loader.setVisibility(View.GONE);
             return;
@@ -247,11 +247,11 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         fullScreenMediaController = new FullScreenMediaController(PeertubeActivity.this, peertube);
         fullScreenMediaController.setAnchorView(videoView);
         videoView.setMediaController(fullScreenMediaController);
-        mediaPlayer = MediaPlayer.create(PeertubeActivity.this, uri);
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 loader.setVisibility(View.GONE);
+                mediaPlayer = mp;
             }
         });
         videoView.setZOrderOnTop(true);
@@ -354,11 +354,13 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         }
     }
     public void changeVideoResolution(Peertube peertube, String resolution){
-        int position = videoView.getCurrentPosition();
-        mediaPlayer.stop();
-        videoView.setVideoURI(Uri.parse(peertube.getFileUrl(resolution)));
-        fullScreenMediaController.setResolutionVal(resolution + "p");
-        videoView.seekTo(position);
-        mediaPlayer.start();
+        if( mediaPlayer != null) {
+            int position = videoView.getCurrentPosition();
+            mediaPlayer.stop();
+            videoView.setVideoURI(Uri.parse(peertube.getFileUrl(resolution)));
+            fullScreenMediaController.setResolutionVal(resolution + "p");
+            videoView.seekTo(position);
+            mediaPlayer.start();
+        }
     }
 }

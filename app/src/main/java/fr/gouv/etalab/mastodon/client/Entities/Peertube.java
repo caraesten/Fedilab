@@ -27,6 +27,7 @@ public class Peertube {
     private String uuid;
     private String name;
     private String description;
+    private String host;
     private String thumbnailPath;
     private String previewPath;
     private String embedPath;
@@ -162,7 +163,7 @@ public class Peertube {
             resolution = this.getResolution().get(0);
         if(resolution == null)
             return null;
-        return "https://" + this.instance + "/static/webseed/" + getUuid()+ "-" + resolution + ".mp4";
+        return "https://" + this.host + "/static/webseed/" + getUuid()+ "-" + resolution + ".mp4";
     }
 
 
@@ -171,7 +172,7 @@ public class Peertube {
             resolution = this.getResolution().get(0);
         if(resolution == null)
             return null;
-        return "https://" + this.instance + "/download/torrents/" + getUuid()+ "-" + resolution + ".torrent";
+        return "https://" + this.host + "/download/torrents/" + getUuid()+ "-" + resolution + ".torrent";
 
     }
     public String getFileDownloadUrl(String resolution) {
@@ -179,7 +180,7 @@ public class Peertube {
             resolution = this.getResolution().get(0);
         if(resolution == null)
             return null;
-        return "https://" + this.instance + "/download/videos/" + getUuid()+ "-" + resolution + ".mp4";
+        return "https://" + this.host + "/download/videos/" + getUuid()+ "-" + resolution + ".mp4";
     }
 
     public List<String> getResolution() {
@@ -188,5 +189,13 @@ public class Peertube {
 
     public void setResolution(List<String> resolution) {
         this.resolution = resolution;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 }
