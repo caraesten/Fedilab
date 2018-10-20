@@ -217,7 +217,11 @@ public class CrossActions {
             @Override
             protected Void doInBackground(Void... voids) {
                 API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                String url = "https://" + remoteAccount.getInstance() + "/@" + remoteAccount.getAcct();
+                String url;
+                if( remoteAccount.getHost() != null && remoteAccount.getAcct().split("@").length > 1) //Peertube compatibility
+                    url = "https://" + remoteAccount.getHost() + "/accounts/" + remoteAccount.getAcct().split("@")[0];
+                else
+                    url = "https://" + remoteAccount.getInstance() + "/@" + remoteAccount.getAcct();
                 response = api.search(url);
                 return null;
             }

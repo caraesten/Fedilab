@@ -90,7 +90,7 @@ public class Account implements Parcelable {
     private HashMap<String, SpannableString> fieldsSpan = new HashMap<>();
     private List<Emojis> emojis;
     private Account account;
-
+    private String host;
 
 
     public followAction getFollowType() {
@@ -150,6 +150,14 @@ public class Account implements Parcelable {
         this.fieldsVerified = fieldsVerified;
     }
 
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
 
     public enum followAction{
         FOLLOW,
@@ -166,6 +174,7 @@ public class Account implements Parcelable {
         username = in.readString();
         acct = in.readString();
         display_name = in.readString();
+        host =  in.readString();
         locked = in.readByte() != 0;
         followers_count = in.readInt();
         following_count = in.readInt();
@@ -379,6 +388,7 @@ public class Account implements Parcelable {
         dest.writeString(username);
         dest.writeString(acct);
         dest.writeString(display_name);
+        dest.writeString(host);
         dest.writeByte((byte) (locked ? 1 : 0));
         dest.writeInt(followers_count);
         dest.writeInt(following_count);

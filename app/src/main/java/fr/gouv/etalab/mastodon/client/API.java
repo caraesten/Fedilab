@@ -16,12 +16,9 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -35,10 +32,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-
-
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.*;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -650,7 +644,6 @@ public class API {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/videos/%s", videoId), 60, null, null);
-            Log.v(Helper.TAG,"response: " + response);
             JSONObject jsonObject = new JSONObject(response);
             peertube = parseSinglePeertube(context, instance, jsonObject);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1580,9 +1573,6 @@ public class API {
      */
     public Results search(String query) {
 
-        //A fix for peertube and account
-        if( query.startsWith("http") && query.split("@").length > 2)
-            query =  "@"+query.split("@")[1] +"@"+ query.split("@")[2];
         HashMap<String, String> params = new HashMap<>();
         params.put("q", query);
         try {
@@ -2854,6 +2844,7 @@ public class API {
             account.setUsername(resobj.get("name").toString());
             account.setAcct(resobj.get("name").toString() + "@"+ resobj.get("host").toString());
             account.setDisplay_name(resobj.get("displayName").toString());
+            account.setHost(resobj.get("host").toString());
             if( resobj.has("createdAt") )
                 account.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
             else
