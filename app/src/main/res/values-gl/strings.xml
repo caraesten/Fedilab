@@ -127,19 +127,19 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Eliminar este toot?</item>
-    <item>Delete &amp; re-draft this toot?</item>
+    <item>Eliminar &amp; rescribir este toot?</item>
   </string-array>
   <plurals name="preview_replies">
-    <item quantity="one">%d reply</item>
-    <item quantity="other">%d replies</item>
+    <item quantity="one">%d resposta</item>
+    <item quantity="other">%d respostas</item>
   </plurals>
-  <string name="set_display_bookmark_button">Display the bookmark button</string>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="bookmark_add">Add to bookmarks</string>
-  <string name="bookmark_remove">Remove bookmark</string>
-  <string name="bookmarks_empty">No bookmarks to display</string>
-  <string name="status_bookmarked">Status has been added to bookmarks!</string>
-  <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+  <string name="set_display_bookmark_button">Mostrar o botón de marcador</string>
+  <string name="bookmarks">Marcadores</string>
+  <string name="bookmark_add">Engadir a marcadores</string>
+  <string name="bookmark_remove">Eliminar marcador</string>
+  <string name="bookmarks_empty">Sen marcadores que mostrar</string>
+  <string name="status_bookmarked">O estado foi engadido a marcadores!</string>
+  <string name="status_unbookmarked">Eliminouse o estado dos marcadores!</string>
   <!-- Date -->
   <string name="date_seconds">%d s</string>
   <string name="date_minutes">%d m</string>
