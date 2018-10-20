@@ -580,6 +580,7 @@
   <string name="number_view_video">%s vues</string>
   <string name="duration_video">Durée : %s</string>
   <string name="add_remote_instance">Ajouter une instance</string>
+  <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
   <string-array name="filter_expire">
     <item>Jamais</item>
     <item>30 minutes</item>
