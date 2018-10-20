@@ -2442,6 +2442,7 @@ public class API {
             peertube.setThumbnailPath(resobj.get("thumbnailPath").toString());
             peertube.setView(Integer.parseInt(resobj.get("views").toString()));
             peertube.setLike(Integer.parseInt(resobj.get("likes").toString()));
+            peertube.setCommentsEnabled(Boolean.parseBoolean(resobj.get("commentsEnabled").toString()));
             peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
             peertube.setDuration(Integer.parseInt(resobj.get("duration").toString()));
             peertube.setAccount(parseAccountResponsePeertube(context, instance, resobj.getJSONObject("account")));

@@ -39,6 +39,7 @@ public class Peertube {
     private String instance;
     private Account account;
     private List<String> resolution;
+    private boolean commentsEnabled;
 
 
     public Peertube() {
@@ -197,5 +198,13 @@ public class Peertube {
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public boolean isCommentsEnabled() {
+        return commentsEnabled;
+    }
+
+    public void setCommentsEnabled(boolean commentsEnabled) {
+        this.commentsEnabled = commentsEnabled;
     }
 }
