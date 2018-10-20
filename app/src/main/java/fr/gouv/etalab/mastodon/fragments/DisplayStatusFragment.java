@@ -27,7 +27,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +39,7 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSearchAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
@@ -91,6 +91,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String remoteInstance;
     private List<String> mutedAccount;
     private String instanceType;
+    private String search_peertube;
+
+
     public DisplayStatusFragment(){
     }
 
@@ -114,6 +117,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             showPinned = bundle.getBoolean("showPinned",false);
             showReply = bundle.getBoolean("showReply",false);
             remoteInstance = bundle.getString("remote_instance", "");
+            search_peertube = bundle.getString("search_peertube", null);
         }
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if( !remoteInstance.equals("")){
@@ -143,10 +147,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
 
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        if( instanceType == null || instanceType.equals("MASTODON")) {
+        if( search_peertube == null && (instanceType == null || instanceType.equals("MASTODON"))) {
+            BaseMainActivity.displayPeertube = false;
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
             lv_status.setAdapter(statusListAdapter);
         }else {
+            BaseMainActivity.displayPeertube = true;
             peertubeAdapater = new PeertubeAdapter(context, remoteInstance, this.peertubes);
             lv_status.setAdapter(peertubeAdapater);
         }
@@ -170,9 +176,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             else if( type == RetrieveFeedsAsyncTask.Type.TAG)
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
-                                asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            else
+                            else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) {
+                                if( search_peertube == null)
+                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                else
+                                    asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }else
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                             nextElementLoader.setVisibility(View.VISIBLE);
@@ -246,9 +255,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else if (type == RetrieveFeedsAsyncTask.Type.TAG)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
-                asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else {
+            else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) {
+                if( search_peertube == null)
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                else
+                    asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }else {
                 if( type == RetrieveFeedsAsyncTask.Type.HOME ){
                     String bookmark;
                     if( context instanceof BaseMainActivity){
@@ -270,9 +282,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         else if (type == RetrieveFeedsAsyncTask.Type.TAG)
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        else {
+                        else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) {
+                            if( search_peertube == null)
+                                asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            else
+                                asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }else {
                             if( type == RetrieveFeedsAsyncTask.Type.HOME ){
                                 String bookmark;
                                 if( context instanceof BaseMainActivity){

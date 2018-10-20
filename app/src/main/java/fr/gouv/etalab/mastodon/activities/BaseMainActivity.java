@@ -48,6 +48,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -195,6 +196,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private String oldSearch;
     boolean isLoadingInstance = false;
     private ImageView delete_instance;
+    public static boolean displayPeertube = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -868,13 +870,50 @@ public abstract class BaseMainActivity extends BaseActivity
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 assert imm != null;
                 imm.hideSoftInputFromWindow(toolbar_search.getWindowToken(), 0);
-                Intent intent = new Intent(BaseMainActivity.this, SearchResultActivity.class);
+                String peertube = null;
+
                 query= query.replaceAll("^#+", "");
-                intent.putExtra("search", query);
-                startActivity(intent);
+                //It's not a peertube search
+                if(!displayPeertube){
+                    Intent intent = new Intent(BaseMainActivity.this, SearchResultActivity.class);
+                    intent.putExtra("search", query);
+                    startActivity(intent);
+                }else{ //Peertube search
+                    if( main_app_container.getVisibility() == View.GONE){
+                        DisplayStatusFragment statusFragment;
+                        Bundle bundle = new Bundle();
+                        statusFragment = new DisplayStatusFragment();
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                        bundle.putString("remote_instance", toolbarTitle.getText().toString().trim());
+                        bundle.putString("search_peertube", query);
+                        statusFragment.setArguments(bundle);
+                        String fragmentTag = "REMOTE_INSTANCE";
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                        main_app_container.setVisibility(View.VISIBLE);
+                        toolbarTitle.setVisibility(View.VISIBLE);
+                        delete_instance.setVisibility(View.VISIBLE);
+                        viewPager.setVisibility(View.GONE);
+                        tabLayout.setVisibility(View.GONE);
+                        toolbarTitle.setText(instance);
+                    }else{
+                        DisplayStatusFragment statusFragment;
+                        Bundle bundle = new Bundle();
+                        statusFragment = new DisplayStatusFragment();
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                        bundle.putString("remote_instance", toolbarTitle.getText().toString().trim());
+                        bundle.putString("search_peertube", query);
+                        statusFragment.setArguments(bundle);
+                        String fragmentTag = "REMOTE_INSTANCE";
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                    }
+                    toolbarTitle.setText(query + " - " + instance);
+                }
                 toolbar_search.setQuery("", false);
                 toolbar_search.setIconified(true);
-
                 if( main_app_container.getVisibility() == View.VISIBLE){
                     main_app_container.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
@@ -1629,6 +1668,7 @@ public abstract class BaseMainActivity extends BaseActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            displayPeertube = false;
             //Hide search bar on back pressed
             if( !toolbar_search.isIconified()){
                 toolbar_search.setIconified(true);
@@ -1644,12 +1684,12 @@ public abstract class BaseMainActivity extends BaseActivity
             } else {
                 Helper.switchLayout(BaseMainActivity.this);
                 main_app_container.setVisibility(View.GONE);
-
                 viewPager.setVisibility(View.VISIBLE);
                 tabLayout.setVisibility(View.VISIBLE);
                 toolbarTitle.setVisibility(View.GONE);
                 delete_instance.setVisibility(View.GONE);
                 delete_all.hide();
+
                 add_new.hide();
                 final NavigationView navigationView = findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);

@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -668,6 +669,37 @@ public class API {
         return apiResponse;
     }
 
+    /**
+     * Retrieves peertube search *synchronously*
+     *
+     * @param query  String search
+     * @return APIResponse
+     */
+    public APIResponse searchPeertube(String instance, String query) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("search", query);
+        params.put("count", "50");
+        List<Peertube> peertubes = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get("https://"+instance+"/api/v1/search/videos", 60, params, null);
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            peertubes = parsePeertube(instance, jsonArray);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPeertubes(peertubes);
+        return apiResponse;
+    }
     /**
      * Retrieves Peertube videos from an instance *synchronously*
      * @return APIResponse
