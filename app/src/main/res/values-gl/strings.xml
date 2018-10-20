@@ -459,55 +459,55 @@ Grazas a:
   <string name="action_lists_update">Editar lista</string>
   <string name="action_lists_title_placeholder">Novo título da listaxe</string>
   <string name="action_lists_search_users">Buscar entre a xente a que vostede segue</string>
-  <string name="action_lists_owner">Your lists</string>
+  <string name="action_lists_owner">As súas listas</string>
   <!-- Migration -->
-  <string name="account_moved_to">%1$s has moved to %2$s</string>
-  <string name="show_boost_count">Show boosts/favourites count</string>
-  <string name="issue_login_title">Authentication does not work?</string>
+  <string name="account_moved_to">%1$s mudouse a %2$s</string>
+  <string name="show_boost_count">Mostrar a conta de promocións/favoritos</string>
+  <string name="issue_login_title">Non funciona a autenticación?</string>
   <string name="issue_login_message">
-        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        <b>Aquí ten unhas comprobacións que poderían axudarlle:</b>\n\n
+        - Comprobe que non ten fallos escribindo o nome da instancia\n\n
+        - Comprobe que a súa instancia está a funcionar\n\n
+        - Si utiliza autenticación de doble factor (2FA), utilice a ligazón inferior (unha vez escriba o nome da instancia)\n\n
+        - Pode utilizar tamén esta ligazón sin ter que usar a 2FA\n\n
+        - Si aínda non pode conectar, por favor suba o problema a Github en https://github.com/stom79/mastalab/issues
     </string>
-  <string name="media_ready">Media has been loaded. Click here to display it.</string>
-  <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-  <string name="data_export_running">Still running, please wait…</string>
-  <string name="data_export">Export statuses</string>
-  <string name="data_export_toots">Export statuses for %1$s</string>
-  <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-  <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+  <string name="media_ready">Cargáronse os medios. Pulse aquí para mostralos.</string>
+  <string name="data_export_start">Esta acción podería prolongarse. Notificarémoslle cando esté rematada.</string>
+  <string name="data_export_running">Aínda a traballar, agarde por favor…</string>
+  <string name="data_export">Exportar estados</string>
+  <string name="data_export_toots">Exportar estados para %1$s</string>
+  <string name="data_export_success">%1$s toots de %2$s foron exportados.</string>
+  <string name="data_export_error">Algo fallou mentras se exportaban os datos para %1$s</string>
   <!-- Proxy -->
   <string name="proxy_set">Proxy</string>
-  <string name="proxy_type">Type</string>
-  <string name="proxy_enable">Enable proxy?</string>
+  <string name="proxy_type">Tipo</string>
+  <string name="proxy_enable">Activar proxy?</string>
   <string name="poxy_host">Host</string>
-  <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
-  <string name="set_theme">Theme:</string>
-  <string name="set_compact_mode">Compact mode</string>
-  <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
-  <string name="no_account_yet">No account yet?</string>
-  <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-  <string name="delete_instance">Delete this instance?</string>
-  <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-  <string name="which_language">Translate in</string>
-  <string name="crash_title">Mastalab has stopped :(</string>
-  <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-  <string name="send_crash_report">Ask for sending crash reports by email?</string>
-  <string name="follow_instance">Follow instance</string>
-  <string name="toast_instance_already_added">You already follow this instance!</string>
-  <string name="toast_instance_followed">The instance is followed!</string>
-  <string name="action_partnership">Partnerships</string>
-  <string name="neutral_menu_information">Information</string>
-  <string name="hide_boost">Hide boosts from %s</string>
-  <string name="endorse">Feature on profile</string>
-  <string name="hide_everything">Hide everything from %s</string>
+  <string name="poxy_port">Porto</string>
+  <string name="poxy_login">Conectar</string>
+  <string name="poxy_password">Contrasinal</string>
+  <string name="set_theme">Decorado:</string>
+  <string name="set_compact_mode">Modo compacto</string>
+  <string name="set_share_details">Engadir detalles do toot ao compartir</string>
+  <string name="support_the_app_on_liberapay">Axude a app en Liberapay</string>
+  <string name="alert_regex">Hai un fallo na expresión regular!</string>
+  <string name="no_account_yet">Sen conta aínda?</string>
+  <string name="toast_instance_unavailable">Non se atoparon liñas temporais en esta instancia!</string>
+  <string name="delete_instance">Eliminar esta instancia?</string>
+  <string name="warning_delete_instance">Vai eliminar %s das instancias que está a seguir.</string>
+  <string name="which_language">Traducir en</string>
+  <string name="crash_title">Mastalab detívose :(</string>
+  <string name="crash_message">Pode enviarme un correo-e co informe do fallo. Axudará a arranxalo :)\n\nPode engadir contido adicional. Grazas!</string>
+  <string name="send_crash_report">Quere enviar informe de fallos por correo-e?</string>
+  <string name="follow_instance">Seguir instancia</string>
+  <string name="toast_instance_already_added">Xa segue a esta instancia!</string>
+  <string name="toast_instance_followed">Esta a seguir a instancia!</string>
+  <string name="action_partnership">Asociados</string>
+  <string name="neutral_menu_information">Información</string>
+  <string name="hide_boost">Ocultar promocións de %s</string>
+  <string name="endorse">Característica no perfil</string>
+  <string name="hide_everything">Ocultar todo de %s</string>
   <string name="show_boost">Show boosts from %s</string>
   <string name="unendorse">Don\'t feature on profile</string>
   <string name="show_everything">Show everything from %s</string>
