@@ -34,6 +34,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -95,20 +97,20 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if( liveNotifications ){
-            if( thread == null || !thread.isAlive()) {
-                thread = new Thread() {
-                    @Override
-                    public void run() {
-                        List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
-                        if (accountStreams != null) {
-                            for (final Account accountStream : accountStreams) {
-                                taks(accountStream);
-                            }
+            if( thread != null && thread.isAlive())
+                thread.interrupt();
+            thread = new Thread() {
+                @Override
+                public void run() {
+                    List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
+                    if (accountStreams != null) {
+                        for (final Account accountStream : accountStreams) {
+                            taks(accountStream);
                         }
                     }
-                };
-                thread.start();
-            }
+                }
+            };
+            thread.start();
         }
     }
 
@@ -167,29 +169,23 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             headers.add("scheme", "https");
             Uri url = Uri.parse("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken());
             AsyncHttpRequest.setDefaultHeaders(headers, url);
-            try {
-                AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
-                    @Override
-                    public void onCompleted(Exception ex, WebSocket webSocket) {
-                        if (ex != null) {
-                            ex.printStackTrace();
-                            return;
-                        }
-                        webSocket.setStringCallback(new WebSocket.StringCallback() {
-                            public void onStringAvailable(String s) {
-                                try {
-                                    JSONObject eventJson = new JSONObject(s);
-                                    onRetrieveStreaming(account, eventJson);
-                                } catch (JSONException ignored) { ignored.printStackTrace();
-                                }
-                            }
-                        });
+            AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
+                @Override
+                public void onCompleted(Exception ex, WebSocket webSocket) {
+                    if (ex != null) {
+                        ex.printStackTrace();
+                        return;
                     }
-                });
-            }catch (Exception e){
-                e.printStackTrace();
-                startStream();
-            }
+                    webSocket.setStringCallback(new WebSocket.StringCallback() {
+                        public void onStringAvailable(String s) {
+                            try {
+                                JSONObject eventJson = new JSONObject(s);
+                                onRetrieveStreaming(account, eventJson);
+                            } catch (JSONException ignored) {}
+                        }
+                    });
+                }
+            });
 
         }
     }
