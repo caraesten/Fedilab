@@ -146,41 +146,41 @@
   <string name="date_hours">%d h</string>
   <string name="date_day">%d d</string>
   <!-- TOOT -->
-  <string name="toot_cw_placeholder">Warning</string>
-  <string name="toot_placeholder">What is on your mind?</string>
+  <string name="toot_cw_placeholder">Aviso</string>
+  <string name="toot_placeholder">Que contas?</string>
   <string name="toot_it">TOOT!</string>
   <string name="cw">cw</string>
-  <string name="toot_title">Write a toot</string>
-  <string name="toot_title_reply">Reply to a toot</string>
-  <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-  <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-  <string name="toot_delete_media">Delete this media?</string>
-  <string name="toot_error_no_content">Your toot is empty!</string>
-  <string name="toot_visibility_tilte">Visibility of the toot</string>
-  <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-  <string name="toot_sent">The toot has been sent!</string>
-  <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_title">Escriba un toot</string>
+  <string name="toot_title_reply">Resposte a un toot</string>
+  <string name="toot_no_space">Acadou os 500 caracteres permitidos!</string>
+  <string name="toot_select_image">Escolla medios</string>
+  <string name="toot_select_image_error">Algo fallou ao engadir os medios!</string>
+  <string name="toot_delete_media">Eliminar este elemento?</string>
+  <string name="toot_error_no_content">O seu toot está baldeiro!</string>
+  <string name="toot_visibility_tilte">Visibilidade do toot</string>
+  <string name="toots_visibility_tilte">Visibilidade por omisión para os toots: </string>
+  <string name="toot_sent">O toot foi enviado!</string>
+  <string name="toot_reply_content_title">Está a respostar a este toot:</string>
+  <string name="toot_sensitive">Contido sensible?</string>
   <string-array name="toot_visibility">
-    <item>Post to public timelines</item>
-    <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
-    <item>Post to mentioned users only</item>
+    <item>Publicar en liñas temporais públicas</item>
+    <item>Non publicar en TL públicas</item>
+    <item>Só para seguidoras</item>
+    <item>Só para as usuarias mencionadas</item>
   </string-array>
-  <string name="no_draft">No drafts!</string>
-  <string name="choose_toot">Choose a toot</string>
-  <string name="choose_accounts">Choose an account</string>
-  <string name="select_accounts">Select some accounts</string>
-  <string name="remove_draft">Remove draft?</string>
-  <string name="show_reply">Click on the button to display the original toot</string>
-  <string name="upload_form_description">Describe for the visually impaired</string>
+  <string name="no_draft">Sen borradores!</string>
+  <string name="choose_toot">Escolla un toot</string>
+  <string name="choose_accounts">Escolla unha conta</string>
+  <string name="select_accounts">Escolla varias contas</string>
+  <string name="remove_draft">Eliminar borrador?</string>
+  <string name="show_reply">Pulse no botón para mostrar o toot orixinal</string>
+  <string name="upload_form_description">Descrición para usuarias con deficiencias visuais</string>
   <!-- Instance -->
-  <string name="instance_no_description">No description available!</string>
+  <string name="instance_no_description">Sen descrición dispoñible!</string>
   <!-- About -->
-  <string name="about_vesrion">Release %1$s</string>
-  <string name="about_developer">Developer:</string>
-  <string name="about_license">License: </string>
+  <string name="about_vesrion">Versión %1$s</string>
+  <string name="about_developer">Desenvolvedora:</string>
+  <string name="about_license">Licenza: </string>
   <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">Source code: </string>
   <string name="about_yandex">Translation of toots:</string>
@@ -245,23 +245,23 @@
   <string name="toast_unfollow">The account is no longer followed!</string>
   <string name="toast_reblog">The toot was boosted!</string>
   <string name="toast_unreblog">The toot is no longer boosted!</string>
-  <string name="toast_favourite">The toot was added to your favourites!</string>
-  <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-  <string name="toast_report">The toot was reported!</string>
-  <string name="toast_unstatus">The toot was deleted!</string>
-  <string name="toast_pin">The toot was pinned!</string>
-  <string name="toast_unpin">The toot was unpinned!</string>
-  <string name="toast_error">Oops ! An error occurred!</string>
-  <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-  <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
-  <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-  <string name="toast_error_search">An error occurred while searching!</string>
-  <string name="toast_error_login">Can not log in!</string>
-  <string name="toast_update_credential_ok">The profile data have been saved!</string>
-  <string name="nothing_to_do">No action can be taken</string>
-  <string name="toast_saved">The media has been saved!</string>
-  <string name="toast_error_translate">An error occurred while translating!</string>
-  <string name="toast_toot_saved">Draft saved!</string>
+  <string name="toast_favourite">Este toot foi engadido aos seus favoritos!</string>
+  <string name="toast_unfavourite">Este toot eliminouse dos favoritos!</string>
+  <string name="toast_report">Informou sobre este toot!</string>
+  <string name="toast_unstatus">Eliminou o toot!</string>
+  <string name="toast_pin">O toot foi fixado!</string>
+  <string name="toast_unpin">O toot foi liberado!</string>
+  <string name="toast_error">Vaia! Algo fallou!</string>
+  <string name="toast_code_error">Algo fallou! A instancia non devolveu o código de autorización!</string>
+  <string name="toast_error_instance">O dominio da instancia non semella ser válido!</string>
+  <string name="toast_error_loading_account">Algo fallou mentras cambiaba de conta!</string>
+  <string name="toast_error_search">Algo fallou ao buscar!</string>
+  <string name="toast_error_login">Non puido conectar!</string>
+  <string name="toast_update_credential_ok">Gardáronse os datos do perfil!</string>
+  <string name="nothing_to_do">Non se poden realizar accións</string>
+  <string name="toast_saved">Gardáronse os medios!</string>
+  <string name="toast_error_translate">Algo fallou ao traducir!</string>
+  <string name="toast_toot_saved">Borrador gardado!</string>
   <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
   <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
   <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
