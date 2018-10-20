@@ -209,42 +209,42 @@
   <string name="warning_battery">Está activado o aforro de enerxía! Podería non funcionar como debe.</string>
   <!-- timed mute -->
   <string name="timed_mute_date_error">O tempo de silencio debe ser maior de un minuto.</string>
-  <string name="timed_mute_date">%1$s foi silenciado ate %2$s.\n Pode voltar a activar a conta desde a súa páxina de perfil.</string>
-  <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+  <string name="timed_mute_date">%1$s foi acalado ate %2$s.\n Pode voltar a activar a conta desde a súa páxina de perfil.</string>
+  <string name="timed_mute_profile">%1$s foi silenciado ate %2$s.\n Pulse aquí para voltar activalo.</string>
   <!-- Notifications -->
-  <string name="no_notifications">No notification to display</string>
-  <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
-  <string name="notif_pouet">New toot from %1$s</string>
+  <string name="no_notifications">Sen notificación que mostrar</string>
+  <string name="notif_mention">mencionouna</string>
+  <string name="notif_reblog">promoveu o seu estado</string>
+  <string name="notif_favourite">favoreceu o seu estado</string>
+  <string name="notif_follow">segueuna</string>
+  <string name="notif_pouet">Novo toot desde %1$s</string>
   <plurals name="other_notifications">
-    <item quantity="one">and another notification</item>
-    <item quantity="other">and %d other notifications</item>
+    <item quantity="one">e outra notificación</item>
+    <item quantity="other">e outras %d notificacións</item>
   </plurals>
   <plurals name="other_notif_hometimeline">
-    <item quantity="one">and another toot to discover</item>
-    <item quantity="other">and %d other toots to discover</item>
+    <item quantity="one">e outro toot a descubrir</item>
+    <item quantity="other">e %d toots máis a descubrir</item>
   </plurals>
-  <string name="delete_notification_ask">Delete a notification?</string>
-  <string name="delete_notification_ask_all">Delete all notifications?</string>
-  <string name="delete_notification">The notification has been deleted!</string>
-  <string name="delete_notification_all">All notifications have been deleted!</string>
+  <string name="delete_notification_ask">Borrar notificación?</string>
+  <string name="delete_notification_ask_all">Borrar todas as notificacións?</string>
+  <string name="delete_notification">Eliminouse a notificación!</string>
+  <string name="delete_notification_all">Borráronse todas as notificacións!</string>
   <!-- HEADER -->
-  <string name="following">Following</string>
-  <string name="followers">Followers</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="following">Seguindo</string>
+  <string name="followers">Seguidoras</string>
+  <string name="pinned_toots">Fixados</string>
   <!-- TOAST -->
-  <string name="client_error">Unable to get client id!</string>
-  <string name="no_internet">No Internet connection!</string>
-  <string name="toast_block">The account was blocked!</string>
-  <string name="toast_unblock">The account is no longer blocked!</string>
-  <string name="toast_mute">The account was muted!</string>
-  <string name="toast_unmute">The account is no longer muted!</string>
-  <string name="toast_follow">The account was followed!</string>
-  <string name="toast_unfollow">The account is no longer followed!</string>
-  <string name="toast_reblog">The toot was boosted!</string>
-  <string name="toast_unreblog">The toot is no longer boosted!</string>
+  <string name="client_error">Imposible obter o id de cliente!</string>
+  <string name="no_internet">Sen conexión a internet!</string>
+  <string name="toast_block">A conta foi bloqueada!</string>
+  <string name="toast_unblock">A conta xa non está bloqueada!</string>
+  <string name="toast_mute">A conta foi acalada!</string>
+  <string name="toast_unmute">A conta xa non está acalada!</string>
+  <string name="toast_follow">A conta foi seguida!</string>
+  <string name="toast_unfollow">A conta xa non está seguida!</string>
+  <string name="toast_reblog">O toot foi promovido!</string>
+  <string name="toast_unreblog">O toot xa non está promovido!</string>
   <string name="toast_favourite">Este toot foi engadido aos seus favoritos!</string>
   <string name="toast_unfavourite">Este toot eliminouse dos favoritos!</string>
   <string name="toast_report">Informou sobre este toot!</string>
@@ -371,34 +371,34 @@
   <!-- Quick settings for notifications -->
   <string name="settings_popup_title">Push notifications</string>
   <string name="settings_popup_message">
-        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+Por favor, confirme cales son as notificacións push que quere recibir.
+        Posteriormente pode activar ou desactivar estas notificacións en Axustes (pestana Notificacións).
     </string>
-  <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-  <string name="settings_popup_notification">For unread notifications?</string>
+  <string name="settings_popup_timeline">Para os toots non lidos no Inicio?</string>
+  <string name="settings_popup_notification">Para as notificacións non lidas?</string>
   <!-- CACHE -->
-  <string name="cache_title">Clear cache</string>
-  <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+  <string name="cache_title">Limpar caché</string>
+  <string name="cache_message">Hai %1$s de datos na caché.\n\nDesexa eliminalos?</string>
   <string name="cache_units">Mb</string>
-  <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+  <string name="toast_cache_clear">Limpouse a caché! Liberáronse %1$s</string>
   <!-- ACTIVITY CACHE -->
-  <string name="action_sync">Synchronize</string>
-  <string name="action_filter">Filter</string>
-  <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
-  <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
-  <string name="v_direct">Direct</string>
-  <string name="v_keywords">Some keywords…</string>
-  <string name="show_media">Show media</string>
-  <string name="show_pinned">Show pinned</string>
-  <string name="filter_no_result">No matching result found!</string>
-  <string name="data_backup_toots">Backup toots for %1$s</string>
-  <string name="data_backup_success">%1$s new toots have been imported</string>
+  <string name="action_sync">Sincronizar</string>
+  <string name="action_filter">Filtrar</string>
+  <string name="owner_cached_toots">Os seus toots</string>
+  <string name="v_public">Público</string>
+  <string name="v_unlisted">Non listado</string>
+  <string name="v_private">Privado</string>
+  <string name="v_direct">Directo</string>
+  <string name="v_keywords">Palabras chave…</string>
+  <string name="show_media">Mostrar medios</string>
+  <string name="show_pinned">Mostrar fixados</string>
+  <string name="filter_no_result">Non se atoparon resultados!</string>
+  <string name="data_backup_toots">Respaldar toots para %1$s</string>
+  <string name="data_backup_success">%1$s novos toots foron importados</string>
   <string-array name="filter_select">
-    <item>No</item>
-    <item>Only</item>
-    <item>Both</item>
+    <item>Non</item>
+    <item>Só</item>
+    <item>Ambos</item>
   </string-array>
   <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
   <!-- PRIVACY -->
