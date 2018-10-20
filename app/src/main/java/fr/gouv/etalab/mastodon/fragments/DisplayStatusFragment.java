@@ -74,6 +74,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private PeertubeAdapter peertubeAdapater;
     private String max_id;
     private List<Status> statuses;
+    private List<Status> notFilteredStatuses;
     private List<Peertube> peertubes;
     private RetrieveFeedsAsyncTask.Type type;
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
@@ -102,6 +103,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_status, container, false);
         statuses = new ArrayList<>();
+        notFilteredStatuses = new ArrayList<>();
         peertubes = new ArrayList<>();
         context = getContext();
         Bundle bundle = this.getArguments();
@@ -143,11 +145,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
 
-
+        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account account = new AccountDAO(context, db).getAccountByID(userId);
         mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
 
-        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         if( search_peertube == null && (instanceType == null || instanceType.equals("MASTODON"))) {
             BaseMainActivity.displayPeertube = null;
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
@@ -366,7 +367,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }else {
             int previousPosition = this.statuses.size();
             List<Status> statuses = Helper.filterToots(context, apiResponse.getStatuses(), mutedAccount, type);
-
+            List<Status> notFilteredStatuses = apiResponse.getStatuses();
             if( type == RetrieveFeedsAsyncTask.Type.HOME) {
                 if (max_id == null || (apiResponse.getMax_id() != null && Long.parseLong(max_id) > Long.parseLong(apiResponse.getMax_id())))
                     max_id = apiResponse.getMax_id();
@@ -393,12 +394,17 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     //Toots are older than the bookmark -> no special treatment with them
                     if( bookmark == null || Long.parseLong(statuses.get(0).getId())+1 < Long.parseLong(bookmark)){
                         this.statuses.addAll(statuses);
+                        this.notFilteredStatuses.addAll(notFilteredStatuses);
                         statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                     }else { //Toots are younger than the bookmark
                         String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
                         int position = 0;
+                        int positionNotFiltered = 0;
                         while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
                             position++;
+                        }
+                        while (position < this.notFilteredStatuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.notFilteredStatuses.get(position).getId())) {
+                            positionNotFiltered++;
                         }
                         ArrayList<Status> tmpStatuses = new ArrayList<>();
                         for (Status tmpStatus : statuses) {
@@ -419,6 +425,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             }
                         }
                         this.statuses.addAll(position, tmpStatuses);
+                        this.notFilteredStatuses.addAll(positionNotFiltered, tmpStatuses);
                         statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
                         if( tmpStatuses.size() < 3) //If new toots are only two
                             lv_status.scrollToPosition(0);
@@ -428,6 +435,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
                 }else {
                     this.statuses.addAll(statuses);
+                    this.notFilteredStatuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 }
                 if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
@@ -471,6 +479,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     //Update the id of the last toot retrieved
                     MainActivity.lastHomeId = status.getId();
                     statuses.add(0, status);
+                    notFilteredStatuses.add(0, status);
                     if (!status.getAccount().getId().equals(userId))
                         MainActivity.countNewStatus++;
                     statusListAdapter.notifyItemInserted(0);
@@ -483,6 +492,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
                 status.setNew(false);
                 statuses.add(0, status);
+                notFilteredStatuses.add(0, status);
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                 if (firstVisibleItem > 0)
                     statusListAdapter.notifyItemInserted(0);
@@ -499,6 +509,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      * Refresh status in list
      */
     public void refreshFilter(){
+        statuses.clear();
+        statuses.addAll(Helper.filterToots(context, notFilteredStatuses, mutedAccount, type));
         statusListAdapter.notifyDataSetChanged();
     }
 
@@ -537,11 +549,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     retrieveMissingToots(statuses.get(0).getId());
             }
         }else if (type == RetrieveFeedsAsyncTask.Type.HOME){
-            //Cleans old timed mute accounts
-            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            new TempMuteDAO(context, db).removeOld();
-            Account account = new AccountDAO(context, db).getAccountByID(userId);
-            List<String> mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
             statusListAdapter.updateMuted(mutedAccount);
             if( statuses != null && statuses.size() > 0)
                 retrieveMissingToots(statuses.get(0).getId());
@@ -647,6 +654,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onRetrieveMissingFeeds(List<Status> statusesMissing) {
         swipeRefreshLayout.setRefreshing(false);
+
         List<Status> statuses = Helper.filterToots(context, statusesMissing, mutedAccount, type);
         if( isSwipped && this.statuses != null && this.statuses.size() > 0) {
             for (Status status : this.statuses) {
@@ -665,6 +673,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             statuses.get(i).setNew(true);
                         inserted++;
                         this.statuses.add(0, statuses.get(i));
+                        notFilteredStatuses.add(0, statuses.get(i));
                         if (type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
                             MainActivity.countNewStatus++;
                     }

@@ -162,6 +162,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
+import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
@@ -2376,7 +2377,6 @@ public class Helper {
     public static List<Status> filterToots(Context context, List<Status> statuses, List<String> timedMute, RetrieveFeedsAsyncTask.Type type){
         if( statuses == null || statuses.size() == 0 )
             return statuses;
-
         ArrayList<Status> filteredStatus = new ArrayList<>();
         String filter;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -2390,7 +2390,7 @@ public class Helper {
             String content = status.getContent();
             if( status.getSpoiler_text() != null)
                 content += status.getSpoiler_text();
-            boolean addToot = true;
+            boolean addToot = true; //Flag to tell if the current toot will be added.
             if( status.getAccount()  == null)
                 addToot = false;
             if(addToot && MainActivity.filters != null){
@@ -2429,12 +2429,6 @@ public class Helper {
                         addToot = false;
                     else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
                         addToot = false;
-                    } else {
-                        if (timedMute != null && timedMute.size() > 0) {
-
-                            if (timedMute.contains(status.getAccount().getId()))
-                                addToot = false;
-                        }
                     }
                 } else {
                     if (context instanceof ShowAccountActivity) {
@@ -2445,10 +2439,15 @@ public class Helper {
                     }
                 }
             }
+            if( addToot){
+                if (timedMute != null && timedMute.size() > 0) {
+                    if (timedMute.contains(status.getAccount().getId()))
+                        addToot = false;
+                }
+            }
             if(addToot)
                 filteredStatus.add(status);
         }
         return filteredStatus;
     }
-
 }

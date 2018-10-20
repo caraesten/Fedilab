@@ -58,8 +58,8 @@
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/account_action"
         app:fabSize="mini"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:scaleType="fitXY"
         android:layout_gravity="center"
