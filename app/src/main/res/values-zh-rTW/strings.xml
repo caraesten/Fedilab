@@ -579,6 +579,7 @@
   <string name="number_view_video">%s 次檢視</string>
   <string name="duration_video">長度：%s</string>
   <string name="add_remote_instance">新增實體</string>
+  <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
