@@ -31,6 +31,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -81,8 +82,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private RelativeLayout loader;
     private TextView peertube_view_count, peertube_like_count, peertube_dislike_count, peertube_share, peertube_download, peertube_description, peertube_title;
     private ScrollView peertube_information_container;
-    private ProgressDialog pDialog;
-    public static final int progress_bar_type = 0;
+    private MediaPlayer mediaPlayer;
+    private FullScreenMediaController fullScreenMediaController;
+    private int stopPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +147,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             peertube_information_container.setVisibility(View.VISIBLE);
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -217,7 +221,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             loader.setVisibility(View.GONE);
             return;
         }
-        if( apiResponse.getPeertubes().get(0).getFileUrl() == null){
+        if( apiResponse.getPeertubes().get(0).getFileUrl(null) == null){
             Toast.makeText(PeertubeActivity.this, R.string.toast_error,Toast.LENGTH_LONG).show();
             loader.setVisibility(View.GONE);
             return;
@@ -232,7 +236,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube_like_count.setText(String.valueOf(peertube.getLike()));
         peertube_view_count.setText(String.valueOf(peertube.getView()));
 
-        Uri uri = Uri.parse(apiResponse.getPeertubes().get(0).getFileUrl());
+        Uri uri = Uri.parse(apiResponse.getPeertubes().get(0).getFileUrl(null));
         try {
             HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
         } catch (KeyManagementException e) {
@@ -241,17 +245,21 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             e.printStackTrace();
         }
         videoView.setVideoURI(uri);
-        FullScreenMediaController mc = new FullScreenMediaController(PeertubeActivity.this);
-        mc.setAnchorView(videoView);
-        videoView.setMediaController(mc);
-        videoView.start();
+        videoView.getCurrentPosition();
+        fullScreenMediaController = new FullScreenMediaController(PeertubeActivity.this, peertube);
+        fullScreenMediaController.setAnchorView(videoView);
+        videoView.setMediaController(fullScreenMediaController);
+        mediaPlayer = MediaPlayer.create(PeertubeActivity.this, uri);
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 loader.setVisibility(View.GONE);
-                //mp.start();
             }
         });
+        videoView.setZOrderOnTop(true);
+        videoView.setMediaController(fullScreenMediaController);
+        videoView.start();
+
         peertube_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,10 +267,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     if (ContextCompat.checkSelfPermission(PeertubeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(PeertubeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(PeertubeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
                     } else {
-                        manageDownloads(PeertubeActivity.this, peertube.getFileDownloadUrl());
+                        manageDownloads(PeertubeActivity.this, peertube.getFileDownloadUrl(null));
                     }
                 }else{
-                    manageDownloads(PeertubeActivity.this, peertube.getFileDownloadUrl());
+                    manageDownloads(PeertubeActivity.this, peertube.getFileDownloadUrl(null));
                 }
             }
         });
@@ -327,5 +335,32 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             lv_comments.setAdapter(statusListAdapter);
 
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if( videoView != null) {
+            stopPosition = videoView.getCurrentPosition(); //stopPosition is an int
+            videoView.pause();
+        }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if( videoView != null) {
+            videoView.seekTo(stopPosition);
+            videoView.resume();
+            videoView.start();
+        }
+    }
+    public void changeVideoResolution(Peertube peertube, String resolution){
+        int position = videoView.getCurrentPosition();
+        mediaPlayer.stop();
+        videoView.setVideoURI(Uri.parse(peertube.getFileUrl(resolution)));
+        fullScreenMediaController.setResolutionVal(resolution + "p");
+        videoView.seekTo(position);
+        mediaPlayer.start();
     }
 }

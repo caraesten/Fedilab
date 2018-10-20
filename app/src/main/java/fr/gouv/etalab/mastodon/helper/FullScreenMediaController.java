@@ -17,14 +17,20 @@ package fr.gouv.etalab.mastodon.helper;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.MediaController;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
+import fr.gouv.etalab.mastodon.client.Entities.Peertube;
+
 
 /**
  * Created by Thomas on 14/10/2018.
@@ -33,6 +39,10 @@ import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
 public class FullScreenMediaController extends MediaController {
 
     private ImageButton fullScreen;
+    private Button resolution;
+    private Context context;
+    private Peertube peertube;
+    private String resolutionVal;
 
     public enum fullscreen{
         OFF,
@@ -40,8 +50,14 @@ public class FullScreenMediaController extends MediaController {
     }
     public FullScreenMediaController(Context context) {
         super(context);
+        this.context = context;
     }
 
+    public FullScreenMediaController(Context context, Peertube peertube) {
+        super(context);
+        this.peertube = peertube;
+        this.context = context;
+    }
 
     @Override
     public void setAnchorView(View view) {
@@ -50,15 +66,47 @@ public class FullScreenMediaController extends MediaController {
 
         //image button for full screen to be added to media controller
         fullScreen = new ImageButton(super.getContext());
-
-        FrameLayout.LayoutParams params =
-                new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+        LayoutParams params =
+                new LayoutParams(LayoutParams.WRAP_CONTENT,
                         LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.RIGHT;
+        params.gravity = Gravity.END;
         params.rightMargin = 80;
         params.topMargin = 22;
         addView(fullScreen, params);
 
+        if( resolutionVal == null)
+            resolutionVal = peertube.getResolution().get(0) +"p";
+        resolution = new Button(super.getContext());
+        resolution.setAllCaps(false);
+        resolution.setBackgroundColor(Color.TRANSPARENT);
+        resolution.setText(resolutionVal);
+        resolution.setPadding(0,0,0,0);
+        LayoutParams paramsButton =
+                new LayoutParams(LayoutParams.WRAP_CONTENT,
+                        LayoutParams.WRAP_CONTENT);
+        paramsButton.gravity = Gravity.START;
+        paramsButton.rightMargin = 80;
+        paramsButton.topMargin = 22;
+        addView(resolution, paramsButton);
+        resolution.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(context, resolution);
+                int i = 0;
+                for(String res: peertube.getResolution()){
+                    MenuItem item = popup.getMenu().add(0, i, Menu.NONE, res);
+                    item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            ((PeertubeActivity)context).changeVideoResolution(peertube, res);
+                            resolution.setText(String.format("%sp",res));
+                            return false;
+                        }
+                    });
+                }
+                popup.show();
+            }
+        });
         if(((PeertubeActivity)getContext()).getFullscreen() == fullscreen.ON){
             Resources resources = getResources();
             fullScreen.setImageDrawable(resources.getDrawable(R.drawable.ic_fullscreen_exit));
@@ -81,6 +129,10 @@ public class FullScreenMediaController extends MediaController {
                 changeIcon();
             }
         });
+    }
+
+    public void setResolutionVal(String resolutionVal){
+        this.resolutionVal = resolutionVal;
     }
 
     private void changeIcon(){

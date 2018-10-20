@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Thomas on 29/09/2018.
@@ -29,7 +30,6 @@ public class Peertube {
     private String thumbnailPath;
     private String previewPath;
     private String embedPath;
-    private String fileDownloadUrl;
     private int view;
     private int like;
     private int dislike;
@@ -37,8 +37,8 @@ public class Peertube {
     private int duration;
     private String instance;
     private Account account;
-    private String fileUrl;
-    private String torrentDownloadUrl;
+    private List<String> resolution;
+
 
     public Peertube() {
     }
@@ -157,27 +157,36 @@ public class Peertube {
         this.account = account;
     }
 
-    public String getFileUrl() {
-        return fileUrl;
+    public String getFileUrl(String resolution) {
+        if( resolution == null)
+            resolution = this.getResolution().get(0);
+        if(resolution == null)
+            return null;
+        return "https://" + this.instance + "/static/webseed/" + getUuid()+ "-" + resolution + ".mp4";
     }
 
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
+
+    public String getTorrentDownloadUrl(String resolution) {
+        if( resolution == null)
+            resolution = this.getResolution().get(0);
+        if(resolution == null)
+            return null;
+        return "https://" + this.instance + "/download/torrents/" + getUuid()+ "-" + resolution + ".torrent";
+
+    }
+    public String getFileDownloadUrl(String resolution) {
+        if( resolution == null)
+            resolution = this.getResolution().get(0);
+        if(resolution == null)
+            return null;
+        return "https://" + this.instance + "/download/videos/" + getUuid()+ "-" + resolution + ".mp4";
     }
 
-    public String getTorrentDownloadUrl() {
-        return torrentDownloadUrl;
+    public List<String> getResolution() {
+        return resolution;
     }
 
-    public void setTorrentDownloadUrl(String torrentDownloadUrl) {
-        this.torrentDownloadUrl = torrentDownloadUrl;
-    }
-
-    public String getFileDownloadUrl() {
-        return fileDownloadUrl;
-    }
-
-    public void setFileDownloadUrl(String fileDownloadUrl) {
-        this.fileDownloadUrl = fileDownloadUrl;
+    public void setResolution(List<String> resolution) {
+        this.resolution = resolution;
     }
 }

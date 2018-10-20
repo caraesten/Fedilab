@@ -2416,14 +2416,13 @@ public class API {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             JSONArray files = resobj.getJSONArray("files");
+            ArrayList<String> resolutions = new ArrayList<>();
             for(int j = 0 ; j < files.length() ; j++){
                 JSONObject attObj = files.getJSONObject(j);
-                peertube.setFileDownloadUrl(attObj.get("fileDownloadUrl").toString());
-                peertube.setFileUrl(attObj.get("fileUrl").toString());
-                peertube.setTorrentDownloadUrl(attObj.get("torrentDownloadUrl").toString());
+                resolutions.add(attObj.getJSONObject("resolution").get("id").toString());
             }
+            peertube.setResolution(resolutions);
         } catch (JSONException e) {
             e.printStackTrace();
         }
