@@ -67,14 +67,14 @@
   <string name="show_boosts">Mostrar promocións</string>
   <string name="show_replies">Mostrar respostas</string>
   <string name="action_open_in_web">Abrir en navegador</string>
-  <string name="translate">Translate</string>
-  <string name="please_wait">Please, wait few seconds before making this action.</string>
+  <string name="translate">Traducir</string>
+  <string name="please_wait">Por favor, agarde uns segundos antes de realizar esta acción.</string>
   <!--- Menu -->
-  <string name="home_menu">Home</string>
-  <string name="local_menu">Local timeline</string>
-  <string name="global_menu">Federated timeline</string>
-  <string name="neutral_menu_title">Options</string>
-  <string name="favorites_menu">Favourites</string>
+  <string name="home_menu">Inicio</string>
+  <string name="local_menu">Liña temporal local</string>
+  <string name="global_menu">Liña temporal federada</string>
+  <string name="neutral_menu_title">Axustes</string>
+  <string name="favorites_menu">Favoritas</string>
   <string name="communication_menu_title">Communication</string>
   <string name="muted_menu">Muted users</string>
   <string name="blocked_menu">Blocked users</string>
