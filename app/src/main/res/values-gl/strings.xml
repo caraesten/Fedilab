@@ -182,23 +182,23 @@
   <string name="about_developer">Desenvolvedora:</string>
   <string name="about_license">Licenza: </string>
   <string name="about_license_action">GNU GPL V3</string>
-  <string name="about_code">Source code: </string>
-  <string name="about_yandex">Translation of toots:</string>
-  <string name="about_thekinrar">Search instances:</string>
+  <string name="about_code">Código fonte: </string>
+  <string name="about_yandex">Tradución dos toots:</string>
+  <string name="about_thekinrar">Buscar instancias:</string>
   <string name="about_thekinrar_action">instances.social</string>
-  <string name="thanks_text_logo">Icon designer:</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_logo">Deseño de iconas:</string>
+  <string name="thanks_text_banner">Deseño da banda:</string>
   <!-- Conversation -->
-  <string name="conversation">Conversation</string>
+  <string name="conversation">Conversa</string>
   <!-- Accounts -->
-  <string name="no_accounts">No account to display</string>
-  <string name="no_follow_request">No follow request</string>
+  <string name="no_accounts">Sen conta que mostrar</string>
+  <string name="no_follow_request">Sen petición de seguimento</string>
   <string name="status_cnt">Toots \n %1$s</string>
-  <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
-  <string name="authorize">Authorize</string>
-  <string name="reject">Reject</string>
+  <string name="following_cnt">Seguindo \n %1$s</string>
+  <string name="followers_cnt">Seguidoras \n %1$s</string>
+  <string name="pins_cnt">Fixadas \n %d</string>
+  <string name="authorize">Autorizar</string>
+  <string name="reject">Rexeitar</string>
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">No scheduled toot to display!</string>
   <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
