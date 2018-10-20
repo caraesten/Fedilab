@@ -130,7 +130,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
         videoView = findViewById(R.id.media_video);
         new RetrievePeertubeSingleAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new RetrievePeertubeSingleCommentsAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
     }
 
     public void change(){
@@ -225,7 +225,16 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             loader.setVisibility(View.GONE);
             return;
         }
+
         peertube = apiResponse.getPeertubes().get(0);
+        if( peertube.isCommentsEnabled())
+            new RetrievePeertubeSingleCommentsAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else {
+            RelativeLayout no_action = findViewById(R.id.no_action);
+            TextView no_action_text = findViewById(R.id.no_action_text);
+            no_action_text.setText(getString(R.string.comment_no_allowed_peertube));
+            no_action.setVisibility(View.VISIBLE);
+        }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         setTitle(peertube.getName());
@@ -317,10 +326,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         List<Status> statuses = apiResponse.getStatuses();
         if( statuses == null || statuses.size() == 0){
             RelativeLayout no_action = findViewById(R.id.no_action);
-            if( peertube != null && !peertube.isCommentsEnabled()) {
-                TextView no_action_text = findViewById(R.id.no_action_text);
-                no_action_text.setText(getString(R.string.comment_no_allowed_peertube));
-            }
             no_action.setVisibility(View.VISIBLE);
             RecyclerView lv_comments = findViewById(R.id.peertube_comments);
             lv_comments.setVisibility(View.GONE);
