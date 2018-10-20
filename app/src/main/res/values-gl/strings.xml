@@ -400,16 +400,16 @@ Por favor, confirme cales son as notificacións push que quere recibir.
     <item>Só</item>
     <item>Ambos</item>
   </string-array>
-  <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+  <string name="owner_cached_toots_empty">Non se atoparon toots na base de datos. Por favor, utilice o botón de sincronización no menú para obtelos.</string>
   <!-- PRIVACY -->
-  <string name="privacy_data_title">Recorded data</string>
+  <string name="privacy_data_title">Datos gravados</string>
   <string name="privacy_data">
-        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+Só se garda no dispositivo a información básica das contas.
+        Estos datos son totalmente confidenciais e só poden ser utilizados pola aplicación.
+        Eliminando a aplicación eliminará inmediatamente estos datos.\n
+        &#9888; Usuario e Contrasinal nunca se gardan. Só se utilizan no proceso de autenticación (SSL) coa instancia.
     </string>
-  <string name="privacy_authorizations_title">Permissions:</string>
+  <string name="privacy_authorizations_title">Permisos:</string>
   <string name="privacy_authorizations">
         - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
