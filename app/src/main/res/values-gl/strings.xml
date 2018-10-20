@@ -411,54 +411,54 @@ Só se garda no dispositivo a información básica das contas.
     </string>
   <string name="privacy_authorizations_title">Permisos:</string>
   <string name="privacy_authorizations">
-        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+        - <b>ACCESS_NETWORK_STATE</b>: Utilizado para detectar si o dispositivo está conectado a unha rede WiFi.\n
+        - <b>INTERNET</b>: Utilizado para as consultas a instancia.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Utilizado para gardar medios ou mover a app a tarxeta SD.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Utilizado para engadir medios aos toots.\n
+        - <b>BOOT_COMPLETED</b>: Utilizado para iniciar o servizo de notificacións.\n
+        - <b>WAKE_LOCK</b>: Utilizado durante o servizo de notificacións.
     </string>
-  <string name="privacy_API_authorizations_title">API permissions:</string>
+  <string name="privacy_API_authorizations_title">Permisos API:</string>
   <string name="privacy_API_authorizations">
-        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+        - <b>Lectura</b>: Ler datos.\n
+        - <b>Escritura</b>: Publicar estados e subir medios para os estados.\n
+        - <b>Seguimento</b>: Seguir, deixar de seguir, bloquear, desbloquear.\n\n
+        <b>&#9888; Estas accións só se realizan a petición da usuaria.</b>
     </string>
-  <string name="privacy_API_title">Tracking and Libraries</string>
+  <string name="privacy_API_title">Rastrexo e Bibliotecas</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        A aplicación <b>non utiliza ferramentas de rastrexo</b> (medida de audiencias, reporte de fallos, etc.) e non contén publicidade.\n\n
+        O uso de bibliotecas foi minimizado: \n
+        - <b>Glide</b>: Para xestionar medios\n
+        - <b>Android-Job</b>: Para xestionar servizos\n
+        - <b>PhotoView</b>: Para xestionar imaxes\n
     </string>
-  <string name="privacy_API_yandex_title">Translation of toots</string>
+  <string name="privacy_API_yandex_title">Tradución dos toots</string>
   <string name="privacy_API_yandex_authorizations">
-        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+A aplicación ofrece a posibilidade de traducir os toots utilizando o idioma do dispositivo e a API de Yandex.\n
+        Yandex ten a súa propia política de intimidade, que pode atopar aquí: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
-        Thank you to Stéphane for the logo.
+Grazas Stéphane polo logo.
     </string>
   <string name="thanks_text_dev">
-        Thank you to:
+Grazas a:
     </string>
-  <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
-  <string name="fetch_more_toots">Fetch more toots…</string>
+  <string name="filter_regex">Filtrado de expresións regulares</string>
+  <string name="search">Buscar</string>
+  <string name="delete">Eliminar</string>
+  <string name="fetch_more_toots">Obter máis toots…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
-  <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-  <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-  <string name="action_lists_add_to">Add to list</string>
-  <string name="action_lists_remove_from">Remove from list</string>
-  <string name="action_lists_create">Add list</string>
-  <string name="action_lists_delete">Delete list</string>
-  <string name="action_lists_update">Edit list</string>
-  <string name="action_lists_title_placeholder">New list title</string>
-  <string name="action_lists_search_users">Search among people you follow</string>
+  <string name="action_lists">Listaxes</string>
+  <string name="action_lists_confirm_delete">Está segura de querer eliminar esta listaxe?</string>
+  <string name="action_lists_empty_content">Aínda non hai nada na lista. Cando as usuarias da lista publiquen novos estados, aparecerán aquí.</string>
+  <string name="action_lists_add_to">Engadir a lista</string>
+  <string name="action_lists_remove_from">Eliminar da lista</string>
+  <string name="action_lists_create">Engadir lista</string>
+  <string name="action_lists_delete">Eliminar lista</string>
+  <string name="action_lists_update">Editar lista</string>
+  <string name="action_lists_title_placeholder">Novo título da listaxe</string>
+  <string name="action_lists_search_users">Buscar entre a xente a que vostede segue</string>
   <string name="action_lists_owner">Your lists</string>
   <!-- Migration -->
   <string name="account_moved_to">%1$s has moved to %2$s</string>
@@ -518,34 +518,34 @@ Só se garda no dispositivo a información básica das contas.
   <string name="direct_message">Direct message</string>
   <string name="filters">Filters</string>
   <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-  <string name="filter_keyword">Keyword or phrase</string>
-  <string name="context_home">Home timeline</string>
-  <string name="context_public">Public timelines</string>
-  <string name="context_notification">Notifications</string>
-  <string name="context_conversation">Conversations</string>
+  <string name="filter_keyword">Palabra chave ou frase</string>
+  <string name="context_home">Liña temporal de inicio</string>
+  <string name="context_public">Liñas de tempo públicas</string>
+  <string name="context_notification">Notificacións</string>
+  <string name="context_conversation">Conversas</string>
   <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-  <string name="context_drop">Drop instead of hide</string>
-  <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
-  <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-  <string name="context_whole_word">Whole word</string>
-  <string name="filter_context">Filter contexts</string>
-  <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-  <string name="filter_expire">Expire after</string>
-  <string name="add_new_filter">Add New Filter</string>
-  <string name="action_filter_delete">Delete filter?</string>
-  <string name="action_update_filter">Update filter</string>
-  <string name="action_filter_create">Create filter</string>
-  <string name="how_to_follow">Whom to follow</string>
-  <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
-  <string name="follow_account">Follow</string>
-  <string name="select_all">Select all</string>
-  <string name="unselect_all">Unselect all</string>
-  <string name="follow_trunk">%s is followed!</string>
-  <string name="create_list_trunk">Creating the list %s</string>
-  <string name="add_account_list_trunk">Adding accounts to the list</string>
-  <string name="account_added_list_trunk">Accounts were added to the list</string>
-  <string name="adding_account_list_trunk">Adding accounts to the list</string>
-  <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
+  <string name="context_drop">Desbotar en lugar de ocultar</string>
+  <string name="context_drop_explanations">Os toots filtrados desaparecerán irreversiblemente, incluso si despois elimina o filtro</string>
+  <string name="context_whole_word_explanations">Cando a palabra chave é só alfanumérica, só se aplicará si coincide a palabra completa</string>
+  <string name="context_whole_word">Palabra completa</string>
+  <string name="filter_context">Filtrar contextos</string>
+  <string name="filter_context_explanations">Un o varios contextos onde se debe aplicar o filtro</string>
+  <string name="filter_expire">Caducar tras</string>
+  <string name="add_new_filter">Engadir novo filtro</string>
+  <string name="action_filter_delete">Eliminar filtro?</string>
+  <string name="action_update_filter">Actualizar filtro</string>
+  <string name="action_filter_create">Crear filtro</string>
+  <string name="how_to_follow">A quen seguir</string>
+  <string name="action_who_to_follow_empty_content">Non hai contas listadas por agora!</string>
+  <string name="follow_account">Seguir</string>
+  <string name="select_all">Escoller todo</string>
+  <string name="unselect_all">Desmarcar todo</string>
+  <string name="follow_trunk">Está a seguir a %s!</string>
+  <string name="create_list_trunk">Creando a listaxe %s</string>
+  <string name="add_account_list_trunk">Engadindo contas a lista</string>
+  <string name="account_added_list_trunk">Engadíronse contas a listaxe</string>
+  <string name="adding_account_list_trunk">Engadindo contas a listaxe</string>
+  <string name="action_list_add">Aínda non creou listaxes. Pulse no botón \"+\" para engadir unha nova.</string>
   <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
   <string name="about_trunk">Who to follow</string>
   <string name="about_trunk_action">Trunk API</string>
