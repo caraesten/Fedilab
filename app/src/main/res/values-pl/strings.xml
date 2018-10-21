@@ -217,8 +217,8 @@
   <string name="no_notifications">Brak powiadomień do wyświetlenia</string>
   <string name="notif_mention">wspomniał o tobie</string>
   <string name="notif_reblog">podbił twój wpis</string>
-  <string name="notif_favourite">polubił twój wpis</string>
-  <string name="notif_follow">zaczął Cię śledzić</string>
+  <string name="notif_favourite">dodał(a) Twój wpis do ulubionych</string>
+  <string name="notif_follow">zaczął(-ęła) Cię śledzić</string>
   <string name="notif_pouet">Nowy wpis od %1$s</string>
   <plurals name="other_notifications">
     <item quantity="one">dodaj %d innych powiadomień</item>
@@ -586,6 +586,11 @@ Podziękowania dla:    </string>
   <string name="duration_video">Duration: %s</string>
   <string name="add_remote_instance">Add an instance</string>
   <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
+  <string name="pickup_resolution">Pick up a resolution</string>
+  <string name="peertube_favorites">Peertube favourites</string>
+  <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
+  <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
+  <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
   <string-array name="filter_expire">
     <item>Nigdy</item>
     <item>30 minut</item>

@@ -580,6 +580,11 @@
   <string name="duration_video">長度：%s</string>
   <string name="add_remote_instance">新增實體</string>
   <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
+  <string name="pickup_resolution">Pick up a resolution</string>
+  <string name="peertube_favorites">Peertube favourites</string>
+  <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
+  <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
+  <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
