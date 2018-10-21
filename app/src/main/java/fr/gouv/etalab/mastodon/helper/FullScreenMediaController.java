@@ -18,12 +18,8 @@ package fr.gouv.etalab.mastodon.helper;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.MediaController;
@@ -88,30 +84,14 @@ public class FullScreenMediaController extends MediaController {
         paramsButton.gravity = Gravity.START;
         paramsButton.rightMargin = 80;
         paramsButton.topMargin = 22;
-        addView(resolution, paramsButton);
         resolution.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(context, resolution);
-                int i = 0;
-                for(String res: peertube.getResolution()){
-                    MenuItem item = popup.getMenu().add(0, i, Menu.NONE, res);
-                    item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            ((PeertubeActivity)context).changeVideoResolution(peertube, res);
-                            resolution.setText(String.format("%sp",res));
-                            return false;
-                        }
-                    });
-                    i++;
-                }
-                try {
-                    popup.show();
-                }catch (WindowManager.BadTokenException ignored){}
-
+                ((PeertubeActivity)getContext()).displayResolution();
             }
         });
+        addView(resolution, paramsButton);
+
         if(((PeertubeActivity)getContext()).getFullscreen() == fullscreen.ON){
             Resources resources = getResources();
             fullScreen.setImageDrawable(resources.getDrawable(R.drawable.ic_fullscreen_exit));
@@ -130,7 +110,7 @@ public class FullScreenMediaController extends MediaController {
                 }else{
                     ((PeertubeActivity)getContext()).setFullscreen(fullscreen.ON);
                 }
-                ((PeertubeActivity)getContext()).change();
+
                 changeIcon();
             }
         });
@@ -138,6 +118,8 @@ public class FullScreenMediaController extends MediaController {
 
     public void setResolutionVal(String resolutionVal){
         this.resolutionVal = resolutionVal;
+        if( resolution != null)
+            resolution.setText(String.format("%sp",resolutionVal));
     }
 
     private void changeIcon(){

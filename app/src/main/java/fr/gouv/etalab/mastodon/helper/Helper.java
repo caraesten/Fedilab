@@ -2057,9 +2057,9 @@ public class Helper {
 
     public static String secondsToString(int pTime) {
 
-        int hour = pTime/3660;
-        int min = pTime/60;
-        int sec = pTime-(min*60);
+        int hour = pTime/3600;
+        int min = (pTime -(hour*3600))/60;
+        int sec = pTime -(hour*3600)-(min*60);
         String strHour="0", strMin="0", strSec="0";
 
         if( hour > 0 )

@@ -641,6 +641,7 @@
     <string name="duration_video">Duration: %s</string>
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
+    <string name="pickup_resolution">Pick up a resolution</string>
 
     <string-array name="filter_expire">
         <item>Never</item>
