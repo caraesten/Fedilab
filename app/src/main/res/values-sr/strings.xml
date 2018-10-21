@@ -580,17 +580,17 @@
   <string name="comment">Коментар</string>
   <string name="peertube_instance">Peertube инстанца</string>
   <string name="set_display_direct">Прикажи временску лајну приватних порука</string>
-  <string name="set_keep_background_process">Keep background process when app is closed</string>
-  <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-  <string name="number_view_video">%s views</string>
-  <string name="duration_video">Duration: %s</string>
-  <string name="add_remote_instance">Add an instance</string>
-  <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
-  <string name="pickup_resolution">Pick up a resolution</string>
-  <string name="peertube_favorites">Peertube favourites</string>
-  <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-  <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-  <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+  <string name="set_keep_background_process">Настави процес у позадини када се апликација затвори</string>
+  <string name="no_comments">Први оставите коментар на овај видео са овим дугметом горе десно!</string>
+  <string name="number_view_video">%s прегледа</string>
+  <string name="duration_video">Трајање: %s</string>
+  <string name="add_remote_instance">Додај инстанцу</string>
+  <string name="comment_no_allowed_peertube">Коментари нису омогућени на овом видео запису!</string>
+  <string name="pickup_resolution">Одаберите резолуцију</string>
+  <string name="peertube_favorites">Peertube омиљени</string>
+  <string name="bookmark_add_peertube">Видео је додат у забелешке!</string>
+  <string name="bookmark_remove_peertube">Видео је уклоњен из забелешки!</string>
+  <string name="bookmark_peertube_empty">Нема Peertube видео записа у Вашим омиљеним ставкама!</string>
   <string-array name="filter_expire">
     <item>Никадa</item>
     <item>30 минута</item>
