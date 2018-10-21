@@ -14,6 +14,8 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+import org.json.JSONObject;
+
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class Peertube {
     private Account account;
     private List<String> resolution;
     private boolean commentsEnabled;
-
+    private JSONObject cache;
 
     public Peertube() {
     }
@@ -206,5 +208,13 @@ public class Peertube {
 
     public void setCommentsEnabled(boolean commentsEnabled) {
         this.commentsEnabled = commentsEnabled;
+    }
+
+    public JSONObject getCache() {
+        return cache;
+    }
+
+    public void setCache(JSONObject cache) {
+        this.cache = cache;
     }
 }

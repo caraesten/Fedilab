@@ -32,6 +32,10 @@
                         android:icon="@drawable/ic_bookmark"
                         android:title="@string/bookmarks" />
                     <item
+                        android:id="@+id/nav_peertube"
+                        android:icon="@drawable/ic_favorite_peertube_full"
+                        android:title="@string/peertube_favorites" />
+                    <item
                         android:id="@+id/nav_filters"
                         android:icon="@drawable/ic_filter"
                         android:title="@string/filters" />

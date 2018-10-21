@@ -616,7 +616,6 @@ public class API {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get("https://"+instance+"/api/v1/videos", 60, params, null);
-            Helper.largeLog(response);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             peertubes = parsePeertube(instance, jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -2386,10 +2385,11 @@ public class API {
      * @param resobj JSONObject
      * @return Peertube
      */
-    private static Peertube parsePeertube(Context context, String instance, JSONObject resobj){
+    public static Peertube parsePeertube(Context context, String instance, JSONObject resobj){
         Peertube peertube = new Peertube();
         try {
             peertube.setId(resobj.get("id").toString());
+            peertube.setCache(resobj);
             peertube.setUuid(resobj.get("uuid").toString());
             peertube.setName(resobj.get("name").toString());
             peertube.setDescription(resobj.get("description").toString());
@@ -2425,6 +2425,7 @@ public class API {
             peertube.setId(resobj.get("id").toString());
             peertube.setUuid(resobj.get("uuid").toString());
             peertube.setName(resobj.get("name").toString());
+            peertube.setCache(resobj);
             peertube.setInstance(instance);
             peertube.setHost(resobj.getJSONObject("account").get("host").toString());
             peertube.setDescription(resobj.get("description").toString());

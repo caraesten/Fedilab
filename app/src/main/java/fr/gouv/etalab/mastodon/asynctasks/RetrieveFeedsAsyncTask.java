@@ -30,6 +30,7 @@ import fr.gouv.etalab.mastodon.helper.FilterToots;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
+import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 
@@ -68,6 +69,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         CONTEXT,
         TAG,
         CACHE_BOOKMARKS,
+        CACHE_BOOKMARKS_PEERTUBE,
         CACHE_STATUS,
         REMOTE_INSTANCE
     }
@@ -178,6 +180,12 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new StatusCacheDAO(contextReference.get(), db).getAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
                 apiResponse.setStatuses(statuses);
+                break;
+            case CACHE_BOOKMARKS_PEERTUBE:
+                apiResponse = new APIResponse();
+                db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                List<Peertube> peertubes = new PeertubeFavoritesDAO(contextReference.get(), db).getAllPeertube();
+                apiResponse.setPeertubes(peertubes);
                 break;
             case CACHE_STATUS:
                 apiResponse = new APIResponse();

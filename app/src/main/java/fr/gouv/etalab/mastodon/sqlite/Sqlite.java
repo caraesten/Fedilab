@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 14;
+    public static final int DB_VERSION = 15;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -51,6 +51,9 @@ public class Sqlite extends SQLiteOpenHelper {
 
     //Table for instance names
     static final String TABLE_INSTANCES = "INSTANCES";
+
+    //Table for peertube favorites
+    static final String TABLE_PEERTUBE_FAVOURITES = "PEERTUBE_FAVOURITES";
 
     static final String COL_USER_ID = "USER_ID";
     static final String COL_USERNAME = "USERNAME";
@@ -166,6 +169,18 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE_TYPE + " TEXT, " + COL_DATE_CREATION + " TEXT NOT NULL)";
 
 
+    static final String COL_UUID = "UUID";
+    static final String COL_CACHE = "CACHE";
+    static final String COL_DATE = "DATE";
+
+    private final String CREATE_TABLE_PEERTUBE_FAVOURITES = "CREATE TABLE "
+            + TABLE_PEERTUBE_FAVOURITES + "("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_UUID + " TEXT NOT NULL, "
+            + COL_INSTANCE + " TEXT NOT NULL, "
+            + COL_CACHE + " TEXT NOT NULL, "
+            + COL_DATE + " TEXT NOT NULL)";
+
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -189,6 +204,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_STATUSES_CACHE);
         db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
         db.execSQL(CREATE_TABLE_INSTANCES);
+        db.execSQL(CREATE_TABLE_PEERTUBE_FAVOURITES);
     }
 
     @Override
@@ -228,6 +244,8 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN "+ COL_EMOJIS + " TEXT");
             case 13:
                 db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN "+ COL_INSTANCE_TYPE + " TEXT");
+            case 14:
+                db.execSQL(CREATE_TABLE_PEERTUBE_FAVOURITES);
             default:
                 break;
         }

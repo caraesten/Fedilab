@@ -121,6 +121,20 @@
                         android:text="0"
                         android:layout_height="wrap_content"
                         tools:ignore="HardcodedText" />
+                    <TextView
+                        android:id="@+id/peertube_bookmark"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:drawableTop="@drawable/ic_bookmark_peertube_border"
+                        android:drawablePadding="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text=""
+                        android:layout_height="wrap_content"
+                        />
                     <LinearLayout
                         android:layout_weight="1"
                         android:layout_width="0dp"

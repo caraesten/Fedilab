@@ -106,6 +106,7 @@ import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayBookmarksFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayDraftsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayFavoritesPeertubeFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFiltersFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayFollowRequestSentFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayHowToFragment;
@@ -1830,7 +1831,7 @@ public abstract class BaseMainActivity extends BaseActivity
         toolbarTitle.setVisibility(View.VISIBLE);
         delete_instance.setVisibility(View.GONE);
         appBar.setExpanded(true);
-        if (id != R.id.nav_drafts && id != R.id.nav_bookmarks ) {
+        if (id != R.id.nav_drafts && id != R.id.nav_bookmarks && id != R.id.nav_peertube ) {
             delete_all.hide();
         }else{
             delete_all.show();
@@ -1900,6 +1901,12 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "BOOKMARKS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayBookmarksFragment, fragmentTag).commit();
+            toot.hide();
+        }else if (id == R.id.nav_peertube) {
+            DisplayFavoritesPeertubeFragment displayFavoritesPeertubeFragment = new DisplayFavoritesPeertubeFragment();
+            fragmentTag = "BOOKMARKS_PEERTUBE";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayFavoritesPeertubeFragment, fragmentTag).commit();
             toot.hide();
         }else if( id == R.id.nav_follow_request){
             toot.hide();

@@ -21,6 +21,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -66,6 +68,8 @@ import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.FullScreenMediaController;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
+import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
@@ -82,7 +86,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private FullScreenMediaController.fullscreen fullscreen;
     private VideoView videoView;
     private RelativeLayout loader;
-    private TextView peertube_view_count, peertube_like_count, peertube_dislike_count, peertube_share, peertube_download, peertube_description, peertube_title;
+    private TextView peertube_view_count, peertube_bookmark, peertube_like_count, peertube_dislike_count, peertube_share, peertube_download, peertube_description, peertube_title;
     private ScrollView peertube_information_container;
     private MediaPlayer mediaPlayer;
     private FullScreenMediaController fullScreenMediaController;
@@ -112,6 +116,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         setContentView(R.layout.activity_peertube);
         loader = findViewById(R.id.loader);
         peertube_view_count = findViewById(R.id.peertube_view_count);
+        peertube_bookmark = findViewById(R.id.peertube_bookmark);
         peertube_like_count = findViewById(R.id.peertube_like_count);
         peertube_dislike_count = findViewById(R.id.peertube_dislike_count);
         peertube_share = findViewById(R.id.peertube_share);
@@ -281,6 +286,34 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 }else{
                     manageDownloads(PeertubeActivity.this, peertube.getFileDownloadUrl(null));
                 }
+            }
+        });
+        SQLiteDatabase db = Sqlite.getInstance(PeertubeActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        List<Peertube> peertubes = new PeertubeFavoritesDAO(PeertubeActivity.this, db).getSinglePeertube(peertube);
+
+        Drawable img;
+
+        if( peertubes == null || peertubes.size() == 0)
+            img = ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_bookmark_peertube_border);
+        else
+            img = ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_bookmark_peertube);
+        peertube_bookmark.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+
+        peertube_bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Peertube> peertubes = new PeertubeFavoritesDAO(PeertubeActivity.this, db).getSinglePeertube(peertube);
+                if( peertubes == null || peertubes.size() == 0){
+                    new PeertubeFavoritesDAO(PeertubeActivity.this, db).insert(peertube);
+                    Toast.makeText(PeertubeActivity.this,R.string.bookmark_add_peertube, Toast.LENGTH_SHORT).show();
+                }else{
+                    new PeertubeFavoritesDAO(PeertubeActivity.this, db).remove(peertube);
+                    Toast.makeText(PeertubeActivity.this,R.string.bookmark_remove_peertube, Toast.LENGTH_SHORT).show();
+                }
+                if( peertubes != null && peertubes.size() > 0) //Was initially in cache
+                    peertube_bookmark.setCompoundDrawablesWithIntrinsicBounds( null, ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_bookmark_peertube_border), null ,null);
+                else
+                    peertube_bookmark.setCompoundDrawablesWithIntrinsicBounds( null, ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_bookmark_peertube), null ,null);
             }
         });
 
