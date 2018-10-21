@@ -572,6 +572,11 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="duration_video">Dauer: %s</string>
   <string name="add_remote_instance">Instanz hinzufügen</string>
   <string name="comment_no_allowed_peertube">Kommentare sind bei diesem Video nicht aktiviert!</string>
+  <string name="pickup_resolution">Pick up a resolution</string>
+  <string name="peertube_favorites">Peertube favourites</string>
+  <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
+  <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
+  <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>
