@@ -581,11 +581,11 @@
   <string name="duration_video">Durée : %s</string>
   <string name="add_remote_instance">Ajouter une instance</string>
   <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
-  <string name="pickup_resolution">Pick up a resolution</string>
-  <string name="peertube_favorites">Peertube favourites</string>
-  <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
+  <string name="pickup_resolution">Choisissez une résolution</string>
+  <string name="peertube_favorites">Favoris PeerTube</string>
+  <string name="bookmark_add_peertube">La vidéo est rajoutée aux favoris !</string>
   <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-  <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+  <string name="bookmark_peertube_empty">Il n’y a aucune vidéo Peertube dans vos favoris !</string>
   <string-array name="filter_expire">
     <item>Jamais</item>
     <item>30 minutes</item>
