@@ -582,6 +582,11 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="duration_video">Iraupena: %s</string>
   <string name="add_remote_instance">Gehitu instantzia bat</string>
   <string name="comment_no_allowed_peertube">Iruzkinak ez daude aktibatuta bideo honetan!</string>
+  <string name="pickup_resolution">Pick up a resolution</string>
+  <string name="peertube_favorites">Peertube favourites</string>
+  <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
+  <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
+  <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
   <string-array name="filter_expire">
     <item>Inoiz ez</item>
     <item>30 minutu</item>
