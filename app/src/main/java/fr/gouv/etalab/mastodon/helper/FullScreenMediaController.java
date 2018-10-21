@@ -23,6 +23,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.MediaController;
@@ -65,7 +66,7 @@ public class FullScreenMediaController extends MediaController {
         super.setAnchorView(view);
 
         //image button for full screen to be added to media controller
-        fullScreen = new ImageButton(super.getContext());
+        fullScreen = new ImageButton(context);
         LayoutParams params =
                 new LayoutParams(LayoutParams.WRAP_CONTENT,
                         LayoutParams.WRAP_CONTENT);
@@ -76,7 +77,7 @@ public class FullScreenMediaController extends MediaController {
 
         if( resolutionVal == null)
             resolutionVal = peertube.getResolution().get(0) +"p";
-        resolution = new Button(super.getContext());
+        resolution = new Button(context);
         resolution.setAllCaps(false);
         resolution.setBackgroundColor(Color.TRANSPARENT);
         resolution.setText(resolutionVal);
@@ -103,8 +104,12 @@ public class FullScreenMediaController extends MediaController {
                             return false;
                         }
                     });
+                    i++;
                 }
-                popup.show();
+                try {
+                    popup.show();
+                }catch (WindowManager.BadTokenException ignored){}
+
             }
         });
         if(((PeertubeActivity)getContext()).getFullscreen() == fullscreen.ON){

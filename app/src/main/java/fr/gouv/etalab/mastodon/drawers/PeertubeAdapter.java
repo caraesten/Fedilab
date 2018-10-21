@@ -21,7 +21,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,12 +113,10 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
                 Bundle b = new Bundle();
                 String finalUrl = "https://"  + instance + peertube.getEmbedPath();
                 Pattern link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/embed\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
-                Log.v(Helper.TAG,"finalUrl: "+finalUrl);
                 Matcher matcherLink = link.matcher(finalUrl);
                 if( matcherLink.find()) {
                     String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
                     b.putString("peertubeLinkToFetch", url);
-                    Log.v(Helper.TAG,"peertube_instance: "+matcherLink.group(1).replace("https://","").replace("http://",""));
                     b.putString("peertube_instance", matcherLink.group(1).replace("https://","").replace("http://",""));
                     b.putString("video_id", matcherLink.group(2));
                 }

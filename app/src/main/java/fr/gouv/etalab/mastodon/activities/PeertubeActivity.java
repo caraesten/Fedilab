@@ -74,7 +74,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
 public class PeertubeActivity extends BaseActivity implements OnRetrievePeertubeInterface {
 
     private String peertubeInstance, videoId;
-    private String peertubeLinkToFetch;
     private FullScreenMediaController.fullscreen fullscreen;
     private VideoView videoView;
     private RelativeLayout loader;
@@ -121,10 +120,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         if(b != null) {
             peertubeInstance = b.getString("peertube_instance", null);
             videoId = b.getString("video_id", null);
-            peertubeLinkToFetch = b.getString("peertubeLinkToFetch", null);
         }
-        if( peertubeLinkToFetch == null)
-            finish();
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -172,8 +168,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     @Override
                     protected Void doInBackground(Void... voids) {
 
-                        if(peertubeLinkToFetch != null) {
-                            Results search = new API(contextReference.get()).search(peertubeLinkToFetch);
+                        if(peertube != null) {
+                            Results search = new API(contextReference.get()).search("https://" + peertube.getAccount().getHost() +  "/videos/watch/" + peertube.getUuid());
                             if (search != null) {
                                 remoteStatuses = search.getStatuses();
                             }
@@ -265,7 +261,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             }
         });
         videoView.setZOrderOnTop(true);
-        videoView.setMediaController(fullScreenMediaController);
         videoView.start();
 
         peertube_download.setOnClickListener(new View.OnClickListener() {

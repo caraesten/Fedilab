@@ -616,6 +616,7 @@ public class API {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get("https://"+instance+"/api/v1/videos", 60, params, null);
+            Helper.largeLog(response);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             peertubes = parsePeertube(instance, jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
