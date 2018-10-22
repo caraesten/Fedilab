@@ -588,6 +588,13 @@
   <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
   <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
   <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+  <string name="channel">Channel</string>
+  <string name="no_peertube_channels">No Peertube channels</string>
+  <string name="no_peertube_instances">No Peertube instances</string>
+  <string name="no_mastodon_instances">No Mastodon instances</string>
+  <string name="no_lists">No lists</string>
+  <string name="videos">Videos</string>
+  <string name="channels">Channels</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>

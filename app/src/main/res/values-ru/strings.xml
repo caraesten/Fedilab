@@ -13,7 +13,7 @@
   <string name="close">Закрыть</string>
   <string name="yes">Да</string>
   <string name="no">Нет</string>
-  <string name="cancel">Отменить</string>
+  <string name="cancel">Отмена</string>
   <string name="download">Скачать</string>
   <string name="download_file">Скачать %1$s</string>
   <string name="download_over">Загрузка завершена</string>
@@ -21,10 +21,10 @@
   <string name="save_over">Файл сохранён</string>
   <string name="download_from" formatted="false">Файл: %1$s</string>
   <string name="password">Пароль</string>
-  <string name="email">Адрес электронной почты</string>
+  <string name="email">Email</string>
   <string name="accounts">Аккаунты</string>
   <string name="toots">Toots</string>
-  <string name="tags">Тэги</string>
+  <string name="tags">Теги</string>
   <string name="token">Токен</string>
   <string name="save">Сохранить</string>
   <string name="restore">Восстановить</string>
@@ -41,7 +41,7 @@
   <string name="clear">Очистить</string>
   <string name="microphone">Микрофон</string>
   <string name="camera">Камера</string>
-  <string name="speech_prompt">Пожалуйста, скажите что-то</string>
+  <string name="speech_prompt">Пожалуйста, скажите что-нибудь</string>
   <string name="speech_not_supported">Извините! Ваше устройство не поддерживает голосовой ввод!</string>
   <string name="delete_all">Удалить все</string>
   <string name="translate_toot">Перевести этот toot.</string>
@@ -59,7 +59,7 @@
   <string name="replies">Ответы</string>
   <string name="username">Имя пользователя</string>
   <string name="drafts">Черновики</string>
-  <string name="new_data">Доступны новые данные! Хотите их посмотреть?</string>
+  <string name="new_data">Доступны новые данные! Вы хотите их отобразить?</string>
   <string name="favourite">Избранные</string>
   <string name="follow">Новые подписчики</string>
   <string name="mention">Упоминания</string>
@@ -78,7 +78,7 @@
   <string name="communication_menu_title">Общение</string>
   <string name="muted_menu">Приглушенные</string>
   <string name="blocked_menu">Чёрный список</string>
-  <string name="remote_follow_menu">Удалённая подписка</string>
+  <string name="remote_follow_menu">Удаленная подписка</string>
   <string name="notifications">Уведомления</string>
   <string name="follow_request">Запросы на подписку</string>
   <string name="optimization">Оптимизация</string>
@@ -86,8 +86,8 @@
   <string name="profile">Профиль</string>
   <string name="make_a_choice">Что Вы хотите делать?</string>
   <string name="delete_account_title">﻿Удалить аккаунт</string>
-  <string name="delete_account_message" formatted="false">Удалить учетную запись %1$s из приложения?</string>
-  <string name="send_email">Отправить эл. письмо</string>
+  <string name="delete_account_message" formatted="false">Удалить аккаунт %1$s из приложения?</string>
+  <string name="send_email">Отправить email</string>
   <string name="choose_file">Выберите файл</string>
   <string name="choose_file_error">Файл не найден!</string>
   <string name="click_to_change">Нажмите для изменения</string>
@@ -123,7 +123,7 @@
     <item>Заглушить этот аккаунт?</item>
     <item>Блокировать этот аккаунт?</item>
     <item>Пожаловаться на этот toot?</item>
-    <item>Block this domain?</item>
+    <item>Заблокировать этот домен?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Удалить этот toot?</item>
@@ -338,7 +338,7 @@
     <item>DeepL</item>
     <item>Нет</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">Ваш ключ API, вы можете оставить пустым для Yandex</string>
   <string-array name="settings_theme">
     <item>Темное</item>
     <item>Светлое</item>
@@ -532,23 +532,23 @@
   <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
   <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
   <string name="context_whole_word">Whole word</string>
-  <string name="filter_context">Filter contexts</string>
+  <string name="filter_context">Фильтр контекстов</string>
   <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-  <string name="filter_expire">Expire after</string>
-  <string name="add_new_filter">Add New Filter</string>
+  <string name="filter_expire">Истекает после</string>
+  <string name="add_new_filter">Добавить новый фильтр</string>
   <string name="action_filter_delete">Удалить фильтр?</string>
   <string name="action_update_filter">Обновить фильтр</string>
-  <string name="action_filter_create">Create filter</string>
+  <string name="action_filter_create">Создать фильтр</string>
   <string name="how_to_follow">Whom to follow</string>
   <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
-  <string name="follow_account">Follow</string>
-  <string name="select_all">Select all</string>
-  <string name="unselect_all">Unselect all</string>
+  <string name="follow_account">Подписаться</string>
+  <string name="select_all">Выбрать все</string>
+  <string name="unselect_all">Снять выбор</string>
   <string name="follow_trunk">%s is followed!</string>
-  <string name="create_list_trunk">Creating the list %s</string>
-  <string name="add_account_list_trunk">Adding accounts to the list</string>
-  <string name="account_added_list_trunk">Accounts were added to the list</string>
-  <string name="adding_account_list_trunk">Adding accounts to the list</string>
+  <string name="create_list_trunk">Создание списка %s</string>
+  <string name="add_account_list_trunk">Добавление аккаунтов в список</string>
+  <string name="account_added_list_trunk">Аккаунты были добавлены в список</string>
+  <string name="adding_account_list_trunk">Добавление аккаунтов в список</string>
   <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
   <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
   <string name="about_trunk">Who to follow</string>
@@ -592,6 +592,13 @@
   <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
   <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
   <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+  <string name="channel">Channel</string>
+  <string name="no_peertube_channels">No Peertube channels</string>
+  <string name="no_peertube_instances">No Peertube instances</string>
+  <string name="no_mastodon_instances">No Mastodon instances</string>
+  <string name="no_lists">No lists</string>
+  <string name="videos">Videos</string>
+  <string name="channels">Channels</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
