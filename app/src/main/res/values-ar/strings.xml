@@ -596,6 +596,13 @@
   <string name="bookmark_add_peertube">تم إضافة الفيديو إلى الفواصل المرجعية!</string>
   <string name="bookmark_remove_peertube">تم إزالة الفيديو من الفواصل المرجعية!</string>
   <string name="bookmark_peertube_empty">لا توجد أية فيديوهات بيرتيوب في مفضلاتك!</string>
+  <string name="channel">Channel</string>
+  <string name="no_peertube_channels">No Peertube channels</string>
+  <string name="no_peertube_instances">No Peertube instances</string>
+  <string name="no_mastodon_instances">No Mastodon instances</string>
+  <string name="no_lists">No lists</string>
+  <string name="videos">Videos</string>
+  <string name="channels">Channels</string>
   <string-array name="filter_expire">
     <item>أبدًا</item>
     <item>30 دقيقة</item>
