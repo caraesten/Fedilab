@@ -24,6 +24,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     private RelativeLayout mainLoader, nextElementLoader, textviewNoAction;
     private boolean firstLoad;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private String targetedId;
+    private String targetedId, instance, name;
     private boolean swiped;
     private RecyclerView lv_accounts;
 
@@ -78,6 +79,8 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         if (bundle != null) {
             type = (RetrieveAccountsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
+            instance = bundle.getString("instance", null);
+            name = bundle.getString("name", null);
         }
         max_id = null;
         firstLoad = true;
@@ -108,10 +111,12 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                     if (firstVisibleItem + visibleItemCount == totalItemCount) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
-                                asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            else
+                            if (type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING)
                                 asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            else if (type == RetrieveAccountsAsyncTask.Type.CHANNELS)
+                                asyncTask = new RetrieveAccountsAsyncTask(context, instance, name, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            else
+                                asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -128,10 +133,12 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
-                if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
-                    asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                else
+                if (type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING)
                     asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                else if (type == RetrieveAccountsAsyncTask.Type.CHANNELS)
+                    asyncTask = new RetrieveAccountsAsyncTask(context, instance, name, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                else
+                    asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -157,10 +164,12 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                 break;
         }
 
-        if (type != RetrieveAccountsAsyncTask.Type.FOLLOWERS && type != RetrieveAccountsAsyncTask.Type.FOLLOWING)
-            asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        else
+        if (type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING)
             asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else if (type == RetrieveAccountsAsyncTask.Type.CHANNELS)
+            asyncTask = new RetrieveAccountsAsyncTask(context, instance, name, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else
+            asyncTask = new RetrieveAccountsAsyncTask(context, type, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         return rootView;
     }

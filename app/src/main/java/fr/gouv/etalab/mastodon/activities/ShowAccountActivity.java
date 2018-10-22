@@ -25,6 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -113,7 +114,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private StatusListAdapter statusListAdapter;
     private FloatingActionButton account_follow;
 
-    private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private String accountId;
     private TabLayout tabLayout;
@@ -599,18 +599,20 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 }
             }
         });
-
+        mPager = findViewById(R.id.account_viewpager);
         if( !peertubeAccount) {
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
+            mPager.setOffscreenPageLimit(3);
         }else {
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.videos)));
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.channels)));
+            mPager.setOffscreenPageLimit(2);
         }
 
-        mPager = findViewById(R.id.account_viewpager);
-        mPager.setOffscreenPageLimit(3);
+
+
         PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
@@ -858,7 +860,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     .load(account.getAvatar())
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                             RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), Helper.addBorder(resource, account_pp.getContext()));
                             circularBitmapDrawable.setCircular(true);
                             account_pp.setImageDrawable(circularBitmapDrawable);
@@ -994,6 +996,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
      * Pager adapter for the 4 fragments
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+
         ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -1019,13 +1022,13 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     }
                 case 1:
                     if( peertubeAccount){
-                        DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
-                        bundle = new Bundle();
-                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                        bundle.putString("search_peertube", account.getHost());
-                        bundle.putBoolean("account_channel",true);
-                        displayStatusFragment.setArguments(bundle);
-                        return displayStatusFragment;
+                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
+                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.CHANNELS);
+                        bundle.putString("targetedId", accountId);
+                        bundle.putString("instance",account.getAcct().split("@")[1]);
+                        bundle.putString("name",account.getAcct().split("@")[0]);
+                        displayAccountsFragment.setArguments(bundle);
+                        return displayAccountsFragment;
                     }else{
                         DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                         bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
@@ -1040,6 +1043,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     bundle.putString("targetedId", accountId);
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
+
             }
             return null;
         }
@@ -1059,7 +1063,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         @Override
         public int getCount() {
-            return NUM_PAGES;
+            if( peertubeAccount)
+                return 2;
+            else
+                return 3;
         }
     }
 

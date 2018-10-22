@@ -37,12 +37,22 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnRetrieveAccountsInterface listener;
     private String targetedId;
     private WeakReference<Context> contextReference;
+    private String instance, name;
 
     public enum Type{
         BLOCKED,
         MUTED,
         FOLLOWING,
-        FOLLOWERS
+        FOLLOWERS,
+        CHANNELS
+    }
+
+    public RetrieveAccountsAsyncTask(Context context, String instance, String name, OnRetrieveAccountsInterface onRetrieveAccountsInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.instance = instance;
+        this.name = name;
+        this.listener = onRetrieveAccountsInterface;
+        this.action = Type.CHANNELS;
     }
 
     public RetrieveAccountsAsyncTask(Context context, Type action, String targetedId, String max_id, OnRetrieveAccountsInterface onRetrieveAccountsInterface){
@@ -76,6 +86,9 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case FOLLOWERS:
                 apiResponse = api.getFollowers(targetedId, max_id);
+                break;
+            case CHANNELS:
+                apiResponse = api.getPeertubeChannel(instance, name);
                 break;
         }
         return null;

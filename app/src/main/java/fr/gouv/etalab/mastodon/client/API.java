@@ -16,6 +16,8 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +28,7 @@ import java.lang.*;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.text.Format;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -600,6 +603,34 @@ public class API {
         return apiResponse;
     }
 
+
+    /**
+     * Retrieves Peertube videos from an instance *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getPeertubeChannel(String instance, String name) {
+
+        List<Account> accounts = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            Log.v(Helper.TAG,"url: "  + String.format("https://"+instance+"/api/v1/accounts/%s/video-channels", name));
+            String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/accounts/%s/video-channels", name), 60, null, null);
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            accounts = parseAccountResponsePeertube(context, instance, jsonArray);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setAccounts(accounts);
+        return apiResponse;
+    }
 
     /**
      * Retrieves Peertube videos from an instance *synchronously*
@@ -2833,6 +2864,21 @@ public class API {
         return list;
     }
 
+    private List<Account> parseAccountResponsePeertube(Context context, String instance, JSONArray jsonArray){
+        List<Account> accounts = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Account account = parseAccountResponsePeertube(context, instance, resobj);
+                accounts.add(account);
+                i++;
+            }
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return accounts;
+    }
 
     /**
      * Parse json response an unique peertube account
@@ -2841,6 +2887,7 @@ public class API {
      */
     private static Account parseAccountResponsePeertube(Context context, String instance, JSONObject resobj){
         Account account = new Account();
+        Log.v(Helper.TAG, String.valueOf(resobj));
         try {
             account.setId(resobj.get("id").toString());
             account.setUsername(resobj.get("name").toString());
