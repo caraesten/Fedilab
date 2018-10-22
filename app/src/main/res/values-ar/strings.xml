@@ -513,10 +513,10 @@
   <string name="toast_instance_followed">تمت مُتابَعة مثيل الخادوم</string>
   <string name="action_partnership">الشراكات</string>
   <string name="neutral_menu_information">معلومات</string>
-  <string name="hide_boost">إخفاء ترقياته</string>
+  <string name="hide_boost">إخفاء ترقيات %s</string>
   <string name="endorse">أوصِ به على صفحتك</string>
   <string name="hide_everything">إخفاء كل شيء مِن %s</string>
-  <string name="show_boost">إظهار ترقياته</string>
+  <string name="show_boost">إظهار ترقيات %s</string>
   <string name="unendorse">إلغاء التوصية مِن صفحتك</string>
   <string name="show_everything">إظهار كل شيء قادم مِن %s</string>
   <string name="toast_endorse">تمت توصية الحساب على صفحتك الشخصية</string>
@@ -591,10 +591,10 @@
   <string name="duration_video">المدة: %s</string>
   <string name="add_remote_instance">إضافة مثيل خادوم</string>
   <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
-  <string name="pickup_resolution">Pick up a resolution</string>
-  <string name="peertube_favorites">Peertube favourites</string>
-  <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-  <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
+  <string name="pickup_resolution">اختيار الجودة</string>
+  <string name="peertube_favorites">مفضلات بيرتيوب</string>
+  <string name="bookmark_add_peertube">تم إضافة الفيديو إلى الفواصل المرجعية!</string>
+  <string name="bookmark_remove_peertube">تم إزالة الفيديو من الفواصل المرجعية!</string>
   <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
   <string-array name="filter_expire">
     <item>أبدًا</item>
