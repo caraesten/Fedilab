@@ -110,7 +110,7 @@ public class FullScreenMediaController extends MediaController {
                 }else{
                     ((PeertubeActivity)getContext()).setFullscreen(fullscreen.ON);
                 }
-
+                ((PeertubeActivity)getContext()).change();
                 changeIcon();
             }
         });

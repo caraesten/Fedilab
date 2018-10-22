@@ -98,7 +98,7 @@ public class InstancesDAO {
      */
     public List<RemoteInstance> getAllInstances(){
         try {
-            Cursor c = db.query(Sqlite.TABLE_INSTANCES, null, Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
+            Cursor c = db.query(Sqlite.TABLE_INSTANCES, null, Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_INSTANCE_TYPE + " ASC, "+Sqlite.COL_INSTANCE + " ASC", null);
             return cursorToListSearch(c);
         } catch (Exception e) {
             return null;
