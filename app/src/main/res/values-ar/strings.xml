@@ -585,17 +585,17 @@
   <string name="comment">تعليق</string>
   <string name="peertube_instance">مثيل خادوم بير تيوب</string>
   <string name="set_display_direct">عرض الخيط المحلي للرسائل الخاصة</string>
-  <string name="set_keep_background_process">Keep background process when app is closed</string>
-  <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
+  <string name="set_keep_background_process">إبقاء العمل في الخلفية عند إغلاق التطبيق</string>
+  <string name="no_comments">كن الأول في التعليق على هذا الفيديو بالضغط على الزر الأيمن في الأعلى!</string>
   <string name="number_view_video">%s مشاهداة</string>
   <string name="duration_video">المدة: %s</string>
   <string name="add_remote_instance">إضافة مثيل خادوم</string>
-  <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
+  <string name="comment_no_allowed_peertube">إنّ التعليقات على هذا الفيديو مُعطّلة!</string>
   <string name="pickup_resolution">اختيار الجودة</string>
   <string name="peertube_favorites">مفضلات بيرتيوب</string>
   <string name="bookmark_add_peertube">تم إضافة الفيديو إلى الفواصل المرجعية!</string>
   <string name="bookmark_remove_peertube">تم إزالة الفيديو من الفواصل المرجعية!</string>
-  <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+  <string name="bookmark_peertube_empty">لا توجد أية فيديوهات بيرتيوب في مفضلاتك!</string>
   <string-array name="filter_expire">
     <item>أبدًا</item>
     <item>30 دقيقة</item>
