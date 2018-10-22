@@ -578,7 +578,7 @@
   <string name="peertube_instance">Peertube instantie</string>
   <string name="set_display_direct">Toon prive berichten tijdlijn</string>
   <string name="set_keep_background_process">Keep background process when app is closed</string>
-  <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
+  <string name="no_comments">Wees de eerste om op deze video te reageren m.b.v. de knop rechtsboven!</string>
   <string name="number_view_video">%s keer bekeken</string>
   <string name="duration_video">Duur: %s</string>
   <string name="add_remote_instance">Een server toevoegen</string>
