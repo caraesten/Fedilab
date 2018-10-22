@@ -523,7 +523,7 @@ Grazas a:
   <string name="context_public">Liñas de tempo públicas</string>
   <string name="context_notification">Notificacións</string>
   <string name="context_conversation">Conversas</string>
-  <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
+  <string name="filter_keyword_explanations">Farase coincidir sen importar se é texto agochado ou con aviso de contido na mensaxe</string>
   <string name="context_drop">Desbotar en lugar de ocultar</string>
   <string name="context_drop_explanations">Os toots filtrados desaparecerán irreversiblemente, incluso si despois elimina o filtro</string>
   <string name="context_whole_word_explanations">Cando a palabra chave é só alfanumérica, só se aplicará si coincide a palabra completa</string>
@@ -582,12 +582,12 @@ Grazas a:
   <string name="number_view_video">%s vistas</string>
   <string name="duration_video">Duración: %s</string>
   <string name="add_remote_instance">Engadir unha instancia</string>
-  <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
-  <string name="pickup_resolution">Pick up a resolution</string>
-  <string name="peertube_favorites">Peertube favourites</string>
-  <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-  <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-  <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+  <string name="comment_no_allowed_peertube">Non se activaron os comentarios para este vídeo!</string>
+  <string name="pickup_resolution">Escolle unha resolución</string>
+  <string name="peertube_favorites">Favoritos de Peertube</string>
+  <string name="bookmark_add_peertube">Este vídeo foi engadido aos marcadores!</string>
+  <string name="bookmark_remove_peertube">Este vídeo foi eliminado dos marcadores!</string>
+  <string name="bookmark_peertube_empty">Non ten vídeos de Peertube nos seus favoritos!</string>
   <string-array name="filter_expire">
     <item>Nunca</item>
     <item>30 minutos</item>
