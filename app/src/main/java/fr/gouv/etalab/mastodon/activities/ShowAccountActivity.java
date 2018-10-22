@@ -22,11 +22,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -48,31 +46,20 @@ import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountAsyncTask;
@@ -130,7 +117,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private ViewPager mPager;
     private String accountId;
     private TabLayout tabLayout;
-    private TextView account_note, account_follow_request;
+    private TextView account_note, account_follow_request, account_type;
     private String userId;
     private Relationship relationship;
     private ImageView pp_actionBar;
@@ -145,8 +132,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private TextView account_un;
     private Account account;
     private boolean show_boosts, show_replies;
-
-
+    private boolean showMediaOnly, showPinned;
+    private boolean peertubeAccount;
 
     public enum action{
         FOLLOW,
@@ -187,9 +174,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_pp = findViewById(R.id.account_pp);
         account_dn = findViewById(R.id.account_dn);
         account_un = findViewById(R.id.account_un);
-
+        account_type = findViewById(R.id.account_type);
         if(b != null){
             accountId = b.getString("accountId");
+            peertubeAccount = b.getBoolean("peertubeAccount", false);
             new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new RetrieveAccountAsyncTask(getApplicationContext(),accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -208,69 +196,11 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
 
-
+        showMediaOnly = false;
+        showPinned = false;
 
 
         tabLayout = findViewById(R.id.account_tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
-
-        mPager = findViewById(R.id.account_viewpager);
-        mPager.setOffscreenPageLimit(3);
-        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-
-        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                TabLayout.Tab tab = tabLayout.getTabAt(position);
-                if( tab != null)
-                    tab.select();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                Fragment fragment = null;
-                if( mPager.getAdapter() != null)
-                    fragment = (Fragment) mPager.getAdapter().instantiateItem(mPager, tab.getPosition());
-                switch (tab.getPosition()){
-                    case 0:
-                        if( displayStatusFragment != null )
-                            displayStatusFragment.scrollToTop();
-                        break;
-                    case 1:
-                    case 2:
-                        if( fragment != null) {
-                            DisplayAccountsFragment displayAccountsFragment = ((DisplayAccountsFragment) fragment);
-                            displayAccountsFragment.scrollToTop();
-                        }
-                        break;
-                }
-            }
-        });
 
         account_note = findViewById(R.id.account_note);
 
@@ -331,6 +261,11 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             popup.getMenu().findItem(R.id.action_mention).setVisible(true);
             stringArrayConf =  getResources().getStringArray(R.array.more_action_confirm);
         }
+        if( peertubeAccount){
+            popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
+            popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
+            popup.getMenu().findItem(R.id.action_direct_message).setVisible(false);
+        }
         if( relationship != null){
             if( !relationship.isFollowing()) {
                 popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
@@ -371,11 +306,17 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             @Override
                             public void run() {
                                 try {
-                                    String response = new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/timelines/public?local=true", 10, null, null);
+                                    if( !peertubeAccount)
+                                        new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/timelines/public?local=true", 10, null, null);
+                                    else
+                                        new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/videos/", 10, null, null);
                                     runOnUiThread(new Runnable() {
                                         public void run() {
                                             final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                                            new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName, "MASTODON");
+                                            if( !peertubeAccount)
+                                                new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName, "MASTODON");
+                                            else
+                                                new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName, "PEERTUBE");
                                             Toast.makeText(getApplicationContext(), R.string.toast_instance_followed,Toast.LENGTH_LONG).show();
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             Bundle bundle = new Bundle();
@@ -530,7 +471,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             account_dn.setCompoundDrawables( null, null, null, null);
         }
 
-
+        //Peertube account
+        if( peertubeAccount) {
+            account_type.setVisibility(View.VISIBLE);
+        }
         TextView actionbar_title = findViewById(R.id.show_account_title);
         if( account.getAcct() != null)
             actionbar_title.setText(account.getAcct());
@@ -656,6 +600,70 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             }
         });
 
+        if( !peertubeAccount) {
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
+        }else {
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.videos)));
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.channels)));
+        }
+
+        mPager = findViewById(R.id.account_viewpager);
+        mPager.setOffscreenPageLimit(3);
+        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                TabLayout.Tab tab = tabLayout.getTabAt(position);
+                if( tab != null)
+                    tab.select();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                Fragment fragment = null;
+                if( mPager.getAdapter() != null)
+                    fragment = (Fragment) mPager.getAdapter().instantiateItem(mPager, tab.getPosition());
+                switch (tab.getPosition()){
+                    case 0:
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
+                        break;
+                    case 1:
+                    case 2:
+                        if( fragment != null) {
+                            DisplayAccountsFragment displayAccountsFragment = ((DisplayAccountsFragment) fragment);
+                            displayAccountsFragment.scrollToTop();
+                        }
+                        break;
+                }
+            }
+        });
 
 
         if ( account.getFields() != null && account.getFields().size() > 0){
@@ -754,7 +762,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account.makeEmojisAccount(ShowAccountActivity.this, ShowAccountActivity.this);
         account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
         account_note.setMovementMethod(LinkMovementMethod.getInstance());
-        if (tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
+        if (!peertubeAccount && tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
             //noinspection ConstantConditions
             tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, withSuffix(account.getStatuses_count())));
             //noinspection ConstantConditions
@@ -763,7 +771,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, withSuffix(account.getFollowers_count())));
 
             //Allows to filter by long click
-            /*final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+            final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
             tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -837,7 +845,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     popup.show();
                     return true;
                 }
-            });*/
+            });
 
 
         }
@@ -995,18 +1003,39 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             Bundle bundle = new Bundle();
             switch (position){
                 case 0:
-                    TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
-                    bundle.putString("targetedId", accountId);
-                    tabLayoutTootsFragment.setArguments(bundle);
-                    return tabLayoutTootsFragment;
+                    if( ! peertubeAccount){
+                        TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
+                        bundle.putString("targetedId", accountId);
+                        tabLayoutTootsFragment.setArguments(bundle);
+                        return tabLayoutTootsFragment;
+                    }else{
+                        DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
+                        bundle = new Bundle();
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
+                        bundle.putString("targetedId", accountId);
+                        bundle.putBoolean("showReply",false);
+                        displayStatusFragment.setArguments(bundle);
+                        return displayStatusFragment;
+                    }
                 case 1:
-                    DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
-                    bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
-                    bundle.putString("targetedId", accountId);
-                    displayAccountsFragment.setArguments(bundle);
-                    return displayAccountsFragment;
+                    if( peertubeAccount){
+                        DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
+                        bundle = new Bundle();
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                        bundle.putString("search_peertube", account.getHost());
+                        bundle.putBoolean("account_channel",true);
+                        displayStatusFragment.setArguments(bundle);
+                        return displayStatusFragment;
+                    }else{
+                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
+                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
+                        bundle.putString("targetedId", accountId);
+                        displayAccountsFragment.setArguments(bundle);
+                        return displayAccountsFragment;
+                    }
+
                 case 2:
-                    displayAccountsFragment = new DisplayAccountsFragment();
+                    DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
                     bundle.putString("targetedId", accountId);
                     displayAccountsFragment.setArguments(bundle);

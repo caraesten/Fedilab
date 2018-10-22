@@ -53,6 +53,7 @@ import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -89,6 +90,7 @@ import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
@@ -118,6 +120,7 @@ import fr.gouv.etalab.mastodon.fragments.WhoToFollowFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnFilterActionInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMetaDataInterface;
@@ -163,7 +166,7 @@ import org.json.JSONObject;
 
 
 public abstract class BaseMainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface {
+        implements NavigationView.OnNavigationItemSelectedListener, OnUpdateAccountInfoInterface, OnRetrieveMetaDataInterface, OnRetrieveInstanceInterface, OnRetrieveRemoteAccountInterface, OnRetrieveEmojiAccountInterface, OnFilterActionInterface, OnListActionInterface {
 
     private FloatingActionButton toot, delete_all, add_new;
     private HashMap<String, String> tagTile = new HashMap<>();
@@ -198,6 +201,7 @@ public abstract class BaseMainActivity extends BaseActivity
     boolean isLoadingInstance = false;
     private ImageView delete_instance;
     public static String displayPeertube = null;
+    private PopupMenu popup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -333,10 +337,11 @@ public abstract class BaseMainActivity extends BaseActivity
         federatedTimelines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new ManageListsAsyncTask(BaseMainActivity.this, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new InstancesDAO(BaseMainActivity.this, db).cleanDoublon();
                 List<RemoteInstance> remoteInstances = new InstancesDAO(BaseMainActivity.this, db).getAllInstances();
-                PopupMenu popup = new PopupMenu(BaseMainActivity.this, federatedTimelines);
+                popup = new PopupMenu(BaseMainActivity.this, federatedTimelines);
                 popup.getMenuInflater()
                         .inflate(R.menu.remote_instances, popup.getMenu());
                 try {
@@ -346,37 +351,72 @@ public abstract class BaseMainActivity extends BaseActivity
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                int i = 0;
-                if(remoteInstances != null)
-                for(RemoteInstance remoteInstance: remoteInstances) {
-                    MenuItem item = popup.getMenu().add(0, i, Menu.NONE, remoteInstance.getHost());
-                    if(remoteInstance.getType() == null || remoteInstance.getType().equals("MASTODON"))
-                        item.setIcon(R.drawable.mastodon_icon_item);
-                    else
-                        item.setIcon(R.drawable.peertube_icon);
-                    i++;
-                    item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            DisplayStatusFragment statusFragment;
-                            Bundle bundle = new Bundle();
-                            statusFragment = new DisplayStatusFragment();
-                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                            bundle.putString("remote_instance", remoteInstance.getHost());
-                            statusFragment.setArguments(bundle);
-                            String fragmentTag = "REMOTE_INSTANCE";
-                            FragmentManager fragmentManager = getSupportFragmentManager();
-                            fragmentManager.beginTransaction()
-                                    .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                            main_app_container.setVisibility(View.VISIBLE);
-                            viewPager.setVisibility(View.GONE);
-                            tabLayout.setVisibility(View.GONE);
-                            toolbarTitle.setVisibility(View.VISIBLE);
-                            delete_instance.setVisibility(View.VISIBLE);
-                            toolbarTitle.setText(remoteInstance.getHost());
-                            return false;
+                if(remoteInstances != null) {
+                    SubMenu submMastodon = popup.getMenu().findItem(R.id.action_show_mastodon).getSubMenu();
+                    SubMenu submPeertube = popup.getMenu().findItem(R.id.action_show_peertube).getSubMenu();
+                    SubMenu submChannel = popup.getMenu().findItem(R.id.action_show_channel).getSubMenu();
+                    int i = 0, j = 0 , k = 0, l = 0;
+                    for (RemoteInstance remoteInstance : remoteInstances) {
+                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("MASTODON")) {
+                            MenuItem itemPlaceHolder = submMastodon.findItem(R.id.mastodon_instances);
+                            if( itemPlaceHolder != null)
+                                itemPlaceHolder.setVisible(false);
+                            MenuItem item = submMastodon.add(0, i, Menu.NONE, remoteInstance.getHost());
+                            item.setIcon(R.drawable.mastodon_icon_item);
+                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    DisplayStatusFragment statusFragment;
+                                    Bundle bundle = new Bundle();
+                                    statusFragment = new DisplayStatusFragment();
+                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                                    bundle.putString("remote_instance", remoteInstance.getHost());
+                                    statusFragment.setArguments(bundle);
+                                    String fragmentTag = "REMOTE_INSTANCE";
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                                    main_app_container.setVisibility(View.VISIBLE);
+                                    viewPager.setVisibility(View.GONE);
+                                    tabLayout.setVisibility(View.GONE);
+                                    toolbarTitle.setVisibility(View.VISIBLE);
+                                    delete_instance.setVisibility(View.VISIBLE);
+                                    toolbarTitle.setText(remoteInstance.getHost());
+                                    return false;
+                                }
+                            });
+                            i++;
+                        }if (remoteInstance.getType() == null || remoteInstance.getType().equals("PEERTUBE")) {
+                            MenuItem itemPlaceHolder = submPeertube.findItem(R.id.peertube_instances);
+                            if( itemPlaceHolder != null)
+                                itemPlaceHolder.setVisible(false);
+                            MenuItem item = submPeertube.add(0, j, Menu.NONE, remoteInstance.getHost());
+                            item.setIcon(R.drawable.peertube_icon);
+                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    DisplayStatusFragment statusFragment;
+                                    Bundle bundle = new Bundle();
+                                    statusFragment = new DisplayStatusFragment();
+                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                                    bundle.putString("remote_instance", remoteInstance.getHost());
+                                    statusFragment.setArguments(bundle);
+                                    String fragmentTag = "REMOTE_INSTANCE";
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                                    main_app_container.setVisibility(View.VISIBLE);
+                                    viewPager.setVisibility(View.GONE);
+                                    tabLayout.setVisibility(View.GONE);
+                                    toolbarTitle.setVisibility(View.VISIBLE);
+                                    delete_instance.setVisibility(View.VISIBLE);
+                                    toolbarTitle.setText(remoteInstance.getHost());
+                                    return false;
+                                }
+                            });
+                            j++;
                         }
-                    });
+                    }
                 }
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
@@ -2053,6 +2093,39 @@ public abstract class BaseMainActivity extends BaseActivity
     public void onActionDone(ManageFiltersAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
         if( apiResponse != null && apiResponse.getFilters() != null && apiResponse.getFilters().size() > 0){
             filters = apiResponse.getFilters();
+        }
+    }
+
+    @Override
+    public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
+        if( apiResponse.getError() != null){
+            return;
+        }
+        if( actionType == ManageListsAsyncTask.action.GET_LIST && popup != null) {
+            if (apiResponse.getLists() != null && apiResponse.getLists().size() > 0) {
+                SubMenu submList = popup.getMenu().findItem(R.id.action_show_list).getSubMenu();
+                int l = 0;
+                for (fr.gouv.etalab.mastodon.client.Entities.List list : apiResponse.getLists()) {
+                    MenuItem itemPlaceHolder = submList.findItem(R.id.list_instances);
+                    if( itemPlaceHolder != null)
+                        itemPlaceHolder.setVisible(false);
+                    MenuItem item = submList.add(0, l, Menu.NONE, list.getTitle());
+                    item.setIcon(R.drawable.ic_list_instance);
+                    item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            Intent intent = new Intent(BaseMainActivity.this, ListActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("id", list.getId());
+                            b.putString("title", list.getTitle());
+                            intent.putExtras(b);
+                            startActivity(intent);
+                            return false;
+                        }
+                    });
+                    l++;
+                }
+            }
         }
     }
 

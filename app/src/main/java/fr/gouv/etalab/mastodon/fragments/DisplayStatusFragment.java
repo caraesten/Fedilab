@@ -121,6 +121,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             showReply = bundle.getBoolean("showReply",false);
             remoteInstance = bundle.getString("remote_instance", "");
             search_peertube = bundle.getString("search_peertube", null);
+
         }
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if( !remoteInstance.equals("")){
