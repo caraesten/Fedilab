@@ -588,6 +588,13 @@ Grazas a:
   <string name="bookmark_add_peertube">Este vídeo foi engadido aos marcadores!</string>
   <string name="bookmark_remove_peertube">Este vídeo foi eliminado dos marcadores!</string>
   <string name="bookmark_peertube_empty">Non ten vídeos de Peertube nos seus favoritos!</string>
+  <string name="channel">Channel</string>
+  <string name="no_peertube_channels">No Peertube channels</string>
+  <string name="no_peertube_instances">No Peertube instances</string>
+  <string name="no_mastodon_instances">No Mastodon instances</string>
+  <string name="no_lists">No lists</string>
+  <string name="videos">Videos</string>
+  <string name="channels">Channels</string>
   <string-array name="filter_expire">
     <item>Nunca</item>
     <item>30 minutos</item>
