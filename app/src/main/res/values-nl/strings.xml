@@ -583,7 +583,7 @@
   <string name="duration_video">Duration: %s</string>
   <string name="add_remote_instance">Add an instance</string>
   <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
-  <string name="pickup_resolution">Pick up a resolution</string>
+  <string name="pickup_resolution">Kies een resolutie</string>
   <string name="peertube_favorites">PeerTube-favorieten</string>
   <string name="bookmark_add_peertube">De video is aan de bladwijzers toegevoegd!</string>
   <string name="bookmark_remove_peertube">De video is uit de bladwijzers verwijderd!</string>
