@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.drawers;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +47,8 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
+import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
 
@@ -142,16 +145,26 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             });
         }
 
+        if( action != RetrieveAccountsAsyncTask.Type.CHANNELS){
+            holder.account_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if( holder.account_ds.getVisibility() == View.VISIBLE)
+                        holder.account_ds.setVisibility(View.GONE);
+                    else
+                        holder.account_ds.setVisibility(View.VISIBLE);
+                }
+            });
+        }else{
+            holder.account_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        holder.account_container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( holder.account_ds.getVisibility() == View.VISIBLE)
-                    holder.account_ds.setVisibility(View.GONE);
-                else
-                    holder.account_ds.setVisibility(View.VISIBLE);
-            }
-        });
+                }
+            });
+        }
+
+
         holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
         holder.account_un.setText(String.format("@%s",account.getUsername()));
         holder.account_ac.setText(account.getAcct());
@@ -239,11 +252,16 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             accountsListAdapter.notifyDataSetChanged();
         }
         if( statusAction == API.StatusAction.FOLLOW){
-            for(Account account: accounts){
-                if( account.getId().equals(targetedId))
-                    account.setFollowType(Account.followAction.FOLLOW);
+            if( action == RetrieveAccountsAsyncTask.Type.CHANNELS){
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                new InstancesDAO(context, db).insertInstance(accounts.get(0).getAcct().split("@")[1], accounts.get(0).getAcct().split("@")[0], "PEERTUBE_CHANNEL");
+            }else{
+                for(Account account: accounts){
+                    if( account.getId().equals(targetedId))
+                        account.setFollowType(Account.followAction.FOLLOW);
+                }
+                accountsListAdapter.notifyDataSetChanged();
             }
-            accountsListAdapter.notifyDataSetChanged();
         }
         if( statusAction == API.StatusAction.UNFOLLOW){
             for(Account account: accounts){

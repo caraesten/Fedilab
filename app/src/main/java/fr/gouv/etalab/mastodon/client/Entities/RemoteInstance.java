@@ -24,6 +24,8 @@ public class RemoteInstance {
 
     private String host;
     private String type;
+    private String id;
+    private String dbID;
 
     public RemoteInstance(){}
 
@@ -42,5 +44,21 @@ public class RemoteInstance {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDbID() {
+        return dbID;
+    }
+
+    public void setDbID(String dbID) {
+        this.dbID = dbID;
     }
 }

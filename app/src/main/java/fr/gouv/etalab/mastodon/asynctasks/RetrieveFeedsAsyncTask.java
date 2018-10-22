@@ -54,7 +54,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private boolean showReply = false;
     private WeakReference<Context> contextReference;
     private FilterToots filterToots;
-    private String instanceName;
+    private String instanceName,remoteInstance, name;
 
     public enum Type{
         HOME,
@@ -126,10 +126,19 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.tag = tag;
     }
 
+    public RetrieveFeedsAsyncTask(Context context, String  remoteInstance, String name, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.remoteInstance = remoteInstance;
+        this.max_id = max_id;
+        this.listener = onRetrieveFeedsInterface;
+        this.name = name;
+        this.action = Type.REMOTE_INSTANCE;
+    }
 
     @Override
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
+        SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         switch (action){
             case HOME:
                 apiResponse = api.getHomeTimeline(max_id);
@@ -144,18 +153,21 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getDirectTimeline(max_id);
                 break;
             case REMOTE_INSTANCE:
-                SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                List<RemoteInstance> remoteInstanceObj = new InstancesDAO(this.contextReference.get(), db).getInstanceByName(this.instanceName);
-                if( remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("MASTODON")) {
-                    apiResponse = api.getPublicTimeline(this.instanceName, false, max_id);
-                    List<fr.gouv.etalab.mastodon.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
-                    if( statusesTemp != null){
-                        for(fr.gouv.etalab.mastodon.client.Entities.Status status: statusesTemp){
-                            status.setType(action);
+                if( this.name != null && this.remoteInstance != null){ //For Peertube channels
+                    apiResponse = api.getPeertubeChannelVideos(this.remoteInstance, this.name);
+                }else{ //For other remote instance
+                    List<RemoteInstance> remoteInstanceObj = new InstancesDAO(this.contextReference.get(), db).getInstanceByName(this.instanceName);
+                    if( remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("MASTODON")) {
+                        apiResponse = api.getPublicTimeline(this.instanceName, false, max_id);
+                        List<fr.gouv.etalab.mastodon.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
+                        if( statusesTemp != null){
+                            for(fr.gouv.etalab.mastodon.client.Entities.Status status: statusesTemp){
+                                status.setType(action);
+                            }
                         }
+                    }else {
+                        apiResponse = api.getPeertube(this.instanceName, max_id);
                     }
-                }else {
-                    apiResponse = api.getPeertube(this.instanceName, max_id);
                 }
                 break;
             case FAVOURITES:

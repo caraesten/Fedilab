@@ -48,7 +48,6 @@ import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -202,6 +201,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private ImageView delete_instance;
     public static String displayPeertube = null;
     private PopupMenu popup;
+    private String instance_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -310,7 +310,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            new InstancesDAO(BaseMainActivity.this, db).remove(title);
+                            new InstancesDAO(BaseMainActivity.this, db).remove(instance_id);
                             BaseMainActivity.this.onBackPressed();
                         }
                     });
@@ -355,7 +355,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     SubMenu submMastodon = popup.getMenu().findItem(R.id.action_show_mastodon).getSubMenu();
                     SubMenu submPeertube = popup.getMenu().findItem(R.id.action_show_peertube).getSubMenu();
                     SubMenu submChannel = popup.getMenu().findItem(R.id.action_show_channel).getSubMenu();
-                    int i = 0, j = 0 , k = 0, l = 0;
+                    int i = 0, j = 0 , k = 0;
                     for (RemoteInstance remoteInstance : remoteInstances) {
                         if (remoteInstance.getType() == null || remoteInstance.getType().equals("MASTODON")) {
                             MenuItem itemPlaceHolder = submMastodon.findItem(R.id.mastodon_instances);
@@ -373,6 +373,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                     bundle.putString("remote_instance", remoteInstance.getHost());
                                     statusFragment.setArguments(bundle);
                                     String fragmentTag = "REMOTE_INSTANCE";
+                                    instance_id = remoteInstance.getDbID();
                                     FragmentManager fragmentManager = getSupportFragmentManager();
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
@@ -386,7 +387,40 @@ public abstract class BaseMainActivity extends BaseActivity
                                 }
                             });
                             i++;
-                        }if (remoteInstance.getType() == null || remoteInstance.getType().equals("PEERTUBE")) {
+                        }
+                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("PEERTUBE_CHANNEL")) {
+                            MenuItem itemPlaceHolder = submChannel.findItem(R.id.channel_instances);
+                            if( itemPlaceHolder != null)
+                                itemPlaceHolder.setVisible(false);
+                            MenuItem item = submChannel.add(0, k, Menu.NONE, remoteInstance.getId() + " - " +remoteInstance.getHost());
+                            item.setIcon(R.drawable.ic_list_instance);
+                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    DisplayStatusFragment statusFragment;
+                                    Bundle bundle = new Bundle();
+                                    statusFragment = new DisplayStatusFragment();
+                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                                    bundle.putString("remote_instance", remoteInstance.getHost());
+                                    bundle.putString("remote_channel_name", remoteInstance.getId());
+                                    statusFragment.setArguments(bundle);
+                                    instance_id = remoteInstance.getDbID();
+                                    String fragmentTag = "REMOTE_INSTANCE";
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                                    main_app_container.setVisibility(View.VISIBLE);
+                                    viewPager.setVisibility(View.GONE);
+                                    tabLayout.setVisibility(View.GONE);
+                                    toolbarTitle.setVisibility(View.VISIBLE);
+                                    delete_instance.setVisibility(View.VISIBLE);
+                                    toolbarTitle.setText(remoteInstance.getHost());
+                                    return false;
+                                }
+                            });
+                            k++;
+                        }
+                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("PEERTUBE")) {
                             MenuItem itemPlaceHolder = submPeertube.findItem(R.id.peertube_instances);
                             if( itemPlaceHolder != null)
                                 itemPlaceHolder.setVisible(false);
@@ -402,6 +436,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                     bundle.putString("remote_instance", remoteInstance.getHost());
                                     statusFragment.setArguments(bundle);
                                     String fragmentTag = "REMOTE_INSTANCE";
+                                    instance_id = remoteInstance.getDbID();
                                     FragmentManager fragmentManager = getSupportFragmentManager();
                                     fragmentManager.beginTransaction()
                                             .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();

@@ -36,14 +36,12 @@ public class InstancesDAO {
 
     private SQLiteDatabase db;
     public Context context;
-    private String userId;
 
     public InstancesDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables
         this.context = context;
         this.db = db;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
     }
 
@@ -54,10 +52,10 @@ public class InstancesDAO {
      * Insert an instance name in database
      * @param instanceName String
      */
-    public void insertInstance(String instanceName, String type) {
+    public void insertInstance(String instanceName, String id, String type) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_INSTANCE, instanceName.trim());
-        values.put(Sqlite.COL_USER_ID, userId);
+        values.put(Sqlite.COL_USER_ID, id);
         values.put(Sqlite.COL_INSTANCE_TYPE, type);
         values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
         //Inserts search
@@ -66,15 +64,8 @@ public class InstancesDAO {
         }catch (Exception ignored) {}
     }
 
-
-    //------- REMOVE  -------
-
-    /***
-     * Remove instance by its name
-     * @return int
-     */
-    public int remove(String instanceName){
-        return db.delete(Sqlite.TABLE_INSTANCES,  Sqlite.COL_INSTANCE + " = \"" + instanceName + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null);
+    public void insertInstance(String instanceName, String type) {
+        insertInstance(instanceName, "null", type);
     }
 
     //------- REMOVE  -------
@@ -83,11 +74,21 @@ public class InstancesDAO {
      * Remove instance by its name
      * @return int
      */
-    public int cleanDoublon(){
-        return db.delete(Sqlite.TABLE_INSTANCES,  Sqlite.COL_ID + " NOT IN (" +
-                "  SELECT MIN("+Sqlite.COL_ID+")" +
+    public int remove(String id){
+        return db.delete(Sqlite.TABLE_INSTANCES,  Sqlite.COL_ID + " = \"" + id + "\"", null);
+    }
+
+    //------- REMOVE  -------
+
+    /***
+     * Remove instance by its name
+     * @return int
+     */
+    public void cleanDoublon(){
+        db.delete(Sqlite.TABLE_INSTANCES, Sqlite.COL_ID + " NOT IN (" +
+                "  SELECT MIN(" + Sqlite.COL_ID + ")" +
                 "  FROM " + Sqlite.TABLE_INSTANCES +
-                "  GROUP BY "+ Sqlite.COL_INSTANCE + "," + Sqlite.COL_USER_ID +")", null);
+                "  GROUP BY " + Sqlite.COL_INSTANCE + "," + Sqlite.COL_USER_ID + ")", null);
     }
 
     //------- GETTERS  -------
@@ -98,7 +99,7 @@ public class InstancesDAO {
      */
     public List<RemoteInstance> getAllInstances(){
         try {
-            Cursor c = db.query(Sqlite.TABLE_INSTANCES, null, Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_INSTANCE_TYPE + " ASC, "+Sqlite.COL_INSTANCE + " ASC", null);
+            Cursor c = db.query(Sqlite.TABLE_INSTANCES, null, null, null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
             return cursorToListSearch(c);
         } catch (Exception e) {
             return null;
@@ -113,7 +114,7 @@ public class InstancesDAO {
      */
     public List<RemoteInstance> getInstanceByName(String keyword){
         try {
-            Cursor c = db.query(Sqlite.TABLE_INSTANCES, null, Sqlite.COL_INSTANCE + " = \"" + keyword + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_INSTANCES, null, Sqlite.COL_INSTANCE + " = \"" + keyword + "\"", null, null, null, null, null);
             return cursorToListSearch(c);
         } catch (Exception e) {
             return null;
@@ -133,6 +134,8 @@ public class InstancesDAO {
         List<RemoteInstance> remoteInstances = new ArrayList<>();
         while (c.moveToNext() ) {
             RemoteInstance remoteInstance = new RemoteInstance();
+            remoteInstance.setDbID(c.getString(c.getColumnIndex(Sqlite.COL_ID)));
+            remoteInstance.setId(c.getString(c.getColumnIndex(Sqlite.COL_USER_ID)));
             remoteInstance.setHost(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
             remoteInstance.setType(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE_TYPE)) == null?"MASTODON":c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE_TYPE)));
             remoteInstances.add(remoteInstance);
