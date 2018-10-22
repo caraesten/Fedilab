@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -40,6 +41,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -74,13 +76,14 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
 
 
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(layoutInflater.inflate(R.layout.drawer_account, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         final AccountsListAdapter.ViewHolder holder = (AccountsListAdapter.ViewHolder) viewHolder;
         final Account account = accounts.get(position);
 
@@ -89,6 +92,9 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             account.setFollowType(Account.followAction.BLOCK);
         else if( action == RetrieveAccountsAsyncTask.Type.MUTED)
             account.setFollowType(Account.followAction.MUTE);
+
+        if( action == RetrieveAccountsAsyncTask.Type.CHANNELS)
+            account.setFollowType(Account.followAction.NOT_FOLLOW);
 
         if (account.getFollowType() == Account.followAction.NOTHING){
             holder.account_follow.hide();
@@ -173,22 +179,30 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         holder.account_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( doAction != null) {
-                    account.setMakingAction(true);
-                    new PostActionAsyncTask(context, doAction, account.getId(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                if( action != RetrieveAccountsAsyncTask.Type.CHANNELS) {
+                    if (doAction != null) {
+                        account.setMakingAction(true);
+                        new PostActionAsyncTask(context, doAction, account.getId(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
+                }else {
+                    CrossActions.followPeertubeChannel(context, account, AccountsListAdapter.this);
                 }
             }
         });
         holder.account_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Avoid to reopen details about the current account
-                if( targetedId == null || !targetedId.equals(account.getId())){
-                    Intent intent = new Intent(context, ShowAccountActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString("accountId", account.getId());
-                    intent.putExtras(b);
-                    context.startActivity(intent);
+                if(action != RetrieveAccountsAsyncTask.Type.CHANNELS) {
+                    //Avoid to reopen details about the current account
+                    if (targetedId == null || !targetedId.equals(account.getId())) {
+                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("accountId", account.getId());
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                }else {
+                    CrossActions.doCrossProfile(context, account);
                 }
 
             }

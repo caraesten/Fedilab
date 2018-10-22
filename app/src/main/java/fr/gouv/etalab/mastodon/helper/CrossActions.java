@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
@@ -198,6 +199,37 @@ public class CrossActions {
         }
     }
 
+
+    public static void followPeertubeChannel(final Context context, Account remoteAccount, OnPostActionInterface onPostActionInterface){
+        new AsyncTask<Void, Void, Void>() {
+            private WeakReference<Context> contextReference = new WeakReference<>(context);
+            Results response;
+
+            @Override
+            protected void onPreExecute() {
+                Toast.makeText(contextReference.get(), R.string.retrieve_remote_account, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                API api = new API(contextReference.get());
+                String url;
+                url = "https://" + remoteAccount.getHost() + "/video-channels/" + remoteAccount.getAcct().split("@")[0];
+                response = api.search(url);
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void result) {
+                if( response == null){
+                    return;
+                }
+                List<Account> remoteAccounts = response.getAccounts();
+                if( remoteAccounts != null && remoteAccounts.size() > 0) {
+                    new PostActionAsyncTask(context, null, remoteAccounts.get(0), API.StatusAction.FOLLOW, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+    }
 
     public static void doCrossProfile(final Context context, Account remoteAccount){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
