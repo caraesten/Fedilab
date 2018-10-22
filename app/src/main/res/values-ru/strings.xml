@@ -123,7 +123,7 @@
     <item>Заглушить этот аккаунт?</item>
     <item>Блокировать этот аккаунт?</item>
     <item>Пожаловаться на этот toot?</item>
-    <item>Block this domain?</item>
+    <item>Заблокировать этот домен?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Удалить этот toot?</item>
@@ -338,7 +338,7 @@
     <item>DeepL</item>
     <item>Нет</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">Ваш ключ API, вы можете оставить пустым для Yandex</string>
   <string-array name="settings_theme">
     <item>Темное</item>
     <item>Светлое</item>
