@@ -41,7 +41,7 @@
   <string name="clear">Очистить</string>
   <string name="microphone">Микрофон</string>
   <string name="camera">Камера</string>
-  <string name="speech_prompt">Пожалуйста, скажите что-то</string>
+  <string name="speech_prompt">Пожалуйста, скажите что-нибудь</string>
   <string name="speech_not_supported">Извините! Ваше устройство не поддерживает голосовой ввод!</string>
   <string name="delete_all">Удалить все</string>
   <string name="translate_toot">Перевести этот toot.</string>
@@ -59,7 +59,7 @@
   <string name="replies">Ответы</string>
   <string name="username">Имя пользователя</string>
   <string name="drafts">Черновики</string>
-  <string name="new_data">Доступны новые данные! Хотите их посмотреть?</string>
+  <string name="new_data">Доступны новые данные! Вы хотите их отобразить?</string>
   <string name="favourite">Избранные</string>
   <string name="follow">Новые подписчики</string>
   <string name="mention">Упоминания</string>
@@ -86,8 +86,8 @@
   <string name="profile">Профиль</string>
   <string name="make_a_choice">Что Вы хотите делать?</string>
   <string name="delete_account_title">﻿Удалить аккаунт</string>
-  <string name="delete_account_message" formatted="false">Удалить учетную запись %1$s из приложения?</string>
-  <string name="send_email">Отправить эл. письмо</string>
+  <string name="delete_account_message" formatted="false">Удалить аккаунт %1$s из приложения?</string>
+  <string name="send_email">Отправить email</string>
   <string name="choose_file">Выберите файл</string>
   <string name="choose_file_error">Файл не найден!</string>
   <string name="click_to_change">Нажмите для изменения</string>
