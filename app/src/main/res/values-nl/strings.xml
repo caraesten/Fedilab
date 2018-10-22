@@ -558,9 +558,9 @@
   <string name="channel_notif_fav">Nieuwe favoriet</string>
   <string name="channel_notif_mention">Nieuwe vermelding</string>
   <string name="channel_notif_toot">Nieuwe toot</string>
-  <string name="channel_notif_backup">Toots backup</string>
-  <string name="channel_notif_media">Media download</string>
-  <string name="set_notif_sound">Verander notificatie geluid</string>
+  <string name="channel_notif_backup">Toots back-uppen</string>
+  <string name="channel_notif_media">Media downloaden</string>
+  <string name="set_notif_sound">Meldingsgeluid veranderen</string>
   <string name="select_sound">Selecteer toon</string>
   <string name="set_enable_time_slot">Tijdslot inschakelen</string>
   <string name="how_to_videos">How-to-video\'s</string>
