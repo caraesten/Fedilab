@@ -579,10 +579,10 @@
   <string name="set_display_direct">Toon prive berichten tijdlijn</string>
   <string name="set_keep_background_process">Keep background process when app is closed</string>
   <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-  <string name="number_view_video">%s views</string>
-  <string name="duration_video">Duration: %s</string>
-  <string name="add_remote_instance">Add an instance</string>
-  <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
+  <string name="number_view_video">%s keer bekeken</string>
+  <string name="duration_video">Duur: %s</string>
+  <string name="add_remote_instance">Een server toevoegen</string>
+  <string name="comment_no_allowed_peertube">Reageren op deze video is uitgeschakeld!</string>
   <string name="pickup_resolution">Kies een resolutie</string>
   <string name="peertube_favorites">PeerTube-favorieten</string>
   <string name="bookmark_add_peertube">De video is aan de bladwijzers toegevoegd!</string>
