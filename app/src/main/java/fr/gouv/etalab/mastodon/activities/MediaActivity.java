@@ -373,7 +373,8 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     new SimpleTarget<Bitmap>() {
                         @Override
                         public void onResourceReady(@NonNull final Bitmap resource, Transition<? super Bitmap> transition) {
-                            imageView.setImageBitmap(resource);
+                            Bitmap imageCompressed = Helper.compressImageIfNeeded(MediaActivity.this, resource);
+                            imageView.setImageBitmap(imageCompressed);
                             Glide.with(getApplicationContext())
                                 .asBitmap()
                                 .load(finalUrl).into(
@@ -381,9 +382,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                                     @Override
                                     public void onResourceReady(@NonNull final Bitmap resource, Transition<? super Bitmap> transition) {
                                         loader.setVisibility(View.GONE);
+                                        Bitmap imageCompressed = Helper.compressImageIfNeeded(MediaActivity.this, resource);
                                         if( imageView.getScale() < 1.1) {
                                             downloadedImage = resource;
-                                            imageView.setImageBitmap(resource);
+                                            imageView.setImageBitmap(imageCompressed);
                                         }else{
                                             message_ready.setVisibility(View.VISIBLE);
                                         }
@@ -391,7 +393,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                                             @Override
                                             public void onClick(View view) {
                                                 downloadedImage = resource;
-                                                imageView.setImageBitmap(resource);
+                                                imageView.setImageBitmap(imageCompressed);
                                                 message_ready.setVisibility(View.GONE);
                                             }
                                         });

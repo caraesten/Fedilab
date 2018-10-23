@@ -2277,6 +2277,22 @@ public class Helper {
         }
     }
 
+    public static Bitmap compressImageIfNeeded(Context context, Bitmap bmToCompress){
+
+        int size = bmToCompress.getByteCount();
+        double resizeby =  33554432; //4Mo
+        double resize = ((double)size)/resizeby;
+        if( resize > 1 ) {
+            Bitmap newBitmap = Bitmap.createScaledBitmap(bmToCompress, (int) (bmToCompress.getWidth() / resize),
+                    (int) (bmToCompress.getHeight() / resize), true);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            newBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+            return newBitmap;
+        }
+        return bmToCompress;
+    }
+
+
     @SuppressWarnings({"WeakerAccess", "unused"})
     public static void largeLog(String content) {
         if (content.length() > 4000) {
