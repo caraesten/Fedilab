@@ -577,7 +577,7 @@
   <string name="comment">Reageren</string>
   <string name="peertube_instance">PeerTube-server</string>
   <string name="set_display_direct">Tijdlijn met directe berichten tonen</string>
-  <string name="set_keep_background_process">Na afsluiten Mastalab deze op de achtergrond blijven uitvoeren</string>
+  <string name="set_keep_background_process">Mastalab op de achtergrond blijven uitvoeren</string>
   <string name="no_comments">Wees de eerste om op deze video te reageren m.b.v. de knop rechtsboven!</string>
   <string name="number_view_video">%s keer bekeken</string>
   <string name="duration_video">Duur: %s</string>
@@ -588,13 +588,13 @@
   <string name="bookmark_add_peertube">De video is aan de bladwijzers toegevoegd!</string>
   <string name="bookmark_remove_peertube">De video is uit de bladwijzers verwijderd!</string>
   <string name="bookmark_peertube_empty">Er zitten geen PeerTube-video\'s tussen jouw favorieten!</string>
-  <string name="channel">Channel</string>
-  <string name="no_peertube_channels">No Peertube channels</string>
-  <string name="no_peertube_instances">No Peertube instances</string>
-  <string name="no_mastodon_instances">No Mastodon instances</string>
-  <string name="no_lists">No lists</string>
-  <string name="videos">Videos</string>
-  <string name="channels">Channels</string>
+  <string name="channel">Kanaal</string>
+  <string name="no_peertube_channels">Geen PeerTube-kanalen</string>
+  <string name="no_peertube_instances">Geen PeerTube-servers</string>
+  <string name="no_mastodon_instances">Geen Mastodonservers</string>
+  <string name="no_lists">Geen lijsten</string>
+  <string name="videos">Video\'s</string>
+  <string name="channels">Kanalen</string>
   <string-array name="filter_expire">
     <item>Nooit</item>
     <item>30 minuten</item>
