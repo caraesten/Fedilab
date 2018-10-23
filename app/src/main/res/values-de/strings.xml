@@ -581,7 +581,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="no_peertube_channels">No Peertube channels</string>
   <string name="no_peertube_instances">No Peertube instances</string>
   <string name="no_mastodon_instances">No Mastodon instances</string>
-  <string name="no_lists">No lists</string>
+  <string name="no_lists">Keine Liste!</string>
   <string name="videos">Videos</string>
   <string name="channels">Channels</string>
   <string-array name="filter_expire">
