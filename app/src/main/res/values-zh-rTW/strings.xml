@@ -579,19 +579,19 @@
   <string name="number_view_video">%s 次檢視</string>
   <string name="duration_video">長度：%s</string>
   <string name="add_remote_instance">新增實體</string>
-  <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
-  <string name="pickup_resolution">Pick up a resolution</string>
-  <string name="peertube_favorites">Peertube favourites</string>
-  <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-  <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-  <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
-  <string name="channel">Channel</string>
-  <string name="no_peertube_channels">No Peertube channels</string>
-  <string name="no_peertube_instances">No Peertube instances</string>
-  <string name="no_mastodon_instances">No Mastodon instances</string>
-  <string name="no_lists">No lists</string>
-  <string name="videos">Videos</string>
-  <string name="channels">Channels</string>
+  <string name="comment_no_allowed_peertube">此影片未啟用評論！</string>
+  <string name="pickup_resolution">挑選解析度</string>
+  <string name="peertube_favorites">Peertube 最愛</string>
+  <string name="bookmark_add_peertube">影片已加入到書籤中！</string>
+  <string name="bookmark_remove_peertube">影片已從書籤中移除！</string>
+  <string name="bookmark_peertube_empty">您的最愛中沒有 PeerTube 影片！</string>
+  <string name="channel">頻道</string>
+  <string name="no_peertube_channels">沒有 PeerTube 頻道</string>
+  <string name="no_peertube_instances">沒有 PeerTube 實體</string>
+  <string name="no_mastodon_instances">沒有 Mastodon 實體</string>
+  <string name="no_lists">沒有列表</string>
+  <string name="videos">影片</string>
+  <string name="channels">頻道</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>
