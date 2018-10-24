@@ -30,6 +30,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -87,7 +88,7 @@ public class Account implements Parcelable {
     private int metaDataSizeVerified;
     private HashMap<String, String> fields = new HashMap<>();
     private HashMap<String, Boolean> fieldsVerified = new HashMap<>();
-    private HashMap<String, SpannableString> fieldsSpan = new HashMap<>();
+    private HashMap<SpannableString, SpannableString> fieldsSpan = new HashMap<>();
     private List<Emojis> emojis;
     private Account account;
     private String host;
@@ -133,12 +134,12 @@ public class Account implements Parcelable {
         return fields;
     }
 
-    public void setFieldsSpan(HashMap<String, SpannableString> fieldsSpan) {
+    public void setFieldsSpan(HashMap<SpannableString, SpannableString> fieldsSpan) {
         this.fieldsSpan = fieldsSpan;
     }
 
 
-    public HashMap<String, SpannableString> getFieldsSpan() {
+    public HashMap<SpannableString, SpannableString> getFieldsSpan() {
         return fieldsSpan;
     }
 
@@ -491,20 +492,6 @@ public class Account implements Parcelable {
 
         if( account.getDisplay_name() != null)
             displayNameSpan = new SpannableString(account.getDisplay_name());
-        if( account.getFields() != null && account.getFields().size() > 0) {
-            Iterator it = account.getFields().entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                SpannableString fieldSpan;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    fieldSpan = new SpannableString(Html.fromHtml((String)pair.getValue(), FROM_HTML_MODE_LEGACY));
-                else
-                    //noinspection deprecation
-                    fieldSpan = new SpannableString(Html.fromHtml((String)pair.getValue()));
-                fieldsSpan.put((String) pair.getKey(), fieldSpan);
-            }
-            account.setFieldsSpan(fieldsSpan);
-        }
         final List<Emojis> emojis = account.getEmojis();
         if( emojis != null && emojis.size() > 0 ) {
             final int[] i = {0};
@@ -543,10 +530,10 @@ public class Account implements Parcelable {
                                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                                        }
                                    }
-                                   Iterator it = fieldsSpan.entrySet().iterator();
+                                   Iterator it = fields.entrySet().iterator();
                                    while (it.hasNext()) {
                                        Map.Entry pair = (Map.Entry) it.next();
-                                       SpannableString fieldSpan = (SpannableString) pair.getValue();
+                                       SpannableString fieldSpan = new SpannableString((String)pair.getValue());
                                        if (fieldSpan.toString().contains(targetedEmoji)) {
                                            //emojis can be used several times so we have to loop
                                            for (int startPosition = -1; (startPosition = fieldSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
@@ -558,9 +545,24 @@ public class Account implements Parcelable {
                                                                            (int) Helper.convertDpToPixel(20, context), false)), startPosition,
                                                            endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                                            }
-                                           fieldsSpan.put((String) pair.getKey(), fieldSpan);
+                                           SpannableString keySpan = new SpannableString((String)pair.getKey());
+                                           if (keySpan.toString().contains(targetedEmoji)) {
+                                               //emojis can be used several times so we have to loop
+                                               for (int startPosition = -1; (startPosition = keySpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                                   final int endPosition = startPosition + targetedEmoji.length();
+                                                   if (endPosition <= keySpan.toString().length() && endPosition >= startPosition)
+                                                       keySpan.setSpan(
+                                                               new ImageSpan(context,
+                                                                       Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                               (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                               endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                               }
+
+                                           }
+                                           fieldsSpan.put(keySpan, fieldSpan);
                                        }
                                    }
+
 
                                    i[0]++;
                                    if (i[0] == (emojis.size())) {

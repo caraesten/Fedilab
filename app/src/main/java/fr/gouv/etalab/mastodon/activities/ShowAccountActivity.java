@@ -1075,7 +1075,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
         account_dn.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);;
         if ( account.getFieldsSpan() != null && account.getFieldsSpan().size() > 0){
-            HashMap<String, SpannableString> fieldsSpan = account.getFieldsSpan();
+            HashMap<SpannableString, SpannableString> fieldsSpan = account.getFieldsSpan();
             Iterator it = fieldsSpan.entrySet().iterator();
             int i = 1;
             LinearLayout fields_container = findViewById(R.id.fields_container);
@@ -1083,7 +1083,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 fields_container.setVisibility(View.VISIBLE);
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
-                String label = (String)pair.getKey();
+                SpannableString label = (SpannableString)pair.getKey();
                 SpannableString value = (SpannableString)pair.getValue();
                 LinearLayout field;
                 TextView labelView;
