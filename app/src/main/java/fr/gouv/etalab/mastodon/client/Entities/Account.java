@@ -18,19 +18,16 @@ import android.app.Activity;
 import android.content.*;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -38,8 +35,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +45,6 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 
-import static android.text.Html.FROM_HTML_MODE_LEGACY;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -86,9 +82,9 @@ public class Account implements Parcelable {
     private boolean muting_notifications;
     private int metaDataSize;
     private int metaDataSizeVerified;
-    private HashMap<String, String> fields = new HashMap<>();
-    private HashMap<String, Boolean> fieldsVerified = new HashMap<>();
-    private HashMap<SpannableString, SpannableString> fieldsSpan = new HashMap<>();
+    private LinkedHashMap<String, String> fields = new LinkedHashMap<>();
+    private LinkedHashMap<String, Boolean> fieldsVerified = new LinkedHashMap<>();
+    private LinkedHashMap<SpannableString, SpannableString> fieldsSpan = new LinkedHashMap<>();
     private List<Emojis> emojis;
     private Account account;
     private String host;
@@ -126,28 +122,28 @@ public class Account implements Parcelable {
         this.muting_notifications = muting_notifications;
     }
 
-    public void setFields(HashMap<String, String> fields) {
+    public void setFields(LinkedHashMap<String, String> fields) {
         this.fields = fields;
     }
 
-    public HashMap<String, String> getFields() {
+    public LinkedHashMap<String, String> getFields() {
         return fields;
     }
 
-    public void setFieldsSpan(HashMap<SpannableString, SpannableString> fieldsSpan) {
+    public void setFieldsSpan(LinkedHashMap<SpannableString, SpannableString> fieldsSpan) {
         this.fieldsSpan = fieldsSpan;
     }
 
 
-    public HashMap<SpannableString, SpannableString> getFieldsSpan() {
+    public LinkedHashMap<SpannableString, SpannableString> getFieldsSpan() {
         return fieldsSpan;
     }
 
-    public HashMap<String, Boolean> getFieldsVerified() {
+    public LinkedHashMap<String, Boolean> getFieldsVerified() {
         return fieldsVerified;
     }
 
-    public void setFieldsVerified(HashMap<String, Boolean> fieldsVerified) {
+    public void setFieldsVerified(LinkedHashMap<String, Boolean> fieldsVerified) {
         this.fieldsVerified = fieldsVerified;
     }
 

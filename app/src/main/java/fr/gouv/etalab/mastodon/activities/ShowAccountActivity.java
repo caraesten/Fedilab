@@ -59,6 +59,7 @@ import com.bumptech.glide.request.transition.Transition;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import fr.gouv.etalab.mastodon.R;
@@ -669,8 +670,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
 
         if ( account.getFields() != null && account.getFields().size() > 0){
-            HashMap<String, String> fields = account.getFields();
-            HashMap<String, Boolean> fieldsVerified = account.getFieldsVerified();
+            LinkedHashMap<String, String> fields = account.getFields();
+            LinkedHashMap<String, Boolean> fieldsVerified = account.getFieldsVerified();
             Iterator it = fields.entrySet().iterator();
             int i = 1;
             LinearLayout fields_container = findViewById(R.id.fields_container);

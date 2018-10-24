@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import fr.gouv.etalab.mastodon.R;
@@ -2979,8 +2980,8 @@ public class API {
             account.setHeader_static(resobj.get("header_static").toString());
             try {
                 JSONArray fields = resobj.getJSONArray("fields");
-                HashMap<String, String> fieldsMap = new HashMap<>();
-                HashMap<String, Boolean> fieldsMapVerified = new HashMap<>();
+                LinkedHashMap<String, String> fieldsMap = new LinkedHashMap<>();
+                LinkedHashMap<String, Boolean> fieldsMapVerified = new LinkedHashMap<>();
                 if( fields != null){
                     for(int j = 0 ; j < fields.length() ; j++){
                         fieldsMap.put(fields.getJSONObject(j).getString("name"),fields.getJSONObject(j).getString("value"));
