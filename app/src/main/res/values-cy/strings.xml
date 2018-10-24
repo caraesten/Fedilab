@@ -218,9 +218,9 @@
   <!-- Notifications -->
   <string name="no_notifications">No notification to display</string>
   <string name="notif_mention">mentioned you</string>
-  <string name="notif_reblog">boosted your status</string>
-  <string name="notif_favourite">favourited your status</string>
-  <string name="notif_follow">followed you</string>
+  <string name="notif_reblog">wedi hybu\'ch tŵt</string>
+  <string name="notif_favourite">wedi nodi\'ch tŵt yn ffefryn</string>
+  <string name="notif_follow">wedi\'ch dilyn chi</string>
   <string name="notif_pouet">New toot from %1$s</string>
   <plurals name="other_notifications">
     <item quantity="zero">and %d other notifications</item>
@@ -346,35 +346,35 @@
   </string-array>
   <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
   <string-array name="settings_theme">
-    <item>Dark</item>
-    <item>Light</item>
-    <item>Black</item>
+    <item>Tywyll</item>
+    <item>Golau</item>
+    <item>Du</item>
   </string-array>
   <string-array name="settings_resize_picture">
-    <item>No</item>
+    <item>Na</item>
     <item>512 Kb</item>
     <item>1 Mb</item>
     <item>2 Mb</item>
   </string-array>
   <string name="set_led_colour">Set LED colour:</string>
   <string-array name="led_colours">
-    <item>Blue</item>
+    <item>Glas</item>
     <item>Cyan</item>
     <item>Magenta</item>
-    <item>Green</item>
-    <item>Red</item>
+    <item>Gwyrdd</item>
+    <item>Coch</item>
     <item>Yellow</item>
-    <item>White</item>
+    <item>Gwyn</item>
   </string-array>
   <string name="set_title_news">News</string>
   <string name="set_notification_news">Notify for new toots on the home timeline</string>
-  <string name="action_follow">Follow</string>
-  <string name="action_unfollow">Unfollow</string>
-  <string name="action_block">Block</string>
-  <string name="action_unblock">Unblock</string>
-  <string name="action_mute">Mute</string>
+  <string name="action_follow">Dilyn</string>
+  <string name="action_unfollow">Dad-ddilyn</string>
+  <string name="action_block">Blocio</string>
+  <string name="action_unblock">Dad-flocio</string>
+  <string name="action_mute">Mudo</string>
   <string name="action_no_action">No action</string>
-  <string name="action_unmute">Unmute</string>
+  <string name="action_unmute">Dad-fudo</string>
   <string name="request_sent">Request sent</string>
   <string name="followed_by">Follows you</string>
   <string name="action_search">Search</string>
@@ -457,8 +457,8 @@
         Thank you to:
     </string>
   <string name="filter_regex">Filter out by regular expressions</string>
-  <string name="search">Search</string>
-  <string name="delete">Delete</string>
+  <string name="search">Chwilio</string>
+  <string name="delete">Dileu</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
   <string name="action_lists">Lists</string>
@@ -497,8 +497,8 @@
   <string name="proxy_enable">Enable proxy?</string>
   <string name="poxy_host">Host</string>
   <string name="poxy_port">Port</string>
-  <string name="poxy_login">Login</string>
-  <string name="poxy_password">Password</string>
+  <string name="poxy_login">Mewngofnodi</string>
+  <string name="poxy_password">Cyfrinair</string>
   <string name="set_theme">Theme:</string>
   <string name="set_compact_mode">Compact mode</string>
   <string name="set_share_details">Add toot details when sharing</string>
