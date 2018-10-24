@@ -68,7 +68,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -858,10 +857,13 @@ public abstract class BaseMainActivity extends BaseActivity
                             displayStatusFragment.scrollToTop();
                             break;
                         case 3:
-                            if (display_direct && display_local)
+                            if (display_local && display_direct){
                                 updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL, 0);
-                            else
+                            }else if (display_global && !display_direct){
                                 updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                            } else if (display_global ) {
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                            }
                             displayStatusFragment = ((DisplayStatusFragment) fragment);
                             displayStatusFragment.scrollToTop();
                             break;
@@ -2232,7 +2234,12 @@ public abstract class BaseMainActivity extends BaseActivity
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            } else if (position == 4 && display_global && countPage == 5){
+            } else if (position == 3 && display_global ){
+                statusFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
+                statusFragment.setArguments(bundle);
+                return statusFragment;
+            }else if (position == 4 && display_global && countPage == 5){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                 statusFragment.setArguments(bundle);
@@ -2264,10 +2271,14 @@ public abstract class BaseMainActivity extends BaseActivity
                         localFragment = (DisplayStatusFragment) createdFragment;
                     else if ( !display_direct && display_global)
                         federatedFragment = (DisplayStatusFragment) createdFragment;
+                    else
+                        federatedFragment = (DisplayStatusFragment) createdFragment;
                 case 3:
                     if( display_direct && display_local)
                         localFragment = (DisplayStatusFragment) createdFragment;
                     else if( !display_direct && display_local && display_global)
+                        federatedFragment = (DisplayStatusFragment) createdFragment;
+                    else
                         federatedFragment = (DisplayStatusFragment) createdFragment;
                     break;
                 case 4:
@@ -2360,74 +2371,77 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
+
     public void updateTimeLine(RetrieveFeedsAsyncTask.Type type, int value){
 
-
-        if( type == RetrieveFeedsAsyncTask.Type.DIRECT && display_direct){
-            if( tabLayout.getTabAt(2) != null ){
+        if( type == RetrieveFeedsAsyncTask.Type.DIRECT ){
+            if (tabLayout.getTabAt(2) != null && display_direct) {
                 View tabDirect = tabLayout.getTabAt(2).getCustomView();
                 assert tabDirect != null;
                 TextView tabCounterDirect = tabDirect.findViewById(R.id.tab_counter);
                 tabCounterDirect.setText(String.valueOf(value));
-                if( value > 0){
+                if (value > 0) {
                     tabCounterDirect.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     tabCounterDirect.setVisibility(View.GONE);
                 }
             }
-        }else if( type == RetrieveFeedsAsyncTask.Type.LOCAL && display_local){
-            if( tabLayout.getTabAt(2) != null && !display_direct){
-                View tabLocal = tabLayout.getTabAt(2).getCustomView();
-                assert tabLocal != null;
-                TextView tabCounterLocal = tabLocal.findViewById(R.id.tab_counter);
-                tabCounterLocal.setText(String.valueOf(value));
-                if( value > 0){
-                    tabCounterLocal.setVisibility(View.VISIBLE);
-                }else {
-                    tabCounterLocal.setVisibility(View.GONE);
-                }
-            }else if( tabLayout.getTabAt(3) != null && display_direct){
-                View tabLocal = tabLayout.getTabAt(3).getCustomView();
-                assert tabLocal != null;
-                TextView tabCounterLocal = tabLocal.findViewById(R.id.tab_counter);
-                tabCounterLocal.setText(String.valueOf(value));
-                if( value > 0){
-                    tabCounterLocal.setVisibility(View.VISIBLE);
-                }else {
-                    tabCounterLocal.setVisibility(View.GONE);
+        }else if( type == RetrieveFeedsAsyncTask.Type.LOCAL ){
+            if( display_local) {
+                if (tabLayout.getTabAt(2) != null && !display_direct) {
+                    View tabLocal = tabLayout.getTabAt(2).getCustomView();
+                    assert tabLocal != null;
+                    TextView tabCounterLocal = tabLocal.findViewById(R.id.tab_counter);
+                    tabCounterLocal.setText(String.valueOf(value));
+                    if (value > 0) {
+                        tabCounterLocal.setVisibility(View.VISIBLE);
+                    } else {
+                        tabCounterLocal.setVisibility(View.GONE);
+                    }
+                } else if (tabLayout.getTabAt(3) != null ) {
+                    View tabLocal = tabLayout.getTabAt(3).getCustomView();
+                    assert tabLocal != null;
+                    TextView tabCounterLocal = tabLocal.findViewById(R.id.tab_counter);
+                    tabCounterLocal.setText(String.valueOf(value));
+                    if (value > 0) {
+                        tabCounterLocal.setVisibility(View.VISIBLE);
+                    } else {
+                        tabCounterLocal.setVisibility(View.GONE);
+                    }
                 }
             }
-        }else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && display_global){
-            if( tabLayout.getTabAt(4) != null && display_local && display_direct){
-                View tabPublic = tabLayout.getTabAt(4).getCustomView();
-                assert tabPublic != null;
-                TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
-                tabCounterPublic.setText(String.valueOf(value));
-                if( value > 0){
-                    tabCounterPublic.setVisibility(View.VISIBLE);
-                }else {
-                    tabCounterPublic.setVisibility(View.GONE);
-                }
-            }else if( tabLayout.getTabAt(2) != null && !display_local && !display_direct){
-                View tabPublic = tabLayout.getTabAt(2).getCustomView();
-                assert tabPublic != null;
-                TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
-                tabCounterPublic.setText(String.valueOf(value));
-                if( value > 0){
-                    tabCounterPublic.setVisibility(View.VISIBLE);
-                }else {
-                    tabCounterPublic.setVisibility(View.GONE);
-                }
-            }else if( tabLayout.getTabAt(3) != null && ((!display_local && display_direct) || (display_local && !display_direct) )){
-                View tabPublic = tabLayout.getTabAt(2).getCustomView();
-                assert tabPublic != null;
-                TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
-                tabCounterPublic.setText(String.valueOf(value));
-                if( value > 0){
-                    tabCounterPublic.setVisibility(View.VISIBLE);
-                }else {
-                    tabCounterPublic.setVisibility(View.GONE);
+        }else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC ){
+            if( display_global){
+                if( tabLayout.getTabAt(2) != null && !display_local && !display_direct){
+                    View tabPublic = tabLayout.getTabAt(2).getCustomView();
+                    assert tabPublic != null;
+                    TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
+                    tabCounterPublic.setText(String.valueOf(value));
+                    if( value > 0){
+                        tabCounterPublic.setVisibility(View.VISIBLE);
+                    }else {
+                        tabCounterPublic.setVisibility(View.GONE);
+                    }
+                }else if( tabLayout.getTabAt(3) != null && ((!display_local && display_direct) || (display_local && !display_direct) )){
+                    View tabPublic = tabLayout.getTabAt(3).getCustomView();
+                    assert tabPublic != null;
+                    TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
+                    tabCounterPublic.setText(String.valueOf(value));
+                    if( value > 0){
+                        tabCounterPublic.setVisibility(View.VISIBLE);
+                    }else {
+                        tabCounterPublic.setVisibility(View.GONE);
+                    }
+                }else if( tabLayout.getTabAt(4) != null && display_local && display_direct){
+                    View tabPublic = tabLayout.getTabAt(4).getCustomView();
+                    assert tabPublic != null;
+                    TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
+                    tabCounterPublic.setText(String.valueOf(value));
+                    if( value > 0){
+                        tabCounterPublic.setVisibility(View.VISIBLE);
+                    }else {
+                        tabCounterPublic.setVisibility(View.GONE);
+                    }
                 }
             }
         }
