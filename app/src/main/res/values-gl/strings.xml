@@ -590,11 +590,11 @@ Grazas a:
   <string name="bookmark_peertube_empty">Non ten vídeos de Peertube nos seus favoritos!</string>
   <string name="channel">Canle</string>
   <string name="no_peertube_channels">Sen canles Peertube</string>
-  <string name="no_peertube_instances">No Peertube instances</string>
-  <string name="no_mastodon_instances">No Mastodon instances</string>
-  <string name="no_lists">No lists</string>
-  <string name="videos">Videos</string>
-  <string name="channels">Channels</string>
+  <string name="no_peertube_instances">Sen instancias Peertube</string>
+  <string name="no_mastodon_instances">Sen instancias Mastodon</string>
+  <string name="no_lists">Sen listas</string>
+  <string name="videos">Vídeos</string>
+  <string name="channels">Canles</string>
   <string-array name="filter_expire">
     <item>Nunca</item>
     <item>30 minutos</item>
