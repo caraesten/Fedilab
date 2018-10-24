@@ -1592,7 +1592,6 @@ public abstract class BaseMainActivity extends BaseActivity
                     b.putString("accountId", extras.getString(INTENT_TARGETED_ACCOUNT));
                     intentShow.putExtras(b);
                     startActivity(intentShow);
-
                 }
             }else if( extras.getInt(INTENT_ACTION) == SEARCH_INSTANCE){
                 String instance = extras.getString(INSTANCE_NAME);

@@ -241,7 +241,7 @@ public class NotificationsSyncJob extends Job {
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
             intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
             intent.putExtra(PREF_KEY_ID, account.getId());
-            if( targeted_account != null )
+            if( targeted_account != null && notifType == Helper.NotifType.FOLLLOW)
                 intent.putExtra(INTENT_TARGETED_ACCOUNT, targeted_account);
             intent.putExtra(PREF_INSTANCE, account.getInstance());
             long notif_id = Long.parseLong(account.getId());

@@ -275,8 +275,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
                             intent.putExtra(PREF_KEY_ID, account.getId());
-                            if (targeted_account != null)
+                            if (targeted_account != null) {
                                 intent.putExtra(INTENT_TARGETED_ACCOUNT, targeted_account);
+                            }
                             long notif_id = Long.parseLong(account.getId());
                             final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
                             if (notification.getAccount().getAvatar() != null) {
