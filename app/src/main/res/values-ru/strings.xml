@@ -54,7 +54,7 @@
   <string name="open_with">Открыть с помощью</string>
   <string name="validate">Подтверждение</string>
   <string name="media">Медиа</string>
-  <string name="share_with">Поделиться с</string>
+  <string name="share_with">Поделиться через</string>
   <string name="shared_via">Поделился через Mastalab</string>
   <string name="replies">Ответы</string>
   <string name="username">Имя пользователя</string>
@@ -74,10 +74,10 @@
   <string name="local_menu">Местная лента</string>
   <string name="global_menu">Федеративная лента</string>
   <string name="neutral_menu_title">Опции</string>
-  <string name="favorites_menu">Избранное</string>
+  <string name="favorites_menu">Избранные</string>
   <string name="communication_menu_title">Общение</string>
   <string name="muted_menu">Приглушенные</string>
-  <string name="blocked_menu">Чёрный список</string>
+  <string name="blocked_menu">Заблокированные пользователи</string>
   <string name="remote_follow_menu">Удаленная подписка</string>
   <string name="notifications">Уведомления</string>
   <string name="follow_request">Запросы на подписку</string>
@@ -93,9 +93,9 @@
   <string name="click_to_change">Нажмите для изменения</string>
   <string name="failed">Ошибка!</string>
   <string name="scheduled_toots">Запланированные toots</string>
-  <string name="disclaimer_full">Информация, представленная ниже, не может отражать профиль пользователя полностью.</string>
-  <string name="insert_emoji">Добавить эмодзи</string>
-  <string name="no_emoji">Приложение не собирает пользовательские эмодзи.</string>
+  <string name="disclaimer_full">Информация, приведенная ниже, может не соответствовать профилю пользователя.</string>
+  <string name="insert_emoji">Вставить эмодзи</string>
+  <string name="no_emoji">На данный момент приложение не собирает пользовательские эмодзи.</string>
   <string name="live_notif">Пуш-уведомления</string>
   <!-- Status -->
   <string name="no_status">Нет toot для отображения</string>
