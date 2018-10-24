@@ -152,7 +152,7 @@
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Warning</string>
   <string name="toot_placeholder">What is on your mind?</string>
-  <string name="toot_it">TOOT!</string>
+  <string name="toot_it">Tŵt!</string>
   <string name="cw">cw</string>
   <string name="toot_title">Write a toot</string>
   <string name="toot_title_reply">Reply to a toot</string>
