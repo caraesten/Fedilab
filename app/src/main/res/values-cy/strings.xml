@@ -399,7 +399,7 @@
   <string name="owner_cached_toots">Your toots</string>
   <string name="v_public">Public</string>
   <string name="v_unlisted">Unlisted</string>
-  <string name="v_private">Private</string>
+  <string name="v_private">Preifat</string>
   <string name="v_direct">Direct</string>
   <string name="v_keywords">Some keywords…</string>
   <string name="show_media">Show media</string>
@@ -408,7 +408,7 @@
   <string name="data_backup_toots">Backup toots for %1$s</string>
   <string name="data_backup_success">%1$s new toots have been imported</string>
   <string-array name="filter_select">
-    <item>No</item>
+    <item>Na</item>
     <item>Only</item>
     <item>Both</item>
   </string-array>
@@ -533,7 +533,7 @@
   <string name="filter_keyword">Keyword or phrase</string>
   <string name="context_home">Home timeline</string>
   <string name="context_public">Public timelines</string>
-  <string name="context_notification">Notifications</string>
+  <string name="context_notification">Hysbysiadau</string>
   <string name="context_conversation">Conversations</string>
   <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
   <string name="context_drop">Drop instead of hide</string>
