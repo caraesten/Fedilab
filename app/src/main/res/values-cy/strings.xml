@@ -5,7 +5,7 @@
   <string name="navigation_drawer_close">Close the menu</string>
   <string name="action_about">Amdano</string>
   <string name="action_about_instance">About the instance</string>
-  <string name="action_privacy">Privacy</string>
+  <string name="action_privacy">Preifatrwydd</string>
   <string name="action_cache">Cache</string>
   <string name="action_logout">Allgofnodi</string>
   <string name="login">Mewngofnodi</string>
@@ -15,16 +15,16 @@
   <string name="no">Na</string>
   <string name="cancel">Cancel</string>
   <string name="download">Lawrlwytho</string>
-  <string name="download_file">Download %1$s</string>
+  <string name="download_file">Lawrlwytho %1$s</string>
   <string name="download_over">Download complete</string>
   <string name="save_file">Save %1$s</string>
   <string name="save_over">Media saved</string>
-  <string name="download_from" formatted="false">File: %1$s</string>
-  <string name="password">Password</string>
-  <string name="email">Email</string>
-  <string name="accounts">Accounts</string>
-  <string name="toots">Toots</string>
-  <string name="tags">Tags</string>
+  <string name="download_from" formatted="false">Ffeil: %1$s</string>
+  <string name="password">Cyfrinair</string>
+  <string name="email">E-bost</string>
+  <string name="accounts">Cyfrifon</string>
+  <string name="toots">Tŵtiau</string>
+  <string name="tags">Tagiau</string>
   <string name="token">Token</string>
   <string name="save">Save</string>
   <string name="restore">Restore</string>
