@@ -153,7 +153,7 @@
   <string name="toot_cw_placeholder">Warning</string>
   <string name="toot_placeholder">What is on your mind?</string>
   <string name="toot_it">Tŵt!</string>
-  <string name="cw">cw</string>
+  <string name="cw">cs</string>
   <string name="toot_title">Write a toot</string>
   <string name="toot_title_reply">Reply to a toot</string>
   <string name="toot_no_space">You have reached the 500 characters allowed!</string>
@@ -165,7 +165,7 @@
   <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
   <string name="toot_sent">The toot has been sent!</string>
   <string name="toot_reply_content_title">You are replying to this toot:</string>
-  <string name="toot_sensitive">Sensitive content?</string>
+  <string name="toot_sensitive">Cynnwys sensitif?</string>
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
     <item>Do not post to public timelines</item>
@@ -289,7 +289,7 @@
   <string name="load_attachment">Load the pictures</string>
   <string name="load_attachment_spoiler">Show more…</string>
   <string name="load_attachment_spoiler_less">Show less…</string>
-  <string name="load_sensitive_attachment">Sensitive content</string>
+  <string name="load_sensitive_attachment">Cynnwys sensitif</string>
   <string name="set_display_reply">Display previous message in responses</string>
   <string name="set_display_local">Display local timeline</string>
   <string name="set_display_global">Display federated timeline</string>
