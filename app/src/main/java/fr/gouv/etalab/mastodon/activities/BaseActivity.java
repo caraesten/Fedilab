@@ -3,6 +3,9 @@ package fr.gouv.etalab.mastodon.activities;
 import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 
+import com.vanniktech.emoji.EmojiManager;
+import com.vanniktech.emoji.one.EmojiOneProvider;
+
 import fr.gouv.etalab.mastodon.helper.Helper;
 
 /**
@@ -14,6 +17,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 public class BaseActivity extends AppCompatActivity {
     static {
         Helper.installProvider();
+        EmojiManager.install(new EmojiOneProvider());
     }
 
 }

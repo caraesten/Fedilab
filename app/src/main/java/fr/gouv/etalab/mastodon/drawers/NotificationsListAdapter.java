@@ -51,6 +51,7 @@ import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
+import com.vanniktech.emoji.EmojiTextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -1075,10 +1076,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     class ViewHolder extends RecyclerView.ViewHolder {
 
         FrameLayout card_status_container;
-        CustomTextView notification_status_content;
+        EmojiTextView notification_status_content;
         TextView notification_type;
         LinearLayout status_spoiler_container;
-        CustomTextView status_spoiler;
+        EmojiTextView status_spoiler;
         Button status_spoiler_button;
         TextView notification_account_username;
         ImageView notification_account_profile;

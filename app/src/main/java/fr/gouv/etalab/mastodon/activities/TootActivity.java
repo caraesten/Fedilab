@@ -56,7 +56,6 @@ import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -81,6 +80,7 @@ import com.github.stom79.localepicker.CountryPickerListener;
 import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.translate.Translate;
+import com.vanniktech.emoji.EmojiPopup;
 
 
 import java.io.ByteArrayInputStream;
@@ -119,6 +119,7 @@ import fr.gouv.etalab.mastodon.client.Glide.GlideApp;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.drawers.CustomEmojiAdapter;
 import fr.gouv.etalab.mastodon.drawers.EmojisSearchAdapter;
+import fr.gouv.etalab.mastodon.helper.MastalabAutoCompleteTextView;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.sqlite.CustomEmojiDAO;
@@ -141,6 +142,7 @@ import fr.gouv.etalab.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.convertDpToPixel;
 
@@ -161,7 +163,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private boolean isSensitive = false;
     private ImageButton toot_visibility;
     private Button toot_it;
-    private AutoCompleteTextView toot_content;
+    private MastalabAutoCompleteTextView toot_content;
     private EditText toot_cw_content;
     private Status tootReply = null;
     private String tootMention = null;
@@ -179,6 +181,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private HorizontalScrollView picture_scrollview;
     private int currentCursorPosition, searchLength;
     private TextView toot_space_left;
+    private ImageButton toot_emoji;
     private String initialContent;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
     private Account accountReply;
@@ -261,6 +264,19 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         picture_scrollview = findViewById(R.id.picture_scrollview);
         toot_sensitive = findViewById(R.id.toot_sensitive);
         drawer_layout = findViewById(R.id.drawer_layout);
+        toot_emoji = findViewById(R.id.toot_emoji);
+        final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(drawer_layout).build(toot_content);
+
+        toot_emoji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emojiPopup.toggle(); // Toggles visibility of the Popup.
+            }
+        });
+
+
+
+
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -2157,7 +2173,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private void changeColor(){
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_DARK) {
+        if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK) {
             changeDrawableColor(TootActivity.this, R.drawable.ic_public_toot, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_lock_open_toot, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_lock_outline_toot, R.color.dark_text);
@@ -2166,6 +2182,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.dark_text);
+            changeDrawableColor(TootActivity.this, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
         }else {
             changeDrawableColor(TootActivity.this, R.drawable.ic_public_toot, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_lock_open_toot, R.color.white);
@@ -2175,6 +2192,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_previous, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.white);
+            changeDrawableColor(TootActivity.this, R.drawable.emoji_one_category_smileysandpeople, R.color.black);
         }
     }
 

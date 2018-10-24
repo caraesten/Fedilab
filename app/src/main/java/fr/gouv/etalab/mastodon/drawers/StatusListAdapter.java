@@ -69,6 +69,8 @@ import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
 import com.github.stom79.mytransl.translate.Translate;
+import com.vanniktech.emoji.EmojiTextView;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -226,9 +228,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     class ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout status_content_container;
         LinearLayout status_spoiler_container;
-        CustomTextView status_spoiler;
+        EmojiTextView status_spoiler;
         Button status_spoiler_button;
-        CustomTextView status_content;
+        EmojiTextView status_content;
         TextView status_content_translated;
         LinearLayout status_content_translated_container;
         TextView status_account_username;

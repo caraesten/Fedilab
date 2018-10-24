@@ -120,6 +120,16 @@
                     style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
+                <ImageButton
+                    android:id="@+id/toot_emoji"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:padding="2dp"
+                    android:src="@drawable/emoji_one_category_smileysandpeople"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                   />
                 <TextView
                     android:id="@+id/toot_space_left"
                     android:layout_width="0dp"
