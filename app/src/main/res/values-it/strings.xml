@@ -570,7 +570,7 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
   <string name="block_domain_confirm_message">Are you sure to block %s?</string>
   <string name="blocked_domains">Blocked domains</string>
-  <string name="block_domain">Block domain</string>
+  <string name="block_domain">Blocca dominio</string>
   <string name="toast_block_domain">The domain is blocked</string>
   <string name="toast_unblock_domain">The domain is no longer blocked!</string>
   <string name="retrieve_remote_status">Fetching remote status</string>
@@ -596,11 +596,11 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <string name="videos">Videos</string>
   <string name="channels">Canali</string>
   <string-array name="filter_expire">
-    <item>Never</item>
-    <item>30 minutes</item>
+    <item>Mai</item>
+    <item>30 minuti</item>
     <item>1 ora</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
+    <item>6 ore</item>
+    <item>12 ore</item>
     <item>1 giorno</item>
     <item>1 settimana</item>
   </string-array>
