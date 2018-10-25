@@ -38,7 +38,7 @@
             android:hint="@string/toot_cw_placeholder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <AutoCompleteTextView
+        <fr.gouv.etalab.mastodon.helper.MastalabAutoCompleteTextView
             android:layout_marginTop="10dp"
             android:id="@+id/toot_content"
             android:gravity="top|start"

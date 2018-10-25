@@ -93,5 +93,3 @@ The number of libraries is minimized and it does not use tracking tools. The sou
 
 Developer: [@tom79](https://mastodon.social/@tom79)
 
-<a rel="me" href="https://mastodon.social/@tom79">Mastodon</a>
-
