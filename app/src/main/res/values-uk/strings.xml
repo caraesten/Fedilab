@@ -118,7 +118,7 @@
   <string name="more_action_6">Поділитися</string>
   <string name="more_action_7">Згадати</string>
   <string name="more_action_8">Тимчасово заглушити</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_9">Видалити &amp; переробити</string>
   <string-array name="more_action_confirm">
     <item>Заглушити цей обліковий запис?</item>
     <item>Заблокувати цей обліковий запис?</item>
@@ -127,7 +127,7 @@
   </string-array>
   <string-array name="more_action_owner_confirm">
     <item>Видалити цей дмух?</item>
-    <item>Delete &amp; re-draft this toot?</item>
+    <item>Видалити &amp; переробити цей гудок?</item>
   </string-array>
   <plurals name="preview_replies">
     <item quantity="one">%d відповідь</item>
@@ -189,7 +189,7 @@
   <string name="about_thekinrar">Шукати екземпляри:</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Дизайнер піктограм:</string>
-  <string name="thanks_text_banner">Banner designer:</string>
+  <string name="thanks_text_banner">Дизайнер банеру:</string>
   <!-- Conversation -->
   <string name="conversation">Розмова</string>
   <!-- Accounts -->
@@ -338,7 +338,7 @@
     <item>DeepL</item>
     <item>Ні</item>
   </string-array>
-  <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+  <string name="your_api_key">Ваш API ключ, можете залишити пустим для Яндекс</string>
   <string-array name="settings_theme">
     <item>Темна</item>
     <item>Світла</item>
@@ -486,20 +486,20 @@
   <string name="set_theme">Тема:</string>
   <string name="set_compact_mode">Компактний режим</string>
   <string name="set_share_details">Add toot details when sharing</string>
-  <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-  <string name="alert_regex">There is an error in the regular expression!</string>
-  <string name="no_account_yet">No account yet?</string>
+  <string name="support_the_app_on_liberapay">Підтримати додаток на Liberapay</string>
+  <string name="alert_regex">Помилка у регулярному виразі!</string>
+  <string name="no_account_yet">Немає облікового запису?</string>
   <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
   <string name="delete_instance">Delete this instance?</string>
   <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-  <string name="which_language">Translate in</string>
+  <string name="which_language">Перекласти</string>
   <string name="crash_title">Mastalab has stopped :(</string>
   <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
   <string name="send_crash_report">Ask for sending crash reports by email?</string>
   <string name="follow_instance">Follow instance</string>
   <string name="toast_instance_already_added">You already follow this instance!</string>
   <string name="toast_instance_followed">The instance is followed!</string>
-  <string name="action_partnership">Partnerships</string>
+  <string name="action_partnership">Партнерство</string>
   <string name="neutral_menu_information">Інформація</string>
   <string name="hide_boost">Hide boosts from %s</string>
   <string name="endorse">Feature on profile</string>
@@ -511,14 +511,14 @@
   <string name="toast_unendorse">The account is no longer featured on profile</string>
   <string name="toast_show_boost">Boosts are now shown!</string>
   <string name="toast_hide_boost">Boosts are now hidden!</string>
-  <string name="direct_message">Direct message</string>
-  <string name="filters">Filters</string>
+  <string name="direct_message">Пряме повідомлення</string>
+  <string name="filters">Фільтри</string>
   <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-  <string name="filter_keyword">Keyword or phrase</string>
+  <string name="filter_keyword">Ключове слово або фраза</string>
   <string name="context_home">Home timeline</string>
   <string name="context_public">Public timelines</string>
-  <string name="context_notification">Notifications</string>
-  <string name="context_conversation">Conversations</string>
+  <string name="context_notification">Сповіщення</string>
+  <string name="context_conversation">Розмови</string>
   <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
   <string name="context_drop">Drop instead of hide</string>
   <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
