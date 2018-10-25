@@ -523,7 +523,7 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <string name="context_public">Timeline pubblica</string>
   <string name="context_notification">Notifiche</string>
   <string name="context_conversation">Conversazioni</string>
-  <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
+  <string name="filter_keyword_explanations">Il confronto sarà eseguito ignorando minuscole/maiuscole e i content warning di un toot</string>
   <string name="context_drop">Ignorare invece di nascondere</string>
   <string name="context_drop_explanations">I toot filtrati scompariranno in modo irreversibile, anche se il filtro verrà successivamente rimosso</string>
   <string name="context_whole_word_explanations">Quando la parola chiave o la frase è solo alfanumerica, sarà applicato solo se corrisponde alll\'intera parola</string>
