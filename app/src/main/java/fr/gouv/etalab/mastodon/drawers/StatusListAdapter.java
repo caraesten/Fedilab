@@ -382,6 +382,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
 
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int position) {
@@ -425,6 +426,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
+
+            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT &&  getItemViewType(position) != FOCUSED_STATUS && position != 0 ){
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                params.setMargins((int)Helper.convertDpToPixel(30, context), 0, 0, 0);
+                holder.main_container.setLayoutParams(params);
+            }else if(type == RetrieveFeedsAsyncTask.Type.CONTEXT &&  getItemViewType(position) == FOCUSED_STATUS && position != 0 ){
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                params.setMargins((int)Helper.convertDpToPixel(15, context), 0, 0, 0);
+                holder.main_container.setLayoutParams(params);
+            }
 
 
             if( getItemViewType(position) == FOCUSED_STATUS ) {
@@ -639,7 +656,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_content_translated.setMovementMethod(LinkMovementMethod.getInstance());
             //-------- END -> Manages translations
 
-
+            if( status.getAccount() == null) {
+                Account account = new AccountDAO(context, db).getAccountByID(sharedpreferences.getString(Helper.PREF_KEY_ID, null));
+                status.setAccount(account);
+            }
             //Displays name & emoji in toot header
             final String ppurl;
             if( status.getReblog() != null){
@@ -986,22 +1006,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
 
-            if( theme == Helper.THEME_LIGHT){
+           /* if( theme == Helper.THEME_LIGHT){
                 holder.main_container.setBackgroundResource(R.color.mastodonC3__);
             }else if (theme == Helper.THEME_DARK){
                 holder.main_container.setBackgroundResource(R.color.mastodonC1_);
             }else if (theme == Helper.THEME_BLACK){
                 holder.main_container.setBackgroundResource(R.color.black);
-            }
+            }*/
             if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
 
                 if( position == conversationPosition){
-                    if( theme == Helper.THEME_LIGHT)
+                   /* if( theme == Helper.THEME_LIGHT)
                         holder.main_container.setBackgroundResource(R.color.mastodonC3_);
                     else if( theme == Helper.THEME_DARK)
                         holder.main_container.setBackgroundResource(R.color.mastodonC1___);
                     else if( theme == Helper.THEME_BLACK)
-                        holder.main_container.setBackgroundResource(R.color.black_2);
+                        holder.main_container.setBackgroundResource(R.color.black_2);*/
                     if( status.getCard() != null){
 
                         holder.status_cardview_content.setText(status.getCard().getDescription());
@@ -1052,12 +1072,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }else {
                     holder.status_cardview.setVisibility(View.GONE);
                     holder.status_cardview_video.setVisibility(View.GONE);
-                    if( theme == Helper.THEME_LIGHT)
+                    /*if( theme == Helper.THEME_LIGHT)
                         holder.main_container.setBackgroundResource(R.color.mastodonC3__);
                     else if( theme == Helper.THEME_DARK)
                         holder.main_container.setBackgroundResource(R.color.mastodonC1_);
                     else if (theme == Helper.THEME_BLACK)
-                        holder.main_container.setBackgroundResource(R.color.black);
+                        holder.main_container.setBackgroundResource(R.color.black);*/
                 }
             }
 

@@ -110,7 +110,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         expanded = false;
 
         setContentView(R.layout.activity_show_conversation);
-
+        lv_status = findViewById(R.id.lv_status);
         Toolbar toolbar = findViewById(R.id.toolbar);
         if( theme == THEME_BLACK)
             toolbar.setBackgroundColor(ContextCompat.getColor(ShowConversationActivity.this, R.color.black));
@@ -247,11 +247,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                 new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false,false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
-        lv_status = findViewById(R.id.lv_status);
-        lv_status.addItemDecoration(new DividerItemDecoration(ShowConversationActivity.this, DividerItemDecoration.VERTICAL));
-        final LinearLayoutManager mLayoutManager;
-        mLayoutManager = new LinearLayoutManager(this);
-        lv_status.setLayoutManager(mLayoutManager);
+
 
     }
 
@@ -288,10 +284,12 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
+
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+
         int position = 0;
         boolean positionFound = false;
         statuses = new ArrayList<>();
@@ -332,15 +330,22 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                 statuses.addAll(context.getDescendants());
             }
         }
+        statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+
+        final LinearLayoutManager mLayoutManager;
+        mLayoutManager = new LinearLayoutManager(this);
+
+        lv_status.setLayoutManager(mLayoutManager);
+        lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this,position));
+        lv_status.setAdapter(statusListAdapter);
+
         if( isRefreshed){
             position = statuses.size()-1;
             lv_status.scrollToPosition(position);
         }else {
             lv_status.smoothScrollToPosition(position);
         }
-        statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
-       // lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this,position), DividerItemDecoration.VERTICAL);
-        lv_status.setAdapter(statusListAdapter);
+
         statusListAdapter.notifyDataSetChanged();
         loader.setVisibility(View.GONE);
         lv_status.setVisibility(View.VISIBLE);

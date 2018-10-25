@@ -18,8 +18,10 @@ package fr.gouv.etalab.mastodon.drawers;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import fr.gouv.etalab.mastodon.R;
@@ -43,36 +45,43 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
     }
 
     @Override
-    public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
-        canvas.save();
-        int left = parent.getPaddingLeft();
-        int right = parent.getWidth() - parent.getPaddingRight();
+    public void onDraw(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+
+        int left = parent.getPaddingLeft() + (int)Helper.convertDpToPixel(12, context);
+        int right = left + (int)Helper.convertDpToPixel(4, context);
         int childCount = parent.getChildCount();
-        int top = 0, bottom = 0;
-        StatusListAdapter adapter = (StatusListAdapter) parent.getAdapter();
-        int offSet = (int) Helper.convertDpToPixel(50, context);
+
+
+        int offSet = (int) Helper.convertDpToPixel(30, context);
+
         for (int i = 0; i < childCount; i++) {
+
             View child = parent.getChildAt(i);
+            StatusListAdapter adapter = (StatusListAdapter) parent.getAdapter();
             int position = parent.getChildAdapterPosition(child);
+
             Status status = adapter.getItem(position);
+
+            int top = 0;
+            int bottom = 0;
             if( status != null){
                 Status statusBefore = null;
                 if( position > 0)
                     statusBefore = adapter.getItem(position - 1);
                 top = (statusBefore != null && statusBefore.getId().equals(status.getIn_reply_to_id()))?
-                        child.getBottom(): (child.getTop() + offSet);
+                        child.getTop(): (child.getTop() + offSet);
                 Status statusAfter = null;
                 if( adapter.getItemCount() > position+1)
                     statusAfter = adapter.getItem(position + 1);
-                bottom =  (statusAfter != null && status.getId().equals(statusAfter.getIn_reply_to_id()) && position != statusOpenedPosition)?
-                    child.getTop():child.getTop()+offSet;
-
-
+                bottom =  (statusAfter != null && status.getId().equals(statusAfter.getIn_reply_to_id()) )?
+                    child.getBottom():child.getTop()+offSet;
+                if( position == 0)
+                    top = bottom - (int)Helper.convertDpToPixel(28, context);
             }
             divider.setBounds(left, top, right, bottom);
             divider.draw(canvas);
         }
-        canvas.restore();
+
     }
 
 }
