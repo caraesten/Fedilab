@@ -94,7 +94,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private List<String> mutedAccount;
     private String instanceType;
     private String search_peertube, remote_channel_name;
-
+    private boolean isFetchingMore;
 
     public DisplayStatusFragment(){
     }
@@ -112,6 +112,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         firstTootsLoaded = true;
         showPinned = false;
         showReply = false;
+        isFetchingMore = false;
         if (bundle != null) {
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
@@ -444,8 +445,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
                         if( tmpStatuses.size() < 3) //If new toots are only two
                             lv_status.scrollToPosition(0);
-                        else
-                            lv_status.scrollToPosition(position+tmpStatuses.size());
+                        else {
+                            if(isFetchingMore)
+                                lv_status.scrollToPosition(position);
+                            else
+                                lv_status.scrollToPosition(position + tmpStatuses.size());
+                            isFetchingMore = false;
+                        }
                     }
 
                 }else {
@@ -468,6 +474,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             swipeRefreshLayout.setRefreshing(false);
             firstLoad = false;
+            isFetchingMore = false;
 
         }
     }
@@ -705,6 +712,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void fetchMore(String max_id){
+        isFetchingMore = true;
         asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
