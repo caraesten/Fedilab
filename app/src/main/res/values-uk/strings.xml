@@ -494,7 +494,7 @@
   <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
   <string name="which_language">Перекласти</string>
   <string name="crash_title">Mastalab зупинився :(</string>
-  <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
+  <string name="crash_message">Ви можете надіслати мені звіт про збій електронною поштою. Це допоможе виправити це:)\n\nВи можете додати додатковий вміст. Дякую!</string>
   <string name="send_crash_report">Ask for sending crash reports by email?</string>
   <string name="follow_instance">Follow instance</string>
   <string name="toast_instance_already_added">You already follow this instance!</string>
@@ -503,7 +503,7 @@
   <string name="neutral_menu_information">Інформація</string>
   <string name="hide_boost">Hide boosts from %s</string>
   <string name="endorse">Feature on profile</string>
-  <string name="hide_everything">Hide everything from %s</string>
+  <string name="hide_everything">Сховати все від %s</string>
   <string name="show_boost">Show boosts from %s</string>
   <string name="unendorse">Don\'t feature on profile</string>
   <string name="show_everything">Show everything from %s</string>
