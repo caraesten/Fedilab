@@ -22,6 +22,8 @@ import android.net.NetworkInfo;
 import java.util.HashSet;
 import java.util.Set;
 
+import fr.gouv.etalab.mastodon.helper.Helper;
+
 /**
  * Original work from https://stackoverflow.com/a/25873554
  *
@@ -36,6 +38,7 @@ public class NetworkStateReceiver extends BroadcastReceiver {
         connected = null;
     }
 
+    @Override
     public void onReceive(Context context, Intent intent) {
         if(intent == null || intent.getExtras() == null)
             return;
@@ -52,6 +55,7 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 
         notifyStateToAll();
     }
+
 
     private void notifyStateToAll() {
         for(NetworkStateReceiverListener listener : listeners)

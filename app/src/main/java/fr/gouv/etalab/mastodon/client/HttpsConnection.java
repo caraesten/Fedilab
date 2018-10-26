@@ -118,6 +118,7 @@ public class HttpsConnection {
     @SuppressWarnings("ConstantConditions")
     public String get(String urlConnection, int timeout, HashMap<String, String> paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
 
+
         if( urlConnection.startsWith("https://")) {
             Map<String, Object> params = new LinkedHashMap<>();
             if (paramaters != null) {
