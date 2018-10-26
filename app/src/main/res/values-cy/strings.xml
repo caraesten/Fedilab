@@ -200,7 +200,7 @@
   <string name="status_cnt">Tŵtiau \n %1$s</string>
   <string name="following_cnt">Following \n %1$s</string>
   <string name="followers_cnt">Dilynwyr \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
+  <string name="pins_cnt">Wedi eu pinio \n %d</string>
   <string name="authorize">Authorize</string>
   <string name="reject">Reject</string>
   <!-- Scheduled toots -->
@@ -245,7 +245,7 @@
   <!-- HEADER -->
   <string name="following">Following</string>
   <string name="followers">Dilynwyr</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="pinned_toots">Wedi eu pinio</string>
   <!-- TOAST -->
   <string name="client_error">Unable to get client id!</string>
   <string name="no_internet">No Internet connection!</string>
@@ -371,10 +371,10 @@
   <string name="action_follow">Dilyn</string>
   <string name="action_unfollow">Dad-ddilyn</string>
   <string name="action_block">Blocio</string>
-  <string name="action_unblock">Dad-flocio</string>
+  <string name="action_unblock">Dadflocio</string>
   <string name="action_mute">Mudo</string>
   <string name="action_no_action">No action</string>
-  <string name="action_unmute">Dad-fudo</string>
+  <string name="action_unmute">Dad-dawelu</string>
   <string name="request_sent">Request sent</string>
   <string name="followed_by">Yn eich dilyn chi</string>
   <string name="action_search">Chwilio</string>
@@ -400,7 +400,7 @@
   <string name="v_public">Cyhoeddus</string>
   <string name="v_unlisted">Unlisted</string>
   <string name="v_private">Preifat</string>
-  <string name="v_direct">Direct</string>
+  <string name="v_direct">Preifat</string>
   <string name="v_keywords">Some keywords…</string>
   <string name="show_media">Show media</string>
   <string name="show_pinned">Show pinned</string>
@@ -461,7 +461,7 @@
   <string name="delete">Dileu</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
+  <string name="action_lists">Rhestrau</string>
   <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
   <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
   <string name="action_lists_add_to">Add to list</string>
@@ -527,7 +527,7 @@
   <string name="toast_unendorse">The account is no longer featured on profile</string>
   <string name="toast_show_boost">Boosts are now shown!</string>
   <string name="toast_hide_boost">Boosts are now hidden!</string>
-  <string name="direct_message">Direct message</string>
+  <string name="direct_message">Neges preifat</string>
   <string name="filters">Filters</string>
   <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
   <string name="filter_keyword">Keyword or phrase</string>
@@ -604,7 +604,7 @@
   <string name="no_peertube_channels">No Peertube channels</string>
   <string name="no_peertube_instances">No Peertube instances</string>
   <string name="no_mastodon_instances">No Mastodon instances</string>
-  <string name="no_lists">No lists</string>
+  <string name="no_lists">Dim rhestrau</string>
   <string name="videos">Videos</string>
   <string name="channels">Channels</string>
   <string-array name="filter_expire">
