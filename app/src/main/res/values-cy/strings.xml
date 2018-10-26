@@ -17,7 +17,7 @@
   <string name="download">Lawrlwytho</string>
   <string name="download_file">Lawrlwytho %1$s</string>
   <string name="download_over">Download complete</string>
-  <string name="save_file">Save %1$s</string>
+  <string name="save_file">Cadw %1$s</string>
   <string name="save_over">Media saved</string>
   <string name="download_from" formatted="false">Ffeil: %1$s</string>
   <string name="password">Cyfrinair</string>
@@ -57,7 +57,7 @@
   <string name="share_with">Share with</string>
   <string name="shared_via">Shared via Mastalab</string>
   <string name="replies">Replies</string>
-  <string name="username">User name</string>
+  <string name="username">Enwdefnyddiwr</string>
   <string name="drafts">Drafftiau</string>
   <string name="new_data">New data are available! Do you want to display them?</string>
   <string name="favourite">Ffefrynnau</string>
