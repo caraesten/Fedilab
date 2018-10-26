@@ -173,15 +173,6 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
             }
         });
 
-        if( theme == Helper.THEME_LIGHT) {
-            about_code.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-            about_thekinrar.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-            about_trunk.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-            about_translation.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-            about_license.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-            about_support.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-            paypal.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-        }
 
         TextView about_website = findViewById(R.id.about_website);
         about_website.setOnClickListener(new View.OnClickListener() {

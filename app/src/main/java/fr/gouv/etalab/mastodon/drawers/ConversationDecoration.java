@@ -57,10 +57,10 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
             StatusListAdapter adapter = (StatusListAdapter) parent.getAdapter();
             int position = parent.getChildAdapterPosition(child);
 
+            assert adapter != null;
             Status status = adapter.getItem(position);
 
-            int top = 0;
-            int bottom = 0;
+            int top, bottom;
             if( status != null){
                 Status statusBefore = null;
                 if( position > 0)
@@ -74,9 +74,10 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
                     child.getBottom():child.getTop()+offSet;
                 if( position == 0 && childCount > 1)
                     top = bottom - (int)Helper.convertDpToPixel(28, context);
+                divider.setBounds(left, top, right, bottom);
+                divider.draw(canvas);
             }
-            divider.setBounds(left, top, right, bottom);
-            divider.draw(canvas);
+
         }
 
     }

@@ -140,9 +140,6 @@ public class LoginActivity extends BaseActivity {
             login_passwd = findViewById(R.id.login_passwd);
 
 
-            if (theme == Helper.THEME_LIGHT) {
-                connectionButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-            }
             login_instance.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick (AdapterView<?> parent, View view, int position, long id) {

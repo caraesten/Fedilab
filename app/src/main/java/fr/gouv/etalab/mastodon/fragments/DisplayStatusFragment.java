@@ -570,6 +570,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }
+        }else if (type == RetrieveFeedsAsyncTask.Type.DIRECT){
+            if( getUserVisibleHint() ){
+                if( statuses != null && statuses.size() > 0)
+                    retrieveMissingToots(statuses.get(0).getId());
+            }
         }else if (type == RetrieveFeedsAsyncTask.Type.HOME){
             statusListAdapter.updateMuted(mutedAccount);
             if( statuses != null && statuses.size() > 0)
