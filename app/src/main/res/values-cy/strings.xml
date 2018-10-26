@@ -80,7 +80,7 @@
   <string name="blocked_menu">Defnyddwyr wedi’u blocio</string>
   <string name="remote_follow_menu">Remote follow</string>
   <string name="notifications">Hysbysiadau</string>
-  <string name="follow_request">Follow requests</string>
+  <string name="follow_request">Dilyn ceisiadau</string>
   <string name="optimization">Optimization</string>
   <string name="settings">Settings</string>
   <string name="profile">Profile</string>
@@ -397,7 +397,7 @@
   <string name="action_sync">Synchronize</string>
   <string name="action_filter">Filter</string>
   <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
+  <string name="v_public">Cyhoeddus</string>
   <string name="v_unlisted">Unlisted</string>
   <string name="v_private">Preifat</string>
   <string name="v_direct">Direct</string>
