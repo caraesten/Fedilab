@@ -22,7 +22,6 @@ import android.net.NetworkInfo;
 import java.util.HashSet;
 import java.util.Set;
 
-import fr.gouv.etalab.mastodon.helper.Helper;
 
 /**
  * Original work from https://stackoverflow.com/a/25873554
