@@ -60,8 +60,8 @@
   <string name="username">User name</string>
   <string name="drafts">Drafftiau</string>
   <string name="new_data">New data are available! Do you want to display them?</string>
-  <string name="favourite">Favourites</string>
-  <string name="follow">New followers</string>
+  <string name="favourite">Ffefrynnau</string>
+  <string name="follow">Dilynwyr newydd</string>
   <string name="mention">Mentions</string>
   <string name="reblog">Hybiadau</string>
   <string name="show_boosts">Dangos hybiadau</string>
@@ -70,17 +70,17 @@
   <string name="translate">Translate</string>
   <string name="please_wait">Please, wait few seconds before making this action.</string>
   <!--- Menu -->
-  <string name="home_menu">Home</string>
-  <string name="local_menu">Local timeline</string>
-  <string name="global_menu">Federated timeline</string>
+  <string name="home_menu">Hafan</string>
+  <string name="local_menu">Llinell amser lleol</string>
+  <string name="global_menu">Llinell amser ffederasiwn</string>
   <string name="neutral_menu_title">Options</string>
-  <string name="favorites_menu">Favourites</string>
+  <string name="favorites_menu">Ffefrynnau</string>
   <string name="communication_menu_title">Communication</string>
-  <string name="muted_menu">Muted users</string>
-  <string name="blocked_menu">Blocked users</string>
+  <string name="muted_menu">Defnyddwyr mud</string>
+  <string name="blocked_menu">Defnyddwyr wedi’u blocio</string>
   <string name="remote_follow_menu">Remote follow</string>
   <string name="notifications">Hysbysiadau</string>
-  <string name="follow_request">Follow requests</string>
+  <string name="follow_request">Dilyn ceisiadau</string>
   <string name="optimization">Optimization</string>
   <string name="settings">Settings</string>
   <string name="profile">Profile</string>
@@ -154,11 +154,11 @@
   <string name="toot_placeholder">What is on your mind?</string>
   <string name="toot_it">Tŵt!</string>
   <string name="cw">cs</string>
-  <string name="toot_title">Write a toot</string>
+  <string name="toot_title">Cyfansoddi tŵt</string>
   <string name="toot_title_reply">Reply to a toot</string>
   <string name="toot_no_space">You have reached the 500 characters allowed!</string>
   <string name="toot_select_image">Select a media</string>
-  <string name="toot_select_image_error">An error occurred while selecting the media!</string>
+  <string name="toot_select_image_error">Roedd gwall!</string>
   <string name="toot_delete_media">Delete this media?</string>
   <string name="toot_error_no_content">Your toot is empty!</string>
   <string name="toot_visibility_tilte">Visibility of the toot</string>
@@ -169,7 +169,7 @@
   <string-array name="toot_visibility">
     <item>Post to public timelines</item>
     <item>Do not post to public timelines</item>
-    <item>Post to followers only</item>
+    <item>Cyhoeddi i ddilynwyr yn unig</item>
     <item>Post to mentioned users only</item>
   </string-array>
   <string name="no_draft">No drafts!</string>
@@ -197,9 +197,9 @@
   <!-- Accounts -->
   <string name="no_accounts">No account to display</string>
   <string name="no_follow_request">No follow request</string>
-  <string name="status_cnt">Toots \n %1$s</string>
+  <string name="status_cnt">Tŵtiau \n %1$s</string>
   <string name="following_cnt">Following \n %1$s</string>
-  <string name="followers_cnt">Followers \n %1$s</string>
+  <string name="followers_cnt">Dilynwyr \n %1$s</string>
   <string name="pins_cnt">Pinned \n %d</string>
   <string name="authorize">Authorize</string>
   <string name="reject">Reject</string>
@@ -244,7 +244,7 @@
   <string name="delete_notification_all">All notifications have been deleted!</string>
   <!-- HEADER -->
   <string name="following">Following</string>
-  <string name="followers">Followers</string>
+  <string name="followers">Dilynwyr</string>
   <string name="pinned_toots">Pinned</string>
   <!-- TOAST -->
   <string name="client_error">Unable to get client id!</string>
@@ -263,7 +263,7 @@
   <string name="toast_unstatus">The toot was deleted!</string>
   <string name="toast_pin">The toot was pinned!</string>
   <string name="toast_unpin">The toot was unpinned!</string>
-  <string name="toast_error">Oops ! An error occurred!</string>
+  <string name="toast_error">Roedd gwall!</string>
   <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
   <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
   <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
@@ -376,7 +376,7 @@
   <string name="action_no_action">No action</string>
   <string name="action_unmute">Dad-fudo</string>
   <string name="request_sent">Request sent</string>
-  <string name="followed_by">Follows you</string>
+  <string name="followed_by">Yn eich dilyn chi</string>
   <string name="action_search">Chwilio</string>
   <string name="set_capitalize">First letter in capital for replies</string>
   <string name="set_resize_picture">Resize pictures</string>
@@ -397,7 +397,7 @@
   <string name="action_sync">Synchronize</string>
   <string name="action_filter">Filter</string>
   <string name="owner_cached_toots">Your toots</string>
-  <string name="v_public">Public</string>
+  <string name="v_public">Cyhoeddus</string>
   <string name="v_unlisted">Unlisted</string>
   <string name="v_private">Preifat</string>
   <string name="v_direct">Direct</string>
