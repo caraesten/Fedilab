@@ -65,7 +65,6 @@
                 android:gravity="center"
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 android:tint="@android:color/white"
-                android:textColor="@color/white"
                 android:text="@string/set_notif_sound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

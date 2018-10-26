@@ -336,7 +336,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         mLayoutManager = new LinearLayoutManager(this);
 
         lv_status.setLayoutManager(mLayoutManager);
-        lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this,position));
+        lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this));
         lv_status.setAdapter(statusListAdapter);
 
         if( isRefreshed){

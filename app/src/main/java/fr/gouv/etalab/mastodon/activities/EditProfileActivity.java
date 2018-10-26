@@ -206,9 +206,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         set_lock_account.setEnabled(false);
 
         new RetrieveAccountInfoAsyncTask(getApplicationContext(), EditProfileActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        if( theme == Helper.THEME_LIGHT) {
-            set_profile_save.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-        }
+
     }
 
     @Override

@@ -656,9 +656,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         if( restored != -1 ){
             restoreToot(restored);
         }
-        if( theme == Helper.THEME_LIGHT) {
-            toot_it.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-        }
+
     }
 
     @Override

@@ -122,9 +122,7 @@ public class RemoteFollowActivity extends BaseActivity implements OnRetrieveRemo
         loader = findViewById(R.id.loader);
         lv_account = findViewById(R.id.lv_account);
         rf_no_result = findViewById(R.id.rf_no_result);
-        if( theme == Helper.THEME_LIGHT) {
-            rf_search.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
-        }
+
         isLoadingInstance = false;
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null) {
