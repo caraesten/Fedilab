@@ -21,7 +21,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import fr.gouv.etalab.mastodon.R;
@@ -36,11 +35,9 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
 
     private Drawable divider;
     private Context context;
-    private int statusOpenedPosition;
 
-    public ConversationDecoration(Context context, int statusOpenedPosition){
+    public ConversationDecoration(Context context){
         divider = ContextCompat.getDrawable(context,R.drawable.line_divider);
-        this.statusOpenedPosition = statusOpenedPosition;
         this.context = context;
     }
 
@@ -75,7 +72,7 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
                     statusAfter = adapter.getItem(position + 1);
                 bottom =  (statusAfter != null && status.getId().equals(statusAfter.getIn_reply_to_id()) )?
                     child.getBottom():child.getTop()+offSet;
-                if( position == 0)
+                if( position == 0 && childCount > 1)
                     top = bottom - (int)Helper.convertDpToPixel(28, context);
             }
             divider.setBounds(left, top, right, bottom);
