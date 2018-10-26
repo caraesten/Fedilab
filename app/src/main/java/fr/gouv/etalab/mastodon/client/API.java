@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +26,6 @@ import java.lang.*;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.text.Format;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -729,8 +727,12 @@ public class API {
      */
     public APIResponse searchPeertube(String instance, String query) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("search", query);
         params.put("count", "50");
+        try {
+            params.put("search", URLEncoder.encode(query, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            params.put("search", query);
+        }
         List<Peertube> peertubes = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
