@@ -354,7 +354,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     }
 
     public Status getItem(int position){
-        if( statuses.size() > position)
+        if( statuses.size() > position && position >= 0)
             return statuses.get(position);
         else return null;
     }
