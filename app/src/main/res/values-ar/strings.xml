@@ -603,6 +603,7 @@
   <string name="no_lists">ليس هناك أية قائمة</string>
   <string name="videos">الفيديوهات</string>
   <string name="channels">القنوات</string>
+  <string name="set_display_emoji">Use Emoji One</string>
   <string-array name="filter_expire">
     <item>أبدًا</item>
     <item>30 دقيقة</item>
