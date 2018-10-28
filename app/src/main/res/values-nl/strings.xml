@@ -595,6 +595,7 @@
   <string name="no_lists">Geen lijsten</string>
   <string name="videos">Video\'s</string>
   <string name="channels">Kanalen</string>
+  <string name="set_display_emoji">Use Emoji One</string>
   <string-array name="filter_expire">
     <item>Nooit</item>
     <item>30 minuten</item>
