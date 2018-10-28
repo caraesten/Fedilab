@@ -591,6 +591,7 @@
   <string name="no_lists">Немає списків</string>
   <string name="videos">Відео</string>
   <string name="channels">Канали</string>
+  <string name="set_display_emoji">Use Emoji One</string>
   <string-array name="filter_expire">
     <item>Ніколи</item>
     <item>30 хвилин</item>
