@@ -593,6 +593,7 @@
   <string name="no_lists">Aucune liste</string>
   <string name="videos">Vidéos</string>
   <string name="channels">Chaînes</string>
+  <string name="set_display_emoji">Use Emoji One</string>
   <string-array name="filter_expire">
     <item>Jamais</item>
     <item>30 minutes</item>

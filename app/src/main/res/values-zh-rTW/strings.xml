@@ -592,6 +592,7 @@
   <string name="no_lists">沒有列表</string>
   <string name="videos">影片</string>
   <string name="channels">頻道</string>
+  <string name="set_display_emoji">Use Emoji One</string>
   <string-array name="filter_expire">
     <item>永不</item>
     <item>30 分鐘</item>

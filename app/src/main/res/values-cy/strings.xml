@@ -17,7 +17,7 @@
   <string name="download">Lawrlwytho</string>
   <string name="download_file">Lawrlwytho %1$s</string>
   <string name="download_over">Download complete</string>
-  <string name="save_file">Save %1$s</string>
+  <string name="save_file">Cadw %1$s</string>
   <string name="save_over">Media saved</string>
   <string name="download_from" formatted="false">Ffeil: %1$s</string>
   <string name="password">Cyfrinair</string>
@@ -57,7 +57,7 @@
   <string name="share_with">Share with</string>
   <string name="shared_via">Shared via Mastalab</string>
   <string name="replies">Replies</string>
-  <string name="username">User name</string>
+  <string name="username">Enwdefnyddiwr</string>
   <string name="drafts">Drafftiau</string>
   <string name="new_data">New data are available! Do you want to display them?</string>
   <string name="favourite">Ffefrynnau</string>
@@ -200,7 +200,7 @@
   <string name="status_cnt">Tŵtiau \n %1$s</string>
   <string name="following_cnt">Following \n %1$s</string>
   <string name="followers_cnt">Dilynwyr \n %1$s</string>
-  <string name="pins_cnt">Pinned \n %d</string>
+  <string name="pins_cnt">Wedi eu pinio \n %d</string>
   <string name="authorize">Authorize</string>
   <string name="reject">Reject</string>
   <!-- Scheduled toots -->
@@ -245,7 +245,7 @@
   <!-- HEADER -->
   <string name="following">Following</string>
   <string name="followers">Dilynwyr</string>
-  <string name="pinned_toots">Pinned</string>
+  <string name="pinned_toots">Wedi eu pinio</string>
   <!-- TOAST -->
   <string name="client_error">Unable to get client id!</string>
   <string name="no_internet">No Internet connection!</string>
@@ -312,7 +312,7 @@
   <string name="set_notif_silent">Silent Notifications</string>
   <string name="set_night_mode">Night mode</string>
   <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-  <string name="settings_title_profile">Edit profile</string>
+  <string name="settings_title_profile">Golygu proffil</string>
   <string name="set_profile_description">Bio…</string>
   <string name="set_lock_account">Lock account</string>
   <string name="set_save_changes">Save changes</string>
@@ -371,10 +371,10 @@
   <string name="action_follow">Dilyn</string>
   <string name="action_unfollow">Dad-ddilyn</string>
   <string name="action_block">Blocio</string>
-  <string name="action_unblock">Dad-flocio</string>
+  <string name="action_unblock">Dadflocio</string>
   <string name="action_mute">Mudo</string>
   <string name="action_no_action">No action</string>
-  <string name="action_unmute">Dad-fudo</string>
+  <string name="action_unmute">Dad-dawelu</string>
   <string name="request_sent">Request sent</string>
   <string name="followed_by">Yn eich dilyn chi</string>
   <string name="action_search">Chwilio</string>
@@ -400,7 +400,7 @@
   <string name="v_public">Cyhoeddus</string>
   <string name="v_unlisted">Unlisted</string>
   <string name="v_private">Preifat</string>
-  <string name="v_direct">Direct</string>
+  <string name="v_direct">Preifat</string>
   <string name="v_keywords">Some keywords…</string>
   <string name="show_media">Show media</string>
   <string name="show_pinned">Show pinned</string>
@@ -461,7 +461,7 @@
   <string name="delete">Dileu</string>
   <string name="fetch_more_toots">Fetch more toots…</string>
   <!-- About lists -->
-  <string name="action_lists">Lists</string>
+  <string name="action_lists">Rhestrau</string>
   <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
   <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
   <string name="action_lists_add_to">Add to list</string>
@@ -527,7 +527,7 @@
   <string name="toast_unendorse">The account is no longer featured on profile</string>
   <string name="toast_show_boost">Boosts are now shown!</string>
   <string name="toast_hide_boost">Boosts are now hidden!</string>
-  <string name="direct_message">Direct message</string>
+  <string name="direct_message">Neges preifat</string>
   <string name="filters">Filters</string>
   <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
   <string name="filter_keyword">Keyword or phrase</string>
@@ -604,9 +604,10 @@
   <string name="no_peertube_channels">No Peertube channels</string>
   <string name="no_peertube_instances">No Peertube instances</string>
   <string name="no_mastodon_instances">No Mastodon instances</string>
-  <string name="no_lists">No lists</string>
+  <string name="no_lists">Dim rhestrau</string>
   <string name="videos">Videos</string>
   <string name="channels">Channels</string>
+  <string name="set_display_emoji">Use Emoji One</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 munud</item>
