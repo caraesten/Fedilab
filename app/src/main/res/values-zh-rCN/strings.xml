@@ -587,6 +587,7 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
   <string name="no_lists">No lists</string>
   <string name="videos">Videos</string>
   <string name="channels">Channels</string>
+  <string name="set_display_emoji">Use Emoji One</string>
   <string-array name="filter_expire">
     <item>Never</item>
     <item>30 minutes</item>
