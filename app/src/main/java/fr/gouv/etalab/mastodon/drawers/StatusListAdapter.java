@@ -69,7 +69,6 @@ import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
 import com.github.stom79.mytransl.translate.Translate;
-import com.vanniktech.emoji.EmojiTextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
