@@ -595,6 +595,7 @@ Grazas a:
   <string name="no_lists">Sen listas</string>
   <string name="videos">Vídeos</string>
   <string name="channels">Canles</string>
+  <string name="set_display_emoji">Use Emoji One</string>
   <string-array name="filter_expire">
     <item>Nunca</item>
     <item>30 minutos</item>
