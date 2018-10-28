@@ -1076,10 +1076,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     class ViewHolder extends RecyclerView.ViewHolder {
 
         FrameLayout card_status_container;
-        EmojiTextView notification_status_content;
+        CustomTextView notification_status_content;
         TextView notification_type;
         LinearLayout status_spoiler_container;
-        EmojiTextView status_spoiler;
+        CustomTextView status_spoiler;
         Button status_spoiler_button;
         TextView notification_account_username;
         ImageView notification_account_profile;

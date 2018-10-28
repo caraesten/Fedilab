@@ -190,6 +190,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean display_emoji = sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true);
+        final CheckBox set_display_emoji = rootView.findViewById(R.id.set_display_emoji);
+        set_display_emoji.setChecked(display_emoji);
+
+        set_display_emoji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_EMOJI, set_display_emoji.isChecked());
+                editor.apply();
+            }
+        });
+
         boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
         final CheckBox set_expand_media = rootView.findViewById(R.id.set_expand_image);
         set_expand_media.setChecked(expand_media);

@@ -116,7 +116,6 @@ import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
-import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
 
@@ -228,9 +227,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     class ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout status_content_container;
         LinearLayout status_spoiler_container;
-        EmojiTextView status_spoiler;
+        CustomTextView status_spoiler;
         Button status_spoiler_button;
-        EmojiTextView status_content;
+        CustomTextView status_content;
         TextView status_content_translated;
         LinearLayout status_content_translated_container;
         TextView status_account_username;

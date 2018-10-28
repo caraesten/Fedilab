@@ -119,7 +119,7 @@
         android:orientation="vertical"
         android:visibility="gone"
         android:layout_height="wrap_content">
-        <com.vanniktech.emoji.EmojiTextView
+        <fr.gouv.etalab.mastodon.helper.CustomTextView
             android:id="@+id/status_spoiler"
             android:layout_marginTop="10dp"
             android:textIsSelectable="true"
@@ -150,7 +150,7 @@
         android:layout_marginBottom="5dp"
         android:orientation="vertical"
         android:layout_height="wrap_content">
-        <com.vanniktech.emoji.EmojiTextView
+        <fr.gouv.etalab.mastodon.helper.CustomTextView
             android:id="@+id/status_content"
             android:textIsSelectable="true"
             android:layout_marginLeft="10dp"

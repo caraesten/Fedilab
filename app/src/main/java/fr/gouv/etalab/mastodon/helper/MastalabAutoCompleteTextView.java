@@ -2,6 +2,7 @@ package fr.gouv.etalab.mastodon.helper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.support.annotation.CallSuper;
@@ -19,6 +20,7 @@ import fr.gouv.etalab.mastodon.R;
 public class MastalabAutoCompleteTextView extends android.support.v7.widget.AppCompatAutoCompleteTextView implements EmojiEditTextInterface {
 
     private float emojiSize;
+    private boolean emoji;
 
     public MastalabAutoCompleteTextView(Context context) {
         super(context);
@@ -29,7 +31,8 @@ public class MastalabAutoCompleteTextView extends android.support.v7.widget.AppC
 
         final Paint.FontMetrics fontMetrics = getPaint().getFontMetrics();
         final float defaultEmojiSize = fontMetrics.descent - fontMetrics.ascent;
-
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        emoji = sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true);
         if (attrs == null) {
             emojiSize = defaultEmojiSize;
         } else {
@@ -54,7 +57,9 @@ public class MastalabAutoCompleteTextView extends android.support.v7.widget.AppC
     protected void onTextChanged(final CharSequence text, final int start, final int lengthBefore, final int lengthAfter) {
         final Paint.FontMetrics fontMetrics = getPaint().getFontMetrics();
         final float defaultEmojiSize = fontMetrics.descent - fontMetrics.ascent;
-        EmojiManager.getInstance().replaceWithImages(getContext(), getText(), emojiSize, defaultEmojiSize);
+        if( emoji) {
+            EmojiManager.getInstance().replaceWithImages(getContext(), getText(), emojiSize, defaultEmojiSize);
+        }
     }
 
     @Override

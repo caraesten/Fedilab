@@ -16,19 +16,16 @@ package fr.gouv.etalab.mastodon.helper;
  * see <http://www.gnu.org/licenses>. */
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
-import android.support.annotation.CallSuper;
 import android.support.annotation.DimenRes;
 import android.support.annotation.Px;
-import android.text.Selection;
-import android.text.Spannable;
+import android.support.v7.widget.AppCompatTextView;
+import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 
-import com.vanniktech.emoji.EmojiEditTextInterface;
-import com.vanniktech.emoji.emoji.Emoji;
+import com.vanniktech.emoji.EmojiManager;
 
 import fr.gouv.etalab.mastodon.R;
 
@@ -38,64 +35,57 @@ import fr.gouv.etalab.mastodon.R;
  * Allows to fix crashes with selection see: https://stackoverflow.com/a/36740247
  */
 
-public class CustomTextView extends android.support.v7.widget.AppCompatTextView implements EmojiEditTextInterface {
+public class CustomTextView extends AppCompatTextView {
 
     private float emojiSize;
+    private boolean emoji;
     public CustomTextView(Context context) {
         super(context);
     }
 
     public CustomTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        emoji = sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true);
+
         final Paint.FontMetrics fontMetrics = getPaint().getFontMetrics();
         final float defaultEmojiSize = fontMetrics.descent - fontMetrics.ascent;
 
         if (attrs == null) {
             emojiSize = defaultEmojiSize;
         } else {
-            @SuppressLint("CustomViewStyleable") final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EmojiMultiAutoCompleteTextView);
+            @SuppressLint("CustomViewStyleable") final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.EmojiTextView);
 
             try {
-                emojiSize = a.getDimension(R.styleable.EmojiMultiAutoCompleteTextView_emojiSize, defaultEmojiSize);
+                emojiSize = a.getDimension(R.styleable.EmojiTextView_emojiSize, defaultEmojiSize);
             } finally {
                 a.recycle();
             }
         }
-
         setText(getText());
     }
 
-    public CustomTextView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
     @Override
-    public void backspace() {
-        final KeyEvent event = new KeyEvent(0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
-        dispatchKeyEvent(event);
-    }
-
-    @Override
-    public float getEmojiSize() {
-        return emojiSize;
-    }
-
-    @Override @CallSuper
-    public void input(final Emoji emoji) {
-        if (emoji != null) {
-            final int start = getSelectionStart();
-            final int end = getSelectionEnd();
-
-            append(emoji.getUnicode());
+    public void setText(final CharSequence rawText, final BufferType type) {
+        if( emoji) {
+            final CharSequence text = rawText == null ? "" : rawText;
+            final SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
+            final Paint.FontMetrics fontMetrics = getPaint().getFontMetrics();
+            final float defaultEmojiSize = fontMetrics.descent - fontMetrics.ascent;
+            EmojiManager.getInstance().replaceWithImages(getContext(), spannableStringBuilder, emojiSize, defaultEmojiSize);
+            super.setText(spannableStringBuilder, type);
+        }else {
+            super.setText(rawText, type);
         }
+
     }
 
-    @Override
+    /** sets the emoji size in pixels and automatically invalidates the text and renders it with the new size */
     public final void setEmojiSize(@Px final int pixels) {
         setEmojiSize(pixels, true);
     }
 
-    @Override
+    /** sets the emoji size in pixels and automatically invalidates the text and renders it with the new size when {@code shouldInvalidate} is true */
     public final void setEmojiSize(@Px final int pixels, final boolean shouldInvalidate) {
         emojiSize = pixels;
 
@@ -104,31 +94,14 @@ public class CustomTextView extends android.support.v7.widget.AppCompatTextView 
         }
     }
 
-    @Override
+    /** sets the emoji size in pixels with the provided resource and automatically invalidates the text and renders it with the new size */
     public final void setEmojiSizeRes(@DimenRes final int res) {
         setEmojiSizeRes(res, true);
     }
 
-    @Override
+    /** sets the emoji size in pixels with the provided resource and invalidates the text and renders it with the new size when {@code shouldInvalidate} is true */
     public final void setEmojiSizeRes(@DimenRes final int res, final boolean shouldInvalidate) {
         setEmojiSize(getResources().getDimensionPixelSize(res), shouldInvalidate);
     }
 
-    //TODO: sounds no longer needed, commented but might be removed in a next release
-    /*@Override
-    public boolean dispatchTouchEvent(final MotionEvent event) {
-        // FIXME simple workaround to https://code.google.com/p/android/issues/detail?id=191430
-        int startSelection = getSelectionStart();
-        int endSelection = getSelectionEnd();
-        if (startSelection < 0 || endSelection < 0){
-            Selection.setSelection((Spannable) getText(), getText().length());
-        } else if (startSelection != endSelection) {
-            if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                final CharSequence text = getText();
-                setText(null);
-                setText(text);
-            }
-        }
-        return super.dispatchTouchEvent(event);
-    }*/
 }

@@ -19,5 +19,4 @@ public class BaseActivity extends AppCompatActivity {
         Helper.installProvider();
         EmojiManager.install(new EmojiOneProvider());
     }
-
 }

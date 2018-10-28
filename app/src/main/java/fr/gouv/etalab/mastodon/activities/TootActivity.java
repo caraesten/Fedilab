@@ -56,6 +56,7 @@ import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -265,15 +266,19 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         toot_sensitive = findViewById(R.id.toot_sensitive);
         drawer_layout = findViewById(R.id.drawer_layout);
         toot_emoji = findViewById(R.id.toot_emoji);
-        final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(drawer_layout).build(toot_content);
 
-        toot_emoji.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                emojiPopup.toggle(); // Toggles visibility of the Popup.
-            }
-        });
+        if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true)) {
+            final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(drawer_layout).build(toot_content);
 
+            toot_emoji.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    emojiPopup.toggle(); // Toggles visibility of the Popup.
+                }
+            });
+        }else {
+            toot_emoji.setVisibility(View.GONE);
+        }
 
 
 
