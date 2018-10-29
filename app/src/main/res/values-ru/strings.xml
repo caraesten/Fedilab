@@ -98,18 +98,18 @@
   <string name="no_emoji">На данный момент приложение не собирает пользовательские эмодзи.</string>
   <string name="live_notif">Пуш-уведомления</string>
   <!-- Status -->
-  <string name="no_status">Нет toot для отображения</string>
-  <string name="fav_added">Toot был добавлен в избранные</string>
-  <string name="fav_removed">Toot был удалён из избранных!</string>
-  <string name="reblog_added">Toot был поднят!</string>
-  <string name="reblog_removed">Toot удалён из поднятых!</string>
+  <string name="no_status">Нет тутов для отображения</string>
+  <string name="fav_added">Этот тут был добавлен в избранное</string>
+  <string name="fav_removed">Этот тут был удален из избранного!</string>
+  <string name="reblog_added">Этот тут был продвинут!</string>
+  <string name="reblog_removed">Этот тут больше не продвигается!</string>
   <string name="reblog_by">Поднят %1$s</string>
-  <string name="favourite_add">Добавьте этот toot в избранное?</string>
-  <string name="favourite_remove">Удалить этот toot из избранного?</string>
-  <string name="reblog_add">Поднять этот toot?</string>
-  <string name="reblog_remove">Отменить поднятие этого toot?</string>
-  <string name="pin_add">Закрепить этот toot?</string>
-  <string name="pin_remove">Открепить этот toot?</string>
+  <string name="favourite_add">Добавить этот тут в избранное?</string>
+  <string name="favourite_remove">Удалить этот тут из избранного?</string>
+  <string name="reblog_add">Продвинут этот тут?</string>
+  <string name="reblog_remove">Не продвигать этот тут?</string>
+  <string name="pin_add">Закрепить этот тут?</string>
+  <string name="pin_remove">Открепить этот тут?</string>
   <string name="more_action_1">Заглушить</string>
   <string name="more_action_2">Заблокировать</string>
   <string name="more_action_3">Пожаловаться</string>
@@ -122,11 +122,11 @@
   <string-array name="more_action_confirm">
     <item>Заглушить этот аккаунт?</item>
     <item>Блокировать этот аккаунт?</item>
-    <item>Пожаловаться на этот toot?</item>
+    <item>Пожаловаться на этот тут?</item>
     <item>Заблокировать этот домен?</item>
   </string-array>
   <string-array name="more_action_owner_confirm">
-    <item>Удалить этот toot?</item>
+    <item>Удалить этот тут?</item>
     <item>Delete &amp; re-draft this toot?</item>
   </string-array>
   <plurals name="preview_replies">
@@ -154,18 +154,18 @@
   <string name="cw">предупреждение о контенте</string>
   <string name="toot_title">Написать тут</string>
   <string name="toot_title_reply">Ответить на тут</string>
-  <string name="toot_no_space">Вы достигли 500 разрешённых символов!</string>
-  <string name="toot_select_image">Выбрать файл</string>
-  <string name="toot_select_image_error">Произошла ошибка при выборе файла!</string>
-  <string name="toot_delete_media">Удалить этот файл?</string>
+  <string name="toot_no_space">Вы достигли предела 500 символов!</string>
+  <string name="toot_select_image">Выбрать медиафайл</string>
+  <string name="toot_select_image_error">При выборе медиафайла произошла ошибка!</string>
+  <string name="toot_delete_media">Удалить этот медиафайл?</string>
   <string name="toot_error_no_content">Ваш тут пуст!</string>
   <string name="toot_visibility_tilte">Видимость тута</string>
   <string name="toots_visibility_tilte">Видимость тутов по умолчанию: </string>
   <string name="toot_sent">Тут отправлен!</string>
   <string name="toot_reply_content_title">Вы отвечаете на этот тут:</string>
-  <string name="toot_sensitive">Чувствительный контент?</string>
+  <string name="toot_sensitive">Деликатный контент?</string>
   <string-array name="toot_visibility">
-    <item>Отправлять в публичные ленты</item>
+    <item>Отправить в публичные ленты</item>
     <item>Не отправлять в публичные ленты</item>
     <item>Отправить только читателям</item>
     <item>Отправить только упомянутым пользователям</item>
@@ -175,7 +175,7 @@
   <string name="choose_accounts">Выберите учётную запись</string>
   <string name="select_accounts">Выберите аккаунт</string>
   <string name="remove_draft">Удалить черновик?</string>
-  <string name="show_reply">Нажмите на кнопку для отображения оригинального toot</string>
+  <string name="show_reply">Нажмите кнопку, чтобы отобразить исходный тут</string>
   <string name="upload_form_description">Описания для слабовидящих</string>
   <!-- Instance -->
   <string name="instance_no_description">Описание недоступно!</string>
@@ -185,7 +185,7 @@
   <string name="about_license">Лицензия: </string>
   <string name="about_license_action">Лицензия GNU GPL V3</string>
   <string name="about_code">Исходный код: </string>
-  <string name="about_yandex">Перевод toots:</string>
+  <string name="about_yandex">Перевод тутов:</string>
   <string name="about_thekinrar">Поиск серверов:</string>
   <string name="about_thekinrar_action">instances.social</string>
   <string name="thanks_text_logo">Дизайн иконок:</string>
@@ -195,7 +195,7 @@
   <!-- Accounts -->
   <string name="no_accounts">Нет учетной записи для отображения</string>
   <string name="no_follow_request">Не следовать запросу</string>
-  <string name="status_cnt">Toots \n %1$s</string>
+  <string name="status_cnt">Туты \n %1$s</string>
   <string name="following_cnt">Подписаны \n %1$s</string>
   <string name="followers_cnt">Подписчиков \n %1$s</string>
   <string name="pins_cnt">Закреплены \n %d</string>
@@ -204,7 +204,7 @@
   <!-- Scheduled toots -->
   <string name="no_scheduled_toots">Нет запланированных тутов для отображения!</string>
   <string name="no_scheduled_toots_indications">Напишите тут, а затем выберите <b>Запланировать</b> из верхнего меню.</string>
-  <string name="remove_scheduled">Удалить запланированный toot?</string>
+  <string name="remove_scheduled">Удалить запланированный тут?</string>
   <string name="media_count">Файл: %d</string>
   <string name="toot_scheduled">Тут запланирован!</string>
   <string name="toot_scheduled_date">Планируемая дата должна превышать текущий час!</string>
@@ -219,7 +219,7 @@
   <string name="notif_reblog">повышен ваш статус</string>
   <string name="notif_favourite">добавил(а) ваш статус в избранные</string>
   <string name="notif_follow">подписался на вас</string>
-  <string name="notif_pouet">Новый toot от %1$s</string>
+  <string name="notif_pouet">Новый тут от %1$s</string>
   <plurals name="other_notifications">
     <item quantity="one">и другое уведомление</item>
     <item quantity="few">и другое уведомление</item>
@@ -249,14 +249,14 @@
   <string name="toast_unmute">Аккаунт более не пригушён!</string>
   <string name="toast_follow">Вы подписались на этот аккаунт!</string>
   <string name="toast_unfollow">Вы больше не подписаны!</string>
-  <string name="toast_reblog">Toot был поднят!</string>
-  <string name="toast_unreblog">Toot более не поднят!</string>
-  <string name="toast_favourite">Toot был добавлен в избранные!</string>
-  <string name="toast_unfavourite">Toot был убран из избранных!</string>
-  <string name="toast_report">На toot была отправлена жалоба!</string>
-  <string name="toast_unstatus">Toot был удалён!</string>
-  <string name="toast_pin">Toot был закреплён!</string>
-  <string name="toast_unpin">Toot был откреплён!</string>
+  <string name="toast_reblog">Этот тут был продвинут!</string>
+  <string name="toast_unreblog">Этот тут больше не продвигается!</string>
+  <string name="toast_favourite">Этот тут был добавлен в ваше избранное!</string>
+  <string name="toast_unfavourite">Этот тут был удален из вашего избранного!</string>
+  <string name="toast_report">Жалоба на этот тут отправлена!</string>
+  <string name="toast_unstatus">Этот тут был удален!</string>
+  <string name="toast_pin">Этот тут был закреплен!</string>
+  <string name="toast_unpin">Этот тут был откреплен!</string>
   <string name="toast_error">Упс ! Произошла ошибка!</string>
   <string name="toast_code_error">Произошла ошибка! Сервер не вернул код авторизации!</string>
   <string name="toast_error_instance">Сервер недействителен!</string>
@@ -269,7 +269,7 @@
   <string name="toast_error_translate">Произошла ошибка при переводе!</string>
   <string name="toast_toot_saved">Черновик сохранён!</string>
   <string name="toast_error_char_limit">Вы уверены, что этот сервер допускает это количество знаков? Обычно это значение близко к 500 знакам.</string>
-  <string name="toast_visibility_changed">Видимость toots была изменена для аккаунта %1$s</string>
+  <string name="toast_visibility_changed">Видимость тутов была изменена для аккаунта %1$s</string>
   <string name="toast_empty_search">Имя сервера и отображаемое имя не могут быть пустыми!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">Оптимизация загрузки</string>
@@ -291,7 +291,7 @@
   <string name="set_folder_title">Путь: </string>
   <string name="set_auto_store_toot">Сохранять черновики автоматически</string>
   <string name="set_bubble_counter">Показывать счётчики</string>
-  <string name="set_auto_add_media_url">Добавить URL-адрес в toots</string>
+  <string name="set_auto_add_media_url">Добавлять URL-адрес медиа в туты</string>
   <string name="settings_title_notifications">Настроить уведомления</string>
   <string name="set_notif_follow">Уведомлять, когда кто-то следует за вами</string>
   <string name="set_notif_follow_ask">Уведомлять, когда кто-то просит следовать за вами</string>
@@ -361,7 +361,7 @@
     <item>Белый</item>
   </string-array>
   <string name="set_title_news">Новости</string>
-  <string name="set_notification_news">Уведомлять о новых toots в домашней ленте</string>
+  <string name="set_notification_news">Уведомлять о новых тутах в домашней ленте</string>
   <string name="action_follow">Подписаться</string>
   <string name="action_unfollow">Отписаться</string>
   <string name="action_block">Заблокировать</string>
@@ -380,7 +380,7 @@
         Пожалуйста, подтвердите пуш-уведомления, которые хотите получать.
         Вы можете включить или отключить их позже в настройках (вкладка \"Уведомления\").
     </string>
-  <string name="settings_popup_timeline">Для непрочитанных toots в домашней ленте?</string>
+  <string name="settings_popup_timeline">Для непрочитанных тутов в домашней ленте?</string>
   <string name="settings_popup_notification">Для непрочитанные уведомлений?</string>
   <!-- CACHE -->
   <string name="cache_title">Очистить кэш</string>
@@ -400,7 +400,7 @@
   <string name="show_pinned">Показать закреплённые</string>
   <string name="filter_no_result">Ничего не найдено!</string>
   <string name="data_backup_toots">Резервное копирование тутов для %1$s</string>
-  <string name="data_backup_success">%1$s новых toots было импортировано</string>
+  <string name="data_backup_success">было импортировано %1$s новых тутов</string>
   <string-array name="filter_select">
     <item>Нет</item>
     <item>Только</item>
@@ -438,10 +438,10 @@
        - <b>Android-Job</b>: Для управления сервисами\n
        - <b>PhotoView</b>: Для управления изображениями\n
     </string>
-  <string name="privacy_API_yandex_title">Перевод toots</string>
+  <string name="privacy_API_yandex_title">Перевод тутов</string>
   <string name="privacy_API_yandex_authorizations">
-        Приложение предлагает возможность перевести toots с использованием языка устройства и Яндекс API.\n 
-       Яндекс имеет собственную политику конфиденциальности, условия которой можно найти здесь: https://yandex.ru/legal/confidential/?lang=en
+        Приложение предлагает возможность переводить туты, используя язык устройства и Яндекс API.\n 
+        Яндекс имеет собственную политику конфиденциальности, условия которой можно найти здесь: https://yandex.ru/legal/confidential/?lang=en
     </string>
   <string name="thanks_text">
         Благодарю Стефана ( Stéphane) за логотип.
@@ -481,7 +481,7 @@
   <string name="data_export_running">Все ещё работает, ожидайте…</string>
   <string name="data_export">Экспорт статусов</string>
   <string name="data_export_toots">Экспорт статусов для %1$s</string>
-  <string name="data_export_success">%1$s toots из %2$s были экспортированы.</string>
+  <string name="data_export_success">%1$s тутов из %2$s были экспортированы.</string>
   <string name="data_export_error">Что-то пошло не так, при экспорте данных для %1$s</string>
   <!-- Proxy -->
   <string name="proxy_set">Прокси</string>
