@@ -23,7 +23,7 @@
   <string name="password">Пароль</string>
   <string name="email">Email</string>
   <string name="accounts">Аккаунты</string>
-  <string name="toots">Toots</string>
+  <string name="toots">Туты</string>
   <string name="tags">Теги</string>
   <string name="token">Токен</string>
   <string name="save">Сохранить</string>
@@ -44,7 +44,7 @@
   <string name="speech_prompt">Пожалуйста, скажите что-нибудь</string>
   <string name="speech_not_supported">Извините! Ваше устройство не поддерживает голосовой ввод!</string>
   <string name="delete_all">Удалить все</string>
-  <string name="translate_toot">Перевести этот toot.</string>
+  <string name="translate_toot">Перевести этот тут.</string>
   <string name="schedule">Запланировать</string>
   <string name="text_size">Размеры текста и значков</string>
   <string name="text_size_change">Изменить текущий размер текста:</string>
@@ -92,7 +92,7 @@
   <string name="choose_file_error">Файл не найден!</string>
   <string name="click_to_change">Нажмите для изменения</string>
   <string name="failed">Ошибка!</string>
-  <string name="scheduled_toots">Запланированные toots</string>
+  <string name="scheduled_toots">Запланированные туты</string>
   <string name="disclaimer_full">Информация, приведенная ниже, может не соответствовать профилю пользователя.</string>
   <string name="insert_emoji">Вставить эмодзи</string>
   <string name="no_emoji">На данный момент приложение не собирает пользовательские эмодзи.</string>
@@ -150,19 +150,19 @@
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Предупреждение</string>
   <string name="toot_placeholder">О чем вы думаете?</string>
-  <string name="toot_it">TOOT!</string>
+  <string name="toot_it">ТРУБИТЬ!</string>
   <string name="cw">предупреждение о контенте</string>
-  <string name="toot_title">Написать toot</string>
-  <string name="toot_title_reply">Ответить на toot</string>
+  <string name="toot_title">Написать тут</string>
+  <string name="toot_title_reply">Ответить на тут</string>
   <string name="toot_no_space">Вы достигли 500 разрешённых символов!</string>
   <string name="toot_select_image">Выбрать файл</string>
   <string name="toot_select_image_error">Произошла ошибка при выборе файла!</string>
   <string name="toot_delete_media">Удалить этот файл?</string>
-  <string name="toot_error_no_content">Ваш toot пуст!</string>
-  <string name="toot_visibility_tilte">Видимость toot</string>
-  <string name="toots_visibility_tilte">Видимость toots по умолчанию: </string>
-  <string name="toot_sent">Toot был отправлен!</string>
-  <string name="toot_reply_content_title">Вы отвечаете на этот toot:</string>
+  <string name="toot_error_no_content">Ваш тут пуст!</string>
+  <string name="toot_visibility_tilte">Видимость тута</string>
+  <string name="toots_visibility_tilte">Видимость тутов по умолчанию: </string>
+  <string name="toot_sent">Тут отправлен!</string>
+  <string name="toot_reply_content_title">Вы отвечаете на этот тут:</string>
   <string name="toot_sensitive">Чувствительный контент?</string>
   <string-array name="toot_visibility">
     <item>Отправлять в публичные ленты</item>
@@ -171,7 +171,7 @@
     <item>Отправить только упомянутым пользователям</item>
   </string-array>
   <string name="no_draft">Нет черновиков!</string>
-  <string name="choose_toot">Выбрать toot</string>
+  <string name="choose_toot">Выбрать тут</string>
   <string name="choose_accounts">Выберите учётную запись</string>
   <string name="select_accounts">Выберите аккаунт</string>
   <string name="remove_draft">Удалить черновик?</string>
@@ -202,11 +202,11 @@
   <string name="authorize">Войти</string>
   <string name="reject">Отклонить</string>
   <!-- Scheduled toots -->
-  <string name="no_scheduled_toots">Нет запланированных toots для отображения!</string>
-  <string name="no_scheduled_toots_indications">Напишите toot, а затем выберите <b>график</b> из верхнего меню.</string>
+  <string name="no_scheduled_toots">Нет запланированных тутов для отображения!</string>
+  <string name="no_scheduled_toots_indications">Напишите тут, а затем выберите <b>Запланировать</b> из верхнего меню.</string>
   <string name="remove_scheduled">Удалить запланированный toot?</string>
   <string name="media_count">Файл: %d</string>
-  <string name="toot_scheduled">Toot был запланирован!</string>
+  <string name="toot_scheduled">Тут запланирован!</string>
   <string name="toot_scheduled_date">Планируемая дата должна превышать текущий час!</string>
   <string name="warning_battery">Батарея в режиме энергосбережения! Возможна некорректная работа.</string>
   <!-- timed mute -->
@@ -273,7 +273,7 @@
   <string name="toast_empty_search">Имя сервера и отображаемое имя не могут быть пустыми!</string>
   <!-- Settings -->
   <string name="settings_title_optimisation">Оптимизация загрузки</string>
-  <string name="set_toots_page">Число toots за загрузку</string>
+  <string name="set_toots_page">Количество тутов на загрузку</string>
   <string name="set_accounts_page">Число аккаунтов за загрузку</string>
   <string name="set_notifications_page">Число уведомлений за загрузку</string>
   <string name="set_attachment_always">Всегда</string>
