@@ -20,6 +20,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -37,7 +38,11 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
     private Context context;
 
     public ConversationDecoration(Context context){
-        divider = ContextCompat.getDrawable(context,R.drawable.line_divider);
+        try {
+            divider = ContextCompat.getDrawable(context,R.drawable.line_divider);
+        }catch (Exception e){
+            divider = ResourcesCompat.getDrawable(context.getResources(), R.drawable.line_divider, null);
+        }
         this.context = context;
     }
 
