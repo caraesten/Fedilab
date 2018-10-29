@@ -118,7 +118,7 @@
   <string name="more_action_6">Поделиться</string>
   <string name="more_action_7">Упомянуть</string>
   <string name="more_action_8">Временно приглушить</string>
-  <string name="more_action_9">Delete &amp; re-draft</string>
+  <string name="more_action_9">Удалить &amp; переписать</string>
   <string-array name="more_action_confirm">
     <item>Приглушить этот аккаунт?</item>
     <item>Заблокировать этот аккаунт?</item>
@@ -554,7 +554,7 @@
   <string name="about_trunk">Who to follow</string>
   <string name="about_trunk_action">Магистральный API</string>
   <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
-  <string name="retrieve_remote_account">Fetching remote account</string>
+  <string name="retrieve_remote_account">Получение удаленного аккаунта</string>
   <string name="expand_image">Automatically expand hidden media</string>
   <string name="set_display_follow_instance">Display follow instances button</string>
   <string name="channel_notif_follow">New follow</string>
@@ -586,14 +586,14 @@
   <string name="number_view_video">%s просмотров</string>
   <string name="duration_video">Продолжительность: %s</string>
   <string name="add_remote_instance">Add an instance</string>
-  <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
+  <string name="comment_no_allowed_peertube">Комментирование этого видео отключено!</string>
   <string name="pickup_resolution">Pick up a resolution</string>
   <string name="peertube_favorites">Peertube favourites</string>
   <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
   <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
   <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
   <string name="channel">Канал</string>
-  <string name="no_peertube_channels">No Peertube channels</string>
+  <string name="no_peertube_channels">Нет каналов Peertube</string>
   <string name="no_peertube_instances">No Peertube instances</string>
   <string name="no_mastodon_instances">No Mastodon instances</string>
   <string name="no_lists">Нет списков</string>
