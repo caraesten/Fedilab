@@ -56,6 +56,7 @@ public class API {
     private Attachment attachment;
     private List<Account> accounts;
     private List<Status> statuses;
+    private List<Conversation> conversations;
     private int tootPerPage, accountPerPage, notificationPerPage;
     private int actionCode;
     private String instance;
@@ -493,6 +494,54 @@ public class API {
      */
     public APIResponse getDirectTimeline( String max_id) {
         return getDirectTimeline(max_id, null, tootPerPage);
+    }
+
+    /**
+     * Retrieves conversation timeline for the account *synchronously*
+     * @param max_id   String id max
+     * @return APIResponse
+     */
+    public APIResponse getConversationTimeline( String max_id) {
+        return getConversationTimeline(max_id, null, tootPerPage);
+    }
+
+    /**
+     * Retrieves conversation timeline for the account *synchronously*
+     * @param max_id   String id max
+     * @param since_id String since the id
+     * @param limit    int limit  - max value 40
+     * @return APIResponse
+     */
+    private APIResponse getConversationTimeline(String max_id, String since_id, int limit) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("max_id", max_id);
+        if (since_id != null)
+            params.put("since_id", since_id);
+        if (0 > limit || limit > 80)
+            limit = 80;
+        params.put("limit",String.valueOf(limit));
+        conversations = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUrl("/conversations"), 60, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            conversations = parseConversations(new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setConversations(conversations);
+        return apiResponse;
     }
 
     /**
@@ -2576,6 +2625,46 @@ public class API {
         return howToVideo;
     }
 
+    /**
+     * Parse json response for several conversations
+     * @param jsonArray JSONArray
+     * @return List<Conversation>
+     */
+    private List<Conversation> parseConversations(JSONArray jsonArray){
+
+        List<Conversation> conversations = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ){
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Conversation conversation = parseConversation(context, resobj);
+                i++;
+                conversations.add(conversation);
+            }
+
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return conversations;
+    }
+
+    /**
+     * Parse json response for unique conversation
+     * @param resobj JSONObject
+     * @return Conversation
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    private Conversation parseConversation(Context context, JSONObject resobj) {
+        Conversation conversation = new Conversation();
+        try {
+            conversation.setId(resobj.get("id").toString());
+            conversation.setUnread(Boolean.parseBoolean(resobj.get("unread").toString()));
+            conversation.setAccounts(parseAccountResponse(resobj.getJSONArray("accounts")));
+            conversation.setLast_status(parseStatuses(context, resobj.getJSONObject("last_status")));
+        }catch (JSONException ignored) {}
+        return conversation;
+    }
     /**
      * Parse json response for several status
      * @param jsonArray JSONArray

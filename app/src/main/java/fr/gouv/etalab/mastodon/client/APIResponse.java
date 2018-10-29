@@ -28,6 +28,7 @@ public class APIResponse {
     private List<Account> accounts = null;
     private List<Status> statuses = null;
     private List<Context> contexts = null;
+    private List<Conversation> conversations = null;
     private List<Notification> notifications = null;
     private List<Relationship> relationships = null;
     private List<HowToVideo> howToVideos = null;
@@ -158,5 +159,13 @@ public class APIResponse {
 
     public void setPeertubes(List<Peertube> peertubes) {
         this.peertubes = peertubes;
+    }
+
+    public List<Conversation> getConversations() {
+        return conversations;
+    }
+
+    public void setConversations(List<Conversation> conversations) {
+        this.conversations = conversations;
     }
 }

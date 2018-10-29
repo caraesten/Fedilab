@@ -60,6 +60,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         HOME,
         LOCAL,
         DIRECT,
+        CONVERSATION,
         PUBLIC,
         HASHTAG,
         LIST,
@@ -151,6 +152,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case DIRECT:
                 apiResponse = api.getDirectTimeline(max_id);
+                break;
+            case CONVERSATION:
+                apiResponse = api.getConversationTimeline(max_id);
                 break;
             case REMOTE_INSTANCE:
                 if( this.name != null && this.remoteInstance != null){ //For Peertube channels

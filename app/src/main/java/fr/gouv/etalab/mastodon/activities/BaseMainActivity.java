@@ -847,9 +847,22 @@ public abstract class BaseMainActivity extends BaseActivity
                             displayStatusFragment.scrollToTop();
                             break;
                         case 2:
-                            if (display_direct)
-                                updateTimeLine(RetrieveFeedsAsyncTask.Type.DIRECT, 0);
-                            else if (display_local)
+                            if (display_direct) {
+
+                                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+                                if (instanceVersion != null) {
+                                    Version currentVersion = new Version(instanceVersion);
+                                    Version minVersion = new Version("2.6");
+                                    if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                                        updateTimeLine(RetrieveFeedsAsyncTask.Type.CONVERSATION, 0);
+                                    } else {
+                                        updateTimeLine(RetrieveFeedsAsyncTask.Type.DIRECT, 0);
+                                    }
+                                }else{
+                                    updateTimeLine(RetrieveFeedsAsyncTask.Type.DIRECT, 0);
+                                }
+                            }else if (display_local)
                                 updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL, 0);
                             else if (display_global)
                                 updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
@@ -2210,7 +2223,20 @@ public abstract class BaseMainActivity extends BaseActivity
                 return notificationsFragment;
             }else if( position == 2 && display_direct) {
                 statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.DIRECT);
+
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+                if (instanceVersion != null) {
+                    Version currentVersion = new Version(instanceVersion);
+                    Version minVersion = new Version("2.6");
+                    if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.CONVERSATION);
+                    } else {
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.DIRECT);
+                    }
+                }else{
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.DIRECT);
+                }
                 statusFragment.setArguments(bundle);
                 return statusFragment;
             }else if(position == 2 && display_local ){
@@ -2373,7 +2399,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
     public void updateTimeLine(RetrieveFeedsAsyncTask.Type type, int value){
 
-        if( type == RetrieveFeedsAsyncTask.Type.DIRECT ){
+        if( type == RetrieveFeedsAsyncTask.Type.DIRECT || type == RetrieveFeedsAsyncTask.Type.CONVERSATION){
             if (tabLayout.getTabAt(2) != null && display_direct) {
                 View tabDirect = tabLayout.getTabAt(2).getCustomView();
                 assert tabDirect != null;

@@ -43,6 +43,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSearchAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Conversation;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.drawers.PeertubeAdapter;
@@ -366,6 +367,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
+
         if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && peertubeAdapater != null){
             int previousPosition = this.peertubes.size();
             if( max_id == null)
@@ -381,6 +383,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             firstLoad = false;
             flag_loading = false;
         }else {
+            //Add conversation in status
+            if( type == RetrieveFeedsAsyncTask.Type.CONVERSATION ){
+                List<Conversation> conversations = apiResponse.getConversations();
+                List<Status> statusesConversations = new ArrayList<>();
+                for( Conversation conversation: conversations)
+                    statusesConversations.add(conversation.getLast_status());
+                apiResponse.setStatuses(statusesConversations);
+            }
             int previousPosition = this.statuses.size();
             List<Status> statuses = Helper.filterToots(context, apiResponse.getStatuses(), mutedAccount, type);
             List<Status> notFilteredStatuses = apiResponse.getStatuses();
