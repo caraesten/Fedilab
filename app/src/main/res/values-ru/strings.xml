@@ -76,7 +76,7 @@
   <string name="neutral_menu_title">Опции</string>
   <string name="favorites_menu">Избранные</string>
   <string name="communication_menu_title">Общение</string>
-  <string name="muted_menu">Приглушенные</string>
+  <string name="muted_menu">Приглушенные пользователи</string>
   <string name="blocked_menu">Заблокированные пользователи</string>
   <string name="remote_follow_menu">Удаленная подписка</string>
   <string name="notifications">Уведомления</string>
@@ -84,7 +84,7 @@
   <string name="optimization">Оптимизация</string>
   <string name="settings">Настройки</string>
   <string name="profile">Профиль</string>
-  <string name="make_a_choice">Что Вы хотите делать?</string>
+  <string name="make_a_choice">Что вы хотите делать?</string>
   <string name="delete_account_title">﻿Удалить аккаунт</string>
   <string name="delete_account_message" formatted="false">Удалить аккаунт %1$s из приложения?</string>
   <string name="send_email">Отправить email</string>
@@ -96,7 +96,7 @@
   <string name="disclaimer_full">Информация, приведенная ниже, может не соответствовать профилю пользователя.</string>
   <string name="insert_emoji">Вставить эмодзи</string>
   <string name="no_emoji">На данный момент приложение не собирает пользовательские эмодзи.</string>
-  <string name="live_notif">Пуш-уведомления</string>
+  <string name="live_notif">Живые уведомления</string>
   <!-- Status -->
   <string name="no_status">Нет тутов для отображения</string>
   <string name="fav_added">Этот тут был добавлен в избранное</string>
@@ -110,18 +110,18 @@
   <string name="reblog_remove">Не продвигать этот тут?</string>
   <string name="pin_add">Закрепить этот тут?</string>
   <string name="pin_remove">Открепить этот тут?</string>
-  <string name="more_action_1">Заглушить</string>
+  <string name="more_action_1">Приглушить</string>
   <string name="more_action_2">Заблокировать</string>
   <string name="more_action_3">Пожаловаться</string>
   <string name="more_action_4">Удалить</string>
   <string name="more_action_5">Копировать</string>
   <string name="more_action_6">Поделиться</string>
   <string name="more_action_7">Упомянуть</string>
-  <string name="more_action_8">Временно заглушить</string>
+  <string name="more_action_8">Временно приглушить</string>
   <string name="more_action_9">Delete &amp; re-draft</string>
   <string-array name="more_action_confirm">
-    <item>Заглушить этот аккаунт?</item>
-    <item>Блокировать этот аккаунт?</item>
+    <item>Приглушить этот аккаунт?</item>
+    <item>Заблокировать этот аккаунт?</item>
     <item>Пожаловаться на этот тут?</item>
     <item>Заблокировать этот домен?</item>
   </string-array>
@@ -135,7 +135,7 @@
     <item quantity="many">%d ответов</item>
     <item quantity="other">%d ответов</item>
   </plurals>
-  <string name="set_display_bookmark_button">Отобразить кнопку добавления в закладки</string>
+  <string name="set_display_bookmark_button">Отобразить кнопку закладок</string>
   <string name="bookmarks">Закладки</string>
   <string name="bookmark_add">Добавить в закладки</string>
   <string name="bookmark_remove">Удалить закладку</string>
@@ -146,7 +146,7 @@
   <string name="date_seconds">%d с</string>
   <string name="date_minutes">%d м</string>
   <string name="date_hours">%d ч</string>
-  <string name="date_day">%d дней</string>
+  <string name="date_day">%d д</string>
   <!-- TOOT -->
   <string name="toot_cw_placeholder">Предупреждение</string>
   <string name="toot_placeholder">О чем вы думаете?</string>
@@ -172,7 +172,7 @@
   </string-array>
   <string name="no_draft">Нет черновиков!</string>
   <string name="choose_toot">Выбрать тут</string>
-  <string name="choose_accounts">Выберите учётную запись</string>
+  <string name="choose_accounts">Выберите аккаунт</string>
   <string name="select_accounts">Выберите аккаунт</string>
   <string name="remove_draft">Удалить черновик?</string>
   <string name="show_reply">Нажмите кнопку, чтобы отобразить исходный тут</string>
@@ -183,7 +183,7 @@
   <string name="about_vesrion">Версия %1$s</string>
   <string name="about_developer">Разработчик:</string>
   <string name="about_license">Лицензия: </string>
-  <string name="about_license_action">Лицензия GNU GPL V3</string>
+  <string name="about_license_action">GNU GPL V3</string>
   <string name="about_code">Исходный код: </string>
   <string name="about_yandex">Перевод тутов:</string>
   <string name="about_thekinrar">Поиск серверов:</string>
