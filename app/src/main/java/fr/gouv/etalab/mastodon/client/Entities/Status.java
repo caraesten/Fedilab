@@ -119,6 +119,8 @@ public class Status implements Parcelable{
     public Status(){
         this.status = this;
     }
+    private List<String> conversationProfilePicture;
+
 
     protected Status(Parcel in) {
         id = in.readString();
@@ -1027,5 +1029,13 @@ public class Status implements Parcelable{
 
     public void setType(RetrieveFeedsAsyncTask.Type type) {
         this.type = type;
+    }
+
+    public List<String> getConversationProfilePicture() {
+        return conversationProfilePicture;
+    }
+
+    public void setConversationProfilePicture(List<String> conversationProfilePicture) {
+        this.conversationProfilePicture = conversationProfilePicture;
     }
 }

@@ -42,6 +42,7 @@ import android.text.Spannable;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -62,7 +63,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.stom79.mytransl.MyTransL;
@@ -255,10 +260,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView status_prev2_h;
         ImageView status_prev3_h;
         ImageView status_prev4_h;
+        LinearLayout conversation_pp_2_container, conversation_pp_3_container;
         ImageView status_prev1_play_h;
         ImageView status_prev2_play_h;
         ImageView status_prev3_play_h;
         ImageView status_prev4_play_h;
+        ImageView conversation_pp_1;
+        ImageView conversation_pp_2;
+        ImageView conversation_pp_3;
+        ImageView conversation_pp_4;
+        LinearLayout conversation_pp;
+
         RelativeLayout status_prev4_container;
         TextView status_reply;
         ImageView status_pin;
@@ -280,7 +292,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         WebView status_cardview_webview;
         ImageView hide_preview, hide_preview_h;
         TextView status_toot_app;
-
 
         public View getView(){
             return itemView;
@@ -348,6 +359,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             hide_preview = itemView.findViewById(R.id.hide_preview);
             hide_preview_h = itemView.findViewById(R.id.hide_preview_h);
             status_toot_app = itemView.findViewById(R.id.status_toot_app);
+            conversation_pp = itemView.findViewById(R.id.conversation_pp);
+            conversation_pp_1 = itemView.findViewById(R.id.conversation_pp_1);
+            conversation_pp_2 = itemView.findViewById(R.id.conversation_pp_2);
+            conversation_pp_3 = itemView.findViewById(R.id.conversation_pp_3);
+            conversation_pp_4 = itemView.findViewById(R.id.conversation_pp_4);
+            conversation_pp_2_container = itemView.findViewById(R.id.conversation_pp_2_container);
+            conversation_pp_3_container = itemView.findViewById(R.id.conversation_pp_3_container);
         }
     }
 
@@ -747,6 +765,54 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_profile_boost.setVisibility(View.GONE);
                 holder.status_account_profile_boost_by.setVisibility(View.GONE);
                 holder.status_account_profile.setVisibility(View.VISIBLE);
+            }
+            if( type == RetrieveFeedsAsyncTask.Type.CONVERSATION && status.getConversationProfilePicture() != null){
+                holder.status_account_profile.setVisibility(View.GONE);
+                holder.conversation_pp.setVisibility(View.VISIBLE);
+                if( status.getConversationProfilePicture().size() == 1) {
+                    holder.conversation_pp_1.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_1.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    holder.conversation_pp_2_container.setVisibility(View.GONE);
+                    holder.conversation_pp_3_container.setVisibility(View.GONE);
+                    holder.conversation_pp_2.setVisibility(View.GONE);
+                    holder.conversation_pp_3.setVisibility(View.GONE);
+                    holder.conversation_pp_4.setVisibility(View.GONE);
+                    Glide.with(context)
+                            .load(status.getConversationProfilePicture().get(0))
+                            .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(10)))
+                            .into(holder.conversation_pp_1);
+                }else if( status.getConversationProfilePicture().size() == 2) {
+                    holder.conversation_pp_2_container.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_3_container.setVisibility(View.GONE);
+                    holder.conversation_pp_1.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_2.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_3.setVisibility(View.GONE);
+                    holder.conversation_pp_4.setVisibility(View.GONE);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(0), holder.conversation_pp_1);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(1), holder.conversation_pp_2);
+                }else if( status.getConversationProfilePicture().size() == 3) {
+                    holder.conversation_pp_4.setVisibility(View.GONE);
+                    holder.conversation_pp_1.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_2.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_3.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_4.setVisibility(View.GONE);
+                    holder.conversation_pp_2_container.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_3_container.setVisibility(View.VISIBLE);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(0), holder.conversation_pp_1);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(1), holder.conversation_pp_2);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(2), holder.conversation_pp_3);
+                }else if( status.getConversationProfilePicture().size() == 4) {
+                    holder.conversation_pp_1.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_2.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_3.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_4.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_2_container.setVisibility(View.VISIBLE);
+                    holder.conversation_pp_3_container.setVisibility(View.VISIBLE);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(0), holder.conversation_pp_1);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(1), holder.conversation_pp_2);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(2), holder.conversation_pp_3);
+                    Helper.loadGiF(context, status.getConversationProfilePicture().get(3), holder.conversation_pp_4);
+                }
             }
             holder.status_action_container.setVisibility(View.VISIBLE);
             if( ( getItemViewType(position) != COMPACT_STATUS ) && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale)))){
