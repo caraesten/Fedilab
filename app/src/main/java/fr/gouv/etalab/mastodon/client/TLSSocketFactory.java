@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
@@ -30,6 +31,11 @@ public class TLSSocketFactory extends SSLSocketFactory {
     public SSLContext getSSLContext(){
         return this.context;
     }
+
+    public SSLEngine getSSLEngine(){
+        return this.context.createSSLEngine();
+    }
+
     @Override
     public String[] getDefaultCipherSuites() {
         return sSLSocketFactory.getDefaultCipherSuites();

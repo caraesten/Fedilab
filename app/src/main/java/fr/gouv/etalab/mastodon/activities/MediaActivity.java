@@ -30,7 +30,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -410,12 +409,18 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 pbar_inf.setIndeterminate(false);
                 pbar_inf.setScaleY(3f);
                 File file = new File(getCacheDir() + "/" + Helper.md5(url)+".mp4");
+                try {
+                    HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
+                } catch (KeyManagementException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
                 if(file.exists()) {
                     Uri uri = Uri.parse(file.getAbsolutePath());
                     videoView.setVisibility(View.VISIBLE);
-                    Log.v(Helper.TAG,"uri 2: " + uri);
+
                     videoView.setVideoURI(uri);
-                    videoView.seekTo(0);
                     videoView.start();
                     MediaController mc = new MediaController(MediaActivity.this);
                     videoView.setMediaController(mc);
@@ -432,14 +437,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 }else{
                     videoView.setVisibility(View.VISIBLE);
                     Uri uri = Uri.parse(url);
-                    try {
-                        HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
-                    } catch (KeyManagementException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchAlgorithmException e) {
-                        e.printStackTrace();
-                    }
-                    Log.v(Helper.TAG,"uri 1: " + uri);
                     videoView.setVideoURI(uri);
                     videoView.start();
                     MediaController mc = new MediaController(MediaActivity.this);
