@@ -16,6 +16,8 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -598,7 +600,7 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getHomeTimeline( String max_id) {
-        return getHomeTimeline(max_id, null, tootPerPage);
+        return getHomeTimeline(max_id, null, null, tootPerPage);
     }
 
 
@@ -607,7 +609,15 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getHomeTimelineSinceId(String since_id) {
-        return getHomeTimeline(null, since_id, tootPerPage);
+        return getHomeTimeline(null, since_id, null, tootPerPage);
+    }
+
+    /**
+     * Retrieves home timeline for the account from a min Id value *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getHomeTimelineMinId(String min_id) {
+        return getHomeTimeline(null, null, min_id, tootPerPage);
     }
 
 
@@ -618,20 +628,24 @@ public class API {
      * @param limit    int limit  - max value 40
      * @return APIResponse
      */
-    private APIResponse getHomeTimeline(String max_id, String since_id, int limit) {
+    private APIResponse getHomeTimeline(String max_id, String since_id, String min_id, int limit) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
             params.put("max_id", max_id);
         if (since_id != null)
             params.put("since_id", since_id);
+        if (min_id != null)
+            params.put("min_id", min_id);
         if (0 > limit || limit > 80)
             limit = 80;
         params.put("limit",String.valueOf(limit));
         statuses = new ArrayList<>();
+        Log.v(Helper.TAG,"params: " + params);
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/timelines/home"), 60, params, prefKeyOauthTokenT);
+            Log.v(Helper.TAG,"response: " + response);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(new JSONArray(response));
