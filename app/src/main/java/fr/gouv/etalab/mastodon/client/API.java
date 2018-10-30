@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -641,11 +640,9 @@ public class API {
             limit = 80;
         params.put("limit",String.valueOf(limit));
         statuses = new ArrayList<>();
-        Log.v(Helper.TAG,"params: " + params);
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/timelines/home"), 60, params, prefKeyOauthTokenT);
-            Log.v(Helper.TAG,"response: " + response);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(new JSONArray(response));
