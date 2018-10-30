@@ -584,7 +584,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="no_lists">Keine Liste!</string>
   <string name="videos">Videos</string>
   <string name="channels">Kanäle</string>
-  <string name="set_display_emoji">Use Emoji One</string>
+  <string name="set_display_emoji">Emoji One verwenden</string>
   <string-array name="filter_expire">
     <item>Nie</item>
     <item>30 Minuten</item>

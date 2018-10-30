@@ -80,7 +80,7 @@
   <string name="blocked_menu">Utenti bloccati</string>
   <string name="remote_follow_menu">Segui da remoto</string>
   <string name="notifications">Notifiche</string>
-  <string name="follow_request">Richiesta di follow</string>
+  <string name="follow_request">Richieste di follow</string>
   <string name="optimization">Ottimizzazione</string>
   <string name="settings">Impostazioni</string>
   <string name="profile">Profilo</string>
@@ -563,7 +563,7 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <string name="set_notif_sound">Cambia il suono di notifica</string>
   <string name="select_sound">Seleziona tono</string>
   <string name="set_enable_time_slot">Abilita fascia oraria</string>
-  <string name="how_to_videos">Video Di Aiuto</string>
+  <string name="how_to_videos">Video di aiuto</string>
   <string name="retrieve_remote_conversation">Recupero della conversazione remota!</string>
   <string name="no_blocked_domain">Nessun dominio bloccato!</string>
   <string name="unblock_domain_confirm">Sblocca dominio</string>
@@ -595,7 +595,7 @@ Per favore, conferma le notifiche push che vuoi ricevere.
   <string name="no_lists">Nessuna lista</string>
   <string name="videos">Video</string>
   <string name="channels">Canali</string>
-  <string name="set_display_emoji">Use Emoji One</string>
+  <string name="set_display_emoji">Utilizza le Emoji One</string>
   <string-array name="filter_expire">
     <item>Mai</item>
     <item>30 minuti</item>
