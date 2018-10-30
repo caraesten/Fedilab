@@ -47,7 +47,9 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 public class StreamingFederatedTimelineService extends IntentService {
 
-
+    static {
+        Helper.installProvider();
+    }
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *

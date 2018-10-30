@@ -78,7 +78,9 @@ import static fr.gouv.etalab.mastodon.helper.Helper.notify_user;
 
 public class LiveNotificationService extends Service implements NetworkStateReceiver.NetworkStateReceiverListener {
 
-
+    static {
+        Helper.installProvider();
+    }
 
     protected Account account;
     boolean backgroundProcess;
