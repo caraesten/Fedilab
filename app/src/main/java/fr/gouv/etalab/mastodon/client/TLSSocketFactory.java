@@ -18,14 +18,18 @@ import javax.net.ssl.SSLSocketFactory;
 public class TLSSocketFactory extends SSLSocketFactory {
 
     private SSLSocketFactory sSLSocketFactory;
+    private SSLContext context;
 
     public TLSSocketFactory() throws KeyManagementException, NoSuchAlgorithmException {
 
-        SSLContext context = SSLContext.getInstance("TLS");
+        context = SSLContext.getInstance("TLS");
         context.init(null, null, null);
         sSLSocketFactory = context.getSocketFactory();
     }
 
+    public SSLContext getSSLContext(){
+        return this.context;
+    }
     @Override
     public String[] getDefaultCipherSuites() {
         return sSLSocketFactory.getDefaultCipherSuites();

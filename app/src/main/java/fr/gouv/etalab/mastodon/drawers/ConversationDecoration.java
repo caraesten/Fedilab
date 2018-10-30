@@ -38,11 +38,7 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
     private Context context;
 
     public ConversationDecoration(Context context){
-        try {
-            divider = ContextCompat.getDrawable(context,R.drawable.line_divider);
-        }catch (Exception e){
-            divider = ResourcesCompat.getDrawable(context.getResources(), R.drawable.line_divider, null);
-        }
+        divider = ContextCompat.getDrawable(context,R.drawable.line_divider);
         this.context = context;
     }
 
