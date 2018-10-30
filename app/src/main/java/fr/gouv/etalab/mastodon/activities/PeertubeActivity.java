@@ -258,13 +258,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        try {
-            HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
         videoView.setVideoURI(uri);
         videoView.getCurrentPosition();
         fullScreenMediaController = new FullScreenMediaController(PeertubeActivity.this, peertube);

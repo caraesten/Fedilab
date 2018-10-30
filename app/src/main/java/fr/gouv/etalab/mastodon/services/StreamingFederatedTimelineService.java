@@ -29,8 +29,6 @@ import com.koushikdutta.async.http.Headers;
 import com.koushikdutta.async.http.WebSocket;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.BufferedReader;
-import java.io.InputStream;
 import javax.net.ssl.HttpsURLConnection;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
