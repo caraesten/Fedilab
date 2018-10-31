@@ -120,6 +120,7 @@ import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
 
@@ -416,7 +417,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
 
-            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && getItemViewType(position) != COMPACT_STATUS  && displayBookmarkButton)
+            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && getItemViewType(position) == FOCUSED_STATUS  && displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
             else
                 holder.status_bookmark.setVisibility(View.GONE);
@@ -692,20 +693,23 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //Change the color in gray for accounts in DARK Theme only
             Spannable wordtoSpan = status.getDisplayNameSpan();
 
-            if( theme == THEME_DARK || theme == Helper.THEME_BLACK) {
-                Pattern hashAcct;
-                if( status.getReblog() != null)
-                    hashAcct = Pattern.compile("\\s(@"+status.getReblog().getAccount().getAcct()+")");
-                else
-                    hashAcct = Pattern.compile("(@"+status.getAccount().getAcct()+")");
-                if( wordtoSpan != null && hashAcct != null){
-                    Matcher matcherAcct = hashAcct.matcher(wordtoSpan);
-                    while (matcherAcct.find()){
-                        int matchStart = matcherAcct.start(1);
-                        int matchEnd = matcherAcct.end();
-                        if( wordtoSpan.length() >= matchEnd && matchStart < matchEnd)
+            Pattern hashAcct;
+            if( status.getReblog() != null)
+                hashAcct = Pattern.compile("\\s(@"+status.getReblog().getAccount().getAcct()+")");
+            else
+                hashAcct = Pattern.compile("(@"+status.getAccount().getAcct()+")");
+            if( wordtoSpan != null && hashAcct != null){
+                Matcher matcherAcct = hashAcct.matcher(wordtoSpan);
+                while (matcherAcct.find()){
+                    int matchStart = matcherAcct.start(1);
+                    int matchEnd = matcherAcct.end();
+                    if( wordtoSpan.length() >= matchEnd && matchStart < matchEnd){
+                        if( theme == THEME_LIGHT)
                             wordtoSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_icon)), matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        else
+                            wordtoSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.mastodonC2)), matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
+
                 }
             }
             holder.status_account_username.setText(wordtoSpan);
@@ -1699,14 +1703,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( status.getApplication() != null && getItemViewType(position) == FOCUSED_STATUS){
                 Application application = status.getApplication();
                 holder.status_toot_app.setText(application.getName());
-                holder.status_toot_app.setVisibility(View.VISIBLE);
-                if( application.getWebsite() != null && !application.getWebsite().trim().equals("null"))
-                holder.status_toot_app.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Helper.openBrowser(context, application.getWebsite());
-                    }
-                });
+                if( application.getWebsite() != null && !application.getWebsite().trim().equals("null") && application.getWebsite().trim().length() == 0) {
+                    holder.status_toot_app.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Helper.openBrowser(context, application.getWebsite());
+                        }
+                    });
+                    holder.status_toot_app.setVisibility(View.VISIBLE);
+                }
             }else {
                 holder.status_toot_app.setVisibility(View.GONE);
             }
