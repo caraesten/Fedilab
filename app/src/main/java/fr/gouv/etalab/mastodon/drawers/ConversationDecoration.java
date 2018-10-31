@@ -73,7 +73,9 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
                 bottom =  (statusAfter != null && status.getId().equals(statusAfter.getIn_reply_to_id()) )?
                     child.getBottom():child.getTop()+offSet;
                 if( position == 0 && childCount > 1)
-                    top = bottom - (int)Helper.convertDpToPixel(28, context);
+                    top = bottom - (int)Helper.convertDpToPixel(14, context);
+                if( position == 0 && childCount  <= 1 )
+                    top = bottom;
                 divider.setBounds(left, top, right, bottom);
                 divider.draw(canvas);
             }

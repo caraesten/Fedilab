@@ -21,6 +21,10 @@
     android:layout_height="wrap_content"
     android:id="@+id/main_container"
     android:paddingTop="10dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     android:divider="?android:dividerHorizontal"
     android:showDividers="end"
     android:orientation="vertical"
@@ -49,9 +53,6 @@
                 <ImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_centerHorizontal="true"
@@ -62,9 +63,9 @@
                     android:id="@+id/status_account_profile_boost_by"
                     android:layout_height="30dp"
                     android:layout_width="30dp"
-                    android:layout_marginTop="25dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:layout_marginTop="20dp"
                     style="?attr/shapeBorder"
                     android:visibility="gone"
                     tools:ignore="ContentDescription" />
@@ -81,8 +82,8 @@
                 tools:ignore="ContentDescription" />
         </LinearLayout>
         <LinearLayout
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
