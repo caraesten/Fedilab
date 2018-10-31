@@ -75,6 +75,4 @@ dependencies {
     implementation "com.koushikdutta.async:androidasync:2.+"
     implementation 'com.vanniktech:emoji-one:0.6.0-SNAPSHOT'
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
-
-
 }

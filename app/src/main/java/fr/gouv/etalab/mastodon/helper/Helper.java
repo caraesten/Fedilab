@@ -1798,6 +1798,7 @@ public class Helper {
         try {
             return gson.fromJson(serializedAccount, Account.class);
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }
