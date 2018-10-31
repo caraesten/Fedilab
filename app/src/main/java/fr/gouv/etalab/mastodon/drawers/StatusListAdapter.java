@@ -1703,14 +1703,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( status.getApplication() != null && getItemViewType(position) == FOCUSED_STATUS){
                 Application application = status.getApplication();
                 holder.status_toot_app.setText(application.getName());
-                holder.status_toot_app.setVisibility(View.VISIBLE);
-                if( application.getWebsite() != null && !application.getWebsite().trim().equals("null"))
-                holder.status_toot_app.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Helper.openBrowser(context, application.getWebsite());
-                    }
-                });
+                if( application.getWebsite() != null && !application.getWebsite().trim().equals("null") && application.getWebsite().trim().length() == 0) {
+                    holder.status_toot_app.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Helper.openBrowser(context, application.getWebsite());
+                        }
+                    });
+                    holder.status_toot_app.setVisibility(View.VISIBLE);
+                }
             }else {
                 holder.status_toot_app.setVisibility(View.GONE);
             }

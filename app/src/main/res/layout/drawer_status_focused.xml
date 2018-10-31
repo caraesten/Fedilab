@@ -20,19 +20,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/main_container"
+    android:paddingTop="10dp"
     android:divider="?android:dividerHorizontal"
     android:showDividers="end"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:orientation="horizontal"
         android:baselineAligned="false">
         <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:orientation="vertical"
             >
             <RelativeLayout
@@ -121,10 +121,6 @@
             android:drawableStart="@drawable/ic_remove_red_eye"
             android:gravity="center_vertical"
             android:drawablePadding="5dp"
-            android:paddingLeft="10dp"
-            android:paddingStart="10dp"
-            android:paddingRight="10dp"
-            android:paddingEnd="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:maxLines="1"
@@ -141,15 +137,11 @@
         <fr.gouv.etalab.mastodon.helper.CustomTextView
             android:id="@+id/status_content"
             android:textIsSelectable="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
@@ -199,8 +191,8 @@
         <LinearLayout
             android:id="@+id/status_cardview"
             android:padding="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:visibility="gone"
             android:background="@drawable/card_border"
             android:layout_width="match_parent"
@@ -250,7 +242,7 @@
             android:id="@+id/status_cardview_video"
             android:layout_width="300dp"
             android:layout_height="220dp"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
             >
             <WebView
                 android:id="@+id/status_cardview_webview"
@@ -260,7 +252,7 @@
         <RelativeLayout
             android:id="@+id/status_horizontal_document_container"
             android:visibility="gone"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -387,6 +379,7 @@
         </RelativeLayout>
         <LinearLayout
             android:visibility="gone"
+            android:layout_marginTop="10dp"
             android:id="@+id/status_document_container"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -511,10 +504,6 @@
             android:drawableStart="@drawable/ic_photo"
             android:gravity="center_vertical"
             android:drawablePadding="5dp"
-            android:paddingLeft="10dp"
-            android:paddingStart="10dp"
-            android:paddingRight="10dp"
-            android:paddingEnd="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:maxLines="1"
@@ -536,17 +525,15 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
     <TextView
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/status_toot_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
         />
     <TextView
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
         android:id="@+id/status_toot_app"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
@@ -562,36 +549,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:padding="@dimen/drawer_padding"
-        android:layout_marginStart="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
-        <LinearLayout
+        <TextView
+            android:drawablePadding="2dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:id="@+id/status_reply"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:drawablePadding="2dp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:id="@+id/status_reply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ProgressBar
-                android:id="@+id/loader_replies"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:indeterminate="true"
-                android:layout_width="15dp"
-                android:layout_height="15dp" />
-        </LinearLayout>
-
+            android:layout_height="wrap_content" />
         <TextView
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
@@ -624,45 +590,22 @@
             android:layout_weight="1"
             android:layout_gravity="end"
             android:gravity="end"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
             android:layout_height="wrap_content">
             <ImageView
-                android:layout_marginRight="20dp"
-                android:layout_marginEnd="20dp"
                 android:id="@+id/status_privacy"
                 android:layout_gravity="center_vertical"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 tools:ignore="ContentDescription" />
             <ImageView
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:id="@+id/status_more"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/ic_more_horiz"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:visibility="gone"
-        android:layout_marginBottom="5dp"
-        android:layout_marginStart="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_vertical_margin"
-        android:id="@+id/status_replies"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
-        <LinearLayout
-            android:orientation="horizontal"
-            android:id="@+id/status_replies_profile_pictures"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
     </LinearLayout>
     <Button
         android:id="@+id/fetch_more"
