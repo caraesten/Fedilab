@@ -243,7 +243,8 @@ public class Sqlite extends SQLiteOpenHelper {
             case 12:
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN "+ COL_EMOJIS + " TEXT");
             case 13:
-                db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN "+ COL_INSTANCE_TYPE + " TEXT");
+                if( oldVersion > 11)
+                    db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN "+ COL_INSTANCE_TYPE + " TEXT");
             case 14:
                 db.execSQL(CREATE_TABLE_PEERTUBE_FAVOURITES);
             default:
