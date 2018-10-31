@@ -439,11 +439,11 @@
     </string>
   <string name="privacy_API_title">التعقب و المكتبات</string>
   <string name="privacy_API">
-        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+        إنّ التطبيق <b>لا يستخدم أدوات للتعقّب</b> (لقياس الجمهور، للإبلاغ عن الأخطاء، إلخ.) ولا يحتوي على أية إعلانات تجارية.\n\n
+        تم التقليل من استخدام المكتبات: \n
+        - <b>Glide</b>: لإدارة الوسائط\n
+        - <b>Android-Job</b>: لإدارة الخدمات\n
+        - <b>PhotoView</b>: لإدارة الصور\n
     </string>
   <string name="privacy_API_yandex_title">ترجمة التبويقات</string>
   <string name="privacy_API_yandex_authorizations">

@@ -565,7 +565,7 @@ Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehler
   <string name="retrieve_remote_status">Rufe entfernten Status ab</string>
   <string name="comment">Kommentar</string>
   <string name="peertube_instance">Peertube Instanz</string>
-  <string name="set_display_direct">Private Nachrichten als eigene Zeitleiste anzeigen</string>
+  <string name="set_display_direct">Direktnachrichten als eigene Zeitleiste anzeigen</string>
   <string name="set_keep_background_process">Im Hintergrund ausführen</string>
   <string name="no_comments">Kommentiere als Erster dieses Video mit den Knopf oben rechts!</string>
   <string name="number_view_video">%s mal gesehen</string>
