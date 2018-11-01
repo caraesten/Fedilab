@@ -617,7 +617,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 });
             }
-            if( status.getContentSpan().toString().equals("") || status.getContentSpan().toString().length() == 0){
+            if( status.getContent().trim().equals("") || status.getContent().trim().length() == 0){
                 holder.status_content_container.setVisibility(View.GONE);
             }else {
                 holder.status_content_container.setVisibility(View.VISIBLE);
