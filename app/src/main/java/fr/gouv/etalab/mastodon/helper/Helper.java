@@ -1187,15 +1187,17 @@ public class Helper {
     public static void changeUser(Activity activity, String userID, boolean checkItem) {
 
 
-        final NavigationView navigationView = activity.findViewById(R.id.nav_view);
-        MainActivity.lastNotificationId = null;
-        MainActivity.lastHomeId = null;
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
         //Can happen when an account has been deleted and there is a click on an old notification
         if( account == null)
             return;
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+        if( account.getToken().equals(token))
+            return;
+        MainActivity.lastNotificationId = null;
+        MainActivity.lastHomeId = null;
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());
