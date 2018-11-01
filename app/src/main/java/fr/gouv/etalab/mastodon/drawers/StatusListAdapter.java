@@ -415,7 +415,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
 
             final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
+            boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
 
             if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && getItemViewType(position) == FOCUSED_STATUS  && displayBookmarkButton)
