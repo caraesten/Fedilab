@@ -52,7 +52,7 @@
   <string name="next">Следующий</string>
   <string name="previous">Предыдущий</string>
   <string name="open_with">Открыть с помощью</string>
-  <string name="validate">Подтверждение</string>
+  <string name="validate">Подтвердить</string>
   <string name="media">Медиа</string>
   <string name="share_with">Поделиться через</string>
   <string name="shared_via">Поделился через Mastalab</string>
@@ -298,7 +298,7 @@
   <string name="set_notif_follow_share">Уведомлять, когда кто-то повышает ваш статус</string>
   <string name="set_notif_follow_add">Уведомлять, когда кто-то добавил вас в избранные</string>
   <string name="set_notif_follow_mention">Уведомлять, когда кто-то вас упоминает</string>
-  <string name="set_share_validation">Показывать диалоговое окно подтверждения перед повышением</string>
+  <string name="set_share_validation">Предупреждать перед тем как продвинуть</string>
   <string name="set_share_validation_fav">Предупреждать перед добавлением в избранные</string>
   <string name="settings_title_more_options">Расширенные настройки</string>
   <string name="set_wifi_only">Уведомлять только в сети WiFi</string>
@@ -505,8 +505,8 @@
   <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
   <string name="send_crash_report">Ask for sending crash reports by email?</string>
   <string name="follow_instance">Подписаться на сервер</string>
-  <string name="toast_instance_already_added">You already follow this instance!</string>
-  <string name="toast_instance_followed">The instance is followed!</string>
+  <string name="toast_instance_already_added">Вы уже подписаны на этот сервер!</string>
+  <string name="toast_instance_followed">На этот сервер подписка выполнена!</string>
   <string name="action_partnership">Сотрудничество</string>
   <string name="neutral_menu_information">Информация</string>
   <string name="hide_boost">Скрыть продвигаемые от %s</string>
@@ -516,7 +516,7 @@
   <string name="unendorse">Не показывать в профиле</string>
   <string name="show_everything">Показать все от %s</string>
   <string name="toast_endorse">Этот аккаунт теперь отображается в профиле</string>
-  <string name="toast_unendorse">Этот аккаунт теперь больше не отображается в профиле</string>
+  <string name="toast_unendorse">Этот аккаунт больше не отображается в профиле</string>
   <string name="toast_show_boost">Продвигаемые теперь отображаются!</string>
   <string name="toast_hide_boost">Продвигаемые теперь скрываются!</string>
   <string name="direct_message">Прямое сообщение</string>
