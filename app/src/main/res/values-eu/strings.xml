@@ -582,19 +582,19 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="duration_video">Iraupena: %s</string>
   <string name="add_remote_instance">Gehitu instantzia bat</string>
   <string name="comment_no_allowed_peertube">Iruzkinak ez daude aktibatuta bideo honetan!</string>
-  <string name="pickup_resolution">Pick up a resolution</string>
-  <string name="peertube_favorites">Peertube favourites</string>
-  <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-  <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-  <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
-  <string name="channel">Channel</string>
-  <string name="no_peertube_channels">No Peertube channels</string>
-  <string name="no_peertube_instances">No Peertube instances</string>
-  <string name="no_mastodon_instances">No Mastodon instances</string>
-  <string name="no_lists">No lists</string>
-  <string name="videos">Videos</string>
-  <string name="channels">Channels</string>
-  <string name="set_display_emoji">Use Emoji One</string>
+  <string name="pickup_resolution">Hautatu bereizmen bat</string>
+  <string name="peertube_favorites">Peertubeko gogokoak</string>
+  <string name="bookmark_add_peertube">Bideoa gogokoetara gehitu da!</string>
+  <string name="bookmark_remove_peertube">Bideoa gogokoetatik kendu da!</string>
+  <string name="bookmark_peertube_empty">Ez dago Peertubeko bideorik gogokoetan!</string>
+  <string name="channel">Kanala</string>
+  <string name="no_peertube_channels">Peertubeko kanalik ez</string>
+  <string name="no_peertube_instances">Peertube instantziarik ez</string>
+  <string name="no_mastodon_instances">Mastodon instantziarik ez</string>
+  <string name="no_lists">Zerrendarik ez</string>
+  <string name="videos">Bideoak</string>
+  <string name="channels">Kanalak</string>
+  <string name="set_display_emoji">Erabili Emoji One</string>
   <string-array name="filter_expire">
     <item>Inoiz ez</item>
     <item>30 minutu</item>
