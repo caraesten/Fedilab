@@ -617,9 +617,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 });
             }
-
-
+            if( status.getContentSpan().toString().equals("") || status.getContentSpan().toString().length() == 0){
+                holder.status_content_container.setVisibility(View.GONE);
+            }else {
+                holder.status_content_container.setVisibility(View.VISIBLE);
+            }
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
+
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
 
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
@@ -686,7 +690,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
             }else {
                 ppurl = status.getAccount().getAvatar();
-                holder.status_account_displayname.setText(status.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+                if( status.getAccount().getdisplayNameSpan() == null || status.getAccount().getdisplayNameSpan().toString().trim().length() == 0)
+                    holder.status_account_displayname.setText(status.getAccount().getUsername().replace("@",""), TextView.BufferType.SPANNABLE);
+                else
+                    holder.status_account_displayname.setText(status.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
             }
             //-------- END -> Displays name & emoji in toot header
 

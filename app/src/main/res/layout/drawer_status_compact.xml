@@ -459,7 +459,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:baselineAligned="false">
             <RelativeLayout
                 android:layout_width="0dp"
@@ -600,7 +600,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/status_mention_spoiler"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -615,7 +615,7 @@
         android:maxLines="1"
         android:layout_gravity="end"
         android:gravity="end"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:textStyle="italic"
         android:textSize="16sp"
         android:textColor="?attr/colorAccent"
@@ -624,7 +624,6 @@
         android:id="@+id/status_action_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
         <TextView
