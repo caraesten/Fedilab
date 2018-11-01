@@ -513,8 +513,7 @@ public class Status implements Parcelable{
         status.getAccount().makeEmojisAccount(context, null);
         String displayName;
         if( status.getReblog() != null){
-            displayName = Helper.shortnameToUnicode(status.getReblog().getAccount().getDisplay_name(), true);
-            displayName = String.format("%s @%s",displayName,status.getReblog().getAccount().getAcct());
+            displayName = String.format("@%s",status.getReblog().getAccount().getAcct());
         }else {
             displayName = String.format("@%s",status.getAccount().getAcct());
         }

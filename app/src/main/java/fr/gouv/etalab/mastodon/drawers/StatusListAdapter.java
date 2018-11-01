@@ -238,7 +238,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_content_translated;
         LinearLayout status_content_translated_container;
         TextView status_account_username;
-        TextView status_account_displayname;
+        TextView status_account_displayname, status_account_displayname_owner;
         ImageView status_account_profile;
         ImageView status_account_profile_boost;
         ImageView status_account_profile_boost_by;
@@ -307,6 +307,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_content_translated = itemView.findViewById(R.id.status_content_translated);
             status_account_username = itemView.findViewById(R.id.status_account_username);
             status_account_displayname = itemView.findViewById(R.id.status_account_displayname);
+            status_account_displayname_owner = itemView.findViewById(R.id.status_account_displayname_owner);
             status_account_profile = itemView.findViewById(R.id.status_account_profile);
             status_account_profile_boost = itemView.findViewById(R.id.status_account_profile_boost);
             status_account_profile_boost_by = itemView.findViewById(R.id.status_account_profile_boost_by);
@@ -688,8 +689,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( status.getReblog() != null){
                 ppurl = status.getReblog().getAccount().getAvatar();
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
+                if( status.getReblog().getAccount().getDisplay_name().length() > 0)
+                    holder.status_account_displayname_owner.setText( status.getReblog().getAccount().getDisplay_name());
+                else
+                    holder.status_account_displayname_owner.setText( status.getReblog().getAccount().getAcct().replace("@",""));
+                holder.status_account_displayname_owner.setVisibility(View.VISIBLE);
+
             }else {
                 ppurl = status.getAccount().getAvatar();
+                holder.status_account_displayname_owner.setVisibility(View.GONE);
                 if( status.getAccount().getdisplayNameSpan() == null || status.getAccount().getdisplayNameSpan().toString().trim().length() == 0)
                     holder.status_account_displayname.setText(status.getAccount().getUsername().replace("@",""), TextView.BufferType.SPANNABLE);
                 else
@@ -699,12 +707,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             //Change the color in gray for accounts in DARK Theme only
             Spannable wordtoSpan = status.getDisplayNameSpan();
-
             Pattern hashAcct;
-            if( status.getReblog() != null)
-                hashAcct = Pattern.compile("\\s(@"+status.getReblog().getAccount().getAcct()+")");
-            else
+            if( status.getReblog() != null) {
+                hashAcct = Pattern.compile("(@" + status.getReblog().getAccount().getAcct() + ")");
+            }else
                 hashAcct = Pattern.compile("(@"+status.getAccount().getAcct()+")");
+
             if( wordtoSpan != null && hashAcct != null){
                 Matcher matcherAcct = hashAcct.matcher(wordtoSpan);
                 while (matcherAcct.find()){
