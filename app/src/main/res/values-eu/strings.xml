@@ -589,12 +589,12 @@ Eskerrik asko Stéphane logoagatik.    </string>
   <string name="bookmark_peertube_empty">Ez dago Peertubeko bideorik gogokoetan!</string>
   <string name="channel">Kanala</string>
   <string name="no_peertube_channels">Peertubeko kanalik ez</string>
-  <string name="no_peertube_instances">No Peertube instances</string>
-  <string name="no_mastodon_instances">No Mastodon instances</string>
-  <string name="no_lists">No lists</string>
-  <string name="videos">Videos</string>
-  <string name="channels">Channels</string>
-  <string name="set_display_emoji">Use Emoji One</string>
+  <string name="no_peertube_instances">Peertube instantziarik ez</string>
+  <string name="no_mastodon_instances">Mastodon instantziarik ez</string>
+  <string name="no_lists">Zerrendarik ez</string>
+  <string name="videos">Bideoak</string>
+  <string name="channels">Kanalak</string>
+  <string name="set_display_emoji">Erabili Emoji One</string>
   <string-array name="filter_expire">
     <item>Inoiz ez</item>
     <item>30 minutu</item>
