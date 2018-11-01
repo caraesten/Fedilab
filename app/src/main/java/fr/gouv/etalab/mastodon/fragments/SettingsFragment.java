@@ -231,7 +231,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        boolean display_bookmark = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, true);
+        boolean display_bookmark = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
         final CheckBox set_display_bookmark = rootView.findViewById(R.id.set_display_bookmarks);
         set_display_bookmark.setChecked(display_bookmark);
 

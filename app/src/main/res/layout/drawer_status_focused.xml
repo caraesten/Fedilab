@@ -95,6 +95,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/status_account_displayname_owner"
+                android:visibility="gone"
+                android:maxLines="1"
+                android:drawablePadding="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
                 android:textSize="12sp"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -111,7 +118,7 @@
         android:layout_height="wrap_content">
         <fr.gouv.etalab.mastodon.helper.CustomTextView
             android:id="@+id/status_spoiler"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:textIsSelectable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -132,13 +139,14 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/status_content_container"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
         <fr.gouv.etalab.mastodon.helper.CustomTextView
             android:id="@+id/status_content"
             android:textIsSelectable="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
@@ -170,7 +178,7 @@
         <LinearLayout
             android:id="@+id/status_content_translated_container"
             android:visibility="gone"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -192,7 +200,6 @@
         <LinearLayout
             android:id="@+id/status_cardview"
             android:padding="5dp"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:visibility="gone"
             android:background="@drawable/card_border"
@@ -243,7 +250,7 @@
             android:id="@+id/status_cardview_video"
             android:layout_width="300dp"
             android:layout_height="220dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             >
             <WebView
                 android:id="@+id/status_cardview_webview"
@@ -253,7 +260,7 @@
         <RelativeLayout
             android:id="@+id/status_horizontal_document_container"
             android:visibility="gone"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -380,7 +387,7 @@
         </RelativeLayout>
         <LinearLayout
             android:visibility="gone"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:id="@+id/status_document_container"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -521,12 +528,12 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/status_mention_spoiler"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <TextView
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/status_toot_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -540,7 +547,7 @@
         android:maxLines="1"
         android:layout_gravity="end"
         android:gravity="end"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:textStyle="italic"
         android:textSize="16sp"
         android:textColor="?attr/colorAccent"
@@ -549,7 +556,6 @@
         android:id="@+id/status_action_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal">
         <TextView
