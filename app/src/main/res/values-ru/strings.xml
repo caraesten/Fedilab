@@ -4,7 +4,7 @@
   <string name="navigation_drawer_open">Открыть меню</string>
   <string name="navigation_drawer_close">Закрыть меню</string>
   <string name="action_about">О программе</string>
-  <string name="action_about_instance">О сервере</string>
+  <string name="action_about_instance">Об этом сервере</string>
   <string name="action_privacy">Конфиденциальность</string>
   <string name="action_cache">Кэш</string>
   <string name="action_logout">Выйти</string>
@@ -18,7 +18,7 @@
   <string name="download_file">Скачать %1$s</string>
   <string name="download_over">Загрузка завершена</string>
   <string name="save_file">Сохранить %1$s</string>
-  <string name="save_over">Файл сохранён</string>
+  <string name="save_over">Медиафайл сохранен</string>
   <string name="download_from" formatted="false">Файл: %1$s</string>
   <string name="password">Пароль</string>
   <string name="email">Email</string>
@@ -29,7 +29,7 @@
   <string name="save">Сохранить</string>
   <string name="restore">Восстановить</string>
   <string name="two_factor_authentification">Двухфакторная аутентификация?</string>
-  <string name="other_instance">Сервер mastodon.etalab.gouv.fr?</string>
+  <string name="other_instance">Сервер не mastodon.etalab.gouv.fr?</string>
   <string name="no_result">Нет результатов!</string>
   <string name="instance">Сервер</string>
   <string name="instance_example">Сервер: mastodon.social</string>
@@ -63,12 +63,12 @@
   <string name="favourite">Избранные</string>
   <string name="follow">Новые подписчики</string>
   <string name="mention">Упоминания</string>
-  <string name="reblog">Поднятые</string>
-  <string name="show_boosts">Показать поднятые</string>
-  <string name="show_replies">Посмотреть ответы</string>
+  <string name="reblog">Продвинутые</string>
+  <string name="show_boosts">Показать продвинутые</string>
+  <string name="show_replies">Показать ответы</string>
   <string name="action_open_in_web">Открыть в браузере</string>
   <string name="translate">Перевести</string>
-  <string name="please_wait">Пожалуйста подождите пару секунд, прежде чем совершить действие.</string>
+  <string name="please_wait">Пожалуйста, подождите несколько секунд, прежде чем выполнить это действие.</string>
   <!--- Menu -->
   <string name="home_menu">Домой</string>
   <string name="local_menu">Местная лента</string>
@@ -555,8 +555,8 @@
   <string name="about_trunk_action">Магистральный API</string>
   <string name="toast_impossible_to_follow">Аккаунт(ы) не могут быть подписаны</string>
   <string name="retrieve_remote_account">Получение удаленного аккаунта</string>
-  <string name="expand_image">Automatically expand hidden media</string>
-  <string name="set_display_follow_instance">Display follow instances button</string>
+  <string name="expand_image">Раскрывать скрытое медиасодержимое автоматически</string>
+  <string name="set_display_follow_instance">Отображать кнопку подписки на сервера</string>
   <string name="channel_notif_follow">Новая подписка</string>
   <string name="channel_notif_boost">Новое продвижение</string>
   <string name="channel_notif_fav">Новое избранное</string>
@@ -568,7 +568,7 @@
   <string name="select_sound">Выбрать сигнал</string>
   <string name="set_enable_time_slot">Активировать временной интервал</string>
   <string name="how_to_videos">Видеоинструкции</string>
-  <string name="retrieve_remote_conversation">Fetching remote thread!</string>
+  <string name="retrieve_remote_conversation">Получение удаленной ветки!</string>
   <string name="no_blocked_domain">Нет заблокированных доменов!</string>
   <string name="unblock_domain_confirm">Разблокировать домен</string>
   <string name="unblock_domain_confirm_message">Вы уверены, что хотите разблокировать %s?</string>
@@ -599,7 +599,7 @@
   <string name="no_lists">Нет списков</string>
   <string name="videos">Видео</string>
   <string name="channels">Каналы</string>
-  <string name="set_display_emoji">Use Emoji One</string>
+  <string name="set_display_emoji">Использовать Emoji One</string>
   <string-array name="filter_expire">
     <item>Никогда</item>
     <item>30 минут</item>
