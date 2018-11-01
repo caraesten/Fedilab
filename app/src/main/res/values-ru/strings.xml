@@ -285,8 +285,8 @@
   <string name="load_attachment_spoiler_less">Показать меньше…</string>
   <string name="load_sensitive_attachment">Чувствительный контент</string>
   <string name="set_display_reply">Отображать предыдущее сообщение в ответах</string>
-  <string name="set_display_local">Локальная лента</string>
-  <string name="set_display_global">Лента федерации</string>
+  <string name="set_display_local">Показывать локальную ленту</string>
+  <string name="set_display_global">Показывать федеративную ленту</string>
   <string name="set_disable_gif">Использовать GIF-аватары</string>
   <string name="set_folder_title">Путь: </string>
   <string name="set_auto_store_toot">Сохранять черновики автоматически</string>
@@ -497,7 +497,7 @@
   <string name="support_the_app_on_liberapay">Поддержать приложение на Liberapay</string>
   <string name="alert_regex">В регулярном выражении есть ошибка!</string>
   <string name="no_account_yet">Еще нет аккаунта?</string>
-  <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+  <string name="toast_instance_unavailable">На этом сервере нет лент!</string>
   <string name="delete_instance">Удалить этот сервер?</string>
   <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
   <string name="which_language">Перевести на</string>
