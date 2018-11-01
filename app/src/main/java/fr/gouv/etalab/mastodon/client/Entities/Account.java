@@ -483,14 +483,13 @@ public class Account implements Parcelable {
         return spannableString;
     }
 
-    public void makeEmojisAccount(final Context context, final OnRetrieveEmojiAccountInterface listener){
+    public void makeEmojisAccountProfile(final Context context, final OnRetrieveEmojiAccountInterface listener){
         if( ((Activity)context).isFinishing() )
             return;
-        fields = new LinkedHashMap<>();
-        fieldsVerified = new LinkedHashMap<>();
-        fieldsSpan = new LinkedHashMap<>();
-        noteSpan = account.getNoteSpan();
-
+        if( fields == null)
+            fields = new LinkedHashMap<>();
+        if( fieldsSpan == null)
+            fieldsSpan = new LinkedHashMap<>();
         if( account.getDisplay_name() != null)
             displayNameSpan = new SpannableString(account.getDisplay_name());
         if( account.getFields() != null && account.getFields().size() > 0) {
@@ -565,22 +564,6 @@ public class Account implements Parcelable {
                                             fieldsSpan.put((SpannableString) pair.getKey(), fieldSpan);
                                         }else
                                             fieldsSpan.put(keySpan, fieldSpan);
-                                        /*if (keySpan.toString().contains(targetedEmoji)) {
-                                            //emojis can be used several times so we have to loop
-                                            for (int startPosition = -1; (startPosition = keySpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
-                                                final int endPosition = startPosition + targetedEmoji.length();
-                                                if (endPosition <= keySpan.toString().length() && endPosition >= startPosition)
-                                                    keySpan.setSpan(
-                                                            new ImageSpan(context,
-                                                                    Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
-                                                                            (int) Helper.convertDpToPixel(20, context), false)), startPosition,
-                                                            endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                                            }
-
-                                            SpannableString obj = fieldsSpan.remove(pair.getKey());
-                                            fieldsSpan.put(keySpan, obj);
-                                        }else
-                                            fieldsSpan.put(keySpan, fieldSpan);*/
                                     }
 
                                     i[0]++;
@@ -588,6 +571,72 @@ public class Account implements Parcelable {
                                         if (noteSpan != null)
                                             account.setNoteSpan(noteSpan);
                                         account.setFieldsSpan(fieldsSpan);
+                                        if (listener != null)
+                                            listener.onRetrieveEmojiAccount(account);
+                                    }
+                                }
+                            });
+                }catch (Exception ignored){}
+
+            }
+        }
+    }
+
+
+    public void makeEmojisAccount(final Context context, final OnRetrieveEmojiAccountInterface listener){
+        if( ((Activity)context).isFinishing() )
+            return;
+
+        fields = new LinkedHashMap<>();
+        fieldsVerified = new LinkedHashMap<>();
+        fieldsSpan = new LinkedHashMap<>();
+        noteSpan = account.getNoteSpan();
+        if( account.getDisplay_name() != null)
+            displayNameSpan = new SpannableString(account.getDisplay_name());
+        if( account.getFields() != null && account.getFields().size() > 0) {
+            Iterator it = account.getFields().entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                SpannableString fieldSpan;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    fieldSpan = new SpannableString(Html.fromHtml((String)pair.getValue(), FROM_HTML_MODE_LEGACY));
+                else
+                    //noinspection deprecation
+                    fieldSpan = new SpannableString(Html.fromHtml((String)pair.getValue()));
+                fieldsSpan.put(new SpannableString((String)pair.getKey()), fieldSpan);
+            }
+            account.setFieldsSpan(fieldsSpan);
+        }
+        final List<Emojis> emojis = account.getEmojis();
+        if( emojis != null && emojis.size() > 0 ) {
+
+            final int[] i = {0};
+            for (final Emojis emoji : emojis) {
+                fields = account.getFields();
+                try {
+                    Glide.with(context)
+                            .asBitmap()
+                            .load(emoji.getUrl())
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                    final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                    if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
+                                        //emojis can be used several times so we have to loop
+                                        for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                            final int endPosition = startPosition + targetedEmoji.length();
+                                            if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition)
+                                                displayNameSpan.setSpan(
+                                                        new ImageSpan(context,
+                                                                Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                        (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                        }
+                                    }
+                                    i[0]++;
+                                    if (i[0] == (emojis.size())) {
+                                        if (noteSpan != null)
+                                            account.setNoteSpan(noteSpan);
                                         if (listener != null)
                                             listener.onRetrieveEmojiAccount(account);
                                     }

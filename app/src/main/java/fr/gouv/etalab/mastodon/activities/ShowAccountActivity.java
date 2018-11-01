@@ -762,7 +762,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_un.setText(String.format("@%s", account.getAcct()));
         SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote(), account.getEmojis());
         account.setNoteSpan(spannableString);
-        account.makeEmojisAccount(ShowAccountActivity.this, ShowAccountActivity.this);
+        account.makeEmojisAccountProfile(ShowAccountActivity.this, ShowAccountActivity.this);
         account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
         account_note.setMovementMethod(LinkMovementMethod.getInstance());
         if (!peertubeAccount && tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
