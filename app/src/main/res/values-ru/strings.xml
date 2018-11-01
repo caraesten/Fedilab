@@ -507,7 +507,7 @@
   <string name="follow_instance">Подписаться на сервер</string>
   <string name="toast_instance_already_added">Вы уже подписаны на этот сервер!</string>
   <string name="toast_instance_followed">На этот сервер подписка выполнена!</string>
-  <string name="action_partnership">Сотрудничество</string>
+  <string name="action_partnership">Партнерство</string>
   <string name="neutral_menu_information">Информация</string>
   <string name="hide_boost">Скрыть продвигаемые от %s</string>
   <string name="endorse">Отображать в профиле</string>
@@ -585,7 +585,7 @@
   <string name="no_comments">Будьте первым прокомментировавшим это видео (при помощи верхней правой кнопки)!</string>
   <string name="number_view_video">%s просмотров</string>
   <string name="duration_video">Продолжительность: %s</string>
-  <string name="add_remote_instance">Add an instance</string>
+  <string name="add_remote_instance">Добавить сервер</string>
   <string name="comment_no_allowed_peertube">Комментирование этого видео отключено!</string>
   <string name="pickup_resolution">Подобрать разрешение</string>
   <string name="peertube_favorites">Избранное Peertube</string>
