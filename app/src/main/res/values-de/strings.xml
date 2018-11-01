@@ -53,7 +53,7 @@
   <string name="previous">Zurück</string>
   <string name="open_with">Öffne mit</string>
   <string name="validate">Bestätigen</string>
-  <string name="media">Dateien</string>
+  <string name="media">Medien</string>
   <string name="share_with">Teilen mit</string>
   <string name="shared_via">Geteilt von Mastalab</string>
   <string name="replies">Antworten</string>
@@ -207,7 +207,7 @@
   <string name="no_scheduled_toots">Keine geplanten Toots vorhanden!</string>
   <string name="no_scheduled_toots_indications">Schreibe einen Toot und wähle <b>Planen</b> im Topmenü.</string>
   <string name="remove_scheduled">Geplanten Toot löschen?</string>
-  <string name="media_count">Dateien: %d</string>
+  <string name="media_count">Medien: %d</string>
   <string name="toot_scheduled">Der Toot wurde geplant!</string>
   <string name="toot_scheduled_date">Der Zeitpunkt muss nach der aktuellen Stunde liegen!</string>
   <string name="warning_battery">Akkuoptimierung ist aktiviert! Manches funktioniert eventuell nicht wie erwartet.</string>
