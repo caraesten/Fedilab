@@ -244,9 +244,9 @@
     <string name="client_error">Не удалось получить идентификатор клиента!</string>
     <string name="no_internet">Нет подключения к Интернету!</string>
     <string name="toast_block">Аккаунт заблокирован!</string>
-    <string name="toast_unblock">Аккаунт больше не заблокирован!</string>
-    <string name="toast_mute">Аккаунт был приглушён!</string>
-    <string name="toast_unmute">Аккаунт более не пригушён!</string>
+    <string name="toast_unblock">Аккаунт больше не блокируется!</string>
+    <string name="toast_mute">Аккаунт был приглушен!</string>
+    <string name="toast_unmute">Аккаунт более не пригушен!</string>
     <string name="toast_follow">Вы подписались на этот аккаунт!</string>
     <string name="toast_unfollow">Вы больше не подписаны!</string>
     <string name="toast_reblog">Этот тут был продвинут!</string>
