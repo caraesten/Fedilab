@@ -408,6 +408,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             }
             if( type.equals("favourite") || type.equals("reblog")){
                 holder.status_document_container.setVisibility(View.GONE);
+                holder.status_show_more.setVisibility(View.GONE);
             }else {
                 if (status.getReblog() == null) {
                     if (status.getMedia_attachments().size() < 1) {
@@ -416,7 +417,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     } else {
                         //If medias are loaded without any conditions or if device is on wifi
                         if (!status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status, holder);
+                            loadAttachments(notification, holder);
                             holder.status_show_more.setVisibility(View.GONE);
                             status.setAttachmentShown(true);
                         } else {
@@ -427,29 +428,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 holder.status_show_more.setVisibility(View.VISIBLE);
                                 holder.status_document_container.setVisibility(View.GONE);
                             } else {
-                                loadAttachments(status, holder);
-                            }
-                        }
-                    }
-                } else { //Attachments for reblogs
-                    if (status.getReblog().getMedia_attachments().size() < 1) {
-                        holder.status_document_container.setVisibility(View.GONE);
-                        holder.status_show_more.setVisibility(View.GONE);
-                    } else {
-                        //If medias are loaded without any conditions or if device is on wifi
-                        if (!status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                            loadAttachments(status.getReblog(), holder);
-                            holder.status_show_more.setVisibility(View.GONE);
-                            status.getReblog().setAttachmentShown(true);
-                        } else {
-                            //Text depending if toots is sensitive or not
-                            String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
-                            holder.status_show_more.setText(textShowMore);
-                            if (!status.isAttachmentShown()) {
-                                holder.status_show_more.setVisibility(View.VISIBLE);
-                                holder.status_document_container.setVisibility(View.GONE);
-                            } else {
-                                loadAttachments(status.getReblog(), holder);
+                                loadAttachments(notification, holder);
                             }
                         }
                     }
@@ -498,8 +477,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_show_more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    loadAttachments(status, holder);
-                    holder.status_show_more.setVisibility(View.GONE);
+                    loadAttachments(notification, holder);
                     notification.getStatus().setAttachmentShown(true);
                     notifyNotificationChanged(notification);
                     /*
@@ -520,8 +498,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
                             public void onFinish() {
                                 notification.getStatus().setAttachmentShown(false);
-                                holder.status_show_more.setVisibility(View.VISIBLE);
-
                                 notifyNotificationChanged(notification);
                             }
                         }.start();
@@ -945,8 +921,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     }
 
-    private void loadAttachments(final Status status, ViewHolder holder){
-        List<Attachment> attachments = status.getMedia_attachments();
+    private void loadAttachments(final Notification notification, ViewHolder holder){
+        List<Attachment> attachments = notification.getStatus().getMedia_attachments();
         if( attachments != null && attachments.size() > 0){
             int i = 0;
             holder.status_document_container.setVisibility(View.VISIBLE);
@@ -1014,7 +990,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     public void onClick(View v) {
                         Intent intent = new Intent(context, MediaActivity.class);
                         Bundle b = new Bundle();
-                        intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
+                        intent.putParcelableArrayListExtra("mediaArray", notification.getStatus().getMedia_attachments());
                         b.putInt("position", finalPosition);
                         intent.putExtras(b);
                         context.startActivity(intent);

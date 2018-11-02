@@ -1249,14 +1249,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     -> Default value is set to 5 seconds
                  */
                     final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
-
                     if (timeout > 0) {
-
                         new CountDownTimer((timeout * 1000), 1000) {
-
                             public void onTick(long millisUntilFinished) {
                             }
-
                             public void onFinish() {
                                 status.setAttachmentShown(false);
                                 notifyStatusChanged(status);
@@ -1885,18 +1881,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                             height = (int) Helper.convertDpToPixel(200, context);
                                             resource = Bitmap.createScaledBitmap(resource, width, height, false);
                                         }
-                                        //Allow to put full width for preview for single attachment -> disabled for the moment
-                                        /*int tootWidth = holder.status_content_container.getWidth();
-
-                                        if( width < tootWidth && attachments.size() == 1){
-                                            double ratio = ((double)tootWidth/ (double)width);
-                                            height = (int)(ratio * (double)height);
-                                            width = tootWidth;
-                                            holder.status_horizontal_document_container.getLayoutParams().height = height;
-                                            resource = Bitmap.createScaledBitmap(resource, width, height, false);
-                                        }else{
-                                            holder.status_horizontal_document_container.getLayoutParams().height = (int)Helper.convertDpToPixel(200, context);
-                                        }*/
                                         imageView.setImageBitmap(resource);
                                     }
                                 });
