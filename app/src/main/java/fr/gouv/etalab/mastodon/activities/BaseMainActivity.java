@@ -151,6 +151,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_INSTANCE;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_REMOTE;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_URL;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
@@ -268,7 +269,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconHome = tabHome.getCustomView().findViewById(R.id.tab_icon);
-        iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+
         iconHome.setImageResource(R.drawable.ic_home);
 
         if( theme == THEME_BLACK)
@@ -279,24 +280,35 @@ public abstract class BaseMainActivity extends BaseActivity
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconNotif = tabNotif.getCustomView().findViewById(R.id.tab_icon);
-        iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconNotif.setImageResource(R.drawable.ic_notifications);
 
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconDirect = tabDirect.getCustomView().findViewById(R.id.tab_icon);
-        iconDirect.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconDirect.setImageResource(R.drawable.ic_direct_messages);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconLocal = tabLocal.getCustomView().findViewById(R.id.tab_icon);
-        iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconLocal.setImageResource(R.drawable.ic_people);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconGlobal = tabPublic.getCustomView().findViewById(R.id.tab_icon);
-        iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         iconGlobal.setImageResource(R.drawable.ic_public);
+
+        if( theme == THEME_LIGHT){
+            iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+            iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+            iconDirect.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+            iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+            iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+        }else {
+            iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+            iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+            iconDirect.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+            iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+            iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+        }
+
 
        FloatingActionButton federatedTimelines = findViewById(R.id.federated_timeline);
 
@@ -630,11 +642,20 @@ public abstract class BaseMainActivity extends BaseActivity
             }
         });
 
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_home,R.color.dark_text);
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_text);
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_direct_messages,R.color.dark_text);
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_text);
-        changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_text);
+        if( theme == THEME_LIGHT){
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_home,R.color.dark_icon);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_icon);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_direct_messages,R.color.dark_icon);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_icon);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_icon);
+        }else {
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_home,R.color.dark_text);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_text);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_direct_messages,R.color.dark_text);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_text);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_text);
+        }
+
 
         startSreaming();
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -819,7 +840,10 @@ public abstract class BaseMainActivity extends BaseActivity
                 if( tab.getCustomView() != null) {
                     ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
                     if( icon != null)
-                        icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.white), PorterDuff.Mode.SRC_IN);
+                        if( theme == THEME_LIGHT)
+                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                        else
+                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
                 }
             }
 

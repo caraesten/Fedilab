@@ -2317,6 +2317,14 @@ public class Helper {
                 tableLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
             }
         }
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == THEME_LIGHT)
+            tableLayout.setTabTextColors(ContextCompat.getColor(context, R.color.mastodonC1), ContextCompat.getColor(context, R.color.mastodonC4));
+        else if( theme == THEME_BLACK)
+            tableLayout.setTabTextColors(ContextCompat.getColor(context, R.color.dark_text), ContextCompat.getColor(context, R.color.dark_icon));
+        else if( theme == THEME_DARK)
+            tableLayout.setTabTextColors(ContextCompat.getColor(context, R.color.dark_text), ContextCompat.getColor(context, R.color.mastodonC4));
     }
 
     public static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {

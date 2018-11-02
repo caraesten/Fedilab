@@ -41,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
-                android:theme="@style/AppThemeDark_NoActionBar"
                 app:popupTheme="?attr/popupOverlay"/>
         </android.support.design.widget.AppBarLayout>
         <RelativeLayout

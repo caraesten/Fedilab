@@ -68,6 +68,9 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_REMOTE;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_URL;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -747,9 +750,18 @@ public class Status implements Parcelable{
                         },
                         matchStart, matchEnd,
                         Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
-                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart){
+                if( theme == THEME_DARK)
+                    spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_link_toot)), matchStart, matchEnd,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                else if( theme == THEME_BLACK)
+                    spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.black_link_toot)), matchStart, matchEnd,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                else if( theme == THEME_LIGHT)
+                    spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.mastodonC4)), matchStart, matchEnd,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+
         }
         SpannableString spannableStringT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -782,8 +794,17 @@ public class Status implements Parcelable{
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
-                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
-                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart) {
+                    if (theme == THEME_DARK)
+                        spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_link_toot)), matchStart, matchEnd,
+                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    else if (theme == THEME_BLACK)
+                        spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.black_link_toot)), matchStart, matchEnd,
+                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    else if (theme == THEME_LIGHT)
+                        spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.mastodonC4)), matchStart, matchEnd,
+                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
         }
 
         if( accountsMentionUnknown.size() > 0 ) {
@@ -807,9 +828,17 @@ public class Status implements Parcelable{
                              },
                                     startPosition, endPosition,
                                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                        if(endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
-                            spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
-                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        if(endPosition <= spannableStringT.toString().length() && endPosition >= startPosition){
+                                if (theme == THEME_DARK)
+                                    spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_link_toot)), startPosition, endPosition,
+                                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                                else if (theme == THEME_BLACK)
+                                    spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_link_toot)), startPosition, endPosition,
+                                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                                else if (theme == THEME_LIGHT)
+                                    spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.mastodonC4)), startPosition, endPosition,
+                                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                            }
                     }
                 }
             }
@@ -867,9 +896,17 @@ public class Status implements Parcelable{
                                     startPosition, endPosition,
                                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                         }
-                        if(endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
-                            spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
-                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        if(endPosition <= spannableStringT.toString().length() && endPosition >= startPosition){
+                            if (theme == THEME_DARK)
+                                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_link_toot)), startPosition, endPosition,
+                                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                            else if (theme == THEME_BLACK)
+                                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.black_link_toot)), startPosition, endPosition,
+                                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                            else if (theme == THEME_LIGHT)
+                                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.mastodonC4)), startPosition, endPosition,
+                                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        }
                     }
                 }
                 it.remove();
@@ -903,9 +940,17 @@ public class Status implements Parcelable{
                                 },
                                 startPosition, endPosition,
                                 Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-                        if(endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
-                            spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), startPosition, endPosition,
-                                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        if(endPosition <= spannableStringT.toString().length() && endPosition >= startPosition){
+                            if (theme == THEME_DARK)
+                                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_link_toot)), startPosition, endPosition,
+                                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                            else if (theme == THEME_BLACK)
+                                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.black_link_toot)), startPosition, endPosition,
+                                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                            else if (theme == THEME_LIGHT)
+                                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.mastodonC4)), startPosition, endPosition,
+                                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        }
                     }
                 }
 
@@ -932,9 +977,17 @@ public class Status implements Parcelable{
                         ds.setUnderlineText(false);
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
-                spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, (theme==Helper.THEME_DARK||theme==Helper.THEME_BLACK)?R.color.mastodonC2:R.color.mastodonC4)), matchStart, matchEnd,
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart){
+                if (theme == THEME_DARK)
+                    spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.dark_link_toot)), matchStart, matchEnd,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                else if (theme == THEME_BLACK)
+                    spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.black_link_toot)), matchStart, matchEnd,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                else if (theme == THEME_LIGHT)
+                    spannableStringT.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.mastodonC4)), matchStart, matchEnd,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
         }
         return spannableStringT;
     }
