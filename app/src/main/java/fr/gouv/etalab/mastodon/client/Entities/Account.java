@@ -403,18 +403,24 @@ public class Account implements Parcelable {
         dest.writeString(token);
         dest.writeString(instance);
 
-        metaDataSize = fields.size();
-        metaDataSizeVerified = fieldsVerified.size();
-        dest.writeInt(metaDataSize);
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
-            dest.writeString(entry.getKey());
-            dest.writeString(entry.getValue());
-        }
 
-        dest.writeInt(metaDataSizeVerified);
-        for (Map.Entry<String, Boolean> entry : fieldsVerified.entrySet()) {
-            dest.writeString(entry.getKey());
-            dest.writeByte((byte) (entry.getValue() ? 1 : 0));
+
+
+        if( fields != null) {
+            metaDataSize = fields.size();
+            dest.writeInt(metaDataSize);
+            for (Map.Entry<String, String> entry : fields.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeString(entry.getValue());
+            }
+        }
+        if( fieldsVerified != null) {
+            metaDataSizeVerified = fieldsVerified.size();
+            dest.writeInt(metaDataSizeVerified);
+            for (Map.Entry<String, Boolean> entry : fieldsVerified.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeByte((byte) (entry.getValue() ? 1 : 0));
+            }
         }
     }
 
