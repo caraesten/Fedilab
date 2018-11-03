@@ -453,14 +453,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
-                params.setMargins((int)Helper.convertDpToPixel(30, context), 0, 0, 0);
+                params.setMargins((int)Helper.convertDpToPixel(25, context), 0, 0, 0);
                 holder.main_container.setLayoutParams(params);
             }else if(type == RetrieveFeedsAsyncTask.Type.CONTEXT &&  getItemViewType(position) == FOCUSED_STATUS && position != 0 ){
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
-                params.setMargins((int)Helper.convertDpToPixel(15, context), 0, 0, 0);
+                params.setMargins((int)Helper.convertDpToPixel(20, context), 0, 0, 0);
                 holder.main_container.setLayoutParams(params);
             }
 
@@ -1721,7 +1721,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
             }
 
-            if( status.getApplication() != null && getItemViewType(position) == FOCUSED_STATUS){
+            if( getItemViewType(position) == FOCUSED_STATUS && status.getApplication() != null && status.getApplication().getName() != null && status.getApplication().getName().length() > 0){
                 Application application = status.getApplication();
                 holder.status_toot_app.setText(application.getName());
                 if( application.getWebsite() != null && !application.getWebsite().trim().equals("null") && application.getWebsite().trim().length() == 0) {
@@ -1731,8 +1731,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             Helper.openBrowser(context, application.getWebsite());
                         }
                     });
-                    holder.status_toot_app.setVisibility(View.VISIBLE);
                 }
+                holder.status_toot_app.setVisibility(View.VISIBLE);
             }else {
                 holder.status_toot_app.setVisibility(View.GONE);
             }
