@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/tools"
@@ -336,7 +336,7 @@
     </LinearLayout>
     <RelativeLayout
         android:visibility="gone"
-        android:background="@color/black"
+        android:background="@color/white"
         android:id="@+id/container_trans"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
