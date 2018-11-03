@@ -224,7 +224,8 @@
         <item name="android:background">@drawable/button_selector_black</item>
     </style>
 
-    <style name="DialogBlack" parent="Theme.AppCompat.Dialog">
+
+    <style name="DialogBlack" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:windowBackground">@color/black_3</item>
         <item name="colorAccent">@color/dark_icon</item>
         <item name="android:headerBackground">@color/black_3</item>
@@ -242,10 +243,6 @@
     </style>
     <style name="BlackSpinnerItemStyle" parent="Base.Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:padding">10dp</item>
-    </style>
-
-    <style name="AlertDialogBlack" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:windowBackground">@color/black_3</item>
     </style>
 
     <style name="AppThemeBlack.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
@@ -334,7 +331,7 @@
         <item name="android:background">@drawable/button_selector</item>
     </style>
 
-    <style name="DialogDark" parent="Theme.AppCompat.Dialog">
+    <style name="DialogDark" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:windowBackground">@color/mastodonC1</item>
         <item name="colorAccent">@color/mastodonC4</item>
         <item name="android:headerBackground">@color/mastodonC2</item>
