@@ -25,6 +25,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +38,7 @@
             android:orientation="horizontal"
             card_view:ignore="DisableBaselineAlignment">
             <LinearLayout
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <ImageView
@@ -57,8 +62,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -70,17 +73,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
                     android:id="@+id/notification_account_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/status_date"
                     android:layout_width="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginLeft="2dp"
                     android:textSize="12sp"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
                     android:layout_gravity="end"
                     android:gravity="end"
                     android:layout_height="wrap_content" />
@@ -93,7 +94,7 @@
                     android:layout_height="wrap_content">
                     <fr.gouv.etalab.mastodon.helper.CustomTextView
                         android:id="@+id/status_spoiler"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:textIsSelectable="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -124,13 +125,14 @@
                     android:orientation="vertical">
                     <fr.gouv.etalab.mastodon.helper.CustomTextView
                         android:id="@+id/notification_status_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:textIsSelectable="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <LinearLayout
                         android:id="@+id/status_document_container"
                         android:orientation="horizontal"
+                        android:layout_marginBottom="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:baselineAligned="false">
@@ -263,74 +265,66 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/status_mention_spoiler"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/status_action_container"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="@dimen/drawer_padding"
-            android:layout_marginStart="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="@dimen/activity_vertical_margin"
-            android:layout_marginEnd="@dimen/activity_vertical_margin"
-            android:layout_marginRight="@dimen/activity_vertical_margin"
-            android:orientation="horizontal">
-            <TextView
-                android:drawablePadding="2dp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:id="@+id/status_reply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:drawablePadding="2dp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:id="@+id/status_reblog_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:drawablePadding="2dp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:id="@+id/status_favorite_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:id="@+id/status_action_container"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:padding="@dimen/drawer_padding"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:drawablePadding="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:id="@+id/status_reply"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
+                        android:drawablePadding="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:id="@+id/status_reblog_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
+                        android:drawablePadding="2dp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:id="@+id/status_favorite_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_gravity="end"
-                android:gravity="end"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_marginRight="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:id="@+id/status_privacy"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    tools:ignore="ContentDescription" />
-                <ImageView
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:id="@+id/status_more"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_more_horiz"
-                    tools:ignore="ContentDescription" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="end"
+                        android:gravity="end"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/status_privacy"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            tools:ignore="ContentDescription" />
+                        <ImageView
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginStart="15dp"
+                            android:id="@+id/status_more"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_more_horiz"
+                            tools:ignore="ContentDescription" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
