@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -38,6 +39,8 @@ import fr.gouv.etalab.mastodon.drawers.SearchListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchStatusInterface;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
 
 /**
@@ -88,7 +91,10 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
         }
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        if (theme == THEME_LIGHT && getSupportActionBar() != null){
+            Toolbar toolbar = getSupportActionBar().getCustomView().findViewById(R.id.toolbar);
+            Helper.colorizeToolbar(toolbar, R.color.black, SearchResultActivity.this);
+        }
         setTitle(search);
         loader.setVisibility(View.VISIBLE);
         lv_search.setVisibility(View.GONE);

@@ -39,6 +39,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -81,7 +82,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnUpdateCredentialInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
-
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
 
 /**
@@ -149,6 +150,10 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                         finish();
                     }
                 });
+            }
+            if (theme == THEME_LIGHT){
+                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
+                Helper.colorizeToolbar(toolbar, R.color.black, EditProfileActivity.this);
             }
         }else{
             setTitle(R.string.settings_title_profile);

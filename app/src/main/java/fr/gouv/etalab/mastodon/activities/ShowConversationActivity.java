@@ -68,6 +68,7 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
 
 /**
@@ -182,6 +183,9 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
                 }
             });
 
+            if (theme == THEME_LIGHT){
+                Helper.colorizeToolbar(getSupportActionBar().getCustomView().findViewById(R.id.toolbar), R.color.black, ShowConversationActivity.this);
+            }
         }else{
             setTitle(R.string.conversation);
         }

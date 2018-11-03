@@ -17,11 +17,13 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
 
 /**
@@ -52,6 +54,10 @@ public class PrivacyActivity extends BaseActivity {
 
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (theme == THEME_LIGHT && getSupportActionBar() != null){
+            Toolbar toolbar = getSupportActionBar().getCustomView().findViewById(R.id.toolbar);
+            Helper.colorizeToolbar(toolbar, R.color.black, PrivacyActivity.this);
+        }
         setContentView(R.layout.activity_privacy);
         setTitle(getString(R.string.action_privacy));
     }

@@ -26,6 +26,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +48,7 @@ import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
 import fr.gouv.etalab.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
 
 
@@ -94,7 +96,6 @@ public class WebviewActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
        webView = Helper.initializeWebview(WebviewActivity.this, R.id.webview);
-
         setTitle("");
         FrameLayout webview_container = findViewById(R.id.webview_container);
         final ViewGroup videoLayout = findViewById(R.id.videoLayout); // Your own view, read class comments
@@ -150,6 +151,10 @@ public class WebviewActivity extends BaseActivity {
             menu.findItem(R.id.action_go).setVisible(false);
             menu.findItem(R.id.action_comment).setVisible(true);
         }
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == THEME_LIGHT)
+            Helper.colorizeIconMenu(menu, R.color.black);
         return true;
     }
     @Override

@@ -42,6 +42,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.InputFilter;
@@ -56,7 +57,6 @@ import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -182,7 +182,6 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private HorizontalScrollView picture_scrollview;
     private int currentCursorPosition, searchLength;
     private TextView toot_space_left;
-    private ImageButton toot_emoji;
     private String initialContent;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
     private Account accountReply;
@@ -198,7 +197,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private boolean removed;
     private boolean restoredScheduled;
     static boolean active = false;
-    private static Activity activity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,25 +221,28 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         }
 
         setContentView(R.layout.activity_toot);
-        activity = this;
         ActionBar actionBar = getSupportActionBar();
-        if( actionBar != null ){
+        if( actionBar != null ) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             assert inflater != null;
             @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.toot_action_bar, null);
             actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-
             ImageView close_toot = actionBar.getCustomView().findViewById(R.id.close_toot);
+
             close_toot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                     assert inputMethodManager != null;
                     inputMethodManager.hideSoftInputFromWindow(toot_content.getWindowToken(), 0);
                     finish();
                 }
             });
+            if (theme == THEME_LIGHT){
+                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
+                Helper.colorizeToolbar(toolbar, R.color.black, TootActivity.this);
+            }
             title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
             pp_progress = actionBar.getCustomView().findViewById(R.id.pp_progress);
@@ -265,7 +267,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         picture_scrollview = findViewById(R.id.picture_scrollview);
         toot_sensitive = findViewById(R.id.toot_sensitive);
         drawer_layout = findViewById(R.id.drawer_layout);
-        toot_emoji = findViewById(R.id.toot_emoji);
+        ImageButton toot_emoji = findViewById(R.id.toot_emoji);
 
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true)) {
             final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(drawer_layout).build(toot_content);
@@ -797,7 +799,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         }
     }
 
-    private static class asyncPicture extends AsyncTask<Void, Void, Void> {
+    private class asyncPicture extends AsyncTask<Void, Void, Void> {
 
         ByteArrayInputStream bs;
         WeakReference<Activity> activityWeakReference;
@@ -815,7 +817,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
 
             if( uriFile == null) {
-                activity.runOnUiThread(new Runnable() {
+                runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
                     }
@@ -1305,8 +1307,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             if( itemViewReply != null)
                 itemViewReply.setVisible(false);
         }
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == THEME_LIGHT)
+            Helper.colorizeIconMenu(menu, R.color.black);
+        changeColor();
         String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
         Version currentVersion = new Version(instanceVersion);
         Version minVersion = new Version("2.0");

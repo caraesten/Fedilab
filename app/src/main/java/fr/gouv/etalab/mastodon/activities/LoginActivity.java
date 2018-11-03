@@ -14,6 +14,7 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,22 +25,27 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.UnderlineSpan;
 import android.text.util.Linkify;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +59,8 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.helper.Helper;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.convertDpToPixel;
 
@@ -128,7 +136,27 @@ public class LoginActivity extends BaseActivity {
             }
 
             setContentView(R.layout.activity_login);
-
+            ActionBar actionBar = getSupportActionBar();
+            if( actionBar != null ) {
+                LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                assert inflater != null;
+                @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.simple_bar, null);
+                actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+                ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
+                TextView toolbar_title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+                toolbar_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+                toolbar_title.setText(R.string.add_account);
+                if (theme == THEME_LIGHT){
+                    Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
+                    Helper.colorizeToolbar(toolbar, R.color.black, LoginActivity.this);
+                }
+            }
             if (theme == Helper.THEME_DARK) {
                 changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC2);
             } else {

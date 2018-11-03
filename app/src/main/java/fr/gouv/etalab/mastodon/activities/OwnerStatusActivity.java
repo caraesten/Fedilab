@@ -75,6 +75,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
 
 /**
@@ -142,6 +143,8 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
             ImageView close_toot = actionBar.getCustomView().findViewById(R.id.close_toot);
+            if( theme == THEME_LIGHT)
+                close_toot.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.black));
             close_toot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

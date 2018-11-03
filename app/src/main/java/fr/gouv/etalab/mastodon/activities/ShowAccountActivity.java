@@ -41,6 +41,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
@@ -99,6 +100,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_INSTANCE;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
 
@@ -220,6 +222,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         final ImageButton account_menu = findViewById(R.id.account_menu);
         ImageButton action_more = findViewById(R.id.action_more);
+        if( theme == THEME_LIGHT)
+            changeDrawableColor(getApplicationContext(),action_more,R.color.dark_icon);
         account_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,6 +236,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 showMenu(account_menu);
             }
         });
+
+
     }
 
     private void showMenu(View account_menu){
@@ -240,7 +246,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         final PopupMenu popup = new PopupMenu(ShowAccountActivity.this, account_menu);
         popup.getMenuInflater()
                 .inflate(R.menu.main_showaccount, popup.getMenu());
-       
+
         final String[] stringArrayConf;
         final boolean isOwner = account.getId().equals(userId);
         String[] splitAcct = account.getAcct().split("@");
@@ -505,6 +511,15 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         final TextView warning_message = findViewById(R.id.warning_message);
         final SpannableString content = new SpannableString(getString(R.string.disclaimer_full));
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        if( theme == THEME_DARK)
+            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.dark_link_toot)), 0, content.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        else if( theme == THEME_BLACK)
+            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.black_link_toot)), 0, content.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        else if( theme == THEME_LIGHT)
+            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)), 0, content.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         warning_message.setText(content);
         warning_message.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -911,6 +926,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 return false;
             }
         });
+
     }
 
 

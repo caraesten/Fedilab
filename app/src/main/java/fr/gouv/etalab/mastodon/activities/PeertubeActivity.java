@@ -34,6 +34,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -72,6 +73,7 @@ import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
 
 
@@ -133,7 +135,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         }
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        if (theme == THEME_LIGHT && getSupportActionBar() != null){
+            Toolbar toolbar = getSupportActionBar().getCustomView().findViewById(R.id.toolbar);
+            Helper.colorizeToolbar(toolbar, R.color.black, PeertubeActivity.this);
+        }
         videoView = findViewById(R.id.media_video);
         new RetrievePeertubeSingleAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 

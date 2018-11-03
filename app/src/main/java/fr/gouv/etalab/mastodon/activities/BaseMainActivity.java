@@ -25,6 +25,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -252,6 +253,17 @@ public abstract class BaseMainActivity extends BaseActivity
         setSupportActionBar(toolbar);
         toolbarTitle  = toolbar.findViewById(R.id.toolbar_title);
         toolbar_search = toolbar.findViewById(R.id.toolbar_search);
+        if( theme == THEME_LIGHT) {
+            ImageView icon = toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_button);
+            ImageView close = toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+            ImageView search_mag_icon = toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
+            if( icon != null)
+                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
+            if( close != null)
+                close.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
+            if( search_mag_icon != null)
+                search_mag_icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
+        }
         tabLayout = findViewById(R.id.tabLayout);
         delete_instance = findViewById(R.id.delete_instance);
         viewPager = findViewById(R.id.viewpager);
