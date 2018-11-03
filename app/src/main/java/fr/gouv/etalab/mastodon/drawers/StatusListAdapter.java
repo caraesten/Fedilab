@@ -417,8 +417,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
+            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
 
-            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && getItemViewType(position) == FOCUSED_STATUS  && displayBookmarkButton)
+            if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
             else
                 holder.status_bookmark.setVisibility(View.GONE);
@@ -445,7 +446,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
-            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
+
 
             if( type == RetrieveFeedsAsyncTask.Type.CONTEXT &&  getItemViewType(position) != FOCUSED_STATUS && position != 0 ){
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
