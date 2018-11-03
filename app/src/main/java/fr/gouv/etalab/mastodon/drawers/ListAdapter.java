@@ -125,11 +125,18 @@ public class ListAdapter extends BaseAdapter implements OnListActionInterface {
                 context.startActivity(intent);
             }
         });
-
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
         holder.search_container.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                 builder.setTitle(context.getString(R.string.action_lists_delete) + ": " + list.getTitle());
                 builder.setMessage(context.getString(R.string.action_lists_confirm_delete) );
                 builder.setIcon(android.R.drawable.ic_dialog_alert)

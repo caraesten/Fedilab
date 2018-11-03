@@ -92,7 +92,17 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
         add_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                 LayoutInflater inflater = getLayoutInflater();
                 @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_list, null);
                 dialogBuilder.setView(dialogView);

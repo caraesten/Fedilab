@@ -149,12 +149,19 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
                 break;
         }
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
         //Delete scheduled toot
         holder.scheduled_toot_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                 builder.setMessage(status.getContent() + '\n' + Helper.dateToString(storedStatus.getCreation_date()));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle(R.string.remove_scheduled)
@@ -195,7 +202,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
         holder.scheduled_toot_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                 LayoutInflater inflater = ((MainActivity)context).getLayoutInflater();
                 @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.datetime_picker, null);
                 SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);

@@ -197,6 +197,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private boolean removed;
     private boolean restoredScheduled;
     static boolean active = false;
+    private int style;
 
 
     @Override
@@ -219,7 +220,13 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             default:
                 setTheme(R.style.AppThemeDark);
         }
-
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
         setContentView(R.layout.activity_toot);
         ActionBar actionBar = getSupportActionBar();
         if( actionBar != null ) {
@@ -888,7 +895,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 finish();
                 return true;
             case R.id.action_view_reply:
-                AlertDialog.Builder alert = new AlertDialog.Builder(TootActivity.this);
+                AlertDialog.Builder alert = new AlertDialog.Builder(TootActivity.this, style);
                 alert.setTitle(R.string.toot_reply_content_title);
                 final TextView input = new TextView(TootActivity.this);
                 //Set the padding
@@ -940,7 +947,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     @Override
                     public void onSelectCountry(String name, String locale, int flagDrawableResID) {
                         picker.dismiss();
-                        AlertDialog.Builder transAlert = new AlertDialog.Builder(TootActivity.this);
+                        AlertDialog.Builder transAlert = new AlertDialog.Builder(TootActivity.this, style);
                         transAlert.setTitle(R.string.translate_toot);
 
                         popup_trans = getLayoutInflater().inflate( R.layout.popup_translate, null );
@@ -1075,7 +1082,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 return true;
             case R.id.action_emoji:
                 final List<Emojis>  emojis = new CustomEmojiDAO(getApplicationContext(), db).getAllEmojis();
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this, style);
                 int paddingPixel = 15;
                 float density = getResources().getDisplayMetrics().density;
                 int paddingDp = (int)(paddingPixel * density);
@@ -1136,7 +1143,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         Toast.makeText(getApplicationContext(), R.string.no_draft, Toast.LENGTH_LONG).show();
                         return true;
                     }
-                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this);
+                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this, style);
                     builderSingle.setTitle(getString(R.string.choose_toot));
                     final DraftsListAdapter draftsListAdapter = new DraftsListAdapter(TootActivity.this, drafts);
                     final int[] ids = new int[drafts.size()];
@@ -1154,7 +1161,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     builderSingle.setPositiveButton(R.string.delete_all, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, int which) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(TootActivity.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(TootActivity.this, style);
                             builder.setTitle(R.string.delete_all);
                             builder.setIcon(android.R.drawable.ic_dialog_alert)
                                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -1194,7 +1201,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     Toast.makeText(getApplicationContext(),R.string.toot_error_no_content, Toast.LENGTH_LONG).show();
                     return true;
                 }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this);
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
                 LayoutInflater inflater = this.getLayoutInflater();
                 @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.datetime_picker, null);
                 dialogBuilder.setView(dialogView);
@@ -1465,7 +1472,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     }
 
     private void showAddDescription(final Attachment attachment){
-        AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this);
+        AlertDialog.Builder builderInner = new AlertDialog.Builder(TootActivity.this, style);
         builderInner.setTitle(R.string.upload_form_description);
 
         @SuppressLint("InflateParams") View popup_media_description = getLayoutInflater().inflate( R.layout.popup_media_description, null );
@@ -1521,7 +1528,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
      */
     private void showRemove(final int viewId){
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this, style);
 
         dialog.setMessage(R.string.toot_delete_media);
         dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -1569,7 +1576,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
     private void tootVisibilityDialog(){
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(TootActivity.this, style);
         dialog.setTitle(R.string.toot_visibility_tilte);
         final String[] stringArray = getResources().getStringArray(R.array.toot_visibility);
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(TootActivity.this, android.R.layout.simple_list_item_1, stringArray);
@@ -2213,7 +2220,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             checkedValues[i] = toot_content.getText().toString().contains("@" + account.getAcct());
             i++;
         }
-        final AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this);
+        final AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this, style);
         AccountsReplyAdapter accountsReplyAdapter = new AccountsReplyAdapter(TootActivity.this, accounts, checkedValues);
         builderSingle.setTitle(getString(R.string.select_accounts)).setAdapter(accountsReplyAdapter, null);
         builderSingle.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {

@@ -611,7 +611,17 @@ public class SettingsFragment extends Fragment {
         set_toot_visibility.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context, style);
                 dialog.setTitle(R.string.toot_visibility_tilte);
                 final String[] stringArray = getResources().getStringArray(R.array.toot_visibility);
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, stringArray);

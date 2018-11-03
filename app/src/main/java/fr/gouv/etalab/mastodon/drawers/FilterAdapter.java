@@ -105,11 +105,20 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
             for(String ct: filter.getContext())
                 contextString.append(ct).append(" ");
         holder.filter_context.setText(contextString.toString());
-
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
         holder.edit_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                 LayoutInflater inflater = ((BaseMainActivity)context).getLayoutInflater();
                 @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_filter, null);
                 dialogBuilder.setView(dialogView);
@@ -229,7 +238,7 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
         holder.delete_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                 builder.setTitle(context.getString(R.string.action_filter_delete) );
                 builder.setMessage(context.getString(R.string.action_lists_confirm_delete) );
                 builder.setIcon(android.R.drawable.ic_dialog_alert)

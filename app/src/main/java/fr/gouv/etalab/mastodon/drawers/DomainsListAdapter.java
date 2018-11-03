@@ -82,7 +82,17 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
         holder.domain_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                 builder.setMessage(context.getString(R.string.unblock_domain_confirm_message, domain));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle(R.string.unblock_domain_confirm)

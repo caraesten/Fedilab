@@ -387,7 +387,8 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         if( account.getHeader() == null || account.getHeader().contains("missing.png"))
             set_header_picture_overlay.setVisibility(View.VISIBLE);
 
-
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         set_profile_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -400,8 +401,15 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                     profile_note = set_profile_description.getText().toString().trim();
                 else
                     profile_note = null;
-
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(EditProfileActivity.this);
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(EditProfileActivity.this, style);
                 LayoutInflater inflater = EditProfileActivity.this.getLayoutInflater();
                 @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.dialog_profile, null);
                 dialogBuilder.setView(dialogView);

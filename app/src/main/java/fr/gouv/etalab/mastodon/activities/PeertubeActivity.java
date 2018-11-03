@@ -404,8 +404,17 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     }
 
     public void displayResolution(){
-
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(PeertubeActivity.this);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(PeertubeActivity.this, style);
         builderSingle.setTitle(R.string.pickup_resolution);
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(PeertubeActivity.this, android.R.layout.select_dialog_item);
         for(String resolution: peertube.getResolution())

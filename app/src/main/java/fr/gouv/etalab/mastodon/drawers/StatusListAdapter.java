@@ -1267,7 +1267,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 }
             });
-
+            int style;
+            if (theme == Helper.THEME_DARK) {
+                style = R.style.DialogDark;
+            } else if (theme == Helper.THEME_BLACK){
+                style = R.style.DialogBlack;
+            }else {
+                style = R.style.Dialog;
+            }
 
             if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
                 holder.status_more.setVisibility(View.GONE);
@@ -1322,7 +1329,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             final API.StatusAction doAction;
                             switch (item.getItemId()) {
                                 case R.id.action_redraft:
-                                    builderInner = new AlertDialog.Builder(context);
+                                    builderInner = new AlertDialog.Builder(context, style);
                                     builderInner.setTitle(stringArrayConf[1]);
                                     redraft = true;
                                     doAction = API.StatusAction.UNSTATUS;
@@ -1336,7 +1343,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     Helper.openBrowser(context, status.getReblog()!=null?status.getReblog().getUrl():status.getUrl());
                                     return true;
                                 case R.id.action_remove:
-                                    builderInner = new AlertDialog.Builder(context);
+                                    builderInner = new AlertDialog.Builder(context, style);
                                     builderInner.setTitle(stringArrayConf[0]);
                                     doAction = API.StatusAction.UNSTATUS;
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -1346,14 +1353,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         builderInner.setMessage(Html.fromHtml(status.getContent()));
                                     break;
                                 case R.id.action_block_domain:
-                                    builderInner = new AlertDialog.Builder(context);
+                                    builderInner = new AlertDialog.Builder(context, style);
                                     builderInner.setTitle(stringArrayConf[3]);
                                     doAction = API.StatusAction.BLOCK_DOMAIN;
                                     String domain = status.getAccount().getAcct().split("@")[1];
                                     builderInner.setMessage(context.getString(R.string.block_domain_confirm_message, domain));
                                     break;
                                 case R.id.action_mute:
-                                    builderInner = new AlertDialog.Builder(context);
+                                    builderInner = new AlertDialog.Builder(context, style);
                                     builderInner.setTitle(stringArrayConf[0]);
                                     doAction = API.StatusAction.MUTE;
                                     break;
@@ -1388,7 +1395,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     }
                                     return true;
                                 case R.id.action_timed_mute:
-                                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
                                     LayoutInflater inflater = ((Activity)context).getLayoutInflater();
                                     @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.datetime_picker, null);
                                     dialogBuilder.setView(dialogView);
@@ -1472,7 +1479,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     alertDialog.show();
                                     return true;
                                 case R.id.action_block:
-                                    builderInner = new AlertDialog.Builder(context);
+                                    builderInner = new AlertDialog.Builder(context, style);
                                     builderInner.setTitle(stringArrayConf[1]);
                                     doAction = API.StatusAction.BLOCK;
                                     break;
@@ -1480,7 +1487,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     translateToot(status);
                                     return true;
                                 case R.id.action_report:
-                                    builderInner = new AlertDialog.Builder(context);
+                                    builderInner = new AlertDialog.Builder(context, style);
                                     builderInner.setTitle(stringArrayConf[2]);
                                     doAction = API.StatusAction.REPORT;
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)

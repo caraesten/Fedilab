@@ -72,7 +72,7 @@
                     android:textSize="12sp"
                     android:textAllCaps="false"
                     android:text="@string/choose_picture"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                    style="?attr/borderlessColored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -121,7 +121,7 @@
             android:gravity="center"
             android:textAllCaps="false"
             android:text="@string/choose_picture"
-            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            style="?attr/borderlessColored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

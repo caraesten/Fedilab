@@ -143,8 +143,6 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
             ImageView close_toot = actionBar.getCustomView().findViewById(R.id.close_toot);
-            if( theme == THEME_LIGHT)
-                close_toot.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.black));
             close_toot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -153,6 +151,9 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
             });
             TextView toolbarTitle = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
+            if (theme == THEME_LIGHT){
+                Helper.colorizeToolbar(actionBar.getCustomView().findViewById(R.id.toolbar), R.color.black, OwnerStatusActivity.this);
+            }
             toolbarTitle.setText(getString(R.string.owner_cached_toots));
         }
         statuses = new ArrayList<>();
@@ -265,6 +266,10 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.option_owner_cache, menu);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == THEME_LIGHT)
+            Helper.colorizeIconMenu(menu, R.color.black);
         return true;
     }
 
@@ -304,7 +309,16 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
                 startService(backupIntent);
                 return true;
             case R.id.action_filter:
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OwnerStatusActivity.this);
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(OwnerStatusActivity.this, style);
                 LayoutInflater inflater = this.getLayoutInflater();
                 @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_owner_toots, null);
                 dialogBuilder.setView(dialogView);

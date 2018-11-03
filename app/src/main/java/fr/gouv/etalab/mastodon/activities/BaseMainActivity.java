@@ -203,6 +203,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public static String displayPeertube = null;
     private PopupMenu popup;
     private String instance_id;
+    private int style;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -321,7 +322,13 @@ public abstract class BaseMainActivity extends BaseActivity
             iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         }
 
-
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
        FloatingActionButton federatedTimelines = findViewById(R.id.federated_timeline);
 
         delete_instance.setOnClickListener(new View.OnClickListener() {
@@ -329,7 +336,7 @@ public abstract class BaseMainActivity extends BaseActivity
             public void onClick(View v) {
                 try{
                     String title = toolbarTitle.getText().toString();
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this);
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
                     dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
@@ -480,7 +487,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_add_instance:
-                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this);
+                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
                                 LayoutInflater inflater = getLayoutInflater();
                                 @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.search_instance, null);
                                 dialogBuilder.setView(dialogView);
@@ -1188,7 +1195,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                 startActivity(intent);
                                 return true;
                             case R.id.action_cache:
-                                AlertDialog.Builder builder = new AlertDialog.Builder(BaseMainActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(BaseMainActivity.this, style);
                                 builder.setTitle(R.string.cache_title);
                                 long sizeCache = Helper.cacheSize(getCacheDir());
                                 float cacheSize = 0;
@@ -1224,7 +1231,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                 int textSize = sharedpreferences.getInt(Helper.SET_TEXT_SIZE,110);
                                 int iconSize = sharedpreferences.getInt(Helper.SET_ICON_SIZE,130);
 
-                                builder = new AlertDialog.Builder(BaseMainActivity.this);
+                                builder = new AlertDialog.Builder(BaseMainActivity.this, style);
                                 builder.setTitle(R.string.text_size);
 
                                 @SuppressLint("InflateParams") View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, null );
@@ -1362,7 +1369,7 @@ public abstract class BaseMainActivity extends BaseActivity
         // Asked once for notification opt-in
         boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
         if(!popupShown){
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this);
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
             LayoutInflater inflater = getLayoutInflater();
             @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
             dialogBuilder.setView(dialogView);
@@ -1551,7 +1558,7 @@ public abstract class BaseMainActivity extends BaseActivity
                             editor.apply();
                             break;
                         case R.id.action_filter:
-                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this);
+                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
                             LayoutInflater inflater = getLayoutInflater();
                             @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_regex, null);
                             dialogBuilder.setView(dialogView);
@@ -2364,7 +2371,7 @@ public abstract class BaseMainActivity extends BaseActivity
         tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this);
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {

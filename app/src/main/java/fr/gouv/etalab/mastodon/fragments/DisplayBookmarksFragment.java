@@ -72,6 +72,7 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
         textviewNoAction = rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, DisplayBookmarksFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
         return rootView;
     }
 
@@ -117,7 +118,17 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
             delete_all.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                    int style;
+                    if (theme == Helper.THEME_DARK) {
+                        style = R.style.DialogDark;
+                    } else if (theme == Helper.THEME_BLACK){
+                        style = R.style.DialogBlack;
+                    }else {
+                        style = R.style.Dialog;
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                     builder.setTitle(R.string.delete_all);
                     builder.setIcon(android.R.drawable.ic_dialog_alert)
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

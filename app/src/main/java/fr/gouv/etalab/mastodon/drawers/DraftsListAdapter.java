@@ -137,8 +137,17 @@ public class DraftsListAdapter extends BaseAdapter  {
         holder.draft_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                 builder.setMessage(draft.getStatus().getContent() + '\n' + Helper.dateToString(draft.getCreation_date()));
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle(R.string.remove_draft)

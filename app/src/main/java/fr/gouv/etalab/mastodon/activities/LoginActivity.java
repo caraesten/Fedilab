@@ -294,7 +294,16 @@ public class LoginActivity extends BaseActivity {
             login_issue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+                    int style;
+                    if (theme == Helper.THEME_DARK) {
+                        style = R.style.DialogDark;
+                    } else if (theme == Helper.THEME_BLACK){
+                        style = R.style.DialogBlack;
+                    }else {
+                        style = R.style.Dialog;
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, style);
                     builder.setTitle(R.string.issue_login_title);
                     TextView message = new TextView(LoginActivity.this);
                     final SpannableString s =

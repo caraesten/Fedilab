@@ -123,11 +123,18 @@ public class SearchTootsListAdapter extends BaseAdapter  {
             }
         });
         final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
         holder.search_container.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
                 builder.setMessage(context.getString(R.string.delete) + ": " + search);
                 builder.setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

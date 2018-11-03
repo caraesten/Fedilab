@@ -58,6 +58,7 @@ import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 public class CrossActions {
 
 
+    private static int style;
 
     /**
      * Returns the list of connected accounts when cross actions are allowed otherwise, returns the current account
@@ -119,6 +120,15 @@ public class CrossActions {
         boolean undoAction = (doAction == API.StatusAction.UNPIN || doAction == API.StatusAction.UNREBLOG || doAction == API.StatusAction.UNFAVOURITE);
         //Undo actions won't ask for choosing a user
 
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
+
         if(type != null && type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && limitedToOwner){
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
@@ -144,7 +154,7 @@ public class CrossActions {
                     pinAction(context, status, baseAdapter, onPostActionInterface);
             }
         } else {
-            AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+            AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, style);
             builderSingle.setTitle(context.getString(R.string.choose_accounts));
             final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
             final Account[] accountArray = new Account[accounts.size()];
@@ -336,7 +346,7 @@ public class CrossActions {
                 Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
             }
         }else {
-            AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+            AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, style);
             builderSingle.setTitle(context.getString(R.string.choose_accounts));
             final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
             final Account[] accountArray = new Account[accounts.size()];
@@ -421,7 +431,7 @@ public class CrossActions {
             }
         }else {
             if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE){
-                AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, style);
                 builderSingle.setTitle(context.getString(R.string.choose_accounts));
                 final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
                 final Account[] accountArray = new Account[accounts.size()];
@@ -570,7 +580,7 @@ public class CrossActions {
             context.startActivity(intentToot);
             ((BaseActivity)context).finish();
         }else {
-            AlertDialog.Builder builderSingle = new AlertDialog.Builder(context);
+            AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, style);
             builderSingle.setTitle(context.getString(R.string.choose_accounts));
             final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
             final Account[] accountArray = new Account[accounts.size()];
@@ -624,7 +634,7 @@ public class CrossActions {
             title = context.getString(R.string.pin_remove);
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             builder.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));

@@ -118,7 +118,7 @@
                     android:padding="5dp"
                     android:text="@string/cw"
                     android:layout_gravity="center"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                    style="?attr/borderlessColored"
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
                 <ImageButton
@@ -129,7 +129,7 @@
                     android:padding="2dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/emoji_one_category_smileysandpeople"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                    style="?attr/borderlessColored"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     />

@@ -15,6 +15,8 @@
 package fr.gouv.etalab.mastodon.activities;
 
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -22,9 +24,14 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,6 +45,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
 
 
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -73,6 +81,27 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
 
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if( actionBar != null ) {
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            assert inflater != null;
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.simple_bar, null);
+            actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
+            TextView toolbar_title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            toolbar_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            toolbar_title.setText(R.string.action_about_instance);
+            if (theme == THEME_LIGHT){
+                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
+                Helper.colorizeToolbar(toolbar, R.color.black, InstanceActivity.this);
+            }
+        }
         setContentView(R.layout.activity_instance);
         changeDrawableColor(getApplicationContext(), R.drawable.ic_mail_outline,R.color.white);
         instance_container = findViewById(R.id.instance_container);

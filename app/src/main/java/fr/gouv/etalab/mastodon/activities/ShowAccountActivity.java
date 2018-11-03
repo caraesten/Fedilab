@@ -293,6 +293,16 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 AlertDialog.Builder builderInner;
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
                 switch (item.getItemId()) {
 
                     case R.id.action_follow_instance:
@@ -383,12 +393,12 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         startActivity(intent);
                         return true;
                     case R.id.action_mute:
-                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this);
+                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
                         builderInner.setTitle(stringArrayConf[0]);
                         doActionAccount = API.StatusAction.MUTE;
                         break;
                     case R.id.action_block:
-                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this);
+                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
                         builderInner.setTitle(stringArrayConf[1]);
                         doActionAccount = API.StatusAction.BLOCK;
                         break;

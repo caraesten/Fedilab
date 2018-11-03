@@ -760,8 +760,17 @@ public class Helper {
      * @param url String download url
      */
     public static void manageDownloads(final Context context, final String url){
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        int style;
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context, style);
         final DownloadManager.Request request;
         try {
             request = new DownloadManager.Request(Uri.parse(url.trim()));
@@ -1143,7 +1152,17 @@ public class Helper {
                     deleteButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            new AlertDialog.Builder(activity)
+                            final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                            int style;
+                            if (theme == Helper.THEME_DARK) {
+                                style = R.style.DialogDark;
+                            } else if (theme == Helper.THEME_BLACK){
+                                style = R.style.DialogBlack;
+                            }else {
+                                style = R.style.Dialog;
+                            }
+                            new AlertDialog.Builder(activity, style)
                                     .setTitle(activity.getString(R.string.delete_account_title))
                                     .setMessage(activity.getString(R.string.delete_account_message, "@" + account.getAcct() + "@" + account.getInstance()))
                                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {

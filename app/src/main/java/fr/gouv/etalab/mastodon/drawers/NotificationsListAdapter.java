@@ -102,6 +102,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     private int behaviorWithAttachments;
     private boolean isOnWifi;
     private NotificationsListAdapter.ViewHolder holder;
+    private int style;
 
     public NotificationsListAdapter(Context context, boolean isOnWifi, int behaviorWithAttachments, List<Notification> notifications){
         this.context = context;
@@ -131,6 +132,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
 
 
+
         final float scale = context.getResources().getDisplayMetrics().density;
         String type = notification.getType();
         String typeString = "";
@@ -141,6 +143,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.main_container_trans.setAlpha(.3f);
         }else {
             holder.main_container_trans.setAlpha(.1f);
+        }
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
         }
         Drawable imgH = null;
         switch (type){
@@ -639,7 +648,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         final API.StatusAction doAction;
                         switch (item.getItemId()) {
                             case R.id.action_remove:
-                                builderInner = new AlertDialog.Builder(context);
+                                builderInner = new AlertDialog.Builder(context, style);
                                 builderInner.setTitle(stringArrayConf[0]);
                                 doAction = API.StatusAction.UNSTATUS;
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -649,7 +658,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                     builderInner.setMessage(Html.fromHtml(status.getContent()));
                                 break;
                             case R.id.action_mute:
-                                builderInner = new AlertDialog.Builder(context);
+                                builderInner = new AlertDialog.Builder(context, style);
                                 builderInner.setTitle(stringArrayConf[0]);
                                 doAction = API.StatusAction.MUTE;
                                 break;
@@ -657,12 +666,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 Helper.openBrowser(context, status.getUrl());
                                 return true;
                             case R.id.action_block:
-                                builderInner = new AlertDialog.Builder(context);
+                                builderInner = new AlertDialog.Builder(context, style);
                                 builderInner.setTitle(stringArrayConf[1]);
                                 doAction = API.StatusAction.BLOCK;
                                 break;
                             case R.id.action_report:
-                                builderInner = new AlertDialog.Builder(context);
+                                builderInner = new AlertDialog.Builder(context, style);
                                 builderInner.setTitle(stringArrayConf[2]);
                                 doAction = API.StatusAction.REPORT;
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -823,7 +832,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     private void displayConfirmationNotificationDialog(final Notification notification){
         final ArrayList seletedItems = new ArrayList();
 
-        AlertDialog dialog = new AlertDialog.Builder(context)
+        AlertDialog dialog = new AlertDialog.Builder(context, style)
                 .setTitle(R.string.delete_notification_ask)
                 .setMultiChoiceItems(new String[]{context.getString(R.string.delete_notification_ask_all)}, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
