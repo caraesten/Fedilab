@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Ouvrir le menu</string>
     <string name="navigation_drawer_close">Fermer le menu</string>
     <string name="action_about">À propos</string>
-    <string name="action_about_instance">À propos de l\'instance</string>
+    <string name="action_about_instance">À propos de l’instance</string>
     <string name="action_privacy">Confidentialité</string>
     <string name="action_cache">Cache</string>
     <string name="action_logout">Déconnexion</string>
@@ -57,7 +57,7 @@
     <string name="share_with">Partager avec</string>
     <string name="shared_via">Partagé via Mastalab</string>
     <string name="replies">Réponses</string>
-    <string name="username">Nom d\'utilisateur</string>
+    <string name="username">Nom d’utilisateur</string>
     <string name="drafts">Brouillons</string>
     <string name="new_data">De nouvelles données sont disponibles ! Souhaitez-vous les afficher ?</string>
     <string name="favourite">Favoris</string>
@@ -80,7 +80,7 @@
     <string name="blocked_menu">Utilisateurs bloqués</string>
     <string name="remote_follow_menu">Suivre à distance</string>
     <string name="notifications">Notifications</string>
-    <string name="follow_request">Demandes d\'abonnements</string>
+    <string name="follow_request">Demandes d’abonnements</string>
     <string name="optimization">Optimisation</string>
     <string name="settings">Paramètres</string>
     <string name="profile">Profil</string>
@@ -154,7 +154,7 @@
     <string name="toot_title_reply">Répondre à un pouet</string>
     <string name="toot_no_space">Vous avez atteint les 500 caractères autorisés !</string>
     <string name="toot_select_image">Sélectionnez un média</string>
-    <string name="toot_select_image_error">Une erreur s\'est produite lors de la sélection du média !</string>
+    <string name="toot_select_image_error">Une erreur s’est produite lors de la sélection du média !</string>
     <string name="toot_delete_media">Supprimer le média ?</string>
     <string name="toot_error_no_content">Votre pouet est vide !</string>
     <string name="toot_visibility_tilte">Visibilité du pouet</string>
@@ -173,7 +173,7 @@
     <string name="choose_accounts">Choisissez un compte</string>
     <string name="select_accounts">Sélectionnez des comptes</string>
     <string name="remove_draft">Supprimer le brouillon ?</string>
-    <string name="show_reply">Cliquer sur le bouton pour afficher le pouet d\'origine</string>
+    <string name="show_reply">Cliquer sur le bouton pour afficher le pouet d’origine</string>
     <string name="upload_form_description">Décrire pour les malvoyants</string>
     <!-- Instance -->
     <string name="instance_no_description">Aucune description !</string>
@@ -184,7 +184,7 @@
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Code source :</string>
     <string name="about_yandex">Traduction des pouets :</string>
-    <string name="about_thekinrar">Recherche d\'instances :</string>
+    <string name="about_thekinrar">Recherche d’instances :</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Concepteur de l’icône :</string>
     <string name="thanks_text_banner">Concepteur de la bannière :</string>
@@ -192,7 +192,7 @@
     <string name="conversation">Conversation</string>
     <!-- Accounts -->
     <string name="no_accounts">Aucun compte à afficher</string>
-    <string name="no_follow_request">Aucune demande d\'abonnement</string>
+    <string name="no_follow_request">Aucune demande d’abonnement</string>
     <string name="status_cnt">Pouets \n %1$s</string>
     <string name="following_cnt">Abonnements \n %1$s</string>
     <string name="followers_cnt">Abonnés \n %1$s</string>
@@ -251,11 +251,11 @@
     <string name="toast_unstatus">Le pouet a été supprimé !</string>
     <string name="toast_pin">Le pouet a été épinglé !</string>
     <string name="toast_unpin">Le pouet a été désépinglé !</string>
-    <string name="toast_error">Oups ! Une erreur s\'est produite !</string>
+    <string name="toast_error">Oups ! Une erreur s’est produite !</string>
     <string name="toast_code_error">Une erreur s’est produite ! L’instance n’a retourné aucun code d\autorisation !</string>
     <string name="toast_error_instance">Le nom de l’instance ne semble pas être valide !</string>
-    <string name="toast_error_loading_account">Une erreur s\'est produite pendant le chargement du compte !</string>
-    <string name="toast_error_search">Une erreur s\'est produite lors de la recherche !</string>
+    <string name="toast_error_loading_account">Une erreur s’est produite pendant le chargement du compte !</string>
+    <string name="toast_error_search">Une erreur s’est produite lors de la recherche !</string>
     <string name="toast_error_login">Impossible de vous connecter !</string>
     <string name="toast_update_credential_ok">Les données du profil ont été sauvegardées !</string>
     <string name="nothing_to_do">Aucune action ne peut être réalisée</string>
@@ -471,8 +471,8 @@
     <string name="set_theme">Thèmes :</string>
     <string name="set_compact_mode">Mode compact</string>
     <string name="set_share_details">Ajouter les détails du pouet en le partageant</string>
-    <string name="support_the_app_on_liberapay">Soutenir l\'app sur Liberpay</string>
-    <string name="alert_regex">Il y a une erreur dans l\'expression régulière !</string>
+    <string name="support_the_app_on_liberapay">Soutenir l’app sur Liberapay</string>
+    <string name="alert_regex">Il y a une erreur dans l’expression régulière !</string>
     <string name="no_account_yet">Vous n’avez pas encore de compte ?</string>
     <string name="toast_instance_unavailable">Aucun fil n’a été trouvé sur cette instance !</string>
     <string name="delete_instance">Désirez-vous effacer cette instance ?</string>
