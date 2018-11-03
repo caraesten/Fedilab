@@ -147,7 +147,7 @@
     <string name="date_day">%d j</string>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Avertissement</string>
-    <string name="toot_placeholder">Qu\'avez-vous en tête ?</string>
+    <string name="toot_placeholder">Qu’avez-vous en tête ?</string>
     <string name="toot_it">POUET !</string>
     <string name="cw">cw</string>
     <string name="toot_title">Ecrire un pouet</string>
@@ -209,8 +209,8 @@
     <string name="warning_battery">L’économiseur de batterie est activé ! Il se peut que cela ne fonctionne pas comme prévu.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">Le délai pour rendre muet doit être supérieur à une minute.</string>
-    <string name="timed_mute_date">%1$s est muet jusqu\'au %2$s.\n Vous pouvez annuler cette action en vous rendant sur son profil.</string>
-    <string name="timed_mute_profile">%1$s est muet jusqu\'au %2$s.\n Cliquez ici pour annuler.</string>
+    <string name="timed_mute_date">%1$s est muet jusqu’au %2$s.\n Vous pouvez annuler cette action en vous rendant sur son profil.</string>
+    <string name="timed_mute_profile">%1$s est muet jusqu’au %2$s.\n Cliquez ici pour annuler.</string>
     <!-- Notifications -->
     <string name="no_notifications">Aucune notification à afficher</string>
     <string name="notif_mention">vous a mentionné</string>
@@ -264,7 +264,7 @@
     <string name="toast_toot_saved">Brouillon enregistré !</string>
     <string name="toast_error_char_limit">Êtes-vous sûr que cette instance autorise ce nombre de caractères ? Habituellement, cette valeur est proche de 500 caractères.</string>
     <string name="toast_visibility_changed">La visibilité des pouets a été changée pour le compte %1$s</string>
-    <string name="toast_empty_search">Il faut renseigner une instance et un nom d\'utilisateur !</string>
+    <string name="toast_empty_search">Il faut renseigner une instance et un nom d’utilisateur !</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation du chargement</string>
     <string name="set_toots_page">Nombre de pouets par chargement</string>
@@ -278,7 +278,7 @@
     <string name="load_attachment_spoiler">Afficher le contenu ?</string>
     <string name="load_attachment_spoiler_less">Afficher moins…</string>
     <string name="load_sensitive_attachment">Charger les images sensibles</string>
-    <string name="set_display_reply">Afficher le message précédent lors d\'une réponse</string>
+    <string name="set_display_reply">Afficher le message précédent lors d’une réponse</string>
     <string name="set_display_local">Afficher le fil local</string>
     <string name="set_display_global">Afficher le fil public</string>
     <string name="set_disable_gif">Désactiver l’animation des avatars</string>
@@ -288,23 +288,23 @@
     <string name="set_auto_add_media_url">Ajouter l’URL des médias dans les pouets</string>
     <string name="settings_title_notifications">Gestion des notifications</string>
     <string name="set_notif_follow">Notifier lorsque quelqu’un me suit</string>
-    <string name="set_notif_follow_ask">Notifier lorsque quelqu\'un demande à me suivre</string>
-    <string name="set_notif_follow_share">Notifier lorsque quelqu\'un partage mes pouets</string>
+    <string name="set_notif_follow_ask">Notifier lorsque quelqu’un demande à me suivre</string>
+    <string name="set_notif_follow_share">Notifier lorsque quelqu’un partage mes pouets</string>
     <string name="set_notif_follow_add">Notifier lorsque quelqu’un ajoute mes pouets à ses favoris</string>
     <string name="set_notif_follow_mention">Notifier lorsque quelqu’un me mentionne</string>
     <string name="set_share_validation">Confirmer avant de partager</string>
-    <string name="set_share_validation_fav">Confirmer avant d\'ajouter aux favoris</string>
+    <string name="set_share_validation_fav">Confirmer avant d’ajouter aux favoris</string>
     <string name="settings_title_more_options">Options avancées</string>
     <string name="set_wifi_only">Notifier en WIFI seulement</string>
     <string name="set_notify">Notifier ?</string>
     <string name="set_notif_silent">Utiliser le vibreur</string>
     <string name="set_night_mode">Mode nuit</string>
-    <string name="set_nsfw_timeout">Délai d\'affichage NSFW (en secondes, 0 signifie aucun délai)</string>
+    <string name="set_nsfw_timeout">Délai d’affichage NSFW (en secondes, 0 signifie aucun délai)</string>
     <string name="settings_title_profile">Modifier le profil</string>
     <string name="set_profile_description">Présentation…</string>
     <string name="set_lock_account">Verrouiller le compte</string>
     <string name="set_save_changes">Enregistrer les modifications</string>
-    <string name="set_header_picture_overlay">Choisissez une image d\'entête</string>
+    <string name="set_header_picture_overlay">Choisissez une image d’entête</string>
     <string name="set_fit_preview">Voir l’aperçu d’image en entier</string>
     <string name="set_automatically_split_toot">Fractionnement automatique au-delà de 500 caractères</string>
     <string name="note_no_space">Vous avez atteint les 160 caractères autorisés !</string>
@@ -355,7 +355,7 @@
         <item>Blanc</item>
     </string-array>
     <string name="set_title_news">Actualités</string>
-    <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d\'accueil</string>
+    <string name="set_notification_news">Notifier lors de nouveaux pouets sur la page d’accueil</string>
     <string name="action_follow">Suivre</string>
     <string name="action_unfollow">Se désabonner</string>
     <string name="action_block">Bloquer</string>
@@ -372,7 +372,7 @@
     <string name="settings_popup_title">Notifications poussées</string>
     <string name="settings_popup_message">Veuillez confirmer les notifications que vous souhaitez recevoir.
         Vous pourrez les activer ou les désactiver plus tard dans les paramètres (onglet Notifications).</string>
-    <string name="settings_popup_timeline">Pour les pouets non lus sur la page d\'accueil</string>
+    <string name="settings_popup_timeline">Pour les pouets non lus sur la page d’accueil</string>
     <string name="settings_popup_notification">Pour les notifications non lues ?</string>
     <!-- CACHE -->
     <string name="cache_title">Nettoyage du cache</string>
@@ -447,12 +447,12 @@
     <string name="account_moved_to">%1$s a été déplacé vers %2$s</string>
     <string name="show_boost_count">Afficher le nombre de partages/favoris</string>
     <string name="issue_login_title">Problème de connexion ?</string>
-    <string name="issue_login_message"><b>Voici quelques vérifications qui pourraient aider :</b> \n\n 
-- Vérifier qu\'il n\'y a pas d\'erreur dans le nom de l\'instance\n\n 
+    <string name="issue_login_message"><b>Voici quelques vérifications qui pourraient aider :</b> \n\n 
+- Vérifier qu’il n’y a pas d’erreur dans le nom de l’instance\n\n 
 - Vérifiez que votre instance est fonctionnelle\n\n 
-- Si vous utilisez l’authentification en deux étapes (2FA), veuillez utiliser le lien en bas (une fois le nom de l\'instance renseigné) \n\n 
+- Si vous utilisez l’authentification en deux étapes (2FA), veuillez utiliser le lien en bas (une fois le nom de l’instance renseigné) \n\n 
 - Vous pouvez également utiliser ce lien sans utiliser la 2FA\n\n 
-- Si cela ne fonctionne toujours pas, vous pouvez reporter ce problème sur Github : https://github.com/stom79/mastalab/issues</string>
+- Si cela ne fonctionne toujours pas, vous pouvez reporter ce problème sur Github : https://github.com/stom79/mastalab/issues</string>
     <string name="media_ready">L’image a été chargée. Cliquez ici pour l’afficher.</string>
     <string name="data_export_start">Cela peut être assez long. Vous serez notifié·e une fois l’exportation finie.</string>
     <string name="data_export_running">Exportation en cours, veuillez patienter…</string>
@@ -479,7 +479,7 @@
     <string name="warning_delete_instance">Vous êtes sur le point de supprimer %s des instances suivies.</string>
     <string name="which_language">Tranduire en</string>
     <string name="crash_title">Mastalab s’est arrêté :(</string>
-    <string name="crash_message">Vous pouvez m\'envoyer le rapport d\'erreur par mail. Cela aidera à corriger le problème :)\n\nVous pouvez y ajouter des informations supplémentaires. Merci !</string>
+    <string name="crash_message">Vous pouvez m’envoyer le rapport d’erreur par mail. Cela aidera à corriger le problème :)\n\nVous pouvez y ajouter des informations supplémentaires. Merci !</string>
     <string name="send_crash_report">Demander l’envoi de rapports d’incidents par courriel ?</string>
     <string name="follow_instance">Suivre l’instance</string>
     <string name="toast_instance_already_added">Vous suivez déjà cette instance !</string>
