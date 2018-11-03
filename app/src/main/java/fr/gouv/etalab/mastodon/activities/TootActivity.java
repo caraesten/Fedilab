@@ -1702,6 +1702,9 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 }
             }
         }else {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra(INTENT_ACTION, HOME_TIMELINE_INTENT);
+            startActivity(intent);
             finish();
         }
 

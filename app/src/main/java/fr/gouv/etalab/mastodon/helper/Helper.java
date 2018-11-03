@@ -1213,25 +1213,35 @@ public class Helper {
     public static void changeUser(Activity activity, String userID, boolean checkItem) {
 
 
+        final NavigationView navigationView = activity.findViewById(R.id.nav_view);
+        navigationView.getMenu().clear();
+        MainActivity.lastNotificationId = null;
+        MainActivity.lastHomeId = null;
+        navigationView.inflateMenu(R.menu.activity_main_drawer);
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
         //Can happen when an account has been deleted and there is a click on an old notification
         if( account == null)
             return;
+        //Locked account can see follow request
+        if (account.isLocked()) {
+            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
+        } else {
+            navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
+        }
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-        if( account.getToken().equals(token))
-            return;
-        MainActivity.lastNotificationId = null;
-        MainActivity.lastHomeId = null;
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());
         editor.putString(Helper.PREF_INSTANCE, account.getInstance().trim());
         editor.apply();
-        Intent intent = activity.getIntent();
-        activity.finish();
-        activity.startActivity(intent);
+        activity.recreate();
+        if( checkItem ) {
+            Intent intent = new Intent(activity, MainActivity.class);
+            intent.putExtra(INTENT_ACTION, CHANGE_USER_INTENT);
+            activity.startActivity(intent);
+        }
+
     }
 
 
