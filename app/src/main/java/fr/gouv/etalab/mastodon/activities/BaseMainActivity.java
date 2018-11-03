@@ -691,6 +691,7 @@ public abstract class BaseMainActivity extends BaseActivity
         if( display_global)
             tabLayout.addTab(tabPublic);
 
+
         //Display filter for notification when long pressing the tab
         final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
         tabStrip.getChildAt(1).setOnLongClickListener(new View.OnLongClickListener() {
@@ -880,6 +881,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     toot.show();
                 else
                     toot.hide();
+
                 if( viewPager.getAdapter() != null) {
                     Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
                     switch (tab.getPosition()) {
@@ -941,6 +943,14 @@ public abstract class BaseMainActivity extends BaseActivity
                             displayStatusFragment.scrollToTop();
                     }
                 }
+                if( tab.getCustomView() != null) {
+                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                    if( icon != null)
+                        if( theme == THEME_BLACK)
+                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                        else
+                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+                }
             }
         });
         Helper.refreshSearchTag(BaseMainActivity.this, tabLayout, adapter);
@@ -950,6 +960,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
         final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
 
         //Scroll to top when top bar is clicked for favourites/blocked/muted
@@ -1122,6 +1133,7 @@ public abstract class BaseMainActivity extends BaseActivity
         toot = findViewById(R.id.toot);
         delete_all = findViewById(R.id.delete_all);
         add_new = findViewById(R.id.add_new);
+        tabLayout.getTabAt(0).select();
         toot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
