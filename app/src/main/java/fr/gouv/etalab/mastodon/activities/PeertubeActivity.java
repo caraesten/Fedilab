@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,18 +31,22 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -94,6 +99,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private FullScreenMediaController fullScreenMediaController;
     private int stopPosition;
     private Peertube peertube;
+    private TextView toolbar_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,9 +141,25 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         }
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if (theme == THEME_LIGHT && getSupportActionBar() != null){
-            Toolbar toolbar = getSupportActionBar().getCustomView().findViewById(R.id.toolbar);
-            Helper.colorizeToolbar(toolbar, R.color.black, PeertubeActivity.this);
+        ActionBar actionBar = getSupportActionBar();
+        if( actionBar != null ) {
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            assert inflater != null;
+            @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.simple_bar, null);
+            actionBar.setCustomView(view, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            ImageView toolbar_close = actionBar.getCustomView().findViewById(R.id.toolbar_close);
+            toolbar_title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
+            toolbar_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            if (theme == THEME_LIGHT){
+                Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
+                Helper.colorizeToolbar(toolbar, R.color.black, PeertubeActivity.this);
+            }
         }
         videoView = findViewById(R.id.media_video);
         new RetrievePeertubeSingleAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -165,6 +187,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         getMenuInflater().inflate(R.menu.main_webview, menu);
         menu.findItem(R.id.action_go).setVisible(false);
         menu.findItem(R.id.action_comment).setVisible(true);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == THEME_LIGHT)
+            Helper.colorizeIconMenu(menu, R.color.black);
         return true;
     }
     @Override
@@ -248,7 +274,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
-        setTitle(peertube.getName());
+        toolbar_title.setText(peertube.getName());
         peertube_description.setText(peertube.getDescription());
         peertube_title.setText(peertube.getName());
         peertube_dislike_count.setText(String.valueOf(peertube.getDislike()));

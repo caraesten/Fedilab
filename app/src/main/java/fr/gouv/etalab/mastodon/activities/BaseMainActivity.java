@@ -274,6 +274,7 @@ public abstract class BaseMainActivity extends BaseActivity
         TabLayout.Tab tabLocal = tabLayout.newTab();
         TabLayout.Tab tabPublic = tabLayout.newTab();
 
+
         tabHome.setCustomView(R.layout.tab_badge);
         tabNotif.setCustomView(R.layout.tab_badge);
         tabDirect.setCustomView(R.layout.tab_badge);
@@ -689,7 +690,6 @@ public abstract class BaseMainActivity extends BaseActivity
             tabLayout.addTab(tabLocal);
         if( display_global)
             tabLayout.addTab(tabPublic);
-
 
         //Display filter for notification when long pressing the tab
         final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
