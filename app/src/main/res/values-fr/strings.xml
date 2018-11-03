@@ -405,26 +405,26 @@
         Ces données sont strictement confidentielles et ne sont utilisables que par l’application. La suppression de l’application entraîne immédiatement la suppression de ces données.\n
         &#9888; Les identifiants et les mots de passe ne sont jamais enregistrés, ils ne sont utilisés que lors de l’authentification sécurisée (SSL) vers l’instance.</string>
     <string name="privacy_authorizations_title">Autorisations de l’application :</string>
-    <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b> : Utilisée pour savoir si l\'appareil est connecté au WIFI.\n
-        - <b>INTERNET</b> : Utilisée pour les requêtes vers l\'instance.\n
+    <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b> : Utilisée pour savoir si l’appareil est connecté au WIFI.\n
+        - <b>INTERNET</b> : Utilisée pour les requêtes vers l’instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b> : Utilisée pour télécharger les médias / déplacer sur la carte SD.\n
         - <b>READ_EXTERNAL_STORAGE</b> : Utilisée pour ajouter des médias aux pouets.\n
-        - <b>BOOT_COMPLETED</b> : Utilisée pour lancer le service de notifications quand l\'appareil démarre.\n
+        - <b>BOOT_COMPLETED</b> : Utilisée pour lancer le service de notifications quand l’appareil démarre.\n
         - <b>WAKE_LOCK</b> : Utilisée lors du service de notifications.</string>
-    <string name="privacy_API_authorizations_title">Autorisations de l\'API</string>
-    <string name="privacy_API_authorizations">- <b>Read</b> : Lire les données du compte.\n
-        - <b>Write</b> : Envoyer des messages et attacher des médias aux messages.\n
-        - <b>Follow</b> : S\'abonner, se désabonner, bloquer, débloquer.\n\n
-        <b>&#9888; Ces actions ne sont réalisées qu\'à la demande de l\'utilisateur.</b></string>
+    <string name="privacy_API_authorizations_title">Autorisations de l’API :</string>
+    <string name="privacy_API_authorizations">- <b>Read</b> : Lire les données du compte.\n
+        - <b>Write</b> : Envoyer des messages et attacher des médias aux messages.\n
+        - <b>Follow</b> : S’abonner, se désabonner, bloquer, débloquer.\n\n
+        <b>&#9888; Ces actions ne sont réalisées qu’à la demande de l’utilisateur·rice.</b></string>
     <string name="privacy_API_title">Suivi et bibliothèques</string>
-    <string name="privacy_API">L\'application n\'utilise <b>aucun outil de suivi</b> (mesure d\'audience, rapport d\'erreurs, etc.) et elle ne comporte aucune publicité.\n\n
-        L\'utilisation de bibliothèques est réduite au strict minimum :\n
-        - <b>Glid</b> : Pour la gestion des médias\n
-        - <b>Android-Job</b> : Pour la gestion des services\n
-        - <b>PhotoView</b> : Pour la gestion des images\n</string>
+    <string name="privacy_API">L’application n’utilise <b>aucun outil de suivi</b> (mesure d\'audience, rapport d’erreurs, etc.) et elle ne comporte aucune publicité.\n\n
+        L’utilisation de bibliothèques est réduite au strict minimum :\n
+        - <b>Glid</b> : Pour la gestion des médias\n
+        - <b>Android-Job</b> : Pour la gestion des services\n
+        - <b>PhotoView</b> : Pour la gestion des images\n</string>
     <string name="privacy_API_yandex_title">Traduction des pouets</string>
-    <string name="privacy_API_yandex_authorizations">L\'application offre la possibilité de traduire les pouets en utilisant les paramètres régionaux de l\'appareil et l\'API de Yandex.\n
-        Yandex a sa propre politique de confidentialité qui peut être consultée à l\'adresse suivante : https://yandex.ru/legal/confidential/?lang=en</string>
+    <string name="privacy_API_yandex_authorizations">L’application offre la possibilité de traduire les pouets en utilisant les paramètres régionaux de l’appareil et l’API de Yandex.\n
+        Yandex a sa propre politique de confidentialité qui peut être consultée à l\'adresse suivante : https://yandex.ru/legal/confidential/?lang=en</string>
     <string name="thanks_text">Merci à Stéphane pour le logo.</string>
     <string name="thanks_text_dev">Merci à :</string>
     <string name="filter_regex">Filtrer avec une expression régulière</string>
@@ -434,7 +434,7 @@
     <!-- About lists -->
     <string name="action_lists">Listes</string>
     <string name="action_lists_confirm_delete">Êtes-vous sûr de vouloir supprimer définitivement cette liste ?</string>
-    <string name="action_lists_empty_content">Il n\'y a rien dans cette liste pour l\'instant.</string>
+    <string name="action_lists_empty_content">Il n’y a rien dans cette liste pour l’instant.</string>
     <string name="action_lists_add_to">Ajouter à la liste</string>
     <string name="action_lists_remove_from">Supprimer de la liste</string>
     <string name="action_lists_create">Ajouter une liste</string>
@@ -453,13 +453,13 @@
 - Si vous utilisez l’authentification en deux étapes (2FA), veuillez utiliser le lien en bas (une fois le nom de l\'instance renseigné) \n\n 
 - Vous pouvez également utiliser ce lien sans utiliser la 2FA\n\n 
 - Si cela ne fonctionne toujours pas, vous pouvez reporter ce problème sur Github : https://github.com/stom79/mastalab/issues</string>
-    <string name="media_ready">L\'image a été chargée. Cliquez ici pour l\'afficher.</string>
-    <string name="data_export_start">Cela peut être assez long. Vous serez notifié(e) une fois l\'exportation finie.</string>
+    <string name="media_ready">L’image a été chargée. Cliquez ici pour l’afficher.</string>
+    <string name="data_export_start">Cela peut être assez long. Vous serez notifié·e une fois l’exportation finie.</string>
     <string name="data_export_running">Exportation en cours, veuillez patienter…</string>
     <string name="data_export">Exporter vos pouets</string>
     <string name="data_export_toots">Pouets exportés pour %1$s</string>
     <string name="data_export_success">%1$s pouets sur %2$s ont été exportés.</string>
-    <string name="data_export_error">Une erreur est survenue lors de l\'exportation des pouets pour %1$s</string>
+    <string name="data_export_error">Une erreur est survenue lors de l’exportation des pouets pour %1$s</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Type</string>
