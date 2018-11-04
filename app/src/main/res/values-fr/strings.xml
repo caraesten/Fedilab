@@ -165,7 +165,7 @@
     <string-array name="toot_visibility">
         <item>Afficher dans les fils publics</item>
         <item>Ne pas afficher dans les fils publics</item>
-        <item>N\'afficher que pour vos abonné(e)s</item>
+        <item>N\'afficher que pour vos abonné·e·s</item>
         <item>N\'afficher que pour les personnes mentionnées</item>
     </string-array>
     <string name="no_draft">Aucun brouillon !</string>
@@ -486,7 +486,7 @@
     <string name="toast_instance_followed">Maintenant, vous suivez cette instance !</string>
     <string name="action_partnership">Partenariats</string>
     <string name="neutral_menu_information">Information</string>
-    <string name="hide_boost">Masquer ses boosts</string>
+    <string name="hide_boost">Masquer les boosts de %s</string>
     <string name="endorse">Recommander</string>
     <string name="hide_everything">Tout masquer venant de %s</string>
     <string name="show_boost">Afficher les boosts de %s</string>
@@ -520,7 +520,7 @@
     <string name="action_who_to_follow_empty_content">Actuellement, cette liste ne contient aucun compte !</string>
     <string name="follow_account">Suivre</string>
     <string name="select_all">Tout sélectionner</string>
-    <string name="unselect_all">Tout déselectionner</string>
+    <string name="unselect_all">Tout désélectionner</string>
     <string name="follow_trunk">%s est suivi !</string>
     <string name="create_list_trunk">Création de la liste %s</string>
     <string name="add_account_list_trunk">Rajout des comptes à la liste</string>
@@ -576,7 +576,7 @@
     <string name="no_lists">Aucune liste</string>
     <string name="videos">Vidéos</string>
     <string name="channels">Chaînes</string>
-    <string name="set_display_emoji">Utiliser les Emoji One</string>
+    <string name="set_display_emoji">Utiliser les EmojiOne</string>
     <string-array name="filter_expire">
         <item>Jamais</item>
         <item>30 minutes</item>
