@@ -288,7 +288,7 @@
     <string name="set_attachment_action">تحميل الوسائط</string>
     <string name="load_attachment">تحميل الصور</string>
     <string name="load_attachment_spoiler">عرض المزيد…</string>
-    <string name="load_attachment_spoiler_less">إعرض أقل …</string>
+    <string name="load_attachment_spoiler_less">اعرض أقل…</string>
     <string name="load_sensitive_attachment">محتوى حساس</string>
     <string name="set_display_reply">إظهار نص الرسالة السابقة في الردود</string>
     <string name="set_display_local">إظهار الخيط المحلي</string>
@@ -309,18 +309,18 @@
     <string name="settings_title_more_options">الإعدادات المتقدمة</string>
     <string name="set_wifi_only">تفعيل الإخطار في وضع الواي فاي فقط</string>
     <string name="set_notify">هل تود الإخطار ؟</string>
-    <string name="set_notif_silent">إخطارت صامتة</string>
-    <string name="set_night_mode">الوضع اليلي</string>
+    <string name="set_notif_silent">كتم الاشعارات</string>
+    <string name="set_night_mode">الوضع الليلي</string>
     <string name="set_nsfw_timeout">مهلة عرض الـ NSFW (بالثواني، 0 يعني مُعطَّل)</string>
     <string name="settings_title_profile">تعديل الملف الشخصي</string>
-    <string name="set_profile_description">السيرة الذاتية ...</string>
+    <string name="set_profile_description">السيرة الذاتية…</string>
     <string name="set_lock_account">تأمين الحساب</string>
     <string name="set_save_changes">حفظ التغييرات</string>
-    <string name="set_header_picture_overlay">إختيار الصورة الرأسية</string>
+    <string name="set_header_picture_overlay">اختيار الصورة الرأسية</string>
     <string name="set_fit_preview">تكافؤ معاينة الصور</string>
     <string name="set_automatically_split_toot">تقسيم التبويقات التي تفوق الـ 500 حرف عند الرد</string>
-    <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به !</string>
-    <string name="username_no_space">لقد بلغت حد الـ 30 حرف المسموح به !</string>
+    <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به!</string>
+    <string name="username_no_space">لقد بلغت حد الـ 30 حرف المسموح به!</string>
     <string name="settings_title_hour">فترة استقبال الإخطارات:</string>
     <string name="settings_time_from">بين</string>
     <string name="settings_time_to">و</string>
@@ -328,7 +328,7 @@
     <string name="settings_time_lower">يجب أن تكون المدة الزمنية أقصر مِن %1$s</string>
     <string name="settings_hour_init">من</string>
     <string name="settings_hour_end">إلى</string>
-    <string name="embedded_browser">إستخدم المتصفح المُدمَج في التطبيق</string>
+    <string name="embedded_browser">استخدم المتصفح المُدمَج في التطبيق</string>
     <string name="custom_tabs">الألسنة الخاصة</string>
     <string name="use_javascript">تفعيل الجافاسكريبت</string>
     <string name="expand_cw">توسيع نافذة التحذير عن المحتوى تلقائيًا</string>
@@ -368,7 +368,7 @@
     </string-array>
     <string name="set_title_news">الجديد</string>
     <string name="set_notification_news">الإخطار عن التبويقات الجديدة على الخط الرئيسي</string>
-    <string name="action_follow">إتبع</string>
+    <string name="action_follow">اتبع</string>
     <string name="action_unfollow">إلغاء المتابعة</string>
     <string name="action_block">حظر</string>
     <string name="action_unblock">إلغاء الحظر</string>
@@ -390,7 +390,7 @@
     <string name="cache_title">مسح ذاكرة التخزين المؤقت</string>
     <string name="cache_message">هناك %1$s من البيانات في ذاكرة التخزين المؤقتة.\n\nهل تودّ إزالتها ؟</string>
     <string name="cache_units">ميغابايت</string>
-    <string name="toast_cache_clear">تم تنضيف ذاكرة التخزين المؤقتة و تفريغ %1$s !</string>
+    <string name="toast_cache_clear">تم تنظيف ذاكرة التخزين المؤقتة و تفريغ %1$s</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">مزامنة</string>
     <string name="action_filter">عامل التصفية</string>
@@ -399,11 +399,11 @@
     <string name="v_unlisted">غير المدرجة</string>
     <string name="v_private">الخاصة</string>
     <string name="v_direct">المباشرة</string>
-    <string name="v_keywords">بعض الكلمات المفتاحية …</string>
+    <string name="v_keywords">بعض الكلمات المفتاحية…</string>
     <string name="show_media">إظهار الوسائط</string>
-    <string name="show_pinned">إظهار المثبّة</string>
-    <string name="filter_no_result">لا توجد أي نتيجة تتطابق طلب البحث !</string>
-    <string name="data_backup_toots">النسخ الإحتياطي لتبويقات حساب %1$s</string>
+    <string name="show_pinned">إظهار المدبسة</string>
+    <string name="filter_no_result">لا توجد أي نتيجة تتطابق طلب البحث!</string>
+    <string name="data_backup_toots">النسخ الاحتياطي لتبويقات حساب %1$s</string>
     <string name="data_backup_success">تمت عملية استرجاع %1$s تبويقات جديدة</string>
     <string-array name="filter_select">
         <item>لا</item>
@@ -426,9 +426,9 @@
         - <b>WAKE_LOCK</b>: Used during the notification service.</string>
     <string name="privacy_API_authorizations_title">تصريحات خدمة برمجة التطبيقات API:</string>
     <string name="privacy_API_authorizations">- <b>القراءة</b>: قراءة البيانات.\n
-        - <b>الكتابة</b>:  نشر المنشورات و رفع الصور الخاصة بالمنسورات .\n
+        - <b>الكتابة</b>:  نشر المنشورات و رفع الصور الخاصة بالمنشورات.\n
         - <b>المتابعة</b>: المتابعة و إلغاء المتابعة و الحظر و إلغاء الحظر.\n\n
-        <b>&#9888; يقوم التطبيق بهذه الإجراءت عند طلب المُستخدِم لاستعمالها.</b></string>
+        <b>&#9888; يقوم التطبيق بهذه الإجراءات عند طلب المُستخدِم لاستعمالها.</b></string>
     <string name="privacy_API_title">التعقب و المكتبات</string>
     <string name="privacy_API">إنّ التطبيق <b>لا يستخدم أدوات للتعقّب</b> (لقياس الجمهور، للإبلاغ عن الأخطاء، إلخ.) ولا يحتوي على أية إعلانات تجارية.\n\n
         تم التقليل من استخدام المكتبات: \n
@@ -443,7 +443,7 @@
     <string name="filter_regex">التصفية بواسطة العبارات المنطقية</string>
     <string name="search">البحث</string>
     <string name="delete">حذف</string>
-    <string name="fetch_more_toots">تحميل المزيد من التبويقات ...</string>
+    <string name="fetch_more_toots">تحميل المزيد من التبويقات…</string>
     <!-- About lists -->
     <string name="action_lists">القوائم</string>
     <string name="action_lists_confirm_delete">هل تود فعلا حذف هذه القائمة ؟</string>
