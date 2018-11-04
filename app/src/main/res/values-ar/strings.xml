@@ -16,7 +16,7 @@
     <string name="cancel">إلغاء</string>
     <string name="download">تنزيل</string>
     <string name="download_file">تنزيل %1$s</string>
-    <string name="download_over">إكتمل التنزيل</string>
+    <string name="download_over">اكتمل التنزيل</string>
     <string name="save_file">حفظ %1$s</string>
     <string name="save_over">تم حفظ الصورة</string>
     <string name="download_from" formatted="false">ملف: %1$s</string>
@@ -27,7 +27,7 @@
     <string name="tags">الأوسمة</string>
     <string name="token">الرمز المميز</string>
     <string name="save">حفظ</string>
-    <string name="restore">إستعادة</string>
+    <string name="restore">استعادة</string>
     <string name="two_factor_authentification">المصادقة بخطوتين ؟</string>
     <string name="other_instance">مثيل خادم آخر غير mastodon.etalab.gouv.fr ؟</string>
     <string name="no_result">لم يتم العثور على أية نتيجة!</string>
@@ -57,16 +57,16 @@
     <string name="share_with">شارك بواسطة</string>
     <string name="shared_via">تمت مشاركته عبر ماستالاب</string>
     <string name="replies">الردود</string>
-    <string name="username">إسم المستخدم</string>
+    <string name="username">اسم المستخدم</string>
     <string name="drafts">المسودات</string>
-    <string name="new_data">هناك بيانات جديدة متوفرة ! هل تودّ عرضها ؟</string>
+    <string name="new_data">هناك بيانات جديدة متوفرة! هل تودّ عرضها؟</string>
     <string name="favourite">المفضلة</string>
     <string name="follow">متابِعون جدد</string>
     <string name="mention">الإشارات</string>
     <string name="reblog">الترقيات</string>
     <string name="show_boosts">عرض الترقيات</string>
     <string name="show_replies">عرض الردود</string>
-    <string name="action_open_in_web">إفتح في المتصفح</string>
+    <string name="action_open_in_web">افتح في المتصفح</string>
     <string name="translate">ترجمة</string>
     <string name="please_wait">الرجاء الانتظار بضع ثوان قبل اتخاذ هذا الإجراء.</string>
     <!--- Menu -->
@@ -89,9 +89,9 @@
     <string name="delete_account_message" formatted="false">هل تود إزالة حساب %1$s من التطبيق ؟</string>
     <string name="send_email">إرسال بريد إلكتروني</string>
     <string name="choose_file">يرجى تحديد ملف</string>
-    <string name="choose_file_error">لم يتم العثور على أي تطبيق لإدارة الملفات !</string>
-    <string name="click_to_change">إضغط على رابط المسار لتعديله</string>
-    <string name="failed">فشل !</string>
+    <string name="choose_file_error">لم يتم العثور على أي تطبيق لإدارة الملفات!</string>
+    <string name="click_to_change">اضغط على رابط المسار لتعديله</string>
+    <string name="failed">فشل!</string>
     <string name="scheduled_toots">التبويقات المبرمجة</string>
     <string name="disclaimer_full">قد لا تعكِس المعلومات أدناه كامل الملف الشخصي للمستخدِم.</string>
     <string name="insert_emoji">إضافة إيموجو</string>
@@ -100,9 +100,9 @@
     <!-- Status -->
     <string name="no_status">لا توجد هناك أية تبويقات لعرضها</string>
     <string name="fav_added">تمت إضافة التبويق إلى مفضلاتك</string>
-    <string name="fav_removed">تمت إزالة التبويق من مفضلاتك !</string>
-    <string name="reblog_added">تمت ترقية التبويق !</string>
-    <string name="reblog_removed">تم إلغاء ترقية التبويق !</string>
+    <string name="fav_removed">تمت إزالة التبويق من مفضلاتك!</string>
+    <string name="reblog_added">تمت ترقية التبويق!</string>
+    <string name="reblog_removed">تم إلغاء ترقية التبويق!</string>
     <string name="reblog_by">رقاه %1$s</string>
     <string name="favourite_add">هل تود إضافة هذا التبويق إلى مفضلاتك ؟</string>
     <string name="favourite_remove">هل تود إزالة هذا التبويق من مفضلاتك ؟</string>
@@ -127,7 +127,7 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>هل تود حذف هذا التبويق ؟</item>
-        <item>هل تريد حقا حذف و إعادة صياغة هذا التبويق ؟</item>
+        <item>هل تريد حقا حذف و إعادة صياغة هذا التبويق؟</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="zero">%d رد</item>
@@ -142,8 +142,8 @@
     <string name="bookmark_add">إضافة إلى الفواصل المرجعية</string>
     <string name="bookmark_remove">حذف الفاصلة المرجعية</string>
     <string name="bookmarks_empty">لا توجد أية فواصل مرجعية للعرض</string>
-    <string name="status_bookmarked">تم إضافة المنشور إلى الفواصل المرجعية !</string>
-    <string name="status_unbookmarked">تمت إزالة المنشور مِن الفواصل المرجعية !</string>
+    <string name="status_bookmarked">تم إضافة المنشور إلى الفواصل المرجعية!</string>
+    <string name="status_unbookmarked">تمت إزالة المنشور مِن الفواصل المرجعية!</string>
     <!-- Date -->
     <string name="date_seconds">%d ثا</string>
     <string name="date_minutes">%d د</string>
@@ -152,18 +152,18 @@
     <!-- TOOT -->
     <string name="toot_cw_placeholder">تحذير</string>
     <string name="toot_placeholder">ما الجديد ؟</string>
-    <string name="toot_it">بوِّق !</string>
+    <string name="toot_it">بوِّق!</string>
     <string name="cw">ت.م</string>
     <string name="toot_title">تحرير تبويق</string>
     <string name="toot_title_reply">الرد على تبويق</string>
-    <string name="toot_no_space">لقد بلغت حد الـ 500 حرف المسموح به !</string>
+    <string name="toot_no_space">لقد بلغت حد الـ 500 حرف المسموح به!</string>
     <string name="toot_select_image">تحديد وسائط</string>
-    <string name="toot_select_image_error">طرأ هناك خطأ أثناء اختيار الوسائط !</string>
+    <string name="toot_select_image_error">طرأ هناك خطأ أثناء اختيار الوسائط!</string>
     <string name="toot_delete_media">هل تود حذف هذه الصورة ؟</string>
-    <string name="toot_error_no_content">إن تبويقك فارغ !</string>
+    <string name="toot_error_no_content">إن تبويقك فارغ!</string>
     <string name="toot_visibility_tilte">طريقة نشر التبويق</string>
     <string name="toots_visibility_tilte">أسلوب نشر التبويقات:</string>
-    <string name="toot_sent">تم إرسال التبويق !</string>
+    <string name="toot_sent">تم إرسال التبويق!</string>
     <string name="toot_reply_content_title">بصدد الرد على هذا التبويق:</string>
     <string name="toot_sensitive">محتوى حساس ؟</string>
     <string-array name="toot_visibility">
@@ -172,15 +172,15 @@
         <item>أنشر إلى متابعيك فقط</item>
         <item>أنشر إلى المستخدمين المشار إليهم فقط</item>
     </string-array>
-    <string name="no_draft">لا توجد مسودات !</string>
-    <string name="choose_toot">إختر تبويقا</string>
-    <string name="choose_accounts">إختر حسابا</string>
-    <string name="select_accounts">قم بإختيار بعض من الحسابات</string>
+    <string name="no_draft">لا توجد مسودات!</string>
+    <string name="choose_toot">اختر تبويقا</string>
+    <string name="choose_accounts">اختر حسابا</string>
+    <string name="select_accounts">قم باختيار بعض من الحسابات</string>
     <string name="remove_draft">هل تود حذف المسودة ؟</string>
-    <string name="show_reply">إضغط على الزر لعرض التبويق الأصلي</string>
+    <string name="show_reply">اضغط على الزر لعرض التبويق الأصلي</string>
     <string name="upload_form_description">وصف للمعاقين بصريا</string>
     <!-- Instance -->
-    <string name="instance_no_description">لا يوجد وصف !</string>
+    <string name="instance_no_description">لا يوجد وصف!</string>
     <!-- About -->
     <string name="about_vesrion">الإصدار %1$s</string>
     <string name="about_developer">المُطوّر:</string>
@@ -204,12 +204,12 @@
     <string name="authorize">تصريح</string>
     <string name="reject">رفض</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">ليس عندك أية تبويقات مبرمَجة للعرض !</string>
-    <string name="no_scheduled_toots_indications">قم بتحرير تبويق ثم إختر <b>برمَجة</b> على القائمة العلوية.</string>
+    <string name="no_scheduled_toots">ليس عندك أية تبويقات مبرمَجة للعرض!</string>
+    <string name="no_scheduled_toots_indications">قم بتحرير تبويق ثم اختر <b>برمَجة</b> على القائمة العلوية.</string>
     <string name="remove_scheduled">هل تود حذف التبويق المُبرمَج ؟</string>
     <string name="media_count">الوسائط: %d</string>
-    <string name="toot_scheduled">تمت برمجة التبويق بنجاح !</string>
-    <string name="toot_scheduled_date">يجب أن يكون تاريخ البرمجة أكبر من الساعة الحالية !</string>
+    <string name="toot_scheduled">تمت برمجة التبويق بنجاح!</string>
+    <string name="toot_scheduled_date">يجب أن يكون تاريخ البرمجة أكبر من الساعة الحالية!</string>
     <string name="warning_battery">وضع توفير الطاقة على البطارية مشغَّل ! مِن المحتمل ألا يعمل كالمعتاد.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">ينبغي أن يكون وقت الكتم أكبر من دقيقة واحدة.</string>
