@@ -1413,6 +1413,16 @@ public class Helper {
                 .setEndAngle(90)
                 .build();
 
+        if( actionButton != null) {
+            actionButton.setFocusable(true);
+            actionButton.setFocusableInTouchMode(true);
+            actionButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    actionMenu.close(true);
+                }
+            });
+        }
         buttonLight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
