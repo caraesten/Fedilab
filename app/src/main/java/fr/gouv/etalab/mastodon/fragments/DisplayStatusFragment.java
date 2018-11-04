@@ -691,6 +691,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     @Override
     public void onRetrieveMissingFeeds(List<Status> statusesMissing) {
+        if(swipeRefreshLayout == null)
+            return;
         swipeRefreshLayout.setRefreshing(false);
 
         List<Status> statuses = Helper.filterToots(context, statusesMissing, mutedAccount, type);

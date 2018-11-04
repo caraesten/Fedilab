@@ -21,6 +21,7 @@ import android.content.ContentResolver;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -311,11 +312,15 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
         Bundle b = getIntent().getExtras();
         ArrayList<Uri> sharedUri = new ArrayList<>();
-
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         restored = -1;
         if(b != null) {
             tootReply = b.getParcelable("tootReply");
-            accountReply = b.getParcelable("accountReply");
+            String accountReplyToken = b.getString("accountReplyToken", null);
+            accountReply = null;
+            if( accountReplyToken != null){
+                accountReply = new AccountDAO(getApplicationContext(),db).getAccountByToken(accountReplyToken);
+            }
             tootMention = b.getString("tootMention", null);
             urlMention = b.getString("urlMention", null);
             fileMention = b.getString("fileMention", null);
@@ -349,7 +354,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             toot_it.setVisibility(View.GONE);
             invalidateOptionsMenu();
         }
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+
         String userIdReply;
         if( accountReply == null)
             userIdReply = sharedpreferences.getString(Helper.PREF_KEY_ID, null);

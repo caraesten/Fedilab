@@ -19,6 +19,7 @@ package fr.gouv.etalab.mastodon.helper;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -1230,6 +1231,13 @@ public class Helper {
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(false);
         }
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+        if( !account.getToken().equals(token)){
+            FragmentManager fm = activity.getFragmentManager();
+            for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                fm.popBackStack();
+            }
+        }
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());

@@ -59,6 +59,8 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
+        if( this.contextReference.get() == null)
+            return null;
         API api = new API(this.contextReference.get());
         List<fr.gouv.etalab.mastodon.client.Entities.Status> tempStatus;
         APIResponse apiResponse = null;

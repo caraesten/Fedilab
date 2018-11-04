@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
@@ -599,9 +598,8 @@ public class CrossActions {
                 @Override
                 public void onClick(final DialogInterface dialog, int which) {
                     final Account account = accountArray[which];
-
                     Intent intentToot = new Intent(context, TootActivity.class);
-                    bundle.putParcelable("accountReply", account);
+                    bundle.putString("accountReplyToken", account.getToken());
                     intentToot.putExtras(bundle);
                     context.startActivity(intentToot);
                     ((BaseActivity)context).finish();
