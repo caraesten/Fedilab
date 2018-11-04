@@ -457,7 +457,7 @@
     <string name="action_lists_search_users">البحث فيما بين الحسابات التي تتبعها</string>
     <string name="action_lists_owner">قوائمك</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s إنتقلَ إلى %2$s</string>
+    <string name="account_moved_to">%1$s انتقلَ إلى %2$s</string>
     <string name="show_boost_count">عرض عدد الترقيات و المفضلة</string>
     <string name="issue_login_title">هل المصادقة لا تعمل ؟</string>
     <string name="issue_login_message"><b>Here are some checks that might help:</b>\n\n
