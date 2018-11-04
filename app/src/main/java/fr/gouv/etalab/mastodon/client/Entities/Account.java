@@ -189,13 +189,18 @@ public class Account implements Parcelable {
         token = in.readString();
         instance = in.readString();
         metaDataSize = in.readInt();
+
         for(int i = 0; i < metaDataSize; i++){
+            if( fields == null)
+                fields = new LinkedHashMap<>();
             String key = in.readString();
             String value = in.readString();
             fields.put(key,value);
         }
         metaDataSizeVerified = in.readInt();
         for(int i = 0; i < metaDataSizeVerified; i++){
+            if( fieldsVerified == null)
+                fieldsVerified = new LinkedHashMap<>();
             String key = in.readString();
             Boolean value = in.readByte() != 0;
             fieldsVerified.put(key,value);
