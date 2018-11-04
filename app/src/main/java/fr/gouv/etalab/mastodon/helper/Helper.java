@@ -37,6 +37,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
+
 import android.support.design.widget.TabLayout;
 import android.support.media.ExifInterface;
 import android.support.v4.app.FragmentActivity;
@@ -114,6 +115,9 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import org.conscrypt.Conscrypt;
 
@@ -1333,11 +1337,122 @@ public class Helper {
      * @param account Account - new account in use
      * @param headerLayout View - the menu header
      */
-    public static void updateHeaderAccountInfo(final Activity activity, final Account account, final View headerLayout){
+    public static void updateHeaderAccountInfo(Activity activity, final Account account, final View headerLayout){
         ImageView profilePicture = headerLayout.findViewById(R.id.profilePicture);
-
         TextView username = headerLayout.findViewById(R.id.username);
         TextView displayedName = headerLayout.findViewById(R.id.displayedName);
+        LinearLayout more_option_container = headerLayout.findViewById(R.id.more_option_container);
+        SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        ImageView icon = new ImageView(activity);
+
+
+        FloatingActionButton.LayoutParams layoutparmans = new FloatingActionButton.LayoutParams((int)Helper.convertDpToPixel(35,activity),(int)Helper.convertDpToPixel(35,activity));
+        FloatingActionButton.LayoutParams layoutparmanImg = new FloatingActionButton.LayoutParams((int)Helper.convertDpToPixel(25,activity),(int)Helper.convertDpToPixel(25,activity));
+        layoutparmans.setMargins((int)Helper.convertDpToPixel(20, activity),0,0,0);
+        MenuFloating actionButton = null;
+        if( theme == THEME_LIGHT) {
+            icon.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush));
+            actionButton = new MenuFloating.Builder(activity)
+                    .setContentView(icon, layoutparmanImg)
+                    .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular))
+                    .setLayoutParams(layoutparmans)
+                    .setTag("THEME")
+                    .intoView(more_option_container)
+                    .build();
+        }else if( theme == THEME_DARK) {
+            icon.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush_white));
+            actionButton = new MenuFloating.Builder(activity)
+                    .setContentView(icon, layoutparmanImg)
+                    .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_dark))
+                    .setLayoutParams(layoutparmans)
+                    .setTag("THEME")
+                    .intoView(more_option_container)
+                    .build();
+        }else if( theme == THEME_BLACK) {
+            icon.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush_white));
+            actionButton = new MenuFloating.Builder(activity)
+                    .setContentView(icon, layoutparmanImg)
+                    .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_black))
+                    .setLayoutParams(layoutparmans)
+                    .setTag("THEME")
+                    .intoView(more_option_container)
+                    .build();
+        }
+
+
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(activity);
+
+        // repeat many times:
+        ImageView itemIconLight = new ImageView(activity);
+        itemIconLight.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush));
+        SubActionButton buttonLight = itemBuilder
+                .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular))
+                .setContentView(itemIconLight).build();
+
+
+        ImageView itemDark = new ImageView(activity);
+        itemDark.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush_white));
+        SubActionButton buttonDark = itemBuilder
+                .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_dark))
+                .setContentView(itemDark).build();
+
+        ImageView itemBlack = new ImageView(activity);
+        itemBlack.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush_white));
+        SubActionButton buttonBlack = itemBuilder
+                .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_black))
+                .setContentView(itemBlack).build();
+
+        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(activity)
+                .addSubActionView(buttonLight)
+                .addSubActionView(buttonDark)
+                .addSubActionView(buttonBlack)
+                .attachTo(actionButton)
+                .setStartAngle(0)
+                .setEndAngle(90)
+                .build();
+
+        buttonLight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actionMenu.close(true);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+                editor.apply();
+                activity.recreate();
+                Intent intent = new Intent(activity, MainActivity.class);
+                activity.finish();
+                activity.startActivity(intent);
+            }
+        });
+        buttonDark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actionMenu.close(true);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
+                editor.apply();
+                activity.recreate();
+                Intent intent = new Intent(activity, MainActivity.class);
+                activity.finish();
+                activity.startActivity(intent);
+            }
+        });
+        buttonBlack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actionMenu.close(true);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
+                editor.apply();
+                activity.recreate();
+                Intent intent = new Intent(activity, MainActivity.class);
+                activity.finish();
+                activity.startActivity(intent);
+            }
+        });
+
         if( account == null ) {
             Helper.logout(activity);
             Intent myIntent = new Intent(activity, LoginActivity.class);
@@ -1360,8 +1475,6 @@ public class Helper {
                 urlHeader = Helper.getLiveInstanceWithProtocol(activity) + account.getHeader();
             }
             LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
-            final SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
             if( theme == Helper.THEME_LIGHT){
                 main_header_container.setBackgroundDrawable( activity.getResources().getDrawable(R.drawable.side_nav_bar_dark));
             }

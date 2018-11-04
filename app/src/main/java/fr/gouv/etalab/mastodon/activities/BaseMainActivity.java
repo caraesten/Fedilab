@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -118,6 +119,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.fragments.WhoToFollowFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.helper.MenuFloating;
 import fr.gouv.etalab.mastodon.interfaces.OnFilterActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
@@ -204,6 +206,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private PopupMenu popup;
     private String instance_id;
     private int style;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,7 +243,7 @@ public abstract class BaseMainActivity extends BaseActivity
             finish();
             return;
         }
-
+        activity = this;
         rateThisApp();
 
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
@@ -1335,7 +1338,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 startActivity(intent);
             }
         });
-        updateHeaderAccountInfo(BaseMainActivity.this, account, headerLayout);
+        MenuFloating.tags = new ArrayList<>();
+        updateHeaderAccountInfo(activity, account, headerLayout);
         //Locked account can see follow request
         if (account.isLocked()) {
             navigationView.getMenu().findItem(R.id.nav_follow_request).setVisible(true);
@@ -2111,7 +2115,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }else {
             SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-            updateHeaderAccountInfo(BaseMainActivity.this, account, headerLayout);
+            updateHeaderAccountInfo(activity, account, headerLayout);
         }
     }
 

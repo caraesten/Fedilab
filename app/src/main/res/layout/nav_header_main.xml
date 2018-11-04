@@ -50,10 +50,13 @@
                 android:layout_height="60dp"
                 tools:ignore="ContentDescription" />
             <LinearLayout
+                android:id="@+id/more_option_container"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                tools:ignore="UselessLeaf" />
+                android:orientation="horizontal"
+                tools:ignore="UselessLeaf" >
+            </LinearLayout>
             <ImageView
                 android:gravity="center_vertical|end"
                 android:src="@drawable/ic_more_vert"
