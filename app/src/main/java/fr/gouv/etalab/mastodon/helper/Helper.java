@@ -1414,12 +1414,19 @@ public class Helper {
                 .build();
 
         if( actionButton != null) {
-            actionButton.setFocusable(true);
             actionButton.setFocusableInTouchMode(true);
             actionButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    actionMenu.close(true);
+                    try {
+                        if( !activity.isFinishing() ){
+                            if( hasFocus && !actionMenu.isOpen())
+                                actionMenu.open(true);
+                            else if( !hasFocus && actionMenu.isOpen())
+                                actionMenu.close(true);
+                        }
+                    }catch (Exception ignored){}
+
                 }
             });
         }

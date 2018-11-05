@@ -264,7 +264,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
             if( close != null)
                 close.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon));
-            EditText editText = ((EditText) toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_src_text));
+            EditText editText = toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_src_text);
             editText.setHintTextColor(getResources().getColor(R.color.dark_icon));
             editText.setTextColor(getResources().getColor(R.color.dark_icon));
         }

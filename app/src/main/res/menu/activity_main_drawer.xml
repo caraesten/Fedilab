@@ -29,7 +29,7 @@
                         android:title="@string/owner_cached_toots" />
                     <item
                         android:id="@+id/nav_bookmarks"
-                        android:icon="@drawable/ic_bookmark"
+                        android:icon="@drawable/ic_bookmark_menu"
                         android:title="@string/bookmarks" />
                     <item
                         android:id="@+id/nav_peertube"

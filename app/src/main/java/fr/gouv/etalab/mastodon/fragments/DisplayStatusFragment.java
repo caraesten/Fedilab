@@ -435,7 +435,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
                             position++;
                         }
-                        while (position < this.notFilteredStatuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.notFilteredStatuses.get(position).getId())) {
+                        while (positionNotFiltered < this.notFilteredStatuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.notFilteredStatuses.get(positionNotFiltered).getId())) {
                             positionNotFiltered++;
                         }
                         ArrayList<Status> tmpStatuses = new ArrayList<>();
