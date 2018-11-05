@@ -1006,6 +1006,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             switch (status.getVisibility()){
                 case "direct":
                     holder.status_reblog_count.setVisibility(View.GONE);
+                    break;
                 case "private":
                     boolean isOwner = status.getAccount().getId().equals(userId);
                     if( isOwner)
