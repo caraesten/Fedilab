@@ -108,7 +108,7 @@
     <string name="favourite_remove">Supprimer ce pouet des favoris ?</string>
     <string name="reblog_add">Partager ce pouet ?</string>
     <string name="reblog_remove">Supprimer ce pouet des partages ?</string>
-    <string name="pin_add">Epingler ce pouet ?</string>
+    <string name="pin_add">Épingler ce pouet ?</string>
     <string name="pin_remove">Désépingler ce pouet ?</string>
     <string name="more_action_1">Masquer</string>
     <string name="more_action_2">Bloquer</string>
@@ -150,7 +150,7 @@
     <string name="toot_placeholder">Qu’avez-vous en tête ?</string>
     <string name="toot_it">POUET !</string>
     <string name="cw">cw</string>
-    <string name="toot_title">Ecrire un pouet</string>
+    <string name="toot_title">Écrire un pouet</string>
     <string name="toot_title_reply">Répondre à un pouet</string>
     <string name="toot_no_space">Vous avez atteint les 500 caractères autorisés !</string>
     <string name="toot_select_image">Sélectionnez un média</string>
@@ -165,7 +165,7 @@
     <string-array name="toot_visibility">
         <item>Afficher dans les fils publics</item>
         <item>Ne pas afficher dans les fils publics</item>
-        <item>N\'afficher que pour vos abonné(e)s</item>
+        <item>N\'afficher que pour vos abonné·e·s</item>
         <item>N\'afficher que pour les personnes mentionnées</item>
     </string-array>
     <string name="no_draft">Aucun brouillon !</string>
@@ -196,12 +196,12 @@
     <string name="status_cnt">Pouets \n %1$s</string>
     <string name="following_cnt">Abonnements \n %1$s</string>
     <string name="followers_cnt">Abonnés \n %1$s</string>
-    <string name="pins_cnt">Epinglés %d</string>
+    <string name="pins_cnt">Épinglés %d</string>
     <string name="authorize">Autoriser</string>
     <string name="reject">Rejeter</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Aucun pouet programmé à afficher !</string>
-    <string name="no_scheduled_toots_indications">Ecrivez un pouet, puis choisissez <b>Programmer</b> dans le menu du haut.</string>
+    <string name="no_scheduled_toots_indications">Rédigez un pouet, puis choisissez <b>Programmer</b> dans le menu du haut.</string>
     <string name="remove_scheduled">Supprimer le pouet programmé ?</string>
     <string name="media_count">Média(s): %d</string>
     <string name="toot_scheduled">Le pouet a été programmé !</string>
@@ -233,7 +233,7 @@
     <!-- HEADER -->
     <string name="following">Abonnements</string>
     <string name="followers">Abonnés</string>
-    <string name="pinned_toots">Epinglé</string>
+    <string name="pinned_toots">Épinglé</string>
     <!-- TOAST -->
     <string name="client_error">Impossible d’obtenir l’id du client !</string>
     <string name="no_internet">Aucune connexion Internet !</string>
@@ -477,7 +477,7 @@
     <string name="toast_instance_unavailable">Aucun fil n’a été trouvé sur cette instance !</string>
     <string name="delete_instance">Désirez-vous effacer cette instance ?</string>
     <string name="warning_delete_instance">Vous êtes sur le point de supprimer %s des instances suivies.</string>
-    <string name="which_language">Tranduire en</string>
+    <string name="which_language">Traduire en</string>
     <string name="crash_title">Mastalab s’est arrêté :(</string>
     <string name="crash_message">Vous pouvez m’envoyer le rapport d’erreur par mail. Cela aidera à corriger le problème :)\n\nVous pouvez y ajouter des informations supplémentaires. Merci !</string>
     <string name="send_crash_report">Demander l’envoi de rapports d’incidents par courriel ?</string>
@@ -486,7 +486,7 @@
     <string name="toast_instance_followed">Maintenant, vous suivez cette instance !</string>
     <string name="action_partnership">Partenariats</string>
     <string name="neutral_menu_information">Information</string>
-    <string name="hide_boost">Masquer ses boosts</string>
+    <string name="hide_boost">Masquer les boosts de %s</string>
     <string name="endorse">Recommander</string>
     <string name="hide_everything">Tout masquer venant de %s</string>
     <string name="show_boost">Afficher les boosts de %s</string>
@@ -520,7 +520,7 @@
     <string name="action_who_to_follow_empty_content">Actuellement, cette liste ne contient aucun compte !</string>
     <string name="follow_account">Suivre</string>
     <string name="select_all">Tout sélectionner</string>
-    <string name="unselect_all">Tout déselectionner</string>
+    <string name="unselect_all">Tout désélectionner</string>
     <string name="follow_trunk">%s est suivi !</string>
     <string name="create_list_trunk">Création de la liste %s</string>
     <string name="add_account_list_trunk">Rajout des comptes à la liste</string>
@@ -576,7 +576,7 @@
     <string name="no_lists">Aucune liste</string>
     <string name="videos">Vidéos</string>
     <string name="channels">Chaînes</string>
-    <string name="set_display_emoji">Utiliser les Emoji One</string>
+    <string name="set_display_emoji">Utiliser les EmojiOne</string>
     <string-array name="filter_expire">
         <item>Jamais</item>
         <item>30 minutes</item>
