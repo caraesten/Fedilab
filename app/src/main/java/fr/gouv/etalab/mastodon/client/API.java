@@ -1702,7 +1702,11 @@ public class API {
     public Results search(String query) {
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("q", query);
+        try {
+            params.put("q", URLEncoder.encode(query, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            params.put("q", query);
+        }
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/search"), 60, params, prefKeyOauthTokenT);
