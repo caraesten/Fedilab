@@ -1415,16 +1415,12 @@ public class Helper {
 
         if( actionButton != null) {
             actionButton.setFocusableInTouchMode(true);
+            actionButton.setFocusable(true);
             actionButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     try {
-                        if( !activity.isFinishing() ){
-                            if( hasFocus && !actionMenu.isOpen())
-                                actionMenu.open(true);
-                            else if( !hasFocus && actionMenu.isOpen())
-                                actionMenu.close(true);
-                        }
+                        actionMenu.close(true);
                     }catch (Exception ignored){}
 
                 }
