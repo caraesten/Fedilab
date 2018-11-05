@@ -436,8 +436,8 @@
         - <b>Android-Job</b>: لإدارة الخدمات\n
         - <b>PhotoView</b>: لإدارة الصور\n</string>
     <string name="privacy_API_yandex_title">ترجمة التبويقات</string>
-    <string name="privacy_API_yandex_authorizations">The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en</string>
+    <string name="privacy_API_yandex_authorizations">يوفر التطبيق امكانية ترجمة التبويقات باستخدام لغة الجهاز وواجهة برمجة التطبيقات  Yandex API.\n
+        لدى ياندكس سياستهم الخاصة بشأن الخصوصية و يمكن العثور عليها هنا: https://yandex.ru/legal/confidential/?lang=en</string>
     <string name="thanks_text">شكرا لـ Stéphane على الشارة.</string>
     <string name="thanks_text_dev">الشكر لـ :</string>
     <string name="filter_regex">التصفية بواسطة العبارات المنطقية</string>
