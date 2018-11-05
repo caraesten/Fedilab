@@ -251,13 +251,16 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         final boolean isOwner = account.getId().equals(userId);
         String[] splitAcct = account.getAcct().split("@");
 
-        if( splitAcct.length <= 1)
+        if( splitAcct.length <= 1) {
             popup.getMenu().findItem(R.id.action_follow_instance).setVisible(false);
-        if( isOwner) {
+            popup.getMenu().findItem(R.id.action_block_instance).setVisible(false);
+
+        }if( isOwner) {
             popup.getMenu().findItem(R.id.action_block).setVisible(false);
             popup.getMenu().findItem(R.id.action_mute).setVisible(false);
             popup.getMenu().findItem(R.id.action_mention).setVisible(false);
             popup.getMenu().findItem(R.id.action_follow_instance).setVisible(false);
+            popup.getMenu().findItem(R.id.action_block_instance).setVisible(false);
             popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
             popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
             popup.getMenu().findItem(R.id.action_direct_message).setVisible(false);
@@ -304,7 +307,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     style = R.style.Dialog;
                 }
                 switch (item.getItemId()) {
-
                     case R.id.action_follow_instance:
                         String finalInstanceName = splitAcct[1];
                         final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
@@ -402,6 +404,12 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         builderInner.setTitle(stringArrayConf[1]);
                         doActionAccount = API.StatusAction.BLOCK;
                         break;
+                    case R.id.action_block_instance:
+                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
+                        doActionAccount = API.StatusAction.BLOCK_DOMAIN;
+                        String domain = account.getAcct().split("@")[1];
+                        builderInner.setMessage(getString(R.string.block_domain_confirm_message, domain));
+                        break;
                     default:
                         return true;
                 }
@@ -414,7 +422,13 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog,int which) {
-                        new PostActionAsyncTask(getApplicationContext(), doActionAccount, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        String targetedId;
+                        if( item.getItemId() == R.id.action_block_instance){
+                            targetedId = account.getAcct().split("@")[1];
+                        }else {
+                            targetedId = account.getId();
+                        }
+                        new PostActionAsyncTask(getApplicationContext(), doActionAccount, targetedId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         dialog.dismiss();
                     }
                 });

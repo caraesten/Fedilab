@@ -507,6 +507,14 @@ public class API {
     }
 
     /**
+     * Retrieves direct timeline for the account since an Id value *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getConversationTimelineSinceId(String since_id) {
+        return getConversationTimeline(null, since_id, tootPerPage);
+    }
+
+    /**
      * Retrieves conversation timeline for the account *synchronously*
      * @param max_id   String id max
      * @param since_id String since the id
