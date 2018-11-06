@@ -194,7 +194,7 @@
     <string name="conversation">Беседа</string>
     <!-- Accounts -->
     <string name="no_accounts">Нет аккаунта для отображения</string>
-    <string name="no_follow_request">Нет запроса на подписку</string>
+    <string name="no_follow_request">Нет запросов на подписку</string>
     <string name="status_cnt">Туты \n %1$s</string>
     <string name="following_cnt">Подписан \n %1$s</string>
     <string name="followers_cnt">Подписчиков \n %1$s</string>
@@ -578,8 +578,8 @@
     <string name="bookmark_peertube_empty">В вашем избранном нет видео Peertube!</string>
     <string name="channel">Канал</string>
     <string name="no_peertube_channels">Нет каналов Peertube</string>
-    <string name="no_peertube_instances">Нет экземпляров Peertube</string>
-    <string name="no_mastodon_instances">Нет экземпляров Mastodon</string>
+    <string name="no_peertube_instances">Нет серверов Peertube</string>
+    <string name="no_mastodon_instances">Нет серверов Mastodon</string>
     <string name="no_lists">Нет списков</string>
     <string name="videos">Видео</string>
     <string name="channels">Каналы</string>
