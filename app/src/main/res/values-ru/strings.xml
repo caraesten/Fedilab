@@ -379,21 +379,21 @@
     <string name="settings_popup_message">Пожалуйста, подтвердите пуш-уведомления, которые хотите получать.
         Вы можете включить или отключить их позже в настройках (вкладка \"Уведомления\").</string>
     <string name="settings_popup_timeline">Для непрочитанных тутов в домашней ленте?</string>
-    <string name="settings_popup_notification">Для непрочитанные уведомлений?</string>
+    <string name="settings_popup_notification">Для непрочитанных уведомлений?</string>
     <!-- CACHE -->
     <string name="cache_title">Очистить кэш</string>
     <string name="cache_message">Существует %1$s данных кэша.\n\nВы хотите их удалить?</string>
     <string name="cache_units">МБ</string>
     <string name="toast_cache_clear">Кэш очишен! Освобождено %1$s</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Синхронизация</string>
+    <string name="action_sync">Синхронизировать</string>
     <string name="action_filter">Фильтр</string>
     <string name="owner_cached_toots">Ваши туты</string>
     <string name="v_public">Публичное</string>
     <string name="v_unlisted">Не в списке</string>
     <string name="v_private">Приватно</string>
     <string name="v_direct">Напрямую</string>
-    <string name="v_keywords">Ключевые слова…</string>
+    <string name="v_keywords">Некоторые ключевые слова…</string>
     <string name="show_media">Показать медиа</string>
     <string name="show_pinned">Показать закрепленные</string>
     <string name="filter_no_result">Результатов не найдено!</string>
@@ -432,8 +432,8 @@
     <string name="privacy_API_yandex_title">Перевод тутов</string>
     <string name="privacy_API_yandex_authorizations">Приложение предлагает возможность переводить туты, используя язык устройства и Яндекс API.\n 
         Яндекс имеет собственную политику конфиденциальности, условия которой можно найти здесь: https://yandex.ru/legal/confidential/?lang=en</string>
-    <string name="thanks_text">Благодарю Стефана ( Stéphane) за логотип.</string>
-    <string name="thanks_text_dev">Благодарность:</string>
+    <string name="thanks_text">Благодарю Stéphane за логотип.</string>
+    <string name="thanks_text_dev">Спасибо:</string>
     <string name="filter_regex">Отфильтровать по регулярным выражениям</string>
     <string name="search">Поиск</string>
     <string name="delete">Удалить</string>
