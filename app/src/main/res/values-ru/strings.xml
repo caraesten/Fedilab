@@ -274,8 +274,8 @@
     <!-- Settings -->
     <string name="settings_title_optimisation">Оптимизация загрузки</string>
     <string name="set_toots_page">Количество тутов на загрузку</string>
-    <string name="set_accounts_page">Число аккаунтов за загрузку</string>
-    <string name="set_notifications_page">Число уведомлений за загрузку</string>
+    <string name="set_accounts_page">Количество аккаунтов за загрузку</string>
+    <string name="set_notifications_page">Количество уведомлений за загрузку</string>
     <string name="set_attachment_always">Всегда</string>
     <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Спрашивать</string>
@@ -290,24 +290,24 @@
     <string name="set_disable_gif">Отключить GIF-аватары</string>
     <string name="set_folder_title">Путь:</string>
     <string name="set_auto_store_toot">Сохранять черновики автоматически</string>
-    <string name="set_bubble_counter">Показывать счётчики</string>
+    <string name="set_bubble_counter">Показывать счетчики</string>
     <string name="set_auto_add_media_url">Добавлять URL-адрес медиа в туты</string>
-    <string name="settings_title_notifications">Настроить уведомления</string>
-    <string name="set_notif_follow">Уведомлять, когда кто-то следует за вами</string>
-    <string name="set_notif_follow_ask">Уведомлять, когда кто-то просит следовать за вами</string>
+    <string name="settings_title_notifications">Управление уведомлениями</string>
+    <string name="set_notif_follow">Уведомлять, когда кто-то подписывается на вас</string>
+    <string name="set_notif_follow_ask">Уведомлять при получении запроса на подписку</string>
     <string name="set_notif_follow_share">Уведомлять, когда кто-то продвигает ваш статус</string>
-    <string name="set_notif_follow_add">Уведомлять, когда кто-то добавил вас в избранные</string>
+    <string name="set_notif_follow_add">Уведомлять, если кто-то добавил ваш статус в избранное</string>
     <string name="set_notif_follow_mention">Уведомлять, когда кто-то вас упоминает</string>
     <string name="set_share_validation">Предупреждать перед тем как продвинуть</string>
     <string name="set_share_validation_fav">Предупреждать перед добавлением в избранные</string>
     <string name="settings_title_more_options">Расширенные настройки</string>
-    <string name="set_wifi_only">Уведомлять только в сети WiFi</string>
+    <string name="set_wifi_only">Уведомлять только в сети WIFI</string>
     <string name="set_notify">Уведомлять?</string>
-    <string name="set_notif_silent">Беззвучные Уведомления</string>
+    <string name="set_notif_silent">Тихие уведомления</string>
     <string name="set_night_mode">Ночной режим</string>
     <string name="set_nsfw_timeout">Время просмотра NSFW (в секундах, 0 означает выключено)</string>
     <string name="settings_title_profile">Изменить профиль</string>
-    <string name="set_profile_description">Биография…</string>
+    <string name="set_profile_description">О…</string>
     <string name="set_lock_account">Заблокировать аккаунт</string>
     <string name="set_save_changes">Сохранить изменения</string>
     <string name="set_header_picture_overlay">Выбрать изображение обложки</string>
@@ -320,12 +320,12 @@
     <string name="settings_time_to">и</string>
     <string name="settings_time_greater">Время должно быть больше, чем %1$s</string>
     <string name="settings_time_lower">Время должно быть меньше, чем %1$s</string>
-    <string name="settings_hour_init">Уведомлять с</string>
-    <string name="settings_hour_end">До</string>
+    <string name="settings_hour_init">Время начала</string>
+    <string name="settings_hour_end">Время окончания</string>
     <string name="embedded_browser">Использовать встроенный браузер</string>
     <string name="custom_tabs">Пользовательские вкладки</string>
-    <string name="use_javascript">Включить JavaScript</string>
-    <string name="expand_cw">Автоматически расширять cw</string>
+    <string name="use_javascript">Включить Javascript</string>
+    <string name="expand_cw">Автоматически раскрывать cw</string>
     <string name="use_cookies">Разрешить сторонние куки</string>
     <string name="settings_ui_layout">Временные рамки для ленты:</string>
     <string-array name="settings_menu_tabs">
@@ -451,16 +451,16 @@
     <string name="action_lists_search_users">Поиск среди людей, на которых вы подписаны</string>
     <string name="action_lists_owner">Ваши списки</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s добавлен к %2$s</string>
+    <string name="account_moved_to">%1$s был перенесен в %2$s</string>
     <string name="show_boost_count">Показать количество продвигаемых/избранных</string>
-    <string name="issue_login_title">Не работает аутентификация?</string>
+    <string name="issue_login_title">Аутентификация не работает?</string>
     <string name="issue_login_message"><b>Вот некоторые подсказки, которые должны вам помочь:\n\n</b>
         - Проверьте на предмет орфографических ошибок при написании сервера\n\n - 
         - Проверьте, возможно сервер временно недоступен\n\n 
         - Если вы используете двухфакторную проверку подлинности (2FA), пожалуйста, используйте ссылку внизу (после заполнения имени сервера)\n\n 
          - Вы также можете использовать эту ссылку без использования 2FA\n\n
          - Если всё перечисленное не помогает, пожалуйста задайте вопрос на Github https://github.com/stom79/mastalab/issues</string>
-    <string name="media_ready">Файл был загружен. Нажмите здесь, для его отображения.</string>
+    <string name="media_ready">Медиафайл загружен. Нажмите здесь, для его отображения.</string>
     <string name="data_export_start">Это действие может продолжаться довольно долго. Вы будете уведомлены, когда оно будет закончено.</string>
     <string name="data_export_running">Все ещё работает, ожидайте…</string>
     <string name="data_export">Экспорт статусов</string>
@@ -468,14 +468,14 @@
     <string name="data_export_success">%1$s тутов из %2$s были экспортированы.</string>
     <string name="data_export_error">Что-то пошло не так, при экспорте данных для %1$s</string>
     <!-- Proxy -->
-    <string name="proxy_set">Прокси</string>
+    <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Тип</string>
-    <string name="proxy_enable">Включить прокси?</string>
-    <string name="poxy_host">Сервер</string>
+    <string name="proxy_enable">Включить proxy?</string>
+    <string name="poxy_host">Хост</string>
     <string name="poxy_port">Порт</string>
-    <string name="poxy_login">Логин</string>
+    <string name="poxy_login">Имя пользователя</string>
     <string name="poxy_password">Пароль</string>
-    <string name="set_theme">Оформление:</string>
+    <string name="set_theme">Тема:</string>
     <string name="set_compact_mode">Компактный режим</string>
     <string name="set_share_details">Добавить детали тута при перепосте</string>
     <string name="support_the_app_on_liberapay">Поддержать приложение на Liberapay</string>
@@ -536,7 +536,7 @@
     <string name="action_list_add">Вы еще не создали список. Нажмите кнопку \"+\", чтобы добавить первый.</string>
     <string name="action_remote_instance_add">Вы не подписаны на какие-либо внешние сервера. Нажмите кнопку \"+\", чтобы добавить первый.</string>
     <string name="about_trunk">На кого подписаться</string>
-    <string name="about_trunk_action">Магистральный API</string>
+    <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Аккаунт(ы) не могут быть подписаны</string>
     <string name="retrieve_remote_account">Получение внешнего аккаунта</string>
     <string name="expand_image">Раскрывать скрытое медиасодержимое автоматически</string>
