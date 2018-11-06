@@ -78,7 +78,7 @@
     <string name="communication_menu_title">Общение</string>
     <string name="muted_menu">Приглушенные пользователи</string>
     <string name="blocked_menu">Заблокированные пользователи</string>
-    <string name="remote_follow_menu">Удаленная подписка</string>
+    <string name="remote_follow_menu">Внешняя подписка</string>
     <string name="notifications">Уведомления</string>
     <string name="follow_request">Запросы на подписку</string>
     <string name="optimization">Оптимизация</string>
@@ -210,7 +210,7 @@
     <string name="toot_scheduled_date">Запланированная дата должна быть в будущем!</string>
     <string name="warning_battery">Режим энергосбережения включен! Возможна некорректная работа.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">Время для приглушения должно быть больше одной минуты.</string>
+    <string name="timed_mute_date_error">Время приглушения должно быть больше одной минуты.</string>
     <string name="timed_mute_date">%1$s был приглушен до %2$s.\n Вы можете изменить это со страницы ее/его профиля.</string>
     <string name="timed_mute_profile">%1$s приглушен до %2$s.\n Нажмите здесь, чтобы изменить это.</string>
     <!-- Notifications -->
@@ -305,20 +305,20 @@
     <string name="set_notify">Уведомлять?</string>
     <string name="set_notif_silent">Беззвучные Уведомления</string>
     <string name="set_night_mode">Ночной режим</string>
-    <string name="set_nsfw_timeout">Время просмотра NSFW постов (в секундах, 0 означает выкл)</string>
-    <string name="settings_title_profile">Редактировать профиль</string>
+    <string name="set_nsfw_timeout">Время просмотра NSFW (в секундах, 0 означает выключено)</string>
+    <string name="settings_title_profile">Изменить профиль</string>
     <string name="set_profile_description">Биография…</string>
     <string name="set_lock_account">Заблокировать аккаунт</string>
     <string name="set_save_changes">Сохранить изменения</string>
-    <string name="set_header_picture_overlay">Выбор изображения профиля</string>
-    <string name="set_fit_preview">Показывать масштабируемых изображений</string>
+    <string name="set_header_picture_overlay">Выбрать изображение обложки</string>
+    <string name="set_fit_preview">Подгонять изображения предпросмотра</string>
     <string name="set_automatically_split_toot">Автоматически разделять туты, содержащие более 500 символов</string>
     <string name="note_no_space">Вы достигли 160 символов!</string>
     <string name="username_no_space">Вы достигли 30 символов!</string>
-    <string name="settings_title_hour">Промежутки времени для уведомлений:</string>
+    <string name="settings_title_hour">Временной интервал для уведомлений:</string>
     <string name="settings_time_from">Между</string>
     <string name="settings_time_to">и</string>
-    <string name="settings_time_greater">Время должно быть больше чем %1$s</string>
+    <string name="settings_time_greater">Время должно быть больше, чем %1$s</string>
     <string name="settings_time_lower">Время должно быть меньше, чем %1$s</string>
     <string name="settings_hour_init">Уведомлять с</string>
     <string name="settings_hour_end">До</string>
@@ -538,7 +538,7 @@
     <string name="about_trunk">На кого подписаться</string>
     <string name="about_trunk_action">Магистральный API</string>
     <string name="toast_impossible_to_follow">Аккаунт(ы) не могут быть подписаны</string>
-    <string name="retrieve_remote_account">Получение удаленного аккаунта</string>
+    <string name="retrieve_remote_account">Получение внешнего аккаунта</string>
     <string name="expand_image">Раскрывать скрытое медиасодержимое автоматически</string>
     <string name="set_display_follow_instance">Отображать кнопку подписки на сервера</string>
     <string name="channel_notif_follow">Новая подписка</string>
@@ -552,7 +552,7 @@
     <string name="select_sound">Выбрать сигнал</string>
     <string name="set_enable_time_slot">Активировать временной интервал</string>
     <string name="how_to_videos">Видеоинструкции</string>
-    <string name="retrieve_remote_conversation">Получение удаленной ветки!</string>
+    <string name="retrieve_remote_conversation">Получение внешней ветки!</string>
     <string name="no_blocked_domain">Нет заблокированных доменов!</string>
     <string name="unblock_domain_confirm">Разблокировать домен</string>
     <string name="unblock_domain_confirm_message">Вы уверены, что хотите разблокировать %s?</string>
@@ -561,7 +561,7 @@
     <string name="block_domain">Заблокировать домен</string>
     <string name="toast_block_domain">Этот домен заблокирован</string>
     <string name="toast_unblock_domain">Этот домен больше не заблокирован!</string>
-    <string name="retrieve_remote_status">Получение удаленного статуса</string>
+    <string name="retrieve_remote_status">Получение внешнего статуса</string>
     <string name="comment">Комментарий</string>
     <string name="peertube_instance">Экземпляр Peertube</string>
     <string name="set_display_direct">Показывать приватные сообщения в ленте</string>
