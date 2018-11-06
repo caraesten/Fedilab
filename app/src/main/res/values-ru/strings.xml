@@ -418,7 +418,7 @@
         - <b>READ_EXTERNAL_STORAGE</b>: Используется для добавления мультимедиа в туты.\n
         - <b>BOOT_COMPLETED</b>: Используется для запуска службы уведомлений.\n
         - <b>WAKE_LOCK</b>: Используется во время службы уведомлений.</string>
-    <string name="privacy_API_authorizations_title">API разрешения:</string>
+    <string name="privacy_API_authorizations_title">Разрешения API:</string>
     <string name="privacy_API_authorizations">- <b>читать</b>: Читать данные.\n 
         - <b>записи</b>: Публикация статусов и загрузки фалов для статусов.\n 
         - <b>следовать</b>: Подписаться, отписаться, блокировать, раблокировка.\n\n
