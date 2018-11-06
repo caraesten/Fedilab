@@ -90,7 +90,7 @@
     <string name="send_email">Отправить email</string>
     <string name="choose_file">Выберите файл</string>
     <string name="choose_file_error">Файл не найден!</string>
-    <string name="click_to_change">Нажмите для изменения</string>
+    <string name="click_to_change">Нажмите на путь, чтобы изменить его</string>
     <string name="failed">Ошибка!</string>
     <string name="scheduled_toots">Запланированные туты</string>
     <string name="disclaimer_full">Информация, приведенная ниже, может не соответствовать профилю пользователя.</string>
@@ -103,7 +103,7 @@
     <string name="fav_removed">Этот тут был удален из избранного!</string>
     <string name="reblog_added">Этот тут был продвинут!</string>
     <string name="reblog_removed">Этот тут больше не продвигается!</string>
-    <string name="reblog_by">Поднят %1$s</string>
+    <string name="reblog_by">Продвигается %1$s</string>
     <string name="favourite_add">Добавить этот тут в избранное?</string>
     <string name="favourite_remove">Удалить этот тут из избранного?</string>
     <string name="reblog_add">Продвинут этот тут?</string>
@@ -151,7 +151,7 @@
     <string name="toot_cw_placeholder">Предупреждение</string>
     <string name="toot_placeholder">О чем вы думаете?</string>
     <string name="toot_it">ТРУБИТЬ!</string>
-    <string name="cw">предупреждение о контенте</string>
+    <string name="cw">cw</string>
     <string name="toot_title">Написать тут</string>
     <string name="toot_title_reply">Ответить на тут</string>
     <string name="toot_no_space">Вы достигли предела 500 символов!</string>
@@ -173,12 +173,12 @@
     <string name="no_draft">Нет черновиков!</string>
     <string name="choose_toot">Выбрать тут</string>
     <string name="choose_accounts">Выберите аккаунт</string>
-    <string name="select_accounts">Выберите аккаунт</string>
+    <string name="select_accounts">Выберите аккаунты</string>
     <string name="remove_draft">Удалить черновик?</string>
     <string name="show_reply">Нажмите кнопку, чтобы отобразить исходный тут</string>
-    <string name="upload_form_description">Описания для слабовидящих</string>
+    <string name="upload_form_description">Опишите для слабовидящих</string>
     <!-- Instance -->
-    <string name="instance_no_description">Описание недоступно!</string>
+    <string name="instance_no_description">Нет описания!</string>
     <!-- About -->
     <string name="about_vesrion">Версия %1$s</string>
     <string name="about_developer">Разработчик:</string>
@@ -193,13 +193,13 @@
     <!-- Conversation -->
     <string name="conversation">Беседа</string>
     <!-- Accounts -->
-    <string name="no_accounts">Нет учетной записи для отображения</string>
-    <string name="no_follow_request">Не следовать запросу</string>
+    <string name="no_accounts">Нет аккаунта для отображения</string>
+    <string name="no_follow_request">Нет запроса на подписку</string>
     <string name="status_cnt">Туты \n %1$s</string>
     <string name="following_cnt">Подписаны \n %1$s</string>
     <string name="followers_cnt">Подписчиков \n %1$s</string>
     <string name="pins_cnt">Закреплены \n %d</string>
-    <string name="authorize">Войти</string>
+    <string name="authorize">Авторизовать</string>
     <string name="reject">Отклонить</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Нет запланированных тутов для отображения!</string>
@@ -208,10 +208,10 @@
     <string name="media_count">Файл: %d</string>
     <string name="toot_scheduled">Тут запланирован!</string>
     <string name="toot_scheduled_date">Запланированная дата должна быть в будущем!</string>
-    <string name="warning_battery">Батарея в режиме энергосбережения! Возможна некорректная работа.</string>
+    <string name="warning_battery">Режим энергосбережения включен! Возможна некорректная работа.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">Время для отключения звука, должно быть больше чем одна минута.</string>
-    <string name="timed_mute_date">%1$s уведомления отключёны до %2$s.\n Вы можете включить уведомления через страницу своего профиля.</string>
+    <string name="timed_mute_date_error">Время для приглушения должно быть больше одной минуты.</string>
+    <string name="timed_mute_date">%1$s приглушен до %2$s.\n Вы можете изменить это со страницы ее/его профиля.</string>
     <string name="timed_mute_profile">%1$s отключён до %2$s.\n Нажмите здесь, чтобы включить учетную запись.</string>
     <!-- Notifications -->
     <string name="no_notifications">Нет уведомлений для отображения</string>
