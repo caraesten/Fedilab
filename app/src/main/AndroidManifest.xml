@@ -124,6 +124,11 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             />
+        <activity android:name=".activities.TootInfoActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            />
         <activity android:name=".activities.HashTagActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"

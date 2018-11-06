@@ -91,6 +91,7 @@ import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
+import fr.gouv.etalab.mastodon.activities.TootInfoActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
@@ -1342,6 +1343,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         //noinspection deprecation
                                         builderInner.setMessage(Html.fromHtml(status.getContent()));
                                 break;
+                                case R.id.action_info:
+                                    Intent intent = new Intent(context, TootInfoActivity.class);
+                                    Bundle b = new Bundle();
+                                    if( status.getReblog() != null)
+                                        b.putString("toot_id", status.getReblog().getId());
+                                    else
+                                        b.putString("toot_id", status.getId());
+                                    intent.putExtras(b);
+                                    context.startActivity(intent);
+                                    return true;
                                 case R.id.action_open_browser:
                                     Helper.openBrowser(context, status.getReblog()!=null?status.getReblog().getUrl():status.getUrl());
                                     return true;

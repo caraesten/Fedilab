@@ -44,7 +44,9 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
         MUTED,
         FOLLOWING,
         FOLLOWERS,
-        CHANNELS
+        CHANNELS,
+        REBLOGGED,
+        FAVOURITED
     }
 
     public RetrieveAccountsAsyncTask(Context context, String instance, String name, OnRetrieveAccountsInterface onRetrieveAccountsInterface){
@@ -75,6 +77,12 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
 
         API api = new API(this.contextReference.get());
         switch (action){
+            case REBLOGGED:
+                apiResponse = api.getRebloggedBy(targetedId, max_id);
+                break;
+            case FAVOURITED:
+                apiResponse = api.getFavouritedBy(targetedId, max_id);
+                break;
             case BLOCKED:
                 apiResponse = api.getBlocks(max_id);
                 break;

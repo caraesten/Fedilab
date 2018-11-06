@@ -110,7 +110,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                     if (firstVisibleItem + visibleItemCount == totalItemCount) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            if (type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING)
+                            if (type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING || type == RetrieveAccountsAsyncTask.Type.REBLOGGED || type == RetrieveAccountsAsyncTask.Type.FAVOURITED)
                                 asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             else if (type == RetrieveAccountsAsyncTask.Type.CHANNELS)
                                 asyncTask = new RetrieveAccountsAsyncTask(context, instance, name, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -132,7 +132,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
-                if (type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING)
+                if (type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING|| type == RetrieveAccountsAsyncTask.Type.REBLOGGED || type == RetrieveAccountsAsyncTask.Type.FAVOURITED)
                     asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 else if (type == RetrieveAccountsAsyncTask.Type.CHANNELS)
                     asyncTask = new RetrieveAccountsAsyncTask(context, instance, name, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -163,7 +163,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                 break;
         }
 
-        if (type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING)
+        if (type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING|| type == RetrieveAccountsAsyncTask.Type.REBLOGGED || type == RetrieveAccountsAsyncTask.Type.FAVOURITED)
             asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else if (type == RetrieveAccountsAsyncTask.Type.CHANNELS)
             asyncTask = new RetrieveAccountsAsyncTask(context, instance, name, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
