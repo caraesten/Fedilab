@@ -106,7 +106,7 @@
     <string name="reblog_by">Продвигается %1$s</string>
     <string name="favourite_add">Добавить этот тут в избранное?</string>
     <string name="favourite_remove">Удалить этот тут из избранного?</string>
-    <string name="reblog_add">Продвинут этот тут?</string>
+    <string name="reblog_add">Продвинуть этот тут?</string>
     <string name="reblog_remove">Не продвигать этот тут?</string>
     <string name="pin_add">Закрепить этот тут?</string>
     <string name="pin_remove">Открепить этот тут?</string>
@@ -196,7 +196,7 @@
     <string name="no_accounts">Нет аккаунта для отображения</string>
     <string name="no_follow_request">Нет запроса на подписку</string>
     <string name="status_cnt">Туты \n %1$s</string>
-    <string name="following_cnt">Подписаны \n %1$s</string>
+    <string name="following_cnt">Подписан \n %1$s</string>
     <string name="followers_cnt">Подписчиков \n %1$s</string>
     <string name="pins_cnt">Закреплены \n %d</string>
     <string name="authorize">Авторизовать</string>
@@ -216,15 +216,15 @@
     <!-- Notifications -->
     <string name="no_notifications">Нет уведомлений для отображения</string>
     <string name="notif_mention">вас упомянули</string>
-    <string name="notif_reblog">повышен ваш статус</string>
+    <string name="notif_reblog">ваш статус продвинут</string>
     <string name="notif_favourite">добавил(а) ваш статус в избранные</string>
     <string name="notif_follow">подписался на вас</string>
     <string name="notif_pouet">Новый тут от %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">и другое уведомление</item>
-        <item quantity="few">и другое уведомление</item>
-        <item quantity="many">и %d другие уведомления</item>
-        <item quantity="other">и %d другие уведомления</item>
+        <item quantity="few">и %d других уведомления</item>
+        <item quantity="many">и %d других уведомлений</item>
+        <item quantity="other">и %d других уведомлений</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">и другой тут для просмотра</item>
@@ -234,12 +234,12 @@
     </plurals>
     <string name="delete_notification_ask">Удалить уведомление?</string>
     <string name="delete_notification_ask_all">Удалить все уведомления?</string>
-    <string name="delete_notification">Уведомление было удалено!</string>
+    <string name="delete_notification">Это уведомление было удалено!</string>
     <string name="delete_notification_all">Все уведомления были удалены!</string>
     <!-- HEADER -->
     <string name="following">Подписки</string>
     <string name="followers">Подписчики</string>
-    <string name="pinned_toots">Закреплен</string>
+    <string name="pinned_toots">Закреплено</string>
     <!-- TOAST -->
     <string name="client_error">Не удалось получить идентификатор клиента!</string>
     <string name="no_internet">Нет подключения к Интернету!</string>
@@ -248,7 +248,7 @@
     <string name="toast_mute">Аккаунт был приглушен!</string>
     <string name="toast_unmute">Аккаунт более не пригушен!</string>
     <string name="toast_follow">Вы подписались на этот аккаунт!</string>
-    <string name="toast_unfollow">Вы больше не подписаны!</string>
+    <string name="toast_unfollow">Вы больше не подписаны на этот аккаунт!</string>
     <string name="toast_reblog">Этот тут был продвинут!</string>
     <string name="toast_unreblog">Этот тут больше не продвигается!</string>
     <string name="toast_favourite">Этот тут был добавлен в ваше избранное!</string>
@@ -259,16 +259,16 @@
     <string name="toast_unpin">Этот тут был откреплен!</string>
     <string name="toast_error">Упс ! Произошла ошибка!</string>
     <string name="toast_code_error">Произошла ошибка! Сервер не вернул код авторизации!</string>
-    <string name="toast_error_instance">Сервер недействителен!</string>
-    <string name="toast_error_loading_account">Произошла ошибка при переключении между аккаунтами!</string>
+    <string name="toast_error_instance">Этот сервер выглядит недействительным!</string>
+    <string name="toast_error_loading_account">При переключении между аккаунтами произошла ошибка!</string>
     <string name="toast_error_search">Произошла ошибка при поиске!</string>
     <string name="toast_error_login">Не удалось войти!</string>
-    <string name="toast_update_credential_ok">Данные профиля были сохранены!</string>
+    <string name="toast_update_credential_ok">Данные профиля сохранены!</string>
     <string name="nothing_to_do">Ничего не происходило</string>
-    <string name="toast_saved">Файл сохранён!</string>
-    <string name="toast_error_translate">Произошла ошибка при переводе!</string>
+    <string name="toast_saved">Этот медиафайл сохранен!</string>
+    <string name="toast_error_translate">При переводе произошла ошибка!</string>
     <string name="toast_toot_saved">Черновик сохранен!</string>
-    <string name="toast_error_char_limit">Вы уверены, что этот сервер допускает это количество знаков? Обычно это значение близко к 500 знакам.</string>
+    <string name="toast_error_char_limit">Вы уверены, что данный сервер допускает такое количество знаков? Обычно это значение близко к 500.</string>
     <string name="toast_visibility_changed">Видимость тутов была изменена для аккаунта %1$s</string>
     <string name="toast_empty_search">Имя сервера и отображаемое имя не могут быть пустыми!</string>
     <!-- Settings -->
@@ -295,7 +295,7 @@
     <string name="settings_title_notifications">Настроить уведомления</string>
     <string name="set_notif_follow">Уведомлять, когда кто-то следует за вами</string>
     <string name="set_notif_follow_ask">Уведомлять, когда кто-то просит следовать за вами</string>
-    <string name="set_notif_follow_share">Уведомлять, когда кто-то повышает ваш статус</string>
+    <string name="set_notif_follow_share">Уведомлять, когда кто-то продвигает ваш статус</string>
     <string name="set_notif_follow_add">Уведомлять, когда кто-то добавил вас в избранные</string>
     <string name="set_notif_follow_mention">Уведомлять, когда кто-то вас упоминает</string>
     <string name="set_share_validation">Предупреждать перед тем как продвинуть</string>
@@ -452,7 +452,7 @@
     <string name="action_lists_owner">Ваши списки</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s добавлен к %2$s</string>
-    <string name="show_boost_count">Показать количество повышенных/избранных</string>
+    <string name="show_boost_count">Показать количество продвигаемых/избранных</string>
     <string name="issue_login_title">Не работает аутентификация?</string>
     <string name="issue_login_message"><b>Вот некоторые подсказки, которые должны вам помочь:\n\n</b>
         - Проверьте на предмет орфографических ошибок при написании сервера\n\n - 
@@ -534,7 +534,7 @@
     <string name="account_added_list_trunk">Аккаунты были добавлены в список</string>
     <string name="adding_account_list_trunk">Добавление аккаунтов в список</string>
     <string name="action_list_add">Вы еще не создали список. Нажмите кнопку \"+\", чтобы добавить первый.</string>
-    <string name="action_remote_instance_add">Вы не подписаны на какие-либо удаленные сервера. Нажмите кнопку \"+\", чтобы добавить первый.</string>
+    <string name="action_remote_instance_add">Вы не подписаны на какие-либо внешние сервера. Нажмите кнопку \"+\", чтобы добавить первый.</string>
     <string name="about_trunk">На кого подписаться</string>
     <string name="about_trunk_action">Магистральный API</string>
     <string name="toast_impossible_to_follow">Аккаунт(ы) не могут быть подписаны</string>
