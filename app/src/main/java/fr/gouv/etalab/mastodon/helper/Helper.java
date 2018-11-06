@@ -87,6 +87,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1416,6 +1417,16 @@ public class Helper {
         if( actionButton != null) {
             actionButton.setFocusableInTouchMode(true);
             actionButton.setFocusable(true);
+            actionButton.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if(actionMenu.isOpen())
+                        actionMenu.close(true);
+                    else
+                        actionMenu.open(true);
+                    return false;
+                }
+            });
             actionButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
