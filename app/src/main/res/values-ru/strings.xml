@@ -211,8 +211,8 @@
     <string name="warning_battery">Режим энергосбережения включен! Возможна некорректная работа.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">Время для приглушения должно быть больше одной минуты.</string>
-    <string name="timed_mute_date">%1$s приглушен до %2$s.\n Вы можете изменить это со страницы ее/его профиля.</string>
-    <string name="timed_mute_profile">%1$s отключён до %2$s.\n Нажмите здесь, чтобы включить учетную запись.</string>
+    <string name="timed_mute_date">%1$s был приглушен до %2$s.\n Вы можете изменить это со страницы ее/его профиля.</string>
+    <string name="timed_mute_profile">%1$s приглушен до %2$s.\n Нажмите здесь, чтобы изменить это.</string>
     <!-- Notifications -->
     <string name="no_notifications">Нет уведомлений для отображения</string>
     <string name="notif_mention">вас упомянули</string>
@@ -277,11 +277,11 @@
     <string name="set_accounts_page">Число аккаунтов за загрузку</string>
     <string name="set_notifications_page">Число уведомлений за загрузку</string>
     <string name="set_attachment_always">Всегда</string>
-    <string name="set_attachment_wifi">WiFi</string>
+    <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Спрашивать</string>
-    <string name="set_attachment_action">Загрузить файл</string>
-    <string name="load_attachment">Загрузить изображения</string>
-    <string name="load_attachment_spoiler">Показать больше…</string>
+    <string name="set_attachment_action">Загржать медиа</string>
+    <string name="load_attachment">Загружать изображения</string>
+    <string name="load_attachment_spoiler">Еще…</string>
     <string name="load_attachment_spoiler_less">Показать меньше…</string>
     <string name="load_sensitive_attachment">Чувствительный контент</string>
     <string name="set_display_reply">Отображать предыдущее сообщение в ответах</string>
