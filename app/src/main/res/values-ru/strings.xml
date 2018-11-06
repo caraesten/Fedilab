@@ -215,7 +215,7 @@
     <string name="timed_mute_profile">%1$s приглушен до %2$s.\n Нажмите здесь, чтобы изменить это.</string>
     <!-- Notifications -->
     <string name="no_notifications">Нет уведомлений для отображения</string>
-    <string name="notif_mention">вас упомянули</string>
+    <string name="notif_mention">упомянул(а) вас</string>
     <string name="notif_reblog">ваш статус продвинут</string>
     <string name="notif_favourite">добавил ваш статус в избранные</string>
     <string name="notif_follow">подписался на вас</string>
@@ -563,7 +563,7 @@
     <string name="toast_unblock_domain">Этот домен больше не заблокирован!</string>
     <string name="retrieve_remote_status">Получение внешнего статуса</string>
     <string name="comment">Комментарий</string>
-    <string name="peertube_instance">Экземпляр Peertube</string>
+    <string name="peertube_instance">Сервер Peertube</string>
     <string name="set_display_direct">Показывать приватные сообщения в ленте</string>
     <string name="set_keep_background_process">Сохранять фоновый процесс, когда приложение закрыто</string>
     <string name="no_comments">Будьте первым прокомментировавшим это видео (при помощи верхней правой кнопки)!</string>
