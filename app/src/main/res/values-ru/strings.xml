@@ -89,7 +89,7 @@
     <string name="delete_account_message" formatted="false">Удалить аккаунт %1$s из приложения?</string>
     <string name="send_email">Отправить email</string>
     <string name="choose_file">Выберите файл</string>
-    <string name="choose_file_error">Файл не найден!</string>
+    <string name="choose_file_error">Не найден файловый менеджер!</string>
     <string name="click_to_change">Нажмите на путь, чтобы изменить его</string>
     <string name="failed">Ошибка!</string>
     <string name="scheduled_toots">Запланированные туты</string>
@@ -188,7 +188,7 @@
     <string name="about_yandex">Перевод тутов:</string>
     <string name="about_thekinrar">Поиск серверов:</string>
     <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Дизайн иконок:</string>
+    <string name="thanks_text_logo">Дизайнер иконки:</string>
     <string name="thanks_text_banner">Дизайнер баннера:</string>
     <!-- Conversation -->
     <string name="conversation">Беседа</string>
@@ -205,7 +205,7 @@
     <string name="no_scheduled_toots">Нет запланированных тутов для отображения!</string>
     <string name="no_scheduled_toots_indications">Напишите тут, а затем выберите <b>Запланировать</b> из верхнего меню.</string>
     <string name="remove_scheduled">Удалить запланированный тут?</string>
-    <string name="media_count">Файл: %d</string>
+    <string name="media_count">Медиафайл: %d</string>
     <string name="toot_scheduled">Тут запланирован!</string>
     <string name="toot_scheduled_date">Запланированная дата должна быть в будущем!</string>
     <string name="warning_battery">Режим энергосбережения включен! Возможна некорректная работа.</string>
@@ -217,7 +217,7 @@
     <string name="no_notifications">Нет уведомлений для отображения</string>
     <string name="notif_mention">вас упомянули</string>
     <string name="notif_reblog">ваш статус продвинут</string>
-    <string name="notif_favourite">добавил(а) ваш статус в избранные</string>
+    <string name="notif_favourite">добавил ваш статус в избранные</string>
     <string name="notif_follow">подписался на вас</string>
     <string name="notif_pouet">Новый тут от %1$s</string>
     <plurals name="other_notifications">
@@ -340,9 +340,9 @@
     </string-array>
     <string name="your_api_key">Ваш ключ API, вы можете оставить пустым для Yandex</string>
     <string-array name="settings_theme">
-        <item>Темное</item>
-        <item>Светлое</item>
-        <item>Черное</item>
+        <item>Темная</item>
+        <item>Светлая</item>
+        <item>Черная</item>
     </string-array>
     <string-array name="settings_resize_picture">
         <item>Нет</item>
@@ -376,13 +376,13 @@
     <string name="set_resize_picture">Изменить размер изображений</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-уведомления</string>
-    <string name="settings_popup_message">Пожалуйста, подтвердите пуш-уведомления, которые хотите получать.
-        Вы можете включить или отключить их позже в настройках (вкладка \"Уведомления\").</string>
+    <string name="settings_popup_message">Пожалуйста, подтвердите push-уведомления, которые вы хотите получить.
+        Вы можете включить или отключить эти уведомления позже в настройках (вкладка \'Уведомления\').</string>
     <string name="settings_popup_timeline">Для непрочитанных тутов в домашней ленте?</string>
     <string name="settings_popup_notification">Для непрочитанных уведомлений?</string>
     <!-- CACHE -->
     <string name="cache_title">Очистить кэш</string>
-    <string name="cache_message">Существует %1$s данных кэша.\n\nВы хотите их удалить?</string>
+    <string name="cache_message">Данными кэша занято %1$s.\n\nВы хотите их удалить?</string>
     <string name="cache_units">МБ</string>
     <string name="toast_cache_clear">Кэш очишен! Освобождено %1$s</string>
     <!-- ACTIVITY CACHE -->
@@ -423,7 +423,7 @@
         - <b>записи</b>: Публикация статусов и загрузки фалов для статусов.\n 
         - <b>следовать</b>: Подписаться, отписаться, блокировать, раблокировка.\n\n
         <b>&#9888; Эти действия выполняются только тогда, когда пользователь запрашивает их.</b></string>
-    <string name="privacy_API_title">Отслеживание и Библиотеки</string>
+    <string name="privacy_API_title">Отслеживание и библиотеки</string>
     <string name="privacy_API">Приложение <b>не использует инструменты для отслеживания</b> (замеры аудитории, отчёты об ошибках, и т. д.) и не содержит какой-либо рекламы.\n\n
        Использование библиотек минимизированно: \n
        - <b>Glide</b>: Для управления файлами\n
@@ -440,13 +440,13 @@
     <string name="fetch_more_toots">Получить больше тутов…</string>
     <!-- About lists -->
     <string name="action_lists">Списки</string>
-    <string name="action_lists_confirm_delete">Вы уверены, что вы хотите окончательно удалить этот список?</string>
-    <string name="action_lists_empty_content">В этом списке пока ничего нет. Когда участники списка разместят новые статусы, они появятся здесь.</string>
+    <string name="action_lists_confirm_delete">Вы действительно хотите удалить этот список навсегда?</string>
+    <string name="action_lists_empty_content">В этом списке пока ничего нет. Когда члены этого списка опубликуют новые статусы, они появятся здесь.</string>
     <string name="action_lists_add_to">Добавить в список</string>
     <string name="action_lists_remove_from">Удалить из списка</string>
     <string name="action_lists_create">Добавить список</string>
     <string name="action_lists_delete">Удалить список</string>
-    <string name="action_lists_update">Редактировать список</string>
+    <string name="action_lists_update">Изменить список</string>
     <string name="action_lists_title_placeholder">Новый заголовок списка</string>
     <string name="action_lists_search_users">Поиск среди людей, на которых вы подписаны</string>
     <string name="action_lists_owner">Ваши списки</string>
@@ -461,12 +461,12 @@
          - Вы также можете использовать эту ссылку без использования 2FA\n\n
          - Если всё перечисленное не помогает, пожалуйста задайте вопрос на Github https://github.com/stom79/mastalab/issues</string>
     <string name="media_ready">Медиафайл загружен. Нажмите здесь, для его отображения.</string>
-    <string name="data_export_start">Это действие может продолжаться довольно долго. Вы будете уведомлены, когда оно будет закончено.</string>
-    <string name="data_export_running">Все ещё работает, ожидайте…</string>
+    <string name="data_export_start">Это действие может продолжаться довольно долго. Вы будете уведомлены, когда оно будет завершено.</string>
+    <string name="data_export_running">Все еще работает, подождите…</string>
     <string name="data_export">Экспорт статусов</string>
     <string name="data_export_toots">Экспорт статусов для %1$s</string>
     <string name="data_export_success">%1$s тутов из %2$s были экспортированы.</string>
-    <string name="data_export_error">Что-то пошло не так, при экспорте данных для %1$s</string>
+    <string name="data_export_error">При экспорте данных для %1$s что-то пошло не так</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Тип</string>
