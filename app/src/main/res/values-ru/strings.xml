@@ -584,6 +584,7 @@
     <string name="videos">Видео</string>
     <string name="channels">Каналы</string>
     <string name="set_display_emoji">Использовать Emoji One</string>
+    <string name="information">information</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>
