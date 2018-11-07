@@ -78,7 +78,7 @@
     <string name="communication_menu_title">Общение</string>
     <string name="muted_menu">Приглушенные пользователи</string>
     <string name="blocked_menu">Заблокированные пользователи</string>
-    <string name="remote_follow_menu">Удаленная подписка</string>
+    <string name="remote_follow_menu">Внешняя подписка</string>
     <string name="notifications">Уведомления</string>
     <string name="follow_request">Запросы на подписку</string>
     <string name="optimization">Оптимизация</string>
@@ -89,8 +89,8 @@
     <string name="delete_account_message" formatted="false">Удалить аккаунт %1$s из приложения?</string>
     <string name="send_email">Отправить email</string>
     <string name="choose_file">Выберите файл</string>
-    <string name="choose_file_error">Файл не найден!</string>
-    <string name="click_to_change">Нажмите для изменения</string>
+    <string name="choose_file_error">Не найден файловый менеджер!</string>
+    <string name="click_to_change">Нажмите на путь, чтобы изменить его</string>
     <string name="failed">Ошибка!</string>
     <string name="scheduled_toots">Запланированные туты</string>
     <string name="disclaimer_full">Информация, приведенная ниже, может не соответствовать профилю пользователя.</string>
@@ -103,10 +103,10 @@
     <string name="fav_removed">Этот тут был удален из избранного!</string>
     <string name="reblog_added">Этот тут был продвинут!</string>
     <string name="reblog_removed">Этот тут больше не продвигается!</string>
-    <string name="reblog_by">Поднят %1$s</string>
+    <string name="reblog_by">Продвигается %1$s</string>
     <string name="favourite_add">Добавить этот тут в избранное?</string>
     <string name="favourite_remove">Удалить этот тут из избранного?</string>
-    <string name="reblog_add">Продвинут этот тут?</string>
+    <string name="reblog_add">Продвинуть этот тут?</string>
     <string name="reblog_remove">Не продвигать этот тут?</string>
     <string name="pin_add">Закрепить этот тут?</string>
     <string name="pin_remove">Открепить этот тут?</string>
@@ -151,9 +151,9 @@
     <string name="toot_cw_placeholder">Предупреждение</string>
     <string name="toot_placeholder">О чем вы думаете?</string>
     <string name="toot_it">ТРУБИТЬ!</string>
-    <string name="cw">предупреждение о контенте</string>
+    <string name="cw">cw</string>
     <string name="toot_title">Написать тут</string>
-    <string name="toot_title_reply">Ответить на тут</string>
+    <string name="toot_title_reply">Ответ на тут</string>
     <string name="toot_no_space">Вы достигли предела 500 символов!</string>
     <string name="toot_select_image">Выбрать медиафайл</string>
     <string name="toot_select_image_error">При выборе медиафайла произошла ошибка!</string>
@@ -170,15 +170,15 @@
         <item>Публиковать только для подписчиков</item>
         <item>Публиковать только упомянутым пользователям</item>
     </string-array>
-    <string name="no_draft">Нет черновиков!</string>
+    <string name="no_draft">Черновиков нет!</string>
     <string name="choose_toot">Выбрать тут</string>
     <string name="choose_accounts">Выберите аккаунт</string>
-    <string name="select_accounts">Выберите аккаунт</string>
+    <string name="select_accounts">Выберите аккаунты</string>
     <string name="remove_draft">Удалить черновик?</string>
     <string name="show_reply">Нажмите кнопку, чтобы отобразить исходный тут</string>
-    <string name="upload_form_description">Описания для слабовидящих</string>
+    <string name="upload_form_description">Опишите для слабовидящих</string>
     <!-- Instance -->
-    <string name="instance_no_description">Описание недоступно!</string>
+    <string name="instance_no_description">Нет описания!</string>
     <!-- About -->
     <string name="about_vesrion">Версия %1$s</string>
     <string name="about_developer">Разработчик:</string>
@@ -188,43 +188,43 @@
     <string name="about_yandex">Перевод тутов:</string>
     <string name="about_thekinrar">Поиск серверов:</string>
     <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Дизайн иконок:</string>
+    <string name="thanks_text_logo">Дизайнер иконки:</string>
     <string name="thanks_text_banner">Дизайнер баннера:</string>
     <!-- Conversation -->
-    <string name="conversation">Беседа</string>
+    <string name="conversation">Разговор</string>
     <!-- Accounts -->
-    <string name="no_accounts">Нет учетной записи для отображения</string>
-    <string name="no_follow_request">Не следовать запросу</string>
+    <string name="no_accounts">Нет аккаунта для отображения</string>
+    <string name="no_follow_request">Нет запросов на подписку</string>
     <string name="status_cnt">Туты \n %1$s</string>
-    <string name="following_cnt">Подписаны \n %1$s</string>
+    <string name="following_cnt">Подписан \n %1$s</string>
     <string name="followers_cnt">Подписчиков \n %1$s</string>
     <string name="pins_cnt">Закреплены \n %d</string>
-    <string name="authorize">Войти</string>
+    <string name="authorize">Авторизовать</string>
     <string name="reject">Отклонить</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Нет запланированных тутов для отображения!</string>
     <string name="no_scheduled_toots_indications">Напишите тут, а затем выберите <b>Запланировать</b> из верхнего меню.</string>
     <string name="remove_scheduled">Удалить запланированный тут?</string>
-    <string name="media_count">Файл: %d</string>
+    <string name="media_count">Медиафайл: %d</string>
     <string name="toot_scheduled">Тут запланирован!</string>
     <string name="toot_scheduled_date">Запланированная дата должна быть в будущем!</string>
-    <string name="warning_battery">Батарея в режиме энергосбережения! Возможна некорректная работа.</string>
+    <string name="warning_battery">Режим энергосбережения включен! Возможна некорректная работа.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">Время для отключения звука, должно быть больше чем одна минута.</string>
-    <string name="timed_mute_date">%1$s уведомления отключёны до %2$s.\n Вы можете включить уведомления через страницу своего профиля.</string>
-    <string name="timed_mute_profile">%1$s отключён до %2$s.\n Нажмите здесь, чтобы включить учетную запись.</string>
+    <string name="timed_mute_date_error">Время приглушения должно быть больше одной минуты.</string>
+    <string name="timed_mute_date">%1$s был приглушен до %2$s.\n Вы можете изменить это со страницы ее/его профиля.</string>
+    <string name="timed_mute_profile">%1$s приглушен до %2$s.\n Нажмите здесь, чтобы изменить это.</string>
     <!-- Notifications -->
     <string name="no_notifications">Нет уведомлений для отображения</string>
-    <string name="notif_mention">вас упомянули</string>
-    <string name="notif_reblog">повышен ваш статус</string>
-    <string name="notif_favourite">добавил(а) ваш статус в избранные</string>
+    <string name="notif_mention">упомянул(а) вас</string>
+    <string name="notif_reblog">ваш статус продвинут</string>
+    <string name="notif_favourite">добавил ваш статус в избранные</string>
     <string name="notif_follow">подписался на вас</string>
     <string name="notif_pouet">Новый тут от %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">и другое уведомление</item>
-        <item quantity="few">и другое уведомление</item>
-        <item quantity="many">и %d другие уведомления</item>
-        <item quantity="other">и %d другие уведомления</item>
+        <item quantity="few">и %d других уведомления</item>
+        <item quantity="many">и %d других уведомлений</item>
+        <item quantity="other">и %d других уведомлений</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">и другой тут для просмотра</item>
@@ -234,12 +234,12 @@
     </plurals>
     <string name="delete_notification_ask">Удалить уведомление?</string>
     <string name="delete_notification_ask_all">Удалить все уведомления?</string>
-    <string name="delete_notification">Уведомление было удалено!</string>
+    <string name="delete_notification">Это уведомление было удалено!</string>
     <string name="delete_notification_all">Все уведомления были удалены!</string>
     <!-- HEADER -->
     <string name="following">Подписки</string>
     <string name="followers">Подписчики</string>
-    <string name="pinned_toots">Закреплен</string>
+    <string name="pinned_toots">Закреплено</string>
     <!-- TOAST -->
     <string name="client_error">Не удалось получить идентификатор клиента!</string>
     <string name="no_internet">Нет подключения к Интернету!</string>
@@ -248,7 +248,7 @@
     <string name="toast_mute">Аккаунт был приглушен!</string>
     <string name="toast_unmute">Аккаунт более не пригушен!</string>
     <string name="toast_follow">Вы подписались на этот аккаунт!</string>
-    <string name="toast_unfollow">Вы больше не подписаны!</string>
+    <string name="toast_unfollow">Вы больше не подписаны на этот аккаунт!</string>
     <string name="toast_reblog">Этот тут был продвинут!</string>
     <string name="toast_unreblog">Этот тут больше не продвигается!</string>
     <string name="toast_favourite">Этот тут был добавлен в ваше избранное!</string>
@@ -259,73 +259,73 @@
     <string name="toast_unpin">Этот тут был откреплен!</string>
     <string name="toast_error">Упс ! Произошла ошибка!</string>
     <string name="toast_code_error">Произошла ошибка! Сервер не вернул код авторизации!</string>
-    <string name="toast_error_instance">Сервер недействителен!</string>
-    <string name="toast_error_loading_account">Произошла ошибка при переключении между аккаунтами!</string>
+    <string name="toast_error_instance">Этот сервер выглядит недействительным!</string>
+    <string name="toast_error_loading_account">При переключении между аккаунтами произошла ошибка!</string>
     <string name="toast_error_search">Произошла ошибка при поиске!</string>
     <string name="toast_error_login">Не удалось войти!</string>
-    <string name="toast_update_credential_ok">Данные профиля были сохранены!</string>
+    <string name="toast_update_credential_ok">Данные профиля сохранены!</string>
     <string name="nothing_to_do">Ничего не происходило</string>
-    <string name="toast_saved">Файл сохранён!</string>
-    <string name="toast_error_translate">Произошла ошибка при переводе!</string>
+    <string name="toast_saved">Этот медиафайл сохранен!</string>
+    <string name="toast_error_translate">При переводе произошла ошибка!</string>
     <string name="toast_toot_saved">Черновик сохранен!</string>
-    <string name="toast_error_char_limit">Вы уверены, что этот сервер допускает это количество знаков? Обычно это значение близко к 500 знакам.</string>
+    <string name="toast_error_char_limit">Вы уверены, что данный сервер допускает такое количество знаков? Обычно это значение близко к 500.</string>
     <string name="toast_visibility_changed">Видимость тутов была изменена для аккаунта %1$s</string>
     <string name="toast_empty_search">Имя сервера и отображаемое имя не могут быть пустыми!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Оптимизация загрузки</string>
     <string name="set_toots_page">Количество тутов на загрузку</string>
-    <string name="set_accounts_page">Число аккаунтов за загрузку</string>
-    <string name="set_notifications_page">Число уведомлений за загрузку</string>
+    <string name="set_accounts_page">Количество аккаунтов за загрузку</string>
+    <string name="set_notifications_page">Количество уведомлений за загрузку</string>
     <string name="set_attachment_always">Всегда</string>
-    <string name="set_attachment_wifi">WiFi</string>
+    <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Спрашивать</string>
-    <string name="set_attachment_action">Загрузить файл</string>
-    <string name="load_attachment">Загрузить изображения</string>
-    <string name="load_attachment_spoiler">Показать больше…</string>
-    <string name="load_attachment_spoiler_less">Показать меньше…</string>
-    <string name="load_sensitive_attachment">Чувствительный контент</string>
+    <string name="set_attachment_action">Загржать медиа</string>
+    <string name="load_attachment">Загружать изображения</string>
+    <string name="load_attachment_spoiler">Еще…</string>
+    <string name="load_attachment_spoiler_less">Свернуть…</string>
+    <string name="load_sensitive_attachment">Деликатный контент</string>
     <string name="set_display_reply">Отображать предыдущее сообщение в ответах</string>
     <string name="set_display_local">Показывать локальную ленту</string>
     <string name="set_display_global">Показывать федеративную ленту</string>
-    <string name="set_disable_gif">Использовать GIF-аватары</string>
+    <string name="set_disable_gif">Отключить GIF-аватары</string>
     <string name="set_folder_title">Путь:</string>
     <string name="set_auto_store_toot">Сохранять черновики автоматически</string>
-    <string name="set_bubble_counter">Показывать счётчики</string>
+    <string name="set_bubble_counter">Показывать счетчики</string>
     <string name="set_auto_add_media_url">Добавлять URL-адрес медиа в туты</string>
-    <string name="settings_title_notifications">Настроить уведомления</string>
-    <string name="set_notif_follow">Уведомлять, когда кто-то следует за вами</string>
-    <string name="set_notif_follow_ask">Уведомлять, когда кто-то просит следовать за вами</string>
-    <string name="set_notif_follow_share">Уведомлять, когда кто-то повышает ваш статус</string>
-    <string name="set_notif_follow_add">Уведомлять, когда кто-то добавил вас в избранные</string>
+    <string name="settings_title_notifications">Управление уведомлениями</string>
+    <string name="set_notif_follow">Уведомлять, когда кто-то подписывается на вас</string>
+    <string name="set_notif_follow_ask">Уведомлять при получении запроса на подписку</string>
+    <string name="set_notif_follow_share">Уведомлять, когда кто-то продвигает ваш статус</string>
+    <string name="set_notif_follow_add">Уведомлять, если кто-то добавил ваш статус в избранное</string>
     <string name="set_notif_follow_mention">Уведомлять, когда кто-то вас упоминает</string>
     <string name="set_share_validation">Предупреждать перед тем как продвинуть</string>
     <string name="set_share_validation_fav">Предупреждать перед добавлением в избранные</string>
     <string name="settings_title_more_options">Расширенные настройки</string>
-    <string name="set_wifi_only">Уведомлять только в сети WiFi</string>
+    <string name="set_wifi_only">Уведомлять только в сети WIFI</string>
     <string name="set_notify">Уведомлять?</string>
-    <string name="set_notif_silent">Беззвучные Уведомления</string>
+    <string name="set_notif_silent">Тихие уведомления</string>
     <string name="set_night_mode">Ночной режим</string>
-    <string name="set_nsfw_timeout">Время просмотра NSFW постов (в секундах, 0 означает выкл)</string>
-    <string name="settings_title_profile">Редактировать профиль</string>
-    <string name="set_profile_description">Биография…</string>
+    <string name="set_nsfw_timeout">Время просмотра NSFW (в секундах, 0 означает выключено)</string>
+    <string name="settings_title_profile">Изменить профиль</string>
+    <string name="set_profile_description">О…</string>
     <string name="set_lock_account">Заблокировать аккаунт</string>
     <string name="set_save_changes">Сохранить изменения</string>
-    <string name="set_header_picture_overlay">Выбор изображения профиля</string>
-    <string name="set_fit_preview">Показывать масштабируемых изображений</string>
+    <string name="set_header_picture_overlay">Выбрать изображение обложки</string>
+    <string name="set_fit_preview">Подгонять изображения предпросмотра</string>
     <string name="set_automatically_split_toot">Автоматически разделять туты, содержащие более 500 символов</string>
     <string name="note_no_space">Вы достигли 160 символов!</string>
     <string name="username_no_space">Вы достигли 30 символов!</string>
-    <string name="settings_title_hour">Промежутки времени для уведомлений:</string>
+    <string name="settings_title_hour">Временной интервал для уведомлений:</string>
     <string name="settings_time_from">Между</string>
     <string name="settings_time_to">и</string>
-    <string name="settings_time_greater">Время должно быть больше чем %1$s</string>
+    <string name="settings_time_greater">Время должно быть больше, чем %1$s</string>
     <string name="settings_time_lower">Время должно быть меньше, чем %1$s</string>
-    <string name="settings_hour_init">Уведомлять с</string>
-    <string name="settings_hour_end">До</string>
+    <string name="settings_hour_init">Время начала</string>
+    <string name="settings_hour_end">Время окончания</string>
     <string name="embedded_browser">Использовать встроенный браузер</string>
     <string name="custom_tabs">Пользовательские вкладки</string>
-    <string name="use_javascript">Включить JavaScript</string>
-    <string name="expand_cw">Автоматически расширять cw</string>
+    <string name="use_javascript">Включить Javascript</string>
+    <string name="expand_cw">Автоматически раскрывать cw</string>
     <string name="use_cookies">Разрешить сторонние куки</string>
     <string name="settings_ui_layout">Временные рамки для ленты:</string>
     <string-array name="settings_menu_tabs">
@@ -340,24 +340,24 @@
     </string-array>
     <string name="your_api_key">Ваш ключ API, вы можете оставить пустым для Yandex</string>
     <string-array name="settings_theme">
-        <item>Темное</item>
-        <item>Светлое</item>
-        <item>Черное</item>
+        <item>Темная</item>
+        <item>Светлая</item>
+        <item>Черная</item>
     </string-array>
     <string-array name="settings_resize_picture">
         <item>Нет</item>
-        <item>512 Кб</item>
-        <item>1 Мб</item>
-        <item>2 Мб</item>
+        <item>512 КБ</item>
+        <item>1 МБ</item>
+        <item>2 МБ</item>
     </string-array>
     <string name="set_led_colour">Цвет светодиода:</string>
     <string-array name="led_colours">
         <item>Синий</item>
         <item>Бирюзовый</item>
         <item>Малиновый</item>
-        <item>Зелёный</item>
+        <item>Зеленый</item>
         <item>Красный</item>
-        <item>Жёлтый</item>
+        <item>Желтый</item>
         <item>Белый</item>
     </string-array>
     <string name="set_title_news">Новости</string>
@@ -366,37 +366,37 @@
     <string name="action_unfollow">Отписаться</string>
     <string name="action_block">Заблокировать</string>
     <string name="action_unblock">Разблокировать</string>
-    <string name="action_mute">Отключить звук</string>
+    <string name="action_mute">Приглушить</string>
     <string name="action_no_action">Нет действия</string>
-    <string name="action_unmute">Включить звук</string>
+    <string name="action_unmute">Разглушить</string>
     <string name="request_sent">Запрос отправлен</string>
     <string name="followed_by">Подписан на вас</string>
     <string name="action_search">Поиск</string>
     <string name="set_capitalize">Заглавная первая буква в ответах</string>
     <string name="set_resize_picture">Изменить размер изображений</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Пуш-уведомления</string>
-    <string name="settings_popup_message">Пожалуйста, подтвердите пуш-уведомления, которые хотите получать.
-        Вы можете включить или отключить их позже в настройках (вкладка \"Уведомления\").</string>
+    <string name="settings_popup_title">Push-уведомления</string>
+    <string name="settings_popup_message">Пожалуйста, подтвердите push-уведомления, которые вы хотите получить.
+        Вы можете включить или отключить эти уведомления позже в настройках (вкладка \'Уведомления\').</string>
     <string name="settings_popup_timeline">Для непрочитанных тутов в домашней ленте?</string>
-    <string name="settings_popup_notification">Для непрочитанные уведомлений?</string>
+    <string name="settings_popup_notification">Для непрочитанных уведомлений?</string>
     <!-- CACHE -->
     <string name="cache_title">Очистить кэш</string>
-    <string name="cache_message">Существует %1$s данных кэша.\n\nВы хотите их удалить?</string>
-    <string name="cache_units">Мб</string>
-    <string name="toast_cache_clear">Кэш очишен! %1$s освобождено</string>
+    <string name="cache_message">Данными кэша занято %1$s.\n\nВы хотите их удалить?</string>
+    <string name="cache_units">МБ</string>
+    <string name="toast_cache_clear">Кэш очишен! Освобождено %1$s</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Синхронизация</string>
+    <string name="action_sync">Синхронизировать</string>
     <string name="action_filter">Фильтр</string>
     <string name="owner_cached_toots">Ваши туты</string>
     <string name="v_public">Публичное</string>
     <string name="v_unlisted">Не в списке</string>
     <string name="v_private">Приватно</string>
     <string name="v_direct">Напрямую</string>
-    <string name="v_keywords">Ключевые слова…</string>
-    <string name="show_media">Показать файл</string>
-    <string name="show_pinned">Показать закреплённые</string>
-    <string name="filter_no_result">Ничего не найдено!</string>
+    <string name="v_keywords">Некоторые ключевые слова…</string>
+    <string name="show_media">Показать медиа</string>
+    <string name="show_pinned">Показать закрепленные</string>
+    <string name="filter_no_result">Результатов не найдено!</string>
     <string name="data_backup_toots">Резервное копирование тутов для %1$s</string>
     <string name="data_backup_success">было импортировано %1$s новых тутов</string>
     <string-array name="filter_select">
@@ -418,12 +418,12 @@
         - <b>READ_EXTERNAL_STORAGE</b>: Используется для добавления мультимедиа в туты.\n
         - <b>BOOT_COMPLETED</b>: Используется для запуска службы уведомлений.\n
         - <b>WAKE_LOCK</b>: Используется во время службы уведомлений.</string>
-    <string name="privacy_API_authorizations_title">API разрешения:</string>
+    <string name="privacy_API_authorizations_title">Разрешения API:</string>
     <string name="privacy_API_authorizations">- <b>читать</b>: Читать данные.\n 
         - <b>записи</b>: Публикация статусов и загрузки фалов для статусов.\n 
         - <b>следовать</b>: Подписаться, отписаться, блокировать, раблокировка.\n\n
         <b>&#9888; Эти действия выполняются только тогда, когда пользователь запрашивает их.</b></string>
-    <string name="privacy_API_title">Отслеживание и Библиотеки</string>
+    <string name="privacy_API_title">Отслеживание и библиотеки</string>
     <string name="privacy_API">Приложение <b>не использует инструменты для отслеживания</b> (замеры аудитории, отчёты об ошибках, и т. д.) и не содержит какой-либо рекламы.\n\n
        Использование библиотек минимизированно: \n
        - <b>Glide</b>: Для управления файлами\n
@@ -432,50 +432,50 @@
     <string name="privacy_API_yandex_title">Перевод тутов</string>
     <string name="privacy_API_yandex_authorizations">Приложение предлагает возможность переводить туты, используя язык устройства и Яндекс API.\n 
         Яндекс имеет собственную политику конфиденциальности, условия которой можно найти здесь: https://yandex.ru/legal/confidential/?lang=en</string>
-    <string name="thanks_text">Благодарю Стефана ( Stéphane) за логотип.</string>
-    <string name="thanks_text_dev">Благодарность:</string>
+    <string name="thanks_text">Благодарю Stéphane за логотип.</string>
+    <string name="thanks_text_dev">Спасибо:</string>
     <string name="filter_regex">Отфильтровать по регулярным выражениям</string>
     <string name="search">Поиск</string>
     <string name="delete">Удалить</string>
     <string name="fetch_more_toots">Получить больше тутов…</string>
     <!-- About lists -->
     <string name="action_lists">Списки</string>
-    <string name="action_lists_confirm_delete">Вы уверены, что вы хотите окончательно удалить этот список?</string>
-    <string name="action_lists_empty_content">В этом списке пока ничего нет. Когда участники списка разместят новые статусы, они появятся здесь.</string>
+    <string name="action_lists_confirm_delete">Вы действительно хотите удалить этот список навсегда?</string>
+    <string name="action_lists_empty_content">В этом списке пока ничего нет. Когда члены этого списка опубликуют новые статусы, они появятся здесь.</string>
     <string name="action_lists_add_to">Добавить в список</string>
     <string name="action_lists_remove_from">Удалить из списка</string>
     <string name="action_lists_create">Добавить список</string>
     <string name="action_lists_delete">Удалить список</string>
-    <string name="action_lists_update">Редактировать список</string>
+    <string name="action_lists_update">Изменить список</string>
     <string name="action_lists_title_placeholder">Новый заголовок списка</string>
     <string name="action_lists_search_users">Поиск среди людей, на которых вы подписаны</string>
     <string name="action_lists_owner">Ваши списки</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s добавлен к %2$s</string>
-    <string name="show_boost_count">Показать количество повышенных/избранных</string>
-    <string name="issue_login_title">Не работает аутентификация?</string>
+    <string name="account_moved_to">%1$s был перенесен в %2$s</string>
+    <string name="show_boost_count">Показать количество продвигаемых/избранных</string>
+    <string name="issue_login_title">Аутентификация не работает?</string>
     <string name="issue_login_message"><b>Вот некоторые подсказки, которые должны вам помочь:\n\n</b>
         - Проверьте на предмет орфографических ошибок при написании сервера\n\n - 
         - Проверьте, возможно сервер временно недоступен\n\n 
         - Если вы используете двухфакторную проверку подлинности (2FA), пожалуйста, используйте ссылку внизу (после заполнения имени сервера)\n\n 
          - Вы также можете использовать эту ссылку без использования 2FA\n\n
          - Если всё перечисленное не помогает, пожалуйста задайте вопрос на Github https://github.com/stom79/mastalab/issues</string>
-    <string name="media_ready">Файл был загружен. Нажмите здесь, для его отображения.</string>
-    <string name="data_export_start">Это действие может продолжаться довольно долго. Вы будете уведомлены, когда оно будет закончено.</string>
-    <string name="data_export_running">Все ещё работает, ожидайте…</string>
+    <string name="media_ready">Медиафайл загружен. Нажмите здесь, для его отображения.</string>
+    <string name="data_export_start">Это действие может продолжаться довольно долго. Вы будете уведомлены, когда оно будет завершено.</string>
+    <string name="data_export_running">Все еще работает, подождите…</string>
     <string name="data_export">Экспорт статусов</string>
     <string name="data_export_toots">Экспорт статусов для %1$s</string>
     <string name="data_export_success">%1$s тутов из %2$s были экспортированы.</string>
-    <string name="data_export_error">Что-то пошло не так, при экспорте данных для %1$s</string>
+    <string name="data_export_error">При экспорте данных для %1$s что-то пошло не так</string>
     <!-- Proxy -->
-    <string name="proxy_set">Прокси</string>
+    <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Тип</string>
-    <string name="proxy_enable">Включить прокси?</string>
-    <string name="poxy_host">Сервер</string>
+    <string name="proxy_enable">Включить proxy?</string>
+    <string name="poxy_host">Хост</string>
     <string name="poxy_port">Порт</string>
-    <string name="poxy_login">Логин</string>
+    <string name="poxy_login">Имя пользователя</string>
     <string name="poxy_password">Пароль</string>
-    <string name="set_theme">Оформление:</string>
+    <string name="set_theme">Тема:</string>
     <string name="set_compact_mode">Компактный режим</string>
     <string name="set_share_details">Добавить детали тута при перепосте</string>
     <string name="support_the_app_on_liberapay">Поддержать приложение на Liberapay</string>
@@ -534,11 +534,11 @@
     <string name="account_added_list_trunk">Аккаунты были добавлены в список</string>
     <string name="adding_account_list_trunk">Добавление аккаунтов в список</string>
     <string name="action_list_add">Вы еще не создали список. Нажмите кнопку \"+\", чтобы добавить первый.</string>
-    <string name="action_remote_instance_add">Вы не подписаны на какие-либо удаленные сервера. Нажмите кнопку \"+\", чтобы добавить первый.</string>
+    <string name="action_remote_instance_add">Вы не подписаны на какие-либо внешние сервера. Нажмите кнопку \"+\", чтобы добавить первый.</string>
     <string name="about_trunk">На кого подписаться</string>
-    <string name="about_trunk_action">Магистральный API</string>
+    <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Аккаунт(ы) не могут быть подписаны</string>
-    <string name="retrieve_remote_account">Получение удаленного аккаунта</string>
+    <string name="retrieve_remote_account">Получение внешнего аккаунта</string>
     <string name="expand_image">Раскрывать скрытое медиасодержимое автоматически</string>
     <string name="set_display_follow_instance">Отображать кнопку подписки на сервера</string>
     <string name="channel_notif_follow">Новая подписка</string>
@@ -552,7 +552,7 @@
     <string name="select_sound">Выбрать сигнал</string>
     <string name="set_enable_time_slot">Активировать временной интервал</string>
     <string name="how_to_videos">Видеоинструкции</string>
-    <string name="retrieve_remote_conversation">Получение удаленной ветки!</string>
+    <string name="retrieve_remote_conversation">Получение внешней ветки!</string>
     <string name="no_blocked_domain">Нет заблокированных доменов!</string>
     <string name="unblock_domain_confirm">Разблокировать домен</string>
     <string name="unblock_domain_confirm_message">Вы уверены, что хотите разблокировать %s?</string>
@@ -561,9 +561,9 @@
     <string name="block_domain">Заблокировать домен</string>
     <string name="toast_block_domain">Этот домен заблокирован</string>
     <string name="toast_unblock_domain">Этот домен больше не заблокирован!</string>
-    <string name="retrieve_remote_status">Получение удаленного статуса</string>
+    <string name="retrieve_remote_status">Получение внешнего статуса</string>
     <string name="comment">Комментарий</string>
-    <string name="peertube_instance">Экземпляр Peertube</string>
+    <string name="peertube_instance">Сервер Peertube</string>
     <string name="set_display_direct">Показывать приватные сообщения в ленте</string>
     <string name="set_keep_background_process">Сохранять фоновый процесс, когда приложение закрыто</string>
     <string name="no_comments">Будьте первым прокомментировавшим это видео (при помощи верхней правой кнопки)!</string>
@@ -578,12 +578,13 @@
     <string name="bookmark_peertube_empty">В вашем избранном нет видео Peertube!</string>
     <string name="channel">Канал</string>
     <string name="no_peertube_channels">Нет каналов Peertube</string>
-    <string name="no_peertube_instances">Нет экземпляров Peertube</string>
-    <string name="no_mastodon_instances">Нет экземпляров Mastodon</string>
+    <string name="no_peertube_instances">Нет серверов Peertube</string>
+    <string name="no_mastodon_instances">Нет серверов Mastodon</string>
     <string name="no_lists">Нет списков</string>
     <string name="videos">Видео</string>
     <string name="channels">Каналы</string>
     <string name="set_display_emoji">Использовать Emoji One</string>
+    <string name="information">information</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>

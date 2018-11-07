@@ -590,6 +590,7 @@
     <string name="videos">الفيديوهات</string>
     <string name="channels">القنوات</string>
     <string name="set_display_emoji">استخدم إيموجي وان</string>
+    <string name="information">information</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>
