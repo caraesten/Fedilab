@@ -1346,10 +1346,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 case R.id.action_info:
                                     Intent intent = new Intent(context, TootInfoActivity.class);
                                     Bundle b = new Bundle();
-                                    if( status.getReblog() != null)
+                                    if( status.getReblog() != null) {
                                         b.putString("toot_id", status.getReblog().getId());
-                                    else
+                                        b.putInt("toot_reblogs_count", status.getReblog().getReblogs_count());
+                                        b.putInt("toot_favorites_count", status.getReblog().getFavourites_count());
+                                    }else {
                                         b.putString("toot_id", status.getId());
+                                        b.putInt("toot_reblogs_count", status.getReblogs_count());
+                                        b.putInt("toot_favorites_count", status.getFavourites_count());
+                                    }
                                     intent.putExtras(b);
                                     context.startActivity(intent);
                                     return true;

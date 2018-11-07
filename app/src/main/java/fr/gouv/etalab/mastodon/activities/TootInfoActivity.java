@@ -81,8 +81,12 @@ public class TootInfoActivity extends BaseActivity {
         Bundle b = getIntent().getExtras();
         if( getSupportActionBar() != null)
             getSupportActionBar().hide();
+        int toot_reblogs_count = 0;
+        int toot_favorites_count = 0;
         if( b != null){
             toot_id = b.getString("toot_id", null);
+            toot_reblogs_count = b.getInt("toot_reblogs_count", 0);
+            toot_favorites_count = b.getInt("toot_favorites_count", 0);
         }
         if( toot_id == null){
             Toast.makeText(this, R.string.toast_error, Toast.LENGTH_SHORT).show();
@@ -91,8 +95,8 @@ public class TootInfoActivity extends BaseActivity {
         userID = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         tabLayout = findViewById(R.id.tabLayout);
         mPager = findViewById(R.id.viewpager);
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.reblog)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.favourite)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.reblog) + " ("+toot_reblogs_count+")"));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.favourite) + " ("+toot_favorites_count+")"));
 
         PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
