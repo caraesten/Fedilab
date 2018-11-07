@@ -105,7 +105,7 @@ public class SettingsFragment extends Fragment {
         });
 
 
-        boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, true);
+        boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, false);
 
         final CheckBox set_display_card = rootView.findViewById(R.id.set_display_card);
         set_display_card.setChecked(display_card);

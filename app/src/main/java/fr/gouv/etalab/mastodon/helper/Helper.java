@@ -1969,7 +1969,13 @@ public class Helper {
      */
     public static String accountToStringStorage(Account account){
         Gson gson = new Gson();
-        return gson.toJson(account);
+        try {
+            return gson.toJson(account);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     /**

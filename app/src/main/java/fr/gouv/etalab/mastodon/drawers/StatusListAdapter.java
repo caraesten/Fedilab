@@ -1122,7 +1122,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_pin.setVisibility(View.GONE);
             }
 
-            boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, true);
+            boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, false);
 
             if( status.getWebviewURL() != null){
                 holder.status_cardview_webview.loadUrl(status.getWebviewURL());
