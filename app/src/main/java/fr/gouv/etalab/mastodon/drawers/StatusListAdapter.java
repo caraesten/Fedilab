@@ -1118,39 +1118,40 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_pin.setVisibility(View.GONE);
             }
 
+            boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, true);
 
+            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT || display_card){
 
-            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
+                if( position == conversationPosition || display_card){
+                    Card card = status.getReblog()!= null?status.getReblog().getCard():status.getCard();
+                    if( card != null){
 
-                if( position == conversationPosition){
-                    if( status.getCard() != null){
-
-                        holder.status_cardview_content.setText(status.getCard().getDescription());
-                        holder.status_cardview_title.setText(status.getCard().getTitle());
-                        holder.status_cardview_url.setText(status.getCard().getUrl());
-                        if( status.getCard().getImage() != null && status.getCard().getImage().length() > 10) {
+                        holder.status_cardview_content.setText(card.getDescription());
+                        holder.status_cardview_title.setText(card.getTitle());
+                        holder.status_cardview_url.setText(card.getUrl());
+                        if( card.getImage() != null && card.getImage().length() > 10) {
                             holder.status_cardview_image.setVisibility(View.VISIBLE);
-                            if( !((ShowConversationActivity)context).isFinishing())
+                            if( !((Activity)context).isFinishing())
                                 Glide.with(holder.status_cardview_image.getContext())
-                                        .load(status.getCard().getImage())
+                                        .load(card.getImage())
                                         .into(holder.status_cardview_image);
                         }else
                             holder.status_cardview_image.setVisibility(View.GONE);
-                        if( !status.getCard().getType().equals("video")) {
+                        if( !card.getType().equals("video")) {
                             holder.status_cardview.setVisibility(View.VISIBLE);
                             holder.status_cardview_video.setVisibility(View.GONE);
                             holder.status_cardview.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Helper.openBrowser(context, status.getCard().getUrl());
+                                    Helper.openBrowser(context, card.getUrl());
                                 }
                             });
                         }else {
                             holder.status_cardview.setVisibility(View.GONE);
                             holder.status_cardview_video.setVisibility(View.VISIBLE);
                             holder.status_cardview_webview.getSettings().setJavaScriptEnabled(true);
-                            String html = status.getCard().getHtml();
-                            String src = status.getCard().getUrl();
+                            String html = card.getHtml();
+                            String src = card.getUrl();
                             if( html != null){
                                 Matcher matcher = Pattern.compile("src=\"([^\"]+)\"").matcher(html);
                                 if( matcher.find())
