@@ -578,7 +578,7 @@
     <string name="channels">Chaînes</string>
     <string name="set_display_emoji">Utiliser les EmojiOne</string>
     <string name="information">information</string>
-    <string name="set_display_card">Display previews in all toots</string>
+    <string name="set_display_card">Afficher les aperçus dans tous les pouets</string>
     <string-array name="filter_expire">
         <item>Jamais</item>
         <item>30 minutes</item>
