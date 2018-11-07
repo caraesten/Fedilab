@@ -303,27 +303,27 @@ public class API {
                 parameters.append("id[]=").append(account.getId()).append("&");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(5));
             params.put("id[]", parameters.toString());
+            List<Relationship> relationships = new ArrayList<>();
+            try {
+                HttpsConnection httpsConnection = new HttpsConnection(context);
+                String response = httpsConnection.get(getAbsoluteUrl("/accounts/relationships"), 60, params, prefKeyOauthTokenT);
+                relationships = parseRelationshipResponse(new JSONArray(response));
+                apiResponse.setSince_id(httpsConnection.getSince_id());
+                apiResponse.setMax_id(httpsConnection.getMax_id());
+            } catch (HttpsConnection.HttpsConnectionException e) {
+                setError(e.getStatusCode(), e);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            apiResponse.setRelationships(relationships);
+        }
 
-        }
-        List<Relationship> relationships = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/accounts/relationships"), 60, params, prefKeyOauthTokenT);
-            relationships = parseRelationshipResponse(new JSONArray(response));
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setRelationships(relationships);
         return apiResponse;
     }
 
@@ -2448,6 +2448,41 @@ public class API {
             card.setImage(resobj.get("image").toString());
             card.setHtml(resobj.get("html").toString());
             card.setType(resobj.get("type").toString());
+            try {
+                card.setAuthor_name(resobj.get("author_name").toString());
+            }catch (Exception e){
+                card.setAuthor_name(null);
+            }
+            try {
+                card.setAuthor_url(resobj.get("author_url").toString());
+            }catch (Exception e){
+                card.setAuthor_url(null);
+            }
+            try {
+                card.setEmbed_url(resobj.get("embed_url").toString());
+            }catch (Exception e){
+                card.setEmbed_url(null);
+            }
+            try {
+                card.setProvider_name(resobj.get("provider_name").toString());
+            }catch (Exception e){
+                card.setProvider_name(null);
+            }
+            try {
+                card.setProvider_url(resobj.get("provider_url").toString());
+            }catch (Exception e){
+                card.setProvider_url(null);
+            }
+            try {
+                card.setHeight(Integer.parseInt(resobj.get("height").toString()));
+            }catch (Exception e){
+                card.setHeight(0);
+            }
+            try {
+                card.setWidth(Integer.parseInt(resobj.get("width").toString()));
+            }catch (Exception e){
+                card.setWidth(0);
+            }
         } catch (JSONException e) {
             card = null;
         }

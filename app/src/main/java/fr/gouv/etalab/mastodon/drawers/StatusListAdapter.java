@@ -1273,7 +1273,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_show_more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    loadAttachments(status, holder);
                     status.setAttachmentShown(true);
                     notifyStatusChanged(status);
                 /*
@@ -1967,9 +1966,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 position++;
             }
         }else{
-            if(fullAttachement)
                 holder.status_horizontal_document_container.setVisibility(View.GONE);
-            else
                 holder.status_document_container.setVisibility(View.GONE);
         }
         holder.status_show_more.setVisibility(View.GONE);

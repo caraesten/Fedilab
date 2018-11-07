@@ -30,6 +30,13 @@ public class Card{
     private String image;
     private String type;
     private String html;
+    private String author_name;
+    private String author_url;
+    private String embed_url;
+    private String provider_name;
+    private String provider_url;
+    private int height;
+    private int width;
 
     public Card(){}
 
@@ -81,5 +88,61 @@ public class Card{
 
     public void setHtml(String html) {
         this.html = html;
+    }
+
+    public String getAuthor_name() {
+        return author_name;
+    }
+
+    public void setAuthor_name(String author_name) {
+        this.author_name = author_name;
+    }
+
+    public String getAuthor_url() {
+        return author_url;
+    }
+
+    public void setAuthor_url(String author_url) {
+        this.author_url = author_url;
+    }
+
+    public String getEmbed_url() {
+        return embed_url;
+    }
+
+    public void setEmbed_url(String embed_url) {
+        this.embed_url = embed_url;
+    }
+
+    public String getProvider_name() {
+        return provider_name;
+    }
+
+    public void setProvider_name(String provider_name) {
+        this.provider_name = provider_name;
+    }
+
+    public String getProvider_url() {
+        return provider_url;
+    }
+
+    public void setProvider_url(String provider_url) {
+        this.provider_url = provider_url;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 }
