@@ -576,6 +576,7 @@
     <string name="channels">Channels</string>
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">information</string>
+    <string name="set_display_card">Display previews in all toots</string>
     <string-array name="filter_expire">
         <item>Never</item>
         <item>30 minutes</item>
