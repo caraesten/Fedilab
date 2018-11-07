@@ -2300,20 +2300,6 @@ public class API {
     }
 
 
-    /**
-     * Get card
-     * @param statusId String, the id of the status
-     * @return Card, the card (null if none)
-     */
-    public Card getCard(String statusId){
-
-        Card card = null;
-        try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl(String.format("/statuses/%s/card", statusId)), 60, null, prefKeyOauthTokenT);
-            card = parseCardResponse(new JSONObject(response));
-        }catch (Exception ignored) {ignored.printStackTrace();}
-        return card;
-    }
 
     /**
      * Update a list by its id
@@ -2452,7 +2438,7 @@ public class API {
      * @param resobj JSONObject
      * @return Card
      */
-    private Card parseCardResponse(JSONObject resobj){
+    private static Card parseCardResponse(JSONObject resobj){
 
         Card card = new Card();
         try {
@@ -2831,6 +2817,11 @@ public class API {
                     attachments.add(attachment);
                 }
             }
+            try {
+                status.setCard(parseCardResponse(resobj.getJSONObject("card")));
+            }catch (Exception e){status.setCard(null);}
+
+
             status.setMedia_attachments(attachments);
             //Retrieves mentions
             List<Mention> mentions = new ArrayList<>();

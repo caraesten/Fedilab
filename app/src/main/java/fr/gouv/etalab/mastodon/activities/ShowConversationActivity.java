@@ -27,7 +27,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -49,7 +48,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveCardAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveContextAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -353,9 +351,6 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         statusListAdapter.notifyDataSetChanged();
         loader.setVisibility(View.GONE);
         lv_status.setVisibility(View.VISIBLE);
-
-
-        new RetrieveCardAsyncTask(getApplicationContext(), initialStatus.getId(), ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
