@@ -325,7 +325,23 @@
             android:layout_marginTop="5dp"
             android:layout_margin="10dp"
             >
+            <RelativeLayout
+                android:id="@+id/webview_preview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/webview_preview_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:layout_width="30dp"
+                    android:src="@drawable/ic_play_arrow"
+                    android:layout_height="30dp"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
             <WebView
+                android:visibility="gone"
                 android:id="@+id/status_cardview_webview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

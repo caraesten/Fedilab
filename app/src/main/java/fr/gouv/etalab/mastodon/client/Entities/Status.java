@@ -123,7 +123,7 @@ public class Status implements Parcelable{
         this.status = this;
     }
     private List<String> conversationProfilePicture;
-
+    private String webviewURL = null;
 
     protected Status(Parcel in) {
         id = in.readString();
@@ -1089,5 +1089,13 @@ public class Status implements Parcelable{
 
     public void setConversationProfilePicture(List<String> conversationProfilePicture) {
         this.conversationProfilePicture = conversationProfilePicture;
+    }
+
+    public String getWebviewURL() {
+        return webviewURL;
+    }
+
+    public void setWebviewURL(String webviewURL) {
+        this.webviewURL = webviewURL;
     }
 }

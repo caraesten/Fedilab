@@ -294,14 +294,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         WebView status_cardview_webview;
         ImageView hide_preview, hide_preview_h;
         TextView status_toot_app;
-
+        RelativeLayout webview_preview;
+        ImageView webview_preview_card;
         public View getView(){
             return itemView;
         }
 
         ViewHolder(View itemView) {
             super(itemView);
-            fetch_more = itemView.findViewById(R.id.fetch_more);
+            fetch_more =  itemView.findViewById(R.id.fetch_more);
+            webview_preview_card = itemView.findViewById(R.id.webview_preview_card);
+            webview_preview = itemView.findViewById(R.id.webview_preview);
+            status_horizontal_document_container = itemView.findViewById(R.id.status_horizontal_document_container);
             status_document_container = itemView.findViewById(R.id.status_document_container);
             status_horizontal_document_container = itemView.findViewById(R.id.status_horizontal_document_container);
             status_content = itemView.findViewById(R.id.status_content);
@@ -1120,9 +1124,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, true);
 
+            if( status.getWebviewURL() != null){
+                holder.status_cardview_webview.loadUrl(status.getWebviewURL());
+                holder.status_cardview_webview.setVisibility(View.VISIBLE);
+                holder.status_cardview_video.setVisibility(View.VISIBLE);
+                holder.webview_preview.setVisibility(View.GONE);
+            }else {
+                holder.status_cardview_webview.setVisibility(View.GONE);
+                holder.status_cardview_video.setVisibility(View.GONE);
+                holder.webview_preview.setVisibility(View.VISIBLE);
+            }
             if( type == RetrieveFeedsAsyncTask.Type.CONTEXT || display_card){
 
                 if( position == conversationPosition || display_card){
+
                     Card card = status.getReblog()!= null?status.getReblog().getCard():status.getCard();
                     if( card != null){
 
@@ -1147,6 +1162,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 }
                             });
                         }else {
+                            Glide.with(holder.status_cardview_image.getContext())
+                                    .load(card.getImage())
+                                    .into(holder.webview_preview_card);
                             holder.status_cardview.setVisibility(View.GONE);
                             holder.status_cardview_video.setVisibility(View.VISIBLE);
                             holder.status_cardview_webview.getSettings().setJavaScriptEnabled(true);
@@ -1164,7 +1182,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     holder.status_cardview_video.setVisibility(View.GONE);
                                 }
                             });
-                            holder.status_cardview_webview.loadUrl(finalSrc);
+                            holder.webview_preview.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    status.setWebviewURL(finalSrc);
+                                    notifyStatusChanged(status);
+                                }
+                            });
                         }
                     }else {
                         holder.status_cardview.setVisibility(View.GONE);
