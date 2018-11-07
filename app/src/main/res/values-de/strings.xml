@@ -37,12 +37,12 @@
     <string name="add_account">Konto hinzufügen</string>
     <string name="clipboard">Der Inhalt des Toots wurde in die Zwischenablage kopiert</string>
     <string name="change">Ändern</string>
-    <string name="choose_picture">Grafik auswählen …</string>
+    <string name="choose_picture">Wähle ein Bild…</string>
     <string name="clear">Bereinigen</string>
     <string name="microphone">Mikrofon</string>
     <string name="camera">Kamera</string>
     <string name="speech_prompt">Bitte sag etwas</string>
-    <string name="speech_not_supported">Es tut uns leid! Ihr Gerät unterstützt keine Spracheingabe!</string>
+    <string name="speech_not_supported">Sorry! Dein Gerät unterstützt keine Spracheingabe!</string>
     <string name="delete_all">Alles löschen</string>
     <string name="translate_toot">Toot übersetzen</string>
     <string name="schedule">Planen</string>
@@ -582,6 +582,7 @@
     <string name="videos">Videos</string>
     <string name="channels">Kanäle</string>
     <string name="set_display_emoji">Emoji One verwenden</string>
+    <string name="information">information</string>
     <string-array name="filter_expire">
         <item>Nie</item>
         <item>30 Minuten</item>
