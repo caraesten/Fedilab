@@ -284,6 +284,7 @@ public class Helper {
     public static final String SET_ENABLE_TIME_SLOT = "set_enable_time_slot";
     public static final String SET_KEEP_BACKGROUND_PROCESS = "set_keep_background_process";
     public static final String SET_DISPLAY_EMOJI = "set_display_emoji";
+    public static final String SET_DISPLAY_CARD = "set_display_card";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;

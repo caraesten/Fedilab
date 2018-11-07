@@ -105,6 +105,19 @@ public class SettingsFragment extends Fragment {
         });
 
 
+        boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, true);
+
+        final CheckBox set_display_card = rootView.findViewById(R.id.set_display_card);
+        set_display_card.setChecked(display_card);
+        set_display_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_CARD, set_display_card.isChecked());
+                editor.apply();
+            }
+        });
+
 
         boolean show_media_urls = sharedpreferences.getBoolean(Helper.SET_MEDIA_URLS, false);
         final CheckBox set_auto_add_media_url = rootView.findViewById(R.id.set_auto_add_media_url);

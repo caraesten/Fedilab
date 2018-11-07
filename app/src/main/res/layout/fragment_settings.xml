@@ -168,6 +168,12 @@
             android:text="@string/set_display_emoji"
             android:layout_height="wrap_content" />
 
+        <CheckBox
+            android:id="@+id/set_display_card"
+            android:layout_width="wrap_content"
+            android:text="@string/set_display_card"
+            android:layout_height="wrap_content" />
+
         <!-- Resize pictures -->
         <LinearLayout
             android:layout_marginTop="10dp"
