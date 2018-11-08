@@ -327,7 +327,7 @@
     <string name="use_javascript">Включить Javascript</string>
     <string name="expand_cw">Автоматически раскрывать cw</string>
     <string name="use_cookies">Разрешить сторонние куки</string>
-    <string name="settings_ui_layout">Временные рамки для ленты:</string>
+    <string name="settings_ui_layout">Схема временной шкалы:</string>
     <string-array name="settings_menu_tabs">
         <item>Вкладки</item>
         <item>Меню</item>
