@@ -283,11 +283,10 @@
 
                 <LinearLayout
                     android:id="@+id/status_cardview"
-                    android:padding="5dp"
                     android:layout_marginBottom="5dp"
-                    android:visibility="gone"
                     android:background="@drawable/card_border"
                     android:layout_width="match_parent"
+                    android:gravity="center_vertical"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <ImageView
@@ -295,19 +294,23 @@
                         android:id="@+id/status_cardview_image"
                         android:layout_width="80dp"
                         android:gravity="center"
+                        android:scaleType="centerCrop"
                         android:layout_height="80dp"
                         tools:ignore="ContentDescription" />
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="0dp"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginStart="2dp"
+                        android:padding="5dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content">
                         <TextView
                             android:textSize="14sp"
                             android:maxLines="1"
                             android:textStyle="bold"
+                            android:singleLine="true"
                             android:id="@+id/status_cardview_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -316,7 +319,7 @@
                             android:id="@+id/status_cardview_content"
                             android:layout_width="match_parent"
                             android:textSize="12sp"
-                            android:maxLines="4"
+                            android:maxLines="3"
                             android:layout_height="wrap_content" />
                         <TextView
                             android:id="@+id/status_cardview_url"

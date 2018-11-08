@@ -42,7 +42,6 @@ import android.text.Spannable;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -526,6 +525,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+
+                holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.mastodonC2));
+                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else if( theme == Helper.THEME_DARK ){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
                 changeDrawableColor(context, holder.status_more, R.color.dark_icon);
@@ -541,6 +544,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+
+                holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.mastodonC2));
+                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else {
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.black);
@@ -559,6 +566,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.black));
+
+                holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.black));
             }
             if( theme == THEME_DARK) {
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
@@ -1136,6 +1147,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             if( type == RetrieveFeedsAsyncTask.Type.CONTEXT || display_card){
 
+                if( type ==  RetrieveFeedsAsyncTask.Type.CONTEXT)
+                    holder.status_cardview_content.setVisibility(View.VISIBLE);
+                else
+                    holder.status_cardview_content.setVisibility(View.GONE);
                 if( position == conversationPosition || display_card){
 
                     Card card = status.getReblog()!= null?status.getReblog().getCard():status.getCard();
@@ -1149,6 +1164,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             if( !((Activity)context).isFinishing())
                                 Glide.with(holder.status_cardview_image.getContext())
                                         .load(card.getImage())
+                                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners((int)Helper.convertDpToPixel(7, context))))
                                         .into(holder.status_cardview_image);
                         }else
                             holder.status_cardview_image.setVisibility(View.GONE);
