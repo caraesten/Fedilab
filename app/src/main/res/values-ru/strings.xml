@@ -193,11 +193,11 @@
     <!-- Conversation -->
     <string name="conversation">Разговор</string>
     <!-- Accounts -->
-    <string name="no_accounts">Нет аккаунта для отображения</string>
+    <string name="no_accounts">Никого</string>
     <string name="no_follow_request">Нет запросов на подписку</string>
     <string name="status_cnt">Туты \n %1$s</string>
-    <string name="following_cnt">Подписан \n %1$s</string>
-    <string name="followers_cnt">Подписчиков \n %1$s</string>
+    <string name="following_cnt">Подписки \n %1$s</string>
+    <string name="followers_cnt">Подписчики \n %1$s</string>
     <string name="pins_cnt">Закреплены \n %d</string>
     <string name="authorize">Авторизовать</string>
     <string name="reject">Отклонить</string>
@@ -584,8 +584,8 @@
     <string name="videos">Видео</string>
     <string name="channels">Каналы</string>
     <string name="set_display_emoji">Использовать Emoji One</string>
-    <string name="information">information</string>
-    <string name="set_display_card">Display previews in all toots</string>
+    <string name="information">информация</string>
+    <string name="set_display_card">Показывать предпросмотр для всех тутов</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>
