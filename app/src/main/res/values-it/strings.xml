@@ -578,7 +578,8 @@
     <string name="videos">Video</string>
     <string name="channels">Canali</string>
     <string name="set_display_emoji">Utilizza le Emoji One</string>
-    <string name="information">information</string>
+    <string name="information">Information</string>
+    <string name="set_display_card">Display previews in all toots</string>
     <string-array name="filter_expire">
         <item>Mai</item>
         <item>30 minuti</item>

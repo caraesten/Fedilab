@@ -193,11 +193,11 @@
     <!-- Conversation -->
     <string name="conversation">Разговор</string>
     <!-- Accounts -->
-    <string name="no_accounts">Нет аккаунта для отображения</string>
+    <string name="no_accounts">Никого</string>
     <string name="no_follow_request">Нет запросов на подписку</string>
     <string name="status_cnt">Туты \n %1$s</string>
-    <string name="following_cnt">Подписан \n %1$s</string>
-    <string name="followers_cnt">Подписчиков \n %1$s</string>
+    <string name="following_cnt">Подписки \n %1$s</string>
+    <string name="followers_cnt">Подписчики \n %1$s</string>
     <string name="pins_cnt">Закреплены \n %d</string>
     <string name="authorize">Авторизовать</string>
     <string name="reject">Отклонить</string>
@@ -264,7 +264,7 @@
     <string name="toast_error_search">Произошла ошибка при поиске!</string>
     <string name="toast_error_login">Не удалось войти!</string>
     <string name="toast_update_credential_ok">Данные профиля сохранены!</string>
-    <string name="nothing_to_do">Ничего не происходило</string>
+    <string name="nothing_to_do">Ничего нельзя сделать</string>
     <string name="toast_saved">Этот медиафайл сохранен!</string>
     <string name="toast_error_translate">При переводе произошла ошибка!</string>
     <string name="toast_toot_saved">Черновик сохранен!</string>
@@ -327,7 +327,7 @@
     <string name="use_javascript">Включить Javascript</string>
     <string name="expand_cw">Автоматически раскрывать cw</string>
     <string name="use_cookies">Разрешить сторонние куки</string>
-    <string name="settings_ui_layout">Временные рамки для ленты:</string>
+    <string name="settings_ui_layout">Схема временной шкалы:</string>
     <string-array name="settings_menu_tabs">
         <item>Вкладки</item>
         <item>Меню</item>
@@ -389,7 +389,7 @@
     <string name="action_sync">Синхронизировать</string>
     <string name="action_filter">Фильтр</string>
     <string name="owner_cached_toots">Ваши туты</string>
-    <string name="v_public">Публичное</string>
+    <string name="v_public">Публично</string>
     <string name="v_unlisted">Не в списке</string>
     <string name="v_private">Приватно</string>
     <string name="v_direct">Напрямую</string>
@@ -407,10 +407,10 @@
     <string name="owner_cached_toots_empty">В базе данных тутов не найдено. Пожалуйста, используйте кнопку синхронизации в меню для их получения.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Записанные данные</string>
-    <string name="privacy_data">Только основная информация об аккаунте будет сохранена на устройстве.
-        Эти данные сугубо конфиденциальны и могут быть использованы только приложением.
-        Удаляя приложение, вы также немедленно удаляете данные.\n
-        &#9888; Логин и пароль никогда не сохраняются. Они используются только при зашифрованном (SSL) соединении с сервером.</string>
+    <string name="privacy_data">На устройстве хранятся только основные сведения из аккаунтов.
+        Эти данные являются строго конфиденциальными и могут использоваться только приложением.
+        Удаление приложения немедленно удалит эти данные.\n
+        &#9888; Логин и пароли никогда не сохраняются. Они используются только во время безопасной аутентификации (SSL) с сервером.</string>
     <string name="privacy_authorizations_title">Разрешения:</string>
     <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b>: Используется для определения того, подключено ли устройство к сети WIFI.\n
         - <b>INTERNET</b>: Используется для запросов к серверу.\n
@@ -419,16 +419,16 @@
         - <b>BOOT_COMPLETED</b>: Используется для запуска службы уведомлений.\n
         - <b>WAKE_LOCK</b>: Используется во время службы уведомлений.</string>
     <string name="privacy_API_authorizations_title">Разрешения API:</string>
-    <string name="privacy_API_authorizations">- <b>читать</b>: Читать данные.\n 
-        - <b>записи</b>: Публикация статусов и загрузки фалов для статусов.\n 
-        - <b>следовать</b>: Подписаться, отписаться, блокировать, раблокировка.\n\n
-        <b>&#9888; Эти действия выполняются только тогда, когда пользователь запрашивает их.</b></string>
+    <string name="privacy_API_authorizations">- <b>Чтение</b>: Чтение данных.\n
+        - <b>Запись</b>: Публикация статусов и загрузка файлов для статусов.\n
+        - <b>Подписка</b>: Подписка, отписка, блокировка, разблокировка.\n\n
+        <b>&#9888; Эти действия выполняются только при запросе их пользователем.</b></string>
     <string name="privacy_API_title">Отслеживание и библиотеки</string>
-    <string name="privacy_API">Приложение <b>не использует инструменты для отслеживания</b> (замеры аудитории, отчёты об ошибках, и т. д.) и не содержит какой-либо рекламы.\n\n
-       Использование библиотек минимизированно: \n
-       - <b>Glide</b>: Для управления файлами\n
-       - <b>Android-Job</b>: Для управления сервисами\n
-       - <b>PhotoView</b>: Для управления изображениями\n</string>
+    <string name="privacy_API">Это приложение <b>не использует инструменты отслеживания</b> (измерение аудитории, отчет об ошибках и т. д.) и не содержит никакой рекламы.\n\n
+        Использование библиотек сводится к минимуму: \n
+        - <b>Glide</b>: Для управления файлами\n
+        - <b>Android-Job</b>: Для управления сервисами\n
+        - <b>PhotoView</b>: Для управления изображениями\n</string>
     <string name="privacy_API_yandex_title">Перевод тутов</string>
     <string name="privacy_API_yandex_authorizations">Приложение предлагает возможность переводить туты, используя язык устройства и Яндекс API.\n 
         Яндекс имеет собственную политику конфиденциальности, условия которой можно найти здесь: https://yandex.ru/legal/confidential/?lang=en</string>
@@ -454,12 +454,12 @@
     <string name="account_moved_to">%1$s был перенесен в %2$s</string>
     <string name="show_boost_count">Показать количество продвигаемых/избранных</string>
     <string name="issue_login_title">Аутентификация не работает?</string>
-    <string name="issue_login_message"><b>Вот некоторые подсказки, которые должны вам помочь:\n\n</b>
-        - Проверьте на предмет орфографических ошибок при написании сервера\n\n - 
-        - Проверьте, возможно сервер временно недоступен\n\n 
-        - Если вы используете двухфакторную проверку подлинности (2FA), пожалуйста, используйте ссылку внизу (после заполнения имени сервера)\n\n 
-         - Вы также можете использовать эту ссылку без использования 2FA\n\n
-         - Если всё перечисленное не помогает, пожалуйста задайте вопрос на Github https://github.com/stom79/mastalab/issues</string>
+    <string name="issue_login_message"><b>Вот некоторые подсказки, которые могут помочь:</b>\n\n
+        - Проверьте, нет ли орфографических ошибок в имени сервера\n\n
+        - Убедитесь в доступности вашего сервера\n\n
+        - Если вы используете двухфакторную аутентификацию (2FA), используйте ссылку внизу (после заполнения имени сервера)\n\n
+        - Вы также можете использовать эту ссылку без использования 2FA\n\n
+        - Если все перечисленное вам не помогло, создайте проблему на Github: https://github.com/stom79/mastalab/issues</string>
     <string name="media_ready">Медиафайл загружен. Нажмите здесь, для его отображения.</string>
     <string name="data_export_start">Это действие может продолжаться довольно долго. Вы будете уведомлены, когда оно будет завершено.</string>
     <string name="data_export_running">Все еще работает, подождите…</string>
@@ -584,7 +584,8 @@
     <string name="videos">Видео</string>
     <string name="channels">Каналы</string>
     <string name="set_display_emoji">Использовать Emoji One</string>
-    <string name="information">information</string>
+    <string name="information">информация</string>
+    <string name="set_display_card">Показывать предпросмотр для всех тутов</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>

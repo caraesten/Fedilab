@@ -578,7 +578,8 @@
     <string name="videos">Vídeos</string>
     <string name="channels">Canles</string>
     <string name="set_display_emoji">Use Emoji One</string>
-    <string name="information">information</string>
+    <string name="information">Information</string>
+    <string name="set_display_card">Display previews in all toots</string>
     <string-array name="filter_expire">
         <item>Nunca</item>
         <item>30 minutos</item>
