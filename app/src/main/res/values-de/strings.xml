@@ -582,7 +582,7 @@
     <string name="videos">Videos</string>
     <string name="channels">Kanäle</string>
     <string name="set_display_emoji">Emoji One verwenden</string>
-    <string name="information">information</string>
+    <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
     <string-array name="filter_expire">
         <item>Nie</item>
