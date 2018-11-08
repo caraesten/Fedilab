@@ -264,7 +264,7 @@
     <string name="toast_error_search">Произошла ошибка при поиске!</string>
     <string name="toast_error_login">Не удалось войти!</string>
     <string name="toast_update_credential_ok">Данные профиля сохранены!</string>
-    <string name="nothing_to_do">Ничего не происходило</string>
+    <string name="nothing_to_do">Ничего нельзя сделать</string>
     <string name="toast_saved">Этот медиафайл сохранен!</string>
     <string name="toast_error_translate">При переводе произошла ошибка!</string>
     <string name="toast_toot_saved">Черновик сохранен!</string>
