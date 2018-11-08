@@ -158,7 +158,7 @@
     <string name="toot_delete_media">Lösche diese Datei?</string>
     <string name="toot_error_no_content">Dein Toot ist leer!</string>
     <string name="toot_visibility_tilte">Sichtbarkeit des Toots</string>
-    <string name="toots_visibility_tilte">Standard Sichtbarkeit der Toots:</string>
+    <string name="toots_visibility_tilte">Standard Sichtbarkeit der Toots: </string>
     <string name="toot_sent">Der Toot wurde gesendet!</string>
     <string name="toot_reply_content_title">Du antwortest auf diesen Toot:</string>
     <string name="toot_sensitive">Sensibler Inhalt?</string>
@@ -426,7 +426,8 @@
         Die Nutzung von Bibliotheken ist minimiert:\n
         -<b>Glide</b>: Medien verwalten\n
         -<b>Android-Job</b>: Dienste verwalten\n
-        -<b>PhotoView</b>: Bilder verwalten\n</string>
+        -<b>PhotoView</b>: Bilder verwalten\n
+    </string>
     <string name="privacy_API_yandex_title">Übersetzen von Toots</string>
     <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, toots mithilfe der lokalen sowie Yandex API zu übersetzen.\n
              Yandex hat seine eigene Datenschutzerklärung. Diese kann hier eingehesen werden: https://yandex.ru/legal/confidential/?lang=en</string>
@@ -457,7 +458,7 @@
 - Prüfe ob die Instanz online ist\n\n
 - Benutze den Link unten falls du Zweifaktor-Authentifizierung (2FA) nutzt (nachdem der Instanzname eingetragen wurde)\n\n
 - Du kannst diesen Link auch ohne 2FA benutzen\n\n
-- Erstelle ein issue bei Github falls es dennoch nicht funktioniert: https://github.com/stom79/mastalab/issues</string>
+- Erstelle ein issue bei Github falls es dennoch nicht funktioniert: https://github.com/stom79/mastalab/issues    </string>
     <string name="media_ready">Media wurde geladen. Hier klicken zum anzeigen.</string>
     <string name="data_export_start">Diese Aktion kann sehr lange dauern. Du wirst benachrichtigt wenn sie abgeschlossen wurde.</string>
     <string name="data_export_running">Läuft noch, bitte warten…</string>
@@ -583,7 +584,7 @@
     <string name="channels">Kanäle</string>
     <string name="set_display_emoji">Emoji One verwenden</string>
     <string name="information">Information</string>
-    <string name="set_display_card">Display previews in all toots</string>
+    <string name="set_display_card">Vorschau in allen Toots anzeigen</string>
     <string-array name="filter_expire">
         <item>Nie</item>
         <item>30 Minuten</item>
