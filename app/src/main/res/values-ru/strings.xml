@@ -595,7 +595,7 @@
     <string name="set_display_emoji">Использовать Emoji One</string>
     <string name="information">информация</string>
     <string name="set_display_card">Показывать предпросмотр для всех тутов</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="thanks_text_ux">Новый дизайнер UX/UI</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>
