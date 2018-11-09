@@ -158,7 +158,7 @@
     <string name="toot_delete_media">Ezabatu multimedia hau?</string>
     <string name="toot_error_no_content">Zure toot-a hutsik dago!</string>
     <string name="toot_visibility_tilte">Toot-aren ikusgaitasuna</string>
-    <string name="toots_visibility_tilte">Toot-en lehenetsitako ikusgaitasuna:</string>
+    <string name="toots_visibility_tilte">Toot-en lehenetsitako ikusgaitasuna: </string>
     <string name="toot_sent">Toot-a bidali da!</string>
     <string name="toot_reply_content_title">Toot honi erantzuten ari zara:</string>
     <string name="toot_sensitive">Eduki hunkigarria?</string>
@@ -180,9 +180,9 @@
     <!-- About -->
     <string name="about_vesrion">Bertsioa: %1$s</string>
     <string name="about_developer">Garatzailea:</string>
-    <string name="about_license">Lizentzia:</string>
+    <string name="about_license">Lizentzia: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Iturburu kodea:</string>
+    <string name="about_code">Iturburu kodea: </string>
     <string name="about_yandex">Toot-en itzulpena:</string>
     <string name="about_thekinrar">Bilatu instantziak:</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -282,7 +282,7 @@
     <string name="set_display_local">Bistaratu denbora-lerro lokala</string>
     <string name="set_display_global">Bistaratu denbora-lerro federatua</string>
     <string name="set_disable_gif">Desgaitu GIF abatarrak</string>
-    <string name="set_folder_title">Bidea:</string>
+    <string name="set_folder_title">Bidea: </string>
     <string name="set_auto_store_toot">Gorde zirriborroak automatikoki</string>
     <string name="set_bubble_counter">Erakutsi kontagailuak</string>
     <string name="set_auto_add_media_url">Gehitu multimediaren URLa toot-etan</string>
@@ -321,7 +321,7 @@
     <string name="use_javascript">Gaitu JavaScript</string>
     <string name="expand_cw">Hedatu automatikoki X!</string>
     <string name="use_cookies">Baimendu hirugarrengoen cookie-ak</string>
-    <string name="settings_ui_layout">Denbora lerroen diseinua:</string>
+    <string name="settings_ui_layout">Denbora lerroen diseinua: </string>
     <string-array name="settings_menu_tabs">
         <item>Fitxak</item>
         <item>Menua</item>
@@ -370,8 +370,9 @@
     <string name="set_resize_picture">Aldatu irudien tamaina</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push jakinarazpenak</string>
-    <string name="settings_popup_message">Berretsi jaso nahi dituzun push jakinarazpenak.
-        Jakinarazpen hauek gero ezarpenetan aktibatu edo desaktibatu ditzakezu (Jakinarazpenak fitxa).</string>
+    <string name="settings_popup_message">        Berretsi jaso nahi dituzun push jakinarazpenak.
+        Jakinarazpen hauek gero ezarpenetan aktibatu edo desaktibatu ditzakezu (Jakinarazpenak fitxa).
+    </string>
     <string name="settings_popup_timeline">Irakurri gabeko toot-ak hasiera denbora-lerroan?</string>
     <string name="settings_popup_notification">Irakurri gabeko jakinarazpenentzat?</string>
     <!-- CACHE -->
@@ -401,33 +402,39 @@
     <string name="owner_cached_toots_empty">Ez da toot-ik aurkitu datu-basean. Erabili menuko sinkronizatu botoia eskuratzeko.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Grabatutako datuak</string>
-    <string name="privacy_data">Kontuen oinarrizko informazioa besterik ez da gordetzen gailuetan
+    <string name="privacy_data">        Kontuen oinarrizko informazioa besterik ez da gordetzen gailuetan
         Datu hauek guztiz konfidentzialak dira eta bakarrik aplikazioak erabili ditzake.
         Aplikazioa ezabatzean datu hauek ere ezabatzen dira.\n
-        &#9888; Saioa eta pasahitzak ez dira inoiz gordetzen. Instantzia batekin autentifikazio segurua (SSL) ezartzean besterik ez dira erabiltzen.</string>
+        &#9888; Saioa eta pasahitzak ez dira inoiz gordetzen. Instantzia batekin autentifikazio segurua (SSL) ezartzean besterik ez dira erabiltzen.
+    </string>
     <string name="privacy_authorizations_title">Baimenak:</string>
-    <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b>: Gailua WIFI sare batera konektatuta dagoen egiaztatzeko erabiltzen da.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Gailua WIFI sare batera konektatuta dagoen egiaztatzeko erabiltzen da.\n
         - <b>INTERNET</b>: Instantzia bati itaunketak egiteko erabiltzen da.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Multimedia gordetzeko edo aplikazioa SD txartelera eramateko erabiltzen da.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Toot-etara multimedia gehitzeko erabilytzen da.\n
         - <b>BOOT_COMPLETED</b>: Jakinarazpen zerbitzua abiatzeko erabiltzen da.\n
-        - <b>WAKE_LOCK</b>: Jakinarazpen zerbitzuan zehar erabiltzen da.</string>
+        - <b>WAKE_LOCK</b>: Jakinarazpen zerbitzuan zehar erabiltzen da.
+    </string>
     <string name="privacy_API_authorizations_title">APIaren baimenak:</string>
-    <string name="privacy_API_authorizations">- <b>Irakurri</b>: Irakurri datuak.\n
+    <string name="privacy_API_authorizations">        - <b>Irakurri</b>: Irakurri datuak.\n
         - <b>Idatzi</b>: Bidali mezuak eta igo mezuetarako multimedia.\n
         - <b>Jarraitu</b>: Jarraitu, jarraitzeari utzi, blokeatu, desblokeatu.\n\n
-        <b>&#9888; Ekintza hauek erabiltzaileak eskatuta besterik ez dira burutzen.</b></string>
+        <b>&#9888; Ekintza hauek erabiltzaileak eskatuta besterik ez dira burutzen.</b>
+    </string>
     <string name="privacy_API_title">Jarraipena eta liburutegiak</string>
-    <string name="privacy_API">Aplikazioak <b>ez du jarraipen tresnarik erabiltzen</b> (audientziaren neurria, erroreen jakinarazpena, eta abar.) eta ez du publizitaterik.\n\n
+    <string name="privacy_API">        Aplikazioak <b>ez du jarraipen tresnarik erabiltzen</b> (audientziaren neurria, erroreen jakinarazpena, eta abar.) eta ez du publizitaterik.\n\n
         Liburutegien erabilera minimizatu da: \n
         - <b>Glide</b>: Multimedia kudeatzeko\n
         - <b>Android-Job</b>: Zerbitzuak kudeatzeko\n
-        - <b>PhotoView</b>: Irudiak kudeatzeko\n</string>
+        - <b>PhotoView</b>: Irudiak kudeatzeko\n
+    </string>
     <string name="privacy_API_yandex_title">Toot-en itzulpena</string>
-    <string name="privacy_API_yandex_authorizations">Aplikazioak ttot-ak itzultzeko aukera ematen du gailuaren locale eta Yandex API-a erabiliz.\n
-        Yandex-ek bere pribatutasun politika du eta hemen aurkitu daiteke: https://yandex.ru/legal/confidential/?lang=en</string>
-    <string name="thanks_text">Eskerrik asko Stéphane logoagatik.</string>
-    <string name="thanks_text_dev">Eskerrik asko:</string>
+    <string name="privacy_API_yandex_authorizations">        Aplikazioak ttot-ak itzultzeko aukera ematen du gailuaren locale eta Yandex API-a erabiliz.\n
+        Yandex-ek bere pribatutasun politika du eta hemen aurkitu daiteke: https://yandex.ru/legal/confidential/?lang=en
+    </string>
+    <string name="thanks_text">Eskerrik asko Stéphane logoagatik.    </string>
+    <string name="thanks_text_dev">        Eskerrik asko:
+    </string>
     <string name="filter_regex">Iragazi adierazpen erregularrak erabiliz</string>
     <string name="search">Bilatu</string>
     <string name="delete">Ezabatu</string>
@@ -448,12 +455,13 @@
     <string name="account_moved_to">%1$s %2$s(e)ra mugitu da</string>
     <string name="show_boost_count">Erakutsi bultzada/gogoko kopurua</string>
     <string name="issue_login_title">Autentifikazioa ez dabil?</string>
-    <string name="issue_login_message"><b>Hona lagundu dezaketen egiaztaketa batzuk:</b>\n\n
+    <string name="issue_login_message">        <b>Hona lagundu dezaketen egiaztaketa batzuk:</b>\n\n
         - Egiaztatu ez dagoela akatsik instantziaren izenean\n\n
         - Egiaztatu instantzia ez dagoela erorita\n\n
         - Bi faktoreetako autentifikazioa erabiltzen baduzu (2FA), erabili beheko esteka (behin instantziaren izena bete eta gero)\n\n
         - Esteka hori erabili dezakezu 2FA erabiltzen ez baduzu ere\n\n
-        - Oraindik ez badabil, ireki arazo bat Github kontu honetan https://github.com/stom79/mastalab/issues</string>
+        - Oraindik ez badabil, ireki arazo bat Github kontu honetan https://github.com/stom79/mastalab/issues
+    </string>
     <string name="media_ready">Multimedia kargatu da. Egin klik hemen berau bistaratzeko.</string>
     <string name="data_export_start">Ekintza honek luze hartu dezake. Bukatzean jakinaraziko zaizu.</string>
     <string name="data_export_running">Oraindik abian, itxaron mesedez…</string>
@@ -580,6 +588,7 @@
     <string name="set_display_emoji">Erabili Emoji One</string>
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
+    <string name="thanks_text_ux">New UX/UI designer</string>
     <string-array name="filter_expire">
         <item>Inoiz ez</item>
         <item>30 minutu</item>
