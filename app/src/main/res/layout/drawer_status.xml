@@ -290,12 +290,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <ImageView
+                        android:padding="1dp"
                         android:layout_gravity="center"
                         android:id="@+id/status_cardview_image"
-                        android:layout_width="80dp"
+                        android:layout_width="60dp"
                         android:gravity="center"
                         android:scaleType="centerCrop"
-                        android:layout_height="80dp"
+                        android:layout_height="60dp"
                         tools:ignore="ContentDescription" />
                     <LinearLayout
                         android:orientation="vertical"

@@ -1218,6 +1218,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_cardview.setVisibility(View.GONE);
                     holder.status_cardview_video.setVisibility(View.GONE);
                 }
+            }else {
+                holder.status_cardview.setVisibility(View.GONE);
             }
 
             holder.status_reply.setOnClickListener(new View.OnClickListener() {
