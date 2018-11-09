@@ -157,7 +157,7 @@
     <string name="toot_delete_media">Xóa phương tiện này?</string>
     <string name="toot_error_no_content">Thổi còi của bạn trống!</string>
     <string name="toot_visibility_tilte">Tầm nhìn của thổi còi</string>
-    <string name="toots_visibility_tilte">Khả năng hiển thị của các toots theo mặc định:</string>
+    <string name="toots_visibility_tilte">Khả năng hiển thị của các toots theo mặc định: </string>
     <string name="toot_sent">Thổi còi đã được gửi!</string>
     <string name="toot_reply_content_title">Bạn đang trả lời cho thổi còi này:</string>
     <string name="toot_sensitive">Nội dung nhạy cảm?</string>
@@ -179,9 +179,9 @@
     <!-- About -->
     <string name="about_vesrion">Phát hành %1$s</string>
     <string name="about_developer">Nhà phát triển:</string>
-    <string name="about_license">Giấy phép:</string>
+    <string name="about_license">Giấy phép: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Mã nguồn:</string>
+    <string name="about_code">Mã nguồn: </string>
     <string name="about_yandex">Dịch của thổi còi:</string>
     <string name="about_thekinrar">Trường hợp tìm kiếm:</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -281,7 +281,7 @@ và %d toots khác để khám phá</item>
     <string name="set_display_local">Hiển thị thời gian biểu địa phương</string>
     <string name="set_display_global">Hiển thị thời gian liên kết</string>
     <string name="set_disable_gif">Tắt hình đại diện GIF</string>
-    <string name="set_folder_title">Con đường:</string>
+    <string name="set_folder_title">Con đường: </string>
     <string name="set_auto_store_toot">Tự động lưu dự thảo</string>
     <string name="set_bubble_counter">Quầy hiển thị</string>
     <string name="set_auto_add_media_url">Thêm URL của phương tiện truyền thông vào các toots</string>
@@ -320,7 +320,7 @@ và %d toots khác để khám phá</item>
     <string name="use_javascript">Bật Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Cho phép cookie của bên thứ ba</string>
-    <string name="settings_ui_layout">Giao diện cho các mốc thời gian:</string>
+    <string name="settings_ui_layout">Giao diện cho các mốc thời gian: </string>
     <string-array name="settings_menu_tabs">
         <item>Tab</item>
         <item>Thực đơn</item>
@@ -370,7 +370,8 @@ và %d toots khác để khám phá</item>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push thông báo</string>
     <string name="settings_popup_message">Vui lòng xác nhận thông báo đẩy mà bạn muốn nhận.         
-        Bạn có thể bật hoặc tắt các thông báo này sau trong cài đặt (tab Thông báo).</string>
+        Bạn có thể bật hoặc tắt các thông báo này sau trong cài đặt (tab Thông báo).
+    </string>
     <string name="settings_popup_timeline">Đối với những con rồng chưa đọc trong dòng thời gian ở nhà?</string>
     <string name="settings_popup_notification">Đối với thông báo chưa đọc?</string>
     <!-- CACHE -->
@@ -403,30 +404,33 @@ và %d toots khác để khám phá</item>
     <string name="privacy_data">Chỉ có thông tin cơ bản từ các tài khoản được lưu trữ trên thiết bị.
         Những dữ liệu này là bí mật và chỉ có thể được sử dụng bởi các ứng dụng.
         Xóa ứng dụng sẽ xóa ngay các dữ liệu này.\n
-        &#9888; Đăng nhập và mật khẩu không bao giờ được lưu trữ. Chúng chỉ được sử dụng trong quá trình xác thực an toàn (SSL) với một cá thể.</string>
+        &#9888; Đăng nhập và mật khẩu không bao giờ được lưu trữ. Chúng chỉ được sử dụng trong quá trình xác thực an toàn (SSL) với một cá thể.
+    </string>
     <string name="privacy_authorizations_title">Quyền:</string>
     <string name="privacy_authorizations">-<b>ACCESS_NETWORK_STATE</b>: Được dùng để phát hiện nếu thiết bị được kết nối với mạng WIFI.\n
          -<b>INTERNET</b>: Được sử dụng cho truy vấn đến một cá thể.\n
          -<b>WRITE_EXTERNAL_STORAGE</b>: Được sử dụng để lưu trữ phương tiện hoặc để di chuyển ứng dụng trên thẻ SD.\n
          -<b>READ_EXTERNAL_STORAGE</b>: Được sử dụng để thêm phương tiện vào toots.\n
          -<b>BOOT_COMPLETED</b>: Được sử dụng để bắt đầu dịch vụ thông báo.\n
-         -<b>WAKE_LOCK</b>: Được sử dụng trong dịch vụ thông báo.</string>
+         -<b>WAKE_LOCK</b>: Được sử dụng trong dịch vụ thông báo.    </string>
     <string name="privacy_API_authorizations_title">Quyền của API:</string>
     <string name="privacy_API_authorizations">-<b>Đọc</b>: Đọc dữ liệu.\n
          -<b>Viết</b>: Đăng trạng thái và phương tiện tải lên cho các trạng thái.\n
          - <b> Thực hiện theo</b>: Theo dõi, hủy theo dõi, chặn, bỏ chặn.\n\n
-         <b>&#9888; Những hành động này chỉ được thực hiện khi người dùng yêu cầu họ.</b></string>
+         <b>&#9888; Những hành động này chỉ được thực hiện khi người dùng yêu cầu họ.</b>    </string>
     <string name="privacy_API_title">Theo dõi và Thư viện</string>
     <string name="privacy_API">Ứng dụng<b>không sử dụng công cụ theo dõi</b>(đo lường đối tượng, báo cáo lỗi, v. v.) và không chứa bất kỳ quảng cáo nào.\n\n
          Việc sử dụng thư viện được giảm thiểu:\n
          -<b>Glide </b>: Để quản lý phương tiện truyền thông\n
          -<b>Android-Job</b>: Để quản lý các dịch vụ\n
-         -<b>PhotoView</b>: Để quản lý hình ảnh\n</string>
+         -<b>PhotoView</b>: Để quản lý hình ảnh\n    </string>
     <string name="privacy_API_yandex_title">Dịch thổi còi</string>
     <string name="privacy_API_yandex_authorizations">Ứng dụng cung cấp khả năng dịch toots bằng cách sử dụng miền địa phương của thiết bị và API Yandex.\n
-        Yandex có chính sách riêng tư phù hợp của nó có thể được tìm thấy ở đây: https://yandex.ru/legal/confidential/?lang=en</string>
-    <string name="thanks_text">Cảm ơn Stéphane vì đã có logo.</string>
-    <string name="thanks_text_dev">Cảm ơn bạn:</string>
+        Yandex có chính sách riêng tư phù hợp của nó có thể được tìm thấy ở đây: https://yandex.ru/legal/confidential/?lang=en
+    </string>
+    <string name="thanks_text">Cảm ơn Stéphane vì đã có logo.
+    </string>
+    <string name="thanks_text_dev">Cảm ơn bạn:    </string>
     <string name="filter_regex">Lọc theo biểu thức thông thường</string>
     <string name="search">Tìm kiếm</string>
     <string name="delete">Xóa bỏ</string>
@@ -452,7 +456,8 @@ và %d toots khác để khám phá</item>
         - Kiểm tra rằng trường hợp của bạn không xuống\n\n
         - Nếu bạn sử dụng xác thực hai yếu tố (2FA), vui lòng sử dụng liên kết ở cuối (khi tên cá thể được điền)\n\n
         - Bạn cũng có thể sử dụng liên kết này mà không sử dụng 2FA\n\n
-        - Nếu vẫn không hoạt động, vui lòng nêu lên một vấn đề về Github tại https://github.com/stom79/mastalab/issues</string>
+        - Nếu vẫn không hoạt động, vui lòng nêu lên một vấn đề về Github tại https://github.com/stom79/mastalab/issues
+    </string>
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
@@ -579,6 +584,7 @@ và %d toots khác để khám phá</item>
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
+    <string name="thanks_text_ux">New UX/UI designer</string>
     <string-array name="filter_expire">
         <item>Never</item>
         <item>30 minutes</item>
