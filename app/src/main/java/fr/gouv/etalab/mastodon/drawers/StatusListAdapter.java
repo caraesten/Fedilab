@@ -39,6 +39,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
@@ -726,7 +727,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_displayname.setVisibility(View.VISIBLE);
                 holder.status_account_displayname.setText(context.getResources().getString(R.string.reblog_by, status.getAccount().getUsername()));
                 if( status.getReblog().getAccount().getDisplay_name().length() > 0)
-                    holder.status_account_displayname_owner.setText( status.getReblog().getAccount().getDisplay_name());
+                    holder.status_account_displayname_owner.setText( status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
                 else
                     holder.status_account_displayname_owner.setText( status.getReblog().getAccount().getAcct().replace("@",""));
                 holder.status_account_displayname_owner.setVisibility(View.VISIBLE);
@@ -742,14 +743,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //-------- END -> Displays name & emoji in toot header
 
             //Change the color in gray for accounts in DARK Theme only
-            Spannable wordtoSpan = status.getDisplayNameSpan();
+            Spannable wordtoSpan;
             Pattern hashAcct;
             if( status.getReblog() != null) {
+                wordtoSpan = new SpannableString("@" +  status.getReblog().getAccount().getAcct());
                 hashAcct = Pattern.compile("(@" + status.getReblog().getAccount().getAcct() + ")");
-            }else
-                hashAcct = Pattern.compile("(@"+status.getAccount().getAcct()+")");
-
-            if( wordtoSpan != null && hashAcct != null){
+            }else {
+                wordtoSpan = new SpannableString("@" +  status.getAccount().getAcct());
+                hashAcct = Pattern.compile("(@" + status.getAccount().getAcct() + ")");
+            }
+            if( hashAcct != null){
                 Matcher matcherAcct = hashAcct.matcher(wordtoSpan);
                 while (matcherAcct.find()){
                     int matchStart = matcherAcct.start(1);
