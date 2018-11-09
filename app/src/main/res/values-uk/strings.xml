@@ -160,7 +160,7 @@
     <string name="toot_delete_media">Видалити цей медіа-файл?</string>
     <string name="toot_error_no_content">Ваш дмух пустий!</string>
     <string name="toot_visibility_tilte">Видимість дмуху</string>
-    <string name="toots_visibility_tilte">Видимість дмухів за замовченням:</string>
+    <string name="toots_visibility_tilte">Видимість дмухів за замовченням: </string>
     <string name="toot_sent">Повідомлення було відправлено!</string>
     <string name="toot_reply_content_title">Ви відповідаєте на цей дмух:</string>
     <string name="toot_sensitive">Чутливий вміст?</string>
@@ -182,9 +182,9 @@
     <!-- About -->
     <string name="about_vesrion">Реліз %1$s</string>
     <string name="about_developer">Розробник:</string>
-    <string name="about_license">Ліцензія:</string>
+    <string name="about_license">Ліцензія: </string>
     <string name="about_license_action">GNU GPLv3</string>
-    <string name="about_code">Сирцевий код:</string>
+    <string name="about_code">Сирцевий код: </string>
     <string name="about_yandex">Переклад дмухів:</string>
     <string name="about_thekinrar">Шукати екземпляри:</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -288,7 +288,7 @@
     <string name="set_display_local">Показати локальну стрічку</string>
     <string name="set_display_global">Показати федеративну стрічку</string>
     <string name="set_disable_gif">Вимкнути GIF аватари</string>
-    <string name="set_folder_title">Шлях:</string>
+    <string name="set_folder_title">Шлях: </string>
     <string name="set_auto_store_toot">Зберігати чернетки автоматично</string>
     <string name="set_bubble_counter">Показати лічильники</string>
     <string name="set_auto_add_media_url">Додати URL медіа-файлу до дмуху</string>
@@ -327,7 +327,7 @@
     <string name="use_javascript">Увімкнути JavaScript</string>
     <string name="expand_cw">Автоматично розкривати Cw</string>
     <string name="use_cookies">Приймати куки від сторонніх сайтів</string>
-    <string name="settings_ui_layout">Верстка для стрічок:</string>
+    <string name="settings_ui_layout">Верстка для стрічок: </string>
     <string-array name="settings_menu_tabs">
         <item>Вкладки</item>
         <item>Меню</item>
@@ -376,7 +376,7 @@
     <string name="set_resize_picture">Змінити розмір зображень</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-сповіщення</string>
-    <string name="settings_popup_message">Будь ласка, потрібно підтвердити отримання push-сповіщень. Ви можете змінити налаштування пізніше (вкладка сповіщень).</string>
+    <string name="settings_popup_message">Будь ласка, потрібно підтвердити отримання push-сповіщень. Ви можете змінити налаштування пізніше (вкладка сповіщень).    </string>
     <string name="settings_popup_timeline">Для непрочитаних дмухів у домашній стрічці?</string>
     <string name="settings_popup_notification">Для непрочитаних сповіщень?</string>
     <!-- CACHE -->
@@ -407,25 +407,31 @@
     <!-- PRIVACY -->
     <string name="privacy_data_title">Записані дані</string>
     <string name="privacy_data">Тільки основна інформація з облікових записів зберігається на пристрої.         Ці дані залишаються суворо конфіденційними і можуть використовуватися лише додатком.         У разі видалення додаток одразу видаляє ці дані. \n
-        &#9888; Логіни та паролі не зберігаються. Вони використовуються тільки під час безпечної аутентифікації (SSL) на екземплярі.</string>
+        &#9888; Логіни та паролі не зберігаються. Вони використовуються тільки під час безпечної аутентифікації (SSL) на екземплярі.
+    </string>
     <string name="privacy_authorizations_title">Дозволи:</string>
-    <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b>: використовується для виявлення, чи пристрій підключено до Wi-Fi мережі. \n - <b>Інтернет</b>: використовується для запитів до до екземпляра. \n - <b>WRITE_EXTERNAL_STORAGE</b>: використовується для зберігання медіа або переміщення програми на карту SD \n - <b>READ_EXTERNAL_STORAGE</b>: використовується для додавання медіа до тутів. \n - <b>BOOT_COMPLETED</b>: використовується для запуску служби сповіщень. \n - <b>WAKE_LOCK</b>: Використовується під час роботи служби сповіщень.</string>
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: використовується для виявлення, чи пристрій підключено до Wi-Fi мережі. \n - <b>Інтернет</b>: використовується для запитів до до екземпляра. \n - <b>WRITE_EXTERNAL_STORAGE</b>: використовується для зберігання медіа або переміщення програми на карту SD \n - <b>READ_EXTERNAL_STORAGE</b>: використовується для додавання медіа до тутів. \n - <b>BOOT_COMPLETED</b>: використовується для запуску служби сповіщень. \n - <b>WAKE_LOCK</b>: Використовується під час роботи служби сповіщень.
+    </string>
     <string name="privacy_API_authorizations_title">API дозволи:</string>
     <string name="privacy_API_authorizations">- <b>Читати</b>: Читати дані.\n
         - <b>Писати</b>: Постити статуси і завантажувати медіа-файли.\n
         - <b>Підписка</b>: Підписка, відписка, блок, розблок.\n\n
-        <b>&#9888; Ці дії відбуваються тільки за запитом користувача.</b></string>
+        <b>&#9888; Ці дії відбуваються тільки за запитом користувача.</b>
+    </string>
     <string name="privacy_API_title">Бібліотеки</string>
     <string name="privacy_API">Додаток <b>не відслідковує користувача</b> І не містить реклами.\n\n
         Використання сторонніх бібліотек мінімізоване: \n
         - <b>Glide</b>: для управління медіа-файлами\n
         - <b>Android-Job</b>: Для управління сервісами\n
-        - <b>PhotoView</b>: Для управління зображеннями\n</string>
+        - <b>PhotoView</b>: Для управління зображеннями\n
+    </string>
     <string name="privacy_API_yandex_title">Переклад дмухів</string>
     <string name="privacy_API_yandex_authorizations">Додаток перекладає дмухи через Yandex API.\n
-        Умови конфіденційності Yandex можна знайти за посиланням: https://yandex.ru/legal/confidential/?lang=en</string>
-    <string name="thanks_text">Дякуємо Stéphane за лого.</string>
-    <string name="thanks_text_dev">Подяки:</string>
+        Умови конфіденційності Yandex можна знайти за посиланням: https://yandex.ru/legal/confidential/?lang=en
+    </string>
+    <string name="thanks_text">Дякуємо Stéphane за лого.
+    </string>
+    <string name="thanks_text_dev">Подяки:    </string>
     <string name="filter_regex">Відфільтруйте регулярним виразом</string>
     <string name="search">Пошук</string>
     <string name="delete">Видалити</string>
@@ -446,12 +452,13 @@
     <string name="account_moved_to">%1$s відправлено до %2$s</string>
     <string name="show_boost_count">Показати лічильники передмухнутого/обраного</string>
     <string name="issue_login_title">Автентифікація не працює?</string>
-    <string name="issue_login_message"><b>Деякі поради, що можуть допомогти:</b>\n\n
+    <string name="issue_login_message">        <b>Деякі поради, що можуть допомогти:</b>\n\n
         - Перевірте правильність написання назви екземпляру\n\n
         - Перевірте, чи екземпляр працює\n\n
         - Якщо використовуєте двофакторну авторизацію (2FA), будь ласка скористайтеся посиланням внизу, коли назву екземпляру заповнено\n\n
         - Також можна використовувати посилання без 2FA\n\n
-        - Якщо все одно не працює, повідомте нам на GitHub: https://github.com/stom79/mastalab/issues</string>
+        - Якщо все одно не працює, повідомте нам на GitHub: https://github.com/stom79/mastalab/issues
+    </string>
     <string name="media_ready">Медіа-файл завантажений. Натисніть щоб відобразити.</string>
     <string name="data_export_start">Ця дія довготривала, ви отримаєте сповіщення після закінчення.</string>
     <string name="data_export_running">Почекайте, будь ласка…</string>
@@ -578,6 +585,7 @@
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
+    <string name="thanks_text_ux">New UX/UI designer</string>
     <string-array name="filter_expire">
         <item>Ніколи</item>
         <item>30 хвилин</item>
