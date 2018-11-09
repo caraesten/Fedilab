@@ -157,7 +157,7 @@
     <string name="toot_delete_media">Hapus media ini?</string>
     <string name="toot_error_no_content">Kutipan Anda kosong!</string>
     <string name="toot_visibility_tilte">Visibilitas dari kutipan</string>
-    <string name="toots_visibility_tilte">Visibilitas kutipan secara standar:</string>
+    <string name="toots_visibility_tilte">Visibilitas kutipan secara standar: </string>
     <string name="toot_sent">Kutipan telah dikirim!</string>
     <string name="toot_reply_content_title">Anda membalas kutipan ini:</string>
     <string name="toot_sensitive">Konten sensitif?</string>
@@ -179,9 +179,9 @@
     <!-- About -->
     <string name="about_vesrion">Rilis %1$s</string>
     <string name="about_developer">Pengembang:</string>
-    <string name="about_license">Lisensi:</string>
+    <string name="about_license">Lisensi: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Sumber kode:</string>
+    <string name="about_code">Sumber kode: </string>
     <string name="about_yandex">Terjemahan dari kutipan:</string>
     <string name="about_thekinrar">Contoh pencarian:</string>
     <string name="about_thekinrar_action">contoh.sosial</string>
@@ -279,7 +279,7 @@
     <string name="set_display_local">Tampilkan kronologi lokal</string>
     <string name="set_display_global">Tampilkan kronologi federasi</string>
     <string name="set_disable_gif">Nonaktifkan avatar GIF</string>
-    <string name="set_folder_title">Jalur:</string>
+    <string name="set_folder_title">Jalur: </string>
     <string name="set_auto_store_toot">Simpan konsep otomatis</string>
     <string name="set_bubble_counter">Tampilkan konter</string>
     <string name="set_auto_add_media_url">Tambahkan URL dari media kutipan</string>
@@ -318,7 +318,7 @@
     <string name="use_javascript">Aktifkan Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Izinkan cookie pihak ketiga</string>
-    <string name="settings_ui_layout">Tata letak untuk kronologi:</string>
+    <string name="settings_ui_layout">Tata letak untuk kronologi: </string>
     <string-array name="settings_menu_tabs">
         <item>Tab</item>
         <item>Menu</item>
@@ -367,8 +367,9 @@
     <string name="set_resize_picture">Resize pictures</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Tolak pemberitahuan</string>
-    <string name="settings_popup_message">Tolong konfirmasi penolakan pemberitahuan yang ingin Anda terima.
-        Anda dapat mengaktifkan atau menonaktifkan pemberitahuan ini di setelan (Tab pemberitahuan).</string>
+    <string name="settings_popup_message">       Tolong konfirmasi penolakan pemberitahuan yang ingin Anda terima.
+        Anda dapat mengaktifkan atau menonaktifkan pemberitahuan ini di setelan (Tab pemberitahuan).
+    </string>
     <string name="settings_popup_timeline">Untuk kutipan yang belum dibaca di beranda kronologi?</string>
     <string name="settings_popup_notification">Untuk pemberitahuan yang belum dibaca?</string>
     <!-- CACHE -->
@@ -398,34 +399,41 @@
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Data terekam</string>
-    <string name="privacy_data">Hanya informasi dasar dari akun yang tersimpan pada perangkat.
+    <string name="privacy_data">        Hanya informasi dasar dari akun yang tersimpan pada perangkat.
         Data ini sangat rahasia dan hanya bisa digunakan oleh aplikasi.
         Menghapus aplikasi segera menghapus data ini.\n
-        &#9888; masuk dan kata sandi tidak pernah disimpan. Mereka hanya digunakan selama otentikasi aman (SSL) dengan sebuah tuntutan.</string>
+        &#9888; masuk dan kata sandi tidak pernah disimpan. Mereka hanya digunakan selama otentikasi aman (SSL) dengan sebuah tuntutan.
+    </string>
     <string name="privacy_authorizations_title">Izin:</string>
-    <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b>: Digunakan untuk mendeteksi perangkat terhubung ke jaringan WIFI.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Digunakan untuk mendeteksi perangkat terhubung ke jaringan WIFI.\n
         - <b>INTERNET</b>: Digunakan untuk menanyakan suatu hal.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Digunakan untuk menyimpan media atau memindahkan aplikasi ke kartu SD.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Digunakan untuk menambahkan media ke kutipan.\n
         - <b>BOOT_COMPLETED</b>: Digunakan untuk memulai layanan pemberitahuan.\n
-        - <b>WAKE_LOCK</b>: Digunakan selama layanan pemberitahuan.</string>
+        - <b>WAKE_LOCK</b>: Digunakan selama layanan pemberitahuan.
+    </string>
     <string name="privacy_API_authorizations_title">Izin API:</string>
-    <string name="privacy_API_authorizations">- <b>Read</b>: Membaca data.\
+    <string name="privacy_API_authorizations">        - <b>Read</b>: Membaca data.\
         - <b>Write</b>: Posting status dan unggah media untuk status.\n
         - <b>Follow</b>: Ikuti, berhenti ikuti, blokir, buka blokir.\n\n
-        <b>&#9888; Tindakan ini hanya saat pengguna memintanya.</b></string>
+        <b>&#9888; Tindakan ini hanya saat pengguna memintanya.</b>
+    </string>
     <string name="privacy_API_title">Pelacakan dan Perpustakaan</string>
-    <string name="privacy_API">Aplikasi <b>tidak menggunakan alat pelacak</b> (pengukuran pemirsa, kesalahan pelaporan, dll.) dan tidak berisi iklan apapun.\n\n
+    <string name="privacy_API">        Aplikasi <b>tidak menggunakan alat pelacak</b> (pengukuran pemirsa, kesalahan pelaporan, dll.) dan tidak berisi iklan apapun.\n\n
         Penggunaan perpustakaan diminimalkan: \n
         - <b>Luncuran</b>: Untuk mengelola media\n
         - <b>Kerja Android</b>: Untuk mengelola layanan\n
-        - <b>Tampilan Foto</b>: Untuk mengelola gambar\n</string>
+        - <b>Tampilan Foto</b>: Untuk mengelola gambar\n
+    </string>
     <string name="privacy_API_yandex_title">Terjemahan dari kutipan</string>
-    <string name="privacy_API_yandex_authorizations">Aplikasi ini menawarkan kemampuan untuk menerjemahkan kutipan menggunakan perangkat lokal dan API Yandex.\n
+    <string name="privacy_API_yandex_authorizations">        Aplikasi ini menawarkan kemampuan untuk menerjemahkan kutipan menggunakan perangkat lokal dan API Yandex.\n
         Yandex memiliki kebijakan privasi yang tepat yang dapat ditemukan disini: 
-https://yandex.ru/legal/confidential/?lang=en</string>
-    <string name="thanks_text">Terima kasih untuk Stéphane untuk logo.</string>
-    <string name="thanks_text_dev">Terima kasih untuk:</string>
+https://yandex.ru/legal/confidential/?lang=en
+    </string>
+    <string name="thanks_text">        Terima kasih untuk Stéphane untuk logo.
+    </string>
+    <string name="thanks_text_dev">        Terima kasih untuk:
+    </string>
     <string name="filter_regex">Saring dengan ekspresi reguler</string>
     <string name="search">Cari</string>
     <string name="delete">Hapus</string>
@@ -452,7 +460,8 @@ https://yandex.ru/legal/confidential/?lang=en</string>
         - Periksa bahwa contoh tidak down\n\n
         - Jika anda menggunakan two-factor authentication (2FA), gunakan link dibawah ini (begitu nama contoh terisi)\n\n
         - Anda juga dapat menggunakan link tersebut tanpa menggunakan 2FA\n\n
-        - Jika hal tersebut tidak bekerja, anda dapat melaporkan masalah tersebut pada Github di https://github.com/stom79/mastalab/issues</string>
+        - Jika hal tersebut tidak bekerja, anda dapat melaporkan masalah tersebut pada Github di https://github.com/stom79/mastalab/issues
+    </string>
     <string name="media_ready">Media telah berhasil dimuat. Klik disini untuk menampilkannya.</string>
     <string name="data_export_start">Tindakan cukup lama, Anda akan mendapatkan notifikasi ketika tindakan ini telah selesai.</string>
     <string name="data_export_running">Masih berjalan, tunggu sebentar…</string>
@@ -579,6 +588,7 @@ https://yandex.ru/legal/confidential/?lang=en</string>
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
+    <string name="thanks_text_ux">New UX/UI designer</string>
     <string-array name="filter_expire">
         <item>Never</item>
         <item>30 minutes</item>
