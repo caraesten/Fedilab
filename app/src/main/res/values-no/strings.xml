@@ -158,7 +158,7 @@
     <string name="toot_delete_media">Slett dette mediet?</string>
     <string name="toot_error_no_content">Din toot er tom!</string>
     <string name="toot_visibility_tilte">Sikt på tooten</string>
-    <string name="toots_visibility_tilte">Synlighet av toots som standard:</string>
+    <string name="toots_visibility_tilte">Synlighet av toots som standard: </string>
     <string name="toot_sent">Tooten er sendt!</string>
     <string name="toot_reply_content_title">Du svarer på dette toot:</string>
     <string name="toot_sensitive">Følsomt innhold?</string>
@@ -180,9 +180,9 @@
     <!-- About -->
     <string name="about_vesrion">Slett %1$s</string>
     <string name="about_developer">Utvikler:</string>
-    <string name="about_license">Tillatelse:</string>
+    <string name="about_license">Tillatelse: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Kildekode:</string>
+    <string name="about_code">Kildekode: </string>
     <string name="about_yandex">Oversettelse av toots:</string>
     <string name="about_thekinrar">Søk forekomster:</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -282,7 +282,7 @@
     <string name="set_display_local">Vis lokal tidslinje</string>
     <string name="set_display_global">Vis føderert tidslinje</string>
     <string name="set_disable_gif">Deaktiver GIF-avatarer</string>
-    <string name="set_folder_title">Sti:</string>
+    <string name="set_folder_title">Sti: </string>
     <string name="set_auto_store_toot">Lagre utkast automatisk</string>
     <string name="set_bubble_counter">Skjermer</string>
     <string name="set_auto_add_media_url">Legg til URL til media i toots</string>
@@ -321,7 +321,7 @@
     <string name="use_javascript">Aktiver Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Tillat cookies fra tredjeparter</string>
-    <string name="settings_ui_layout">Oppsett for tidslinjer:</string>
+    <string name="settings_ui_layout">Oppsett for tidslinjer: </string>
     <string-array name="settings_menu_tabs">
         <item>Tabs</item>
         <item>Meny</item>
@@ -371,7 +371,7 @@
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Trykk på varsler</string>
     <string name="settings_popup_message">Vennligst bekreft push notifications som du vil motta.
-Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldinger-fanen).</string>
+Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldinger-fanen).    </string>
     <string name="settings_popup_timeline">For uleste toots i hjemmetidslinjen?</string>
     <string name="settings_popup_notification">For uleste varsler?</string>
     <!-- CACHE -->
@@ -404,30 +404,30 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="privacy_data">Bare grunnleggende informasjon fra kontoer lagres på enheten.
  Disse dataene er strengt konfidensielle og kan bare brukes av søknaden.
  Hvis du sletter programmet, fjerner du umiddelbart disse dataene. \n
- &#9888; Logg inn og passord lagres aldri. De brukes kun under sikker autentisering (SSL) med en forekomst.</string>
+ &#9888; Logg inn og passord lagres aldri. De brukes kun under sikker autentisering (SSL) med en forekomst.    </string>
     <string name="privacy_authorizations_title">Tillatelser:</string>
     <string name="privacy_authorizations"><b> ACCESS_NETWORK_STATE </b>: Brukes til å oppdage om enheten er koblet til et WIFI-nettverk. \n
          - <b> INTERNET </b>: Brukes for spørringer til en forekomst. \n
          - <b> WRITE_EXTERNAL_STORAGE </b>: Brukes til å lagre media eller flytte appen på et SD-kort. \n
          - <b> READ_EXTERNAL_STORAGE </b>: Brukes til å legge til media til toots. \n
          - <b> BOOT_COMPLETED </b>: Brukes til å starte varslingstjenesten. \n
-         - <b> WAKE_LOCK </b>: Brukes under varslingstjenesten.</string>
+         - <b> WAKE_LOCK </b>: Brukes under varslingstjenesten.    </string>
     <string name="privacy_API_authorizations_title">API-tillatelser:</string>
     <string name="privacy_API_authorizations">- <b>Les</b>: Les data. \n
 - <b>Skriv</b>: Legg inn statuser og last opp medier for statuser. \n
 - <b>Følg</b>: Følg, unollow, block, unblock. \n \n
-<b>⚠ Disse handlingene utføres bare når brukeren ber om dem.</b></string>
+<b>⚠ Disse handlingene utføres bare når brukeren ber om dem.</b>    </string>
     <string name="privacy_API_title">Sporing og biblioteker</string>
     <string name="privacy_API">Søknaden <b> bruker ikke sporingsverktøy </b> (målgruppemåling, feilrapportering, etc.) og inneholder ingen reklame. \n \n
          Bruken av biblioteker minimeres: \n
          - <b> Glid </b>: For å administrere media \n
          - <b> Android-jobb </b>: For å administrere tjenester \n
-         - <b> PhotoView </b>: For å administrere bilder \n</string>
+         - <b> PhotoView </b>: For å administrere bilder \n    </string>
     <string name="privacy_API_yandex_title">Oversettelse av toots</string>
     <string name="privacy_API_yandex_authorizations">Programmet tilbyr muligheten til å oversette toots ved hjelp av lokaliteten til enheten og Yandex API. \n
-         Yandex har sin riktige personvernpolicy som finnes her: https://yandex.ru/legal/confidential/?lang=en</string>
-    <string name="thanks_text">Takk til Stéphane for logoen.</string>
-    <string name="thanks_text_dev">Takk til:</string>
+         Yandex har sin riktige personvernpolicy som finnes her: https://yandex.ru/legal/confidential/?lang=en    </string>
+    <string name="thanks_text">Takk til Stéphane for logoen.    </string>
+    <string name="thanks_text_dev">Takk til:    </string>
     <string name="filter_regex">Filtrer ut med vanlige uttrykk</string>
     <string name="search">Søke</string>
     <string name="delete">Slett</string>
@@ -448,12 +448,13 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="account_moved_to">%1$s er flyttet til %2$s</string>
     <string name="show_boost_count">Show boosts/favourites count</string>
     <string name="issue_login_title">Authentication does not work?</string>
-    <string name="issue_login_message"><b>Here are some checks that might help:</b>\n\n
+    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
         - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
         - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues</string>
+        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+    </string>
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
@@ -580,6 +581,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
+    <string name="thanks_text_ux">New UX/UI designer</string>
     <string-array name="filter_expire">
         <item>Never</item>
         <item>30 minutes</item>
