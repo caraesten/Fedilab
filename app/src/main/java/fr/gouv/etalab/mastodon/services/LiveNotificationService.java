@@ -34,6 +34,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -131,7 +132,10 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         if( intent == null || intent.getBooleanExtra("stop", false) ) {
             stopSelf();
         }
-        return START_STICKY;
+        if( backgroundProcess)
+            return START_STICKY;
+        else
+            return START_NOT_STICKY;
     }
 
     @Override
