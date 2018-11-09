@@ -656,6 +656,7 @@
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
+    <string name="thanks_text_ux">New UX/UI designer</string>
 
     <string-array name="filter_expire">
         <item>Never</item>
