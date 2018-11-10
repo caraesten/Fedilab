@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
@@ -208,6 +209,7 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                             filterSent.setIrreversible(context_drop.isChecked());
                             new ManageFiltersAsyncTask(context, ManageFiltersAsyncTask.action.UPDATE_FILTER, filterSent, FilterAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
+                        ((MainActivity)context).refreshFilters();
                         dialog.dismiss();
                     }
                 });

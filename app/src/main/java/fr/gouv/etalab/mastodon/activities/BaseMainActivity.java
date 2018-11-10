@@ -1536,12 +1536,7 @@ public abstract class BaseMainActivity extends BaseActivity
             popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                 @Override
                 public void onDismiss(PopupMenu menu) {
-                    if(homeFragment != null && homeFragment.getUserVisibleHint())
-                        homeFragment.refreshFilter();
-                    if(localFragment != null && localFragment.getUserVisibleHint())
-                        localFragment.refreshFilter();
-                    if(federatedFragment != null && federatedFragment.getUserVisibleHint())
-                        federatedFragment.refreshFilter();
+                    refreshFilters();
                 }
             });
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -1629,6 +1624,14 @@ public abstract class BaseMainActivity extends BaseActivity
         return true;
     }
 
+    public void refreshFilters(){
+        if(homeFragment != null && homeFragment.getUserVisibleHint())
+            homeFragment.refreshFilter();
+        if(localFragment != null && localFragment.getUserVisibleHint())
+            localFragment.refreshFilter();
+        if(federatedFragment != null && federatedFragment.getUserVisibleHint())
+            federatedFragment.refreshFilter();
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {

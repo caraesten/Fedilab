@@ -2584,10 +2584,8 @@ public class Helper {
     }
 
 
-    public static List<Status> filterToots(Context context, List<Status> statuses, List<String> timedMute, RetrieveFeedsAsyncTask.Type type){
-        if( statuses == null || statuses.size() == 0 )
-            return statuses;
-        ArrayList<Status> filteredStatus = new ArrayList<>();
+
+    public static boolean filterToots(Context context, Status status, List<String> timedMute, RetrieveFeedsAsyncTask.Type type){
         String filter;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
@@ -2596,7 +2594,7 @@ public class Helper {
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
         else
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
-        for(Status status: statuses){
+
             String content = status.getContent();
             if( status.getSpoiler_text() != null)
                 content += status.getSpoiler_text();
@@ -2655,12 +2653,9 @@ public class Helper {
                         addToot = false;
                 }
             }
-            if(addToot)
-                filteredStatus.add(status);
-        }
-        return filteredStatus;
-    }
 
+        return addToot;
+    }
 
     public static void colorizeIconMenu(Menu menu, int toolbarIconsColor) {
         final PorterDuffColorFilter colorFilter

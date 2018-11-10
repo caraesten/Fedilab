@@ -141,6 +141,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private StatusListAdapter statusListAdapter;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
+    private final int HIDDEN_STATUS = 0;
     private final int DISPLAYED_STATUS = 1;
     private final int FOCUSED_STATUS = 2;
     private final int COMPACT_STATUS = 3;
@@ -389,6 +390,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
         if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
             return FOCUSED_STATUS;
+        else if( !Helper.filterToots(context, statuses.get(position), timedMute, type))
+            return HIDDEN_STATUS;
         else
             return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
     }
