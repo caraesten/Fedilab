@@ -587,10 +587,10 @@
     <string name="videos">Video</string>
     <string name="channels">Canali</string>
     <string name="set_display_emoji">Utilizza le Emoji One</string>
-    <string name="information">Information</string>
-    <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
+    <string name="information">Informazioni</string>
+    <string name="set_display_card">Mostra anteprime in tutti i toot</string>
+    <string name="thanks_text_ux">Nuovo designer UX/UI</string>
+    <string name="set_old_direct_timeline">Usa la timeline diretta precedente a Mastodon 2.6</string>
     <string-array name="filter_expire">
         <item>Mai</item>
         <item>30 minuti</item>
