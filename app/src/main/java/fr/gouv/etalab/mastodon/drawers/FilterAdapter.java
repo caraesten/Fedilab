@@ -209,7 +209,7 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
                             filterSent.setIrreversible(context_drop.isChecked());
                             new ManageFiltersAsyncTask(context, ManageFiltersAsyncTask.action.UPDATE_FILTER, filterSent, FilterAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }
-                        ((MainActivity)context).refreshFilters();
+
                         dialog.dismiss();
                     }
                 });
@@ -284,6 +284,8 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
             List<Filters> filtersRes = apiResponse.getFilters();
             if (filtersRes != null && filtersRes.size() > 0) {
                 notifyStatusChanged(filtersRes.get(0));
+                MainActivity.filters = filtersRes;
+                ((MainActivity)context).refreshFilters();
             }
         }
     }
