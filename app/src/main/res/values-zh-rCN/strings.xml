@@ -582,6 +582,7 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string-array name="filter_expire">
         <item>Never</item>
         <item>30 minutes</item>
