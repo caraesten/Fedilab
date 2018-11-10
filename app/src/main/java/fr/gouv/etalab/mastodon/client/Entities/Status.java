@@ -16,8 +16,9 @@ package fr.gouv.etalab.mastodon.client.Entities;
 
 
 import android.app.Activity;
-import android.content.*;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -33,10 +34,8 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -119,6 +118,7 @@ public class Status implements Parcelable{
     private String content, contentCW, contentTranslated;
     private SpannableString contentSpan, displayNameSpan, contentSpanCW, contentSpanTranslated;
     private RetrieveFeedsAsyncTask.Type type;
+    private int itemViewType;
 
     public Status(){
         this.status = this;
@@ -138,6 +138,7 @@ public class Status implements Parcelable{
         content = in.readString();
         contentTranslated = in.readString();
         reblogs_count = in.readInt();
+        itemViewType = in.readInt();
         favourites_count = in.readInt();
         replies_count = in.readInt();
         reblogged = in.readByte() != 0;
@@ -371,6 +372,7 @@ public class Status implements Parcelable{
         dest.writeString(content);
         dest.writeString(contentTranslated);
         dest.writeInt(reblogs_count);
+        dest.writeInt(itemViewType);
         dest.writeInt(favourites_count);
         dest.writeInt(replies_count);
         dest.writeByte((byte) (reblogged ? 1 : 0));
@@ -1068,5 +1070,13 @@ public class Status implements Parcelable{
 
     public void setWebviewURL(String webviewURL) {
         this.webviewURL = webviewURL;
+    }
+
+    public int getItemViewType() {
+        return itemViewType;
+    }
+
+    public void setItemViewType(int itemViewType) {
+        this.itemViewType = itemViewType;
     }
 }

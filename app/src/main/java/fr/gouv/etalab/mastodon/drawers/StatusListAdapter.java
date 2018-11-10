@@ -142,9 +142,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
     private final int HIDDEN_STATUS = 0;
-    private final int DISPLAYED_STATUS = 1;
-    private final int FOCUSED_STATUS = 2;
-    private final int COMPACT_STATUS = 3;
+    public static final int DISPLAYED_STATUS = 1;
+    public static final int FOCUSED_STATUS = 2;
+    public static final int COMPACT_STATUS = 3;
     private int conversationPosition;
     private List<String> timedMute;
     private boolean redraft;
@@ -387,7 +387,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public int getItemViewType(int position) {
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
+        boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
             return FOCUSED_STATUS;
         else if( !Helper.filterToots(context, statuses.get(position), timedMute, type))
@@ -421,11 +421,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
+            status.setItemViewType(viewHolder.getItemViewType());
 
             final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
-            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, true);
+            boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
 
             if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
@@ -456,14 +457,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
 
 
-            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT &&  getItemViewType(position) != FOCUSED_STATUS && position != 0 ){
+            if( isCompactMode &&  type == RetrieveFeedsAsyncTask.Type.CONTEXT &&  getItemViewType(position) != FOCUSED_STATUS && position != 0 ){
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
                 params.setMargins((int)Helper.convertDpToPixel(25, context), 0, 0, 0);
                 holder.main_container.setLayoutParams(params);
-            }else if(type == RetrieveFeedsAsyncTask.Type.CONTEXT &&  getItemViewType(position) == FOCUSED_STATUS && position != 0 ){
+            }else if(isCompactMode && type == RetrieveFeedsAsyncTask.Type.CONTEXT &&  getItemViewType(position) == FOCUSED_STATUS && position != 0 ){
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
@@ -529,7 +530,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-
+                changeDrawableColor(context, R.drawable.ic_fetch_more,R.color.dark_icon);
                 holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.mastodonC2));
                 holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
@@ -545,6 +546,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.mastodonC4);
                 changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_fetch_more,R.color.mastodonC4);
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
@@ -553,6 +555,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else {
+                changeDrawableColor(context, R.drawable.ic_fetch_more,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.black);
                 changeDrawableColor(context, holder.status_more, R.color.black);
@@ -890,7 +893,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
                     if( !status.isSpoilerShown() && !expand_cw) {
                         holder.status_content_container.setVisibility(View.GONE);
-                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        if( status.getMentions().size() > 0 )
+                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
                     }else {
                         holder.status_content_container.setVisibility(View.VISIBLE);
@@ -907,7 +913,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
                     if( !status.isSpoilerShown() && !expand_cw) {
                         holder.status_content_container.setVisibility(View.GONE);
-                        holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        if( status.getMentions().size() > 0 )
+                            holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);
+                        else
+                            holder.status_spoiler_mention_container.setVisibility(View.GONE);
                         holder.status_spoiler_button.setText(context.getString(R.string.load_attachment_spoiler));
                     }else {
                         holder.status_content_container.setVisibility(View.VISIBLE);

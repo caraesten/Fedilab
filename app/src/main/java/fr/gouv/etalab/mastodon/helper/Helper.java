@@ -1296,6 +1296,8 @@ public class Helper {
             cw_mention = String.format("@%s %s",mention.getUsername(),cw_mention);
         }
         SpannableString spannableString = new SpannableString(cw_mention);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         for (final Mention mention : mentions) {
             String targetedAccount = "@" + mention.getUsername();
             if (spannableString.toString().contains(targetedAccount)) {
@@ -1315,6 +1317,13 @@ public class Helper {
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
                                     super.updateDrawState(ds);
+                                    ds.setUnderlineText(false);
+                                    if (theme == THEME_DARK)
+                                        ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                    else if (theme == THEME_BLACK)
+                                        ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                    else if (theme == THEME_LIGHT)
+                                        ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
                                 }
                             },
                             startPosition, endPosition,

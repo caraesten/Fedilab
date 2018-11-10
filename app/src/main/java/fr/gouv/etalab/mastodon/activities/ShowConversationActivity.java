@@ -39,7 +39,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -338,7 +337,9 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         mLayoutManager = new LinearLayoutManager(this);
 
         lv_status.setLayoutManager(mLayoutManager);
-        lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this));
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        boolean compactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme, compactMode));
         lv_status.setAdapter(statusListAdapter);
 
         if( isRefreshed){

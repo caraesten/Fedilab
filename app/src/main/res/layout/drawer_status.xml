@@ -510,7 +510,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
                         android:layout_width="wrap_content"
-                        android:src="@drawable/ic_remove_red_eye"
+                        android:src="@drawable/ic_remove_red_eye_img"
                         android:layout_height="wrap_content"
                         tools:ignore="ContentDescription" />
                 </RelativeLayout>
@@ -547,7 +547,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
                             android:layout_width="wrap_content"
-                            android:src="@drawable/ic_remove_red_eye"
+                            android:src="@drawable/ic_remove_red_eye_img"
                             android:layout_height="wrap_content"
                             tools:ignore="ContentDescription" />
                     </RelativeLayout>
@@ -730,8 +730,8 @@
         android:id="@+id/fetch_more"
         android:visibility="gone"
         android:textAllCaps="false"
-        android:drawableLeft="@drawable/ic_expand_more"
-        android:drawableStart="@drawable/ic_expand_more"
+        android:drawableLeft="@drawable/ic_fetch_more"
+        android:drawableStart="@drawable/ic_fetch_more"
         android:gravity="center"
         android:layout_gravity="center"
         android:drawablePadding="5dp"

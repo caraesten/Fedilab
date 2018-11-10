@@ -16,16 +16,20 @@ package fr.gouv.etalab.mastodon.drawers;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
+
+import static fr.gouv.etalab.mastodon.drawers.StatusListAdapter.FOCUSED_STATUS;
 
 /**
  * Created by Thomas on 08/09/2018.
@@ -35,19 +39,32 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
 
     private Drawable divider;
     private Context context;
+    private boolean compactMode;
 
-    public ConversationDecoration(Context context){
-        divider = ContextCompat.getDrawable(context,R.drawable.line_divider);
+    public ConversationDecoration(Context context, int theme, boolean compactMode){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        if( theme == Helper.THEME_BLACK)
+            divider = ContextCompat.getDrawable(context,R.drawable.line_divider_black);
+        else if(theme == Helper.THEME_DARK)
+            divider = ContextCompat.getDrawable(context,R.drawable.line_divider_dark);
+        else if(theme == Helper.THEME_LIGHT)
+            divider = ContextCompat.getDrawable(context,R.drawable.line_divider_light);
+        this.compactMode = compactMode;
         this.context = context;
     }
 
     @Override
     public void onDraw(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
 
-        int left = parent.getPaddingLeft() + (int)Helper.convertDpToPixel(12, context);
+        int leftSide;
+        if( compactMode)
+            leftSide = (int) Helper.convertDpToPixel(12, context);
+        else
+            leftSide = (int) Helper.convertDpToPixel(28, context);
+
+        int left = parent.getPaddingLeft() + leftSide;
         int right = left + (int)Helper.convertDpToPixel(4, context);
         int childCount = parent.getChildCount();
-
 
         int offSet = (int) Helper.convertDpToPixel(30, context);
 
@@ -62,20 +79,31 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
 
             int top, bottom;
             if( status != null){
+
+                int itemViewType = status.getItemViewType();
                 Status statusBefore = null;
-                if( position > 0)
-                    statusBefore = adapter.getItem(position - 1);
-                top = (statusBefore != null && statusBefore.getId().equals(status.getIn_reply_to_id()))?
-                        child.getTop(): (child.getTop() + offSet);
-                Status statusAfter = null;
-                if( adapter.getItemCount() > position+1)
-                    statusAfter = adapter.getItem(position + 1);
-                bottom =  (statusAfter != null && status.getId().equals(statusAfter.getIn_reply_to_id()) )?
-                    child.getBottom():child.getTop()+offSet;
-                if( position == 0 && childCount > 1)
-                    top = bottom - (int)Helper.convertDpToPixel(14, context);
-                if( position == 0 && childCount  <= 1 )
-                    top = bottom;
+                Log.v(Helper.TAG,"itemViewType: " + itemViewType);
+                Log.v(Helper.TAG,"position: " + position);
+                Log.v(Helper.TAG,"content: " + status.getContent());
+                if( itemViewType != FOCUSED_STATUS || position == 0){
+                    if( position > 0)
+                        statusBefore = adapter.getItem(position - 1);
+                    top = (statusBefore != null && statusBefore.getId().equals(status.getIn_reply_to_id()))?
+                            child.getTop(): (child.getTop() + offSet);
+                    Status statusAfter = null;
+                    if( adapter.getItemCount() > position+1)
+                        statusAfter = adapter.getItem(position + 1);
+                    bottom =  (statusAfter != null && status.getId().equals(statusAfter.getIn_reply_to_id()) )?
+                            child.getBottom():child.getTop()+offSet;
+                    if( position == 0 && childCount > 1)
+                        top = bottom - (int)Helper.convertDpToPixel(14, context);
+                    if( position == 0 && childCount  <= 1 )
+                        top = bottom;
+                }else{
+                    top = child.getTop();
+                    bottom = top + (int)Helper.convertDpToPixel(14, context);
+                }
+
                 divider.setBounds(left, top, right, bottom);
                 divider.draw(canvas);
             }
