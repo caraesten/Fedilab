@@ -26,7 +26,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -36,17 +35,23 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -54,14 +59,9 @@ import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -77,6 +77,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -91,11 +94,12 @@ import java.util.regex.Pattern;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
-import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
@@ -116,6 +120,8 @@ import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayMutedInstanceFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
+import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.fragments.WhoToFollowFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -129,14 +135,10 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.services.BackupStatusService;
 import fr.gouv.etalab.mastodon.services.LiveNotificationService;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
-import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
-import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 
 import static fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
 import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
@@ -160,11 +162,6 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
 import static fr.gouv.etalab.mastodon.helper.Helper.unCheckAllMenuItems;
 import static fr.gouv.etalab.mastodon.helper.Helper.updateHeaderAccountInfo;
-import android.support.v4.app.FragmentStatePagerAdapter;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 public abstract class BaseMainActivity extends BaseActivity
@@ -2288,10 +2285,13 @@ public abstract class BaseMainActivity extends BaseActivity
 
                 SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+                boolean old_direct_timeline = sharedpreferences.getBoolean(Helper.SET_OLD_DIRECT_TIMELINE, false);
                 if (instanceVersion != null) {
                     Version currentVersion = new Version(instanceVersion);
                     Version minVersion = new Version("2.6");
-                    if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                    if( old_direct_timeline)
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.DIRECT);
+                    else if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.CONVERSATION);
                     } else {
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.DIRECT);

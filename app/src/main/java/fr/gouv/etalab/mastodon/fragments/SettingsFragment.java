@@ -16,11 +16,6 @@ package fr.gouv.etalab.mastodon.fragments;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.media.RingtoneManager;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,7 +29,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -43,7 +40,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -54,12 +50,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import fr.gouv.etalab.mastodon.R;
 
 import static android.app.Activity.RESULT_OK;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
@@ -229,6 +225,24 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean old_direct_timeline = sharedpreferences.getBoolean(Helper.SET_OLD_DIRECT_TIMELINE, false);
+        final CheckBox set_old_direct_timeline = rootView.findViewById(R.id.set_old_direct_timeline);
+        set_old_direct_timeline.setChecked(old_direct_timeline);
+
+        set_old_direct_timeline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_OLD_DIRECT_TIMELINE, set_old_direct_timeline.isChecked());
+                editor.apply();
+                if( getActivity() != null)
+                    getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                if(getActivity() != null)
+                    getActivity().finish();
+                startActivity(intent);
+            }
+        });
 
         boolean follow_instance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
         final CheckBox set_follow_instance = rootView.findViewById(R.id.set_display_follow_instance);
