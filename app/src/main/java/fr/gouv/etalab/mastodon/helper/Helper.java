@@ -2597,7 +2597,7 @@ public class Helper {
 
             String content = status.getContent();
             if( status.getSpoiler_text() != null)
-                content += status.getSpoiler_text();
+                content += " "+ status.getSpoiler_text();
             boolean addToot = true; //Flag to tell if the current toot will be added.
             if( status.getAccount()  == null)
                 addToot = false;

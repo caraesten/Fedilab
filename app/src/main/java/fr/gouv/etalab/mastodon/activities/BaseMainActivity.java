@@ -1625,11 +1625,11 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
     public void refreshFilters(){
-        if(homeFragment != null && homeFragment.getUserVisibleHint())
+        if(homeFragment != null)
             homeFragment.refreshFilter();
-        if(localFragment != null && localFragment.getUserVisibleHint())
+        if(localFragment != null)
             localFragment.refreshFilter();
-        if(federatedFragment != null && federatedFragment.getUserVisibleHint())
+        if(federatedFragment != null)
             federatedFragment.refreshFilter();
     }
 
