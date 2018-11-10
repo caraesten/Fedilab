@@ -283,6 +283,7 @@
 
                 <LinearLayout
                     android:id="@+id/status_cardview"
+                    android:visibility="gone"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/card_border"
                     android:layout_width="match_parent"

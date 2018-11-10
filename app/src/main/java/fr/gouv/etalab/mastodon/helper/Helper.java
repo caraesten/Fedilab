@@ -2032,7 +2032,12 @@ public class Helper {
      */
     public static ArrayList<Attachment> restoreAttachmentFromString(String serializedAttachment){
         Type listType = new TypeToken<ArrayList<Attachment>>(){}.getType();
-        return new Gson().fromJson(serializedAttachment, listType);
+        try {
+            return new Gson().fromJson(serializedAttachment, listType);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
