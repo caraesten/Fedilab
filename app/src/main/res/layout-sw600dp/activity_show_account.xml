@@ -140,8 +140,6 @@
                                 android:textSize="16sp"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
                             <TextView
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginStart="10dp"
                                 android:textColor="?attr/color_in_account_header"
                                 android:id="@+id/account_un"
                                 android:maxLines="1"
