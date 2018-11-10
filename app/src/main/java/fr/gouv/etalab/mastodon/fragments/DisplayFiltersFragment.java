@@ -254,6 +254,8 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
                 Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
             }
         }
+        MainActivity.filters = apiResponse.getFilters();
+        ((MainActivity)context).refreshFilters();
     }
 
 }

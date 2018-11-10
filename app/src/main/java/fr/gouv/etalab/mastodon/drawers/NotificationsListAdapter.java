@@ -16,20 +16,20 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.graphics.Bitmap;
-import android.os.CountDownTimer;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -49,9 +49,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.bumptech.glide.Glide;
-import com.vanniktech.emoji.EmojiTextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -72,15 +70,15 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.CustomTextView;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.helper.Helper;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
@@ -273,7 +271,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
 
         //Manages theme for icon colors
-        if( theme == Helper.THEME_DARK || theme == THEME_BLACK){
+        if( theme == THEME_BLACK){
             changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
             changeDrawableColor(context, holder.status_more, R.color.dark_icon);
             changeDrawableColor(context, holder.status_privacy, R.color.dark_icon);
@@ -281,6 +279,15 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
+            changeDrawableColor(context, holder.notification_delete,R.color.dark_text);
+        }else if( theme == Helper.THEME_DARK ){
+            changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+            changeDrawableColor(context, holder.status_more, R.color.dark_icon);
+            changeDrawableColor(context, holder.status_privacy, R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
+            changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.mastodonC4);
             changeDrawableColor(context, holder.notification_delete,R.color.dark_text);
         }else {
             changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
@@ -500,7 +507,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_show_more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    loadAttachments(notification, holder);
                     notification.getStatus().setAttachmentShown(true);
                     notifyNotificationChanged(notification);
                     /*

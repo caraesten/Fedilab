@@ -129,36 +129,6 @@
                     android:visibility="gone"
                     tools:ignore="ContentDescription" />
             </RelativeLayout>
-
-            <ImageView
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/new_element"
-                android:visibility="gone"
-                android:src="@drawable/ic_fiber_new"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="ContentDescription" />
-            <ImageButton
-                android:id="@+id/status_translate"
-                android:gravity="center"
-                style="?attr/borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_translate"
-                android:layout_gravity="center_horizontal"
-                />
-            <ImageButton
-                android:id="@+id/status_bookmark"
-                android:gravity="center"
-                android:visibility="gone"
-                android:tint="@android:color/white"
-                style="?attr/borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_bookmark_border"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center_horizontal"
-                />
         </LinearLayout>
         <LinearLayout
             android:layout_marginStart="10dp"
@@ -206,34 +176,84 @@
                     android:gravity="end"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/status_spoiler_container"
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginStart="60dp"
+        android:layout_marginLeft="60dp"
+        android:id="@+id/vertical_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/status_spoiler_container"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+            <fr.gouv.etalab.mastodon.helper.CustomTextView
+                android:id="@+id/status_spoiler"
+                android:layout_marginBottom="10dp"
+                android:textIsSelectable="true"
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/status_spoiler_button"
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/ic_remove_red_eye"
+                android:drawableStart="@drawable/ic_remove_red_eye"
+                android:gravity="center_vertical"
+                android:drawablePadding="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?attr/borderless"
+                android:text="@string/load_attachment_spoiler" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_marginLeft="-60dp"
+                android:layout_marginStart="-60dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content">
-                <fr.gouv.etalab.mastodon.helper.CustomTextView
-                    android:id="@+id/status_spoiler"
-                    android:layout_marginBottom="10dp"
-                    android:textIsSelectable="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <Button
-                    android:id="@+id/status_spoiler_button"
-                    android:textAllCaps="false"
-                    android:drawableLeft="@drawable/ic_remove_red_eye"
-                    android:drawableStart="@drawable/ic_remove_red_eye"
-                    android:gravity="center_vertical"
-                    android:drawablePadding="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:maxLines="1"
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/new_element"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_fiber_new"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    tools:ignore="ContentDescription" />
+                <ImageButton
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/status_translate"
+                    android:gravity="center"
                     style="?attr/borderless"
-                    android:text="@string/load_attachment_spoiler" />
-            </LinearLayout>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_translate"
+                    android:layout_gravity="center_horizontal"
+                    />
+                <ImageButton
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/status_bookmark"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:tint="@android:color/white"
+                    style="?attr/borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_bookmark_border"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_horizontal"
+                    />
+            </RelativeLayout>
             <LinearLayout
                 android:id="@+id/status_content_container"
                 android:visibility="gone"
@@ -629,85 +649,83 @@
                     style="?attr/borderless"
                     android:text="@string/load_attachment" />
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/status_spoiler_mention_container"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/status_mention_spoiler"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/status_action_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/status_spoiler_mention_container"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/status_mention_spoiler"
                 android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:drawablePadding="2dp"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:id="@+id/status_reply"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/status_action_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+            <TextView
+                android:drawablePadding="2dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:id="@+id/status_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-                <TextView
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp"
-                    android:drawablePadding="2dp"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:id="@+id/status_reblog_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp"
-                    android:drawablePadding="2dp"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:id="@+id/status_favorite_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:drawablePadding="2dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:id="@+id/status_reblog_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:drawablePadding="2dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:id="@+id/status_favorite_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
+            <ImageView
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:id="@+id/status_pin"
+                android:layout_gravity="center_vertical"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_pin_drop"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/status_privacy"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    tools:ignore="ContentDescription" />
                 <ImageView
                     android:layout_marginLeft="15dp"
                     android:layout_marginStart="15dp"
-                    android:id="@+id/status_pin"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_pin_drop"/>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="end"
-                    android:gravity="end"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/status_privacy"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        tools:ignore="ContentDescription" />
-                    <ImageView
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginStart="15dp"
-                        android:id="@+id/status_more"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_more_horiz"
-                        tools:ignore="ContentDescription" />
-                </LinearLayout>
+                    android:id="@+id/status_more"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_more_horiz"
+                    tools:ignore="ContentDescription" />
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
-
     <Button
         android:id="@+id/fetch_more"
         android:visibility="gone"

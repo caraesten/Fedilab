@@ -49,18 +49,7 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal|top"
                     tools:ignore="ContentDescription" />
-                <ImageView
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center_horizontal"
-                    android:id="@+id/notification_delete"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_delete"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    tools:ignore="ContentDescription" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -85,7 +74,29 @@
                     android:layout_gravity="end"
                     android:gravity="end"
                     android:layout_height="wrap_content" />
-
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/notification_delete"
+                    android:src="@drawable/ic_delete"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
                 <LinearLayout
                     android:id="@+id/status_spoiler_container"
                     android:layout_width="match_parent"
@@ -326,6 +337,7 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout

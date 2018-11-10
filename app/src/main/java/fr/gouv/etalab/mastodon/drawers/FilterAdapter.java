@@ -36,11 +36,12 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
@@ -280,12 +281,11 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
         if( apiResponse != null) {
             if (apiResponse.getError() != null) {
                 Toast.makeText(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                return;
             }
             List<Filters> filtersRes = apiResponse.getFilters();
             if (filtersRes != null && filtersRes.size() > 0) {
                 notifyStatusChanged(filtersRes.get(0));
-                MainActivity.filters = filtersRes;
-                ((MainActivity)context).refreshFilters();
             }
         }
     }

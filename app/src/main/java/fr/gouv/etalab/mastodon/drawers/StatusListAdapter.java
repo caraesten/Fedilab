@@ -16,25 +16,24 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -62,6 +61,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
@@ -542,8 +542,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_plus_one,R.color.dark_icon);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.dark_icon);
-                changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
-                changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
+                changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.mastodonC4);
                 changeDrawableColor(context, R.drawable.ic_translate,R.color.dark_text);
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
@@ -922,10 +922,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             if( status.getReblog() == null) {
                 if (status.getMedia_attachments().size() < 1) {
-                    if( fullAttachement )
-                        holder.status_horizontal_document_container.setVisibility(View.GONE);
-                    else
-                        holder.status_document_container.setVisibility(View.GONE);
+                    holder.status_horizontal_document_container.setVisibility(View.GONE);
+                    holder.status_document_container.setVisibility(View.GONE);
                     holder.status_show_more.setVisibility(View.GONE);
                 } else {
                     //If medias are loaded without any conditions or if device is on wifi
@@ -989,7 +987,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         else
                             status.setSensitive(true);
 
-                        if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK)
+                        if( theme == Helper.THEME_BLACK)
                             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
                         else
                             changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
@@ -1006,7 +1004,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         else
                             status.setSensitive(true);
 
-                        if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK)
+                        if( theme == Helper.THEME_BLACK)
                             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
                         else
                             changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
