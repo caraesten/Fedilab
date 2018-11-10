@@ -160,7 +160,7 @@
     <string name="toot_delete_media">Usunąć tą zawartość?</string>
     <string name="toot_error_no_content">Twój wpis jest pusty!</string>
     <string name="toot_visibility_tilte">Widoczność wpisu</string>
-    <string name="toots_visibility_tilte">Domyślna widoczność wpisu:</string>
+    <string name="toots_visibility_tilte">Domyślna widoczność wpisu: </string>
     <string name="toot_sent">Wpis został wysłany!</string>
     <string name="toot_reply_content_title">Odpowiadasz na ten wpis:</string>
     <string name="toot_sensitive">Wrażliwe treści?</string>
@@ -182,9 +182,9 @@
     <!-- About -->
     <string name="about_vesrion">Wersja %1$s</string>
     <string name="about_developer">Twórca:</string>
-    <string name="about_license">Licencja:</string>
+    <string name="about_license">Licencja: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Kod źródłowy:</string>
+    <string name="about_code">Kod źródłowy: </string>
     <string name="about_yandex">Tłumaczenie wpisów:</string>
     <string name="about_thekinrar">Więcej o instancjach:</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -288,7 +288,7 @@
     <string name="set_display_local">Wyświetl lokalną oś czasu</string>
     <string name="set_display_global">Wyświetl globalną oś czasu</string>
     <string name="set_disable_gif">Wyłącz animowane obrazy profilowe</string>
-    <string name="set_folder_title">Ścieżka:</string>
+    <string name="set_folder_title">Ścieżka: </string>
     <string name="set_auto_store_toot">Automatyczny zapis szkicu</string>
     <string name="set_bubble_counter">Wyświetl kraje</string>
     <string name="set_auto_add_media_url">Dodaj adres URL zawartości we wpisach</string>
@@ -327,7 +327,7 @@
     <string name="use_javascript">Włącz Javascript</string>
     <string name="expand_cw">Zawsze rozwijaj ostrzeżenia o zawartości</string>
     <string name="use_cookies">Zezwalaj na pliki cookie firm trzecich</string>
-    <string name="settings_ui_layout">Układ osi czasu:</string>
+    <string name="settings_ui_layout">Układ osi czasu: </string>
     <string-array name="settings_menu_tabs">
         <item>Zakładki</item>
         <item>Menu</item>
@@ -377,7 +377,7 @@
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Powiadomienia</string>
     <string name="settings_popup_message">Wskaż, jakie powiadomienia chcesz otrzymywać.
-        Możesz włączyć i wyłączyć te powiadomienia w ustawieniach powiadomień.</string>
+        Możesz włączyć i wyłączyć te powiadomienia w ustawieniach powiadomień.    </string>
     <string name="settings_popup_timeline">Dla nieprzeczytanych wpisów w lokalnej osi czasu?</string>
     <string name="settings_popup_notification">Dla nieprzeczytanych powiadomień?</string>
     <!-- CACHE -->
@@ -407,33 +407,38 @@
     <string name="owner_cached_toots_empty">Nie znaleziono wpisów. Proszę użyć funkcji synchronizacji w celu pobrania nowych wpisów.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Przechowywane dane</string>
-    <string name="privacy_data">Tylko podstawowe informacje o koncie są przechowywane na urządzeniu.
+    <string name="privacy_data">        Tylko podstawowe informacje o koncie są przechowywane na urządzeniu.
         Te dane nie są dostępne dla innych aplikacji.
         Dezinstalacja aplikacji natychmiastowo usuwa wszystkie dane.\n
-        &#9888; Dane logowania nie są przechowywane na urządzeniu. Są użyte tylko podczas pierwszego logowania i przekazywane do instancji szyfrowanym kanałem SSL.</string>
+        &#9888; Dane logowania nie są przechowywane na urządzeniu. Są użyte tylko podczas pierwszego logowania i przekazywane do instancji szyfrowanym kanałem SSL.
+    </string>
     <string name="privacy_authorizations_title">Uprawnienia:</string>
-    <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b>: Pozwala sprawdzić, czy urządzenie jest połączone z siecią WiFi.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Pozwala sprawdzić, czy urządzenie jest połączone z siecią WiFi.\n
         - <b>INTERNET</b>: Pozwala na połączenie z instancją.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Pozwala na zachowywanie multimediów i przeniesienie aplikacji na kartę SD.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Pozwala dodać zawartość do wpisów.\n
         - <b>BOOT_COMPLETED</b>: Pozwala wyświetlać powiadomienia po włączeniu urządzenia.\n
-        - <b>WAKE_LOCK</b>: Pozwala wyświetlać powiadomienia w tle.</string>
+        - <b>WAKE_LOCK</b>: Pozwala wyświetlać powiadomienia w tle.
+    </string>
     <string name="privacy_API_authorizations_title">Uprawnienia API:</string>
-    <string name="privacy_API_authorizations">- <b>Odczyt</b>: Możliwość odczytu danych.\n
+    <string name="privacy_API_authorizations">        - <b>Odczyt</b>: Możliwość odczytu danych.\n
         - <b>Zapis</b>: Wysyłanie wpisów i załączanie multimediów.\n
         - <b>Śledzenie</b>: Śledzenie i blokowanie.\n\n
-        <b>&#9888; Te uprawnienia są wykorzystywane wyłącznie na Twoje żądanie.</b></string>
+        <b>&#9888; Te uprawnienia są wykorzystywane wyłącznie na Twoje żądanie.</b>
+    </string>
     <string name="privacy_API_title">Śledzenie i biblioteki</string>
-    <string name="privacy_API">Mastalab <b>nie śledzi Twojej aktywności</b> (zbieranie wrażliwych danych, zgłaszanie błędów) i nie zawiera reklam.\n\n
+    <string name="privacy_API">        Mastalab <b>nie śledzi Twojej aktywności</b> (zbieranie wrażliwych danych, zgłaszanie błędów) i nie zawiera reklam.\n\n
         Używane biblioteki: \n
         - <b>Glide</b>: zarządzanie zawartością multimedialną\n
         - <b>Android-Job</b>: zarządzanie usługami\n
-        - <b>PhotoView</b>: zarządzanie obrazami\n</string>
+        - <b>PhotoView</b>: zarządzanie obrazami\n
+    </string>
     <string name="privacy_API_yandex_title">Automatyczne tłumaczenie wpisów:</string>
-    <string name="privacy_API_yandex_authorizations">Mastalab oferuje automatyczne tłumaczenie wpisów na wybrany język przy pomocy API Yandex.\n
-        Polityka prywatności usługi Yandex jest dostępna w języku angielskim tutaj: https://yandex.ru/legal/confidential/?lang=en</string>
-    <string name="thanks_text">Podziękowania dla Stéphane za logo.</string>
-    <string name="thanks_text_dev">Podziękowania dla:</string>
+    <string name="privacy_API_yandex_authorizations">        Mastalab oferuje automatyczne tłumaczenie wpisów na wybrany język przy pomocy API Yandex.\n
+        Polityka prywatności usługi Yandex jest dostępna w języku angielskim tutaj: https://yandex.ru/legal/confidential/?lang=en
+    </string>
+    <string name="thanks_text">Podziękowania dla Stéphane za logo.    </string>
+    <string name="thanks_text_dev">Podziękowania dla:    </string>
     <string name="filter_regex">Filtruj przez wyrażenia regularne</string>
     <string name="search">Szukaj</string>
     <string name="delete">Usuń</string>
@@ -454,12 +459,13 @@
     <string name="account_moved_to">%1$s przeniósł się do %2$s</string>
     <string name="show_boost_count">Pokaż liczbę podbić i polubień</string>
     <string name="issue_login_title">Problem z uwierzytelnieniem?</string>
-    <string name="issue_login_message"><b>Spróbuj zastosować się do poniższych rad:</b>\n\n
+    <string name="issue_login_message">        <b>Spróbuj zastosować się do poniższych rad:</b>\n\n
         - Sprawdź, czy nazwa instancji została poprawnie przepisana\n\n
         - Sprawdź, czy instancja jest dostępna\n\n
         - Jeśli używasz dwustopniowego uwierzytelniania (2FA), kliknij w link poniżej (po wpisaniu nazwy instancji)\n\n
         - Możesz użyć tego linku nawet gdy nie używasz 2FA\n\n
-        - Jeśli wciąż nie możesz się zalogować, proszę zgłoś problem tutaj: https://github.com/stom79/mastalab/issues</string>
+        - Jeśli wciąż nie możesz się zalogować, proszę zgłoś problem tutaj: https://github.com/stom79/mastalab/issues
+    </string>
     <string name="media_ready">Załadowano zawartość multimedialną. Naciśnij tutaj, aby ją wyświetlić.</string>
     <string name="data_export_start">To działanie może trochę potrwać. Powiadomimy cię o jego zakończeniu.</string>
     <string name="data_export_running">Wciąż pracuję, proszę czekać…</string>
@@ -586,6 +592,8 @@
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
+    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string-array name="filter_expire">
         <item>Nigdy</item>
         <item>30 minut</item>

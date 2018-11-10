@@ -160,7 +160,7 @@
     <string name="toot_delete_media">Удалить этот медиафайл?</string>
     <string name="toot_error_no_content">Ваш тут пуст!</string>
     <string name="toot_visibility_tilte">Видимость тута</string>
-    <string name="toots_visibility_tilte">Видимость тутов по умолчанию:</string>
+    <string name="toots_visibility_tilte">Видимость тутов по умолчанию: </string>
     <string name="toot_sent">Тут отправлен!</string>
     <string name="toot_reply_content_title">Вы отвечаете на этот тут:</string>
     <string name="toot_sensitive">Деликатный контент?</string>
@@ -182,9 +182,9 @@
     <!-- About -->
     <string name="about_vesrion">Версия %1$s</string>
     <string name="about_developer">Разработчик:</string>
-    <string name="about_license">Лицензия:</string>
+    <string name="about_license">Лицензия: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Исходный код:</string>
+    <string name="about_code">Исходный код: </string>
     <string name="about_yandex">Перевод тутов:</string>
     <string name="about_thekinrar">Поиск серверов:</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -288,7 +288,7 @@
     <string name="set_display_local">Показывать локальную ленту</string>
     <string name="set_display_global">Показывать федеративную ленту</string>
     <string name="set_disable_gif">Отключить GIF-аватары</string>
-    <string name="set_folder_title">Путь:</string>
+    <string name="set_folder_title">Путь: </string>
     <string name="set_auto_store_toot">Сохранять черновики автоматически</string>
     <string name="set_bubble_counter">Показывать счетчики</string>
     <string name="set_auto_add_media_url">Добавлять URL-адрес медиа в туты</string>
@@ -327,7 +327,7 @@
     <string name="use_javascript">Включить Javascript</string>
     <string name="expand_cw">Автоматически раскрывать cw</string>
     <string name="use_cookies">Разрешить сторонние куки</string>
-    <string name="settings_ui_layout">Схема временной шкалы:</string>
+    <string name="settings_ui_layout">Схема временной шкалы: </string>
     <string-array name="settings_menu_tabs">
         <item>Вкладки</item>
         <item>Меню</item>
@@ -376,8 +376,9 @@
     <string name="set_resize_picture">Изменить размер изображений</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-уведомления</string>
-    <string name="settings_popup_message">Пожалуйста, подтвердите push-уведомления, которые вы хотите получить.
-        Вы можете включить или отключить эти уведомления позже в настройках (вкладка \'Уведомления\').</string>
+    <string name="settings_popup_message">        Пожалуйста, подтвердите push-уведомления, которые вы хотите получить.
+        Вы можете включить или отключить эти уведомления позже в настройках (вкладка \'Уведомления\').
+    </string>
     <string name="settings_popup_timeline">Для непрочитанных тутов в домашней ленте?</string>
     <string name="settings_popup_notification">Для непрочитанных уведомлений?</string>
     <!-- CACHE -->
@@ -407,33 +408,40 @@
     <string name="owner_cached_toots_empty">В базе данных тутов не найдено. Пожалуйста, используйте кнопку синхронизации в меню для их получения.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Записанные данные</string>
-    <string name="privacy_data">На устройстве хранятся только основные сведения из аккаунтов.
+    <string name="privacy_data">        На устройстве хранятся только основные сведения из аккаунтов.
         Эти данные являются строго конфиденциальными и могут использоваться только приложением.
         Удаление приложения немедленно удалит эти данные.\n
-        &#9888; Логин и пароли никогда не сохраняются. Они используются только во время безопасной аутентификации (SSL) с сервером.</string>
+        &#9888; Логин и пароли никогда не сохраняются. Они используются только во время безопасной аутентификации (SSL) с сервером.
+    </string>
     <string name="privacy_authorizations_title">Разрешения:</string>
-    <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b>: Используется для определения того, подключено ли устройство к сети WIFI.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Используется для определения того, подключено ли устройство к сети WIFI.\n
         - <b>INTERNET</b>: Используется для запросов к серверу.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Используется для хранения мультимедиа или для перемещения приложения на SD-карту.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Используется для добавления мультимедиа в туты.\n
         - <b>BOOT_COMPLETED</b>: Используется для запуска службы уведомлений.\n
-        - <b>WAKE_LOCK</b>: Используется во время службы уведомлений.</string>
+        - <b>WAKE_LOCK</b>: Используется во время службы уведомлений.
+    </string>
     <string name="privacy_API_authorizations_title">Разрешения API:</string>
-    <string name="privacy_API_authorizations">- <b>Чтение</b>: Чтение данных.\n
+    <string name="privacy_API_authorizations">        - <b>Чтение</b>: Чтение данных.\n
         - <b>Запись</b>: Публикация статусов и загрузка файлов для статусов.\n
         - <b>Подписка</b>: Подписка, отписка, блокировка, разблокировка.\n\n
-        <b>&#9888; Эти действия выполняются только при запросе их пользователем.</b></string>
+        <b>&#9888; Эти действия выполняются только при запросе их пользователем.</b>
+    </string>
     <string name="privacy_API_title">Отслеживание и библиотеки</string>
-    <string name="privacy_API">Это приложение <b>не использует инструменты отслеживания</b> (измерение аудитории, отчет об ошибках и т. д.) и не содержит никакой рекламы.\n\n
+    <string name="privacy_API">        Это приложение <b>не использует инструменты отслеживания</b> (измерение аудитории, отчет об ошибках и т. д.) и не содержит никакой рекламы.\n\n
         Использование библиотек сводится к минимуму: \n
         - <b>Glide</b>: Для управления файлами\n
         - <b>Android-Job</b>: Для управления сервисами\n
-        - <b>PhotoView</b>: Для управления изображениями\n</string>
+        - <b>PhotoView</b>: Для управления изображениями\n
+    </string>
     <string name="privacy_API_yandex_title">Перевод тутов</string>
-    <string name="privacy_API_yandex_authorizations">Приложение предлагает возможность переводить туты, используя язык устройства и Яндекс API.\n 
-        Яндекс имеет собственную политику конфиденциальности, условия которой можно найти здесь: https://yandex.ru/legal/confidential/?lang=en</string>
-    <string name="thanks_text">Благодарю Stéphane за логотип.</string>
-    <string name="thanks_text_dev">Спасибо:</string>
+    <string name="privacy_API_yandex_authorizations">        Приложение предлагает возможность переводить туты, используя язык устройства и Яндекс API.\n 
+        Яндекс имеет собственную политику конфиденциальности, условия которой можно найти здесь: https://yandex.ru/legal/confidential/?lang=en
+    </string>
+    <string name="thanks_text">        Благодарю Stéphane за логотип.
+    </string>
+    <string name="thanks_text_dev">        Спасибо:
+    </string>
     <string name="filter_regex">Отфильтровать по регулярным выражениям</string>
     <string name="search">Поиск</string>
     <string name="delete">Удалить</string>
@@ -454,12 +462,13 @@
     <string name="account_moved_to">%1$s был перенесен в %2$s</string>
     <string name="show_boost_count">Показать количество продвигаемых/избранных</string>
     <string name="issue_login_title">Аутентификация не работает?</string>
-    <string name="issue_login_message"><b>Вот некоторые подсказки, которые могут помочь:</b>\n\n
+    <string name="issue_login_message">        <b>Вот некоторые подсказки, которые могут помочь:</b>\n\n
         - Проверьте, нет ли орфографических ошибок в имени сервера\n\n
         - Убедитесь в доступности вашего сервера\n\n
         - Если вы используете двухфакторную аутентификацию (2FA), используйте ссылку внизу (после заполнения имени сервера)\n\n
         - Вы также можете использовать эту ссылку без использования 2FA\n\n
-        - Если все перечисленное вам не помогло, создайте проблему на Github: https://github.com/stom79/mastalab/issues</string>
+        - Если все перечисленное вам не помогло, создайте проблему на Github: https://github.com/stom79/mastalab/issues
+    </string>
     <string name="media_ready">Медиафайл загружен. Нажмите здесь, для его отображения.</string>
     <string name="data_export_start">Это действие может продолжаться довольно долго. Вы будете уведомлены, когда оно будет завершено.</string>
     <string name="data_export_running">Все еще работает, подождите…</string>
@@ -586,6 +595,8 @@
     <string name="set_display_emoji">Использовать Emoji One</string>
     <string name="information">информация</string>
     <string name="set_display_card">Показывать предпросмотр для всех тутов</string>
+    <string name="thanks_text_ux">Новый дизайнер UX/UI</string>
+    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>

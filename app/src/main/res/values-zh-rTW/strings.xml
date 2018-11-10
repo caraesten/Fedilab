@@ -367,8 +367,9 @@
     <string name="set_resize_picture">調整圖片大小</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">推播通知</string>
-    <string name="settings_popup_message">請確認要接收的推播通知。
-        您稍後可以在設定（通知分頁）中啟用或停用這些通知。</string>
+    <string name="settings_popup_message">        請確認要接收的推播通知。
+        您稍後可以在設定（通知分頁）中啟用或停用這些通知。
+    </string>
     <string name="settings_popup_timeline">針對家時間軸的未讀嘟文？</string>
     <string name="settings_popup_notification">針對未讀通知？</string>
     <!-- CACHE -->
@@ -398,33 +399,40 @@
     <string name="owner_cached_toots_empty">在資料庫中找不到嘟文。請從選單中使用同步按鈕以擷取它們。</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">已記錄的資料</string>
-    <string name="privacy_data">只有帳號中的基本資訊才會儲存在裝置上。
+    <string name="privacy_data">        只有帳號中的基本資訊才會儲存在裝置上。
         這些資料嚴格保密，僅能由應用程式使用。
         刪除應用程式將會立即移除這些資料。\n
-        &#9888; 不會儲存密碼與登入資訊。它們僅會在有安全驗證 (SSL) 的實體上使用。</string>
+        &#9888; 不會儲存密碼與登入資訊。它們僅會在有安全驗證 (SSL) 的實體上使用。
+    </string>
     <string name="privacy_authorizations_title">權限：</string>
-    <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b>：用於偵測裝置是否連線至 WIFI 網路。\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>：用於偵測裝置是否連線至 WIFI 網路。\n
         - <b>INTERNET</b>：用於查詢實體。\n
         - <b>WRITE_EXTERNAL_STORAGE</b>：用於儲存媒體或將應用程式移動到記憶卡上。\n
         - <b>READ_EXTERNAL_STORAGE</b>：用於將媒體新增到嘟文中。\n
         - <b>BOOT_COMPLETED</b>：用於啟動通知服務。\n
-        - <b>WAKE_LOCK</b>：在通知服務期間使用。</string>
+        - <b>WAKE_LOCK</b>：在通知服務期間使用。
+    </string>
     <string name="privacy_API_authorizations_title">API 權限：</string>
-    <string name="privacy_API_authorizations">- <b>Read</b>：讀取資料。\n
+    <string name="privacy_API_authorizations">        - <b>Read</b>：讀取資料。\n
         - <b>Write</b>：貼出狀態與為狀態上傳媒體。\n
         - <b>Follow</b>：關注、取消關注、阻擋、取消阻擋。\n\n
-        <b>&#9888; 這些動作僅在使用者要求執行時才會執行。</b></string>
+        <b>&#9888; 這些動作僅在使用者要求執行時才會執行。</b>
+    </string>
     <string name="privacy_API_title">追蹤與函式庫</string>
-    <string name="privacy_API">本應用程式<b>不使用追蹤工具</b>（粉絲追蹤、錯誤回報等等）且不包含任何廣告。\n\n
+    <string name="privacy_API">        本應用程式<b>不使用追蹤工具</b>（粉絲追蹤、錯誤回報等等）且不包含任何廣告。\n\n
         使用的函式庫也盡量減到最少：\n
         - <b>Glide</b>：管理媒體\n
         - <b>Android-Job</b>：管理服務\n
-        - <b>PhotoView</b>：管理圖片\n</string>
+        - <b>PhotoView</b>：管理圖片\n
+    </string>
     <string name="privacy_API_yandex_title">嘟文翻譯</string>
-    <string name="privacy_API_yandex_authorizations">該應用程式提供了使用裝置的語系設定與 Yandex API 進行翻譯的功能。\n
-        Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/legal/confidential/?lang=en</string>
-    <string name="thanks_text">謝謝 Stéphane 的圖示設計。</string>
-    <string name="thanks_text_dev">感謝您：</string>
+    <string name="privacy_API_yandex_authorizations">        該應用程式提供了使用裝置的語系設定與 Yandex API 進行翻譯的功能。\n
+        Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/legal/confidential/?lang=en
+    </string>
+    <string name="thanks_text">        謝謝 Stéphane 的圖示設計。
+    </string>
+    <string name="thanks_text_dev">        感謝您：
+    </string>
     <string name="filter_regex">按正規表達式進行過濾</string>
     <string name="search">搜尋</string>
     <string name="delete">刪除</string>
@@ -445,12 +453,13 @@
     <string name="account_moved_to">%1$s 已經移動到 %2$s</string>
     <string name="show_boost_count">顯示嘟文／最愛計數</string>
     <string name="issue_login_title">身份驗證無法運作？</string>
-    <string name="issue_login_message"><b>這裡有一些可能會有幫助的檢查：</b>\n\n
+    <string name="issue_login_message">        <b>這裡有一些可能會有幫助的檢查：</b>\n\n
         - 檢查實體名稱沒有拼字錯誤\n\n
         - 檢查您的實體是否仍在運行\n\n
         - 若您使用雙因素驗證 (2FA)，請使用下方的連結（填寫實體名稱後）\n\n
         - 您也可以在不使用 2FA 的狀況下使用此連結\n\n
-        - 若還是無法運作，請在 GitHub 上回報問題，網址為 https://github.com/stom79/mastalab/issues</string>
+        - 若還是無法運作，請在 GitHub 上回報問題，網址為 https://github.com/stom79/mastalab/issues
+    </string>
     <string name="media_ready">媒體已載入。點選這裡以顯示。</string>
     <string name="data_export_start">此動作可能會很久，您將在完成時收到通知。</string>
     <string name="data_export_running">仍在執行中，請稍候……</string>
@@ -577,6 +586,8 @@
     <string name="set_display_emoji">使用 Emoji One</string>
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
+    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string-array name="filter_expire">
         <item>永不</item>
         <item>30 分鐘</item>

@@ -585,6 +585,8 @@
     <string name="set_display_emoji">Emoji One verwenden</string>
     <string name="information">Information</string>
     <string name="set_display_card">Vorschau in allen Toots anzeigen</string>
+    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string-array name="filter_expire">
         <item>Nie</item>
         <item>30 Minuten</item>

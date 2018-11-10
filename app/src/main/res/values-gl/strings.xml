@@ -158,7 +158,7 @@
     <string name="toot_delete_media">Eliminar este elemento?</string>
     <string name="toot_error_no_content">O seu toot está baldeiro!</string>
     <string name="toot_visibility_tilte">Visibilidade do toot</string>
-    <string name="toots_visibility_tilte">Visibilidade por omisión para os toots:</string>
+    <string name="toots_visibility_tilte">Visibilidade por omisión para os toots: </string>
     <string name="toot_sent">O toot foi enviado!</string>
     <string name="toot_reply_content_title">Está a respostar a este toot:</string>
     <string name="toot_sensitive">Contido sensible?</string>
@@ -180,9 +180,9 @@
     <!-- About -->
     <string name="about_vesrion">Versión %1$s</string>
     <string name="about_developer">Desenvolvedora:</string>
-    <string name="about_license">Licenza:</string>
+    <string name="about_license">Licenza: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Código fonte:</string>
+    <string name="about_code">Código fonte: </string>
     <string name="about_yandex">Tradución dos toots:</string>
     <string name="about_thekinrar">Buscar instancias:</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -282,7 +282,7 @@
     <string name="set_display_local">Mostrar liña temporal local</string>
     <string name="set_display_global">Mostrar liña temporal federada</string>
     <string name="set_disable_gif">Desactivar avatares GIF</string>
-    <string name="set_folder_title">Ruta:</string>
+    <string name="set_folder_title">Ruta: </string>
     <string name="set_auto_store_toot">Gardar borradores automáticamente</string>
     <string name="set_bubble_counter">Mostrar contadores</string>
     <string name="set_auto_add_media_url">Engadir a URL dos medios nos toots</string>
@@ -321,7 +321,7 @@
     <string name="use_javascript">Activar javascript</string>
     <string name="expand_cw">Expandir automáticamente CW</string>
     <string name="use_cookies">Permitir testemuños de terceiros</string>
-    <string name="settings_ui_layout">Aspecto das liñas temporais:</string>
+    <string name="settings_ui_layout">Aspecto das liñas temporais: </string>
     <string-array name="settings_menu_tabs">
         <item>Pestanas</item>
         <item>Menú</item>
@@ -371,7 +371,8 @@
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Notificacións Push</string>
     <string name="settings_popup_message">Por favor, confirme cales son as notificacións push que quere recibir.
-        Posteriormente pode activar ou desactivar estas notificacións en Axustes (pestana Notificacións).</string>
+        Posteriormente pode activar ou desactivar estas notificacións en Axustes (pestana Notificacións).
+    </string>
     <string name="settings_popup_timeline">Para os toots non lidos no Inicio?</string>
     <string name="settings_popup_notification">Para as notificacións non lidas?</string>
     <!-- CACHE -->
@@ -404,30 +405,37 @@
     <string name="privacy_data">Só se garda no dispositivo a información básica das contas.
         Estos datos son totalmente confidenciais e só poden ser utilizados pola aplicación.
         Eliminando a aplicación eliminará inmediatamente estos datos.\n
-        &#9888; Usuario e Contrasinal nunca se gardan. Só se utilizan no proceso de autenticación (SSL) coa instancia.</string>
+        &#9888; Usuario e Contrasinal nunca se gardan. Só se utilizan no proceso de autenticación (SSL) coa instancia.
+    </string>
     <string name="privacy_authorizations_title">Permisos:</string>
-    <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b>: Utilizado para detectar si o dispositivo está conectado a unha rede WiFi.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Utilizado para detectar si o dispositivo está conectado a unha rede WiFi.\n
         - <b>INTERNET</b>: Utilizado para as consultas a instancia.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Utilizado para gardar medios ou mover a app a tarxeta SD.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Utilizado para engadir medios aos toots.\n
         - <b>BOOT_COMPLETED</b>: Utilizado para iniciar o servizo de notificacións.\n
-        - <b>WAKE_LOCK</b>: Utilizado durante o servizo de notificacións.</string>
+        - <b>WAKE_LOCK</b>: Utilizado durante o servizo de notificacións.
+    </string>
     <string name="privacy_API_authorizations_title">Permisos API:</string>
-    <string name="privacy_API_authorizations">- <b>Lectura</b>: Ler datos.\n
+    <string name="privacy_API_authorizations">        - <b>Lectura</b>: Ler datos.\n
         - <b>Escritura</b>: Publicar estados e subir medios para os estados.\n
         - <b>Seguimento</b>: Seguir, deixar de seguir, bloquear, desbloquear.\n\n
-        <b>&#9888; Estas accións só se realizan a petición da usuaria.</b></string>
+        <b>&#9888; Estas accións só se realizan a petición da usuaria.</b>
+    </string>
     <string name="privacy_API_title">Rastrexo e Bibliotecas</string>
-    <string name="privacy_API">A aplicación <b>non utiliza ferramentas de rastrexo</b> (medida de audiencias, reporte de fallos, etc.) e non contén publicidade.\n\n
+    <string name="privacy_API">        A aplicación <b>non utiliza ferramentas de rastrexo</b> (medida de audiencias, reporte de fallos, etc.) e non contén publicidade.\n\n
         O uso de bibliotecas foi minimizado: \n
         - <b>Glide</b>: Para xestionar medios\n
         - <b>Android-Job</b>: Para xestionar servizos\n
-        - <b>PhotoView</b>: Para xestionar imaxes\n</string>
+        - <b>PhotoView</b>: Para xestionar imaxes\n
+    </string>
     <string name="privacy_API_yandex_title">Tradución dos toots</string>
     <string name="privacy_API_yandex_authorizations">A aplicación ofrece a posibilidade de traducir os toots utilizando o idioma do dispositivo e a API de Yandex.\n
-        Yandex ten a súa propia política de intimidade, que pode atopar aquí: https://yandex.ru/legal/confidential/?lang=en</string>
-    <string name="thanks_text">Grazas Stéphane polo logo.</string>
-    <string name="thanks_text_dev">Grazas a:</string>
+        Yandex ten a súa propia política de intimidade, que pode atopar aquí: https://yandex.ru/legal/confidential/?lang=en
+    </string>
+    <string name="thanks_text">Grazas Stéphane polo logo.
+    </string>
+    <string name="thanks_text_dev">Grazas a:
+    </string>
     <string name="filter_regex">Filtrado de expresións regulares</string>
     <string name="search">Buscar</string>
     <string name="delete">Eliminar</string>
@@ -448,12 +456,13 @@
     <string name="account_moved_to">%1$s mudouse a %2$s</string>
     <string name="show_boost_count">Mostrar a conta de promocións/favoritos</string>
     <string name="issue_login_title">Non funciona a autenticación?</string>
-    <string name="issue_login_message"><b>Aquí ten unhas comprobacións que poderían axudarlle:</b>\n\n
+    <string name="issue_login_message">        <b>Aquí ten unhas comprobacións que poderían axudarlle:</b>\n\n
         - Comprobe que non ten fallos escribindo o nome da instancia\n\n
         - Comprobe que a súa instancia está a funcionar\n\n
         - Si utiliza autenticación de doble factor (2FA), utilice a ligazón inferior (unha vez escriba o nome da instancia)\n\n
         - Pode utilizar tamén esta ligazón sin ter que usar a 2FA\n\n
-        - Si aínda non pode conectar, por favor suba o problema a Github en https://github.com/stom79/mastalab/issues</string>
+        - Si aínda non pode conectar, por favor suba o problema a Github en https://github.com/stom79/mastalab/issues
+    </string>
     <string name="media_ready">Cargáronse os medios. Pulse aquí para mostralos.</string>
     <string name="data_export_start">Esta acción podería prolongarse. Notificarémoslle cando esté rematada.</string>
     <string name="data_export_running">Aínda a traballar, agarde por favor…</string>
@@ -580,6 +589,8 @@
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
+    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string-array name="filter_expire">
         <item>Nunca</item>
         <item>30 minutos</item>
