@@ -22,7 +22,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import fr.gouv.etalab.mastodon.R;
@@ -82,10 +81,7 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
 
                 int itemViewType = status.getItemViewType();
                 Status statusBefore = null;
-                Log.v(Helper.TAG,"itemViewType: " + itemViewType);
-                Log.v(Helper.TAG,"position: " + position);
-                Log.v(Helper.TAG,"content: " + status.getContent());
-                if( itemViewType != FOCUSED_STATUS || position == 0){
+                if( compactMode || itemViewType != FOCUSED_STATUS || position == 0){
                     if( position > 0)
                         statusBefore = adapter.getItem(position - 1);
                     top = (statusBefore != null && statusBefore.getId().equals(status.getIn_reply_to_id()))?
