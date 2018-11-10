@@ -436,7 +436,6 @@
             android:id="@+id/account_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             app:tabMode="fixed"
             app:tabGravity="fill"
             />
