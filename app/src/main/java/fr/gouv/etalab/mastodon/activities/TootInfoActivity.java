@@ -15,31 +15,21 @@
 package fr.gouv.etalab.mastodon.activities;
 
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 import android.widget.Toast;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
-import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
-import fr.gouv.etalab.mastodon.fragments.TabLayoutTootsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
 
@@ -98,6 +88,22 @@ public class TootInfoActivity extends BaseActivity {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.reblog) + " ("+toot_reblogs_count+")"));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.favourite) + " ("+toot_favorites_count+")"));
 
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mPager.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
