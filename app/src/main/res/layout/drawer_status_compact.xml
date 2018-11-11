@@ -130,6 +130,7 @@
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/vertical_content"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_width="0dp"

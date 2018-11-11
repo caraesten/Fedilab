@@ -86,6 +86,7 @@
             android:layout_marginLeft="10dp"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:id="@+id/vertical_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView

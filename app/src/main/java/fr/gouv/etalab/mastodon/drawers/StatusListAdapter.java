@@ -273,7 +273,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView conversation_pp_3;
         ImageView conversation_pp_4;
         LinearLayout conversation_pp;
-
+        LinearLayout vertical_content;
         RelativeLayout status_prev4_container;
         TextView status_reply;
         ImageView status_pin;
@@ -374,6 +374,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             conversation_pp_4 = itemView.findViewById(R.id.conversation_pp_4);
             conversation_pp_2_container = itemView.findViewById(R.id.conversation_pp_2_container);
             conversation_pp_3_container = itemView.findViewById(R.id.conversation_pp_3_container);
+            vertical_content = itemView.findViewById(R.id.vertical_content);
         }
     }
 
@@ -606,6 +607,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }else{
                 holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
             }
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            if( status.getReblog() == null && !isCompactMode && getItemViewType(position) != FOCUSED_STATUS){
+                params.setMargins((int)Helper.convertDpToPixel(60, context),-(int)Helper.convertDpToPixel(10, context),0,0);
+            }else if( !isCompactMode && getItemViewType(position) != FOCUSED_STATUS){
+                params.setMargins((int)Helper.convertDpToPixel(60, context),0,0,0);
+            }else if( !isCompactMode && getItemViewType(position) == FOCUSED_STATUS){
+                params.setMargins((int)Helper.convertDpToPixel(10, context),(int)Helper.convertDpToPixel(5, context),0,0);
+            }
+
+            holder.vertical_content.setLayoutParams(params);
 
             if( !status.isClickable())
                 status.makeClickable(context);
