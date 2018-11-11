@@ -515,6 +515,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
             boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
+
+            changeDrawableColor(context, R.drawable.video_preview,R.color.white);
             if( theme == Helper.THEME_BLACK){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
                 changeDrawableColor(context, holder.status_more, R.color.dark_icon);
@@ -532,8 +534,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 changeDrawableColor(context, R.drawable.ic_fetch_more,R.color.dark_icon);
                 holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
-                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
-                holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
             }else if( theme == Helper.THEME_DARK ){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
                 changeDrawableColor(context, holder.status_more, R.color.dark_icon);
@@ -552,8 +554,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
 
                 holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
-                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
-                holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
             }else {
                 changeDrawableColor(context, R.drawable.ic_fetch_more,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.black);

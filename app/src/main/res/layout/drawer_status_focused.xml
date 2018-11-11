@@ -265,7 +265,7 @@
                 <ImageView
                     android:layout_centerInParent="true"
                     android:layout_width="30dp"
-                    android:src="@drawable/ic_play_arrow"
+                    android:src="@drawable/video_preview"
                     android:layout_height="30dp"
                     tools:ignore="ContentDescription" />
 
