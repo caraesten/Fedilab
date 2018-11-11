@@ -130,7 +130,12 @@
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/vertical_content"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_width="0dp"
