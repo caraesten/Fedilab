@@ -531,8 +531,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 changeDrawableColor(context, R.drawable.ic_fetch_more,R.color.dark_icon);
-                holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.mastodonC2));
-                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
+                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
                 holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else if( theme == Helper.THEME_DARK ){
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
@@ -551,8 +551,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
 
-                holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.mastodonC2));
-                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+                holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
+                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
                 holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
             }else {
                 changeDrawableColor(context, R.drawable.ic_fetch_more,R.color.black);
