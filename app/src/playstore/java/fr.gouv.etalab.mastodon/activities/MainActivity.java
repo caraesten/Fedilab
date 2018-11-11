@@ -24,7 +24,8 @@ public class MainActivity extends BaseMainActivity {
     @Override
     protected void rateThisApp() {
         RateThisApp.onCreate(this);
-        RateThisApp.showRateDialogIfNeeded(this);
+        RateThisApp.Config config = new RateThisApp.Config(3, 10);
+        RateThisApp.init(config);
     }
 
 }

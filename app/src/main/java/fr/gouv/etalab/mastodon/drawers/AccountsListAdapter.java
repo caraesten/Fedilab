@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -38,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
+import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -45,8 +46,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
-import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
-import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
@@ -57,7 +57,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.withSuffix;
  * Created by Thomas on 27/04/2017.
  * Adapter for accounts
  */
-public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface {
+public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnRetrieveEmojiAccountInterface {
 
     private List<Account> accounts;
     private LayoutInflater layoutInflater;
@@ -149,10 +149,10 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             holder.account_container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if( holder.account_ds.getVisibility() == View.VISIBLE)
-                        holder.account_ds.setVisibility(View.GONE);
+                    if( holder.account_info.getVisibility() == View.VISIBLE)
+                        holder.account_info.setVisibility(View.GONE);
                     else
-                        holder.account_ds.setVisibility(View.VISIBLE);
+                        holder.account_info.setVisibility(View.VISIBLE);
                 }
             });
         }else{
@@ -164,8 +164,14 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             });
         }
 
-
-        holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
+        account.makeEmojisAccount(context, AccountsListAdapter.this);
+        if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
+            if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
+                holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
+            else
+                holder.account_dn.setText(account.getDisplay_name().replace("@",""));
+        }else
+            holder.account_dn.setText( account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
         holder.account_un.setText(String.format("@%s",account.getUsername()));
         holder.account_ac.setText(account.getAcct());
         if( account.getDisplay_name().equals(account.getAcct()))
@@ -232,7 +238,12 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         return accounts.size();
     }
 
-
+    private Account getItemAt(int position){
+        if( accounts.size() > position)
+            return accounts.get(position);
+        else
+            return null;
+    }
 
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
@@ -272,6 +283,24 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         }
     }
 
+    public void notifyAccountChanged(Account account){
+        for (int i = 0; i < accountsListAdapter.getItemCount(); i++) {
+            //noinspection ConstantConditions
+            if (accountsListAdapter.getItemAt(i) != null && accountsListAdapter.getItemAt(i).getId().equals(account.getId())) {
+                try {
+                    accountsListAdapter.notifyItemChanged(i);
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRetrieveEmojiAccount(Account account) {
+
+        notifyAccountChanged(account);
+    }
+
 
     private class ViewHolder extends RecyclerView.ViewHolder{
         ImageView account_pp;
@@ -282,6 +311,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         TextView account_sc;
         TextView account_fgc;
         TextView account_frc;
+        LinearLayout account_info;
         FloatingActionButton account_follow, account_mute_notification;
         TextView account_follow_request;
         LinearLayout account_container;
@@ -297,6 +327,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             account_fgc = itemView.findViewById(R.id.account_fgc);
             account_frc = itemView.findViewById(R.id.account_frc);
             account_follow = itemView.findViewById(R.id.account_follow);
+            account_info = itemView.findViewById(R.id.account_info);
             account_mute_notification = itemView.findViewById(R.id.account_mute_notification);
             account_follow_request = itemView.findViewById(R.id.account_follow_request);
             account_container = itemView.findViewById(R.id.account_container);

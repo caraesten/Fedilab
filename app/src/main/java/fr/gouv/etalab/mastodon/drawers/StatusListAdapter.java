@@ -2158,34 +2158,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             notifyStatusChanged(status);
         }
-
-       /* if( !fromTranslation) {
-            if (!status.isEmojiFound()) {
-                for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
-                    //noinspection ConstantConditions
-                    if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
-                        //noinspection ConstantConditions
-                        statusListAdapter.getItemAt(i).setEmojiFound(true);
-                        try {
-                            statusListAdapter.notifyItemChanged(i);
-                        } catch (Exception ignored) {}
-                    }
-                }
-            }
-        }else {
-            if (!status.isEmojiTranslateFound()) {
-                for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
-                    //noinspection ConstantConditions
-                    if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
-                        //noinspection ConstantConditions
-                        statusListAdapter.getItemAt(i).setEmojiTranslateFound(true);
-                        try {
-                            statusListAdapter.notifyItemChanged(i);
-                        } catch (Exception ignored) {}
-                    }
-                }
-            }
-        }*/
     }
 
     @Override
