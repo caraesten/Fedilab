@@ -141,6 +141,9 @@
                 android:id="@+id/status_account_displayname"
                 android:maxLines="1"
                 android:drawablePadding="2dp"
+                android:layout_marginTop="-2dp"
+                android:layout_marginStart="-2dp"
+                android:layout_marginLeft="-2dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
