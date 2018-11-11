@@ -1177,7 +1177,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             if( !((Activity)context).isFinishing())
                                 Glide.with(holder.status_cardview_image.getContext())
                                         .load(card.getImage())
-                                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners((int)Helper.convertDpToPixel(7, context))))
+                                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners((int)Helper.convertDpToPixel(3, context))))
                                         .into(holder.status_cardview_image);
                         }else
                             holder.status_cardview_image.setVisibility(View.GONE);

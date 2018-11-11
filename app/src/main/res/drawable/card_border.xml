@@ -6,6 +6,6 @@
         android:color="@color/notif_dark_3"
         />
 
-    <corners android:bottomRightRadius="7dp" android:bottomLeftRadius="7dp"
-        android:topLeftRadius="7dp" android:topRightRadius="7dp"/>
+    <corners android:bottomRightRadius="3dp" android:bottomLeftRadius="3dp"
+        android:topLeftRadius="3dp" android:topRightRadius="3dp"/>
 </shape>
