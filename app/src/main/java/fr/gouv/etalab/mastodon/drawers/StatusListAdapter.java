@@ -617,7 +617,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
                     paramsB.setMargins(0,0,0,0);
                 else
-                    paramsB.setMargins(0,(int)Helper.convertDpToPixel(10, context),0,0);
+                    paramsB.setMargins(0,(int)Helper.convertDpToPixel(15, context),0,0);
             }else if( !isCompactMode && getItemViewType(position) != FOCUSED_STATUS){
                 params.setMargins(0,0,0,0);
                 paramsB.setMargins(0,0,0,0);
@@ -904,10 +904,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             holder.status_action_container.setVisibility(View.VISIBLE);
             if( ( getItemViewType(position) != COMPACT_STATUS ) && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale)))){
-                if( status.isSpoilerShown() || getItemViewType(position) == FOCUSED_STATUS){
-                    holder.status_translate.setVisibility(View.VISIBLE);
+                if( status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
+                    if (status.isSpoilerShown() || getItemViewType(position) == FOCUSED_STATUS) {
+                        holder.status_translate.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.status_translate.setVisibility(View.GONE);
+                    }
                 }else {
-                    holder.status_translate.setVisibility(View.GONE);
+                    holder.status_translate.setVisibility(View.VISIBLE);
                 }
             }else {
                 holder.status_translate.setVisibility(View.GONE);
