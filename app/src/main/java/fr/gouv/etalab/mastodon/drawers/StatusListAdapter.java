@@ -297,6 +297,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         TextView status_toot_app;
         RelativeLayout webview_preview;
         ImageView webview_preview_card;
+        LinearLayout left_buttons;
+
         public View getView(){
             return itemView;
         }
@@ -375,6 +377,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             conversation_pp_2_container = itemView.findViewById(R.id.conversation_pp_2_container);
             conversation_pp_3_container = itemView.findViewById(R.id.conversation_pp_3_container);
             vertical_content = itemView.findViewById(R.id.vertical_content);
+            left_buttons =  itemView.findViewById(R.id.left_buttons);
         }
     }
 
@@ -608,14 +611,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
             }
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams paramsB = new LinearLayout.LayoutParams((int)Helper.convertDpToPixel(60, context), LinearLayout.LayoutParams.WRAP_CONTENT);
             if( status.getReblog() == null && !isCompactMode && getItemViewType(position) != FOCUSED_STATUS){
-                params.setMargins((int)Helper.convertDpToPixel(60, context),-(int)Helper.convertDpToPixel(10, context),0,0);
+                params.setMargins(0,-(int)Helper.convertDpToPixel(10, context),0,0);
+                if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
+                    paramsB.setMargins(0,0,0,0);
+                else
+                    paramsB.setMargins(0,(int)Helper.convertDpToPixel(10, context),0,0);
             }else if( !isCompactMode && getItemViewType(position) != FOCUSED_STATUS){
-                params.setMargins((int)Helper.convertDpToPixel(60, context),0,0,0);
+                params.setMargins(0,0,0,0);
+                paramsB.setMargins(0,0,0,0);
             }
 
-            holder.vertical_content.setLayoutParams(params);
 
+
+            holder.vertical_content.setLayoutParams(params);
+            holder.left_buttons.setLayoutParams(paramsB);
             if( !status.isClickable())
                 status.makeClickable(context);
             if( !status.isEmojiFound())
@@ -893,7 +904,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             holder.status_action_container.setVisibility(View.VISIBLE);
             if( ( getItemViewType(position) != COMPACT_STATUS ) && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale)))){
-                holder.status_translate.setVisibility(View.VISIBLE);
+                if( status.isSpoilerShown() || getItemViewType(position) == FOCUSED_STATUS){
+                    holder.status_translate.setVisibility(View.VISIBLE);
+                }else {
+                    holder.status_translate.setVisibility(View.GONE);
+                }
             }else {
                 holder.status_translate.setVisibility(View.GONE);
             }
