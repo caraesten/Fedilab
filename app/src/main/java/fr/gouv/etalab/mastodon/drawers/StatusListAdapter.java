@@ -570,25 +570,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_bookmark_border,R.color.mastodonC1);
                 changeDrawableColor(context, R.drawable.ic_translate,R.color.mastodonC1);
             }else {
-                changeDrawableColor(context, R.drawable.ic_fetch_more,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.black);
-                changeDrawableColor(context, holder.status_more, R.color.black);
-                changeDrawableColor(context, holder.status_privacy, R.color.black);
-                changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_repeat_head_toot,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_plus_one,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
-                changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.black);
+                changeDrawableColor(context, R.drawable.ic_fetch_more,R.color.light_black);
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.light_black);
+                changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.light_black);
+                changeDrawableColor(context, holder.status_more, R.color.light_black);
+                changeDrawableColor(context, holder.status_privacy, R.color.light_black);
+                changeDrawableColor(context, R.drawable.ic_repeat,R.color.light_black);
+                changeDrawableColor(context, R.drawable.ic_repeat_head_toot,R.color.light_black);
+                changeDrawableColor(context, R.drawable.ic_plus_one,R.color.light_black);
+                changeDrawableColor(context, R.drawable.ic_star_border,R.color.light_black);
+                changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.light_black);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.mastodonC4);
-                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
-                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.light_black));
+                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.light_black));
+                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.light_black));
 
-                holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.black));
-                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.black));
-                holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.light_black));
+                holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.light_black));
+                holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.light_black));
 
                 changeDrawableColor(context, R.drawable.ic_bookmark,R.color.white);
                 changeDrawableColor(context, R.drawable.ic_bookmark_border,R.color.white);
@@ -601,8 +601,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
             }else if( theme == THEME_LIGHT) {
-                holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.black));
-                holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.light_black));
+                holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.light_black));
             }
             if( status.isBookmarked())
                 holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark));
@@ -1121,7 +1121,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if( theme == THEME_DARK || theme == THEME_BLACK)
                     changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
                 else
-                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
+                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.light_black);
                 imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
             }
 
@@ -1132,7 +1132,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if( theme == THEME_DARK || theme == THEME_BLACK)
                     changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
                 else
-                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
+                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.light_black);
                 imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
             }
 
@@ -1140,7 +1140,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( theme == THEME_DARK || theme == THEME_BLACK)
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
             else
-                changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.light_black);
             imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
 
 
@@ -1180,7 +1180,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if( theme == THEME_DARK || theme == THEME_BLACK)
                         changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.dark_icon);
                     else
-                        changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.black);
+                        changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.light_black);
                     imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop);
                 }
                 assert imgPin != null;
