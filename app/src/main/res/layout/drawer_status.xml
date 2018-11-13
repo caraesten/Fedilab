@@ -226,7 +226,6 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_gravity="center_horizontal"
                     android:id="@+id/new_element"
                     android:visibility="gone"
                     android:src="@drawable/ic_fiber_new"
@@ -234,14 +233,11 @@
                     android:layout_height="wrap_content"
                     tools:ignore="ContentDescription" />
                 <ImageButton
-
                     android:id="@+id/status_translate"
-                    android:gravity="center"
-                    style="?attr/borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_translate"
-                    android:layout_gravity="center_horizontal"
+                    style="?attr/borderless"
                     />
                 <ImageButton
 
@@ -254,7 +250,6 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_bookmark_border"
                     android:layout_marginTop="5dp"
-                    android:layout_gravity="center_horizontal"
                     />
             </LinearLayout>
             <LinearLayout

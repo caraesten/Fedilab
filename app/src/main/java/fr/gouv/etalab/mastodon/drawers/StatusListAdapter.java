@@ -910,7 +910,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     } else {
                         holder.status_translate.setVisibility(View.GONE);
                     }
-                }else {
+                }else if( status.getReblog() != null && status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().length() > 0) {
+                    if (status.isSpoilerShown() || getItemViewType(position) == FOCUSED_STATUS) {
+                        holder.status_translate.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.status_translate.setVisibility(View.GONE);
+                    }
+                }
+                else {
                     holder.status_translate.setVisibility(View.VISIBLE);
                 }
             }else {
