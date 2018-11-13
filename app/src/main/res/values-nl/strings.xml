@@ -588,8 +588,8 @@
     <string name="channels">Kanalen</string>
     <string name="set_display_emoji">Emoji One gebruiken</string>
     <string name="information">Informatie</string>
-    <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="set_display_card">In alle toots voorvertoningen tonen</string>
+    <string name="thanks_text_ux">Nieuwe ontwerper UX/UI</string>
     <string name="set_old_direct_timeline">Tijdlijn met directe berichten van voor Mastodon 2.6 gebruiken</string>
     <string-array name="filter_expire">
         <item>Nooit</item>
