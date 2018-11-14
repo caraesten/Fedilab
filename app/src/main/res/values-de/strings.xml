@@ -587,6 +587,7 @@
     <string name="set_display_card">Vorschau in allen Toots anzeigen</string>
     <string name="thanks_text_ux">Neuer UX/UI-Designer</string>
     <string name="set_old_direct_timeline">Direkte, alte Zeitline vor Mastodon 2.6 verwenden</string>
+    <string name="set_display_video_preview">Display video previews</string>
     <string-array name="filter_expire">
         <item>Nie</item>
         <item>30 Minuten</item>

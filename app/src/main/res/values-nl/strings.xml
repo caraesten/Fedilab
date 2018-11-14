@@ -586,11 +586,12 @@
     <string name="no_lists">Geen lijsten</string>
     <string name="videos">Video\'s</string>
     <string name="channels">Kanalen</string>
-    <string name="set_display_emoji">Use Emoji One</string>
-    <string name="information">Information</string>
-    <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
+    <string name="set_display_emoji">Emoji One gebruiken</string>
+    <string name="information">Informatie</string>
+    <string name="set_display_card">In alle toots voorvertoningen tonen</string>
+    <string name="thanks_text_ux">Nieuwe ontwerper UX/UI</string>
+    <string name="set_old_direct_timeline">Tijdlijn met directe berichten van voor Mastodon 2.6 gebruiken</string>
+    <string name="set_display_video_preview">Display video previews</string>
     <string-array name="filter_expire">
         <item>Nooit</item>
         <item>30 minuten</item>

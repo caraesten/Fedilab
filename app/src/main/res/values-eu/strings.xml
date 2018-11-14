@@ -287,7 +287,7 @@
     <string name="set_bubble_counter">Erakutsi kontagailuak</string>
     <string name="set_auto_add_media_url">Gehitu multimediaren URLa toot-etan</string>
     <string name="settings_title_notifications">Kudeatu jakinarazpenak</string>
-    <string name="set_notif_follow">Jakinarazi norbaitek jarraitzen zaituenean</string>
+    <string name="set_notif_follow">Jakinarazi norbaitek jarraitzen dizunean</string>
     <string name="set_notif_follow_ask">Jakinarazi norbait zu jarraitzeko eskaera egiten duenean</string>
     <string name="set_notif_follow_share">Jakinarazi norbaitek zure mezuari bultzada ematean</string>
     <string name="set_notif_follow_add">Jakinarazi norbaitek zure mezua gogoko duenean</string>
@@ -590,6 +590,7 @@
     <string name="set_display_card">Erakutsi aurrebistak toot guztietan</string>
     <string name="thanks_text_ux">Interfazearen diseinatzaile berria</string>
     <string name="set_old_direct_timeline">Erabili Mastodon 2.6 aurreko denbora-lerro zuzena</string>
+    <string name="set_display_video_preview">Display video previews</string>
     <string-array name="filter_expire">
         <item>Inoiz ez</item>
         <item>30 minutu</item>
