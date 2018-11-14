@@ -1219,13 +1219,18 @@ public abstract class BaseMainActivity extends BaseActivity
                                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 // continue with delete
-                                                try {
-                                                    String path = getCacheDir().getPath();
-                                                    File dir = new File(path);
-                                                    if (dir.isDirectory()) {
-                                                        Helper.deleteDir(dir);
+                                                AsyncTask.execute(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        try {
+                                                            String path = getCacheDir().getPath();
+                                                            File dir = new File(path);
+                                                            if (dir.isDirectory()) {
+                                                                Helper.deleteDir(dir);
+                                                            }
+                                                        } catch (Exception ignored) {}
                                                     }
-                                                } catch (Exception ignored) {}
+                                                });
                                                 Toast.makeText(BaseMainActivity.this, getString(R.string.toast_cache_clear,String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
                                                 dialog.dismiss();
                                             }

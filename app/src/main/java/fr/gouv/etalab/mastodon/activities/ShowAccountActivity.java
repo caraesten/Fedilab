@@ -792,10 +792,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                             valueView.setBackground(null);
                         }
-                        spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value, account.getEmojis());
+                        spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value);
                         spannableValueString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.verified_text)), 0, spannableValueString.toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     }else {
-                        spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value, account.getEmojis());
+                        spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value);
                     }
                     valueView.setText(spannableValueString, TextView.BufferType.SPANNABLE);
                     valueView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -807,7 +807,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
         account_un.setText(String.format("@%s", account.getAcct()));
-        SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote(), account.getEmojis());
+        SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
         account.setNoteSpan(spannableString);
         account.makeEmojisAccountProfile(ShowAccountActivity.this, ShowAccountActivity.this);
         account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);

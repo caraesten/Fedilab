@@ -77,6 +77,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
+import android.text.style.URLSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Patterns;
@@ -165,7 +166,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
-import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
@@ -397,7 +397,6 @@ public class Helper {
         STORE,
         TOOT
     }
-    private static boolean isPerformingSearch = false;
 
     /**
      * Converts emojis in input to unicode
@@ -1593,27 +1592,44 @@ public class Helper {
      * @param fullContent String, should be the st
      * @return TextView
      */
-    public static SpannableString clickableElementsDescription(final Context context, String fullContent, List<Emojis> emojis) {
+    public static SpannableString clickableElementsDescription(final Context context, String fullContent) {
+
 
         SpannableString spannableString;
         fullContent = Helper.shortnameToUnicode(fullContent, true);
+        SpannableString spannableStringT = new SpannableString(fullContent);
+        Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
+        Matcher matcherALink = aLink.matcher(spannableStringT.toString());
+        ArrayList<Account> accountsMentionUnknown = new ArrayList<>();
+        while (matcherALink.find()){
+            String acct = matcherALink.group(3).replace("@","");
+            String instance = matcherALink.group(2);
+            Account account = new Account();
+            account.setAcct(acct);
+            account.setInstance(instance);
+            accountsMentionUnknown.add(account);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableString = new SpannableString(Html.fromHtml(fullContent, Html.FROM_HTML_MODE_LEGACY));
+            spannableString = new SpannableString(Html.fromHtml(spannableStringT.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>",""), Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
-            spannableString = new SpannableString(Html.fromHtml(fullContent));
+            spannableString = new SpannableString(Html.fromHtml(spannableStringT.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","")));
+
+        URLSpan[] urls = spannableString.getSpans(0, spannableString.length(), URLSpan.class);
+        for(URLSpan span : urls)
+            spannableString.removeSpan(span);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
-        if( embedded_browser){
-            Matcher matcher;
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
-                matcher = Patterns.WEB_URL.matcher(spannableString);
-            else
-                matcher = urlPattern.matcher(spannableString);
-            while (matcher.find()){
-                int matchStart = matcher.start(1);
-                int matchEnd = matcher.end();
-                final String url = spannableString.toString().substring(matchStart, matchEnd);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        Matcher matcher;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+            matcher = Patterns.WEB_URL.matcher(spannableString);
+        else
+            matcher = urlPattern.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(1);
+            int matchEnd = matcher.end();
+            final String url = spannableString.toString().substring(matchStart, matchEnd);
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View textView) {
@@ -1622,85 +1638,76 @@ public class Helper {
                     @Override
                     public void updateDrawState(TextPaint ds) {
                         super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
+                        if (theme == THEME_DARK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                        else if (theme == THEME_BLACK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                        else if (theme == THEME_LIGHT)
+                            ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            }
         }
-        Matcher matcher = hashtagPattern.matcher(spannableString);
+        matcher = hashtagPattern.matcher(spannableString);
         while (matcher.find()){
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
             final String tag = spannableString.toString().substring(matchStart, matchEnd);
-            spannableString.setSpan(new ClickableSpan() {
-                @Override
-                public void onClick(View textView) {
-                    Intent intent = new Intent(context, HashTagActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString("tag", tag.substring(1));
-                    intent.putExtras(b);
-                    context.startActivity(intent);
-                }
-                @Override
-                public void updateDrawState(TextPaint ds) {
-                    super.updateDrawState(ds);
-                }
-            }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+                spannableString.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        Intent intent = new Intent(context, HashTagActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("tag", tag.substring(1));
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
+                        if (theme == THEME_DARK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                        else if (theme == THEME_BLACK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                        else if (theme == THEME_LIGHT)
+                            ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                    }
+                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-
-        Matcher matcherMention = mentionPattern.matcher(spannableString);
-        while (matcherMention.find()){
-            int matchStart = matcherMention.start(1);
-            int matchEnd = matcherMention.end();
-            final String search = spannableString.toString().substring(matchStart, matchEnd);
-            final String finalFullContent = fullContent;
-            spannableString.setSpan(new ClickableSpan() {
-                @Override
-                public void onClick(View textView) {
-                    if(!isPerformingSearch){
-                        isPerformingSearch = true;
-
-                        AsyncTask.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    String[] val = search.split("@");
-                                    if( val.length > 0 ) {
-                                        String username;
-                                        if( val.length == 2){
-                                            username = val[1];
-                                            Pattern urlAccountPattern = Pattern.compile(
-                                                    "https://[\\w._-]+/@"+ username);
-                                            Matcher matcherAccount = urlAccountPattern.matcher(finalFullContent);
-                                            while (matcherAccount.find()){
-                                                String url = matcherAccount.group(0);
-                                                API api = new API(context);
-                                                Results results = api.search(url);
-                                                if( results.getAccounts().size() > 0 ){
-                                                    Account account = results.getAccounts().get(0);
-                                                    Intent intent = new Intent(context, ShowAccountActivity.class);
-                                                    Bundle b = new Bundle();
-                                                    b.putString("accountId", account.getId());
-                                                    intent.putExtras(b);
-                                                    context.startActivity(intent);
-                                                }
-                                            }
-                                        }
-                                    }
-                                    isPerformingSearch = false;
-                                }catch (Exception e){
-                                    isPerformingSearch = false;
-                                    Toast.makeText(context,R.string.toast_error, Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+        if( accountsMentionUnknown.size() > 0 ) {
+            for(Account account: accountsMentionUnknown){
+                String targetedAccount = "@" + account.getAcct();
+                if (spannableString.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
+                    //Accounts can be mentioned several times so we have to loop
+                    for(int startPosition = -1 ; (startPosition = spannableString.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
+                        int endPosition = startPosition + targetedAccount.length();
+                        if( endPosition <= spannableString.toString().length() && endPosition >= startPosition)
+                            spannableString.setSpan(new ClickableSpan() {
+                                 @Override
+                                 public void onClick(View textView) {
+                                     CrossActions.doCrossProfile(context,account);
+                                 }
+                                 @Override
+                                 public void updateDrawState(TextPaint ds) {
+                                     super.updateDrawState(ds);
+                                     ds.setUnderlineText(false);
+                                     if (theme == THEME_DARK)
+                                         ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                     else if (theme == THEME_BLACK)
+                                         ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                     else if (theme == THEME_LIGHT)
+                                         ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                 }
+                             },
+                            startPosition, endPosition,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
                 }
-                @Override
-                public void updateDrawState(TextPaint ds) {
-                    super.updateDrawState(ds);
-                }
-            }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
         }
+
         return spannableString;
     }
 
@@ -2277,23 +2284,29 @@ public class Helper {
             }
         }
         if( url == null) {
-            Glide.with(imageView.getContext())
-                    .load(R.drawable.missing)
-                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                    .into(imageView);
-                    return;
+            try {
+                Glide.with(imageView.getContext())
+                        .load(R.drawable.missing)
+                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                        .into(imageView);
+            }catch (Exception ignored){}
+            return;
         }
         if( !disableGif)
-            Glide.with(imageView.getContext())
-                .load(url)
-                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                .into(imageView);
+            try {
+                Glide.with(imageView.getContext())
+                        .load(url)
+                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                        .into(imageView);
+            }catch (Exception ignored){}
         else
+            try {
             Glide.with(context)
                     .asBitmap()
                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                     .load(url)
                     .into(imageView);
+            }catch (Exception ignored){}
     }
 
     /**

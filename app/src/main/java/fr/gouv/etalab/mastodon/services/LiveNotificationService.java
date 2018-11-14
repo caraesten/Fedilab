@@ -182,7 +182,8 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             AsyncHttpRequest.setDefaultHeaders(headers, url);
             if( webSocketFutures.containsKey(urlKey)  ){
                 try {
-                    webSocketFutures.get(urlKey).get().close();
+                    if( webSocketFutures.get(urlKey) != null && webSocketFutures.get(urlKey).get() != null)
+                        webSocketFutures.get(urlKey).get().close();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
