@@ -1275,17 +1275,7 @@ public class Helper {
         if( url.startsWith("/") ){
             url = Helper.getLiveInstanceWithProtocol(activity) + url;
         }
-
-        Glide.with(activity.getApplicationContext())
-                .asBitmap()
-                .load(url)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                        Resources res = activity.getResources();
-                        imageView.setImageBitmap(resource);
-                    }
-                });
+        loadGiF(activity,url, imageView);
     }
 
 
@@ -1494,9 +1484,7 @@ public class Helper {
             if( url.startsWith("/") ){
                 url = Helper.getLiveInstanceWithProtocol(activity) + account.getAvatar();
             }
-            Glide.with(activity.getApplicationContext())
-                    .load(url)
-                    .into(profilePicture);
+            loadGiF(activity, url, profilePicture);
             String urlHeader = account.getHeader();
             if( urlHeader.startsWith("/") ){
                 urlHeader = Helper.getLiveInstanceWithProtocol(activity) + account.getHeader();

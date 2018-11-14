@@ -24,11 +24,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -52,14 +49,12 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -190,22 +185,7 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         if( url.startsWith("/") ){
             url = Helper.getLiveInstanceWithProtocol(OwnerStatusActivity.this) + account.getAvatar();
         }
-        Glide.with(OwnerStatusActivity.this)
-                .asBitmap()
-                .load(url)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                        BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, OwnerStatusActivity.this), (int) Helper.convertDpToPixel(25, OwnerStatusActivity.this), true));
-                        if( pp_actionBar != null){
-                            pp_actionBar.setImageDrawable(ppDrawable);
-                        } else if( getSupportActionBar() != null){
-
-                            getSupportActionBar().setIcon(ppDrawable);
-                            getSupportActionBar().setDisplayShowHomeEnabled(true);
-                        }
-                    }
-                });
+        Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         new RetrieveFeedsAsyncTask(OwnerStatusActivity.this, filterToots, null, OwnerStatusActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

@@ -54,10 +54,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -167,23 +164,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         }
 
 
-        Glide.with(getApplicationContext())
-                .asBitmap()
-                .load(url)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                        BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
-                        if( pp_actionBar != null){
-                            pp_actionBar.setImageDrawable(ppDrawable);
-                        } else if( getSupportActionBar() != null){
-
-                            getSupportActionBar().setIcon(ppDrawable);
-                            getSupportActionBar().setDisplayShowHomeEnabled(true);
-                        }
-                    }
-                });
-
+        Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
 
         set_profile_name = findViewById(R.id.set_profile_name);
         set_profile_description = findViewById(R.id.set_profile_description);

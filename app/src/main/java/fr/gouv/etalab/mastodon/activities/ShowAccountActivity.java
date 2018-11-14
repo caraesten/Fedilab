@@ -20,7 +20,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -535,18 +534,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             if( url.startsWith("/") ){
                 url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
             }
-            Glide.with(getApplicationContext())
-                    .asBitmap()
-                    .load(url)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                            BitmapDrawable ppDrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(25, getApplicationContext()), (int) Helper.convertDpToPixel(25, getApplicationContext()), true));
-                            if( pp_actionBar != null){
-                                pp_actionBar.setImageDrawable(ppDrawable);
-                            }
-                        }
-                    });
+            Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
 
         }
         final AppBarLayout appBar = findViewById(R.id.appBar);
