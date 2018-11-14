@@ -1205,13 +1205,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_cardview_video.setVisibility(View.GONE);
                 holder.webview_preview.setVisibility(View.VISIBLE);
             }
-            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT || display_card){
+            boolean display_video_preview = sharedpreferences.getBoolean(Helper.SET_DISPLAY_VIDEO_PREVIEWS, true);
+            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT || display_card || display_video_preview){
 
                 if( type ==  RetrieveFeedsAsyncTask.Type.CONTEXT)
                     holder.status_cardview_content.setVisibility(View.VISIBLE);
                 else
                     holder.status_cardview_content.setVisibility(View.GONE);
-                if( position == conversationPosition || display_card){
+
+                if( position == conversationPosition || display_card || display_video_preview){
 
                     Card card = status.getReblog()!= null?status.getReblog().getCard():status.getCard();
                     if( card != null){
@@ -1228,7 +1230,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         .into(holder.status_cardview_image);
                         }else
                             holder.status_cardview_image.setVisibility(View.GONE);
-                        if( !card.getType().equals("video")) {
+                        if( !card.getType().equals("video")  && display_card) {
                             holder.status_cardview.setVisibility(View.VISIBLE);
                             holder.status_cardview_video.setVisibility(View.GONE);
                             holder.status_cardview.setOnClickListener(new View.OnClickListener() {
@@ -1237,7 +1239,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     Helper.openBrowser(context, card.getUrl());
                                 }
                             });
-                        }else {
+                        }else if(card.getType().equals("video") && display_video_preview){
                             Glide.with(holder.status_cardview_image.getContext())
                                     .load(card.getImage())
                                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
@@ -1247,9 +1249,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_cardview_webview.getSettings().setJavaScriptEnabled(true);
                             String html = card.getHtml();
                             String src = card.getUrl();
-                            if( html != null){
+                            if (html != null) {
                                 Matcher matcher = Pattern.compile("src=\"([^\"]+)\"").matcher(html);
-                                if( matcher.find())
+                                if (matcher.find())
                                     src = matcher.group(1);
                             }
                             final String finalSrc = src;

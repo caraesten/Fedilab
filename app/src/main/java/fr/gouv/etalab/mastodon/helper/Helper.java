@@ -277,6 +277,7 @@ public class Helper {
     public static final String SET_KEEP_BACKGROUND_PROCESS = "set_keep_background_process";
     public static final String SET_DISPLAY_EMOJI = "set_display_emoji";
     public static final String SET_DISPLAY_CARD = "set_display_card";
+    public static final String SET_DISPLAY_VIDEO_PREVIEWS= "set_display_video_previews";
     public static final String SET_OLD_DIRECT_TIMELINE = "sset_old_direct_timeline";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;

@@ -128,6 +128,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean display_video_preview = sharedpreferences.getBoolean(Helper.SET_DISPLAY_VIDEO_PREVIEWS, true);
+        final CheckBox set_display_video_preview = rootView.findViewById(R.id.set_display_video_preview);
+        set_display_video_preview.setChecked(display_video_preview);
+
+        set_display_video_preview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_VIDEO_PREVIEWS, set_display_video_preview.isChecked());
+                editor.apply();
+            }
+        });
+
 
         boolean notif_validation = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
         final CheckBox set_share_validation = rootView.findViewById(R.id.set_share_validation);
