@@ -1240,6 +1240,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }else {
                             Glide.with(holder.status_cardview_image.getContext())
                                     .load(card.getImage())
+                                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                                     .into(holder.webview_preview_card);
                             holder.status_cardview.setVisibility(View.GONE);
                             holder.status_cardview_video.setVisibility(View.VISIBLE);
@@ -2003,6 +2004,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 .asBitmap()
                                 .load(url)
                                 .thumbnail(0.1f)
+                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                                 .into(new SimpleTarget<Bitmap>() {
                                     @Override
                                     public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
@@ -2024,6 +2026,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         Glide.with(imageView.getContext())
                                 .load(url)
                                 .thumbnail(0.1f)
+                                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                                 .transition(DrawableTransitionOptions.withCrossFade())
                                 .into(imageView);
                 }
