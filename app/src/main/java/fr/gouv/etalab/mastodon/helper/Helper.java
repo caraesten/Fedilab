@@ -1489,9 +1489,17 @@ public class Helper {
             if( urlHeader.startsWith("/") ){
                 urlHeader = Helper.getLiveInstanceWithProtocol(activity) + account.getHeader();
             }
-            LinearLayout main_header_container = headerLayout.findViewById(R.id.main_header_container);
-            if( theme == Helper.THEME_LIGHT){
-                main_header_container.setBackgroundDrawable( activity.getResources().getDrawable(R.drawable.side_nav_bar_dark));
+            ImageView owner_accounts = headerLayout.findViewById(R.id.owner_accounts);
+            ImageView header_option_info = headerLayout.findViewById(R.id.header_option_info);
+            ImageView header_option_menu = headerLayout.findViewById(R.id.header_option_menu);
+            if( theme == Helper.THEME_DARK || theme == Helper.THEME_BLACK){
+                changeDrawableColor(activity, owner_accounts,R.color.dark_text);
+                changeDrawableColor(activity, header_option_info,R.color.dark_text);
+                changeDrawableColor(activity, header_option_menu,R.color.dark_text);
+            }else {
+                changeDrawableColor(activity, owner_accounts,R.color.light_black);
+                changeDrawableColor(activity, header_option_info,R.color.light_black);
+                changeDrawableColor(activity, header_option_menu,R.color.light_black);
             }
             if (!urlHeader.contains("missing.png")) {
                 Glide.with(activity.getApplicationContext())
@@ -1502,11 +1510,20 @@ public class Helper {
                             public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                 ImageView backgroundImage = headerLayout.findViewById(R.id.back_ground_image);
                                 backgroundImage.setImageBitmap(resource);
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                    backgroundImage.setImageAlpha(60);
-                                }else {
-                                    backgroundImage.setAlpha(60);
+                                if( theme == THEME_LIGHT){
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                        backgroundImage.setImageAlpha(80);
+                                    }else {
+                                        backgroundImage.setAlpha(80);
+                                    }
+                                }else{
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                        backgroundImage.setImageAlpha(60);
+                                    }else {
+                                        backgroundImage.setAlpha(60);
+                                    }
                                 }
+
                             }
                         });
             }
