@@ -36,6 +36,7 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -135,7 +136,11 @@ public class Status implements Parcelable{
         reblog = in.readParcelable(Status.class.getClassLoader());
         account = in.readParcelable(Account.class.getClassLoader());
         mentions = in.readArrayList(Mention.class.getClassLoader());
+        media_attachments = in.readArrayList(Attachment.class.getClassLoader());
+        emojis = in.readArrayList(Emojis.class.getClassLoader());
+        tags = in.readArrayList(Tag.class.getClassLoader());
         content = in.readString();
+        created_at =  (java.util.Date) in.readSerializable();
         contentTranslated = in.readString();
         reblogs_count = in.readInt();
         itemViewType = in.readInt();
@@ -156,6 +161,40 @@ public class Status implements Parcelable{
         pinned = in.readByte() != 0;
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(uri);
+        dest.writeString(url);
+        dest.writeString(in_reply_to_id);
+        dest.writeString(in_reply_to_account_id);
+        dest.writeParcelable(reblog, flags);
+        dest.writeParcelable(account, flags);
+        dest.writeList(mentions);
+        dest.writeList(media_attachments);
+        dest.writeList(emojis);
+        dest.writeList(tags);
+        dest.writeString(content);
+        dest.writeSerializable(created_at);
+        dest.writeString(contentTranslated);
+        dest.writeInt(reblogs_count);
+        dest.writeInt(itemViewType);
+        dest.writeInt(favourites_count);
+        dest.writeInt(replies_count);
+        dest.writeByte((byte) (reblogged ? 1 : 0));
+        dest.writeByte((byte) (favourited ? 1 : 0));
+        dest.writeByte((byte) (muted ? 1 : 0));
+        dest.writeByte((byte) (sensitive ? 1 : 0));
+        dest.writeString(contentCW);
+        dest.writeString(visibility);
+        dest.writeString(language);
+        dest.writeByte((byte) (attachmentShown ? 1 : 0));
+        dest.writeByte((byte) (spoilerShown ? 1 : 0));
+        dest.writeByte((byte) (isTranslated ? 1 : 0));
+        dest.writeByte((byte) (isTranslationShown ? 1 : 0));
+        dest.writeByte((byte) (isNew ? 1 : 0));
+        dest.writeByte((byte) (pinned ? 1 : 0));
+    }
 
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -359,36 +398,6 @@ public class Status implements Parcelable{
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(uri);
-        dest.writeString(url);
-        dest.writeString(in_reply_to_id);
-        dest.writeString(in_reply_to_account_id);
-        dest.writeParcelable(reblog, flags);
-        dest.writeParcelable(account, flags);
-        dest.writeList(mentions);
-        dest.writeString(content);
-        dest.writeString(contentTranslated);
-        dest.writeInt(reblogs_count);
-        dest.writeInt(itemViewType);
-        dest.writeInt(favourites_count);
-        dest.writeInt(replies_count);
-        dest.writeByte((byte) (reblogged ? 1 : 0));
-        dest.writeByte((byte) (favourited ? 1 : 0));
-        dest.writeByte((byte) (muted ? 1 : 0));
-        dest.writeByte((byte) (sensitive ? 1 : 0));
-        dest.writeString(contentCW);
-        dest.writeString(visibility);
-        dest.writeString(language);
-        dest.writeByte((byte) (attachmentShown ? 1 : 0));
-        dest.writeByte((byte) (spoilerShown ? 1 : 0));
-        dest.writeByte((byte) (isTranslated ? 1 : 0));
-        dest.writeByte((byte) (isTranslationShown ? 1 : 0));
-        dest.writeByte((byte) (isNew ? 1 : 0));
-        dest.writeByte((byte) (pinned ? 1 : 0));
-    }
 
     public boolean isSpoilerShown() {
         return spoilerShown;
@@ -459,12 +468,16 @@ public class Status implements Parcelable{
         return isEmojiFound;
     }
 
+
+
+
+
     public void setEmojiFound(boolean emojiFound) {
         isEmojiFound = emojiFound;
     }
 
 
-    public void makeClickable(Context context){
+    public static void transform(Context context, Status status, OnRetrieveEmojiInterface listener){
 
         if( ((Activity)context).isFinishing() || status == null)
             return;
@@ -477,20 +490,21 @@ public class Status implements Parcelable{
         else
             //noinspection deprecation
             spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text()));
-
-        status.setContentSpan(treatment(context, spannableStringContent));
-        status.setContentSpanCW(treatment(context, spannableStringCW));
-        isClickable = true;
+        if( spannableStringContent.length() > 0)
+            status.setContentSpan(treatment(context, spannableStringContent, status));
+        if( spannableStringCW.length() > 0)
+            status.setContentSpanCW(treatment(context, spannableStringCW, status));
+        makeEmojis(context, listener, status);
+        status.setClickable(true);
     }
 
 
-    public void makeClickableTranslation(Context context){
+    public static void transformTranslation(Context context, OnRetrieveEmojiInterface listener, Status status){
 
         if( ((Activity)context).isFinishing() || status == null)
             return;
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SpannableString spannableStringTranslated;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated(), Html.FROM_HTML_MODE_LEGACY));
@@ -498,12 +512,12 @@ public class Status implements Parcelable{
             //noinspection deprecation
             spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated()));
 
-        status.setContentSpanTranslated(treatment(context, spannableStringTranslated));
+        status.setContentSpanTranslated(treatment(context, spannableStringTranslated, status));
+        makeEmojisTranslation(context, listener, status);
     }
 
 
-
-    public void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener){
+    private static void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener, Status status){
 
         if( ((Activity)context).isFinishing() )
             return;
@@ -516,15 +530,16 @@ public class Status implements Parcelable{
         final List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
         final List<Emojis> emojisAccounts = status.getReblog() != null ?status.getReblog().getAccount().getEmojis():status.getAccount().getEmojis();
 
-        status.getAccount().makeEmojisAccount(context, null);
+        status.getAccount().makeEmojisAccount(context, null, status.getAccount());
         String displayName;
         if( status.getReblog() != null){
             displayName = status.getReblog().getAccount().getDisplay_name();
         }else {
             displayName = status.getAccount().getDisplay_name();
         }
-        displayNameSpan = new SpannableString(displayName);
-
+        SpannableString displayNameSpan = new SpannableString(displayName);
+        SpannableString contentSpan = new SpannableString(status.getContent());
+        SpannableString contentSpanCW = new SpannableString(status.getSpoiler_text());
         if( emojisAccounts != null)
             emojis.addAll(emojisAccounts);
         if( emojis != null && emojis.size() > 0 ) {
@@ -564,7 +579,7 @@ public class Status implements Parcelable{
                                                 endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                                     }
                                 }
-                                if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
+                                if (displayNameSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
@@ -590,6 +605,8 @@ public class Status implements Parcelable{
                                 }
                                 i[0]++;
                                 if( i[0] ==  (emojis.size())) {
+                                    status.setContentSpan(contentSpan);
+                                    status.setContentSpanCW(contentSpanCW);
                                     listener.onRetrieveEmoji(status, false);
                                 }
                             }
@@ -600,7 +617,7 @@ public class Status implements Parcelable{
     }
 
 
-    public void makeEmojisTranslation(final Context context, final OnRetrieveEmojiInterface listener){
+    private static void makeEmojisTranslation(final Context context, final OnRetrieveEmojiInterface listener, Status status){
 
         if( ((Activity)context).isFinishing() )
             return;
@@ -671,12 +688,14 @@ public class Status implements Parcelable{
 
 
 
-    private SpannableString treatment(final Context context, final SpannableString spannableString){
+    private static SpannableString treatment(final Context context, final SpannableString spannableString, Status status){
 
         URLSpan[] urls = spannableString.getSpans(0, spannableString.length(), URLSpan.class);
         for(URLSpan span : urls)
             spannableString.removeSpan(span);
-        List<Mention> mentions = this.status.getReblog() != null ? this.status.getReblog().getMentions() : this.status.getMentions();
+        List<Mention> mentions = status.getReblog() != null ? status.getReblog().getMentions() : status.getMentions();
+
+        Log.v(Helper.TAG,"spannableString: " + spannableString);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -767,7 +786,7 @@ public class Status implements Parcelable{
         else
             //noinspection deprecation
             spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","")));
-
+        Log.v(Helper.TAG,"spannableStringT: " + spannableStringT);
         URLSpan[] spans = spannableStringT.getSpans(0, spannableStringT.length(), URLSpan.class);
         for (URLSpan span : spans) {
             spannableStringT.removeSpan(span);
@@ -989,6 +1008,9 @@ public class Status implements Parcelable{
         this.contentSpanTranslated = contentSpanTranslated;
     }
 
+    public void setClickable(boolean clickable) {
+        isClickable = clickable;
+    }
     public boolean isClickable() {
         return isClickable;
     }

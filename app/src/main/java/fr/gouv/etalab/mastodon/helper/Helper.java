@@ -1477,7 +1477,7 @@ public class Helper {
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
-            account.makeEmojisAccount(activity, ((BaseMainActivity)activity));
+            account.makeEmojisAccount(activity, ((BaseMainActivity)activity), account);
             username.setText(String.format("@%s",account.getUsername() + "@" + account.getInstance()));
             displayedName.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
             String url = account.getAvatar();
@@ -2608,6 +2608,8 @@ public class Helper {
 
     public static boolean filterToots(Context context, Status status, List<String> timedMute, RetrieveFeedsAsyncTask.Type type){
         String filter;
+        if( status == null)
+            return true;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);

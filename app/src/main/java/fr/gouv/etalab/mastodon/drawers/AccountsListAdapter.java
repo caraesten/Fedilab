@@ -164,7 +164,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
             });
         }
 
-        account.makeEmojisAccount(context, AccountsListAdapter.this);
+        account.makeEmojisAccount(context, AccountsListAdapter.this, account);
         if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
             if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));

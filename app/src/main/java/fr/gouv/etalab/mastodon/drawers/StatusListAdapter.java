@@ -638,9 +638,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.vertical_content.setLayoutParams(params);
             holder.left_buttons.setLayoutParams(paramsB);
             if( !status.isClickable())
-                status.makeClickable(context);
-            if( !status.isEmojiFound())
-                status.makeEmojis(context, StatusListAdapter.this);
+                Status.transform(context, status, this);
 
             holder.status_content.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -660,9 +658,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             Bundle b = new Bundle();
                             if (status.getReblog() == null)
-                                b.putString("statusId", status.getId());
+                                b.putParcelable("status", status);
                             else
-                                b.putString("statusId", status.getReblog().getId());
+                                b.putParcelable("status", status.getReblog());
                             intent.putExtras(b);
                             if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
                                 ((Activity) context).finish();
@@ -679,9 +677,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             Bundle b = new Bundle();
                             if (status.getReblog() == null)
-                                b.putString("statusId", status.getId());
+                                b.putParcelable("status", status);
                             else
-                                b.putString("statusId", status.getReblog().getId());
+                                b.putParcelable("status", status.getReblog());
                             intent.putExtras(b);
                             if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
                                 ((Activity) context).finish();
@@ -2263,8 +2261,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         status.setTranslated(true);
                         status.setTranslationShown(true);
                         status.setContentTranslated(translate.getTranslatedContent());
-                        status.makeClickableTranslation(context);
-                        status.makeEmojisTranslation(context, StatusListAdapter.this);
+                        status.transformTranslation(context, StatusListAdapter.this, status);
                         notifyStatusChanged(status);
                     }else {
                         Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();

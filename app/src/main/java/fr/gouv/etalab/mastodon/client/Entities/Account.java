@@ -15,8 +15,8 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 import android.app.Activity;
-import android.content.*;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -594,7 +594,7 @@ public class Account implements Parcelable {
     }
 
 
-    public void makeEmojisAccount(final Context context, final OnRetrieveEmojiAccountInterface listener){
+    public void makeEmojisAccount(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account){
         if( ((Activity)context).isFinishing() )
             return;
 

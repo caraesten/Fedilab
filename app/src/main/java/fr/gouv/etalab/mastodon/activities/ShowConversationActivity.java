@@ -27,12 +27,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +71,7 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
 
     private String statusId;
     private Status initialStatus;
+    private Status detailsStatus;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView lv_status;
     private boolean isRefreshed;
@@ -108,9 +109,10 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         setSupportActionBar(toolbar);
 
         Bundle b = getIntent().getExtras();
+        statuses = new ArrayList<>();
         if(b != null)
-            statusId = b.getString("statusId", null);
-        if( statusId == null)
+            detailsStatus = b.getParcelable("status");
+        if( detailsStatus == null || detailsStatus.getId() == null)
             finish();
 
         if( getSupportActionBar() != null)
@@ -196,8 +198,21 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         isRefreshed = false;
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
-        new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false,false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        //new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false,false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
+        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+        statuses.add(detailsStatus);
+        statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, 0, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
 
+        final LinearLayoutManager mLayoutManager;
+        mLayoutManager = new LinearLayoutManager(this);
+        Log.v(Helper.TAG,"statuses= " + statuses.size());
+        lv_status.setLayoutManager(mLayoutManager);
+        boolean compactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme, compactMode));
+        lv_status.setAdapter(statusListAdapter);
+        new RetrieveContextAsyncTask(getApplicationContext(), expanded, detailsStatus.getId(), ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         switch (theme){
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
@@ -257,21 +272,15 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
     @Override
     public void onRetrieveContext(Context context, Status statusFirst, Error error) {
         swipeRefreshLayout.setRefreshing(false);
-        RelativeLayout loader = findViewById(R.id.loader);
         if( error != null){
             Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
 
-        boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-
-        int position = 0;
-        boolean positionFound = false;
-        statuses = new ArrayList<>();
         if( expanded) {
+            int position = 0;
+            boolean positionFound = false;
+            statuses = new ArrayList<>();
             if (statusFirst != null)
                 statuses.add(0, statusFirst);
             if (context.getAncestors() != null && context.getAncestors().size() > 0) {
@@ -297,18 +306,26 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
 
                 }
             }
+            if( isRefreshed){
+                position = statuses.size()-1;
+                lv_status.scrollToPosition(position);
+            }else {
+                lv_status.smoothScrollToPosition(position);
+            }
+
+            statusListAdapter.notifyDataSetChanged();
         }else {
-            position = 0;
             if (context.getAncestors() != null && context.getAncestors().size() > 0) {
-                statuses.addAll(context.getAncestors());
-                position = context.getAncestors().size();
+                statuses.addAll(0,context.getAncestors());
+                statusListAdapter.notifyItemRangeInserted(0, context.getAncestors().size()-1);
             }
             statuses.add(initialStatus);
             if (context.getDescendants() != null && context.getDescendants().size() > 0) {
-                statuses.addAll(context.getDescendants());
+                statuses.addAll(context.getAncestors().size()+1,context.getDescendants());
+                statusListAdapter.notifyItemRangeInserted(context.getAncestors().size()+1, context.getDescendants().size()-1);
             }
         }
-        statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+        /*statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
 
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
@@ -317,18 +334,10 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         boolean compactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme, compactMode));
-        lv_status.setAdapter(statusListAdapter);
+        lv_status.setAdapter(statusListAdapter);*/
 
-        if( isRefreshed){
-            position = statuses.size()-1;
-            lv_status.scrollToPosition(position);
-        }else {
-            lv_status.smoothScrollToPosition(position);
-        }
 
-        statusListAdapter.notifyDataSetChanged();
-        loader.setVisibility(View.GONE);
-        lv_status.setVisibility(View.VISIBLE);
+
 
     }
 

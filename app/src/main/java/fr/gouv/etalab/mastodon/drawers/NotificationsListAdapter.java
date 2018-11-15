@@ -252,7 +252,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             notification.getAccount().setDisplay_name(typeString);
         }else
             holder.notification_type.setText(notification.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
-        notification.getAccount().makeEmojisAccount(context, NotificationsListAdapter.this);
+        notification.getAccount().makeEmojisAccount(context, NotificationsListAdapter.this, notification.getAccount());
         if( imgH != null) {
             holder.notification_type.setCompoundDrawablePadding((int)Helper.convertDpToPixel(5, context));
             imgH.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
@@ -309,9 +309,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
             holder.status_reply.setText("");
             if( !status.isClickable())
-                status.makeClickable(context);
-            if( !status.isEmojiFound())
-                status.makeEmojis(context, NotificationsListAdapter.this);
+                Status.transform(context, status, NotificationsListAdapter.this);
             holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());

@@ -14,17 +14,37 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by Thomas on 23/04/2017.
  * Manage Tags
  */
 
-public class Tag {
+public class Tag implements Parcelable {
 
     private String name;
     private String url;
+
+    public Tag(){}
+
+    protected Tag(Parcel in) {
+        name = in.readString();
+        url = in.readString();
+    }
+
+    public static final Creator<Tag> CREATOR = new Creator<Tag>() {
+        @Override
+        public Tag createFromParcel(Parcel in) {
+            return new Tag(in);
+        }
+
+        @Override
+        public Tag[] newArray(int size) {
+            return new Tag[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -40,5 +60,16 @@ public class Tag {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(url);
     }
 }

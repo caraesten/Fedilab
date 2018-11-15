@@ -15,15 +15,38 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Thomas on 20/10/2017.
  */
 
-public class Emojis {
+public class Emojis implements Parcelable {
 
     private String shortcode;
     private String static_url;
     private String url;
+
+    public Emojis(){}
+
+    protected Emojis(Parcel in) {
+        shortcode = in.readString();
+        static_url = in.readString();
+        url = in.readString();
+    }
+
+    public static final Creator<Emojis> CREATOR = new Creator<Emojis>() {
+        @Override
+        public Emojis createFromParcel(Parcel in) {
+            return new Emojis(in);
+        }
+
+        @Override
+        public Emojis[] newArray(int size) {
+            return new Emojis[size];
+        }
+    };
 
     public String getShortcode() {
         return shortcode;
@@ -47,5 +70,17 @@ public class Emojis {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(shortcode);
+        dest.writeString(static_url);
+        dest.writeString(url);
     }
 }
