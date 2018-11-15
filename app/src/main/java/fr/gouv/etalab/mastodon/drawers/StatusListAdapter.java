@@ -913,7 +913,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             }
             holder.status_action_container.setVisibility(View.VISIBLE);
-            if( ( getItemViewType(position) != COMPACT_STATUS ) && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale)))){
+            boolean differentLanguage = false;
+            if( status.getReblog() == null)
+                differentLanguage = status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale);
+            else
+                differentLanguage = status.getReblog().getLanguage() != null && !status.getReblog().getLanguage().trim().equals(currentLocale);
+
+            if( ( getItemViewType(position) != COMPACT_STATUS ) && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && differentLanguage))){
                 if( status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
                     if (status.isSpoilerShown() || getItemViewType(position) == FOCUSED_STATUS) {
                         holder.status_translate.setVisibility(View.VISIBLE);
