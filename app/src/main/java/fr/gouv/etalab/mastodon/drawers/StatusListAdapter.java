@@ -1217,7 +1217,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                     Card card = status.getReblog()!= null?status.getReblog().getCard():status.getCard();
                     if( card != null){
-
                         holder.status_cardview_content.setText(card.getDescription());
                         holder.status_cardview_title.setText(card.getTitle());
                         holder.status_cardview_url.setText(card.getUrl());
@@ -1230,7 +1229,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         .into(holder.status_cardview_image);
                         }else
                             holder.status_cardview_image.setVisibility(View.GONE);
-                        if( !card.getType().equals("video")  && display_card) {
+                        if( !card.getType().equals("video")  && ( display_card || position == conversationPosition)) {
                             holder.status_cardview.setVisibility(View.VISIBLE);
                             holder.status_cardview_video.setVisibility(View.GONE);
                             holder.status_cardview.setOnClickListener(new View.OnClickListener() {
@@ -1239,7 +1238,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     Helper.openBrowser(context, card.getUrl());
                                 }
                             });
-                        }else if(card.getType().equals("video") && display_video_preview){
+                        }else if(card.getType().equals("video") && ( display_video_preview || position == conversationPosition)){
                             Glide.with(holder.status_cardview_image.getContext())
                                     .load(card.getImage())
                                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
