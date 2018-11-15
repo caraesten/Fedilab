@@ -36,7 +36,6 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
-import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -513,11 +512,10 @@ public class Status implements Parcelable{
             spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated()));
 
         status.setContentSpanTranslated(treatment(context, spannableStringTranslated, status));
-        makeEmojisTranslation(context, listener, status);
     }
 
 
-    private static void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener, Status status){
+    public static void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener, Status status){
 
         if( ((Activity)context).isFinishing() )
             return;
@@ -607,6 +605,7 @@ public class Status implements Parcelable{
                                 if( i[0] ==  (emojis.size())) {
                                     status.setContentSpan(contentSpan);
                                     status.setContentSpanCW(contentSpanCW);
+                                    status.setEmojiFound(true);
                                     listener.onRetrieveEmoji(status, false);
                                 }
                             }
@@ -617,7 +616,7 @@ public class Status implements Parcelable{
     }
 
 
-    private static void makeEmojisTranslation(final Context context, final OnRetrieveEmojiInterface listener, Status status){
+    public static void makeEmojisTranslation(final Context context, final OnRetrieveEmojiInterface listener, Status status){
 
         if( ((Activity)context).isFinishing() )
             return;
@@ -677,6 +676,7 @@ public class Status implements Parcelable{
                                 if( i[0] ==  (emojis.size())) {
                                     if( finalSpannableStringTranslated != null)
                                         status.setContentSpanTranslated(finalSpannableStringTranslated);
+                                    status.setEmojiTranslateFound(true);
                                     listener.onRetrieveEmoji(status, true);
                                 }
                             }
@@ -694,8 +694,6 @@ public class Status implements Parcelable{
         for(URLSpan span : urls)
             spannableString.removeSpan(span);
         List<Mention> mentions = status.getReblog() != null ? status.getReblog().getMentions() : status.getMentions();
-
-        Log.v(Helper.TAG,"spannableString: " + spannableString);
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -786,7 +784,7 @@ public class Status implements Parcelable{
         else
             //noinspection deprecation
             spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","")));
-        Log.v(Helper.TAG,"spannableStringT: " + spannableStringT);
+
         URLSpan[] spans = spannableStringT.getSpans(0, spannableStringT.length(), URLSpan.class);
         for (URLSpan span : spans) {
             spannableStringT.removeSpan(span);

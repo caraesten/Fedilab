@@ -310,6 +310,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_reply.setText("");
             if( !status.isClickable())
                 Status.transform(context, status, NotificationsListAdapter.this);
+            if( !status.isEmojiFound())
+                Status.makeEmojis(context, NotificationsListAdapter.this, status);
             holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());

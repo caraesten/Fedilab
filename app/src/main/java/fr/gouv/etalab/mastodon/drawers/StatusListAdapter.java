@@ -639,7 +639,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.left_buttons.setLayoutParams(paramsB);
             if( !status.isClickable())
                 Status.transform(context, status, this);
-
+            if( !status.isEmojiFound())
+                Status.makeEmojis(context, this, status);
             holder.status_content.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -2261,7 +2262,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         status.setTranslated(true);
                         status.setTranslationShown(true);
                         status.setContentTranslated(translate.getTranslatedContent());
-                        status.transformTranslation(context, StatusListAdapter.this, status);
+                        Status.transformTranslation(context, StatusListAdapter.this, status);
+                        Status.makeEmojisTranslation(context, StatusListAdapter.this, status);
                         notifyStatusChanged(status);
                     }else {
                         Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
