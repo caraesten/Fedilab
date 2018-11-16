@@ -32,6 +32,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -48,7 +49,6 @@ import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 
 /**
@@ -316,7 +316,7 @@ public class CrossActions {
                 if( statuses != null && statuses.size() > 0) {
                     Intent intent = new Intent(context, ShowConversationActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("statusId", statuses.get(0).getId());
+                    b.putParcelable("status", statuses.get(0));
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }
@@ -555,10 +555,10 @@ public class CrossActions {
                         }
                         if( remoteStatuses.get(0).getReblog() != null ) {
                             b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
-                            b.putString("idRedirect", remoteStatuses.get(0).getReblog().getId());
+                            b.putParcelable("idRedirect", remoteStatuses.get(0).getReblog());
                         }else {
                             b.putParcelable("tootReply", remoteStatuses.get(0));
-                            b.putString("idRedirect", remoteStatuses.get(0).getId());
+                            b.putParcelable("idRedirect", remoteStatuses.get(0));
                         }
                         b.putParcelable("accountReply", account);
                         intent.putExtras(b); //Put your id to your next Intent

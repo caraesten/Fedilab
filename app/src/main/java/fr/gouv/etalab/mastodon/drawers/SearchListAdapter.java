@@ -31,19 +31,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.R;
 
 
 /**
@@ -153,7 +152,7 @@ public class SearchListAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShowConversationActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("statusId", status.getId()); //Your id
+                    b.putParcelable("status", status); //Your id
                     intent.putExtras(b); //Put your id to your next Intent
                     context.startActivity(intent);
                 }

@@ -333,7 +333,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShowConversationActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("statusId", status.getId());
+                    b.putParcelable("status", status);
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }
@@ -343,7 +343,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShowConversationActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("statusId", status.getId());
+                    b.putParcelable("status", status);
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }

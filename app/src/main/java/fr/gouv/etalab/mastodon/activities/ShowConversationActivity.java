@@ -211,11 +211,13 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
         boolean compactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme, compactMode));
         lv_status.setAdapter(statusListAdapter);
-        String statusIdToFetch;
+        String statusIdToFetch = null;
         if( initialStatus != null)
             statusIdToFetch = initialStatus.getId();
-        else
+        else if(detailsStatus != null)
             statusIdToFetch = detailsStatus.getId();
+        if( statusIdToFetch == null)
+            finish();
         new RetrieveContextAsyncTask(getApplicationContext(), expanded, statusIdToFetch, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         switch (theme){
             case Helper.THEME_LIGHT:
