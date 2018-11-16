@@ -114,15 +114,12 @@ public class Status implements Parcelable{
     private boolean isNew = false;
     private boolean isVisible = true;
     private boolean fetchMore = false;
-    private Status status;
     private String content, contentCW, contentTranslated;
     private SpannableString contentSpan, displayNameSpan, contentSpanCW, contentSpanTranslated;
     private RetrieveFeedsAsyncTask.Type type;
     private int itemViewType;
 
-    public Status(){
-        this.status = this;
-    }
+    public Status(){}
     private List<String> conversationProfilePicture;
     private String webviewURL = null;
 
@@ -134,6 +131,7 @@ public class Status implements Parcelable{
         in_reply_to_account_id = in.readString();
         reblog = in.readParcelable(Status.class.getClassLoader());
         account = in.readParcelable(Account.class.getClassLoader());
+        application = in.readParcelable(Application.class.getClassLoader());
         mentions = in.readArrayList(Mention.class.getClassLoader());
         media_attachments = in.readArrayList(Attachment.class.getClassLoader());
         emojis = in.readArrayList(Emojis.class.getClassLoader());
@@ -169,6 +167,7 @@ public class Status implements Parcelable{
         dest.writeString(in_reply_to_account_id);
         dest.writeParcelable(reblog, flags);
         dest.writeParcelable(account, flags);
+        dest.writeParcelable(application, flags);
         dest.writeList(mentions);
         dest.writeList(media_attachments);
         dest.writeList(emojis);

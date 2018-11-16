@@ -16,18 +16,17 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,19 +40,14 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveContextAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Context;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.ConversationDecoration;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveCardInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveContextInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
@@ -66,15 +60,13 @@ import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
  * Show conversation activity class
  */
 
-public class ShowConversationActivity extends BaseActivity implements OnRetrieveFeedsInterface, OnRetrieveContextInterface, OnRetrieveCardInterface {
+public class ShowConversationActivity extends BaseActivity implements  OnRetrieveContextInterface {
 
 
-    private String statusId;
     private Status initialStatus;
     private Status detailsStatus;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView lv_status;
-    private boolean isRefreshed;
     private ImageView pp_actionBar;
     private List<Status> statuses;
     private StatusListAdapter statusListAdapter;
@@ -99,7 +91,6 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             default:
                 setTheme(R.style.AppThemeDark_NoActionBar);
         }
-        expanded = false;
 
         setContentView(R.layout.activity_show_conversation);
         lv_status = findViewById(R.id.lv_status);
@@ -110,8 +101,11 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
 
         Bundle b = getIntent().getExtras();
         statuses = new ArrayList<>();
-        if(b != null)
+        if(b != null) {
             detailsStatus = b.getParcelable("status");
+            expanded  = b.getBoolean("expanded", false);
+            initialStatus = b.getParcelable("initialStatus");
+        }
         if( detailsStatus == null || detailsStatus.getId() == null)
             finish();
 
@@ -126,10 +120,14 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             TextView title = getSupportActionBar().getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = getSupportActionBar().getCustomView().findViewById(R.id.pp_actionBar);
             ImageView action_refresh = getSupportActionBar().getCustomView().findViewById(R.id.action_refresh);
-            final ImageView action_expand = getSupportActionBar().getCustomView().findViewById(R.id.action_expand);
+            ImageView action_expand = getSupportActionBar().getCustomView().findViewById(R.id.action_expand);
             title.setText(R.string.conversation);
             ImageView close_conversation = getSupportActionBar().getCustomView().findViewById(R.id.close_conversation);
 
+            if( expanded)
+                action_expand.setImageResource(R.drawable.ic_expand_less);
+            else
+                action_expand.setImageResource(R.drawable.ic_expand_more);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -149,29 +147,30 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             action_refresh.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if( statuses != null) {
-                        swipeRefreshLayout.setRefreshing(true);
-                        (new Handler()).postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                isRefreshed = true;
-                                statusId = statuses.get(statuses.size() - 1).getId();
-                                new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId, null, false, false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }
-                        }, 1000);
-                    }
+                    Intent intent = new Intent(ShowConversationActivity.this, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    b.putParcelable("status", detailsStatus);
+                    b.putBoolean("expanded", expanded);
+                    if( expanded && statuses != null && statuses.size() > 0)
+                        b.putParcelable("initialStatus", statuses.get(0));
+                    intent.putExtras(b);
+                    finish();
+                    startActivity(intent);
                 }
             });
             action_expand.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     expanded = !expanded;
-                    if( expanded)
-                        action_expand.setImageResource(R.drawable.ic_expand_less);
-                    else
-                        action_expand.setImageResource(R.drawable.ic_expand_more);
-                    new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false,false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
+                    Intent intent = new Intent(ShowConversationActivity.this, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    b.putParcelable("status", detailsStatus);
+                    b.putBoolean("expanded", expanded);
+                    if( expanded && statuses != null && statuses.size() > 0)
+                        b.putParcelable("initialStatus", statuses.get(0));
+                    intent.putExtras(b);
+                    finish();
+                    startActivity(intent);
                 }
             });
 
@@ -195,24 +194,29 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         }
         Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
 
-        isRefreshed = false;
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
-        //new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false,false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-        statuses.add(detailsStatus);
+        if( initialStatus != null)
+            statuses.add(initialStatus);
+        else
+            statuses.add(detailsStatus);
         statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, 0, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
 
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
-        Log.v(Helper.TAG,"statuses= " + statuses.size());
         lv_status.setLayoutManager(mLayoutManager);
         boolean compactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme, compactMode));
         lv_status.setAdapter(statusListAdapter);
-        new RetrieveContextAsyncTask(getApplicationContext(), expanded, detailsStatus.getId(), ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        String statusIdToFetch;
+        if( initialStatus != null)
+            statusIdToFetch = initialStatus.getId();
+        else
+            statusIdToFetch = detailsStatus.getId();
+        new RetrieveContextAsyncTask(getApplicationContext(), expanded, statusIdToFetch, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         switch (theme){
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
@@ -236,8 +240,16 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                isRefreshed = true;
-                new RetrieveFeedsAsyncTask(getApplicationContext(), RetrieveFeedsAsyncTask.Type.ONESTATUS, statusId,null, false,false, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                Intent intent = new Intent(ShowConversationActivity.this, ShowConversationActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable("status", detailsStatus);
+                b.putBoolean("expanded", expanded);
+                if( expanded && statuses != null && statuses.size() > 0)
+                    b.putParcelable("initialStatus", statuses.get(0));
+                b.putParcelable("status", detailsStatus);
+                intent.putExtras(b);
+                finish();
+                startActivity(intent);
             }
         });
 
@@ -256,107 +268,41 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
         }
     }
 
-    @Override
-    public void onRetrieveFeeds(APIResponse apiResponse) {
-        if( apiResponse.getError() != null){
-            Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
-            return;
-        }
-        List<Status> statuses = apiResponse.getStatuses();
-        if( statuses != null && statuses.size() > 0 ){
-            initialStatus = statuses.get(0);
-            new RetrieveContextAsyncTask(getApplicationContext(), expanded, initialStatus.getId(), ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }
-    }
 
     @Override
-    public void onRetrieveContext(Context context, Status statusFirst, Error error) {
+    public void onRetrieveContext(Context context, Error error) {
         swipeRefreshLayout.setRefreshing(false);
         if( error != null){
             Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
 
-        if( expanded) {
+        statusListAdapter.setConversationPosition( context.getAncestors().size());
+        if(!expanded) {
+            if (context.getAncestors() != null && context.getAncestors().size() > 0) {
+                statuses.addAll(0, context.getAncestors());
+                statusListAdapter.notifyItemRangeInserted(0, context.getAncestors().size());
+            }
+            if (context.getDescendants() != null && context.getDescendants().size() > 0) {
+                statuses.addAll(context.getAncestors().size() + 1, context.getDescendants());
+                statusListAdapter.notifyItemRangeChanged(context.getAncestors().size()+1, context.getDescendants().size());
+            }
+        }else{
+            List<Status> statusesTemp = context.getDescendants();
+            int i = 1;
             int position = 0;
-            boolean positionFound = false;
-            statuses = new ArrayList<>();
-            if (statusFirst != null)
-                statuses.add(0, statusFirst);
-            if (context.getAncestors() != null && context.getAncestors().size() > 0) {
-                for (Status status : context.getAncestors()) {
-                    statuses.add(status);
-                    if (!positionFound)
-                        position++;
-                    if (status.getId().equals(initialStatus.getId()))
-                        positionFound = true;
-
+            for(Status status: statusesTemp){
+                statuses.add(status);
+                if( status.getId().equals(detailsStatus.getId())) {
+                    statusListAdapter.setConversationPosition(i);
+                    detailsStatus = status;
+                    position = i;
                 }
-            } else if (statusFirst == null) {
-                statuses.add(0, initialStatus);
-                positionFound = true;
+                i++;
             }
-            if (context.getDescendants() != null && context.getDescendants().size() > 0) {
-                for (Status status : context.getDescendants()) {
-                    statuses.add(status);
-                    if (!positionFound)
-                        position++;
-                    if (status.getId().equals(initialStatus.getId()))
-                        positionFound = true;
-
-                }
-            }
-            if( isRefreshed){
-                position = statuses.size()-1;
-                lv_status.scrollToPosition(position);
-            }else {
-                lv_status.smoothScrollToPosition(position);
-            }
-
-            statusListAdapter.notifyDataSetChanged();
-        }else {
-            if (context.getAncestors() != null && context.getAncestors().size() > 0) {
-                Log.v(Helper.TAG,"getAncestors= " + context.getAncestors().size());
-                statuses.addAll(0,context.getAncestors());
-                statusListAdapter.notifyItemRangeInserted(0, context.getAncestors().size()-1);
-            }
-
-            if (context.getDescendants() != null && context.getDescendants().size() > 0) {
-                Log.v(Helper.TAG,"getDescendants= " + context.getDescendants().size());
-                statuses.addAll(context.getAncestors().size()+1,context.getDescendants());
-                statusListAdapter.notifyItemRangeInserted(context.getAncestors().size()+1, context.getDescendants().size()-1);
-            }
-            Log.v(Helper.TAG,"statuses= " +statuses.size());
-        }
-        /*statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
-
-        final LinearLayoutManager mLayoutManager;
-        mLayoutManager = new LinearLayoutManager(this);
-
-        lv_status.setLayoutManager(mLayoutManager);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        boolean compactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
-        lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme, compactMode));
-        lv_status.setAdapter(statusListAdapter);*/
-
-
-
-
-    }
-
-    @Override
-    public void onRetrieveAccount(Card card) {
-        int position = 0;
-        for(Status status: this.statuses) {
-            if( initialStatus.getId().equals(status.getId())) {
-                if( card != null) {
-                    this.statuses.get(position).setCard(card);
-                    initialStatus.setCard(card);
-                    statusListAdapter.notifyItemChanged(position);
-                }
-                return;
-            }
-            position++;
+            statusListAdapter.notifyItemRangeChanged(1,context.getDescendants().size());
+            lv_status.scrollToPosition(position);
         }
     }
+
 }

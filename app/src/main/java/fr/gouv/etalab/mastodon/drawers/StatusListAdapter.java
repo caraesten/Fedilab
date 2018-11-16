@@ -2279,4 +2279,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             notifyStatusChanged(status);
         }
     }
+
+    public void setConversationPosition(int position){
+        this.conversationPosition = position;
+    }
 }

@@ -15,15 +15,37 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Thomas on 23/04/2017.
  * Manage Entity Application
  */
 
-public class Application {
+public class Application implements Parcelable {
 
     private String name;
     private String website;
+
+    public Application(){}
+
+    protected Application(Parcel in) {
+        name = in.readString();
+        website = in.readString();
+    }
+
+    public static final Creator<Application> CREATOR = new Creator<Application>() {
+        @Override
+        public Application createFromParcel(Parcel in) {
+            return new Application(in);
+        }
+
+        @Override
+        public Application[] newArray(int size) {
+            return new Application[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -39,5 +61,16 @@ public class Application {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(website);
     }
 }
