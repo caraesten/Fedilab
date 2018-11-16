@@ -476,7 +476,7 @@ public class Status implements Parcelable{
     }
 
 
-    public static void transform(Context context, Status status, OnRetrieveEmojiInterface listener){
+    public static void transform(Context context, Status status){
 
         if( ((Activity)context).isFinishing() || status == null)
             return;
@@ -493,12 +493,12 @@ public class Status implements Parcelable{
             status.setContentSpan(treatment(context, spannableStringContent, status));
         if( spannableStringCW.length() > 0)
             status.setContentSpanCW(treatment(context, spannableStringCW, status));
-        makeEmojis(context, listener, status);
+
         status.setClickable(true);
     }
 
 
-    public static void transformTranslation(Context context, OnRetrieveEmojiInterface listener, Status status){
+    public static void transformTranslation(Context context, Status status){
 
         if( ((Activity)context).isFinishing() || status == null)
             return;
@@ -512,6 +512,14 @@ public class Status implements Parcelable{
             spannableStringTranslated = new SpannableString(Html.fromHtml(status.getContentTranslated()));
 
         status.setContentSpanTranslated(treatment(context, spannableStringTranslated, status));
+        String displayName;
+        if( status.getReblog() != null){
+            displayName = status.getReblog().getAccount().getDisplay_name();
+        }else {
+            displayName = status.getAccount().getDisplay_name();
+        }
+        SpannableString displayNameSpan = new SpannableString(displayName);
+        status.setDisplayNameSpan(displayNameSpan);
     }
 
 
@@ -529,15 +537,10 @@ public class Status implements Parcelable{
         final List<Emojis> emojisAccounts = status.getReblog() != null ?status.getReblog().getAccount().getEmojis():status.getAccount().getEmojis();
 
         status.getAccount().makeEmojisAccount(context, null, status.getAccount());
-        String displayName;
-        if( status.getReblog() != null){
-            displayName = status.getReblog().getAccount().getDisplay_name();
-        }else {
-            displayName = status.getAccount().getDisplay_name();
-        }
-        SpannableString displayNameSpan = new SpannableString(displayName);
-        SpannableString contentSpan = new SpannableString(status.getContent());
-        SpannableString contentSpanCW = new SpannableString(status.getSpoiler_text());
+
+        SpannableString displayNameSpan = status.getDisplayNameSpan();
+        SpannableString contentSpan = status.getContentSpan();
+        SpannableString contentSpanCW = status.getContentSpanCW();
         if( emojisAccounts != null)
             emojis.addAll(emojisAccounts);
         if( emojis != null && emojis.size() > 0 ) {
@@ -565,7 +568,7 @@ public class Status implements Parcelable{
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                 final String targetedEmoji = ":" + emoji.getShortcode() + ":";
-                                if (contentSpan.toString().contains(targetedEmoji)) {
+                                if (contentSpan != null && contentSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
@@ -577,7 +580,7 @@ public class Status implements Parcelable{
                                                 endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                                     }
                                 }
-                                if (displayNameSpan.toString().contains(targetedEmoji)) {
+                                if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();
@@ -589,7 +592,8 @@ public class Status implements Parcelable{
                                                     endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                                     }
                                 }
-                                if (contentSpanCW.toString().contains(targetedEmoji)) {
+                                status.setDisplayNameSpan(displayNameSpan);
+                                if (contentSpanCW != null && contentSpanCW.toString().contains(targetedEmoji)) {
                                     //emojis can be used several times so we have to loop
                                     for (int startPosition = -1; (startPosition = contentSpanCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
                                         final int endPosition = startPosition + targetedEmoji.length();

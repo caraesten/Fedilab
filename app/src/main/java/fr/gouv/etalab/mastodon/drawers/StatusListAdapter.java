@@ -422,7 +422,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if( viewHolder.getItemViewType() == DISPLAYED_STATUS || viewHolder.getItemViewType() == FOCUSED_STATUS || viewHolder.getItemViewType() == COMPACT_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
             final Status status = statuses.get(position);
-
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
             status.setItemViewType(viewHolder.getItemViewType());
@@ -638,7 +637,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.vertical_content.setLayoutParams(params);
             holder.left_buttons.setLayoutParams(paramsB);
             if( !status.isClickable())
-                Status.transform(context, status, this);
+                Status.transform(context, status);
             if( !status.isEmojiFound())
                 Status.makeEmojis(context, this, status);
             holder.status_content.setOnTouchListener(new View.OnTouchListener() {
@@ -2262,7 +2261,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         status.setTranslated(true);
                         status.setTranslationShown(true);
                         status.setContentTranslated(translate.getTranslatedContent());
-                        Status.transformTranslation(context, StatusListAdapter.this, status);
+                        Status.transformTranslation(context,  status);
                         Status.makeEmojisTranslation(context, StatusListAdapter.this, status);
                         notifyStatusChanged(status);
                     }else {

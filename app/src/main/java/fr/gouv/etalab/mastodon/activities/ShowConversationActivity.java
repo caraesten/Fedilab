@@ -316,14 +316,17 @@ public class ShowConversationActivity extends BaseActivity implements OnRetrieve
             statusListAdapter.notifyDataSetChanged();
         }else {
             if (context.getAncestors() != null && context.getAncestors().size() > 0) {
+                Log.v(Helper.TAG,"getAncestors= " + context.getAncestors().size());
                 statuses.addAll(0,context.getAncestors());
                 statusListAdapter.notifyItemRangeInserted(0, context.getAncestors().size()-1);
             }
-            statuses.add(initialStatus);
+
             if (context.getDescendants() != null && context.getDescendants().size() > 0) {
+                Log.v(Helper.TAG,"getDescendants= " + context.getDescendants().size());
                 statuses.addAll(context.getAncestors().size()+1,context.getDescendants());
                 statusListAdapter.notifyItemRangeInserted(context.getAncestors().size()+1, context.getDescendants().size()-1);
             }
+            Log.v(Helper.TAG,"statuses= " +statuses.size());
         }
         /*statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, position, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
 
