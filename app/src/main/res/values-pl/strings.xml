@@ -484,7 +484,7 @@
     <string name="set_theme">Motyw:</string>
     <string name="set_compact_mode">Tryb kompaktowy</string>
     <string name="set_share_details">Add toot details when sharing</string>
-    <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+    <string name="support_the_app_on_liberapay">Wesprzyj tą aplikacje na Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
     <string name="no_account_yet">Nie masz jeszcze konta?</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
@@ -516,7 +516,7 @@
     <string name="context_home">Lokalna oś czasu</string>
     <string name="context_public">Publiczne osi czasu</string>
     <string name="context_notification">Powiadomienia</string>
-    <string name="context_conversation">Conversations</string>
+    <string name="context_conversation">Rozmowy</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
     <string name="context_drop">Drop instead of hide</string>
     <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
@@ -524,7 +524,7 @@
     <string name="context_whole_word">Cały wyraz</string>
     <string name="filter_context">Filter contexts</string>
     <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-    <string name="filter_expire">Expire after</string>
+    <string name="filter_expire">Wygasaj po</string>
     <string name="add_new_filter">Dodaj nowy filtr</string>
     <string name="action_filter_delete">Usunąć filtr?</string>
     <string name="action_update_filter">Aktualizuj filtr</string>
