@@ -484,19 +484,18 @@ public class CrossActions {
                                 Bundle b = new Bundle();
                                 if( remoteStatuses == null || remoteStatuses.size() == 0){
                                     dialog.dismiss();
-                                    b.putParcelable("accountReply", account);
                                     intent.putExtras(b); //Put your id to your next Intent
                                     contextReference.get().startActivity(intent);
                                     return;
                                 }
                                 if( remoteStatuses.get(0).getReblog() != null ) {
                                     b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
-                                    b.putString("idRedirect", status.getReblog().getId());
+                                    b.putParcelable("idRedirect", status.getReblog());
                                 }else {
                                     b.putParcelable("tootReply", remoteStatuses.get(0));
-                                    b.putString("idRedirect", status.getId());
+                                    b.putParcelable("idRedirect", status);
                                 }
-                                b.putParcelable("accountReply", account);
+                                b.putString("accountReplyToken", account.getToken());
                                 intent.putExtras(b); //Put your id to your next Intent
                                 contextReference.get().startActivity(intent);
                                 if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
@@ -560,7 +559,7 @@ public class CrossActions {
                             b.putParcelable("tootReply", remoteStatuses.get(0));
                             b.putParcelable("idRedirect", remoteStatuses.get(0));
                         }
-                        b.putParcelable("accountReply", account);
+                        b.putString("accountReplyToken", account.getToken());
                         intent.putExtras(b); //Put your id to your next Intent
                         contextReference.get().startActivity(intent);
                     }

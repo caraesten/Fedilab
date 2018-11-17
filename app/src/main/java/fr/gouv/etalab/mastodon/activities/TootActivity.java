@@ -188,7 +188,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private AlertDialog dialogTrans;
     private AlertDialog alertDialogEmoji;
     private String mentionAccount;
-    private Status idRedirect;
+    private String idRedirect;
     private String userId, instance;
     private Account account;
     private ArrayList<String> splitToot;
@@ -326,7 +326,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             sharedContentIni = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
             mentionAccount = b.getString("mentionAccount", null);
-            idRedirect =  b.getParcelable("idRedirect");
+            idRedirect =  b.getString("idRedirect");
             removed = b.getBoolean("removed");
             visibility = b.getString("visibility", null);
             restoredScheduled = b.getBoolean("restoredScheduled", false);
@@ -1682,8 +1682,9 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     Bundle b = new Bundle();
                     if( idRedirect == null)
                         b.putParcelable("status", status);
-                    else
-                        b.putParcelable("status", idRedirect);
+                    else {
+                        b.putString("status", idRedirect);
+                    }
                     intent.putExtras(b);
                     startActivity(intent);
                     finish();
