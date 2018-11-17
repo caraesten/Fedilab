@@ -484,17 +484,17 @@
     <string name="set_theme">Motyw:</string>
     <string name="set_compact_mode">Tryb kompaktowy</string>
     <string name="set_share_details">Add toot details when sharing</string>
-    <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+    <string name="support_the_app_on_liberapay">Wesprzyj tą aplikacje na Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
     <string name="no_account_yet">Nie masz jeszcze konta?</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-    <string name="delete_instance">Delete this instance?</string>
+    <string name="delete_instance">Usunąć tą instancję?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
     <string name="which_language">Translate in</string>
     <string name="crash_title">Mastalab has stopped :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
-    <string name="follow_instance">Follow instance</string>
+    <string name="follow_instance">Obserwuj instancję</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
     <string name="action_partnership">Partnerstwa</string>
@@ -516,7 +516,7 @@
     <string name="context_home">Lokalna oś czasu</string>
     <string name="context_public">Publiczne osi czasu</string>
     <string name="context_notification">Powiadomienia</string>
-    <string name="context_conversation">Conversations</string>
+    <string name="context_conversation">Rozmowy</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
     <string name="context_drop">Drop instead of hide</string>
     <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
@@ -524,7 +524,7 @@
     <string name="context_whole_word">Cały wyraz</string>
     <string name="filter_context">Filter contexts</string>
     <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-    <string name="filter_expire">Expire after</string>
+    <string name="filter_expire">Wygasaj po</string>
     <string name="add_new_filter">Dodaj nowy filtr</string>
     <string name="action_filter_delete">Usunąć filtr?</string>
     <string name="action_update_filter">Aktualizuj filtr</string>
@@ -562,7 +562,7 @@
     <string name="no_blocked_domain">Brak zablokowanych domen!</string>
     <string name="unblock_domain_confirm">Odblokuj domenę</string>
     <string name="unblock_domain_confirm_message">Czy na pewno chcesz odblokować %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+    <string name="block_domain_confirm_message">Czy na pewno chcesz zablokować %s?</string>
     <string name="blocked_domains">Zablokowane domeny</string>
     <string name="block_domain">Zablokuj domenę</string>
     <string name="toast_block_domain">Domena jest zablokowana</string>
@@ -590,11 +590,11 @@
     <string name="videos">Filmy</string>
     <string name="channels">Kanały</string>
     <string name="set_display_emoji">Użyj Emoji One</string>
-    <string name="information">Information</string>
+    <string name="information">Informacja</string>
     <string name="set_display_card">Display previews in all toots</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
+    <string name="set_display_video_preview">Wyświetl podglądy filmów</string>
     <string-array name="filter_expire">
         <item>Nigdy</item>
         <item>30 minut</item>

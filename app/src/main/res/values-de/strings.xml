@@ -42,7 +42,7 @@
     <string name="microphone">Mikrofon</string>
     <string name="camera">Kamera</string>
     <string name="speech_prompt">Bitte sag etwas</string>
-    <string name="speech_not_supported">Sorry! Dein Gerät unterstützt keine Spracheingabe!</string>
+    <string name="speech_not_supported">Dein Gerät unterstützt leider keine Spracheingabe!</string>
     <string name="delete_all">Alles löschen</string>
     <string name="translate_toot">Toot übersetzen</string>
     <string name="schedule">Planen</string>
@@ -587,7 +587,7 @@
     <string name="set_display_card">Vorschau in allen Toots anzeigen</string>
     <string name="thanks_text_ux">Neuer UX/UI-Designer</string>
     <string name="set_old_direct_timeline">Direkte, alte Zeitline vor Mastodon 2.6 verwenden</string>
-    <string name="set_display_video_preview">Display video previews</string>
+    <string name="set_display_video_preview">Video-Vorschau anzeigen</string>
     <string-array name="filter_expire">
         <item>Nie</item>
         <item>30 Minuten</item>
