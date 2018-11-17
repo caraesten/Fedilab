@@ -719,7 +719,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void fetchMore(String max_id){
-        asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id,false, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 

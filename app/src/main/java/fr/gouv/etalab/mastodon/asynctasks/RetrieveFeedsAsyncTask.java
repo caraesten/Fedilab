@@ -53,7 +53,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private FilterToots filterToots;
     private String instanceName,remoteInstance, name;
-
+    private boolean cached = true;
+    
     public enum Type{
         HOME,
         LOCAL,
@@ -87,6 +88,14 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.action = action;
         this.max_id = max_id;
         this.listener = onRetrieveFeedsInterface;
+    }
+
+    public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, boolean cached, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.action = action;
+        this.max_id = max_id;
+        this.listener = onRetrieveFeedsInterface;
+        this.cached = cached;
     }
 
     public RetrieveFeedsAsyncTask(Context context, Type action, String instanceName, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
@@ -140,13 +149,17 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         switch (action){
             case HOME:
-                List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new StatusCacheDAO(contextReference.get(), db).getAllCachedStatus(max_id);
-                if( statuses == null || statuses.size() == 0)
+                if( cached){
+                    List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new StatusCacheDAO(contextReference.get(), db).getAllCachedStatus(max_id);
+                    if( statuses == null || statuses.size() == 0)
+                        apiResponse = api.getHomeTimeline(max_id);
+                    else{
+                        apiResponse = new APIResponse();
+                        apiResponse.setStatuses(statuses);
+                        apiResponse.setMax_id(statuses.get(statuses.size()-1).getId());
+                    }
+                }else{
                     apiResponse = api.getHomeTimeline(max_id);
-                else{
-                    apiResponse = new APIResponse();
-                    apiResponse.setStatuses(statuses);
-                    apiResponse.setMax_id(statuses.get(statuses.size()-1).getId());
                 }
                 break;
             case LOCAL:
@@ -199,7 +212,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             case CACHE_BOOKMARKS:
                 apiResponse = new APIResponse();
                 db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                statuses = new StatusCacheDAO(contextReference.get(), db).getAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
+                List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new StatusCacheDAO(contextReference.get(), db).getAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
                 apiResponse.setStatuses(statuses);
                 break;
             case CACHE_BOOKMARKS_PEERTUBE:
