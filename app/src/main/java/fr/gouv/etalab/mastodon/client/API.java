@@ -15,16 +15,16 @@ package fr.gouv.etalab.mastodon.client;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.*;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -36,10 +36,28 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import fr.gouv.etalab.mastodon.R;
-import fr.gouv.etalab.mastodon.client.Entities.*;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Application;
+import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Card;
+import fr.gouv.etalab.mastodon.client.Entities.Conversation;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Filters;
+import fr.gouv.etalab.mastodon.client.Entities.HowToVideo;
+import fr.gouv.etalab.mastodon.client.Entities.Instance;
+import fr.gouv.etalab.mastodon.client.Entities.InstanceSocial;
+import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Peertube;
+import fr.gouv.etalab.mastodon.client.Entities.Relationship;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.services.CacheTootsService;
 
 
 /**
@@ -413,7 +431,7 @@ public class API {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/statuses", accountId)), 60, params, prefKeyOauthTokenT);
-            statuses = parseStatuses(new JSONArray(response));
+            statuses = parseStatuses(context, new JSONArray(response));
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -662,7 +680,7 @@ public class API {
             String response = httpsConnection.get(getAbsoluteUrl("/timelines/direct"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(new JSONArray(response));
+            statuses = parseStatuses(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -731,7 +749,12 @@ public class API {
             String response = httpsConnection.get(getAbsoluteUrl("/timelines/home"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(new JSONArray(response));
+            statuses = parseStatuses(context, new JSONArray(response));
+            if( response != null) {
+                Intent intent = new Intent(context, CacheTootsService.class);
+                intent.putExtra("response", response);
+                context.startService(intent);
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1023,7 +1046,7 @@ public class API {
             String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(new JSONArray(response));
+            statuses = parseStatuses(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1080,7 +1103,7 @@ public class API {
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/tag/%s",tag.trim())), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(new JSONArray(response));
+            statuses = parseStatuses(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1327,7 +1350,7 @@ public class API {
             String response = httpsConnection.get(getAbsoluteUrl("/favourites"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(new JSONArray(response));
+            statuses = parseStatuses(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -2119,7 +2142,7 @@ public class API {
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/list/%s",list_id)), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(new JSONArray(response));
+            statuses = parseStatuses(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -2425,7 +2448,7 @@ public class API {
         Results results = new Results();
         try {
             results.setAccounts(parseAccountResponse(resobj.getJSONArray("accounts")));
-            results.setStatuses(parseStatuses(resobj.getJSONArray("statuses")));
+            results.setStatuses(parseStatuses(context, resobj.getJSONArray("statuses")));
             results.setHashtags(parseTags(resobj.getJSONArray("hashtags")));
         } catch (JSONException e) {
             setDefaultError(e);
@@ -2792,7 +2815,7 @@ public class API {
      * @param jsonArray JSONArray
      * @return List<Status>
      */
-    private List<Status> parseStatuses(JSONArray jsonArray){
+    public static List<Status> parseStatuses(Context context, JSONArray jsonArray){
 
         List<Status> statuses = new ArrayList<>();
         try {
@@ -2806,7 +2829,7 @@ public class API {
             }
 
         } catch (JSONException e) {
-            setDefaultError(e);
+            e.printStackTrace();
         }
         return statuses;
     }
@@ -3327,8 +3350,8 @@ public class API {
 
         fr.gouv.etalab.mastodon.client.Entities.Context context = new fr.gouv.etalab.mastodon.client.Entities.Context();
         try {
-            context.setAncestors(parseStatuses(jsonObject.getJSONArray("ancestors")));
-            context.setDescendants(parseStatuses(jsonObject.getJSONArray("descendants")));
+            context.setAncestors(parseStatuses(this.context, jsonObject.getJSONArray("ancestors")));
+            context.setDescendants(parseStatuses(this.context, jsonObject.getJSONArray("descendants")));
         } catch (JSONException e) {
             setDefaultError(e);
         }

@@ -218,6 +218,23 @@ public class StatusCacheDAO {
     }
 
     /**
+     * Returns all cached Statuses in db depending prior to max_id
+     * @return stored status List<StoredStatus>
+     */
+    public List<Status> getAllCachedStatus(String max_id){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        try {
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + StatusCacheDAO.STATUS_CACHE+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_STATUS_ID +" <= '" + max_id+ "'", null, null, null, Sqlite.COL_STATUS_ID + " DESC", "40");
+            return cursorToListStatuses(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
      * Returns all cached Statuses in db depending of their cache type
      * @return stored status List<StoredStatus>
      */

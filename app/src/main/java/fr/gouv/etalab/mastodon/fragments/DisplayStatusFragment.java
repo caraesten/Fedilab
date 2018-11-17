@@ -13,6 +13,7 @@ package fr.gouv.etalab.mastodon.fragments;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -33,12 +34,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSearchAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -46,15 +49,14 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Conversation;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.PeertubeAdapter;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
 import fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService;
 import fr.gouv.etalab.mastodon.services.StreamingLocalTimelineService;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -94,6 +96,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private List<String> mutedAccount;
     private String instanceType;
     private String search_peertube, remote_channel_name;
+    private String bookmark;
 
     public DisplayStatusFragment(){
     }
@@ -204,6 +207,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     if( context instanceof BaseMainActivity){
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         Long bookmarkL = Long.parseLong(statuses.get(firstVisibleItem).getId()) + 1;
+                        bookmark = String.valueOf(bookmarkL);
                         editor.putString(Helper.BOOKMARK_ID + userId + instance, String.valueOf(bookmarkL));
                         editor.apply();
                     }
@@ -279,7 +283,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     String bookmark;
                     if( context instanceof BaseMainActivity){
                         bookmark = ((BaseMainActivity) context).getBookmark();
-                        asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         firstTootsLoaded = false;
 
                     }
@@ -310,7 +314,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 String bookmark;
                                 if( context instanceof BaseMainActivity){
                                     bookmark = ((BaseMainActivity) context).getBookmark();
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     firstTootsLoaded = false;
                                 }
                             }else {

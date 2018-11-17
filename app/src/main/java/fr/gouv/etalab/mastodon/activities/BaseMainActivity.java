@@ -1936,9 +1936,10 @@ public abstract class BaseMainActivity extends BaseActivity
     @Override
     public void onDestroy(){
         super.onDestroy();
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( receive_data != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
         boolean backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         if(!backgroundProcess)
             sendBroadcast(new Intent("StopLiveNotificationService"));

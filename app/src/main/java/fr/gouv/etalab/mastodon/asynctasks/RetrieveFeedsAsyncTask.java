@@ -25,9 +25,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.FilterToots;
-import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
@@ -142,7 +140,14 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         switch (action){
             case HOME:
-                apiResponse = api.getHomeTimeline(max_id);
+                List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new StatusCacheDAO(contextReference.get(), db).getAllCachedStatus(max_id);
+                if( statuses == null || statuses.size() == 0)
+                    apiResponse = api.getHomeTimeline(max_id);
+                else{
+                    apiResponse = new APIResponse();
+                    apiResponse.setStatuses(statuses);
+                    apiResponse.setMax_id(statuses.get(statuses.size()-1).getId());
+                }
                 break;
             case LOCAL:
                 apiResponse = api.getPublicTimeline(true, max_id);
@@ -194,7 +199,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             case CACHE_BOOKMARKS:
                 apiResponse = new APIResponse();
                 db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new StatusCacheDAO(contextReference.get(), db).getAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
+                statuses = new StatusCacheDAO(contextReference.get(), db).getAllStatus(StatusCacheDAO.BOOKMARK_CACHE);
                 apiResponse.setStatuses(statuses);
                 break;
             case CACHE_BOOKMARKS_PEERTUBE:

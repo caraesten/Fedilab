@@ -274,8 +274,11 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
     @Override
     public void onRetrieveContext(Context context, Error error) {
         swipeRefreshLayout.setRefreshing(false);
-        if( error != null){
+        if( error != null ){
             Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+        if( context.getAncestors() == null ){
             return;
         }
 

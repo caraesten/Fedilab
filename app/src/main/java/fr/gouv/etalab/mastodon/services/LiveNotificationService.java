@@ -239,6 +239,8 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         Bundle b = new Bundle();
         boolean canSendBroadCast = true;
         Helper.EventStreaming event = null;
+        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         try {
             switch (response.get("event").toString()) {
                 case "notification":
@@ -246,11 +248,11 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     notification = API.parseNotificationResponse(getApplicationContext(), new JSONObject(response.get("payload").toString()));
                     b.putParcelable("data", notification);
 
-                    final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
                     boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
                     boolean canNotify = Helper.canNotify(getApplicationContext());
                     boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+
                     String targeted_account = null;
                     Helper.NotifType notifType = Helper.NotifType.MENTION;
                     boolean activityRunning = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("isMainActivityRunning", false);
@@ -373,6 +375,12 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 case "update":
                     event = Helper.EventStreaming.UPDATE;
                     status = API.parseStatuses(getApplicationContext(), new JSONObject(response.get("payload").toString()));
+                    String instance = Helper.getLiveInstance(getApplicationContext());
+                    if(userId != null && instance != null && userId.equals(account.getId()) && instance.equals(account.getInstance())){
+                        Intent intent = new Intent(getApplicationContext(), CacheTootsService.class);
+                        intent.putExtra("payload",response.get("payload").toString());
+                        startService(intent);
+                    }
                     status.setNew(true);
                     b.putParcelable("data", status);
                     break;
