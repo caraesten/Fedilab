@@ -43,6 +43,17 @@ public class Card implements Parcelable {
 
     public Card(){}
 
+    public static final Creator<Card> CREATOR = new Creator<Card>() {
+        @Override
+        public Card createFromParcel(Parcel in) {
+            return new Card(in);
+        }
+
+        @Override
+        public Card[] newArray(int size) {
+            return new Card[size];
+        }
+    };
 
     protected Card(Parcel in) {
         url = in.readString();
@@ -60,17 +71,24 @@ public class Card implements Parcelable {
         width = in.readInt();
     }
 
-    public static final Creator<Card> CREATOR = new Creator<Card>() {
-        @Override
-        public Card createFromParcel(Parcel in) {
-            return new Card(in);
-        }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(url);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(image);
+        dest.writeString(type);
+        dest.writeString(html);
+        dest.writeString(author_name);
+        dest.writeString(author_url);
+        dest.writeString(embed_url);
+        dest.writeString(provider_name);
+        dest.writeString(provider_url);
+        dest.writeInt(height);
+        dest.writeInt(width);
+    }
 
-        @Override
-        public Card[] newArray(int size) {
-            return new Card[size];
-        }
-    };
+
 
     public String getUrl() {
         return url;
@@ -182,20 +200,5 @@ public class Card implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(url);
-        dest.writeString(title);
-        dest.writeString(description);
-        dest.writeString(image);
-        dest.writeString(type);
-        dest.writeString(html);
-        dest.writeString(author_name);
-        dest.writeString(author_url);
-        dest.writeString(embed_url);
-        dest.writeString(provider_name);
-        dest.writeString(provider_url);
-        dest.writeInt(height);
-        dest.writeInt(width);
-    }
+
 }

@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 15;
+    public static final int DB_VERSION = 16;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -146,7 +146,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_LANGUAGE = "LANGUAGE";
     static final String COL_PINNED = "PINNED";
     static final String COL_DATE_BACKUP = "DATE_BACKUP";
-
+    static final String COL_CARD = "CARD";
 
     private final String CREATE_TABLE_STATUSES_CACHE = "CREATE TABLE " + TABLE_STATUSES_CACHE + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -156,7 +156,7 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_REBLOG + " TEXT, " + COL_CONTENT + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL, "
             + COL_EMOJIS + " TEXT, " + COL_REBLOGS_COUNT + " INTEGER NOT NULL, " + COL_FAVOURITES_COUNT + " INTEGER NOT NULL, "
             + COL_REBLOGGED + " INTEGER, " + COL_FAVOURITED + " INTEGER, " + COL_MUTED + " INTEGER, " + COL_SENSITIVE + " INTEGER, "
-            + COL_SPOILER_TEXT + " TEXT, " + COL_VISIBILITY + " TEXT NOT NULL, " + COL_MEDIA_ATTACHMENTS + " TEXT,"
+            + COL_SPOILER_TEXT + " TEXT, " + COL_VISIBILITY + " TEXT NOT NULL, " + COL_MEDIA_ATTACHMENTS + " TEXT," + COL_CARD + " TEXT,"
             + COL_MENTIONS + " TEXT, " + COL_TAGS + " TEXT, " + COL_APPLICATION + " TEXT,"
             + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER)";
 
@@ -247,6 +247,9 @@ public class Sqlite extends SQLiteOpenHelper {
                     db.execSQL("ALTER TABLE " + TABLE_INSTANCES + " ADD COLUMN "+ COL_INSTANCE_TYPE + " TEXT");
             case 14:
                 db.execSQL(CREATE_TABLE_PEERTUBE_FAVOURITES);
+            case 15:
+                if( oldVersion > 8)
+                    db.execSQL("ALTER TABLE " + TABLE_STATUSES_CACHE + " ADD COLUMN "+ COL_CARD + " TEXT");
             default:
                 break;
         }

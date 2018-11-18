@@ -139,6 +139,7 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 
 import static fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
 import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
@@ -1207,48 +1208,63 @@ public abstract class BaseMainActivity extends BaseActivity
                                 startActivity(intent);
                                 return true;
                             case R.id.action_cache:
-                                AlertDialog.Builder builder = new AlertDialog.Builder(BaseMainActivity.this, style);
-                                builder.setTitle(R.string.cache_title);
-                                long sizeCache = Helper.cacheSize(getCacheDir());
-                                float cacheSize = 0;
-                                if( sizeCache > 0 ) {
-                                    cacheSize = (float) sizeCache / 1000000.0f;
-                                }
-                                final float finalCacheSize = cacheSize;
-                                builder.setMessage(getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), getString(R.string.cache_units))))
-                                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                // continue with delete
-                                                AsyncTask.execute(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        try {
-                                                            String path = getCacheDir().getPath();
-                                                            File dir = new File(path);
-                                                            if (dir.isDirectory()) {
-                                                                Helper.deleteDir(dir);
+
+                                new AsyncTask<Void, Void, Void>() {
+                                    private float cacheSize;
+                                    @Override
+                                    protected Void doInBackground(Void... params) {
+                                        long sizeCache = Helper.cacheSize(getCacheDir().getParentFile());
+                                        cacheSize = 0;
+                                        if( sizeCache > 0 ) {
+                                            cacheSize = (float) sizeCache / 1000000.0f;
+                                        }
+                                        return null;
+                                    }
+                                    @Override
+                                    protected void onPostExecute(Void result){
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(BaseMainActivity.this, style);
+                                        builder.setTitle(R.string.cache_title);
+
+                                        final float finalCacheSize = cacheSize;
+                                        builder.setMessage(getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), getString(R.string.cache_units))))
+                                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        // continue with delete
+                                                        AsyncTask.execute(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                try {
+                                                                    String path = getCacheDir().getParentFile().getPath();
+                                                                    File dir = new File(path);
+                                                                    if (dir.isDirectory()) {
+                                                                        Helper.deleteDir(dir);
+                                                                    }
+                                                                } catch (Exception ignored) {}
+                                                                new StatusCacheDAO(BaseMainActivity.this, db).removeAllStatus(StatusCacheDAO.STATUS_CACHE);
                                                             }
-                                                        } catch (Exception ignored) {}
+                                                        });
+                                                        Toast.makeText(BaseMainActivity.this, getString(R.string.toast_cache_clear,String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
+                                                        dialog.dismiss();
                                                     }
-                                                });
-                                                Toast.makeText(BaseMainActivity.this, getString(R.string.toast_cache_clear,String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
-                                                dialog.dismiss();
-                                            }
-                                        })
-                                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        })
-                                        .setIcon(android.R.drawable.ic_dialog_alert)
-                                        .show();
+                                                })
+                                                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                    }
+                                                })
+                                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                                .show();
+                                    }
+                                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+
                                 return true;
                             case R.id.action_size:
                                 final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                                 int textSize = sharedpreferences.getInt(Helper.SET_TEXT_SIZE,110);
                                 int iconSize = sharedpreferences.getInt(Helper.SET_ICON_SIZE,130);
 
-                                builder = new AlertDialog.Builder(BaseMainActivity.this, style);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(BaseMainActivity.this, style);
                                 builder.setTitle(R.string.text_size);
 
                                 @SuppressLint("InflateParams") View popup_quick_settings = getLayoutInflater().inflate( R.layout.popup_text_size, null );

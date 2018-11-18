@@ -117,6 +117,7 @@ public class StatusCacheDAO {
         values.put(Sqlite.COL_URI, status.getUri());
         values.put(Sqlite.COL_URL, status.getUrl());
         values.put(Sqlite.COL_ACCOUNT, Helper.accountToStringStorage(status.getAccount()));
+        values.put(Sqlite.COL_CARD, Helper.cardToStringStorage(status.getCard()));
         values.put(Sqlite.COL_IN_REPLY_TO_ID, status.getIn_reply_to_id());
         values.put(Sqlite.COL_IN_REPLY_TO_ACCOUNT_ID, status.getIn_reply_to_account_id());
         values.put(Sqlite.COL_REBLOG, status.getReblog()!=null?Helper.statusToStringStorage(status.getReblog()):null);
@@ -447,6 +448,7 @@ public class StatusCacheDAO {
         status.setUri(c.getString(c.getColumnIndex(Sqlite.COL_URI)));
         status.setUrl(c.getString(c.getColumnIndex(Sqlite.COL_URL)));
         status.setAccount(Helper.restoreAccountFromString(c.getString(c.getColumnIndex(Sqlite.COL_ACCOUNT))));
+        status.setCard(Helper.restoreCardFromString(c.getString(c.getColumnIndex(Sqlite.COL_CARD))));
         status.setIn_reply_to_id(c.getString(c.getColumnIndex(Sqlite.COL_IN_REPLY_TO_ID)));
         status.setIn_reply_to_account_id(c.getString(c.getColumnIndex(Sqlite.COL_IN_REPLY_TO_ACCOUNT_ID)));
         status.setReblog(Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_REBLOG))));

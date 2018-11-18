@@ -163,6 +163,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Application;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
@@ -1570,9 +1571,11 @@ public class Helper {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
             for (String aChildren : children) {
-                boolean success = deleteDir(new File(dir, aChildren));
-                if (!success) {
-                    return false;
+                if (!aChildren.equals("databases") && !aChildren.equals("shared_prefs")) {
+                    boolean success = deleteDir(new File(dir, aChildren));
+                    if (!success) {
+                        return false;
+                    }
                 }
             }
             return dir.delete();
@@ -1914,6 +1917,30 @@ public class Helper {
     }
 
     /**
+     * Unserialized a Card
+     * @param serializedCard String serialized card
+     * @return Card
+     */
+    public static Card restoreCardFromString(String serializedCard){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedCard, Card.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    /**
+     * Serialized a Card class
+     * @param card Card to serialize
+     * @return String serialized Status
+     */
+    public static String cardToStringStorage(Card card){
+        Gson gson = new Gson();
+        return gson.toJson(card);
+    }
+
+    /**
      * Unserialized a Status
      * @param serializedStatus String serialized status
      * @return Status
@@ -1926,7 +1953,6 @@ public class Helper {
             return null;
         }
     }
-
 
     /**
      * Serialized a List<String>

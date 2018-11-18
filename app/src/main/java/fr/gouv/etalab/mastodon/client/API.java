@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -2474,39 +2475,47 @@ public class API {
             try {
                 card.setAuthor_name(resobj.get("author_name").toString());
             }catch (Exception e){
+                e.printStackTrace();
                 card.setAuthor_name(null);
             }
             try {
                 card.setAuthor_url(resobj.get("author_url").toString());
             }catch (Exception e){
+                e.printStackTrace();
                 card.setAuthor_url(null);
             }
             try {
                 card.setEmbed_url(resobj.get("embed_url").toString());
             }catch (Exception e){
+                e.printStackTrace();
                 card.setEmbed_url(null);
             }
             try {
                 card.setProvider_name(resobj.get("provider_name").toString());
             }catch (Exception e){
+                e.printStackTrace();
                 card.setProvider_name(null);
             }
             try {
                 card.setProvider_url(resobj.get("provider_url").toString());
             }catch (Exception e){
+                e.printStackTrace();
                 card.setProvider_url(null);
             }
             try {
                 card.setHeight(Integer.parseInt(resobj.get("height").toString()));
             }catch (Exception e){
+                e.printStackTrace();
                 card.setHeight(0);
             }
             try {
                 card.setWidth(Integer.parseInt(resobj.get("width").toString()));
             }catch (Exception e){
+                e.printStackTrace();
                 card.setWidth(0);
             }
         } catch (JSONException e) {
+            e.printStackTrace();
             card = null;
         }
         return card;
@@ -2876,8 +2885,9 @@ public class API {
                 }
             }
             try {
+
                 status.setCard(parseCardResponse(resobj.getJSONObject("card")));
-            }catch (Exception e){status.setCard(null);}
+            }catch (Exception e){status.setCard(null); Log.v(Helper.TAG,"resobj: " + resobj);e.printStackTrace();}
 
 
             status.setMedia_attachments(attachments);
