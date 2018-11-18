@@ -214,25 +214,27 @@
 
         <LinearLayout
             android:id="@+id/status_cardview"
-            android:padding="5dp"
             android:layout_marginBottom="10dp"
             android:visibility="gone"
             android:background="@drawable/card_border"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="1dp"
             android:orientation="horizontal">
             <ImageView
                 android:layout_gravity="center"
                 android:id="@+id/status_cardview_image"
                 android:layout_width="80dp"
                 android:gravity="center"
-                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent"
+                android:minHeight="80dp"
                 tools:ignore="ContentDescription" />
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginStart="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content">
                 <TextView

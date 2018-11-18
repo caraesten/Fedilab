@@ -130,6 +130,7 @@ public class Status implements Parcelable{
         in_reply_to_id = in.readString();
         in_reply_to_account_id = in.readString();
         reblog = in.readParcelable(Status.class.getClassLoader());
+        card = in.readParcelable(Card.class.getClassLoader());
         account = in.readParcelable(Account.class.getClassLoader());
         application = in.readParcelable(Application.class.getClassLoader());
         mentions = in.readArrayList(Mention.class.getClassLoader());
@@ -166,6 +167,7 @@ public class Status implements Parcelable{
         dest.writeString(in_reply_to_id);
         dest.writeString(in_reply_to_account_id);
         dest.writeParcelable(reblog, flags);
+        dest.writeParcelable(card, flags);
         dest.writeParcelable(account, flags);
         dest.writeParcelable(application, flags);
         dest.writeList(mentions);

@@ -15,6 +15,9 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Thomas on 23/04/2017.
  * Manages card in toots, only used during a call to the context
@@ -22,7 +25,7 @@ package fr.gouv.etalab.mastodon.client.Entities;
  * All values are not implemented
  */
 
-public class Card{
+public class Card implements Parcelable {
 
     private String url;
     private String title;
@@ -40,6 +43,34 @@ public class Card{
 
     public Card(){}
 
+
+    protected Card(Parcel in) {
+        url = in.readString();
+        title = in.readString();
+        description = in.readString();
+        image = in.readString();
+        type = in.readString();
+        html = in.readString();
+        author_name = in.readString();
+        author_url = in.readString();
+        embed_url = in.readString();
+        provider_name = in.readString();
+        provider_url = in.readString();
+        height = in.readInt();
+        width = in.readInt();
+    }
+
+    public static final Creator<Card> CREATOR = new Creator<Card>() {
+        @Override
+        public Card createFromParcel(Parcel in) {
+            return new Card(in);
+        }
+
+        @Override
+        public Card[] newArray(int size) {
+            return new Card[size];
+        }
+    };
 
     public String getUrl() {
         return url;
@@ -144,5 +175,27 @@ public class Card{
 
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(url);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(image);
+        dest.writeString(type);
+        dest.writeString(html);
+        dest.writeString(author_name);
+        dest.writeString(author_url);
+        dest.writeString(embed_url);
+        dest.writeString(provider_name);
+        dest.writeString(provider_url);
+        dest.writeInt(height);
+        dest.writeInt(width);
     }
 }

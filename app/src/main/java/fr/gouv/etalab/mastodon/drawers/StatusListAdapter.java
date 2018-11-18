@@ -1222,15 +1222,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.webview_preview.setVisibility(View.VISIBLE);
             }
             boolean display_video_preview = sharedpreferences.getBoolean(Helper.SET_DISPLAY_VIDEO_PREVIEWS, true);
-            if( type == RetrieveFeedsAsyncTask.Type.CONTEXT || display_card || display_video_preview){
+            if( (type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition ) || display_card || display_video_preview){
 
-                if( type ==  RetrieveFeedsAsyncTask.Type.CONTEXT)
+                if( type ==  RetrieveFeedsAsyncTask.Type.CONTEXT & position == conversationPosition)
                     holder.status_cardview_content.setVisibility(View.VISIBLE);
                 else
                     holder.status_cardview_content.setVisibility(View.GONE);
 
                 if( position == conversationPosition || display_card || display_video_preview){
-
                     Card card = status.getReblog()!= null?status.getReblog().getCard():status.getCard();
                     if( card != null){
                         holder.status_cardview_content.setText(card.getDescription());
