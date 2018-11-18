@@ -30,20 +30,18 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 
 
 /**
- * Created by Thomas on 15/02/2018.
- * Manage Status in cache
+ * Created by Thomas on 18/11/2018.
+ * Manage timeline in cache
  */
-public class StatusCacheDAO {
+public class TimelineCacheDAO {
 
     private SQLiteDatabase db;
     public Context context;
 
     //Type of cache
-    public static int BOOKMARK_CACHE = 0;
-    public static int ARCHIVE_CACHE = 1;
-    public static int STATUS_CACHE = 2;
+    public static int HOME_TIMELINE = 0;
 
-    public StatusCacheDAO(Context context, SQLiteDatabase db) {
+    public TimelineCacheDAO(Context context, SQLiteDatabase db) {
         //Creation of the DB with tables
         this.context = context;
         this.db = db;
@@ -93,7 +91,7 @@ public class StatusCacheDAO {
         //Inserts cached status
         long last_id;
         try{
-            last_id = db.insert(Sqlite.TABLE_STATUSES_CACHE, null, values);
+            last_id = db.insert(Sqlite.TABLE_TIMELINE_CACHE, null, values);
         }catch (Exception e) {
             last_id =  -1;
             e.printStackTrace();
@@ -146,7 +144,7 @@ public class StatusCacheDAO {
         //Inserts cached status
         long last_id;
         try{
-            last_id = db.insert(Sqlite.TABLE_STATUSES_CACHE, null, values);
+            last_id = db.insert(Sqlite.TABLE_TIMELINE_CACHE, null, values);
         }catch (Exception e) {
             last_id =  -1;
             e.printStackTrace();
@@ -170,7 +168,7 @@ public class StatusCacheDAO {
         values.put(Sqlite.COL_FAVOURITED, status.isFavourited());
         values.put(Sqlite.COL_MUTED, status.isMuted());
         values.put(Sqlite.COL_PINNED, status.isPinned());
-        return db.update(Sqlite.TABLE_STATUSES_CACHE,
+        return db.update(Sqlite.TABLE_TIMELINE_CACHE,
                 values, Sqlite.COL_STATUS_ID + " =  ? AND " + Sqlite.COL_INSTANCE + " =  ? " + Sqlite.COL_CACHED_ACTION + " = ?",
                 new String[]{String.valueOf(status.getId()), instance, String.valueOf(cacheType)});
     }
@@ -186,7 +184,7 @@ public class StatusCacheDAO {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
-        return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_STATUS_ID + " = \"" + status.getId() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null);
+        return db.delete(Sqlite.TABLE_TIMELINE_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_STATUS_ID + " = \"" + status.getId() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null);
     }
 
     /***
@@ -194,14 +192,14 @@ public class StatusCacheDAO {
      * @return int
      */
     public int remove(int cacheType, Status status, String userId, String instance){
-        return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_STATUS_ID + " = \"" + status.getId() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null);
+        return db.delete(Sqlite.TABLE_TIMELINE_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_STATUS_ID + " = \"" + status.getId() + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\" AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null);
     }
 
     public int removeAllStatus(int cacheType){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
-        return db.delete(Sqlite.TABLE_STATUSES_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null);
+        return db.delete(Sqlite.TABLE_TIMELINE_CACHE,  Sqlite.COL_CACHED_ACTION + " = \""+ cacheType +"\" AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null);
     }
 
     //------- GETTERS  -------
@@ -215,7 +213,7 @@ public class StatusCacheDAO {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", null);
+            Cursor c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", null);
             return cursorToListStatuses(c);
         } catch (Exception e) {
             e.printStackTrace();
@@ -223,6 +221,22 @@ public class StatusCacheDAO {
         }
     }
 
+    /**
+     * Returns all cached Statuses in db depending prior to max_id
+     * @return stored status List<StoredStatus>
+     */
+    public List<Status> getAllCachedStatus(String max_id){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        try {
+            Cursor c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + TimelineCacheDAO.HOME_TIMELINE+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_STATUS_ID +" < '" + max_id+ "'", null, null, null, Sqlite.COL_STATUS_ID + " DESC", "40");
+            return cursorToListStatuses(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /**
      * Returns all cached Statuses in db depending of their cache type
@@ -290,7 +304,7 @@ public class StatusCacheDAO {
         }
 
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, selection.toString(), null, null, null, Sqlite.COL_CREATED_AT + " DESC", "40");
+            Cursor c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null, selection.toString(), null, null, null, Sqlite.COL_CREATED_AT + " DESC", "40");
             return cursorToListStatuses(c);
         } catch (Exception e) {
             e.printStackTrace();
@@ -307,7 +321,7 @@ public class StatusCacheDAO {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_DATE_BACKUP + " DESC", "1");
+            Cursor c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_DATE_BACKUP + " DESC", "1");
             //No element found
             if (c.getCount() == 0)
                 return null;
@@ -330,7 +344,7 @@ public class StatusCacheDAO {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " ASC", "1");
+            Cursor c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " ASC", "1");
             //No element found
             if (c.getCount() == 0)
                 return null;
@@ -353,7 +367,7 @@ public class StatusCacheDAO {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", "1");
+            Cursor c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", "1");
             //No element found
             if (c.getCount() == 0)
                 return null;
@@ -376,7 +390,7 @@ public class StatusCacheDAO {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_STATUS_ID + " DESC", "1");
+            Cursor c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_STATUS_ID + " DESC", "1");
             //No element found
             if (c.getCount() == 0)
                 return null;
@@ -399,7 +413,7 @@ public class StatusCacheDAO {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = Helper.getLiveInstance(context);
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_STATUS_ID + " = '" + id + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_STATUS_ID + " = '" + id + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, null, null);
             return cursorToStoredStatus(c);
         } catch (Exception e) {
             return null;
@@ -413,7 +427,7 @@ public class StatusCacheDAO {
      */
     public Status getStatus(int cacheType, String id, String userId, String instance){
         try {
-            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_STATUS_ID + " = '" + id + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_TIMELINE_CACHE, null, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_STATUS_ID + " = '" + id + "' AND " + Sqlite.COL_INSTANCE + " = '" + instance +"' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, null, null);
             return cursorToStoredStatus(c);
         } catch (Exception e) {
             return null;

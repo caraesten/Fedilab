@@ -139,7 +139,7 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
+import fr.gouv.etalab.mastodon.sqlite.TimelineCacheDAO;
 
 import static fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
 import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
@@ -1240,7 +1240,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                                                         Helper.deleteDir(dir);
                                                                     }
                                                                 } catch (Exception ignored) {}
-                                                                new StatusCacheDAO(BaseMainActivity.this, db).removeAllStatus(StatusCacheDAO.STATUS_CACHE);
+                                                                new TimelineCacheDAO(BaseMainActivity.this, db).removeAllStatus(TimelineCacheDAO.HOME_TIMELINE);
                                                             }
                                                         });
                                                         Toast.makeText(BaseMainActivity.this, getString(R.string.toast_cache_clear,String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), getString(R.string.cache_units))), Toast.LENGTH_LONG).show();

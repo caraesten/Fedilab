@@ -31,6 +31,7 @@ import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
+import fr.gouv.etalab.mastodon.sqlite.TimelineCacheDAO;
 
 
 /**
@@ -150,7 +151,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         switch (action){
             case HOME:
                 if( cached){
-                    List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new StatusCacheDAO(contextReference.get(), db).getAllCachedStatus(max_id);
+                    List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new TimelineCacheDAO(contextReference.get(), db).getAllCachedStatus(max_id);
                     if( statuses == null || statuses.size() == 0)
                         apiResponse = api.getHomeTimeline(max_id);
                     else{

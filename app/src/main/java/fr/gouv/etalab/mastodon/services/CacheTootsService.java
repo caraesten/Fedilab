@@ -33,7 +33,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
+import fr.gouv.etalab.mastodon.sqlite.TimelineCacheDAO;
 
 
 /**
@@ -88,7 +88,7 @@ public class CacheTootsService extends IntentService {
             }
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
-            List<Status> alreadyCached = new StatusCacheDAO(getApplicationContext(), db).getAllStatus(StatusCacheDAO.STATUS_CACHE);
+            List<Status> alreadyCached = new TimelineCacheDAO(getApplicationContext(), db).getAllStatus(TimelineCacheDAO.HOME_TIMELINE);
             ArrayList<String> cachedId = new ArrayList<>();
             if(alreadyCached != null){
                 for(Status status: alreadyCached){
@@ -97,7 +97,7 @@ public class CacheTootsService extends IntentService {
             }
             for(Status status: statuses){
                 if(!cachedId.contains(status.getId())){
-                    new StatusCacheDAO(getApplicationContext(), db).insertStatus(StatusCacheDAO.STATUS_CACHE, status);
+                    new TimelineCacheDAO(getApplicationContext(), db).insertStatus(TimelineCacheDAO.HOME_TIMELINE, status);
                 }
             }
 

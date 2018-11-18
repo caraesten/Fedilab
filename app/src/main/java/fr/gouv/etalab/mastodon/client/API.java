@@ -17,7 +17,6 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -2887,7 +2886,7 @@ public class API {
             try {
 
                 status.setCard(parseCardResponse(resobj.getJSONObject("card")));
-            }catch (Exception e){status.setCard(null); Log.v(Helper.TAG,"resobj: " + resobj);e.printStackTrace();}
+            }catch (Exception e){status.setCard(null);}
 
 
             status.setMedia_attachments(attachments);
