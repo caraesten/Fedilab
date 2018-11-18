@@ -589,6 +589,10 @@
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string name="set_display_video_preview">Display video previews</string>
+    <string name="thanks_text_support">Gitlab Support</string>
+    <string name="action_bug_report">Bug Report</string>
+    <string name="no_mail_client">There are no email clients installed.</string>
+    <string name="bug_report_mail">Send a bug report</string>
     <string-array name="filter_expire">
         <item>Never</item>
         <item>30 minutes</item>
