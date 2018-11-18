@@ -81,4 +81,19 @@
     <color name="verified_text">#79bd9a</color>
     <color name="verified_background">#5579bd9a</color>
 
+
+    <!-- Action icon at the bottom -->
+    <color name="action_light">#617684</color>
+    <color name="action_dark">#d9d9d9</color>
+    <color name="action_black">#d9d9d9</color>
+
+    <!-- Header boosted/header -->
+    <color name="action_light_header">#617684</color>
+
+    <!-- Card border -->
+    <color name="cardBorderLight">#393f4f</color>
+    <color name="cardBorderDark">#393f4f</color>
+    <color name="cardBorderBlack">#d9d9d9</color>
+
+
 </resources>

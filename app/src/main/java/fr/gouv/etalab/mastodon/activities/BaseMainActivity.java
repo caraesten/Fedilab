@@ -310,11 +310,11 @@ public abstract class BaseMainActivity extends BaseActivity
         iconGlobal.setImageResource(R.drawable.ic_public);
 
         if( theme == THEME_LIGHT){
-            iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-            iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-            iconDirect.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-            iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-            iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+            iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+            iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+            iconDirect.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+            iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+            iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
         }else {
             iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
             iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);

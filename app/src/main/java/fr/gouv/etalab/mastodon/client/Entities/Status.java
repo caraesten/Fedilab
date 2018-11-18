@@ -492,7 +492,8 @@ public class Status implements Parcelable{
             status.setContentSpan(treatment(context, spannableStringContent, status));
         if( spannableStringCW.length() > 0)
             status.setContentSpanCW(treatment(context, spannableStringCW, status));
-
+        SpannableString displayNameSpan = new SpannableString(status.reblog!=null?status.getReblog().getAccount().getDisplay_name():status.getAccount().getDisplay_name());
+        status.setDisplayNameSpan(displayNameSpan);
         status.setClickable(true);
     }
 
