@@ -591,6 +591,10 @@
     <string name="thanks_text_ux">Interfazearen diseinatzaile berria</string>
     <string name="set_old_direct_timeline">Erabili Mastodon 2.6 aurreko denbora-lerro zuzena</string>
     <string name="set_display_video_preview">Display video previews</string>
+    <string name="thanks_text_support">Gitlab Support</string>
+    <string name="action_bug_report">Bug Report</string>
+    <string name="no_mail_client">There are no email clients installed.</string>
+    <string name="bug_report_mail">Send a bug report</string>
     <string-array name="filter_expire">
         <item>Inoiz ez</item>
         <item>30 minutu</item>
