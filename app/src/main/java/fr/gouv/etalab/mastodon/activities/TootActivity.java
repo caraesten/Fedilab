@@ -499,7 +499,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             @Override
             public void onClick(View v) {
                 toot_it.setEnabled(false);
-                if(toot_content.getText().toString().trim().length() == 0){
+                if(toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0){
                     Toast.makeText(getApplicationContext(),R.string.toot_error_no_content, Toast.LENGTH_LONG).show();
                     toot_it.setEnabled(true);
                     return;

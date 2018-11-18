@@ -2209,9 +2209,9 @@ public class Helper {
             Toast.makeText(context, R.string.toast_error, Toast.LENGTH_SHORT).show();
             return null;
         }
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth()+10, view.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth()+(int)Helper.convertDpToPixel(10, context), view.getHeight()+(int)Helper.convertDpToPixel(30, context), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(returnedBitmap);
-        canvas.drawBitmap(returnedBitmap, 10, 0, null); 
+        canvas.drawBitmap(returnedBitmap, view.getWidth()+(int)Helper.convertDpToPixel(10, context), 0, null);
         Drawable bgDrawable =view.getBackground();
         if (bgDrawable!=null)
             bgDrawable.draw(canvas);
@@ -2234,9 +2234,9 @@ public class Helper {
         int mastodonC4 = ContextCompat.getColor(context, R.color.mastodonC4);
         paint.setColor(mastodonC4);
         paint.setStrokeWidth(12);
-        paint.setTextSize(30);
+        paint.setTextSize((int)Helper.convertDpToPixel(14, context));
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-        canvas.drawText(name +" - #Mastalab", 10, view.getHeight() -50, paint);
+        canvas.drawText(name +" - #Mastalab", 0, view.getHeight() +(int)Helper.convertDpToPixel(15, context), paint);
 
         return returnedBitmap;
     }
