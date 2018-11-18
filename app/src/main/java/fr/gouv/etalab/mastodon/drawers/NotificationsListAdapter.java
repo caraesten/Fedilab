@@ -272,29 +272,29 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
         //Manages theme for icon colors
         if( theme == THEME_BLACK){
-            changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
-            changeDrawableColor(context, holder.status_more, R.color.dark_icon);
-            changeDrawableColor(context, holder.status_privacy, R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_reply,R.color.action_black);
+            changeDrawableColor(context, holder.status_more, R.color.action_black);
+            changeDrawableColor(context, holder.status_privacy, R.color.action_black);
+            changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_black);
+            changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_black);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.dark_text);
             changeDrawableColor(context, holder.notification_delete,R.color.dark_text);
         }else if( theme == Helper.THEME_DARK ){
-            changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
-            changeDrawableColor(context, holder.status_more, R.color.dark_icon);
-            changeDrawableColor(context, holder.status_privacy, R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
-            changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_reply,R.color.action_dark);
+            changeDrawableColor(context, holder.status_more, R.color.action_dark);
+            changeDrawableColor(context, holder.status_privacy, R.color.action_dark);
+            changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_dark);
+            changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_dark);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.mastodonC4);
             changeDrawableColor(context, holder.notification_delete,R.color.dark_text);
         }else {
-            changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
-            changeDrawableColor(context, holder.status_more, R.color.black);
-            changeDrawableColor(context, holder.status_privacy, R.color.black);
-            changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
-            changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
+            changeDrawableColor(context, R.drawable.ic_reply,R.color.action_light);
+            changeDrawableColor(context, holder.status_more, R.color.action_light);
+            changeDrawableColor(context, holder.status_privacy, R.color.action_light);
+            changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_light);
+            changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_light);
             changeDrawableColor(context, R.drawable.ic_photo,R.color.black);
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
             changeDrawableColor(context, holder.notification_delete,R.color.black);
@@ -356,10 +356,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
                 imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
             }else {
-                if( theme == THEME_DARK || theme == THEME_BLACK)
-                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.dark_icon);
+                if( theme == THEME_DARK)
+                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_dark);
+                else if(theme == THEME_BLACK)
+                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_black);
                 else
-                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.black);
+                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_light);
                 imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
             }
 
@@ -367,16 +369,20 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
                 imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
             }else {
-                if( theme == THEME_DARK || theme == THEME_BLACK)
-                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.dark_icon);
+                if( theme == THEME_DARK )
+                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_dark);
+                else if(theme == THEME_BLACK)
+                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_black);
                 else
-                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.black);
+                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_light);
                 imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
             }
-            if( theme == THEME_DARK || theme == THEME_BLACK)
-                changeDrawableColor(context, R.drawable.ic_reply,R.color.dark_icon);
+            if( theme == THEME_DARK)
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.action_dark);
+            else if(theme == THEME_BLACK)
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.action_black);
             else
-                changeDrawableColor(context, R.drawable.ic_reply,R.color.black);
+                changeDrawableColor(context, R.drawable.ic_reply,R.color.action_light);
             imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
 
             if( status.getReblog() == null) {
@@ -427,14 +433,18 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
             holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
 
-            if( theme == THEME_DARK || theme == THEME_BLACK){
-                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
+            if( theme == THEME_DARK ){
+                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
+                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
+                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
+            }else if(theme == THEME_BLACK){
+                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
+                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
+                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_black));
             }else {
-                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.black));
-                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.black));
-                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.black));
+                holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
+                holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
+                holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_light));
             }
             if( type.equals("favourite") || type.equals("reblog")){
                 holder.status_document_container.setVisibility(View.GONE);

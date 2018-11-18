@@ -591,7 +591,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.mastodonC4);
 
-                changeDrawableColor(context, R.drawable.ic_repeat_head_toot,R.color.light_black);
+                changeDrawableColor(context, R.drawable.ic_repeat_head_toot,R.color.action_light_header);
 
 
                 holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.light_black));
@@ -609,7 +609,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.black_text_toot_header));
             }else if( theme == THEME_LIGHT) {
-                holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.light_black));
+                holder.status_account_displayname.setTextColor(ContextCompat.getColor(context, R.color.action_light_header));
                 holder.status_toot_date.setTextColor(ContextCompat.getColor(context, R.color.light_black));
             }
             if( status.isBookmarked())
@@ -1191,10 +1191,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     changeDrawableColor(context, R.drawable.ic_pin_drop_p,R.color.marked_icon);
                     imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop_p);
                 }else {
-                    if( theme == THEME_DARK || theme == THEME_BLACK)
-                        changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.dark_icon);
+                    if( theme == THEME_DARK )
+                        changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.action_dark);
+                    else if(theme == THEME_BLACK)
+                        changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.action_black);
                     else
-                        changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.light_black);
+                        changeDrawableColor(context, R.drawable.ic_pin_drop,R.color.action_light);
                     imgPin = ContextCompat.getDrawable(context, R.drawable.ic_pin_drop);
                 }
                 assert imgPin != null;

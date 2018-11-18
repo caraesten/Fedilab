@@ -135,6 +135,29 @@
             android:divider="@null"
             android:scrollbars="none" />
 
+        <!-- About Help desk -->
+        <TextView
+            android:id="@+id/about_thanks_support"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:padding="5dp"
+            android:text="@string/thanks_text_support"
+            android:textColor="?colorAccent"
+            android:textSize="16sp" />
+
+        <fr.gouv.etalab.mastodon.helper.ExpandableHeightListView
+            android:id="@+id/lv_support"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginLeft="150dp"
+            android:layout_marginRight="150dp"
+            android:divider="@null"
+            android:scrollbars="none" />
+
         <!-- About banner designer -->
         <TextView
             android:id="@+id/about_thanks_banner"

@@ -1963,6 +1963,16 @@ public abstract class BaseMainActivity extends BaseActivity
             Intent intent = new Intent(getApplicationContext(), PartnerShipActivity.class);
             startActivity(intent);
             return false;
+        }else if(id == R.id.nav_bug_report){
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("message/rfc822");
+            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"incoming+tom79/mastalab@incoming.gitlab.com"});
+            try {
+                startActivity(Intent.createChooser(i, getString(R.string.bug_report_mail)));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(getApplicationContext(), R.string.no_mail_client, Toast.LENGTH_SHORT).show();
+            }
+            return false;
         }
         final NavigationView navigationView = findViewById(R.id.nav_view);
         unCheckAllMenuItems(navigationView);
