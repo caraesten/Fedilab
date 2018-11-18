@@ -449,14 +449,15 @@ public class CrossActions {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
                         final Account account = accountArray[which];
-                        new AsyncTask<Void, Void, Void>() {
-                            private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
-                            private WeakReference<Context> contextReference = new WeakReference<>(context);
+                        if(status != null) {
+                            new AsyncTask<Void, Void, Void>() {
+                                private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
+                                private WeakReference<Context> contextReference = new WeakReference<>(context);
 
-                            @Override
-                            protected Void doInBackground(Void... voids) {
+                                @Override
+                                protected Void doInBackground(Void... voids) {
 
-                                if(status != null) {
+
                                     API api = new API(contextReference.get(), account.getInstance(), account.getToken());
                                     String uri;
                                     if (status.getReblog() != null) {
@@ -474,40 +475,47 @@ public class CrossActions {
                                     if (search != null) {
                                         remoteStatuses = search.getStatuses();
                                     }
+                                    return null;
                                 }
-                                return null;
-                            }
 
-                            @Override
-                            protected void onPostExecute(Void result) {
-                                Intent intent = new Intent(contextReference.get(), TootActivity.class);
-                                Bundle b = new Bundle();
-                                if( remoteStatuses == null || remoteStatuses.size() == 0){
-                                    dialog.dismiss();
+                                @Override
+                                protected void onPostExecute(Void result) {
+                                    Intent intent = new Intent(contextReference.get(), TootActivity.class);
+                                    Bundle b = new Bundle();
+                                    if (remoteStatuses == null || remoteStatuses.size() == 0) {
+                                        dialog.dismiss();
+                                        intent.putExtras(b); //Put your id to your next Intent
+                                        contextReference.get().startActivity(intent);
+                                        return;
+                                    }
+                                    if (remoteStatuses.get(0).getReblog() != null) {
+                                        b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
+                                        b.putParcelable("idRedirect", status.getReblog());
+                                    } else {
+                                        b.putParcelable("tootReply", remoteStatuses.get(0));
+                                        b.putParcelable("idRedirect", status);
+                                    }
+                                    b.putString("accountReplyToken", account.getToken());
                                     intent.putExtras(b); //Put your id to your next Intent
                                     contextReference.get().startActivity(intent);
-                                    return;
-                                }
-                                if( remoteStatuses.get(0).getReblog() != null ) {
-                                    b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
-                                    b.putParcelable("idRedirect", status.getReblog());
-                                }else {
-                                    b.putParcelable("tootReply", remoteStatuses.get(0));
-                                    b.putParcelable("idRedirect", status);
-                                }
-                                b.putString("accountReplyToken", account.getToken());
-                                intent.putExtras(b); //Put your id to your next Intent
-                                contextReference.get().startActivity(intent);
-                                if( type == RetrieveFeedsAsyncTask.Type.CONTEXT ){
-                                    try {
-                                        //Avoid to open multi activities when replying in a conversation
-                                        ((ShowConversationActivity)contextReference.get()).finish();
-                                    }catch (Exception ignored){}
+                                    if (type == RetrieveFeedsAsyncTask.Type.CONTEXT) {
+                                        try {
+                                            //Avoid to open multi activities when replying in a conversation
+                                            ((ShowConversationActivity) contextReference.get()).finish();
+                                        } catch (Exception ignored) {
+                                        }
 
+                                    }
+                                    dialog.dismiss();
                                 }
-                                dialog.dismiss();
-                            }
-                        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+                            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }else{
+                            Intent intent = new Intent(context, TootActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("accountReplyToken", account.getToken());
+                            intent.putExtras(b); //Put your id to your next Intent
+                            context.startActivity(intent);
+                        }
 
                     }
                 });
