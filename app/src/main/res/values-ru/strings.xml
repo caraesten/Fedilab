@@ -596,12 +596,12 @@
     <string name="information">информация</string>
     <string name="set_display_card">Показывать предпросмотр для всех тутов</string>
     <string name="thanks_text_ux">Новый дизайнер UX/UI</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
+    <string name="set_old_direct_timeline">Использовать старый вариант ленты (до версии Mastodon 2.6)</string>
     <string name="set_display_video_preview">Отображать предпросмотр видео</string>
     <string name="thanks_text_support">Поддержка Gitlab</string>
     <string name="action_bug_report">Отчет об ошибке</string>
     <string name="no_mail_client">Не найдено приложений для работы с электронной почтой.</string>
-    <string name="bug_report_mail">Send a bug report</string>
+    <string name="bug_report_mail">Отправить отчет об ошибке</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>
