@@ -600,12 +600,12 @@
     <string name="information">معلومات</string>
     <string name="set_display_card">عرض المعاينات في كافة التبويقات</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
+    <string name="set_old_direct_timeline">استخدم الخيط المباشر المخصص لقبل لماستدون 2.6</string>
     <string name="set_display_video_preview">عرض معاينات الفيديوهات</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
+    <string name="thanks_text_support">الدعم عبر غيت لاي</string>
+    <string name="action_bug_report">الابلاغ عن عِلّة</string>
+    <string name="no_mail_client">لا توجد هناك برامج بريد الكترونية مثبتة.</string>
+    <string name="bug_report_mail">إرسال تقرير الأعطاب</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>
