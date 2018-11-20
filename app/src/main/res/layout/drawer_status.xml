@@ -304,7 +304,7 @@
                     android:id="@+id/status_cardview"
                     android:visibility="gone"
                     android:layout_marginBottom="5dp"
-                    android:background="@drawable/card_border"
+                    android:background="@drawable/card_border_light"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
                     android:layout_height="wrap_content"

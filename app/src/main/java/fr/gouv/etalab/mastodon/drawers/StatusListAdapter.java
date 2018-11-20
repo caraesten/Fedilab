@@ -545,7 +545,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_bookmark,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_bookmark_border,R.color.black);
                 changeDrawableColor(context, R.drawable.ic_translate,R.color.black);
-
+                holder.status_cardview.setBackgroundResource(R.drawable.card_border_black);
             }else if( theme == Helper.THEME_DARK ){
 
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.action_dark);
@@ -569,7 +569,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_cardview_title.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
                 holder.status_cardview_content.setTextColor(ContextCompat.getColor(context, R.color.dark_icon));
                 holder.status_cardview_url.setTextColor(ContextCompat.getColor(context, R.color.dark_text_toot_header));
-
+                holder.status_cardview.setBackgroundResource(R.drawable.card_border_dark);
                 changeDrawableColor(context, R.drawable.ic_bookmark,R.color.mastodonC1);
                 changeDrawableColor(context, R.drawable.ic_bookmark_border,R.color.mastodonC1);
                 changeDrawableColor(context, R.drawable.ic_translate,R.color.mastodonC1);
@@ -587,7 +587,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_light));
 
-
+                holder.status_cardview.setBackgroundResource(R.drawable.card_border_light);
                 changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
                 changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.mastodonC4);
 
@@ -1156,7 +1156,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             else
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.action_light);
             imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
-
 
             assert imgFav != null;
             imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));

@@ -288,7 +288,7 @@
             android:padding="5dp"
             android:layout_marginTop="5dp"
             android:visibility="gone"
-            android:background="@drawable/card_border"
+            android:background="@drawable/card_border_light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
