@@ -97,6 +97,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String instanceType;
     private String search_peertube, remote_channel_name;
     private String bookmark;
+    private boolean isConnectedToInternet;
 
     public DisplayStatusFragment(){
     }
@@ -113,6 +114,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         firstTootsLoaded = true;
         showPinned = false;
         showReply = false;
+        isConnectedToInternet = true;
         if (bundle != null) {
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
@@ -194,9 +196,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 }
                                 else
                                     asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }else
-                                asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
+                            }else{
+                                if( type == RetrieveFeedsAsyncTask.Type.HOME && !isConnectedToInternet){
+                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                }else {
+                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                }
+                            }
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -283,7 +289,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     String bookmark;
                     if( context instanceof BaseMainActivity){
                         bookmark = ((BaseMainActivity) context).getBookmark();
-                        asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark,true,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         firstTootsLoaded = false;
 
                     }
@@ -314,7 +320,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 String bookmark;
                                 if( context instanceof BaseMainActivity){
                                     bookmark = ((BaseMainActivity) context).getBookmark();
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark, true,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     firstTootsLoaded = false;
                                 }
                             }else {
@@ -576,6 +582,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     retrieveMissingToots(statuses.get(0).getId());
             }
         }else if (type == RetrieveFeedsAsyncTask.Type.HOME){
+            isConnectedToInternet = Helper.isConnectedToInternet(context, Helper.getLiveInstance(context));
             statusListAdapter.updateMuted(mutedAccount);
             if( statuses != null && statuses.size() > 0)
                 retrieveMissingToots(statuses.get(0).getId());

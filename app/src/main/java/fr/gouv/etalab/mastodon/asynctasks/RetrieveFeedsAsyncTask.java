@@ -54,7 +54,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private FilterToots filterToots;
     private String instanceName,remoteInstance, name;
-    private boolean cached = true;
+    private boolean cached = false;
     
     public enum Type{
         HOME,
