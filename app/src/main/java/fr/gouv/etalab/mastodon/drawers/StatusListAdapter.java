@@ -637,7 +637,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 else
                     paramsB.setMargins(0,(int)Helper.convertDpToPixel(15, context),0,0);
             }else if( !isCompactMode && getItemViewType(position) != FOCUSED_STATUS){
-                params.setMargins(0,0,0,0);
+                if( status.getContent() == null || status.getContent().trim().equals(""))
+                    params.setMargins(0,-(int)Helper.convertDpToPixel(20, context),0,0);
+                else
+                    params.setMargins(0,0,0,0);
                 paramsB.setMargins(0,0,0,0);
             }
 
