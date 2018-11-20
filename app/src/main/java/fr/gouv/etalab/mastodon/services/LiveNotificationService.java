@@ -379,6 +379,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     if(userId != null && instance != null && userId.equals(account.getId()) && instance.equals(account.getInstance())){
                         Intent intent = new Intent(getApplicationContext(), CacheTootsService.class);
                         intent.putExtra("payload",response.get("payload").toString());
+                        intent.putExtra("prefKeyOauthTokenT", account.getToken());
                         startService(intent);
                     }
                     status.setNew(true);

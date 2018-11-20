@@ -74,8 +74,9 @@ public class CacheTootsService extends IntentService {
             return;
         String response = intent.getExtras().getString("response");
         String payload = intent.getExtras().getString("payload");
+        String prefKeyOauthTokenT = intent.getExtras().getString("prefKeyOauthTokenT");
 
-        if( payload == null && response == null)
+        if( (payload == null && response == null) || prefKeyOauthTokenT == null )
             return;
         try {
             List<Status> statuses;
@@ -97,7 +98,7 @@ public class CacheTootsService extends IntentService {
             }
             for(Status status: statuses){
                 if(!cachedId.contains(status.getId())){
-                    new TimelineCacheDAO(getApplicationContext(), db).insertStatus(TimelineCacheDAO.HOME_TIMELINE, status);
+                    new TimelineCacheDAO(getApplicationContext(), db).insertStatus(TimelineCacheDAO.HOME_TIMELINE, status, prefKeyOauthTokenT);
                 }
             }
 
