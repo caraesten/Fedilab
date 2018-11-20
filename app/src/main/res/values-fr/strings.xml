@@ -195,7 +195,7 @@
     <string name="no_follow_request">Aucune demande d’abonnement</string>
     <string name="status_cnt">Pouets \n %1$s</string>
     <string name="following_cnt">Abonnements \n %1$s</string>
-    <string name="followers_cnt">Abonnés \n %1$s</string>
+    <string name="followers_cnt">Abonné·e·s \n %1$s</string>
     <string name="pins_cnt">Épinglés %d</string>
     <string name="authorize">Autoriser</string>
     <string name="reject">Rejeter</string>
@@ -231,8 +231,8 @@
     <string name="delete_notification">La notification a été supprimée!</string>
     <string name="delete_notification_all">Toutes les notifications ont été supprimées !</string>
     <!-- HEADER -->
-    <string name="following">Abonnements</string>
-    <string name="followers">Abonnés</string>
+    <string name="following">Suit</string>
+    <string name="followers">Abonné·e·s</string>
     <string name="pinned_toots">Épinglé</string>
     <!-- TOAST -->
     <string name="client_error">Impossible d’obtenir l’id du client !</string>
