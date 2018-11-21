@@ -28,6 +28,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.view.View;
@@ -86,6 +87,7 @@ public class Account implements Parcelable {
     private boolean muting_notifications;
     private int metaDataSize;
     private int metaDataSizeVerified;
+    private int metaDataSpanSize;
     private LinkedHashMap<String, String> fields;
     private LinkedHashMap<String, Boolean> fieldsVerified;
     private LinkedHashMap<SpannableString, SpannableString> fieldsSpan;
@@ -93,6 +95,102 @@ public class Account implements Parcelable {
     private Account account;
     private String host;
 
+
+    protected Account(Parcel in) {
+        id = in.readString();
+        username = in.readString();
+        emojis = in.readArrayList(Emojis.class.getClassLoader());
+        acct = in.readString();
+        display_name = in.readString();
+        host =  in.readString();
+        displayNameSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        noteSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        locked = in.readByte() != 0;
+        followers_count = in.readInt();
+        following_count = in.readInt();
+        statuses_count = in.readInt();
+        note = in.readString();
+        url = in.readString();
+        avatar = in.readString();
+        avatar_static = in.readString();
+        header = in.readString();
+        header_static = in.readString();
+        token = in.readString();
+        instance = in.readString();
+        metaDataSize = in.readInt();
+        for(int i = 0; i < metaDataSize; i++){
+            if( fields == null)
+                fields = new LinkedHashMap<>();
+            String key = in.readString();
+            String value = in.readString();
+            fields.put(key,value);
+        }
+        metaDataSizeVerified = in.readInt();
+        for(int i = 0; i < metaDataSizeVerified; i++){
+            if( fieldsVerified == null)
+                fieldsVerified = new LinkedHashMap<>();
+            String key = in.readString();
+            Boolean value = in.readByte() != 0;
+            fieldsVerified.put(key,value);
+        }
+        metaDataSpanSize = in.readInt();
+        for(int i = 0; i < metaDataSpanSize; i++){
+            if( fieldsSpan == null)
+                fieldsSpan = new LinkedHashMap<>();
+            SpannableString key = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+            SpannableString value = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+            fieldsSpan.put(key,value);
+        }
+
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(username);
+        dest.writeList(emojis);
+        dest.writeString(acct);
+        dest.writeString(display_name);
+        dest.writeString(host);
+        TextUtils.writeToParcel(displayNameSpan, dest, flags);
+        TextUtils.writeToParcel(noteSpan, dest, flags);
+        dest.writeByte((byte) (locked ? 1 : 0));
+        dest.writeInt(followers_count);
+        dest.writeInt(following_count);
+        dest.writeInt(statuses_count);
+        dest.writeString(note);
+        dest.writeString(url);
+        dest.writeString(avatar);
+        dest.writeString(avatar_static);
+        dest.writeString(header);
+        dest.writeString(header_static);
+        dest.writeString(token);
+        dest.writeString(instance);
+        if( fields != null) {
+            metaDataSize = fields.size();
+            dest.writeInt(metaDataSize);
+            for (Map.Entry<String, String> entry : fields.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeString(entry.getValue());
+            }
+        }
+        if( fieldsVerified != null) {
+            metaDataSizeVerified = fieldsVerified.size();
+            dest.writeInt(metaDataSizeVerified);
+            for (Map.Entry<String, Boolean> entry : fieldsVerified.entrySet()) {
+                dest.writeString(entry.getKey());
+                dest.writeByte((byte) (entry.getValue() ? 1 : 0));
+            }
+        }
+        if( fieldsSpan != null) {
+            metaDataSpanSize = fieldsSpan.size();
+            dest.writeInt(metaDataSpanSize);
+            for (Map.Entry<SpannableString, SpannableString> entry : fieldsSpan.entrySet()) {
+                TextUtils.writeToParcel(entry.getKey(), dest, flags);
+                TextUtils.writeToParcel(entry.getValue(), dest, flags);
+            }
+        }
+    }
 
     public followAction getFollowType() {
         return followType;
@@ -170,43 +268,7 @@ public class Account implements Parcelable {
     }
 
 
-    protected Account(Parcel in) {
-        id = in.readString();
-        username = in.readString();
-        emojis = in.readArrayList(Emojis.class.getClassLoader());
-        acct = in.readString();
-        display_name = in.readString();
-        host =  in.readString();
-        locked = in.readByte() != 0;
-        followers_count = in.readInt();
-        following_count = in.readInt();
-        statuses_count = in.readInt();
-        note = in.readString();
-        url = in.readString();
-        avatar = in.readString();
-        avatar_static = in.readString();
-        header = in.readString();
-        header_static = in.readString();
-        token = in.readString();
-        instance = in.readString();
-        metaDataSize = in.readInt();
 
-        for(int i = 0; i < metaDataSize; i++){
-            if( fields == null)
-                fields = new LinkedHashMap<>();
-            String key = in.readString();
-            String value = in.readString();
-            fields.put(key,value);
-        }
-        metaDataSizeVerified = in.readInt();
-        for(int i = 0; i < metaDataSizeVerified; i++){
-            if( fieldsVerified == null)
-                fieldsVerified = new LinkedHashMap<>();
-            String key = in.readString();
-            Boolean value = in.readByte() != 0;
-            fieldsVerified.put(key,value);
-        }
-    }
 
     public Account(){
         this.account = this;
@@ -389,47 +451,7 @@ public class Account implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(username);
-        dest.writeList(emojis);
-        dest.writeString(acct);
-        dest.writeString(display_name);
-        dest.writeString(host);
-        dest.writeByte((byte) (locked ? 1 : 0));
-        dest.writeInt(followers_count);
-        dest.writeInt(following_count);
-        dest.writeInt(statuses_count);
-        dest.writeString(note);
-        dest.writeString(url);
-        dest.writeString(avatar);
-        dest.writeString(avatar_static);
-        dest.writeString(header);
-        dest.writeString(header_static);
-        dest.writeString(token);
-        dest.writeString(instance);
 
-
-
-
-        if( fields != null) {
-            metaDataSize = fields.size();
-            dest.writeInt(metaDataSize);
-            for (Map.Entry<String, String> entry : fields.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeString(entry.getValue());
-            }
-        }
-        if( fieldsVerified != null) {
-            metaDataSizeVerified = fieldsVerified.size();
-            dest.writeInt(metaDataSizeVerified);
-            for (Map.Entry<String, Boolean> entry : fieldsVerified.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeByte((byte) (entry.getValue() ? 1 : 0));
-            }
-        }
-    }
 
     public boolean isFollowing() {
         return isFollowing;
