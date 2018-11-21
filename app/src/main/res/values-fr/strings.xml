@@ -592,9 +592,9 @@
     <string name="set_display_video_preview">Afficher les aperçus des vidéos</string>
     <string name="thanks_text_support">Gitlab Support</string>
     <string name="action_bug_report">Signaler un bug</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
+    <string name="no_mail_client">Aucun client de messagerie n’est installé.</string>
     <string name="bug_report_mail">Envoyer un rapport de bogue</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
+    <string name="account_id_clipbloard">L’ID du compte été copié vers le presse-papiers !</string>
     <string-array name="filter_expire">
         <item>Jamais</item>
         <item>30 minutes</item>
