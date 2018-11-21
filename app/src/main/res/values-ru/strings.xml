@@ -602,6 +602,7 @@
     <string name="action_bug_report">Отчет об ошибке</string>
     <string name="no_mail_client">Не найдено приложений для работы с электронной почтой.</string>
     <string name="bug_report_mail">Отправить отчет об ошибке</string>
+    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>
