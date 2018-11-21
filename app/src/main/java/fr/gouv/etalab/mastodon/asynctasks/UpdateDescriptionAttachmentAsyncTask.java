@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
 
@@ -34,19 +35,24 @@ public class UpdateDescriptionAttachmentAsyncTask extends AsyncTask<Void, Void, 
     private OnRetrieveAttachmentInterface listener;
     private Attachment attachment;
     private String mediaId, description;
+    private Account account;
     private API api;
     private WeakReference<Context> contextReference;
 
-    public UpdateDescriptionAttachmentAsyncTask(Context context, String mediaId, String description, OnRetrieveAttachmentInterface onRetrieveAttachmentInterface){
+    public UpdateDescriptionAttachmentAsyncTask(Context context, String mediaId, String description, Account account, OnRetrieveAttachmentInterface onRetrieveAttachmentInterface){
         this.contextReference = new WeakReference<>(context);
         this.listener = onRetrieveAttachmentInterface;
         this.description = description;
         this.mediaId = mediaId;
+        this.account = account;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        api = new API(this.contextReference.get());
+        if( account == null)
+            api = new API(this.contextReference.get());
+        else
+            api = new API(this.contextReference.get(), account.getInstance(), account.getToken());
         attachment = api.updateDescription(mediaId, description);
         return null;
     }
