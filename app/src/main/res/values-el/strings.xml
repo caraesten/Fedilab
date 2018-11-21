@@ -596,6 +596,7 @@
     <string name="action_bug_report">Bug Report</string>
     <string name="no_mail_client">There are no email clients installed.</string>
     <string name="bug_report_mail">Send a bug report</string>
+    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string-array name="filter_expire">
         <item>Never</item>
         <item>30 minutes</item>
