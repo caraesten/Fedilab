@@ -36,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
@@ -230,7 +231,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         if( type == RetrieveFeedsAsyncTask.Type.HOME)
                             MainActivity.countNewStatus = 0;
                         isSwipped = true;
-                        retrieveMissingToots(null);
+                        retrieveMissingToots(statuses.get(0).getId());
                     }
                 }
             });
@@ -394,15 +395,15 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if( type == RetrieveFeedsAsyncTask.Type.CONVERSATION ){
                 List<Conversation> conversations = apiResponse.getConversations();
                 List<Status> statusesConversations = new ArrayList<>();
+                if( conversations != null)
                 for( Conversation conversation: conversations) {
                     Status status = conversation.getLast_status();
-                    if( status != null) {
-                        List<String> ppConversation = new ArrayList<>();
-                        for (Account account : conversation.getAccounts())
-                            ppConversation.add(account.getAvatar());
-                        status.setConversationProfilePicture(ppConversation);
-                        statusesConversations.add(status);
-                    }
+                    status.setConversationId(conversation.getId());
+                    List<String> ppConversation = new ArrayList<>();
+                    for (Account account : conversation.getAccounts())
+                        ppConversation.add(account.getAvatar());
+                    status.setConversationProfilePicture(ppConversation);
+                    statusesConversations.add(status);
                 }
                 apiResponse.setStatuses(statusesConversations);
             }
@@ -586,6 +587,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             statusListAdapter.updateMuted(mutedAccount);
             if( statuses != null && statuses.size() > 0)
                 retrieveMissingToots(statuses.get(0).getId());
+        }else if (type == RetrieveFeedsAsyncTask.Type.TAG){
+            if( getUserVisibleHint() ){
+                if( statuses != null && statuses.size() > 0)
+                    retrieveMissingToots(statuses.get(0).getId());
+            }
         }
     }
 
@@ -707,6 +713,21 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         isSwipped = false;
         if( statuses != null && statuses.size() > 0) {
             int inserted = 0;
+            if(type == RetrieveFeedsAsyncTask.Type.CONVERSATION){ //Remove conversation already displayed if new messages
+                int position = 0;
+                if( this.statuses != null) {
+                    for (Iterator<Status> it = this.statuses.iterator(); it.hasNext(); ) {
+                        Status status = it.next();
+                        for (Status status1 : statuses) {
+                            if (status.getConversationId() != null && status.getConversationId().equals(status1.getConversationId())) {
+                                statusListAdapter.notifyItemRemoved(position);
+                                it.remove();
+                            }
+                        }
+                        position++;
+                    }
+                }
+            }
             for (int i = statuses.size() - 1; i >= 0; i--) {
                 if( this.statuses != null) {
                     if (this.statuses.size() == 0 ||

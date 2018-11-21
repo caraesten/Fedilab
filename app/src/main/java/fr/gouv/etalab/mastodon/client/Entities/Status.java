@@ -118,6 +118,7 @@ public class Status implements Parcelable{
     private SpannableString contentSpan, displayNameSpan, contentSpanCW, contentSpanTranslated;
     private RetrieveFeedsAsyncTask.Type type;
     private int itemViewType;
+    private String conversationId;
 
     public Status(){}
     private List<String> conversationProfilePicture;
@@ -128,6 +129,7 @@ public class Status implements Parcelable{
         uri = in.readString();
         url = in.readString();
         in_reply_to_id = in.readString();
+        conversationId = in.readString();
         in_reply_to_account_id = in.readString();
         reblog = in.readParcelable(Status.class.getClassLoader());
         card = in.readParcelable(Card.class.getClassLoader());
@@ -165,6 +167,7 @@ public class Status implements Parcelable{
         dest.writeString(uri);
         dest.writeString(url);
         dest.writeString(in_reply_to_id);
+        dest.writeString(conversationId);
         dest.writeString(in_reply_to_account_id);
         dest.writeParcelable(reblog, flags);
         dest.writeParcelable(card, flags);
@@ -1137,5 +1140,13 @@ public class Status implements Parcelable{
 
     public void setItemViewType(int itemViewType) {
         this.itemViewType = itemViewType;
+    }
+
+    public String getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(String conversationId) {
+        this.conversationId = conversationId;
     }
 }

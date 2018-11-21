@@ -20,10 +20,12 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Conversation;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
 
 
@@ -62,7 +64,7 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         if( this.contextReference.get() == null)
             return null;
         API api = new API(this.contextReference.get());
-        List<fr.gouv.etalab.mastodon.client.Entities.Status> tempStatus;
+        List<fr.gouv.etalab.mastodon.client.Entities.Status> tempStatus = null;
         APIResponse apiResponse = null;
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
             apiResponse = api.getHomeTimeline(since_id);
@@ -77,7 +79,24 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         else if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
             apiResponse = api.getInstanceTimelineSinceId(remoteInstance, since_id);
         if (apiResponse != null) {
-            tempStatus = apiResponse.getStatuses();
+            if( type != RetrieveFeedsAsyncTask.Type.CONVERSATION)
+                tempStatus = apiResponse.getStatuses();
+            else{
+                List<Conversation> conversations = apiResponse.getConversations();
+                tempStatus = new ArrayList<>();
+                if( conversations != null && conversations.size() > 0){
+                    for(Conversation conversation: conversations){
+                        fr.gouv.etalab.mastodon.client.Entities.Status status = conversation.getLast_status();
+                        List<String> ppConversation = new ArrayList<>();
+                        for (Account account : conversation.getAccounts())
+                            ppConversation.add(account.getAvatar());
+                        status.setConversationProfilePicture(ppConversation);
+                        status.setConversationId(conversation.getId());
+                        tempStatus.add(status);
+                    }
+                }
+            }
+
             if( tempStatus != null)
                 statuses.addAll(0, tempStatus);
         }
