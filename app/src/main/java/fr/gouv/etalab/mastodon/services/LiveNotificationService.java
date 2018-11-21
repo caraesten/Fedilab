@@ -52,6 +52,7 @@ import com.koushikdutta.async.http.WebSocket;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -61,9 +62,11 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.TimelineCacheDAO;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_TARGETED_ACCOUNT;
@@ -377,10 +380,17 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     status = API.parseStatuses(getApplicationContext(), new JSONObject(response.get("payload").toString()));
                     String instance = Helper.getLiveInstance(getApplicationContext());
                     if(userId != null && instance != null && userId.equals(account.getId()) && instance.equals(account.getInstance())){
-                        Intent intent = new Intent(getApplicationContext(), CacheTootsService.class);
-                        intent.putExtra("payload",response.get("payload").toString());
-                        intent.putExtra("prefKeyOauthTokenT", account.getToken());
-                        startService(intent);
+                        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                        List<Status> alreadyCached = new TimelineCacheDAO(getApplicationContext(), db).getAllStatus(TimelineCacheDAO.HOME_TIMELINE);
+                        ArrayList<String> cachedId = new ArrayList<>();
+                        if(alreadyCached != null){
+                            for(Status scache: alreadyCached){
+                                cachedId.add(scache.getId());
+                            }
+                        }
+                        if(!cachedId.contains(status.getId())){
+                            new TimelineCacheDAO(getApplicationContext(), db).insertStatus(TimelineCacheDAO.HOME_TIMELINE, status, account.getToken());
+                        }
                     }
                     status.setNew(true);
                     b.putParcelable("data", status);
