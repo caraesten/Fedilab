@@ -14,6 +14,8 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -807,6 +809,20 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
         account_un.setText(String.format("@%s", account.getAcct()));
+        account_un.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                String account_id = account.getAcct();
+                if( account_id.split("@").length == 1)
+                    account_id += "@" + Helper.getLiveInstance(getApplicationContext());
+                ClipData clip = ClipData.newPlainText("mastodon_account_id", "@"+account_id);
+                Toast.makeText(getApplicationContext(),R.string.account_id_clipbloard, Toast.LENGTH_SHORT).show();
+                assert clipboard != null;
+                clipboard.setPrimaryClip(clip);
+                return false;
+            }
+        });
         SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
         account.setNoteSpan(spannableString);
         account.makeEmojisAccountProfile(ShowAccountActivity.this, ShowAccountActivity.this);
