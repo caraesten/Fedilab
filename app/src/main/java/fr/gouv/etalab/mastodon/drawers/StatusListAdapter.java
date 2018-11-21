@@ -626,7 +626,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             final float scale = context.getResources().getDisplayMetrics().density;
             Drawable imgConversation = null;
             if(  type != RetrieveFeedsAsyncTask.Type.CONTEXT && ((status.getIn_reply_to_account_id() != null && status.getIn_reply_to_account_id().equals(status.getAccount().getId()))
-            ||(status.getReblog() != null && status.getReblog().getIn_reply_to_account_id() != null && status.getReblog().getIn_reply_to_account_id().equals(status.getAccount().getId())))){
+            ||(status.getReblog() != null && status.getReblog().getIn_reply_to_account_id() != null && status.getReblog().getIn_reply_to_account_id().equals(status.getReblog().getAccount().getId())))){
                 imgConversation = ContextCompat.getDrawable(context, R.drawable.ic_conversation);
                 imgConversation.setBounds(0,0,(int) (15 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
             }
@@ -634,7 +634,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_repeat_head_toot);
                 assert img != null;
                 img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
-                holder.status_account_displayname.setCompoundDrawables( img, null, imgConversation, null);
+                holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
+                holder.status_account_displayname_owner.setCompoundDrawables( null, null, imgConversation, null);
             }else{
                 holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
                 holder.status_account_displayname_owner.setCompoundDrawables( null, null, imgConversation, null);
