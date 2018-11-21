@@ -606,7 +606,7 @@
     <string name="action_bug_report">الابلاغ عن عِلّة</string>
     <string name="no_mail_client">لا توجد هناك برامج بريد الكترونية مثبتة.</string>
     <string name="bug_report_mail">إرسال تقرير الأعطاب</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
+    <string name="account_id_clipbloard">تم نسخ معرف الحساب إلى الحافظة!</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>
