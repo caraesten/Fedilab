@@ -525,6 +525,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, holder.status_more, R.color.action_black);
                 changeDrawableColor(context, holder.status_privacy, R.color.action_black);
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_black);
+                changeDrawableColor(context, R.drawable.ic_conversation,R.color.action_black);
                 changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_black);
                 changeDrawableColor(context, R.drawable.ic_plus_one,R.color.action_black);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_black);
@@ -555,6 +556,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_dark);
                 changeDrawableColor(context, R.drawable.ic_plus_one,R.color.action_dark);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_dark);
+                changeDrawableColor(context, R.drawable.ic_conversation,R.color.action_dark);
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
                 holder.status_reply.setTextColor(ContextCompat.getColor(context, R.color.action_dark));
@@ -576,6 +578,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }else {
                 changeDrawableColor(context, R.drawable.ic_fetch_more,R.color.action_light);
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.action_light);
+                changeDrawableColor(context, R.drawable.ic_conversation,R.color.action_light);
                 changeDrawableColor(context, R.drawable.ic_more_horiz,R.color.action_light);
                 changeDrawableColor(context, holder.status_more, R.color.action_light);
                 changeDrawableColor(context, holder.status_privacy, R.color.action_light);
@@ -620,13 +623,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             //Redraws top icons (boost/reply)
             final float scale = context.getResources().getDisplayMetrics().density;
+            Drawable imgConversation = null;
+            if(  (status.getIn_reply_to_account_id() != null && status.getIn_reply_to_account_id().equals(status.getAccount().getId()))
+            ||(status.getReblog() != null && status.getReblog().getIn_reply_to_account_id() != null && status.getReblog().getIn_reply_to_account_id().equals(status.getAccount().getId()))){
+                imgConversation = ContextCompat.getDrawable(context, R.drawable.ic_conversation);
+                imgConversation.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+            }
             if( status.getReblog() != null){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_repeat_head_toot);
                 assert img != null;
                 img.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
-                holder.status_account_displayname.setCompoundDrawables( img, null, null, null);
+                holder.status_account_displayname.setCompoundDrawables( img, null, imgConversation, null);
             }else{
-                holder.status_account_displayname.setCompoundDrawables( null, null, null, null);
+                holder.status_account_displayname_owner.setCompoundDrawables( null, null, imgConversation, null);
             }
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             LinearLayout.LayoutParams paramsB = new LinearLayout.LayoutParams((int)Helper.convertDpToPixel(60, context), LinearLayout.LayoutParams.WRAP_CONTENT);
