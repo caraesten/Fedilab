@@ -87,7 +87,6 @@ public class Account implements Parcelable {
     private boolean muting_notifications;
     private int metaDataSize;
     private int metaDataSizeVerified;
-    private int metaDataSpanSize;
     private LinkedHashMap<String, String> fields;
     private LinkedHashMap<String, Boolean> fieldsVerified;
     private LinkedHashMap<SpannableString, SpannableString> fieldsSpan;
@@ -133,14 +132,6 @@ public class Account implements Parcelable {
             Boolean value = in.readByte() != 0;
             fieldsVerified.put(key,value);
         }
-        metaDataSpanSize = in.readInt();
-        for(int i = 0; i < metaDataSpanSize; i++){
-            if( fieldsSpan == null)
-                fieldsSpan = new LinkedHashMap<>();
-            SpannableString key = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
-            SpannableString value = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
-            fieldsSpan.put(key,value);
-        }
 
     }
 
@@ -180,14 +171,6 @@ public class Account implements Parcelable {
             for (Map.Entry<String, Boolean> entry : fieldsVerified.entrySet()) {
                 dest.writeString(entry.getKey());
                 dest.writeByte((byte) (entry.getValue() ? 1 : 0));
-            }
-        }
-        if( fieldsSpan != null) {
-            metaDataSpanSize = fieldsSpan.size();
-            dest.writeInt(metaDataSpanSize);
-            for (Map.Entry<SpannableString, SpannableString> entry : fieldsSpan.entrySet()) {
-                TextUtils.writeToParcel(entry.getKey(), dest, flags);
-                TextUtils.writeToParcel(entry.getValue(), dest, flags);
             }
         }
     }

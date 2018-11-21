@@ -27,6 +27,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -108,6 +109,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
         }
         if( detailsStatus == null || detailsStatus.getId() == null)
             finish();
+        Log.v(Helper.TAG,"detailsStatus: " + detailsStatus);
 
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
