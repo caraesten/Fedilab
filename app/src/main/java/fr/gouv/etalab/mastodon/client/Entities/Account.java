@@ -173,6 +173,7 @@ public class Account implements Parcelable {
     protected Account(Parcel in) {
         id = in.readString();
         username = in.readString();
+        emojis = in.readArrayList(Emojis.class.getClassLoader());
         acct = in.readString();
         display_name = in.readString();
         host =  in.readString();
@@ -392,6 +393,7 @@ public class Account implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(username);
+        dest.writeList(emojis);
         dest.writeString(acct);
         dest.writeString(display_name);
         dest.writeString(host);
