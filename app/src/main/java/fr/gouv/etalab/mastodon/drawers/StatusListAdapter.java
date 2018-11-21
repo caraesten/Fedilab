@@ -627,7 +627,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if(  type != RetrieveFeedsAsyncTask.Type.CONTEXT && ((status.getIn_reply_to_account_id() != null && status.getIn_reply_to_account_id().equals(status.getAccount().getId()))
             ||(status.getReblog() != null && status.getReblog().getIn_reply_to_account_id() != null && status.getReblog().getIn_reply_to_account_id().equals(status.getAccount().getId())))){
                 imgConversation = ContextCompat.getDrawable(context, R.drawable.ic_conversation);
-                imgConversation.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+                imgConversation.setBounds(0,0,(int) (15 * iconSizePercent/100 * scale + 0.5f),(int) (15 * iconSizePercent/100 * scale + 0.5f));
             }
             if( status.getReblog() != null){
                 Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_repeat_head_toot);
