@@ -716,12 +716,18 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         isSwipped = false;
         if( statuses != null && statuses.size() > 0) {
             int inserted = 0;
+            int insertedConversation = 0;
             if(type == RetrieveFeedsAsyncTask.Type.CONVERSATION){ //Remove conversation already displayed if new messages
                 int position = 0;
                 if( this.statuses != null) {
+                    long initialConversationId = -1;
+                    if( this.statuses.size() > 0 )
+                        initialConversationId = Long.parseLong(this.statuses.get(0).getConversationId());
                     for (Iterator<Status> it = this.statuses.iterator(); it.hasNext(); ) {
                         Status status = it.next();
                         for (Status status1 : statuses) {
+                            if(initialConversationId > 0 && Long.parseLong(status1.getConversationId()) > initialConversationId)
+                                insertedConversation++;
                             if (status.getConversationId() != null && status.getConversationId().equals(status1.getConversationId())) {
                                 statusListAdapter.notifyItemRemoved(position);
                                 it.remove();
@@ -748,8 +754,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             try {
                 if( type == RetrieveFeedsAsyncTask.Type.HOME)
                     ((MainActivity) context).updateHomeCounter();
-                else
-                    ((MainActivity) context).updateTimeLine(type, inserted);
+                else {
+                    if( type != RetrieveFeedsAsyncTask.Type.CONVERSATION)
+                        ((MainActivity) context).updateTimeLine(type, inserted);
+                    else
+                        ((MainActivity) context).updateTimeLine(type, insertedConversation);
+                }
             }catch (Exception ignored){}
         }
     }
