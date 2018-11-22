@@ -395,15 +395,18 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if( type == RetrieveFeedsAsyncTask.Type.CONVERSATION ){
                 List<Conversation> conversations = apiResponse.getConversations();
                 List<Status> statusesConversations = new ArrayList<>();
-                if( conversations != null)
-                for( Conversation conversation: conversations) {
-                    Status status = conversation.getLast_status();
-                    status.setConversationId(conversation.getId());
-                    List<String> ppConversation = new ArrayList<>();
-                    for (Account account : conversation.getAccounts())
-                        ppConversation.add(account.getAvatar());
-                    status.setConversationProfilePicture(ppConversation);
-                    statusesConversations.add(status);
+                if( conversations != null) {
+                    for (Conversation conversation : conversations) {
+                        Status status = conversation.getLast_status();
+                        if (status != null) {
+                            status.setConversationId(conversation.getId());
+                            List<String> ppConversation = new ArrayList<>();
+                            for (Account account : conversation.getAccounts())
+                                ppConversation.add(account.getAvatar());
+                            status.setConversationProfilePicture(ppConversation);
+                        }
+                        statusesConversations.add(status);
+                    }
                 }
                 apiResponse.setStatuses(statusesConversations);
             }
