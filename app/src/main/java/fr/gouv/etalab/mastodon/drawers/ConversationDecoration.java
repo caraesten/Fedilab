@@ -81,7 +81,7 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
 
                 int itemViewType = status.getItemViewType();
                 Status statusBefore = null;
-                if( compactMode || itemViewType != FOCUSED_STATUS || position == 0){
+                if( itemViewType != FOCUSED_STATUS || position == 0){
                     if( position > 0)
                         statusBefore = adapter.getItem(position - 1);
                     top = (statusBefore != null && statusBefore.getId().equals(status.getIn_reply_to_id()))?

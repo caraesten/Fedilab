@@ -231,7 +231,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         if( type == RetrieveFeedsAsyncTask.Type.HOME)
                             MainActivity.countNewStatus = 0;
                         isSwipped = true;
-                        retrieveMissingToots(statuses.get(0).getId());
+                        retrieveMissingToots(null);
                     }
                 }
             });
