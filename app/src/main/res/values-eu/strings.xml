@@ -590,12 +590,12 @@
     <string name="set_display_card">Erakutsi aurrebistak toot guztietan</string>
     <string name="thanks_text_ux">Interfazearen diseinatzaile berria</string>
     <string name="set_old_direct_timeline">Erabili Mastodon 2.6 aurreko denbora-lerro zuzena</string>
-    <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
+    <string name="set_display_video_preview">Erakutsi bideoen aurrebista</string>
+    <string name="thanks_text_support">Gitlab euskarria</string>
+    <string name="action_bug_report">Akats txostena</string>
+    <string name="no_mail_client">Ez dago e-mail bezerorik instalatuta.</string>
+    <string name="bug_report_mail">Bidali akats txostena</string>
+    <string name="account_id_clipbloard">Kontuaren id-a arbelera kopiatu da!</string>
     <string-array name="filter_expire">
         <item>Inoiz ez</item>
         <item>30 minutu</item>
