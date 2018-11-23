@@ -24,27 +24,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="@dimen/fab_margin"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin"
         android:orientation="vertical"
         tools:ignore="UselessParent">
 
         <!-- OPTIMIZATION SETTINGS -->
         <TextView
+            android:text="@string/settings_title_battery"
+            style="?attr/shapeBorder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:layout_marginBottom="20dp"
+            android:id="@+id/battery_layout_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <!-- OPTIMIZATION SETTINGS -->
+        <TextView
             android:text="@string/settings_title_optimisation"
             style="?attr/shapeBorder"
-            android:paddingBottom="10dp"
-            android:layout_width="match_parent"
             android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <!-- Toots per page -->
         <TextView
             android:layout_width="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
             android:typeface="serif"
             android:gravity="center_vertical"
             android:layout_height="wrap_content"
@@ -58,8 +68,10 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/set_toots_page_value"
-                android:layout_gravity="center"
-                android:layout_width="50dp"
+                android:gravity="end"
+                android:layout_width="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_height="wrap_content" />
             <SeekBar
                 android:layout_gravity="center_vertical"
@@ -85,8 +97,10 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/set_accounts_page_value"
-                android:layout_gravity="center"
-                android:layout_width="50dp"
+                android:gravity="end"
+                android:layout_width="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_height="wrap_content" />
             <SeekBar
                 android:layout_gravity="center_vertical"
@@ -112,8 +126,10 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/set_notifications_page_value"
-                android:layout_gravity="center"
-                android:layout_width="50dp"
+                android:gravity="end"
+                android:layout_width="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_height="wrap_content" />
             <SeekBar
                 android:layout_gravity="center_vertical"
@@ -124,8 +140,8 @@
         </LinearLayout>
         <!-- Attachment behavior -->
         <TextView
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/set_attachment_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

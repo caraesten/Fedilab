@@ -280,12 +280,17 @@ public class Helper {
     public static final String SET_DISPLAY_CARD = "set_display_card";
     public static final String SET_DISPLAY_VIDEO_PREVIEWS= "set_display_video_previews";
     public static final String SET_OLD_DIRECT_TIMELINE = "sset_old_direct_timeline";
+    public static final String SET_BATTERY_PROFILE = "set_battery_profile";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
+
+    public static final int BATTERY_PROFILE_NORMAL = 1;
+    public static final int BATTERY_PROFILE_MEDIUM = 2;
+    public static final int BATTERY_PROFILE_LOW = 3;
 
     public static final int THEME_LIGHT = 1;
     public static final int THEME_DARK = 2;
@@ -2813,6 +2818,30 @@ public class Helper {
         }
         else {
             v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
+        }
+    }
+
+    public static void changeBatteryProfile(Context context){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int batteryProfile = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        switch (batteryProfile){
+            case BATTERY_PROFILE_NORMAL:
+                editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+                editor.putBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
+                editor.apply();
+                break;
+            case BATTERY_PROFILE_MEDIUM:
+                editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
+                editor.putBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, false);
+                editor.apply();
+                break;
+            case BATTERY_PROFILE_LOW:
+                editor.putBoolean(Helper.SET_LIVE_NOTIFICATIONS, false);
+                editor.putBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, false);
+                editor.apply();
+                break;
+
         }
     }
 }

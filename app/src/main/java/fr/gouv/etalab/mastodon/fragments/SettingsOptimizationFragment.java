@@ -13,7 +13,9 @@ package fr.gouv.etalab.mastodon.fragments;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,12 +23,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.helper.Helper;
 
 
 /**
@@ -37,6 +43,7 @@ public class SettingsOptimizationFragment extends Fragment {
 
 
     private Context context;
+    int count = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +53,51 @@ public class SettingsOptimizationFragment extends Fragment {
         assert context != null;
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
+
+
+
+        //Translators
+        final Spinner battery_layout_spinner = rootView.findViewById(R.id.battery_layout_spinner);
+        ArrayAdapter<CharSequence> adapterTrans = ArrayAdapter.createFromResource(getContext(),
+                R.array.battery_profiles, android.R.layout.simple_spinner_item);
+        battery_layout_spinner.setAdapter(adapterTrans);
+        int positionSpinner = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL) -1;
+        battery_layout_spinner.setSelection(positionSpinner);
+        battery_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count > 0){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (position){
+                        case 0:
+                            editor.putInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
+                            editor.apply();
+                            break;
+                        case 1:
+                            editor.putInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_MEDIUM);
+                            editor.apply();
+                            break;
+                        case 2:
+                            editor.putInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_LOW);
+                            editor.apply();
+                            break;
+                    }
+                    if( position < 2 ){
+                        try {
+                            ((MainActivity) context).startSreaming();
+                        }catch (Exception ignored){ignored.printStackTrace();}
+                    }else{
+                        context.sendBroadcast(new Intent("StopLiveNotificationService"));
+                    }
+                }else {
+                    count++;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         //Status per page

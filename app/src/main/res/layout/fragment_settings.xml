@@ -29,11 +29,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="@dimen/fab_margin"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin"
         android:orientation="vertical"
         tools:ignore="UselessParent">
-
-
         <CheckBox
             android:id="@+id/set_share_validation"
             android:layout_width="wrap_content"
