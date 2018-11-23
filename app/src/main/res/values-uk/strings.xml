@@ -328,6 +328,11 @@
     <string name="expand_cw">Автоматично розкривати Cw</string>
     <string name="use_cookies">Приймати куки від сторонніх сайтів</string>
     <string name="settings_ui_layout">Верстка для стрічок: </string>
+    <string-array name="battery_profiles">
+        <item>Normal battery drain</item>
+        <item>Medium battery drain</item>
+        <item>Low battery drain</item>
+    </string-array>
     <string-array name="settings_menu_tabs">
         <item>Вкладки</item>
         <item>Меню</item>
@@ -593,6 +598,7 @@
     <string name="no_mail_client">There are no email clients installed.</string>
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
+    <string name="settings_title_battery">Optimization of the battery</string>
     <string-array name="filter_expire">
         <item>Ніколи</item>
         <item>30 хвилин</item>
