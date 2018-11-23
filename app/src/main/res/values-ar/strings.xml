@@ -334,6 +334,11 @@
     <string name="expand_cw">توسيع نافذة التحذير عن المحتوى تلقائيًا</string>
     <string name="use_cookies">تقبُّل كعكات الطرف الثالث</string>
     <string name="settings_ui_layout">نسق الخيوط: </string>
+    <string-array name="battery_profiles">
+        <item>Normal battery drain</item>
+        <item>Medium battery drain</item>
+        <item>Low battery drain</item>
+    </string-array>
     <string-array name="settings_menu_tabs">
         <item>التبويب</item>
         <item>القائمة</item>
@@ -607,6 +612,7 @@
     <string name="no_mail_client">لا توجد هناك برامج بريد الكترونية مثبتة.</string>
     <string name="bug_report_mail">إرسال تقرير الأعطاب</string>
     <string name="account_id_clipbloard">تم نسخ معرف الحساب إلى الحافظة!</string>
+    <string name="settings_title_battery">Optimization of the battery</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>
