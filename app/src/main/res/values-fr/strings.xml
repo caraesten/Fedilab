@@ -322,6 +322,11 @@
     <string name="expand_cw">Afficher automatiquement le contenu masqué</string>
     <string name="use_cookies">Autoriser les cookies tiers</string>
     <string name="settings_ui_layout">Disposition des fils : </string>
+    <string-array name="battery_profiles">
+        <item>Normal battery drain</item>
+        <item>Medium battery drain</item>
+        <item>Low battery drain</item>
+    </string-array>
     <string-array name="settings_menu_tabs">
         <item>Onglets</item>
         <item>Menu</item>
@@ -595,6 +600,7 @@
     <string name="no_mail_client">Aucun client de messagerie n’est installé.</string>
     <string name="bug_report_mail">Envoyer un rapport de bogue</string>
     <string name="account_id_clipbloard">L’ID du compte été copié vers le presse-papiers !</string>
+    <string name="settings_title_battery">Optimization of the battery</string>
     <string-array name="filter_expire">
         <item>Jamais</item>
         <item>30 minutes</item>
