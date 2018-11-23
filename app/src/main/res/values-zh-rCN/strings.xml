@@ -319,6 +319,11 @@
     <string name="expand_cw">自动展开带有警告的内容</string>
     <string name="use_cookies">允许第三方 cookie</string>
     <string name="settings_ui_layout">时间线布局：</string>
+    <string-array name="battery_profiles">
+        <item>Normal battery drain</item>
+        <item>Medium battery drain</item>
+        <item>Low battery drain</item>
+    </string-array>
     <string-array name="settings_menu_tabs">
         <item>选项卡</item>
         <item>菜单</item>
@@ -589,6 +594,7 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
     <string name="no_mail_client">There are no email clients installed.</string>
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
+    <string name="settings_title_battery">Optimization of the battery</string>
     <string-array name="filter_expire">
         <item>Never</item>
         <item>30 minutes</item>
