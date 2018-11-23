@@ -322,6 +322,11 @@
     <string name="expand_cw">Espandi automaticamente cw</string>
     <string name="use_cookies">Permetti cookie di terze-parti</string>
     <string name="settings_ui_layout">Layout per le timeline: </string>
+    <string-array name="battery_profiles">
+        <item>Normal battery drain</item>
+        <item>Medium battery drain</item>
+        <item>Low battery drain</item>
+    </string-array>
     <string-array name="settings_menu_tabs">
         <item>Schede</item>
         <item>Menu</item>
@@ -597,6 +602,7 @@
     <string name="no_mail_client">Non ci sono client email installati.</string>
     <string name="bug_report_mail">Invia un rapporto sugli errori</string>
     <string name="account_id_clipbloard">L\'ID dell\'account è stato copiato negli appunti!</string>
+    <string name="settings_title_battery">Optimization of the battery</string>
     <string-array name="filter_expire">
         <item>Mai</item>
         <item>30 minuti</item>
