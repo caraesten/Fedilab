@@ -321,6 +321,11 @@ và %d toots khác để khám phá</item>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Cho phép cookie của bên thứ ba</string>
     <string name="settings_ui_layout">Giao diện cho các mốc thời gian: </string>
+    <string-array name="battery_profiles">
+        <item>Normal battery drain</item>
+        <item>Medium battery drain</item>
+        <item>Low battery drain</item>
+    </string-array>
     <string-array name="settings_menu_tabs">
         <item>Tab</item>
         <item>Thực đơn</item>
@@ -592,6 +597,7 @@ và %d toots khác để khám phá</item>
     <string name="no_mail_client">There are no email clients installed.</string>
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
+    <string name="settings_title_battery">Optimization of the battery</string>
     <string-array name="filter_expire">
         <item>Never</item>
         <item>30 minutes</item>
