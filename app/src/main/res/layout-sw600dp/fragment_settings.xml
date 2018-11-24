@@ -206,6 +206,24 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+        <!-- Change locale -->
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_change_locale"/>
+            <Spinner
+                android:id="@+id/set_change_locale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
         <!-- Translation engine -->
         <LinearLayout
             android:layout_marginTop="10dp"

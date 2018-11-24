@@ -16,11 +16,13 @@ package fr.gouv.etalab.mastodon.fragments;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -50,6 +52,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -74,7 +78,7 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
-    int count1, count2, count3 = 0;
+    int count1, count2, count3, count4 = 0;
     private EditText your_api_key;
 
 
@@ -577,6 +581,72 @@ public class SettingsFragment extends Fragment {
                     startActivity(intent);
                 }else {
                     count3++;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        final Spinner set_change_locale = rootView.findViewById(R.id.set_change_locale);
+        ArrayAdapter<String> adapterLocale = new ArrayAdapter<>(context,
+                android.R.layout.simple_spinner_dropdown_item, Helper.getLocales(context));
+
+        set_change_locale.setAdapter(adapterLocale);
+
+        int positionSpinnerLanguage = Helper.languageSpinnerPosition(context);
+        set_change_locale.setSelection(positionSpinnerLanguage);
+        set_change_locale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count4 > 0){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (position){
+                        case 0:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.getDefault()));
+                            editor.commit();
+                            break;
+                        case 1:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.ENGLISH));
+                            editor.commit();
+                            break;
+                        case 2:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.FRANCE));
+                            editor.commit();
+                            break;
+                        case 3:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.GERMAN));
+                            editor.commit();
+                            break;
+                        case 4:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.ITALIAN));
+                            editor.commit();
+                            break;
+                        case 5:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.JAPAN));
+                            editor.commit();
+                            break;
+                        case 6:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.CHINESE));
+                            editor.commit();
+                            break;
+                        case 7:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.CHINA));
+                            editor.commit();
+                            break;
+                    }
+                    PackageManager packageManager = context.getPackageManager();
+                    Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
+                    assert intent != null;
+                    ComponentName componentName = intent.getComponent();
+                    Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+                    context.startActivity(mainIntent);
+                    Runtime.getRuntime().exit(0);
+
+                }else {
+                    count4++;
                 }
             }
             @Override

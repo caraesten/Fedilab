@@ -13,9 +13,19 @@ package fr.gouv.etalab.mastodon.activities;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.StrictMode;
+
 import com.evernote.android.job.JobManager;
+import com.franmontiel.localechanger.LocaleChanger;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.jobs.ApplicationJob;
 import fr.gouv.etalab.mastodon.jobs.HomeTimelineSyncJob;
 import fr.gouv.etalab.mastodon.jobs.NotificationsSyncJob;
@@ -37,5 +47,13 @@ public class MainApplication extends Application{
         HomeTimelineSyncJob.schedule(false);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+        try {
+            List<Locale> SUPPORTED_LOCALES = new ArrayList<>();
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.getDefault()));
+            Locale defaultLocale = Helper.restoreLocaleFromString(defaultLocaleString);
+            SUPPORTED_LOCALES.add(defaultLocale);
+            LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
+        }catch (Exception ignored){ignored.printStackTrace();}
     }
 }

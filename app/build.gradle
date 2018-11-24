@@ -75,5 +75,6 @@ dependencies {
     implementation "com.koushikdutta.async:androidasync:2.+"
     implementation 'com.vanniktech:emoji-one:0.6.0-SNAPSHOT'
     implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
+    implementation 'com.github.franmontiel:LocaleChanger:0.9.2'
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
 }

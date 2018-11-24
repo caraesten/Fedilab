@@ -281,6 +281,7 @@ public class Helper {
     public static final String SET_DISPLAY_VIDEO_PREVIEWS= "set_display_video_previews";
     public static final String SET_OLD_DIRECT_TIMELINE = "sset_old_direct_timeline";
     public static final String SET_BATTERY_PROFILE = "set_battery_profile";
+    public static final String SET_DEFAULT_LOCALE = "set_default_locale";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
@@ -1247,7 +1248,7 @@ public class Helper {
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());
         editor.putString(Helper.PREF_INSTANCE, account.getInstance().trim());
-        editor.apply();
+        editor.commit();
         activity.recreate();
         if( checkItem ) {
             Intent intent = new Intent(activity, MainActivity.class);
@@ -1910,6 +1911,29 @@ public class Helper {
     }
 
 
+    /**
+     * Unserialized a Locale
+     * @param serializedLocale String serialized locale
+     * @return Locale
+     */
+    public static Locale restoreLocaleFromString(String serializedLocale){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedLocale, Locale.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    /**
+     * Serialized a Locale class
+     * @param locale Locale to serialize
+     * @return String serialized Locale
+     */
+    public static String localeToStringStorage(Locale locale){
+        Gson gson = new Gson();
+        return gson.toJson(locale);
+    }
 
     /**
      * Serialized a Status class
@@ -2843,5 +2867,38 @@ public class Helper {
                 break;
 
         }
+    }
+
+
+    public static String[] getLocales(Context context){
+        String[] locale = new String[8];
+        locale[0] = context.getString(R.string.default_language);
+        locale[1] = Locale.ENGLISH.getDisplayLanguage();
+        locale[2] = Locale.FRANCE.getDisplayLanguage();
+        locale[3] = Locale.GERMAN.getDisplayLanguage();
+        locale[4] = Locale.ITALIAN.getDisplayLanguage();
+        locale[5] = Locale.JAPAN.getDisplayLanguage();
+        locale[6] = Locale.CHINESE.getDisplayLanguage();
+        locale[7] = Locale.CHINA.getDisplayLanguage();
+        return locale;
+    }
+
+    public static int languageSpinnerPosition(Context context){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.getDefault()));
+        Locale defaultLocale = Helper.restoreLocaleFromString(defaultLocaleString);
+        if( defaultLocale == null)
+            return 0;
+        String language = defaultLocale.getDisplayLanguage();
+        String[] locales = getLocales(context);
+        int index = 0;
+        for (int i=0;i<locales.length;i++) {
+            if (locales[i].equals(language)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+
     }
 }
