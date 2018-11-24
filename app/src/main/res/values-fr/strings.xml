@@ -600,7 +600,7 @@
     <string name="no_mail_client">Aucun client de messagerie n’est installé.</string>
     <string name="bug_report_mail">Envoyer un rapport de bogue</string>
     <string name="account_id_clipbloard">L’ID du compte été copié vers le presse-papiers !</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
+    <string name="settings_title_battery">Optimisation de la batterie</string>
     <string-array name="filter_expire">
         <item>Jamais</item>
         <item>30 minutes</item>
