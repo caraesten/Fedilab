@@ -603,6 +603,8 @@
     <string name="bug_report_mail">Invia un rapporto sugli errori</string>
     <string name="account_id_clipbloard">L\'ID dell\'account è stato copiato negli appunti!</string>
     <string name="settings_title_battery">Ottimizzazione della batteria</string>
+    <string name="set_change_locale">Change the language</string>
+    <string name="default_language">Default language</string>
     <string-array name="filter_expire">
         <item>Mai</item>
         <item>30 minuti</item>
