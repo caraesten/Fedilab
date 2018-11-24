@@ -323,9 +323,9 @@
     <string name="use_cookies">Baimendu hirugarrengoen cookie-ak</string>
     <string name="settings_ui_layout">Denbora lerroen diseinua: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Bateria erabilera arrunta</item>
+        <item>Tarteko bateria erabilera</item>
+        <item>Bateria erabilera baxua</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Fitxak</item>
@@ -601,7 +601,9 @@
     <string name="no_mail_client">Ez dago e-mail bezerorik instalatuta.</string>
     <string name="bug_report_mail">Bidali akats txostena</string>
     <string name="account_id_clipbloard">Kontuaren id-a arbelera kopiatu da!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
+    <string name="settings_title_battery">Bateriaren optimizazioa</string>
+    <string name="set_change_locale">Change the language</string>
+    <string name="default_language">Default language</string>
     <string-array name="filter_expire">
         <item>Inoiz ez</item>
         <item>30 minutu</item>

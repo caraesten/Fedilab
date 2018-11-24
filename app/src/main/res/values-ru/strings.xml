@@ -329,9 +329,9 @@
     <string name="use_cookies">Разрешить сторонние куки</string>
     <string name="settings_ui_layout">Схема временной шкалы: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Обычный расход батареи</item>
+        <item>Средний расход батареи</item>
+        <item>Низкий расход батареи</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Вкладки</item>
@@ -607,8 +607,10 @@
     <string name="action_bug_report">Отчет об ошибке</string>
     <string name="no_mail_client">Не найдено приложений для работы с электронной почтой.</string>
     <string name="bug_report_mail">Отправить отчет об ошибке</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
+    <string name="account_id_clipbloard">Идентификатор учетной записи скопирован в буфер обмена!</string>
+    <string name="settings_title_battery">Оптимизация батареи</string>
+    <string name="set_change_locale">Change the language</string>
+    <string name="default_language">Default language</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>
