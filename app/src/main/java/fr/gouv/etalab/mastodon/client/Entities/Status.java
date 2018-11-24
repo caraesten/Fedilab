@@ -926,7 +926,10 @@ public class Status implements Parcelable{
             for (final Mention mention : mentions) {
                 String targetedAccount = "@" + mention.getUsername();
                 if(spannableStringT.toString().toLowerCase().contains(("@" + mention.getAcct()).toLowerCase())) {
-                    targetedAccount = "@" + mention.getAcct();
+                    String fullname = mention.getAcct();
+                    if( fullname.split("@").length == 1)
+                        fullname += "@" + Helper.getLiveInstance(context);
+                    targetedAccount = "@" + fullname;
                     if (spannableStringT.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
                         //Accounts can be mentioned several times so we have to loop
                         for (int startPosition = -1; (startPosition = spannableStringT.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1; startPosition++) {
@@ -966,26 +969,26 @@ public class Status implements Parcelable{
                         int endPosition = startPosition + targetedAccount.length();
                         if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
                             spannableStringT.setSpan(new ClickableSpan() {
-                                                         @Override
-                                                         public void onClick(View textView) {
-                                                             Intent intent = new Intent(context, ShowAccountActivity.class);
-                                                             Bundle b = new Bundle();
-                                                             b.putString("accountId", mention.getId());
-                                                             intent.putExtras(b);
-                                                             context.startActivity(intent);
-                                                         }
-                                                         @Override
-                                                         public void updateDrawState(TextPaint ds) {
-                                                             super.updateDrawState(ds);
-                                                             ds.setUnderlineText(false);
-                                                             if (theme == THEME_DARK)
-                                                                 ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                             else if (theme == THEME_BLACK)
-                                                                 ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                             else if (theme == THEME_LIGHT)
-                                                                 ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                                                         }
-                                                     },
+                                         @Override
+                                         public void onClick(View textView) {
+                                             Intent intent = new Intent(context, ShowAccountActivity.class);
+                                             Bundle b = new Bundle();
+                                             b.putString("accountId", mention.getId());
+                                             intent.putExtras(b);
+                                             context.startActivity(intent);
+                                         }
+                                         @Override
+                                         public void updateDrawState(TextPaint ds) {
+                                             super.updateDrawState(ds);
+                                             ds.setUnderlineText(false);
+                                             if (theme == THEME_DARK)
+                                                 ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                             else if (theme == THEME_BLACK)
+                                                 ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                             else if (theme == THEME_LIGHT)
+                                                 ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                         }
+                                     },
                                     startPosition, endPosition,
                                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }

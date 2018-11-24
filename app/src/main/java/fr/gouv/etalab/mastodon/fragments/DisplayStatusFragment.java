@@ -293,7 +293,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     String bookmark;
                     if( context instanceof BaseMainActivity){
                         bookmark = ((BaseMainActivity) context).getBookmark();
-                        asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark,true,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        if( bookmark != null)
+                            asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark,true,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        else
+                            asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         firstTootsLoaded = false;
 
                     }
@@ -324,7 +327,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 String bookmark;
                                 if( context instanceof BaseMainActivity){
                                     bookmark = ((BaseMainActivity) context).getBookmark();
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark, true,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    if( bookmark != null)
+                                        asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark,true,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    else
+                                        asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     firstTootsLoaded = false;
                                 }
                             }else {
