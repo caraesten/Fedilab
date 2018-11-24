@@ -629,11 +629,31 @@ public class SettingsFragment extends Fragment {
                             editor.commit();
                             break;
                         case 6:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.CHINESE));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.SIMPLIFIED_CHINESE));
                             editor.commit();
                             break;
                         case 7:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.CHINA));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.TRADITIONAL_CHINESE));
+                            editor.commit();
+                            break;
+                        case 8:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("eu")));
+                            editor.commit();
+                            break;
+                        case 9:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("ar")));
+                            editor.commit();
+                            break;
+                        case 10:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("nl")));
+                            editor.commit();
+                            break;
+                        case 11:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("gl")));
+                            editor.commit();
+                            break;
+                        case 12:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("el")));
                             editor.commit();
                             break;
                     }

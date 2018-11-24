@@ -2871,15 +2871,20 @@ public class Helper {
 
 
     public static String[] getLocales(Context context){
-        String[] locale = new String[8];
+        String[] locale = new String[13];
         locale[0] = context.getString(R.string.default_language);
         locale[1] = Locale.ENGLISH.getDisplayLanguage();
         locale[2] = Locale.FRANCE.getDisplayLanguage();
         locale[3] = Locale.GERMAN.getDisplayLanguage();
         locale[4] = Locale.ITALIAN.getDisplayLanguage();
         locale[5] = Locale.JAPAN.getDisplayLanguage();
-        locale[6] = Locale.CHINESE.getDisplayLanguage();
-        locale[7] = Locale.CHINA.getDisplayLanguage();
+        locale[6] = Locale.SIMPLIFIED_CHINESE.getDisplayLanguage();
+        locale[7] = Locale.TRADITIONAL_CHINESE.getDisplayLanguage();
+        locale[8] = new Locale("eu").getDisplayLanguage();
+        locale[9] = new Locale("ar").getDisplayLanguage();
+        locale[10] = new Locale("nl").getDisplayLanguage();
+        locale[11] = new Locale("gl").getDisplayLanguage();
+        locale[12] = new Locale("el").getDisplayLanguage();
         return locale;
     }
 
