@@ -613,6 +613,8 @@
     <string name="bug_report_mail">إرسال تقرير الأعطاب</string>
     <string name="account_id_clipbloard">تم نسخ معرف الحساب إلى الحافظة!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
+    <string name="set_change_locale">Change the language</string>
+    <string name="default_language">Default language</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>
