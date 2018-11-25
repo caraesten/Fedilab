@@ -86,6 +86,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
@@ -737,15 +738,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         try {
                             if (status.isBookmarked()) {
                                 new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
-                                Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                                Toasty.success(context, context.getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
                             } else {
                                 new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
-                                Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                             }
                             notifyStatusChanged(status);
                         }catch (Exception e){
                             e.printStackTrace();
-                            Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
+                            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                         }
                     }else {
                         int position = 0;
@@ -754,7 +755,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 statuses.remove(status);
                                 statusListAdapter.notifyItemRemoved(position);
                                 new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
-                                Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                                 break;
                             }
                             position++;
@@ -1524,15 +1525,15 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         try {
                                             if (status.isBookmarked()) {
                                                 new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
-                                                Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                                                Toasty.success(context, context.getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
                                             } else {
                                                 new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
-                                                Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                                Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                                             }
                                             notifyStatusChanged(status);
                                         }catch (Exception e){
                                             e.printStackTrace();
-                                            Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
+                                            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                                         }
                                     }else {
                                         int position = 0;
@@ -1541,7 +1542,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 statuses.remove(status);
                                                 statusListAdapter.notifyItemRemoved(position);
                                                 new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
-                                                Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                                Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                                                 break;
                                             }
                                             position++;
@@ -1609,7 +1610,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                     minute);
                                             long time = calendar.getTimeInMillis();
                                             if( (time - new Date().getTime()) < 60000 ){
-                                                Toast.makeText(context, R.string.timed_mute_date_error, Toast.LENGTH_LONG).show();
+                                                Toasty.error(context, context.getString(R.string.timed_mute_date_error), Toast.LENGTH_LONG).show();
                                             }else {
                                                 //Store the toot as draft first
                                                 String targeted_id = status.getAccount().getId();
@@ -1624,7 +1625,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                     timedMute = new ArrayList<>();
                                                     timedMute.add(targeted_id);
                                                 }
-                                                Toast.makeText(context,context.getString(R.string.timed_mute_date,status.getAccount().getAcct(),Helper.dateToString(date_mute)), Toast.LENGTH_LONG).show();
+                                                Toasty.success(context,context.getString(R.string.timed_mute_date,status.getAccount().getAcct(),Helper.dateToString(date_mute)), Toast.LENGTH_LONG).show();
                                                 alertDialog.dismiss();
                                                 notifyDataSetChanged();
                                             }
@@ -1661,7 +1662,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
                                     if( clipboard != null) {
                                         clipboard.setPrimaryClip(clip);
-                                        Toast.makeText(context, R.string.clipboard, Toast.LENGTH_LONG).show();
+                                        Toasty.info(context, context.getString(R.string.clipboard), Toast.LENGTH_LONG).show();
                                     }
                                     return true;
                                 case R.id.action_share:
@@ -2121,7 +2122,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( error != null){
-            Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
@@ -2291,13 +2292,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         Status.makeEmojisTranslation(context, StatusListAdapter.this, status);
                         notifyStatusChanged(status);
                     }else {
-                        Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                        Toasty.error(context, context.getString(R.string.toast_error_translate), Toast.LENGTH_LONG).show();
                     }
                 }
                 @Override
                 public void onFail(HttpsConnectionException e) {
                     e.printStackTrace();
-                    Toast.makeText(context, R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                    Toasty.error(context, context.getString(R.string.toast_error_translate), Toast.LENGTH_LONG).show();
                 }
             });
         }else {

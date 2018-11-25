@@ -13,6 +13,7 @@ package fr.gouv.etalab.mastodon.fragments;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -33,17 +34,17 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.gouv.etalab.mastodon.activities.ListActivity;
+import es.dmoral.toasty.Toasty;
+import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveManyRelationshipsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
-import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveManyRelationshipsInterface;
-import fr.gouv.etalab.mastodon.R;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.drawers.AccountsListAdapter;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveManyRelationshipsInterface;
 
 
 /**
@@ -203,7 +204,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
-            Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;
             flag_loading = false;
@@ -234,7 +235,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     @Override
     public void onRetrieveRelationship(APIResponse apiResponse) {
         if( apiResponse.getError() != null){
-            Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

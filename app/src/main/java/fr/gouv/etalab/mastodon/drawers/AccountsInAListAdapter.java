@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ManageAccountsInListActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -125,7 +126,7 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
     @Override
     public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
        if( actionType == ManageListsAsyncTask.action.DELETE_USERS && statusCode != 200){
-           Toast.makeText(context, context.getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+           Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
        }
     }
 

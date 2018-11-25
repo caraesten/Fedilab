@@ -29,8 +29,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -168,7 +171,7 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
         if( apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 ){
-            Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             flag_loading = false;
             return;
         }

@@ -56,6 +56,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -697,7 +698,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 ClipData clip = ClipData.newPlainText(Helper.CLIP_BOARD, content);
                                 assert clipboard != null;
                                 clipboard.setPrimaryClip(clip);
-                                Toast.makeText(context,R.string.clipboard,Toast.LENGTH_LONG).show();
+                                Toasty.info(context,context.getString(R.string.clipboard),Toast.LENGTH_LONG).show();
                                 return true;
                             case R.id.action_share:
                                 Intent sendIntent = new Intent(Intent.ACTION_SEND);
@@ -873,7 +874,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String targetedId, Error error) {
         if( error != null){
-            Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(context, statusCode, statusAction);
@@ -937,7 +938,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     @Override
     public void onPostNotificationsAction(APIResponse apiResponse, String targetedId) {
         if(apiResponse.getError() != null){
-            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
+            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             return;
         }
         if( targetedId != null){
@@ -950,12 +951,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
                 position++;
             }
-            Toast.makeText(context,R.string.delete_notification,Toast.LENGTH_LONG).show();
+            Toasty.success(context,context.getString(R.string.delete_notification),Toast.LENGTH_LONG).show();
         }else{
             int size = notifications.size();
             notifications.clear();
             notificationsListAdapter.notifyItemRangeRemoved(0, size);
-            Toast.makeText(context,R.string.delete_notification_all,Toast.LENGTH_LONG).show();
+            Toasty.success(context,context.getString(R.string.delete_notification_all),Toast.LENGTH_LONG).show();
         }
 
     }

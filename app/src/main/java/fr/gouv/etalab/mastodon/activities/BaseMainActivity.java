@@ -91,6 +91,7 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
@@ -358,7 +359,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     alertDialog.show();
 
                 }catch (Exception e){
-                    Toast.makeText(BaseMainActivity.this, R.string.toast_error, Toast.LENGTH_SHORT).show();
+                    Toasty.error(BaseMainActivity.this, getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -540,7 +541,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                                     e.printStackTrace();
                                                     runOnUiThread(new Runnable() {
                                                         public void run() {
-                                                            Toast.makeText(getApplicationContext(), R.string.toast_instance_unavailable,Toast.LENGTH_LONG).show();
+                                                            Toasty.warning(getApplicationContext(), getString(R.string.toast_instance_unavailable),Toast.LENGTH_LONG).show();
                                                         }
                                                     });
                                                 }
@@ -1243,7 +1244,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                                                 new TimelineCacheDAO(BaseMainActivity.this, db).removeAllStatus(TimelineCacheDAO.HOME_TIMELINE);
                                                             }
                                                         });
-                                                        Toast.makeText(BaseMainActivity.this, getString(R.string.toast_cache_clear,String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
+                                                        Toasty.success(BaseMainActivity.this, getString(R.string.toast_cache_clear,String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
                                                         dialog.dismiss();
                                                     }
                                                 })
@@ -1592,7 +1593,7 @@ public abstract class BaseMainActivity extends BaseActivity
                             @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_regex, null);
                             dialogBuilder.setView(dialogView);
                             final EditText editText = dialogView.findViewById(R.id.filter_regex);
-                            Toast alertRegex = Toast.makeText(BaseMainActivity.this, R.string.alert_regex, Toast.LENGTH_LONG);
+                            Toast alertRegex = Toasty.warning(BaseMainActivity.this, getString(R.string.alert_regex), Toast.LENGTH_LONG);
                             editText.addTextChangedListener(new TextWatcher() {
                                 @Override
                                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1986,7 +1987,7 @@ public abstract class BaseMainActivity extends BaseActivity
             try {
                 startActivity(Intent.createChooser(i, getString(R.string.bug_report_mail)));
             } catch (android.content.ActivityNotFoundException ex) {
-                Toast.makeText(getApplicationContext(), R.string.no_mail_client, Toast.LENGTH_SHORT).show();
+                Toasty.info(getApplicationContext(), getString(R.string.no_mail_client), Toast.LENGTH_SHORT).show();
             }
             return false;
         }

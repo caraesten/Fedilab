@@ -25,11 +25,13 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
-import fr.gouv.etalab.mastodon.activities.OwnerStatusActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -78,14 +80,14 @@ public class BackupStatusInDataBaseService extends IntentService {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getApplicationContext(), R.string.data_export_start, Toast.LENGTH_LONG).show();
+                    Toasty.info(getApplicationContext(), getString(R.string.data_export_start), Toast.LENGTH_LONG).show();
                 }
             });
         }else {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getApplicationContext(), R.string.data_export_running, Toast.LENGTH_LONG).show();
+                    Toasty.info(getApplicationContext(), getString(R.string.data_export_running), Toast.LENGTH_LONG).show();
                 }
             });
             return;
@@ -136,7 +138,7 @@ public class BackupStatusInDataBaseService extends IntentService {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getApplicationContext(), finalMessage, Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(), finalMessage, Toast.LENGTH_LONG).show();
                 }
             });
         }

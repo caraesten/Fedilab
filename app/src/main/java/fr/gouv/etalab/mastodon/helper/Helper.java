@@ -149,6 +149,7 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.BuildConfig;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
@@ -753,7 +754,7 @@ public class Helper {
             message = context.getString(R.string.toast_error);
         }
         if( !message.trim().equals(""))
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            Toasty.success(context, message, Toast.LENGTH_LONG).show();
     }
 
 
@@ -782,7 +783,7 @@ public class Helper {
         try {
             request = new DownloadManager.Request(Uri.parse(url.trim()));
         }catch (Exception e){
-            Toast.makeText(context,R.string.toast_error,Toast.LENGTH_LONG).show();
+            Toasty.error(context,context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             return;
         }
         final String fileName = URLUtil.guessFileName(url, null, null);
@@ -993,7 +994,7 @@ public class Helper {
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                             notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
                                     R.mipmap.ic_launcher),  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
-                            Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
+                            Toasty.success(context, context.getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
                             return false;
                         }
                     })
@@ -1001,7 +1002,7 @@ public class Helper {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                             notify_user(context, intent, notificationIdTmp, resource,  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
-                            Toast.makeText(context, R.string.toast_saved,Toast.LENGTH_LONG).show();
+                            Toasty.success(context, context.getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
                         }
                     });
         } catch (Exception ignored) {}
@@ -1146,7 +1147,7 @@ public class Helper {
                             if( ! activity.isFinishing() ) {
                                 menuAccountsOpened = false;
                                 String userId = account.getId();
-                                Toast.makeText(activity, activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
+                                Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
                                 changeUser(activity, userId, true);
                                 arrow.setImageResource(R.drawable.ic_arrow_drop_down);
                                 return true;
@@ -1480,7 +1481,7 @@ public class Helper {
         if( account == null ) {
             Helper.logout(activity);
             Intent myIntent = new Intent(activity, LoginActivity.class);
-            Toast.makeText(activity,R.string.toast_error, Toast.LENGTH_LONG).show();
+            Toasty.error(activity,activity.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
@@ -2235,7 +2236,7 @@ public class Helper {
     public static Bitmap convertTootIntoBitmap(Context context, String name, View view) {
 
         if( view.getWidth() == 0 || view.getHeight() == 0){
-            Toast.makeText(context, R.string.toast_error, Toast.LENGTH_SHORT).show();
+            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             return null;
         }
         Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth()+(int)Helper.convertDpToPixel(10, context), view.getHeight()+(int)Helper.convertDpToPixel(30, context), Bitmap.Config.ARGB_8888);
@@ -2394,7 +2395,7 @@ public class Helper {
                 try {
                     context.startActivity(intent);
                 }catch (Exception e){
-                    Toast.makeText(context, R.string.toast_error, Toast.LENGTH_SHORT).show();
+                    Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -2418,7 +2419,7 @@ public class Helper {
         try {
             takenImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uriFile);
         } catch (IOException e) {
-            Toast.makeText(context, R.string.toast_error, Toast.LENGTH_SHORT).show();
+            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             return null;
         }
         ExifInterface exif = null;

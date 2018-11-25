@@ -32,6 +32,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -216,7 +217,7 @@ public class CrossActions {
 
             @Override
             protected void onPreExecute() {
-                Toast.makeText(contextReference.get(), R.string.retrieve_remote_account, Toast.LENGTH_SHORT).show();
+                Toasty.info(contextReference.get(), contextReference.get().getString(R.string.retrieve_remote_account), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -252,7 +253,7 @@ public class CrossActions {
 
             @Override
             protected void onPreExecute() {
-                Toast.makeText(contextReference.get(), R.string.retrieve_remote_account, Toast.LENGTH_SHORT).show();
+                Toasty.info(contextReference.get(), contextReference.get().getString(R.string.retrieve_remote_account), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -298,7 +299,7 @@ public class CrossActions {
 
             @Override
             protected void onPreExecute() {
-                Toast.makeText(contextReference.get(), R.string.retrieve_remote_conversation, Toast.LENGTH_SHORT).show();
+                Toasty.info(contextReference.get(), contextReference.get().getString(R.string.retrieve_remote_conversation), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -334,15 +335,15 @@ public class CrossActions {
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 if (status.isBookmarked()) {
                     new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
-                    Toast.makeText(context, R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                    Toasty.success(context, context.getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
                 } else {
                     new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, status);
-                    Toast.makeText(context, R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                    Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                 }
                 statusListAdapter.notifyStatusChanged(status);
             }catch (Exception e){
                 e.printStackTrace();
-                Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
+                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             }
         }else {
             AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, style);
@@ -370,7 +371,7 @@ public class CrossActions {
 
                         @Override
                         protected void onPreExecute() {
-                            Toast.makeText(contextReference.get(), R.string.retrieve_remote_status, Toast.LENGTH_SHORT).show();
+                            Toasty.info(contextReference.get(), contextReference.get().getString(R.string.retrieve_remote_status), Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -382,7 +383,7 @@ public class CrossActions {
                         @Override
                         protected void onPostExecute(Void result) {
                             if( response == null){
-                                Toast.makeText(contextReference.get(),R.string.toast_error,Toast.LENGTH_LONG).show();
+                                Toasty.error(contextReference.get(),context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
                                 return;
                             }
                             List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = response.getStatuses();
@@ -391,10 +392,10 @@ public class CrossActions {
                                 fr.gouv.etalab.mastodon.client.Entities.Status statusBookmarked = new StatusCacheDAO(contextReference.get(), db).getStatus(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0).getId(), account.getId(), account.getInstance());
                                 if (statusBookmarked == null) {
                                     new StatusCacheDAO(contextReference.get(), db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0), account.getId(), account.getInstance());
-                                    Toast.makeText(contextReference.get(), R.string.status_bookmarked, Toast.LENGTH_LONG).show();
+                                    Toasty.success(contextReference.get(), contextReference.get().getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
                                 } else {
                                     new StatusCacheDAO(contextReference.get(), db).remove(StatusCacheDAO.BOOKMARK_CACHE, statuses.get(0), account.getId(), account.getInstance());
-                                    Toast.makeText(contextReference.get(), R.string.status_unbookmarked, Toast.LENGTH_LONG).show();
+                                    Toasty.success(contextReference.get(), contextReference.get().getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                                 }
                                 statusListAdapter.notifyStatusChanged(statuses.get(0));
                             }

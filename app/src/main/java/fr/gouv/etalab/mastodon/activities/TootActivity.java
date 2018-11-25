@@ -100,6 +100,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.PostStatusAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsForReplyAsyncTask;
@@ -500,7 +501,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             public void onClick(View v) {
                 toot_it.setEnabled(false);
                 if(toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0){
-                    Toast.makeText(getApplicationContext(),R.string.toot_error_no_content, Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                     toot_it.setEnabled(true);
                     return;
                 }
@@ -686,7 +687,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         if (mToast != null) {
             mToast.cancel();
         }
-        mToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        mToast = Toasty.error(this, message, Toast.LENGTH_SHORT);
         mToast.show();
     }
 
@@ -706,12 +707,12 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         count++;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
+                        Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                         toot_picture.setEnabled(true);
                         toot_it.setEnabled(true);
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.toot_select_image_error, Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -728,7 +729,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             // Create the File where the photo should go
             try {
                 photoFile = createImageFile();
-            } catch (IOException ignored) {Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();}
+            } catch (IOException ignored) {
+                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();}
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 photoFileUri = FileProvider.getUriForFile(this,
@@ -762,7 +764,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             picture_scrollview.setVisibility(View.VISIBLE);
             if (data == null || data.getData() == null) {
-                Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 return;
             }
             try {
@@ -775,10 +777,10 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 } else if(mime != null && mime.toLowerCase().contains("image")) {
                     new asyncPicture(TootActivity.this, accountReply, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else {
-                    Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 }
             } catch (FileNotFoundException e) {
-                Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 toot_picture.setEnabled(true);
                 toot_it.setEnabled(true);
             }
@@ -814,7 +816,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             if( uriFile == null) {
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(activityWeakReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
+                        Toasty.error(activityWeakReference.get(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
                     }
                 });
                 return null;
@@ -851,7 +853,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             Uri imageUri = Uri.parse(extras.getString("imageUri"));
             picture_scrollview.setVisibility(View.VISIBLE);
             if(  imageUri == null) {
-                Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 return;
             }
             try {
@@ -864,10 +866,10 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 } else if(mime != null && mime.toLowerCase().contains("image")) {
                     new asyncPicture(TootActivity.this, accountReply, intent.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else {
-                    Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 }
             } catch (FileNotFoundException e) {
-                Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 toot_picture.setEnabled(true);
                 toot_it.setEnabled(true);
             }
@@ -926,7 +928,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     Date dateCompare = Helper.stringToDate(getApplicationContext(), dateString);
                     Date date = new Date();
                     if( date.before(dateCompare)) {
-                        Toast.makeText(getApplicationContext(), R.string.please_wait, Toast.LENGTH_SHORT).show();
+                        Toasty.info(getApplicationContext(), getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
                         return true;
                     }
                 }
@@ -975,14 +977,14 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                                                     cw_trans.setText(translate.getTranslatedContent());
                                                 }
                                             }else {
-                                                Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                                Toasty.error(getApplicationContext(),getString(R.string.toast_error_translate),Toast.LENGTH_LONG).show();
                                             }
                                             if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
                                                 if( dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
                                                     dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
                                         }
                                     } catch (IllegalArgumentException e) {
-                                        Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                        Toasty.error(getApplicationContext(),getString(R.string.toast_error_translate),Toast.LENGTH_LONG).show();
                                     }
 
                                 }
@@ -1016,14 +1018,14 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                                                     toot_trans.setText(translate.getTranslatedContent());
                                                 }
                                             }else {
-                                                Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                                Toasty.error(getApplicationContext(),getString(R.string.toast_error_translate),Toast.LENGTH_LONG).show();
                                             }
                                             if(trans_progress_cw != null && trans_progress_toot != null && trans_progress_cw.getVisibility() == View.GONE && trans_progress_toot.getVisibility() == View.GONE )
                                                 if( dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE) != null)
                                                     dialogTrans.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
                                         }
                                     } catch (IllegalArgumentException e) {
-                                        Toast.makeText(getApplicationContext(), R.string.toast_error_translate, Toast.LENGTH_LONG).show();
+                                        Toasty.error(getApplicationContext(),getString(R.string.toast_error_translate),Toast.LENGTH_LONG).show();
                                     }
                                 }
 
@@ -1116,7 +1118,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 try {
                     startActivityForResult(intent, Helper.REQ_CODE_SPEECH_INPUT);
                 } catch (ActivityNotFoundException a) {
-                    Toast.makeText(getApplicationContext(),
+                    Toasty.info(getApplicationContext(),
                             getString(R.string.speech_not_supported),
                             Toast.LENGTH_SHORT).show();
                 }
@@ -1128,7 +1130,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 try{
                     final List<StoredStatus> drafts = new StatusStoredDAO(TootActivity.this, db).getAllDrafts();
                     if( drafts == null || drafts.size() == 0){
-                        Toast.makeText(getApplicationContext(), R.string.no_draft, Toast.LENGTH_LONG).show();
+                        Toasty.info(getApplicationContext(), getString(R.string.no_draft), Toast.LENGTH_LONG).show();
                         return true;
                     }
                     AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this, style);
@@ -1180,13 +1182,13 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     });
                     builderSingle.show();
                 }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                 }
                 return true;
 
             case R.id.action_schedule:
                 if(toot_content.getText().toString().trim().length() == 0 ){
-                    Toast.makeText(getApplicationContext(),R.string.toot_error_no_content, Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(),getString(R.string.toot_error_no_content), Toast.LENGTH_LONG).show();
                     return true;
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
@@ -1250,7 +1252,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                                 minute);
                         long time = calendar.getTimeInMillis();
                         if( (time - new Date().getTime()) < 60000 ){
-                            Toast.makeText(getApplicationContext(), R.string.toot_scheduled_date, Toast.LENGTH_LONG).show();
+                            Toasty.warning(getApplicationContext(), getString(R.string.toot_scheduled_date), Toast.LENGTH_LONG).show();
                         }else {
                             //Store the toot as draft first
                             storeToot(false, false);
@@ -1274,7 +1276,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                             isSensitive = false;
                             toot_sensitive.setVisibility(View.GONE);
                             currentToId = -1;
-                            Toast.makeText(TootActivity.this,R.string.toot_scheduled, Toast.LENGTH_LONG).show();
+                            Toasty.info(TootActivity.this,getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
                             alertDialog.dismiss();
                         }
                     }
@@ -1337,9 +1339,9 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     public void onRetrieveAttachment(final Attachment attachment, Error error) {
         if( error != null || attachment == null){
             if( error != null)
-                Toast.makeText(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
             else
-                Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             if( attachments.size() == 0 )
                 toot_picture_container.setVisibility(View.GONE);
             toot_picture.setEnabled(true);
@@ -1670,7 +1672,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         isSensitive = false;
         toot_sensitive.setVisibility(View.GONE);
         currentToId = -1;
-        Toast.makeText(TootActivity.this,R.string.toot_sent, Toast.LENGTH_LONG).show();
+        Toasty.success(TootActivity.this, getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
         toot_it.setEnabled(true);
         //It's a reply, so the user will be redirect to its answer
         if( tootReply != null){
@@ -2166,10 +2168,10 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                 }
             }
             if( message )
-                Toast.makeText(getApplicationContext(), R.string.toast_toot_saved, Toast.LENGTH_LONG).show();
+                Toasty.success(getApplicationContext(), getString(R.string.toast_toot_saved), Toast.LENGTH_LONG).show();
         }catch (Exception e){
             if( message)
-                Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
         }
     }
 

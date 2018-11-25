@@ -37,13 +37,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Instance;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveInstanceInterface;
-
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -130,7 +130,7 @@ public class InstanceActivity extends BaseActivity implements OnRetrieveInstance
         instance_container.setVisibility(View.VISIBLE);
         loader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
-            Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
         final Instance instance = apiResponse.getInstance();

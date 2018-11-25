@@ -13,6 +13,7 @@ package fr.gouv.etalab.mastodon.fragments;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -31,19 +32,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingNotificationsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingNotificationsInterface;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 
 
@@ -197,7 +200,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         nextElementLoader.setVisibility(View.GONE);
         String lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
         if( apiResponse.getError() != null){
-            Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             flag_loading = false;
             swipeRefreshLayout.setRefreshing(false);
             swiped = false;

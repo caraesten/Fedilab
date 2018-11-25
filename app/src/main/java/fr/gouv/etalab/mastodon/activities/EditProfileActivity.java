@@ -64,6 +64,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateCredentialAsyncTask;
@@ -210,7 +211,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
     @Override
     public void onRetrieveAccount(Account account, Error error) {
         if( error != null ){
-            Toast.makeText(getApplicationContext(),R.string.toast_error, Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(),getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
         set_profile_name.setText(account.getDisplay_name());
@@ -245,7 +246,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                     String content = s.toString().substring(0,160);
                     set_profile_description.setText(content);
                     set_profile_description.setSelection(set_profile_description.getText().length());
-                    Toast.makeText(getApplicationContext(),R.string.note_no_space,Toast.LENGTH_LONG).show();
+                    Toasty.info(getApplicationContext(),getString(R.string.note_no_space),Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -303,7 +304,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
                     String content = s.toString().substring(0,30);
                     set_profile_name.setText(content);
                     set_profile_name.setSelection(set_profile_name.getText().length());
-                    Toast.makeText(getApplicationContext(),R.string.username_no_space,Toast.LENGTH_LONG).show();
+                    Toasty.info(getApplicationContext(),getString(R.string.username_no_space),Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -514,7 +515,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_HEADER && resultCode == Activity.RESULT_OK) {
             if (data == null || data.getData() == null) {
-                Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 return;
             }
             Uri fileUri = data.getData();
@@ -532,7 +533,7 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             header_picture = Helper.compressImage(EditProfileActivity.this, fileUri, Helper.MediaType.MEDIA);
         }else if(requestCode == PICK_IMAGE_PROFILE && resultCode == Activity.RESULT_OK) {
             if (data == null || data.getData() == null) {
-                Toast.makeText(getApplicationContext(),R.string.toot_select_image_error,Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 return;
             }
             Uri fileUri = data.getData();
@@ -555,10 +556,10 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
     public void onUpdateCredential(APIResponse apiResponse) {
         set_profile_save.setEnabled(true);
         if( apiResponse.getError() != null){
-            Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
-        Toast.makeText(getApplicationContext(), R.string.toast_update_credential_ok, Toast.LENGTH_LONG).show();
+        Toasty.success(getApplicationContext(), getString(R.string.toast_update_credential_ok), Toast.LENGTH_LONG).show();
 
         Intent mStartActivity = new Intent(EditProfileActivity.this, BaseMainActivity.class);
         int mPendingIntentId = 45641;

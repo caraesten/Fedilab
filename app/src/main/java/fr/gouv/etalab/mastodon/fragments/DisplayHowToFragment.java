@@ -25,7 +25,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveHowToAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -93,12 +96,12 @@ public class DisplayHowToFragment extends Fragment implements OnRetrieveHowToInt
     public void onRetrieveHowTo(APIResponse apiResponse) {
         mainLoader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
-            Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
         List<HowToVideo> howToVideos = apiResponse.getHowToVideos();
         if( howToVideos == null || howToVideos.size() == 0 ){
-            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
+            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             return;
         }
         HowToVideosAdapter howToVideosAdapter = new HowToVideosAdapter(context, howToVideos);

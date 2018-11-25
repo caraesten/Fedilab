@@ -26,7 +26,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,12 +39,13 @@ import android.widget.Toast;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.webview.MastalabWebChromeClient;
 import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
-import fr.gouv.etalab.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
@@ -168,11 +168,11 @@ public class WebviewActivity extends BaseActivity {
                 try {
                     startActivity(browserIntent);
                 }catch (Exception e){
-                    Toast.makeText(WebviewActivity.this, R.string.toast_error, Toast.LENGTH_LONG).show();
+                    Toasty.error(WebviewActivity.this,getString(R.string.toast_error),Toast.LENGTH_LONG).show();
                 }
                 return true;
             case R.id.action_comment:
-                Toast.makeText(WebviewActivity.this, R.string.retrieve_remote_status, Toast.LENGTH_LONG).show();
+                Toasty.info(WebviewActivity.this, getString(R.string.retrieve_remote_status), Toast.LENGTH_LONG).show();
                 new AsyncTask<Void, Void, Void>() {
 
                     private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
@@ -195,7 +195,7 @@ public class WebviewActivity extends BaseActivity {
                         Intent intent = new Intent(contextReference.get(), TootActivity.class);
                         Bundle b = new Bundle();
                         if( remoteStatuses == null || remoteStatuses.size() == 0){
-                            Toast.makeText(contextReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
+                            Toasty.error(contextReference.get(),getString(R.string.toast_error),Toast.LENGTH_LONG).show();
                             return;
                         }
                         if( remoteStatuses.get(0).getReblog() != null ) {

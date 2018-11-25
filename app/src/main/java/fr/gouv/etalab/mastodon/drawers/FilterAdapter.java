@@ -40,6 +40,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask;
@@ -280,7 +281,7 @@ public class FilterAdapter extends BaseAdapter implements OnFilterActionInterfac
     public void onActionDone(ManageFiltersAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
         if( apiResponse != null) {
             if (apiResponse.getError() != null) {
-                Toast.makeText(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
                 return;
             }
             List<Filters> filtersRes = apiResponse.getFilters();

@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -32,11 +31,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
@@ -157,7 +156,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
     @Override
     public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
         if( error != null){
-            Toast.makeText(context, error.getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(context, error.getError(),Toast.LENGTH_LONG).show();
             holder.account_follow.setEnabled(true);
             return;
         }
@@ -169,7 +168,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
             }
         }
         holder.account_follow.hide();
-        Toast.makeText(context, R.string.toast_follow, Toast.LENGTH_LONG).show();
+        Toasty.success(context, context.getString(R.string.toast_follow), Toast.LENGTH_LONG).show();
     }
 
 

@@ -34,6 +34,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -91,9 +92,9 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
             if( search != null)
                 new RetrieveSearchAsyncTask(getApplicationContext(), search.trim(), SearchResultActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else
-                Toast.makeText(this,R.string.toast_error_search,Toast.LENGTH_LONG).show();
+                Toasty.error(this,getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(this,R.string.toast_error_search,Toast.LENGTH_LONG).show();
+            Toasty.error(this,getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
         }
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -141,7 +142,7 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
     public void onRetrieveSearch(Results results, Error error) {
         loader.setVisibility(View.GONE);
         if( error != null){
-            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         if( results == null || (results.getAccounts().size() == 0 && results.getStatuses().size() == 0 && results.getHashtags().size() == 0)){
@@ -165,7 +166,7 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
     public void onRetrieveSearchStatus(APIResponse apiResponse, Error error) {
         loader.setVisibility(View.GONE);
         if( apiResponse.getError() != null){
-            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         lv_search.setVisibility(View.VISIBLE);

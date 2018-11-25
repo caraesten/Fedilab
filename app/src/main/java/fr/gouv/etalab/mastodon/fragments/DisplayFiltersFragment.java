@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask;
@@ -231,7 +232,7 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
         mainLoader.setVisibility(View.GONE);
         add_new.setEnabled(true);
         if( apiResponse.getError() != null){
-            Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
         if( actionType == ManageFiltersAsyncTask.action.GET_ALL_FILTER) {
@@ -251,7 +252,7 @@ public class DisplayFiltersFragment extends Fragment implements OnFilterActionIn
                 textviewNoAction.setVisibility(View.GONE);
                 lv_filters.setVisibility(View.VISIBLE);
             }else{
-                Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
+                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             }
         }
         MainActivity.filters = apiResponse.getFilters();

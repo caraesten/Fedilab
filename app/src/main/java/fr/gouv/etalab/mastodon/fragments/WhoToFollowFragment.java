@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.WhoToFollowAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.TrunkAccount;
@@ -96,7 +97,7 @@ public class WhoToFollowFragment extends Fragment implements OnRetrieveWhoToFoll
             WhoToFollowAdapter whoToFollowAdapter = new WhoToFollowAdapter(context, list);
             lv_list.setAdapter(whoToFollowAdapter);
         }else{
-            Toast.makeText(context, R.string.toast_error, Toast.LENGTH_SHORT).show();
+            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
         }
     }
 

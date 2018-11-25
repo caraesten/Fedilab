@@ -34,7 +34,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -45,13 +44,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+
 import java.lang.ref.WeakReference;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -60,6 +59,7 @@ import java.util.Objects;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSingleAsyncTask;
@@ -200,7 +200,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 finish();
                 return true;
             case R.id.action_comment:
-                Toast.makeText(PeertubeActivity.this, R.string.retrieve_remote_status, Toast.LENGTH_LONG).show();
+                Toasty.info(PeertubeActivity.this, getString(R.string.retrieve_remote_status), Toast.LENGTH_LONG).show();
                 new AsyncTask<Void, Void, Void>() {
 
                     private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
@@ -223,7 +223,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                         Intent intent = new Intent(contextReference.get(), TootActivity.class);
                         Bundle b = new Bundle();
                         if( remoteStatuses == null || remoteStatuses.size() == 0){
-                            Toast.makeText(contextReference.get(), R.string.toast_error, Toast.LENGTH_SHORT).show();
+                            Toasty.error(contextReference.get(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if( remoteStatuses.get(0).getReblog() != null ) {
@@ -253,12 +253,12 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     public void onRetrievePeertube(APIResponse apiResponse) {
 
         if( apiResponse == null || (apiResponse.getError() != null) || apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0){
-            Toast.makeText(PeertubeActivity.this, R.string.toast_error,Toast.LENGTH_LONG).show();
+            Toasty.error(PeertubeActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             loader.setVisibility(View.GONE);
             return;
         }
         if( apiResponse.getPeertubes() == null || apiResponse.getPeertubes().get(0) == null || apiResponse.getPeertubes().get(0).getFileUrl(null) == null){
-            Toast.makeText(PeertubeActivity.this, R.string.toast_error,Toast.LENGTH_LONG).show();
+            Toasty.error(PeertubeActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             loader.setVisibility(View.GONE);
             return;
         }
@@ -336,10 +336,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 List<Peertube> peertubes = new PeertubeFavoritesDAO(PeertubeActivity.this, db).getSinglePeertube(peertube);
                 if( peertubes == null || peertubes.size() == 0){
                     new PeertubeFavoritesDAO(PeertubeActivity.this, db).insert(peertube);
-                    Toast.makeText(PeertubeActivity.this,R.string.bookmark_add_peertube, Toast.LENGTH_SHORT).show();
+                    Toasty.success(PeertubeActivity.this,getString(R.string.bookmark_add_peertube), Toast.LENGTH_SHORT).show();
                 }else{
                     new PeertubeFavoritesDAO(PeertubeActivity.this, db).remove(peertube);
-                    Toast.makeText(PeertubeActivity.this,R.string.bookmark_remove_peertube, Toast.LENGTH_SHORT).show();
+                    Toasty.success(PeertubeActivity.this,getString(R.string.bookmark_remove_peertube), Toast.LENGTH_SHORT).show();
                 }
                 if( peertubes != null && peertubes.size() > 0) //Was initially in cache
                     peertube_bookmark.setCompoundDrawablesWithIntrinsicBounds( null, ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_bookmark_peertube_border), null ,null);
@@ -383,9 +383,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     public void onRetrievePeertubeComments(APIResponse apiResponse) {
         if( apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
             if( apiResponse == null)
-                Toast.makeText(PeertubeActivity.this, R.string.toast_error,Toast.LENGTH_LONG).show();
+                Toasty.error(PeertubeActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             else
-                Toast.makeText(PeertubeActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+                Toasty.error(PeertubeActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();

@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -376,9 +377,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         //Discards 404 - error which can often happen due to toots which have been deleted
         if( apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
             if( apiResponse == null)
-                Toast.makeText(context, R.string.toast_error,Toast.LENGTH_LONG).show();
+                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             else
-                Toast.makeText(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+                Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             swipeRefreshLayout.setRefreshing(false);
             flag_loading = false;
             return;

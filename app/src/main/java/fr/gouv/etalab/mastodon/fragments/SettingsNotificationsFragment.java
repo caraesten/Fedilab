@@ -18,16 +18,12 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.DocumentsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,16 +32,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-
-import fr.gouv.etalab.mastodon.helper.Helper;
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.helper.Helper;
 
 import static android.app.Activity.RESULT_OK;
 import static fr.gouv.etalab.mastodon.helper.Helper.compareDate;
@@ -179,7 +174,7 @@ public class SettingsNotificationsFragment extends Fragment {
                             settings_time_from.setText(newDate);
                         }else {
                             String ateRef = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
-                            Toast.makeText(context, context.getString(R.string.settings_time_lower, ateRef), Toast.LENGTH_LONG).show();
+                            Toasty.error(context, context.getString(R.string.settings_time_lower, ateRef), Toast.LENGTH_LONG).show();
                         }
                     }
                 }, Integer.valueOf(datetime[0]), Integer.valueOf(datetime[1]), true);
@@ -205,7 +200,7 @@ public class SettingsNotificationsFragment extends Fragment {
                             settings_time_to.setText(newDate);
                         } else {
                             String ateRef = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
-                            Toast.makeText(context, context.getString(R.string.settings_time_greater, ateRef), Toast.LENGTH_LONG).show();
+                            Toasty.error(context, context.getString(R.string.settings_time_greater, ateRef), Toast.LENGTH_LONG).show();
                         }
                     }
                 }, Integer.valueOf(datetime[0]), Integer.valueOf(datetime[1]), true);
@@ -359,7 +354,7 @@ public class SettingsNotificationsFragment extends Fragment {
                 editor.putString(Helper.SET_NOTIF_SOUND,  uri.toString());
                 editor.apply();
             }catch (Exception e){
-                Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
+                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             }
         }
     }

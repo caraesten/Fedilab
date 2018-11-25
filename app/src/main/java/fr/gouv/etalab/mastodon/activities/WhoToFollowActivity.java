@@ -29,10 +29,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
@@ -142,7 +145,7 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
                 return;
             }
         }else{
-            Toast.makeText(WhoToFollowActivity.this, R.string.toast_error, Toast.LENGTH_SHORT).show();
+            Toasty.error(WhoToFollowActivity.this, getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -187,7 +190,7 @@ public class WhoToFollowActivity extends BaseActivity implements OnRetrieveWhoTo
                         account.setInstance(val[1]);
                         new PostActionAsyncTask(WhoToFollowActivity.this, null, account, API.StatusAction.FOLLOW, WhoToFollowActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }else {
-                        Toast.makeText(WhoToFollowActivity.this,R.string.toast_impossible_to_follow, Toast.LENGTH_LONG).show();
+                        Toasty.error(WhoToFollowActivity.this,getString(R.string.toast_impossible_to_follow), Toast.LENGTH_LONG).show();
                         follow_accounts.setEnabled(true);
                         follow_accounts_select.setEnabled(true);
                         progess_action.setVisibility(View.GONE);

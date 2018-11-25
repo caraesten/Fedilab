@@ -34,9 +34,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -96,7 +96,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
             title = b.getString("title");
             listId = b.getString("id");
         }else{
-            Toast.makeText(this,R.string.toast_error,Toast.LENGTH_LONG).show();
+            Toasty.error(this,getString(R.string.toast_error),Toast.LENGTH_LONG).show();
         }
 
         main_account_container = findViewById(R.id.main_account_container);
@@ -182,7 +182,7 @@ public class ManageAccountsInListActivity extends BaseActivity implements OnList
         loader.setVisibility(View.GONE);
         main_account_container.setVisibility(View.VISIBLE);
         if( apiResponse.getError() != null){
-            Toast.makeText(ManageAccountsInListActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(ManageAccountsInListActivity.this, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
         if( actionType == ManageListsAsyncTask.action.GET_LIST_ACCOUNT){

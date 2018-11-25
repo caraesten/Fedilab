@@ -20,7 +20,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,16 +39,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import es.dmoral.toasty.Toasty;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.R;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
@@ -138,7 +137,7 @@ public class WebviewConnectActivity extends BaseActivity {
 
                     String val[] = url.split("code=");
                     if (val.length< 2){
-                        Toast.makeText(getApplicationContext(), R.string.toast_code_error, Toast.LENGTH_LONG).show();
+                        Toasty.error(getApplicationContext(), getString(R.string.toast_code_error), Toast.LENGTH_LONG).show();
                         Intent myIntent = new Intent(WebviewConnectActivity.this, LoginActivity.class);
                         startActivity(myIntent);
                         finish();

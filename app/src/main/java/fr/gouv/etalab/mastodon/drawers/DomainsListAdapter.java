@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.DeleteDomainsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -142,10 +143,12 @@ public class DomainsListAdapter extends RecyclerView.Adapter implements OnRetrie
         String message;
         if( response == 200){
             message = context.getString(R.string.toast_unblock_domain);
+            Toasty.success(context, message, Toast.LENGTH_LONG).show();
         }else{
             message = context.getString(R.string.toast_error);
+            Toasty.error(context, message, Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder{

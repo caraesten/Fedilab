@@ -67,6 +67,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountAsyncTask;
@@ -190,7 +191,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
         }else{
-            Toast.makeText(this,R.string.toast_error_loading_account,Toast.LENGTH_LONG).show();
+            Toasty.error(this,getString(R.string.toast_error_loading_account),Toast.LENGTH_LONG).show();
         }
         accountUrl = null;
         show_boosts = true;
@@ -316,7 +317,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                         List<RemoteInstance> remoteInstances = new InstancesDAO(ShowAccountActivity.this, db).getInstanceByName(finalInstanceName);
                         if( remoteInstances != null && remoteInstances.size() > 0 ){
-                            Toast.makeText(getApplicationContext(), R.string.toast_instance_already_added,Toast.LENGTH_LONG).show();
+                            Toasty.info(getApplicationContext(), getString(R.string.toast_instance_already_added),Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putInt(INTENT_ACTION, SEARCH_INSTANCE);
@@ -348,7 +349,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                                 new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName, "MASTODON");
                                             else
                                                 new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName, "PEERTUBE");
-                                            Toast.makeText(getApplicationContext(), R.string.toast_instance_followed,Toast.LENGTH_LONG).show();
+                                            Toasty.success(getApplicationContext(), getString(R.string.toast_instance_followed),Toast.LENGTH_LONG).show();
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             Bundle bundle = new Bundle();
                                             bundle.putInt(INTENT_ACTION, SEARCH_INSTANCE);
@@ -361,7 +362,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                     e.printStackTrace();
                                     runOnUiThread(new Runnable() {
                                         public void run() {
-                                            Toast.makeText(getApplicationContext(), R.string.toast_instance_unavailable,Toast.LENGTH_LONG).show();
+                                            Toasty.warning(getApplicationContext(), getString(R.string.toast_instance_unavailable),Toast.LENGTH_LONG).show();
                                         }
                                     });
                                 }
@@ -453,7 +454,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     @Override
     public void onPostAction(int statusCode,API.StatusAction statusAction, String targetedId, Error error) {
         if( error != null){
-            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(getApplicationContext(), statusCode, statusAction);
@@ -466,9 +467,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     public void onRetrieveAccount(final Account account, Error error) {
         if( error != null || account.getAcct() == null){
             if( error == null)
-                Toast.makeText(ShowAccountActivity.this, R.string.toast_error,Toast.LENGTH_LONG).show();
+                Toasty.error(ShowAccountActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             else
-                Toast.makeText(ShowAccountActivity.this, error.getError(),Toast.LENGTH_LONG).show();
+                Toasty.error(ShowAccountActivity.this, error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         this.account = account;
@@ -580,7 +581,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     @Override
                     public void onClick(View view) {
                         new TempMuteDAO(getApplicationContext(), db).remove(authenticatedAccount, account.getId());
-                        Toast.makeText(getApplicationContext(), R.string.toast_unmute, Toast.LENGTH_LONG).show();
+                        Toasty.success(getApplicationContext(), getString(R.string.toast_unmute), Toast.LENGTH_LONG).show();
                         temp_mute.setVisibility(View.GONE);
                     }
                 });
@@ -817,7 +818,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 if( account_id.split("@").length == 1)
                     account_id += "@" + Helper.getLiveInstance(getApplicationContext());
                 ClipData clip = ClipData.newPlainText("mastodon_account_id", "@"+account_id);
-                Toast.makeText(getApplicationContext(),R.string.account_id_clipbloard, Toast.LENGTH_SHORT).show();
+                Toasty.info(getApplicationContext(),getString(R.string.account_id_clipbloard), Toast.LENGTH_SHORT).show();
                 assert clipboard != null;
                 clipboard.setPrimaryClip(clip);
                 return false;
@@ -954,7 +955,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             @Override
             public void onClick(View v) {
                 if( doAction == action.NOTHING){
-                    Toast.makeText(getApplicationContext(), R.string.nothing_to_do, Toast.LENGTH_LONG).show();
+                    Toasty.info(getApplicationContext(), getString(R.string.nothing_to_do), Toast.LENGTH_LONG).show();
                 }else if( doAction == action.FOLLOW){
                     account_follow.setEnabled(false);
                     new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -990,7 +991,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
         if( apiResponse.getError() != null){
-            Toast.makeText(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -1010,7 +1011,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     public void onRetrieveRelationship(Relationship relationship, Error error) {
 
         if( error != null){
-            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         this.relationship = relationship;

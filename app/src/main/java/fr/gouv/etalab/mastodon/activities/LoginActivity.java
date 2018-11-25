@@ -24,7 +24,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -46,15 +45,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
@@ -340,7 +342,7 @@ public class LoginActivity extends BaseActivity {
         try {
             instance =  URLEncoder.encode(login_instance.getText().toString().trim(), "utf-8");
         } catch (UnsupportedEncodingException e) {
-            Toast.makeText(LoginActivity.this,R.string.client_error, Toast.LENGTH_LONG).show();
+            Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
         }
         final String action = "/api/v1/apps";
         final HashMap<String, String> parameters = new HashMap<>();
@@ -395,7 +397,7 @@ public class LoginActivity extends BaseActivity {
                                 message = e.getMessage();
                             else
                                 message = getString(R.string.client_error);
-                            Toast.makeText(getApplicationContext(), message,Toast.LENGTH_LONG).show();
+                            Toasty.error(getApplicationContext(), message,Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -463,7 +465,7 @@ public class LoginActivity extends BaseActivity {
                                                 message = e.getMessage();
                                             else
                                                 message = getString(R.string.client_error);
-                                            Toast.makeText(getApplicationContext(), message,Toast.LENGTH_LONG).show();
+                                            Toasty.error(getApplicationContext(), message,Toast.LENGTH_LONG).show();
                                         }
                                     });
                                 }

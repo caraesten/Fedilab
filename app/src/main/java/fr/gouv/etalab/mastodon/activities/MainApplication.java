@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.jobs.ApplicationJob;
 import fr.gouv.etalab.mastodon.jobs.HomeTimelineSyncJob;
@@ -55,5 +56,6 @@ public class MainApplication extends Application{
             SUPPORTED_LOCALES.add(defaultLocale);
             LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
         }catch (Exception ignored){ignored.printStackTrace();}
+        Toasty.Config.getInstance().apply();
     }
 }

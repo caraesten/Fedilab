@@ -39,6 +39,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveContextAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -187,7 +188,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account account = new AccountDAO(getApplicationContext(),db).getAccountByID(userId);
         if( account.getAvatar() == null){
-            Toast.makeText(ShowConversationActivity.this,R.string.toast_error, Toast.LENGTH_LONG).show();
+            Toasty.error(ShowConversationActivity.this,getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             finish();
         }
         String url = account.getAvatar();
@@ -277,7 +278,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
     public void onRetrieveContext(Context context, Error error) {
         swipeRefreshLayout.setRefreshing(false);
         if( error != null ){
-            Toast.makeText(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         if( context.getAncestors() == null ){

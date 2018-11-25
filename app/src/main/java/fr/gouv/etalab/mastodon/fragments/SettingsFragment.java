@@ -54,6 +54,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -809,9 +810,9 @@ public class SettingsFragment extends Fragment {
                             SharedPreferences.Editor editor = sharedpreferences.edit();
                             editor.putString(Helper.SET_TOOT_VISIBILITY + "@" + account.getAcct() + "@" + account.getInstance(), visibility);
                             editor.apply();
-                            Toast.makeText(context, context.getString(R.string.toast_visibility_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_SHORT).show();
+                            Toasty.info(context, context.getString(R.string.toast_visibility_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(context, R.string.toast_error,Toast.LENGTH_SHORT).show();
+                            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
                         }
 
                         dialog.dismiss();
@@ -965,7 +966,7 @@ public class SettingsFragment extends Fragment {
                 editor.apply();
                 set_folder.setText(path);
             }catch (Exception e){
-                Toast.makeText(context, R.string.toast_error, Toast.LENGTH_LONG).show();
+                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             }
 
         }
