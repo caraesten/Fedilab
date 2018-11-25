@@ -6,35 +6,20 @@ before_script:
   - chmod +x gradlew
 
 stages:
-  - build
+  - build-and-test
   - test
 
 assembleDebug:
-  stage: build
+  stage: build-and-test
   script:
     - ./gradlew assembleDebug
-  cache:
-    key: "$CI_COMMIT_SHA"
-    paths:
-      - app/build/outputs/
-    policy: push
 
 lintDebug:
-  stage: test
-  cache:
-    key: "$CI_COMMIT_SHA"
-    paths:
-      - app/build/outputs/
-    policy: pull
+  stage: build-and-test
   script:
     - ./gradlew -Pci --console=plain :app:lintFdroidDebug -PbuildDir=lint
 
 debugTests:
-  stage: test
-  cache:
-    key: "$CI_COMMIT_SHA"
-    paths:
-      - app/build/outputs/
-    policy: pull
+  stage: build-and-test
   script:
     - ./gradlew -Pci --console=plain :app:testFdroidDebugUnitTest
