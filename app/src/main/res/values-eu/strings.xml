@@ -292,7 +292,7 @@
     <string name="set_notif_follow_share">Jakinarazi norbaitek zure mezuari bultzada ematean</string>
     <string name="set_notif_follow_add">Jakinarazi norbaitek zure mezua gogoko duenean</string>
     <string name="set_notif_follow_mention">Jakinarazi norbaitek aipatzen zaituenean</string>
-    <string name="set_share_validation">Erakutsi berrespen elkarrizketa-koadroa bultzada eman aurretik</string>
+    <string name="set_share_validation">Baieztatu bultzada eman aurretik</string>
     <string name="set_share_validation_fav">Erakutsi baieztapen elkarrizketa-koadroa gogokoetara erantsi aurretik</string>
     <string name="settings_title_more_options">Ezarpen aurreratuak</string>
     <string name="set_wifi_only">Jakinarazi WIFI bidez besterik ez</string>
@@ -337,7 +337,7 @@
         <item>Ez</item>
         <item>Ez</item>
     </string-array>
-    <string name="your_api_key">Zure API gakoa, Tandex erabiltzeko hutsik laga dezakezu</string>
+    <string name="your_api_key">Zure API gakoa, Yandex erabiltzeko hutsik laga dezakezu</string>
     <string-array name="settings_theme">
         <item>Iluna</item>
         <item>Argia</item>
@@ -602,8 +602,8 @@
     <string name="bug_report_mail">Bidali akats txostena</string>
     <string name="account_id_clipbloard">Kontuaren id-a arbelera kopiatu da!</string>
     <string name="settings_title_battery">Bateriaren optimizazioa</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
+    <string name="set_change_locale">Aldatu hizkuntza</string>
+    <string name="default_language">Lehenetsitako hizkuntza</string>
     <string-array name="filter_expire">
         <item>Inoiz ez</item>
         <item>30 minutu</item>
