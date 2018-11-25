@@ -99,6 +99,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String instanceType;
     private String search_peertube, remote_channel_name;
     private String bookmark;
+    private String initialBookMark;
 
     public DisplayStatusFragment(){
     }
@@ -291,15 +292,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }else {
                 if( type == RetrieveFeedsAsyncTask.Type.HOME ){
-                    String bookmark;
+                    firstTootsLoaded = false;
                     if( context instanceof BaseMainActivity){
-                        bookmark = ((BaseMainActivity) context).getBookmark();
-                        if( bookmark != null)
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark,true,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        initialBookMark = ((BaseMainActivity) context).getBookmark();
+                        if( initialBookMark != null)
+                            asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark,true,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         else
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        firstTootsLoaded = false;
-
                     }
                 }else {
                     asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -325,11 +324,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         }else {
                             if( type == RetrieveFeedsAsyncTask.Type.HOME ){
-                                String bookmark;
+                                firstTootsLoaded = false;
                                 if( context instanceof BaseMainActivity){
-                                    bookmark = ((BaseMainActivity) context).getBookmark();
-                                    if( bookmark != null)
-                                        asyncTask = new RetrieveFeedsAsyncTask(context, type, bookmark,true,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    initialBookMark = ((BaseMainActivity) context).getBookmark();
+                                    if( initialBookMark != null)
+                                        asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark,true,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     else
                                         asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     firstTootsLoaded = false;
@@ -441,11 +440,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if( statuses != null && statuses.size() > 0) {
                 if (type == RetrieveFeedsAsyncTask.Type.HOME) {
                     String bookmark = null;
-                    if( context instanceof BaseMainActivity){
-                        bookmark = ((BaseMainActivity) context).getBookmark();
-                    }
                     //Toots are older than the bookmark -> no special treatment with them
-                    if( bookmark == null || Long.parseLong(statuses.get(0).getId())+1 < Long.parseLong(bookmark)){
+                    if( initialBookMark == null || Long.parseLong(statuses.get(0).getId())+1 < Long.parseLong(initialBookMark)){
                         this.statuses.addAll(statuses);
                         statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                     }else { //Toots are younger than the bookmark
@@ -469,7 +465,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         }
                         int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
                         if( tmpStatuses.size()  >= tootPerPage) {
-                            if (tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(bookmark)) {
+                            if (tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(initialBookMark)) {
                                 tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
                             }
                         }
