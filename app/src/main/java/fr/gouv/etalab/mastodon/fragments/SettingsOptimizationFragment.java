@@ -82,6 +82,7 @@ public class SettingsOptimizationFragment extends Fragment {
                             editor.apply();
                             break;
                     }
+                    Helper.changeBatteryProfile(context);
                     if( position < 2 ){
                         try {
                             ((MainActivity) context).startSreaming();

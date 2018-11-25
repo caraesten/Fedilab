@@ -441,13 +441,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if (type == RetrieveFeedsAsyncTask.Type.HOME) {
                     String bookmark = null;
                     //Toots are older than the bookmark -> no special treatment with them
-                    if( initialBookMark == null || Long.parseLong(statuses.get(0).getId())+1 < Long.parseLong(initialBookMark)){
+                    if( initialBookMark == null || Long.parseLong(statuses.get(0).getId()) <= Long.parseLong(initialBookMark)){
                         this.statuses.addAll(statuses);
                         statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                     }else { //Toots are younger than the bookmark
                         String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
                         int position = 0;
-                        int positionNotFiltered = 0;
                         while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
                             position++;
                         }
