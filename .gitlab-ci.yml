@@ -3,24 +3,11 @@ image: hatsoftwares/mastalab-ci:latest
 before_script:
   - export ANDROID_HOME=/opt/android-sdk-linux
   - export PATH=$PATH:/opt/android-sdk-linux/platform-tools/
-  - export GRADLE_USER_HOME=$(pwd)/.gradle/
   - chmod +x gradlew
 
 stages:
-  - prepare
   - build
   - test
-
-prepare:
-  stage: prepare
-  script:
-    - ./gradlew tasks
-  cache:
-      key: "$CI_COMMIT_SHA"
-      paths:
-        - app/build/outputs/
-        - .gradle/
-      policy: push
 
 assembleDebug:
   stage: build
@@ -30,7 +17,7 @@ assembleDebug:
     key: "$CI_COMMIT_SHA"
     paths:
       - app/build/outputs/
-      - .gradle/
+    policy: push
 
 lintDebug:
   stage: test
@@ -38,10 +25,9 @@ lintDebug:
     key: "$CI_COMMIT_SHA"
     paths:
       - app/build/outputs/
-      - .gradle/
     policy: pull
   script:
-    - ./gradlew --stacktrace -Pci --console=plain :app:lintFdroidDebug -PbuildDir=lint
+    - ./gradlew -Pci --console=plain :app:lintFdroidDebug -PbuildDir=lint
 
 debugTests:
   stage: test
@@ -49,7 +35,6 @@ debugTests:
     key: "$CI_COMMIT_SHA"
     paths:
       - app/build/outputs/
-      - .gradle/
     policy: pull
   script:
-    - ./gradlew --stacktrace -Pci --console=plain :app:testFdroidDebugUnitTest
+    - ./gradlew -Pci --console=plain :app:testFdroidDebugUnitTest
