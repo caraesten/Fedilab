@@ -656,6 +656,26 @@ public class SettingsFragment extends Fragment {
                             editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("el")));
                             editor.commit();
                             break;
+                        case 13:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("pt")));
+                            editor.commit();
+                            break;
+                        case 14:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("es")));
+                            editor.commit();
+                            break;
+                        case 15:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("pl")));
+                            editor.commit();
+                            break;
+                        case 16:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("sr")));
+                            editor.commit();
+                            break;
+                        case 17:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("uk")));
+                            editor.commit();
+                            break;
                     }
                     PackageManager packageManager = context.getPackageManager();
                     Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());

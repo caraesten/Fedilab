@@ -2871,7 +2871,7 @@ public class Helper {
 
 
     public static String[] getLocales(Context context){
-        String[] locale = new String[13];
+        String[] locale = new String[18];
         locale[0] = context.getString(R.string.default_language);
         locale[1] = Locale.ENGLISH.getDisplayLanguage();
         locale[2] = Locale.FRANCE.getDisplayLanguage();
@@ -2885,6 +2885,11 @@ public class Helper {
         locale[10] = new Locale("nl").getDisplayLanguage();
         locale[11] = new Locale("gl").getDisplayLanguage();
         locale[12] = new Locale("el").getDisplayLanguage();
+        locale[13] = new Locale("pt").getDisplayLanguage();
+        locale[14] = new Locale("es").getDisplayLanguage();
+        locale[15] = new Locale("pl").getDisplayLanguage();
+        locale[16] = new Locale("sr").getDisplayLanguage();
+        locale[17] = new Locale("uk").getDisplayLanguage();
         return locale;
     }
 
