@@ -35,6 +35,18 @@
 
         <!-- OPTIMIZATION SETTINGS -->
         <TextView
+            android:text="@string/settings_title_battery"
+            style="?attr/shapeBorder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:layout_marginBottom="20dp"
+            android:id="@+id/battery_layout_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- OPTIMIZATION SETTINGS -->
+        <TextView
             android:text="@string/settings_title_optimisation"
             style="?attr/shapeBorder"
             android:paddingBottom="10dp"
