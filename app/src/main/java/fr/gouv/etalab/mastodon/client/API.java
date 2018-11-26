@@ -15,8 +15,8 @@ package fr.gouv.etalab.mastodon.client;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,7 +57,8 @@ import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.services.CacheTootsService;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.TimelineCacheDAO;
 
 
 /**
@@ -751,10 +752,33 @@ public class API {
             apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));
             if( response != null) {
-                Intent intent = new Intent(context, CacheTootsService.class);
-                intent.putExtra("prefKeyOauthTokenT", prefKeyOauthTokenT);
-                intent.putExtra("response", response);
-                context.startService(intent);
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            List<Status> statuses;
+                            statuses = API.parseStatuses(context, new JSONArray(response));
+                            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+
+                            List<Status> alreadyCached = new TimelineCacheDAO(context, db).getAllStatus(TimelineCacheDAO.HOME_TIMELINE);
+                            ArrayList<String> cachedId = new ArrayList<>();
+                            if(alreadyCached != null){
+                                for(Status status: alreadyCached){
+                                    cachedId.add(status.getId());
+                                }
+                            }
+                            for(Status status: statuses){
+                                if(!cachedId.contains(status.getId())){
+                                    new TimelineCacheDAO(context, db).insertStatus(TimelineCacheDAO.HOME_TIMELINE, status, prefKeyOauthTokenT);
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                thread.start();
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);

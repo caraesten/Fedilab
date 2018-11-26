@@ -42,9 +42,6 @@
         <service
             android:name=".services.LiveNotificationService"
             android:exported="false"/>
-        <service
-            android:name=".services.CacheTootsService"
-            android:exported="false"/>
         <service android:name=".services.BackupStatusService"
             android:exported="false"/>
         <service android:name=".services.BackupStatusInDataBaseService"
