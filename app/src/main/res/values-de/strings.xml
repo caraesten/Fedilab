@@ -327,9 +327,9 @@
     <string name="use_cookies">Erlaube Cookies von Drittanbietern</string>
     <string name="settings_ui_layout">Zeitleisten wie anzeigen:</string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Normaler Akkuverbrauch</item>
+        <item>Mittlerer Akkuverbrauch</item>
+        <item>Geringer Akkuverbrauch</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Nur als Reiter</item>
@@ -593,14 +593,14 @@
     <string name="thanks_text_ux">Neuer UX/UI-Designer</string>
     <string name="set_old_direct_timeline">Direkte, alte Zeitline vor Mastodon 2.6 verwenden</string>
     <string name="set_display_video_preview">Video-Vorschau anzeigen</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
+    <string name="thanks_text_support">Gitlab Unterstützung</string>
+    <string name="action_bug_report">Fehlerbericht</string>
+    <string name="no_mail_client">Es ist keine E-Mail Anwendung installiert.</string>
+    <string name="bug_report_mail">Fehlerbericht senden</string>
+    <string name="account_id_clipbloard">Konto-ID wurde in die Zwischenablage kopiert!</string>
+    <string name="settings_title_battery">Akkuoptimierung</string>
+    <string name="set_change_locale">Sprache ändern</string>
+    <string name="default_language">Standardsprache</string>
     <string-array name="filter_expire">
         <item>Nie</item>
         <item>30 Minuten</item>
