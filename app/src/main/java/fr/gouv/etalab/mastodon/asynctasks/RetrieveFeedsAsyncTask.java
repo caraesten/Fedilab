@@ -26,6 +26,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.helper.FilterToots;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
@@ -91,14 +92,6 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveFeedsInterface;
     }
 
-    public RetrieveFeedsAsyncTask(Context context, Type action, String max_id, boolean cached, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
-        this.contextReference = new WeakReference<>(context);
-        this.action = action;
-        this.max_id = max_id;
-        this.listener = onRetrieveFeedsInterface;
-        this.cached = cached;
-    }
-
     public RetrieveFeedsAsyncTask(Context context, Type action, String instanceName, String max_id, OnRetrieveFeedsInterface onRetrieveFeedsInterface){
         this.contextReference = new WeakReference<>(context);
         this.action = action;
@@ -150,7 +143,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         switch (action){
             case HOME:
-                if( cached){
+                if( !Helper.isConnectedToInternet(contextReference.get(), Helper.getLiveInstance(contextReference.get()))){
+                    new TimelineCacheDAO(contextReference.get(), db).cleanDoublon();
                     List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new TimelineCacheDAO(contextReference.get(), db).getAllCachedStatus(max_id);
                     if( statuses == null || statuses.size() == 0)
                         apiResponse = api.getHomeTimeline(max_id);

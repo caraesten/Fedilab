@@ -125,6 +125,14 @@ public class TimelineCacheDAO {
 
     //------- REMOVE  -------
 
+
+    public void cleanDoublon(){
+        db.delete(Sqlite.TABLE_TIMELINE_CACHE, Sqlite.COL_ID + " NOT IN (" +
+                "  SELECT MIN(" + Sqlite.COL_ID + ")" +
+                "  FROM " + Sqlite.TABLE_TIMELINE_CACHE +
+                "  GROUP BY " + Sqlite.COL_STATUS_ID + "," + Sqlite.COL_INSTANCE + ")", null);
+    }
+
     /***
      * Remove stored status
      * @return int
