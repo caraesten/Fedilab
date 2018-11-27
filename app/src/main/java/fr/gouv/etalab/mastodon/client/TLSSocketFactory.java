@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLSocket;
@@ -19,21 +20,21 @@ import javax.net.ssl.SSLSocketFactory;
 public class TLSSocketFactory extends SSLSocketFactory {
 
     private SSLSocketFactory sSLSocketFactory;
-    private SSLContext context;
+    private SSLContext sslContext;
 
     public TLSSocketFactory() throws KeyManagementException, NoSuchAlgorithmException {
 
-        context = SSLContext.getInstance("TLS");
-        context.init(null, null, null);
-        sSLSocketFactory = context.getSocketFactory();
+        sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(null, null, null);
+        sSLSocketFactory = sslContext.getSocketFactory();
     }
 
     public SSLContext getSSLContext(){
-        return this.context;
+        return this.sslContext;
     }
 
     public SSLEngine getSSLEngine(){
-        return this.context.createSSLEngine();
+        return this.sslContext.createSSLEngine();
     }
 
     @Override
