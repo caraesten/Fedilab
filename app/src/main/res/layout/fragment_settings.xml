@@ -185,6 +185,13 @@
             android:text="@string/set_old_direct_timeline"
             android:layout_height="wrap_content" />
 
+        <!-- TRUNCATE LONG TOOTS -->
+        <CheckBox
+            android:id="@+id/set_truncate_toots"
+            android:layout_width="wrap_content"
+            android:text="@string/truncate_long_toots"
+            android:layout_height="wrap_content" />
+
         <!-- Resize pictures -->
         <LinearLayout
             android:layout_marginTop="10dp"

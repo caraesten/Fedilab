@@ -119,6 +119,8 @@ public class Status implements Parcelable{
     private RetrieveFeedsAsyncTask.Type type;
     private int itemViewType;
     private String conversationId;
+    private boolean isExpanded = false;
+    private int numberLines = -1;
 
     public Status(){}
     private List<String> conversationProfilePicture;
@@ -1148,5 +1150,21 @@ public class Status implements Parcelable{
 
     public void setConversationId(String conversationId) {
         this.conversationId = conversationId;
+    }
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
+    }
+
+    public int getNumberLines() {
+        return numberLines;
+    }
+
+    public void setNumberLines(int numberLines) {
+        this.numberLines = numberLines;
     }
 }

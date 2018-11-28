@@ -338,6 +338,7 @@ public class Helper {
     public static final String SET_DISPLAY_GLOBAL = "set_display_global";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS = "set_automatically_split_toots";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";
+    public static final String SET_TRUNCATE_TOOTS = "set_truncate_toots";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 

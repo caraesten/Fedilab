@@ -299,6 +299,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         RelativeLayout webview_preview;
         ImageView webview_preview_card;
         LinearLayout left_buttons;
+        Button status_show_more_content;
 
         public View getView(){
             return itemView;
@@ -379,6 +380,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             conversation_pp_3_container = itemView.findViewById(R.id.conversation_pp_3_container);
             vertical_content = itemView.findViewById(R.id.vertical_content);
             left_buttons =  itemView.findViewById(R.id.left_buttons);
+            status_show_more_content = itemView.findViewById(R.id.status_show_more_content);
         }
     }
 
@@ -715,7 +717,31 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
             }
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
-
+            boolean truncate_toots = sharedpreferences.getBoolean(Helper.SET_TRUNCATE_TOOTS, false);
+            if( truncate_toots) {
+                if (status.getNumberLines() == -1) {
+                    status.setNumberLines(holder.status_content.getLineCount());
+                }
+                if (status.getNumberLines() > 10) {
+                    holder.status_show_more_content.setVisibility(View.VISIBLE);
+                    if (status.isExpanded()) {
+                        holder.status_content.setMaxLines(Integer.MAX_VALUE);
+                        holder.status_show_more_content.setText(R.string.load_attachment_spoiler_less);
+                    } else {
+                        holder.status_content.setMaxLines(10);
+                        holder.status_show_more_content.setText(R.string.load_attachment_spoiler);
+                    }
+                } else {
+                    holder.status_show_more_content.setVisibility(View.GONE);
+                }
+            }
+            holder.status_show_more_content.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    status.setExpanded(!status.isExpanded());
+                    notifyStatusChanged(status);
+                }
+            });
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
 
             holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
@@ -1055,7 +1081,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 }
             }
-
+            if( theme == Helper.THEME_BLACK) {
+                changeDrawableColor(context, R.drawable.ic_photo, R.color.dark_text);
+                changeDrawableColor(context, R.drawable.ic_more_toot_content, R.color.dark_text);
+            }else {
+                changeDrawableColor(context, R.drawable.ic_photo, R.color.mastodonC4);
+                changeDrawableColor(context, R.drawable.ic_more_toot_content, R.color.mastodonC4);
+            }
             if(!fullAttachement)
                 holder.hide_preview.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1065,11 +1097,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             status.getReblog().setSensitive(true);
                         else
                             status.setSensitive(true);
-
-                        if( theme == Helper.THEME_BLACK)
-                            changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
-                        else
-                            changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
                         notifyStatusChanged(status);
                     }
                 });
@@ -1082,11 +1109,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             status.getReblog().setSensitive(true);
                         else
                             status.setSensitive(true);
-
-                        if( theme == Helper.THEME_BLACK)
-                            changeDrawableColor(context, R.drawable.ic_photo,R.color.dark_text);
-                        else
-                            changeDrawableColor(context, R.drawable.ic_photo,R.color.mastodonC4);
                         notifyStatusChanged(status);
                     }
                 });

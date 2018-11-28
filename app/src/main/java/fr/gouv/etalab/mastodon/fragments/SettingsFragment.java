@@ -262,6 +262,20 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean truncate_toots = sharedpreferences.getBoolean(Helper.SET_TRUNCATE_TOOTS, false);
+        final CheckBox set_truncate_toots = rootView.findViewById(R.id.set_truncate_toots);
+        set_truncate_toots.setChecked(truncate_toots);
+
+        set_truncate_toots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_TRUNCATE_TOOTS, set_truncate_toots.isChecked());
+                editor.apply();
+            }
+        });
+
+
         boolean follow_instance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
         final CheckBox set_follow_instance = rootView.findViewById(R.id.set_display_follow_instance);
         set_follow_instance.setChecked(follow_instance);

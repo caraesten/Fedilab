@@ -234,6 +234,21 @@
             android:textIsSelectable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/status_show_more_content"
+            android:visibility="gone"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/ic_more_toot_content"
+            android:drawableStart="@drawable/ic_more_toot_content"
+            android:gravity="center_vertical"
+            android:drawablePadding="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?attr/borderless"
+            android:text="@string/load_attachment_spoiler" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
