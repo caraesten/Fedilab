@@ -901,7 +901,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             if( getItemViewType(position) == FOCUSED_STATUS) {
                 String fullDate_tmp = Helper.dateDiffFull(status.getCreated_at());
-                String fullDate = fullDate_tmp.substring(0,1).toUpperCase() + fullDate_tmp.substring(1);
+                String fullDate = "";
+                if( !fullDate_tmp.equals(""))
+                    fullDate = fullDate_tmp.substring(0,1).toUpperCase() + fullDate_tmp.substring(1);
                 holder.status_toot_date.setText(fullDate);
             }else {
                 holder.status_toot_date.setText(Helper.dateDiff(context, status.getCreated_at()));
