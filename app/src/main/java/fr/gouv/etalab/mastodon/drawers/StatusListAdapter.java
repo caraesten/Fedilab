@@ -717,23 +717,36 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
             }
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
-            boolean truncate_toots = sharedpreferences.getBoolean(Helper.SET_TRUNCATE_TOOTS, false);
-            if( truncate_toots) {
+            int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
+            if( truncate_toots_size > 0) {
+                holder.status_content.setMaxLines(truncate_toots_size);
                 if (status.getNumberLines() == -1) {
-                    status.setNumberLines(holder.status_content.getLineCount());
+                    status.setNumberLines(-2);
+                    holder.status_show_more_content.setVisibility(View.GONE);
+                    holder.status_content.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            status.setNumberLines(holder.status_content.getLineCount());
+                            if( status.getNumberLines() > truncate_toots_size) {
+                                notifyStatusChanged(status);
+                            }
+                        }
+                    });
                 }
-                if (status.getNumberLines() > 10) {
+                else if (status.getNumberLines() > truncate_toots_size) {
                     holder.status_show_more_content.setVisibility(View.VISIBLE);
                     if (status.isExpanded()) {
                         holder.status_content.setMaxLines(Integer.MAX_VALUE);
-                        holder.status_show_more_content.setText(R.string.load_attachment_spoiler_less);
+                        holder.status_show_more_content.setText(R.string.hide_toot_truncate);
                     } else {
-                        holder.status_content.setMaxLines(10);
-                        holder.status_show_more_content.setText(R.string.load_attachment_spoiler);
+                        holder.status_content.setMaxLines(truncate_toots_size);
+                        holder.status_show_more_content.setText(R.string.display_toot_truncate);
                     }
                 } else {
                     holder.status_show_more_content.setVisibility(View.GONE);
                 }
+            }else{
+                holder.status_show_more_content.setVisibility(View.GONE);
             }
             holder.status_show_more_content.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -262,15 +262,22 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        boolean truncate_toots = sharedpreferences.getBoolean(Helper.SET_TRUNCATE_TOOTS, false);
-        final CheckBox set_truncate_toots = rootView.findViewById(R.id.set_truncate_toots);
-        set_truncate_toots.setChecked(truncate_toots);
-
-        set_truncate_toots.setOnClickListener(new View.OnClickListener() {
+        int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
+        SeekBar set_truncate_size = rootView.findViewById(R.id.set_truncate_size);
+        set_truncate_size.setMax(20);
+        set_truncate_size.setProgress(truncate_toots_size);
+        TextView set_truncate_toots = rootView.findViewById(R.id.set_truncate_toots);
+        set_truncate_toots.setText(String.valueOf(truncate_toots_size));
+        set_truncate_size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                set_truncate_toots.setText(String.valueOf(progress));
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_TRUNCATE_TOOTS, set_truncate_toots.isChecked());
+                editor.putInt(Helper.SET_TRUNCATE_TOOTS_SIZE, progress);
                 editor.apply();
             }
         });
