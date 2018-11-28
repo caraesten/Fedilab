@@ -329,9 +329,9 @@
     <string name="use_cookies">Zezwalaj na pliki cookie firm trzecich</string>
     <string name="settings_ui_layout">Układ osi czasu: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Normalne zużycie energii</item>
+        <item>Srednie zużycie energii</item>
+        <item>Niskie zużycie energii</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Zakładki</item>
@@ -608,6 +608,10 @@
     <string name="settings_title_battery">Optimization of the battery</string>
     <string name="set_change_locale">Change the language</string>
     <string name="default_language">Default language</string>
+    <string name="truncate_long_toots">Truncate long toots</string>
+    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
+    <string name="display_toot_truncate">Display more</string>
+    <string name="hide_toot_truncate">Display less</string>
     <string-array name="filter_expire">
         <item>Nigdy</item>
         <item>30 minut</item>
