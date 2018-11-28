@@ -19,7 +19,6 @@ import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-
 import android.graphics.RectF;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -61,7 +60,6 @@ import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
-
 
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
@@ -128,8 +126,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             public void onViewSwipeFinished(View mView, boolean isEnd) {
                 if(!isEnd)
                     canSwipe = true;
-                else
+                else {
                     finish();
+                    overridePendingTransition(0, 0);
+                }
             }
         });
         mSwipeBackLayout.attachToActivity(this);
@@ -153,18 +153,26 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         setSupportActionBar(toolbar);
         media_save = findViewById(R.id.media_save);
         media_close = findViewById(R.id.media_close);
-
+        progress = findViewById(R.id.loader_progress);
         media_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Build.VERSION.SDK_INT >= 23 ){
-                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
-                        ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
+                if(attachment.getType().equals("video") || attachment.getType().equals("gifv")) {
+                    if( attachment != null ) {
+                        progress.setText("0 %");
+                        progress.setVisibility(View.VISIBLE);
+                        new HttpsConnection(MediaActivity.this).download(attachment.getUrl(), MediaActivity.this);
+                    }
+                }else {
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
+                        } else {
+                            Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
+                        }
                     } else {
                         Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
                     }
-                }else{
-                    Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
                 }
             }
         });
@@ -223,7 +231,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             }
         });
 
-        progress = findViewById(R.id.loader_progress);
+
         imageView.setOnMatrixChangeListener(new OnMatrixChangedListener() {
             @Override
             public void onMatrixChanged(RectF rect) {
@@ -450,9 +458,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                         }
                     });
                     videoView.start();
-                    progress.setText("0 %");
-                    progress.setVisibility(View.VISIBLE);
-                    new HttpsConnection(MediaActivity.this).download(finalUrl, MediaActivity.this );
                 }
                 break;
         }
@@ -471,6 +476,15 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 from.renameTo(to);
             fileVideo = to;
             downloadedImage = null;
+        }
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
+            } else {
+                Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
+            }
+        } else {
+            Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
         }
         if( progress != null)
             progress.setVisibility(View.GONE);

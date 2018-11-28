@@ -79,7 +79,6 @@ public class SettingsFragment extends Fragment {
     private Context context;
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
-    int count1, count2, count3, count4 = 0;
     private EditText your_api_key;
 
 
@@ -576,34 +575,30 @@ public class SettingsFragment extends Fragment {
             default:
                 positionSpinnerTheme = 0;
         }
-        set_night_mode.setSelection(positionSpinnerTheme);
+        set_night_mode.setSelection(positionSpinnerTheme, false);
         set_night_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count3 > 0){
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    switch (position){
-                        case 0:
-                            editor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
-                            editor.apply();
-                            break;
-                        case 1:
-                            editor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
-                            editor.apply();
-                            break;
-                        case 2:
-                            editor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
-                            editor.apply();
-                            break;
-                    }
-                    if( getActivity() != null)
-                        getActivity().recreate();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
-                    startActivity(intent);
-                }else {
-                    count3++;
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                switch (position){
+                    case 0:
+                        editor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
+                        editor.apply();
+                        break;
+                    case 1:
+                        editor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
+                        editor.apply();
+                        break;
+                    case 2:
+                        editor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
+                        editor.apply();
+                        break;
                 }
+                if( getActivity() != null)
+                    getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                startActivity(intent);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -619,97 +614,92 @@ public class SettingsFragment extends Fragment {
         set_change_locale.setAdapter(adapterLocale);
 
         int positionSpinnerLanguage = Helper.languageSpinnerPosition(context);
-        set_change_locale.setSelection(positionSpinnerLanguage);
+        set_change_locale.setSelection(positionSpinnerLanguage, false);
         set_change_locale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count4 > 0){
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    switch (position){
-                        case 0:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.getDefault()));
-                            editor.commit();
-                            break;
-                        case 1:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.ENGLISH));
-                            editor.commit();
-                            break;
-                        case 2:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.FRANCE));
-                            editor.commit();
-                            break;
-                        case 3:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.GERMAN));
-                            editor.commit();
-                            break;
-                        case 4:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.ITALIAN));
-                            editor.commit();
-                            break;
-                        case 5:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.JAPAN));
-                            editor.commit();
-                            break;
-                        case 6:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.SIMPLIFIED_CHINESE));
-                            editor.commit();
-                            break;
-                        case 7:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.TRADITIONAL_CHINESE));
-                            editor.commit();
-                            break;
-                        case 8:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("eu")));
-                            editor.commit();
-                            break;
-                        case 9:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("ar")));
-                            editor.commit();
-                            break;
-                        case 10:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("nl")));
-                            editor.commit();
-                            break;
-                        case 11:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("gl")));
-                            editor.commit();
-                            break;
-                        case 12:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("el")));
-                            editor.commit();
-                            break;
-                        case 13:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("pt")));
-                            editor.commit();
-                            break;
-                        case 14:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("es")));
-                            editor.commit();
-                            break;
-                        case 15:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("pl")));
-                            editor.commit();
-                            break;
-                        case 16:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("sr")));
-                            editor.commit();
-                            break;
-                        case 17:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("uk")));
-                            editor.commit();
-                            break;
-                    }
-                    PackageManager packageManager = context.getPackageManager();
-                    Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
-                    assert intent != null;
-                    ComponentName componentName = intent.getComponent();
-                    Intent mainIntent = Intent.makeRestartActivityTask(componentName);
-                    context.startActivity(mainIntent);
-                    Runtime.getRuntime().exit(0);
-
-                }else {
-                    count4++;
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                switch (position){
+                    case 0:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.getDefault()));
+                        editor.commit();
+                        break;
+                    case 1:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.ENGLISH));
+                        editor.commit();
+                        break;
+                    case 2:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.FRANCE));
+                        editor.commit();
+                        break;
+                    case 3:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.GERMAN));
+                        editor.commit();
+                        break;
+                    case 4:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.ITALIAN));
+                        editor.commit();
+                        break;
+                    case 5:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.JAPAN));
+                        editor.commit();
+                        break;
+                    case 6:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.SIMPLIFIED_CHINESE));
+                        editor.commit();
+                        break;
+                    case 7:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.TRADITIONAL_CHINESE));
+                        editor.commit();
+                        break;
+                    case 8:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("eu")));
+                        editor.commit();
+                        break;
+                    case 9:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("ar")));
+                        editor.commit();
+                        break;
+                    case 10:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("nl")));
+                        editor.commit();
+                        break;
+                    case 11:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("gl")));
+                        editor.commit();
+                        break;
+                    case 12:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("el")));
+                        editor.commit();
+                        break;
+                    case 13:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("pt")));
+                        editor.commit();
+                        break;
+                    case 14:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("es")));
+                        editor.commit();
+                        break;
+                    case 15:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("pl")));
+                        editor.commit();
+                        break;
+                    case 16:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("sr")));
+                        editor.commit();
+                        break;
+                    case 17:
+                        editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("uk")));
+                        editor.commit();
+                        break;
                 }
+                PackageManager packageManager = context.getPackageManager();
+                Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
+                assert intent != null;
+                ComponentName componentName = intent.getComponent();
+                Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+                context.startActivity(mainIntent);
+                Runtime.getRuntime().exit(0);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -878,7 +868,7 @@ public class SettingsFragment extends Fragment {
         int positionSpinnerTrans;
         switch (sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX)){
             case Helper.TRANS_YANDEX:
-               positionSpinnerTrans = 0;
+                positionSpinnerTrans = 0;
                 your_api_key.setVisibility(View.VISIBLE);
                 your_api_key.setText(sharedpreferences.getString(Helper.SET_YANDEX_API_KEY, ""));
                 break;
@@ -895,43 +885,39 @@ public class SettingsFragment extends Fragment {
                 your_api_key.setVisibility(View.VISIBLE);
                 positionSpinnerTrans = 0;
         }
-        translation_layout_spinner.setSelection(positionSpinnerTrans);
+        translation_layout_spinner.setSelection(positionSpinnerTrans, false);
         translation_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count2 > 0){
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    switch (position){
-                        case 0:
-                            your_api_key.setVisibility(View.VISIBLE);
-                            editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-                            editor.apply();
-                            if( sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, null) != null)
-                                your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
-                            break;
-                        case 1:
-                            your_api_key.setVisibility(View.VISIBLE);
-                            editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_DEEPL);
-                            editor.apply();
-                            if( sharedpreferences.getString(SET_YANDEX_API_KEY, null) != null)
-                                your_api_key.setText(sharedpreferences.getString(SET_YANDEX_API_KEY, null));
-                            break;
-                        case 2:
-                            your_api_key.setVisibility(View.GONE);
-                            set_trans_forced.isChecked();
-                            editor.putBoolean(Helper.SET_TRANS_FORCED, false);
-                            editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_NONE);
-                            editor.apply();
-                            break;
-                    }
-                    if( getActivity() != null)
-                        getActivity().recreate();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
-                    startActivity(intent);
-                }else {
-                    count2++;
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                switch (position){
+                    case 0:
+                        your_api_key.setVisibility(View.VISIBLE);
+                        editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+                        editor.apply();
+                        if( sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, null) != null)
+                            your_api_key.setText(sharedpreferences.getString(Helper.SET_DEEPL_API_KEY, ""));
+                        break;
+                    case 1:
+                        your_api_key.setVisibility(View.VISIBLE);
+                        editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_DEEPL);
+                        editor.apply();
+                        if( sharedpreferences.getString(SET_YANDEX_API_KEY, null) != null)
+                            your_api_key.setText(sharedpreferences.getString(SET_YANDEX_API_KEY, null));
+                        break;
+                    case 2:
+                        your_api_key.setVisibility(View.GONE);
+                        set_trans_forced.isChecked();
+                        editor.putBoolean(Helper.SET_TRANS_FORCED, false);
+                        editor.putInt(Helper.SET_TRANSLATOR, Helper.TRANS_NONE);
+                        editor.apply();
+                        break;
                 }
+                if( getActivity() != null)
+                    getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                startActivity(intent);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -945,17 +931,13 @@ public class SettingsFragment extends Fragment {
                 R.array.settings_resize_picture, android.R.layout.simple_spinner_item);
         resize_layout_spinner.setAdapter(adapterResize);
         int positionSpinnerResize = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_2MO);
-        resize_layout_spinner.setSelection(positionSpinnerResize);
+        resize_layout_spinner.setSelection(positionSpinnerResize, false);
         resize_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count1 > 0){
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putInt(Helper.SET_PICTURE_RESIZE, position);
-                    editor.apply();
-                }else {
-                    count1++;
-                }
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt(Helper.SET_PICTURE_RESIZE, position);
+                editor.apply();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
