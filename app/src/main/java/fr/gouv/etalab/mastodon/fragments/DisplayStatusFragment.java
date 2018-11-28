@@ -99,6 +99,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String instanceType;
     private String search_peertube, remote_channel_name;
     private String initialBookMark;
+    private boolean fetchMoreButtonDisplayed;
 
     public DisplayStatusFragment(){
     }
@@ -113,6 +114,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         showMediaOnly = false;
         //Will allow to load first toots if bookmark != null
         firstTootsLoaded = true;
+        fetchMoreButtonDisplayed = false;
         showPinned = false;
         showReply = false;
         if (bundle != null) {
@@ -451,8 +453,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         }
                         int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
                         if( tmpStatuses.size()  >= tootPerPage) {
-                            if (tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(initialBookMark)) {
+                            if (!fetchMoreButtonDisplayed && tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(initialBookMark)) {
                                 tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
+                                fetchMoreButtonDisplayed = true;
                             }
                         }
                         this.statuses.addAll(position, tmpStatuses);
@@ -757,6 +760,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void fetchMore(String max_id){
+        fetchMoreButtonDisplayed = false;
         asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
