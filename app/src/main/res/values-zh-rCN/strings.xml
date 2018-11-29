@@ -179,9 +179,9 @@
     <!-- About -->
     <string name="about_vesrion">发布版 %1$s</string>
     <string name="about_developer">开发者：</string>
-    <string name="about_license">许可协议：</string>
+    <string name="about_license">许可协议： </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">源代码：</string>
+    <string name="about_code">源代码： </string>
     <string name="about_yandex">嘟文的翻译：</string>
     <string name="about_thekinrar">搜索实例：</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -279,7 +279,7 @@
     <string name="set_display_local">显示本地时间线</string>
     <string name="set_display_global">显示联邦时间线</string>
     <string name="set_disable_gif">禁用 GIF 头像</string>
-    <string name="set_folder_title">路径：</string>
+    <string name="set_folder_title">路径： </string>
     <string name="set_auto_store_toot">自动保存草稿</string>
     <string name="set_bubble_counter">显示计数器</string>
     <string name="set_auto_add_media_url">在嘟文中添加媒体的 URL</string>
@@ -318,7 +318,7 @@
     <string name="use_javascript">启用 Javascript</string>
     <string name="expand_cw">自动展开带有警告的内容</string>
     <string name="use_cookies">允许第三方 cookie</string>
-    <string name="settings_ui_layout">时间线布局：</string>
+    <string name="settings_ui_layout">时间线布局： </string>
     <string-array name="battery_profiles">
         <item>Normal battery drain</item>
         <item>Medium battery drain</item>
@@ -406,7 +406,7 @@
     <string name="privacy_data_title">记录的数据</string>
     <string name="privacy_data">        只有帐户中的基本信息才会存储在设备上。
         这些数据是严格保密的, 只能由应用程序使用。
-        删除应用程序将立即删除这些数据.
+        删除应用程序将立即删除这些数据。\n
         &#9888; 从不存储登录和密码。它们仅在具有实例的安全身份验证 (SSL) 期间使用。  
     </string>
     <string name="privacy_authorizations_title">权限：</string>
