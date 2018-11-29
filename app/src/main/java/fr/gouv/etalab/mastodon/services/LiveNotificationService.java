@@ -55,7 +55,6 @@ import org.json.JSONObject;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -65,12 +64,10 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import fr.gouv.etalab.mastodon.sqlite.TimelineCacheDAO;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_TARGETED_ACCOUNT;
@@ -393,7 +390,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     event = Helper.EventStreaming.UPDATE;
                     status = API.parseStatuses(getApplicationContext(), new JSONObject(response.get("payload").toString()));
                     String instance = Helper.getLiveInstance(getApplicationContext());
-                    if(userId != null && instance != null && userId.equals(account.getId()) && instance.equals(account.getInstance())){
+                    /*if(userId != null && instance != null && userId.equals(account.getId()) && instance.equals(account.getInstance())){
                         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                         List<Status> alreadyCached = new TimelineCacheDAO(getApplicationContext(), db).getAllStatus(TimelineCacheDAO.HOME_TIMELINE);
                         ArrayList<String> cachedId = new ArrayList<>();
@@ -405,7 +402,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         if(!cachedId.contains(status.getId())){
                             new TimelineCacheDAO(getApplicationContext(), db).insertStatus(TimelineCacheDAO.HOME_TIMELINE, status, account.getToken());
                         }
-                    }
+                    }*/
                     status.setNew(true);
                     b.putParcelable("data", status);
                     break;

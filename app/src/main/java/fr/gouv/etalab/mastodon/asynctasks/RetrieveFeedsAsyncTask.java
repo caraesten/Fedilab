@@ -26,13 +26,11 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.helper.FilterToots;
-import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
-import fr.gouv.etalab.mastodon.sqlite.TimelineCacheDAO;
 
 
 /**
@@ -143,7 +141,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         switch (action){
             case HOME:
-                if( !Helper.isConnectedToInternet(contextReference.get(), Helper.getLiveInstance(contextReference.get()))){
+                /*if( !Helper.isConnectedToInternet(contextReference.get(), Helper.getLiveInstance(contextReference.get()))){
                     new TimelineCacheDAO(contextReference.get(), db).cleanDoublon();
                     List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new TimelineCacheDAO(contextReference.get(), db).getAllCachedStatus(max_id);
                     if( statuses == null || statuses.size() == 0)
@@ -155,7 +153,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     }
                 }else{
                     apiResponse = api.getHomeTimeline(max_id);
-                }
+                }*/
+                apiResponse = api.getHomeTimeline(max_id);
                 break;
             case LOCAL:
                 apiResponse = api.getPublicTimeline(true, max_id);

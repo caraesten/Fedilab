@@ -103,7 +103,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.Entities.Preferences;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
@@ -151,9 +150,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private List<String> timedMute;
     private boolean redraft;
     private Status toot;
-    private Preferences preferences;
 
-    public StatusListAdapter(Context context, Preferences preferences, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
+    public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         super();
         this.context = context;
         this.statuses = statuses;
@@ -165,10 +163,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         this.translator = translator;
         redraft = false;
-        this.preferences = preferences;
     }
 
-    public StatusListAdapter(Context context, Preferences preferences, int position, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
+    public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         this.context = context;
         this.statuses = statuses;
         this.isOnWifi = isOnWifi;
@@ -180,7 +177,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         this.translator = translator;
         redraft = false;
-        this.preferences = preferences;
     }
 
     public void updateMuted(List<String> timedMute){
@@ -432,9 +428,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             status.setItemViewType(viewHolder.getItemViewType());
 
-            final String userId = preferences.getUserId();
-            boolean displayBookmarkButton = preferences.isDisplayBookmarkButton();
-            boolean fullAttachement = preferences.isFullAttachement();
+            final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
+            boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
             boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
             int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
             int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
