@@ -151,7 +151,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private boolean redraft;
     private Status toot;
 
-
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         super();
         this.context = context;
@@ -433,6 +432,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
             boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+            int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
+            int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
+            final boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
+            boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
+            boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, false);
+            boolean display_video_preview = sharedpreferences.getBoolean(Helper.SET_DISPLAY_VIDEO_PREVIEWS, true);
+            int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
+            final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
+            boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
 
             if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
@@ -454,9 +464,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.new_element.setVisibility(View.VISIBLE);
             else
                 holder.new_element.setVisibility(View.GONE);
-            int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
-            int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
-            final boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
+
+
             holder.status_more.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_more.getLayoutParams().width = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
             holder.status_privacy.getLayoutParams().height = (int) Helper.convertDpToPixel((20*iconSizePercent/100), context);
@@ -508,7 +517,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
             //Manages theme for icon colors
-            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
+
             if( theme == Helper.THEME_BLACK)
                 changeDrawableColor(context, R.drawable.ic_fiber_new,R.color.dark_icon);
             else
@@ -519,8 +529,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             else
                 holder.status_privacy.setVisibility(View.VISIBLE);
 
-            boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
-            boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
+
 
             changeDrawableColor(context, R.drawable.video_preview,R.color.white);
             if( theme == Helper.THEME_BLACK){
@@ -717,7 +726,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
             }
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
-            int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
+
             if( truncate_toots_size > 0) {
                 holder.status_content.setMaxLines(truncate_toots_size);
                 if (status.getNumberLines() == -1) {
@@ -811,7 +820,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //-------- END -> Manages translations
 
             if( status.getAccount() == null) {
-                Account account = new AccountDAO(context, db).getAccountByID(sharedpreferences.getString(Helper.PREF_KEY_ID, null));
+                Account account = new AccountDAO(context, db).getAccountByID(userId);
                 status.setAccount(account);
             }
             //Displays name & emoji in toot header
@@ -1260,7 +1269,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_pin.setVisibility(View.GONE);
             }
 
-            boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, false);
 
             if( status.getWebviewURL() != null){
                 holder.status_cardview_webview.loadUrl(status.getWebviewURL());
@@ -1272,7 +1280,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_cardview_video.setVisibility(View.GONE);
                 holder.webview_preview.setVisibility(View.VISIBLE);
             }
-            boolean display_video_preview = sharedpreferences.getBoolean(Helper.SET_DISPLAY_VIDEO_PREVIEWS, true);
+
             if( (type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition ) || display_card || display_video_preview){
 
                 if( type ==  RetrieveFeedsAsyncTask.Type.CONTEXT & position == conversationPosition)
@@ -1429,7 +1437,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if they want. Images are then hidden again.
                     -> Default value is set to 5 seconds
                  */
-                    final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
+
                     if (timeout > 0) {
                         new CountDownTimer((timeout * 1000), 1000) {
                             public void onTick(long millisUntilFinished) {
@@ -1651,7 +1659,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 String targeted_id = status.getAccount().getId();
                                                 Date date_mute = new Date(time);
                                                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                                                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                                                 Account account = new AccountDAO(context, db).getAccountByID(userId);
                                                 new TempMuteDAO(context, db).insert(account, targeted_id, new Date(time));
                                                 if( timedMute != null && !timedMute.contains(account.getId()))
@@ -1717,7 +1724,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                             url = status.getUrl();
                                     }
                                     String extra_text;
-                                    boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
+
                                     if( share_details) {
                                         extra_text = (status.getReblog() != null) ? status.getReblog().getAccount().getAcct() : status.getAccount().getAcct();
                                         if (extra_text.split("@").length == 1)

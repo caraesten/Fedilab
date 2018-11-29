@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,8 +56,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import fr.gouv.etalab.mastodon.sqlite.TimelineCacheDAO;
 
 
 /**
@@ -751,7 +748,7 @@ public class API {
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));
-            if( response != null) {
+            /*if( response != null) {
                 Thread thread = new Thread() {
                     @Override
                     public void run() {
@@ -779,7 +776,7 @@ public class API {
                     }
                 };
                 thread.start();
-            }
+            }*/
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
