@@ -611,10 +611,10 @@
     <string name="settings_title_battery">Оптимизация батареи</string>
     <string name="set_change_locale">Изменить язык</string>
     <string name="default_language">Язык по умолчанию</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
+    <string name="truncate_long_toots">Усекать длинные туты</string>
+    <string name="set_truncate_toot">Усекать туты более \'x\' строк. Ноль означает отключено.</string>
+    <string name="display_toot_truncate">Развернуть</string>
+    <string name="hide_toot_truncate">Свернуть</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>
