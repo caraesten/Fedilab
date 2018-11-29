@@ -1819,6 +1819,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             if( oldContent.length() < currentCursorPosition)
                 return;
             String[] searchA = oldContent.substring(0,currentCursorPosition).split("#");
+            if( searchA.length < 1)
+                return;
             final String search = searchA[searchA.length-1];
             toot_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
