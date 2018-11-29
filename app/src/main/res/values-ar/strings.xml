@@ -612,13 +612,13 @@
     <string name="no_mail_client">لا توجد هناك برامج بريد الكترونية مثبتة.</string>
     <string name="bug_report_mail">إرسال تقرير الأعطاب</string>
     <string name="account_id_clipbloard">تم نسخ معرف الحساب إلى الحافظة!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
+    <string name="settings_title_battery">تحسينات طاقة البطارية</string>
+    <string name="set_change_locale">تغيير اللغة</string>
+    <string name="default_language">اللغة الافتراضية</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
+    <string name="display_toot_truncate">عرض المزيد</string>
+    <string name="hide_toot_truncate">اعرض أقل</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>
