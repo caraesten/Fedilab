@@ -419,7 +419,7 @@
         &#9888; Логин и пароли никогда не сохраняются. Они используются только во время безопасной аутентификации (SSL) с сервером.
     </string>
     <string name="privacy_authorizations_title">Разрешения:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Используется для определения того, подключено ли устройство к сети WIFI.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Используется для определения, подключено ли устройство к сети WIFI.\n
         - <b>INTERNET</b>: Используется для запросов к серверу.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Используется для хранения мультимедиа или для перемещения приложения на SD-карту.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Используется для добавления мультимедиа в туты.\n
