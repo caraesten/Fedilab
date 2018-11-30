@@ -323,7 +323,7 @@
     <string name="settings_hour_init">Время начала</string>
     <string name="settings_hour_end">Время окончания</string>
     <string name="embedded_browser">Использовать встроенный браузер</string>
-    <string name="custom_tabs">Пользовательские вкладки</string>
+    <string name="custom_tabs">Внешний браузер</string>
     <string name="use_javascript">Включить Javascript</string>
     <string name="expand_cw">Автоматически раскрывать cw</string>
     <string name="use_cookies">Разрешить сторонние куки</string>
@@ -434,7 +434,7 @@
     </string>
     <string name="privacy_API_title">Отслеживание и библиотеки</string>
     <string name="privacy_API">        Это приложение <b>не использует инструменты отслеживания</b> (измерение аудитории, отчет об ошибках и т. д.) и не содержит никакой рекламы.\n\n
-        Использование библиотек сводится к минимуму: \n
+        Использование библиотек сведено к минимуму: \n
         - <b>Glide</b>: Для управления файлами\n
         - <b>Android-Job</b>: Для управления сервисами\n
         - <b>PhotoView</b>: Для управления изображениями\n
@@ -482,9 +482,9 @@
     <string name="data_export_success">%1$s тутов из %2$s были экспортированы.</string>
     <string name="data_export_error">При экспорте данных для %1$s что-то пошло не так</string>
     <!-- Proxy -->
-    <string name="proxy_set">Proxy</string>
+    <string name="proxy_set">Прокси</string>
     <string name="proxy_type">Тип</string>
-    <string name="proxy_enable">Включить proxy?</string>
+    <string name="proxy_enable">Включить прокси?</string>
     <string name="poxy_host">Хост</string>
     <string name="poxy_port">Порт</string>
     <string name="poxy_login">Имя пользователя</string>
@@ -494,7 +494,7 @@
     <string name="set_share_details">Добавить детали тута при перепосте</string>
     <string name="support_the_app_on_liberapay">Поддержать приложение на Liberapay</string>
     <string name="alert_regex">В регулярном выражении есть ошибка!</string>
-    <string name="no_account_yet">Еще нет аккаунта?</string>
+    <string name="no_account_yet">Нет аккаунта?</string>
     <string name="toast_instance_unavailable">На этом сервере нет лент!</string>
     <string name="delete_instance">Удалить этот сервер?</string>
     <string name="warning_delete_instance">Вы собираетесь удалить %s из ваших следующих серверов.</string>
