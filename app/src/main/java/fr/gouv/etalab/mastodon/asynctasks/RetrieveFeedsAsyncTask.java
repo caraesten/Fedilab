@@ -141,19 +141,6 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         switch (action){
             case HOME:
-                /*if( !Helper.isConnectedToInternet(contextReference.get(), Helper.getLiveInstance(contextReference.get()))){
-                    new TimelineCacheDAO(contextReference.get(), db).cleanDoublon();
-                    List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = new TimelineCacheDAO(contextReference.get(), db).getAllCachedStatus(max_id);
-                    if( statuses == null || statuses.size() == 0)
-                        apiResponse = api.getHomeTimeline(max_id);
-                    else{
-                        apiResponse = new APIResponse();
-                        apiResponse.setStatuses(statuses);
-                        apiResponse.setMax_id(statuses.get(statuses.size()-1).getId());
-                    }
-                }else{
-                    apiResponse = api.getHomeTimeline(max_id);
-                }*/
                 apiResponse = api.getHomeTimeline(max_id);
                 break;
             case LOCAL:

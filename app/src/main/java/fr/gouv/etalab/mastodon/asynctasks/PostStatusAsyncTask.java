@@ -15,12 +15,21 @@
 package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
+
 import java.lang.ref.WeakReference;
+import java.util.List;
+import java.util.regex.Matcher;
+
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.TagsCacheDAO;
 
 
 /**
@@ -57,6 +66,35 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         listener.onPostStatusAction(apiResponse);
+        //Search for tag with upper cases to store them locally
+        Log.v(Helper.TAG,"ici");
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                String content = status.getContent();
+                if( content != null && content.length() > 0){
+                    SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    Matcher matcher = Helper.hashtagPattern.matcher(content);
+                    while (matcher.find()){
+                        int matchStart = matcher.start(1);
+                        int matchEnd = matcher.end();
+                        //Get cached tags
+                        List<String> cachedTag = new TagsCacheDAO(contextReference.get(), db).getAll();
+                        String tag = content.substring(matchStart, matchEnd);
+                        tag = tag.replace("#","");
+                        if( cachedTag == null){
+                            new TagsCacheDAO(contextReference.get(), db).insert(tag);
+                        }else {
+                            //If cache doesn't contain the tag and the tag has upper case
+                            if(!cachedTag.contains(tag) && !tag.toLowerCase().equals(tag)){
+                                new TagsCacheDAO(contextReference.get(), db).insert(tag);
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        thread.start();
     }
 
 }

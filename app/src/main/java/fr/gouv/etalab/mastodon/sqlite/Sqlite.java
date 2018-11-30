@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 17;
+    public static final int DB_VERSION = 18;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -57,6 +57,9 @@ public class Sqlite extends SQLiteOpenHelper {
 
     //Table for timeline cache
     static final String TABLE_TIMELINE_CACHE = "TIMELINE_CACHE";
+
+    //Table for tags cache
+    static final String TABLE_CACHE_TAGS = "CACHE_TAGS";
 
 
     static final String COL_USER_ID = "USER_ID";
@@ -186,17 +189,11 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_DATE + " TEXT NOT NULL)";
 
 
-    private final String CREATE_TABLE_TIMELE_CACHE = "CREATE TABLE " + TABLE_TIMELINE_CACHE + " ("
+
+    private final String CREATE_TABLE_CACHE_TAGS = "CREATE TABLE "
+            + TABLE_CACHE_TAGS + "("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_CACHED_ACTION + " INTEGER NOT NULL, "+ COL_INSTANCE + " TEXT NOT NULL, " + COL_USER_ID + " NOT NULL, " + COL_DATE_BACKUP + " TEXT NOT NULL, "
-            + COL_STATUS_ID + " TEXT NOT NULL, " + COL_URI + " TEXT NOT NULL, " + COL_URL + " TEXT NOT NULL, "
-            + COL_ACCOUNT + " TEXT NOT NULL, " + COL_IN_REPLY_TO_ID + " TEXT, " + COL_IN_REPLY_TO_ACCOUNT_ID + " TEXT,"
-            + COL_REBLOG + " TEXT, " + COL_CONTENT + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL, "
-            + COL_EMOJIS + " TEXT, " + COL_REBLOGS_COUNT + " INTEGER NOT NULL, " + COL_FAVOURITES_COUNT + " INTEGER NOT NULL, "
-            + COL_REBLOGGED + " INTEGER, " + COL_FAVOURITED + " INTEGER, " + COL_MUTED + " INTEGER, " + COL_SENSITIVE + " INTEGER, "
-            + COL_SPOILER_TEXT + " TEXT, " + COL_VISIBILITY + " TEXT NOT NULL, " + COL_MEDIA_ATTACHMENTS + " TEXT," + COL_CARD + " TEXT,"
-            + COL_MENTIONS + " TEXT, " + COL_TAGS + " TEXT, " + COL_APPLICATION + " TEXT,"
-            + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER)";
+            + COL_TAGS + " TEXT NOT NULL)";
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -222,7 +219,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_UNIQUE_CACHE_INDEX);
         db.execSQL(CREATE_TABLE_INSTANCES);
         db.execSQL(CREATE_TABLE_PEERTUBE_FAVOURITES);
-        db.execSQL(CREATE_TABLE_TIMELE_CACHE);
+        db.execSQL(CREATE_TABLE_CACHE_TAGS);
     }
 
     @Override
@@ -269,7 +266,9 @@ public class Sqlite extends SQLiteOpenHelper {
                 if( oldVersion > 8)
                     db.execSQL("ALTER TABLE " + TABLE_STATUSES_CACHE + " ADD COLUMN "+ COL_CARD + " TEXT");
             case 16:
-                db.execSQL(CREATE_TABLE_TIMELE_CACHE);
+            case 17:
+                db.execSQL("DROP TABLE IF EXISTS '" + TABLE_TIMELINE_CACHE + "'");
+                db.execSQL(CREATE_TABLE_CACHE_TAGS);
             default:
                 break;
         }

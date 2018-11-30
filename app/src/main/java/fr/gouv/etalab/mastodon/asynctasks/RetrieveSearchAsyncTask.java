@@ -15,13 +15,18 @@
 package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.TagsCacheDAO;
 
 
 /**
@@ -36,6 +41,7 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnRetrieveSearchInterface listener;
     private API api;
     private WeakReference<Context> contextReference;
+    private boolean tagsOnly = false;
 
     public RetrieveSearchAsyncTask(Context context, String query, OnRetrieveSearchInterface onRetrieveSearchInterface){
         this.contextReference = new WeakReference<>(context);
@@ -43,11 +49,38 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
         this.listener = onRetrieveSearchInterface;
     }
 
+    public RetrieveSearchAsyncTask(Context context, String query, boolean tagsOnly, OnRetrieveSearchInterface onRetrieveSearchInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.query = query;
+        this.listener = onRetrieveSearchInterface;
+        this.tagsOnly = tagsOnly;
+    }
 
     @Override
     protected Void doInBackground(Void... params) {
         api = new API(this.contextReference.get());
-        results = api.search(query);
+        if( !tagsOnly)
+            results = api.search(query);
+        else {
+            //search tags only
+            results = api.search(query);
+            SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            List<String> cachedTags = new TagsCacheDAO(contextReference.get(), db).getBy(query);
+            if( results.getHashtags() != null){
+                //If cache contains matching tags
+                if( cachedTags != null){
+                    for(String apiTag: results.getHashtags()){
+                        //Cache doesn't contain the tags coming from the api (case insensitive)
+                        if(!Helper.containsCaseInsensitive(apiTag, cachedTags)){
+                            cachedTags.add(apiTag); //It's added
+                        }
+                    }
+                    results.setHashtags(cachedTags);
+                }
+            }else if( cachedTags != null) {
+                results.setHashtags(cachedTags);
+            }
+        }
         return null;
     }
 

@@ -389,20 +389,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 case "update":
                     event = Helper.EventStreaming.UPDATE;
                     status = API.parseStatuses(getApplicationContext(), new JSONObject(response.get("payload").toString()));
-                    String instance = Helper.getLiveInstance(getApplicationContext());
-                    /*if(userId != null && instance != null && userId.equals(account.getId()) && instance.equals(account.getInstance())){
-                        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                        List<Status> alreadyCached = new TimelineCacheDAO(getApplicationContext(), db).getAllStatus(TimelineCacheDAO.HOME_TIMELINE);
-                        ArrayList<String> cachedId = new ArrayList<>();
-                        if(alreadyCached != null){
-                            for(Status scache: alreadyCached){
-                                cachedId.add(scache.getId());
-                            }
-                        }
-                        if(!cachedId.contains(status.getId())){
-                            new TimelineCacheDAO(getApplicationContext(), db).insertStatus(TimelineCacheDAO.HOME_TIMELINE, status, account.getToken());
-                        }
-                    }*/
                     status.setNew(true);
                     b.putParcelable("data", status);
                     break;

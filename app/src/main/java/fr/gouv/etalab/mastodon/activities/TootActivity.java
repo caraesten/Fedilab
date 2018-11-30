@@ -630,7 +630,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                             pp_progress.setVisibility(View.VISIBLE);
                             pp_actionBar.setVisibility(View.GONE);
                         }
-                        new RetrieveSearchAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new RetrieveSearchAsyncTask(getApplicationContext(),search,true, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }else{
                         if( s.toString().charAt(0) == ':')
                             mt = ePattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
