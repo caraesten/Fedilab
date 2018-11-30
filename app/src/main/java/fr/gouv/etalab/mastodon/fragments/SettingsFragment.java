@@ -579,7 +579,7 @@ public class SettingsFragment extends Fragment {
             default:
                 positionSpinnerTheme = 0;
         }
-        set_night_mode.setSelection(positionSpinnerTheme, false);
+        set_night_mode.setSelection(positionSpinnerTheme);
         set_night_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -622,7 +622,7 @@ public class SettingsFragment extends Fragment {
         set_change_locale.setAdapter(adapterLocale);
 
         int positionSpinnerLanguage = Helper.languageSpinnerPosition(context);
-        set_change_locale.setSelection(positionSpinnerLanguage, false);
+        set_change_locale.setSelection(positionSpinnerLanguage);
         set_change_locale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -897,7 +897,7 @@ public class SettingsFragment extends Fragment {
                 your_api_key.setVisibility(View.VISIBLE);
                 positionSpinnerTrans = 0;
         }
-        translation_layout_spinner.setSelection(positionSpinnerTrans, false);
+        translation_layout_spinner.setSelection(positionSpinnerTrans);
         translation_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -946,7 +946,7 @@ public class SettingsFragment extends Fragment {
                 R.array.settings_resize_picture, android.R.layout.simple_spinner_item);
         resize_layout_spinner.setAdapter(adapterResize);
         int positionSpinnerResize = sharedpreferences.getInt(Helper.SET_PICTURE_RESIZE, Helper.S_2MO);
-        resize_layout_spinner.setSelection(positionSpinnerResize, false);
+        resize_layout_spinner.setSelection(positionSpinnerResize);
         resize_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
