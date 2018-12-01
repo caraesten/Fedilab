@@ -605,10 +605,15 @@
     <string name="settings_title_battery">Ottimizzazione della batteria</string>
     <string name="set_change_locale">Cambia lingua</string>
     <string name="default_language">Lingua predefinita</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
+    <string name="truncate_long_toots">Tronca toot lunghi</string>
+    <string name="set_truncate_toot">Tronca toot più lunghi di \'x\' linee. Zero significa disabilitato.</string>
+    <string name="display_toot_truncate">Mostra di più</string>
+    <string name="hide_toot_truncate">Mostra meno</string>
+    <string name="manage_tags">Manage tags</string>
+    <string name="tags_already_stored">The tag already exists!</string>
+    <string name="tags_stored">The tag has been stored!</string>
+    <string name="tags_renamed">The tag has been changed!</string>
+    <string name="tags_deleted">The tag has been deleted!</string>
     <string-array name="filter_expire">
         <item>Mai</item>
         <item>30 minuti</item>
