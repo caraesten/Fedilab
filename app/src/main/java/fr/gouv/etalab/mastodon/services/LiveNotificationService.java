@@ -261,12 +261,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     event = Helper.EventStreaming.NOTIFICATION;
                     notification = API.parseNotificationResponse(getApplicationContext(), new JSONObject(response.get("payload").toString()));
                     b.putParcelable("data", notification);
-
-
                     boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
                     boolean canNotify = Helper.canNotify(getApplicationContext());
                     boolean notify = sharedpreferences.getBoolean(Helper.SET_NOTIFY, true);
-
                     String targeted_account = null;
                     Helper.NotifType notifType = Helper.NotifType.MENTION;
                     boolean activityRunning = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("isMainActivityRunning", false);
@@ -336,53 +333,51 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                             }
                             long notif_id = Long.parseLong(account.getId());
                             final int notificationId = ((notif_id + 1) > 2147483647) ? (int) (2147483647 - notif_id - 1) : (int) (notif_id + 1);
-                            if (notification.getAccount().getAvatar() != null) {
-                                final String finalTitle = title;
-                                Handler mainHandler = new Handler(Looper.getMainLooper());
-                                Helper.NotifType finalNotifType = notifType;
-                                Runnable myRunnable = new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (finalTitle != null) {
-                                            Glide.with(getApplicationContext())
-                                                    .asBitmap()
-                                                    .load(notification.getAccount().getAvatar())
-                                                    .listener(new RequestListener<Bitmap>() {
-                                                        @Override
-                                                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                                                            return false;
-                                                        }
+                            final String finalTitle = title;
+                            Handler mainHandler = new Handler(Looper.getMainLooper());
+                            Helper.NotifType finalNotifType = notifType;
+                            Runnable myRunnable = new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (finalTitle != null) {
+                                        Glide.with(getApplicationContext())
+                                                .asBitmap()
+                                                .load(notification.getAccount().getAvatar())
+                                                .listener(new RequestListener<Bitmap>() {
+                                                    @Override
+                                                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                                        return false;
+                                                    }
 
-                                                        @Override
-                                                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                                            notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getResources(),
-                                                                    R.drawable.mastodonlogo), finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
-                                                            String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                                            if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
-                                                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                                                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
-                                                                editor.apply();
-                                                            }
-                                                            return false;
+                                                    @Override
+                                                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                                        notify_user(getApplicationContext(), intent, notificationId, BitmapFactory.decodeResource(getResources(),
+                                                                R.drawable.mastodonlogo), finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
+                                                        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
+                                                        if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
+                                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
+                                                            editor.apply();
                                                         }
-                                                    })
-                                                    .into(new SimpleTarget<Bitmap>() {
-                                                        @Override
-                                                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                                                            notify_user(getApplicationContext(), intent, notificationId, resource, finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
-                                                            String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
-                                                            if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
-                                                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                                                editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
-                                                                editor.apply();
-                                                            }
+                                                        return false;
+                                                    }
+                                                })
+                                                .into(new SimpleTarget<Bitmap>() {
+                                                    @Override
+                                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                                        notify_user(getApplicationContext(), intent, notificationId, resource, finalNotifType, finalTitle, "@" + account.getAcct() + "@" + account.getInstance());
+                                                        String lastNotif = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), null);
+                                                        if (lastNotif == null || Long.parseLong(notification.getId()) > Long.parseLong(lastNotif)) {
+                                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                                            editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + account.getId() + account.getInstance(), notification.getId());
+                                                            editor.apply();
                                                         }
-                                                    });
-                                        }
+                                                    }
+                                                });
                                     }
-                                };
-                                mainHandler.post(myRunnable);
-                            }
+                                }
+                            };
+                            mainHandler.post(myRunnable);
                         }
                     }
                     break;

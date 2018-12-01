@@ -1126,6 +1126,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             case R.id.action_store:
                 storeToot(true, true);
                 return true;
+            case R.id.action_tags:
+                Intent intentTags = new Intent(TootActivity.this, TagCacheActivity.class);
+                intentTags.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intentTags);
+                return true;
             case R.id.action_restore:
                 try{
                     final List<StoredStatus> drafts = new StatusStoredDAO(TootActivity.this, db).getAllDrafts();

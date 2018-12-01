@@ -52,11 +52,29 @@ public class TagsCacheDAO {
         }catch (Exception ignored) {}
     }
 
+    /**
+     * update a tag in database
+     * @param oldTag String
+     * @param newTag String
+     */
+    public void update(String oldTag, String newTag) {
+        ContentValues values = new ContentValues();
+        values.put(Sqlite.COL_TAGS, newTag);
+        try{
+            db.update(Sqlite.TABLE_CACHE_TAGS, values, Sqlite.COL_TAGS + " = ?",new String[]{ oldTag});
+        }catch (Exception ignored) {}
+    }
+
     /***
      * Remove all tags
      */
     public void removeAll(){
         db.delete(Sqlite.TABLE_CACHE_TAGS, null, null);
+    }
+
+
+    public void removeTag(String tag) {
+        db.delete(Sqlite.TABLE_CACHE_TAGS, Sqlite.COL_TAGS + " = ?", new String[]{tag});
     }
 
     /**
@@ -70,6 +88,18 @@ public class TagsCacheDAO {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /**
+     * Returns tags starting by "search"
+     * @return boolean present
+     */
+    public boolean isPresent(String search){
+        Cursor c = db.query(Sqlite.TABLE_CACHE_TAGS, null, Sqlite.COL_TAGS + " = \"" + search + "\"", null, null, null, null, null);
+        boolean isPresent = (c!= null && c.getCount() > 0);
+        assert c != null;
+        c.close();
+        return isPresent;
     }
 
     /**

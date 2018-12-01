@@ -1482,6 +1482,8 @@ public abstract class BaseMainActivity extends BaseActivity
 
         // Retrieves instance
         new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        // Retrieves filters
+        new ManageFiltersAsyncTask(getApplicationContext(), GET_ALL_FILTER, null,BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -1884,7 +1886,6 @@ public abstract class BaseMainActivity extends BaseActivity
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext())) {
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new ManageFiltersAsyncTask(getApplicationContext(), GET_ALL_FILTER, null,BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         if( lastHomeId != null && homeFragment != null){
             homeFragment.retrieveMissingToots(lastHomeId);

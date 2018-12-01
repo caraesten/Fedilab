@@ -41,4 +41,9 @@
         android:title="@string/schedule"
         android:icon="@drawable/ic_schedule"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_tags"
+        android:title="@string/tags"
+        android:icon="@drawable/ic_edit"
+        app:showAsAction="never" />
 </menu>
