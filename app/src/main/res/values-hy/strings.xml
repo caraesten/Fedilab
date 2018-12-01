@@ -608,6 +608,11 @@
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">Display more</string>
     <string name="hide_toot_truncate">Display less</string>
+    <string name="manage_tags">Manage tags</string>
+    <string name="tags_already_stored">The tag already exists!</string>
+    <string name="tags_stored">The tag has been stored!</string>
+    <string name="tags_renamed">The tag has been changed!</string>
+    <string name="tags_deleted">The tag has been deleted!</string>
     <string-array name="filter_expire">
         <item>Never</item>
         <item>30 minutes</item>
