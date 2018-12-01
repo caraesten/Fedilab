@@ -140,7 +140,6 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
-import fr.gouv.etalab.mastodon.sqlite.TagsCacheDAO;
 
 import static fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
 import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
@@ -1240,8 +1239,6 @@ public abstract class BaseMainActivity extends BaseActivity
                                                                     if (dir.isDirectory()) {
                                                                         Helper.deleteDir(dir);
                                                                     }
-                                                                    //Remove cached tags
-                                                                    new TagsCacheDAO(BaseMainActivity.this,db).removeAll();
                                                                 } catch (Exception ignored) {}
                                                             }
                                                         });
