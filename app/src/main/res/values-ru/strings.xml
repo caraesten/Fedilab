@@ -615,11 +615,11 @@
     <string name="set_truncate_toot">Усекать туты более \'x\' строк. Ноль означает отключено.</string>
     <string name="display_toot_truncate">Развернуть</string>
     <string name="hide_toot_truncate">Свернуть</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
+    <string name="manage_tags">Управление тегами</string>
+    <string name="tags_already_stored">Тег уже существует!</string>
+    <string name="tags_stored">Тег был сохранен!</string>
+    <string name="tags_renamed">Тег был изменен!</string>
+    <string name="tags_deleted">Тег был удален!</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>
