@@ -17,7 +17,6 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -67,7 +66,6 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         listener.onPostStatusAction(apiResponse);
         //Search for tag with upper cases to store them locally
-        Log.v(Helper.TAG,"ici");
         Thread thread = new Thread() {
             @Override
             public void run() {
