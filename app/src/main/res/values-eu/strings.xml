@@ -604,15 +604,15 @@
     <string name="settings_title_battery">Bateriaren optimizazioa</string>
     <string name="set_change_locale">Aldatu hizkuntza</string>
     <string name="default_language">Lehenetsitako hizkuntza</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
+    <string name="truncate_long_toots">Moztu toot luzeak</string>
+    <string name="set_truncate_toot">Moztu \'x\' lerro baino gehiago dituzten tootak. Zerok desaktibatuta dagoela esan nahi du.</string>
+    <string name="display_toot_truncate">Erakutsi gehiago</string>
+    <string name="hide_toot_truncate">Erakutsi gutxiago</string>
+    <string name="manage_tags">Kudeatu etiketak</string>
+    <string name="tags_already_stored">Etiketa badago aurretik!</string>
+    <string name="tags_stored">Etiketa gorde da!</string>
+    <string name="tags_renamed">Etiketa aldatu da!</string>
+    <string name="tags_deleted">Etiketa ezabatu da!</string>
     <string-array name="filter_expire">
         <item>Inoiz ez</item>
         <item>30 minutu</item>
