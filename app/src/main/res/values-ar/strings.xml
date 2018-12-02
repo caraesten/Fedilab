@@ -615,7 +615,7 @@
     <string name="settings_title_battery">تحسينات طاقة البطارية</string>
     <string name="set_change_locale">تغيير اللغة</string>
     <string name="default_language">اللغة الافتراضية</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
+    <string name="truncate_long_toots">تقسيم التبويقات الطويلة</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">عرض المزيد</string>
     <string name="hide_toot_truncate">اعرض أقل</string>
