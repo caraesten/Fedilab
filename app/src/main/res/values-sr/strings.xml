@@ -326,9 +326,9 @@
     <string name="use_cookies">Дозволите независне колачиће</string>
     <string name="settings_ui_layout">Распоред лајни: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Нормална потрошња батерије</item>
+        <item>Средња потрошња батерије</item>
+        <item>Мала потрошња батерије</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Језичци</item>
@@ -587,23 +587,23 @@
     <string name="bookmark_add_peertube">Видео је додат у забелешке!</string>
     <string name="bookmark_remove_peertube">Видео је уклоњен из забелешки!</string>
     <string name="bookmark_peertube_empty">Нема Peertube видео записа у Вашим омиљеним ставкама!</string>
-    <string name="channel">Channel</string>
-    <string name="no_peertube_channels">No Peertube channels</string>
-    <string name="no_peertube_instances">No Peertube instances</string>
-    <string name="no_mastodon_instances">No Mastodon instances</string>
-    <string name="no_lists">No lists</string>
-    <string name="videos">Videos</string>
-    <string name="channels">Channels</string>
-    <string name="set_display_emoji">Use Emoji One</string>
-    <string name="information">Information</string>
-    <string name="set_display_card">Display previews in all toots</string>
+    <string name="channel">Канал</string>
+    <string name="no_peertube_channels">Нема Peertube канала</string>
+    <string name="no_peertube_instances">Нема Peertube инстанци</string>
+    <string name="no_mastodon_instances">Нема Мастoдонт инстанци</string>
+    <string name="no_lists">Нема листи</string>
+    <string name="videos">Видео снимци</string>
+    <string name="channels">Канали</string>
+    <string name="set_display_emoji">Користите Емоји 1</string>
+    <string name="information">Информације</string>
+    <string name="set_display_card">Прикажи претпрегледе у свим тутовима</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
+    <string name="set_display_video_preview">Прикажи видео претпрегледе</string>
+    <string name="thanks_text_support">Гитлаб подршка</string>
+    <string name="action_bug_report">Пријава грешке</string>
+    <string name="no_mail_client">Нема инсталираних клијената е-поште.</string>
+    <string name="bug_report_mail">Пошаљи пријаву грешку</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
     <string name="set_change_locale">Change the language</string>
