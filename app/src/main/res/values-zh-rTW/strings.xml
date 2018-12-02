@@ -320,9 +320,9 @@
     <string name="use_cookies">允許第三方 cookies</string>
     <string name="settings_ui_layout">時間軸佈局：</string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>正常電池消耗</item>
+        <item>中等電池消耗</item>
+        <item>低度電池消耗</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>分頁</item>
@@ -589,9 +589,9 @@
     <string name="videos">影片</string>
     <string name="channels">頻道</string>
     <string name="set_display_emoji">使用 Emoji One</string>
-    <string name="information">Information</string>
-    <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="information">資訊</string>
+    <string name="set_display_card">在所有嘟文中顯示預覽</string>
+    <string name="thanks_text_ux">新的 UX/UI 設計師</string>
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string name="set_display_video_preview">Display video previews</string>
     <string name="thanks_text_support">Gitlab Support</string>
