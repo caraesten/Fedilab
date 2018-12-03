@@ -696,12 +696,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:orientation="horizontal"
                 android:layout_height="wrap_content">
+                <com.varunest.sparkbutton.SparkButton
+                    android:id="@+id/spark_button_reblog"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:sparkbutton_activeImage="@drawable/ic_repeat_boost"
+                    app:sparkbutton_inActiveImage="@drawable/ic_repeat"
+                    app:sparkbutton_iconSize="20dp"
+                    />
                 <TextView
                     android:drawablePadding="2dp"
                     android:layout_gravity="center_vertical"
@@ -709,7 +718,7 @@
                     android:id="@+id/status_reblog_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_marginLeft="15dp"
@@ -722,13 +731,10 @@
                     android:id="@+id/spark_button_fav"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    app:sparkbutton_activeImageTint="@color/marked_icon"
-                    app:sparkbutton_inActiveImageTint="@color/marked_icon"
                     app:sparkbutton_activeImage="@drawable/ic_star"
                     app:sparkbutton_inActiveImage="@drawable/ic_star_border"
                     app:sparkbutton_iconSize="20dp"
-                    app:sparkbutton_primaryColor="@color/marked_icon"
-                    app:sparkbutton_secondaryColor="@color/marked_icon" />
+                   />
                 <TextView
                     android:drawablePadding="2dp"
                     android:layout_gravity="center_vertical"
