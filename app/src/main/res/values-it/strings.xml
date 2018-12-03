@@ -609,11 +609,11 @@
     <string name="set_truncate_toot">Tronca toot più lunghi di \'x\' linee. Zero significa disabilitato.</string>
     <string name="display_toot_truncate">Mostra di più</string>
     <string name="hide_toot_truncate">Mostra meno</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
+    <string name="manage_tags">Gestisci etichette</string>
+    <string name="tags_already_stored">L\'etichetta esiste già!</string>
+    <string name="tags_stored">L\'etichetta è stata salvata!</string>
+    <string name="tags_renamed">L\'etichetta è stata modificata!</string>
+    <string name="tags_deleted">L\'etichetta è stata eliminata!</string>
     <string-array name="filter_expire">
         <item>Mai</item>
         <item>30 minuti</item>
