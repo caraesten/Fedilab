@@ -138,6 +138,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         String typeString = "";
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
+        boolean confirmFav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
+        boolean confirmBoost = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
 
         if (theme == THEME_DARK ){
             holder.main_container_trans.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
@@ -304,6 +306,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
         holder.spark_button_fav.setActiveImageTint(R.color.marked_icon);
         holder.spark_button_reblog.setActiveImageTint(R.color.boost_icon);
+        holder.spark_button_fav.setDisableCircle(true);
+        holder.spark_button_reblog.setDisableCircle(true);
         if( theme == THEME_DARK) {
             holder.spark_button_fav.setInActiveImageTint(R.color.action_dark);
             holder.spark_button_reblog.setInActiveImageTint(R.color.action_dark);
@@ -481,13 +485,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
 
             if( status.isFavAnimated()){
-                holder.spark_button_fav.setAnimationSpeed(2.0f);
+                holder.spark_button_fav.setAnimationSpeed(1.0f);
                 holder.spark_button_fav.playAnimation();
                 status.setFavAnimated(false);
             }
 
             if( status.isBoostAnimated()){
-                holder.spark_button_reblog.setAnimationSpeed(2.0f);
+                holder.spark_button_reblog.setAnimationSpeed(1.0f);
                 holder.spark_button_reblog.playAnimation();
                 status.setBoostAnimated(false);
             }
@@ -495,16 +499,24 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.spark_button_fav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if( !status.isFavourited())
+                    if( !status.isFavourited() && confirmFav)
                         status.setFavAnimated(true);
+                    if( !status.isFavourited() && !confirmFav) {
+                        status.setFavAnimated(true);
+                        notifyNotificationChanged(notification);
+                    }
                     CrossActions.doCrossAction(context, null, status, null, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, true);
                 }
             });
             holder.spark_button_reblog.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if( !status.isReblogged())
+                    if( !status.isReblogged() && confirmBoost)
                         status.setBoostAnimated(true);
+                    if( !status.isReblogged() && !confirmBoost) {
+                        status.setBoostAnimated(true);
+                        notifyNotificationChanged(notification);
+                    }
                     CrossActions.doCrossAction(context, null, status, null, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, true);
                 }
             });
