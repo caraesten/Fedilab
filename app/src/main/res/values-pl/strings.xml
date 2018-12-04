@@ -541,7 +541,7 @@
     <string name="unselect_all">Odznacz wszystko</string>
     <string name="follow_trunk">%s is followed!</string>
     <string name="create_list_trunk">Tworzenie listy %s</string>
-    <string name="add_account_list_trunk">Adding accounts to the list</string>
+    <string name="add_account_list_trunk">Dodawanie kont do listy</string>
     <string name="account_added_list_trunk">Konta zostały dodane do listy</string>
     <string name="adding_account_list_trunk">Dodawanie kont do listy</string>
     <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
@@ -571,7 +571,7 @@
     <string name="blocked_domains">Zablokowane domeny</string>
     <string name="block_domain">Zablokuj domenę</string>
     <string name="toast_block_domain">Domena jest zablokowana</string>
-    <string name="toast_unblock_domain">The domain is no longer blocked!</string>
+    <string name="toast_unblock_domain">Domena nie jest już zablokowana!</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
     <string name="comment">Skomentuj</string>
     <string name="peertube_instance">Instancja Peertube</string>
@@ -601,10 +601,10 @@
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string name="set_display_video_preview">Wyświetl podglądy filmów</string>
     <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
+    <string name="action_bug_report">Zgłoszenie błędu</string>
     <string name="no_mail_client">There are no email clients installed.</string>
     <string name="bug_report_mail">Wyslij raport o błędzie</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
+    <string name="account_id_clipbloard">Id konta został skopiowany do schowka!</string>
     <string name="settings_title_battery">Optymalizacja baterii</string>
     <string name="set_change_locale">Zmień język</string>
     <string name="default_language">Domyślny język</string>
