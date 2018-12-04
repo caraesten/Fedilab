@@ -605,11 +605,11 @@
     <string name="set_truncate_toot">Kürze Toots mit mehr als \'x\' Zeilen. Null bedeutet deaktiviert.</string>
     <string name="display_toot_truncate">Mehr anzeigen</string>
     <string name="hide_toot_truncate">Weniger anzeigen</string>
-    <string name="manage_tags">Tags verwalten</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
+    <string name="manage_tags">Verwalten von Markierungen</string>
+    <string name="tags_already_stored">Diese Markierung existiert bereits!</string>
+    <string name="tags_stored">Die Markierung wurde gespeichert!</string>
+    <string name="tags_renamed">Die Markierung wurde geändert!</string>
+    <string name="tags_deleted">Die Markierung wurde gelöscht!</string>
     <string-array name="filter_expire">
         <item>Nie</item>
         <item>30 Minuten</item>
