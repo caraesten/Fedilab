@@ -1205,7 +1205,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     break;
             }
 
-            Drawable imgReblog, imgReply;
+            Drawable imgReply;
 
             if( !status.isFavAnimated() ) {
                 if (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
@@ -1371,11 +1371,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
 
             if( status.isFavAnimated()){
+                holder.spark_button_fav.setAnimationSpeed(2.0f);
                 holder.spark_button_fav.playAnimation();
                 status.setFavAnimated(false);
             }
 
             if( status.isBoostAnimated()){
+                holder.spark_button_reblog.setAnimationSpeed(2.0f);
                 holder.spark_button_reblog.playAnimation();
                 status.setBoostAnimated(false);
             }

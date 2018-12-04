@@ -50,6 +50,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.varunest.sparkbutton.SparkButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -301,6 +302,26 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             changeDrawableColor(context, holder.notification_delete,R.color.black);
         }
 
+        holder.spark_button_fav.setActiveImageTint(R.color.marked_icon);
+        holder.spark_button_reblog.setActiveImageTint(R.color.boost_icon);
+        if( theme == THEME_DARK) {
+            holder.spark_button_fav.setInActiveImageTint(R.color.action_dark);
+            holder.spark_button_reblog.setInActiveImageTint(R.color.action_dark);
+        }else if(theme == THEME_BLACK) {
+            holder.spark_button_fav.setInActiveImageTint(R.color.action_black);
+            holder.spark_button_reblog.setInActiveImageTint(R.color.action_black);
+        }else {
+            holder.spark_button_fav.setInActiveImageTint(R.color.action_light);
+            holder.spark_button_reblog.setInActiveImageTint(R.color.action_light);
+        }
+        holder.spark_button_fav.setColors(R.color.marked_icon, R.color.marked_icon);
+        holder.spark_button_fav.setImageSize((int) (20 * iconSizePercent/100 * scale + 0.5f));
+        holder.spark_button_fav.setMinimumWidth((int)Helper.convertDpToPixel((20 * iconSizePercent/100 * scale + 0.5f),context));
+
+        holder.spark_button_reblog.setColors(R.color.boost_icon, R.color.boost_icon);
+        holder.spark_button_reblog.setImageSize((int) (20 * iconSizePercent/100 * scale + 0.5f));
+        holder.spark_button_reblog.setMinimumWidth((int)Helper.convertDpToPixel((20 * iconSizePercent/100 * scale + 0.5f),context));
+
         final Status status = notification.getStatus();
         if( status != null ){
             if( status.getMedia_attachments() == null || status.getMedia_attachments().size() < 1)
@@ -352,31 +373,20 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.status_action_container.setVisibility(View.VISIBLE);
 
 
-            Drawable imgFav, imgReblog, imgReply;
-            if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
-                changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
-                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
-            }else {
-                if( theme == THEME_DARK)
-                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_dark);
-                else if(theme == THEME_BLACK)
-                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_black);
-                else
-                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_light);
-                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
+            Drawable imgReply;
+            if( !status.isFavAnimated() ) {
+                if (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
+                    holder.spark_button_fav.setChecked(true);
+                } else {
+                    holder.spark_button_fav.setChecked(false);
+                }
             }
-
-            if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
-                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
-            }else {
-                if( theme == THEME_DARK )
-                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_dark);
-                else if(theme == THEME_BLACK)
-                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_black);
-                else
-                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_light);
-                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
+            if( !status.isBoostAnimated()){
+                if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
+                    holder.spark_button_reblog.setChecked(true);
+                }else {
+                    holder.spark_button_reblog.setChecked(false);
+                }
             }
             if( theme == THEME_DARK)
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.action_dark);
@@ -423,15 +433,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
             }
 
-            assert imgFav != null;
-            imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-            assert imgReblog != null;
-            imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
             assert imgReply != null;
             imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-
-            holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
-            holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
             holder.status_reply.setCompoundDrawables(imgReply, null, null, null);
 
             if( theme == THEME_DARK ){
@@ -475,6 +478,36 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     }
                 }
             }
+
+
+            if( status.isFavAnimated()){
+                holder.spark_button_fav.setAnimationSpeed(2.0f);
+                holder.spark_button_fav.playAnimation();
+                status.setFavAnimated(false);
+            }
+
+            if( status.isBoostAnimated()){
+                holder.spark_button_reblog.setAnimationSpeed(2.0f);
+                holder.spark_button_reblog.playAnimation();
+                status.setBoostAnimated(false);
+            }
+
+            holder.spark_button_fav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if( !status.isFavourited())
+                        status.setFavAnimated(true);
+                    CrossActions.doCrossAction(context, null, status, null, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, true);
+                }
+            });
+            holder.spark_button_reblog.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if( !status.isReblogged())
+                        status.setBoostAnimated(true);
+                    CrossActions.doCrossAction(context, null, status, null, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, true);
+                }
+            });
 
             //Spoiler opens
             holder.status_spoiler_button.setOnClickListener(new View.OnClickListener() {
@@ -1124,7 +1157,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         ImageView status_privacy;
         LinearLayout status_spoiler_mention_container;
         TextView status_mention_spoiler;
-
+        SparkButton spark_button_fav, spark_button_reblog;
         public View getView(){
             return itemView;
         }
@@ -1164,6 +1197,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             status_spoiler_button = itemView.findViewById(R.id.status_spoiler_button);
             status_spoiler_mention_container = itemView.findViewById(R.id.status_spoiler_mention_container);
             status_mention_spoiler = itemView.findViewById(R.id.status_mention_spoiler);
+            spark_button_fav =  itemView.findViewById(R.id.spark_button_fav);
+            spark_button_reblog =  itemView.findViewById(R.id.spark_button_reblog);
         }
     }
 
