@@ -605,9 +605,9 @@
     <string name="default_language">Langue par défaut</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
-    <string name="manage_tags">Manage tags</string>
+    <string name="display_toot_truncate">Afficher plus</string>
+    <string name="hide_toot_truncate">Afficher moins</string>
+    <string name="manage_tags">Gestion des tags</string>
     <string name="tags_already_stored">The tag already exists!</string>
     <string name="tags_stored">The tag has been stored!</string>
     <string name="tags_renamed">The tag has been changed!</string>
