@@ -604,7 +604,7 @@
     <string name="set_display_emoji">استخدم إيموجي وان</string>
     <string name="information">معلومات</string>
     <string name="set_display_card">عرض المعاينات في كافة التبويقات</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="thanks_text_ux">مصمم واجهة المستخدم الجديدة</string>
     <string name="set_old_direct_timeline">استخدم الخيط المباشر المخصص لقبل لماستدون 2.6</string>
     <string name="set_display_video_preview">عرض معاينات الفيديوهات</string>
     <string name="thanks_text_support">الدعم عبر غيت لاي</string>
@@ -615,15 +615,15 @@
     <string name="settings_title_battery">تحسينات طاقة البطارية</string>
     <string name="set_change_locale">تغيير اللغة</string>
     <string name="default_language">اللغة الافتراضية</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
+    <string name="truncate_long_toots">تقسيم التبويقات الطويلة</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">عرض المزيد</string>
     <string name="hide_toot_truncate">اعرض أقل</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
+    <string name="manage_tags">إدارة الوسوم</string>
+    <string name="tags_already_stored">الوسم موجود مِن قَبل!</string>
+    <string name="tags_stored">تم حفظ الوسم!</string>
+    <string name="tags_renamed">تم تعديل الوسم بنجاح!</string>
+    <string name="tags_deleted">تم حذف الوسم!</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>

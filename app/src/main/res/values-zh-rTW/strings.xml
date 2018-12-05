@@ -320,9 +320,9 @@
     <string name="use_cookies">允許第三方 cookies</string>
     <string name="settings_ui_layout">時間軸佈局：</string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>正常電池消耗</item>
+        <item>中等電池消耗</item>
+        <item>低度電池消耗</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>分頁</item>
@@ -589,28 +589,28 @@
     <string name="videos">影片</string>
     <string name="channels">頻道</string>
     <string name="set_display_emoji">使用 Emoji One</string>
-    <string name="information">Information</string>
-    <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
+    <string name="information">資訊</string>
+    <string name="set_display_card">在所有嘟文中顯示預覽</string>
+    <string name="thanks_text_ux">新的 UX/UI 設計師</string>
+    <string name="set_old_direct_timeline">使用 Mastodon 2.6 前的直接時間軸</string>
+    <string name="set_display_video_preview">顯示影片預覽</string>
+    <string name="thanks_text_support">Gitlab 支援</string>
+    <string name="action_bug_report">錯誤回報</string>
+    <string name="no_mail_client">沒有安裝任何電子郵件客戶端</string>
+    <string name="bug_report_mail">傳送錯誤報告</string>
+    <string name="account_id_clipbloard">帳號 id 已複製到剪貼簿！</string>
+    <string name="settings_title_battery">電池最佳化</string>
+    <string name="set_change_locale">變更語言</string>
+    <string name="default_language">預設語言</string>
+    <string name="truncate_long_toots">截斷長嘟文</string>
+    <string name="set_truncate_toot">截斷超過「x」行的嘟文。0 代表停用。</string>
+    <string name="display_toot_truncate">顯示更多</string>
+    <string name="hide_toot_truncate">顯示較少</string>
+    <string name="manage_tags">管理標籤</string>
+    <string name="tags_already_stored">標籤已存在！</string>
+    <string name="tags_stored">標籤已儲存！</string>
+    <string name="tags_renamed">標籤已變更！</string>
+    <string name="tags_deleted">標籤已刪除！</string>
     <string-array name="filter_expire">
         <item>永不</item>
         <item>30 分鐘</item>
