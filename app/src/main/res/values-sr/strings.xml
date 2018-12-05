@@ -617,6 +617,7 @@
     <string name="tags_stored">Ознака ускладиштена!</string>
     <string name="tags_renamed">Ознака промењена!</string>
     <string name="tags_deleted">Ознака избрисана!</string>
+    <string name="set_display_art">Display Art timeline</string>
     <string-array name="filter_expire">
         <item>Никадa</item>
         <item>30 минута</item>
