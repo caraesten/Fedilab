@@ -126,6 +126,7 @@ public class Status implements Parcelable{
     private List<String> conversationProfilePicture;
     private String webviewURL = null;
 
+    private boolean isBoostAnimated = false, isFavAnimated = false;
     protected Status(Parcel in) {
         id = in.readString();
         uri = in.readString();
@@ -1166,5 +1167,21 @@ public class Status implements Parcelable{
 
     public void setNumberLines(int numberLines) {
         this.numberLines = numberLines;
+    }
+
+    public boolean isBoostAnimated() {
+        return isBoostAnimated;
+    }
+
+    public void setBoostAnimated(boolean boostAnimated) {
+        isBoostAnimated = boostAnimated;
+    }
+
+    public boolean isFavAnimated() {
+        return isFavAnimated;
+    }
+
+    public void setFavAnimated(boolean favAnimated) {
+        isFavAnimated = favAnimated;
     }
 }

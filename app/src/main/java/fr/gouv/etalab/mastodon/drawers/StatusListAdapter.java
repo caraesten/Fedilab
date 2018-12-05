@@ -74,6 +74,7 @@ import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
 import com.github.stom79.mytransl.client.Results;
 import com.github.stom79.mytransl.translate.Translate;
+import com.varunest.sparkbutton.SparkButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -315,6 +316,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView webview_preview_card;
         LinearLayout left_buttons;
         Button status_show_more_content;
+        SparkButton spark_button_fav, spark_button_reblog;
 
         public View getView(){
             return itemView;
@@ -396,6 +398,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             vertical_content = itemView.findViewById(R.id.vertical_content);
             left_buttons =  itemView.findViewById(R.id.left_buttons);
             status_show_more_content = itemView.findViewById(R.id.status_show_more_content);
+            spark_button_fav =  itemView.findViewById(R.id.spark_button_fav);
+            spark_button_reblog =  itemView.findViewById(R.id.spark_button_reblog);
         }
     }
 
@@ -517,6 +521,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
             final int timeout = sharedpreferences.getInt(Helper.SET_NSFW_TIMEOUT, 5);
             boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
+            boolean confirmFav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
+            boolean confirmBoost = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
 
             if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
@@ -612,7 +618,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, holder.status_privacy, R.color.action_black);
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_black);
                 changeDrawableColor(context, R.drawable.ic_conversation,R.color.action_black);
-                changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_black);
                 changeDrawableColor(context, R.drawable.ic_plus_one,R.color.action_black);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_black);
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_black));
@@ -639,7 +644,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, holder.status_more, R.color.action_dark);
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_dark);
                 changeDrawableColor(context, holder.status_privacy, R.color.action_dark);
-                changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_dark);
                 changeDrawableColor(context, R.drawable.ic_plus_one,R.color.action_dark);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_dark);
                 changeDrawableColor(context, R.drawable.ic_conversation,R.color.action_dark);
@@ -670,7 +674,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, holder.status_privacy, R.color.action_light);
                 changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_light);
                 changeDrawableColor(context, R.drawable.ic_plus_one,R.color.action_light);
-                changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_light);
                 changeDrawableColor(context, R.drawable.ic_pin_drop, R.color.action_light);
                 holder.status_favorite_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
                 holder.status_reblog_count.setTextColor(ContextCompat.getColor(context, R.color.action_light));
@@ -707,8 +710,33 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_bookmark.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_bookmark_border));
 
 
+
             //Redraws top icons (boost/reply)
             final float scale = context.getResources().getDisplayMetrics().density;
+            holder.spark_button_fav.setActiveImage(R.drawable.ic_star);
+            holder.spark_button_fav.setInactiveImage(R.drawable.ic_star_border);
+            holder.spark_button_fav.setDisableCircle(true);
+            holder.spark_button_reblog.setDisableCircle(true);
+            holder.spark_button_fav.setActiveImageTint(R.color.marked_icon);
+            holder.spark_button_reblog.setActiveImageTint(R.color.boost_icon);
+            if( theme == THEME_DARK) {
+                holder.spark_button_fav.setInActiveImageTint(R.color.action_dark);
+                holder.spark_button_reblog.setInActiveImageTint(R.color.action_dark);
+            }else if(theme == THEME_BLACK) {
+                holder.spark_button_fav.setInActiveImageTint(R.color.action_black);
+                holder.spark_button_reblog.setInActiveImageTint(R.color.action_black);
+            }else {
+                holder.spark_button_fav.setInActiveImageTint(R.color.action_light);
+                holder.spark_button_reblog.setInActiveImageTint(R.color.action_light);
+            }
+            holder.spark_button_fav.setColors(R.color.marked_icon, R.color.marked_icon);
+            holder.spark_button_fav.setImageSize((int) (20 * iconSizePercent/100 * scale + 0.5f));
+            holder.spark_button_fav.setMinimumWidth((int)Helper.convertDpToPixel((20 * iconSizePercent/100 * scale + 0.5f),context));
+
+            holder.spark_button_reblog.setColors(R.color.boost_icon, R.color.boost_icon);
+            holder.spark_button_reblog.setImageSize((int) (20 * iconSizePercent/100 * scale + 0.5f));
+            holder.spark_button_reblog.setMinimumWidth((int)Helper.convertDpToPixel((20 * iconSizePercent/100 * scale + 0.5f),context));
+
             Drawable imgConversation = null;
             if(  type != RetrieveFeedsAsyncTask.Type.CONTEXT && ((status.getIn_reply_to_account_id() != null && status.getIn_reply_to_account_id().equals(status.getAccount().getId()))
             ||(status.getReblog() != null && status.getReblog().getIn_reply_to_account_id() != null && status.getReblog().getIn_reply_to_account_id().equals(status.getReblog().getAccount().getId())))){
@@ -1225,20 +1253,26 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             switch (status.getVisibility()){
                 case "direct":
                     holder.status_reblog_count.setVisibility(View.GONE);
+                    holder.spark_button_reblog.setVisibility(View.GONE);
                     break;
                 case "private":
                     boolean isOwner = status.getAccount().getId().equals(userId);
-                    if( isOwner)
+                    if( isOwner) {
                         holder.status_reblog_count.setVisibility(View.VISIBLE);
-                    else
+                        holder.spark_button_reblog.setVisibility(View.VISIBLE);
+                    }else {
                         holder.status_reblog_count.setVisibility(View.GONE);
+                        holder.spark_button_reblog.setVisibility(View.GONE);
+                    }
                     break;
                 case "public":
                 case "unlisted":
                     holder.status_reblog_count.setVisibility(View.VISIBLE);
+                    holder.spark_button_reblog.setVisibility(View.VISIBLE);
                     break;
                 default:
                     holder.status_reblog_count.setVisibility(View.VISIBLE);
+                    holder.spark_button_reblog.setVisibility(View.VISIBLE);
             }
 
             switch (status.getVisibility()){
@@ -1256,33 +1290,33 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     break;
             }
 
-            Drawable imgFav, imgReblog, imgReply;
-            if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
-                changeDrawableColor(context, R.drawable.ic_star,R.color.marked_icon);
-                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star);
-            }else {
-                if( theme == THEME_DARK)
-                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_dark);
-                else if(theme == THEME_BLACK)
-                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_black);
-                else
-                    changeDrawableColor(context, R.drawable.ic_star_border,R.color.action_light);
-                imgFav = ContextCompat.getDrawable(context, R.drawable.ic_star_border);
-            }
+            Drawable imgReply;
 
-            if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
-                changeDrawableColor(context, R.drawable.ic_repeat_boost,R.color.boost_icon);
-                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat_boost);
+            if( !status.isFavAnimated() ) {
+                if (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
+                    holder.spark_button_fav.setChecked(true);
+                } else {
+                    holder.spark_button_fav.setChecked(false);
+                }
             }else {
-                if( theme == THEME_DARK )
-                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_dark);
-                else if(theme == THEME_BLACK)
-                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_black);
-                else
-                    changeDrawableColor(context, R.drawable.ic_repeat,R.color.action_light);
-                imgReblog = ContextCompat.getDrawable(context, R.drawable.ic_repeat);
+                status.setFavAnimated(false);
+                holder.spark_button_fav.setChecked(true);
+                holder.spark_button_fav.setAnimationSpeed(1.0f);
+                holder.spark_button_fav.playAnimation();
             }
-
+            if( !status.isBoostAnimated()){
+                if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
+                    holder.spark_button_reblog.setChecked(true);
+                }else {
+                    holder.spark_button_reblog.setChecked(false);
+                }
+            }
+            else {
+                status.setBoostAnimated(false);
+                holder.spark_button_reblog.setChecked(true);
+                holder.spark_button_reblog.setAnimationSpeed(1.0f);
+                holder.spark_button_reblog.playAnimation();
+            }
 
             if( theme == THEME_DARK)
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.action_dark);
@@ -1292,15 +1326,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.action_light);
             imgReply = ContextCompat.getDrawable(context, R.drawable.ic_reply);
 
-            assert imgFav != null;
-            imgFav.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
-            assert imgReblog != null;
-            imgReblog.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
+
             assert imgReply != null;
             imgReply.setBounds(0,0,(int) (20 * iconSizePercent/100 * scale + 0.5f),(int) (20 * iconSizePercent/100 * scale + 0.5f));
 
-            holder.status_favorite_count.setCompoundDrawables(imgFav, null, null, null);
-            holder.status_reblog_count.setCompoundDrawables(imgReblog, null, null, null);
 
             if(isCompactMode && ((status.getReblog() == null && status.getReplies_count() > 1) || (status.getReblog() != null && status.getReblog().getReplies_count() > 1))){
                 Drawable img = context.getResources().getDrawable( R.drawable.ic_plus_one );
@@ -1438,16 +1467,29 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
 
 
-            holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
+
+            holder.spark_button_fav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if( !status.isFavourited() && confirmFav)
+                        status.setFavAnimated(true);
+                    if( !status.isFavourited() && !confirmFav) {
+                        status.setFavAnimated(true);
+                        notifyStatusChanged(status);
+                    }
                     CrossActions.doCrossAction(context, type, status, null, (status.isFavourited()|| (status.getReblog() != null && status.getReblog().isFavourited()))? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, true);
                 }
             });
 
-            holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
+            holder.spark_button_reblog.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if( !status.isReblogged() && confirmBoost)
+                        status.setBoostAnimated(true);
+                    if( !status.isReblogged() && !confirmBoost) {
+                        status.setBoostAnimated(true);
+                        notifyStatusChanged(status);
+                    }
                     CrossActions.doCrossAction(context, type, status, null, (status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged()))? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, true);
                 }
             });
@@ -2318,7 +2360,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
                 position++;
             }
-            statusListAdapter.notifyDataSetChanged();
         }else if( statusAction == API.StatusAction.UNFAVOURITE){
             int position = 0;
             for(Status status: statuses){
