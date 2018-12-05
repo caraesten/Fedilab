@@ -66,7 +66,7 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
             results = api.search(query);
             SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             List<String> cachedTags = new TagsCacheDAO(contextReference.get(), db).getBy(query);
-            if( results.getHashtags() != null){
+            if( results != null && results.getHashtags() != null){
                 //If cache contains matching tags
                 if( cachedTags != null){
                     for(String apiTag: results.getHashtags()){
@@ -78,6 +78,8 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
                     results.setHashtags(cachedTags);
                 }
             }else if( cachedTags != null) {
+                if( results == null)
+                    results = new Results();
                 results.setHashtags(cachedTags);
             }
         }

@@ -2880,7 +2880,9 @@ public class API {
             status.setIn_reply_to_account_id(resobj.get("in_reply_to_account_id").toString());
             status.setSensitive(Boolean.parseBoolean(resobj.get("sensitive").toString()));
             status.setSpoiler_text(resobj.get("spoiler_text").toString());
-            status.setVisibility(resobj.get("visibility").toString());
+            try {
+                status.setVisibility(resobj.get("visibility").toString());
+            }catch (Exception e){status.setVisibility("public");}
             status.setLanguage(resobj.get("language").toString());
             status.setUrl(resobj.get("url").toString());
             //TODO: replace by the value

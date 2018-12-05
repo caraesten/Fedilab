@@ -84,6 +84,7 @@ public class TagsEditAdapter extends RecyclerView.Adapter  {
         holder.delete_tag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.tag_name.clearFocus();
                 new TagsCacheDAO(context, db).removeTag(tag[0]);
                 tags.remove(tag[0]);
                 tagsEditAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
