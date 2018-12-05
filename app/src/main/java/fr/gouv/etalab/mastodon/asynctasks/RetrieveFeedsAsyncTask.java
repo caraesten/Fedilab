@@ -71,7 +71,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         CACHE_BOOKMARKS,
         CACHE_BOOKMARKS_PEERTUBE,
         CACHE_STATUS,
-        REMOTE_INSTANCE
+        REMOTE_INSTANCE,
+        ART
     }
 
 
@@ -189,6 +190,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case TAG:
                 apiResponse = api.getPublicTimelineTag(tag, false, max_id);
+                break;
+            case ART:
+                apiResponse = api.getArtTimeline(false, max_id);
                 break;
             case CACHE_BOOKMARKS:
                 apiResponse = new APIResponse();

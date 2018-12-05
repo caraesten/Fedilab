@@ -1084,6 +1084,41 @@ public class API {
         return apiResponse;
     }
 
+
+
+
+    /**
+     * Retrieves art timeline
+     * @param local boolean only local timeline
+     * @param max_id String id max
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    public APIResponse getArtTimeline(boolean local, String max_id){
+        APIResponse apiResponse = getPublicTimelineTag("mastoart", local, true, max_id, null, tootPerPage);
+        APIResponse apiResponseReply = new APIResponse();
+        if( apiResponse != null){
+            apiResponseReply.setMax_id(apiResponse.getMax_id());
+            apiResponseReply.setSince_id(apiResponse.getSince_id());
+            apiResponseReply.setStatuses(new ArrayList<>());
+            if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0){
+                for( Status status: apiResponse.getStatuses()){
+                    if( status.getMedia_attachments().size() > 1){
+                        for(Attachment attachment: status.getMedia_attachments()){
+                            ArrayList<Attachment> attachments = new ArrayList<>();
+                            attachments.add(attachment);
+                            status.setMedia_attachments(attachments);
+                            apiResponseReply.getStatuses().add(status);
+                        }
+                    }else {
+                        apiResponseReply.getStatuses().add(status);
+                    }
+                }
+            }
+        }
+        return apiResponseReply;
+    }
+
     /**
      * Retrieves public tag timeline *synchronously*
      * @param tag String
@@ -1093,7 +1128,7 @@ public class API {
      */
     @SuppressWarnings("SameParameterValue")
     public APIResponse getPublicTimelineTag(String tag, boolean local, String max_id){
-        return getPublicTimelineTag(tag, local, max_id, null, tootPerPage);
+        return getPublicTimelineTag(tag, local, false, max_id, null, tootPerPage);
     }
     /**
      * Retrieves public tag timeline *synchronously*
@@ -1105,7 +1140,7 @@ public class API {
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getPublicTimelineTag(String tag, boolean local, String max_id, String since_id, int limit){
+    private APIResponse getPublicTimelineTag(String tag, boolean local, boolean onlymedia, String max_id, String since_id, int limit){
 
         HashMap<String, String> params = new HashMap<>();
         if( local)

@@ -336,6 +336,7 @@ public class Helper {
     public static final String SET_DISPLAY_DIRECT = "set_display_direct";
     public static final String SET_DISPLAY_LOCAL = "set_display_local";
     public static final String SET_DISPLAY_GLOBAL = "set_display_global";
+    public static final String SET_DISPLAY_ART = "set_display_art";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS = "set_automatically_split_toots";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";
     public static final String SET_TRUNCATE_TOOTS_SIZE = "set_truncate_toots_size";

@@ -219,7 +219,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        if( holder.getItemViewType() == DISPLAYED_STATUS || holder.getItemViewType() == COMPACT_STATUS) {
+        if( type != RetrieveFeedsAsyncTask.Type.ART && (holder.getItemViewType() == DISPLAYED_STATUS || holder.getItemViewType() == COMPACT_STATUS)) {
             final ViewHolder viewHolder = (ViewHolder) holder;
             // Bug workaround for losing text selection ability, see:
             // https://code.google.com/p/android/issues/detail?id=208169
@@ -227,6 +227,20 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             viewHolder.status_content.setEnabled(true);
             viewHolder.status_spoiler.setEnabled(false);
             viewHolder.status_spoiler.setEnabled(true);
+        }
+
+    }
+
+
+    private class ViewHolderArt extends RecyclerView.ViewHolder{
+        ImageView art_media, art_pp;
+        TextView art_username, art_acct;
+        ViewHolderArt(View itemView) {
+            super(itemView);
+            art_media = itemView.findViewById(R.id.art_media);
+            art_pp = itemView.findViewById(R.id.art_pp);
+            art_username = itemView.findViewById(R.id.art_username);
+            art_acct = itemView.findViewById(R.id.art_acct);
         }
     }
 
@@ -405,7 +419,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if( viewType == DISPLAYED_STATUS)
+        if( type == RetrieveFeedsAsyncTask.Type.ART)
+            return new ViewHolderArt(layoutInflater.inflate(R.layout.drawer_art, parent, false));
+        else if( viewType == DISPLAYED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
         else if(viewType == COMPACT_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status_compact, parent, false));
@@ -420,15 +436,27 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int position) {
-
-        if( viewHolder.getItemViewType() == DISPLAYED_STATUS || viewHolder.getItemViewType() == FOCUSED_STATUS || viewHolder.getItemViewType() == COMPACT_STATUS){
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        if( type == RetrieveFeedsAsyncTask.Type.ART) {
+            final ViewHolderArt holder = (ViewHolderArt) viewHolder;
+            final Status status = statuses.get(position);
+            Glide.with(context)
+                .load(status.getMedia_attachments().get(0).getPreview_url())
+                .into(holder.art_media);
+            Glide.with(context)
+                    .load(status.getAccount().getAvatar())
+                    .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(10)))
+                    .into(holder.art_pp);
+            holder.art_username.setText( status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
+            holder.art_acct.setText(String.format("@%s", status.getAccount().getAcct()));
+        }else if( viewHolder.getItemViewType() == DISPLAYED_STATUS || viewHolder.getItemViewType() == FOCUSED_STATUS || viewHolder.getItemViewType() == COMPACT_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
             final Status status = statuses.get(position);
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+
 
             status.setItemViewType(viewHolder.getItemViewType());
 
-            final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
             boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);

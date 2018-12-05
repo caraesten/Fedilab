@@ -180,11 +180,11 @@ public abstract class BaseMainActivity extends BaseActivity
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
     public static List<Filters> filters = new ArrayList<>();
-    private DisplayStatusFragment homeFragment, federatedFragment, localFragment;
+    private DisplayStatusFragment homeFragment, federatedFragment, localFragment, artFragment;
     private DisplayNotificationsFragment notificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
     private static BroadcastReceiver receive_data, receive_federated_data, receive_local_data;
-    private boolean display_direct, display_local, display_global;
+    private boolean display_direct, display_local, display_global, display_art;
     public static int countNewStatus = 0;
     public static int countNewNotifications = 0;
     private String userIdService;
@@ -232,7 +232,7 @@ public abstract class BaseMainActivity extends BaseActivity
         display_direct = sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true);
         display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
         display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
-
+        display_art = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true);
         //Test if user is still log in
         if( ! Helper.isLoggedIn(getApplicationContext())) {
             //It is not, the user is redirected to the login page
@@ -274,13 +274,14 @@ public abstract class BaseMainActivity extends BaseActivity
         TabLayout.Tab tabDirect = tabLayout.newTab();
         TabLayout.Tab tabLocal = tabLayout.newTab();
         TabLayout.Tab tabPublic = tabLayout.newTab();
-
+        TabLayout.Tab tabArt = tabLayout.newTab();
 
         tabHome.setCustomView(R.layout.tab_badge);
         tabNotif.setCustomView(R.layout.tab_badge);
         tabDirect.setCustomView(R.layout.tab_badge);
         tabLocal.setCustomView(R.layout.tab_badge);
         tabPublic.setCustomView(R.layout.tab_badge);
+        tabArt.setCustomView(R.layout.tab_badge);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconHome = tabHome.getCustomView().findViewById(R.id.tab_icon);
@@ -310,18 +311,25 @@ public abstract class BaseMainActivity extends BaseActivity
         ImageView iconGlobal = tabPublic.getCustomView().findViewById(R.id.tab_icon);
         iconGlobal.setImageResource(R.drawable.ic_public);
 
+
+        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+        ImageView iconArt = tabPublic.getCustomView().findViewById(R.id.tab_icon);
+        iconArt.setImageResource(R.drawable.ic_color_lens);
+
         if( theme == THEME_LIGHT){
             iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             iconDirect.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+            iconArt.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
         }else {
             iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
             iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
             iconDirect.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
             iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
             iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+            iconArt.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
         }
 
         if (theme == Helper.THEME_DARK) {
@@ -669,12 +677,14 @@ public abstract class BaseMainActivity extends BaseActivity
             changeDrawableColor(getApplicationContext(), R.drawable.ic_direct_messages,R.color.dark_icon);
             changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_icon);
             changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_icon);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_color_lens,R.color.dark_icon);
         }else {
             changeDrawableColor(getApplicationContext(), R.drawable.ic_home,R.color.dark_text);
             changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_text);
             changeDrawableColor(getApplicationContext(), R.drawable.ic_direct_messages,R.color.dark_text);
             changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_text);
             changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_text);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_color_lens,R.color.dark_text);
         }
 
 
@@ -691,7 +701,8 @@ public abstract class BaseMainActivity extends BaseActivity
             tabLayout.addTab(tabLocal);
         if( display_global)
             tabLayout.addTab(tabPublic);
-
+        if( display_art)
+            tabLayout.addTab(tabArt);
 
         //Display filter for notification when long pressing the tab
         final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
@@ -815,6 +826,8 @@ public abstract class BaseMainActivity extends BaseActivity
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true))
             countPage++;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true))
+            countPage++;
+        if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true))
             countPage++;
 
         viewPager.setOffscreenPageLimit(countPage<=4?countPage:4);
@@ -2343,7 +2356,12 @@ public abstract class BaseMainActivity extends BaseActivity
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            }else if (position == 3 && display_local && display_direct){
+            }else if(position == 2 && display_art ){
+                statusFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.ART);
+                statusFragment.setArguments(bundle);
+                return statusFragment;
+            } else if (position == 3 && display_local && display_direct){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
                 statusFragment.setArguments(bundle);
@@ -2358,12 +2376,29 @@ public abstract class BaseMainActivity extends BaseActivity
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            }else if (position == 4 && display_global && countPage == 5){
+            }else if (position == 3 ){
+                statusFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.ART);
+                statusFragment.setArguments(bundle);
+                return statusFragment;
+            }
+            else if (position == 4 && display_global && countPage == 5){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            } else{ //Here it's a search fragment
+            } else if (position == 4 && !display_global && countPage == 5){
+                statusFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.ART);
+                statusFragment.setArguments(bundle);
+                return statusFragment;
+            } else if (position == 5 && countPage == 6){
+                statusFragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.ART);
+                statusFragment.setArguments(bundle);
+                return statusFragment;
+            }
+            else{ //Here it's a search fragment
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.TAG);
                 if( tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null)
@@ -2391,18 +2426,26 @@ public abstract class BaseMainActivity extends BaseActivity
                     else if ( !display_direct && display_global)
                         federatedFragment = (DisplayStatusFragment) createdFragment;
                     else
-                        federatedFragment = (DisplayStatusFragment) createdFragment;
+                        artFragment = (DisplayStatusFragment) createdFragment;
                 case 3:
                     if( display_direct && display_local)
                         localFragment = (DisplayStatusFragment) createdFragment;
                     else if( !display_direct && display_local && display_global)
                         federatedFragment = (DisplayStatusFragment) createdFragment;
-                    else
+                    else if( display_direct && display_global)
                         federatedFragment = (DisplayStatusFragment) createdFragment;
+                    else
+                        artFragment = (DisplayStatusFragment) createdFragment;
                     break;
                 case 4:
                     if( display_direct && display_local && display_global)
                         federatedFragment = (DisplayStatusFragment) createdFragment;
+                    else
+                        artFragment = (DisplayStatusFragment) createdFragment;
+                    break;
+                case 5:
+                    if( display_direct && display_local && display_global && display_art)
+                        artFragment = (DisplayStatusFragment) createdFragment;
                     break;
             }
             return createdFragment;
@@ -2560,6 +2603,58 @@ public abstract class BaseMainActivity extends BaseActivity
                         tabCounterPublic.setVisibility(View.VISIBLE);
                     }else {
                         tabCounterPublic.setVisibility(View.GONE);
+                    }
+                }
+            }
+        }else if( type == RetrieveFeedsAsyncTask.Type.ART ){
+            if( display_art){
+                if( tabLayout.getTabAt(2) != null && !display_local && !display_direct && !display_global){
+                    View tabArt = tabLayout.getTabAt(2).getCustomView();
+                    assert tabArt != null;
+                    TextView tabCounterArt = tabArt.findViewById(R.id.tab_counter);
+                    tabCounterArt.setText(String.valueOf(value));
+                    if( value > 0){
+                        tabCounterArt.setVisibility(View.VISIBLE);
+                    }else {
+                        tabCounterArt.setVisibility(View.GONE);
+                    }
+                }else if( tabLayout.getTabAt(3) != null && (
+                        (!display_local && !display_direct && display_global) ||
+                        (!display_global && !display_direct && display_local) ||
+                        (!display_global && !display_local && display_direct)
+                        )){
+                    View tabArt = tabLayout.getTabAt(3).getCustomView();
+                    assert tabArt != null;
+                    TextView tabCounterArt = tabArt.findViewById(R.id.tab_counter);
+                    tabCounterArt.setText(String.valueOf(value));
+                    if( value > 0){
+                        tabCounterArt.setVisibility(View.VISIBLE);
+                    }else {
+                        tabCounterArt.setVisibility(View.GONE);
+                    }
+                }else if( tabLayout.getTabAt(4) != null && (
+                        (!display_direct && display_local && display_global) ||
+                        (!display_local && display_direct && display_global) ||
+                        (!display_global && display_local && display_direct)
+                )){
+                    View tabArt = tabLayout.getTabAt(4).getCustomView();
+                    assert tabArt != null;
+                    TextView tabCounterArt = tabArt.findViewById(R.id.tab_counter);
+                    tabCounterArt.setText(String.valueOf(value));
+                    if( value > 0){
+                        tabCounterArt.setVisibility(View.VISIBLE);
+                    }else {
+                        tabCounterArt.setVisibility(View.GONE);
+                    }
+                }else if( tabLayout.getTabAt(5) != null && display_local && display_direct && display_global){
+                    View tabArt = tabLayout.getTabAt(5).getCustomView();
+                    assert tabArt != null;
+                    TextView tabCounterArt = tabArt.findViewById(R.id.tab_counter);
+                    tabCounterArt.setText(String.valueOf(value));
+                    if( value > 0){
+                        tabCounterArt.setVisibility(View.VISIBLE);
+                    }else {
+                        tabCounterArt.setVisibility(View.GONE);
                     }
                 }
             }
