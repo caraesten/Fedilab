@@ -235,12 +235,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private class ViewHolderArt extends RecyclerView.ViewHolder{
         ImageView art_media, art_pp;
         TextView art_username, art_acct;
+        LinearLayout art_author;
         ViewHolderArt(View itemView) {
             super(itemView);
             art_media = itemView.findViewById(R.id.art_media);
             art_pp = itemView.findViewById(R.id.art_pp);
             art_username = itemView.findViewById(R.id.art_username);
             art_acct = itemView.findViewById(R.id.art_acct);
+            art_author = itemView.findViewById(R.id.art_author);
         }
     }
 
@@ -441,6 +443,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         if( type == RetrieveFeedsAsyncTask.Type.ART) {
             final ViewHolderArt holder = (ViewHolderArt) viewHolder;
             final Status status = statuses.get(position);
+
+            if( !status.isClickable())
+                Status.transform(context, status);
+            if( !status.isEmojiFound())
+                Status.makeEmojis(context, this, status);
+
             Glide.with(context)
                 .load(status.getMedia_attachments().get(0).getPreview_url())
                 .into(holder.art_media);
@@ -448,8 +456,46 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     .load(status.getAccount().getAvatar())
                     .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(10)))
                     .into(holder.art_pp);
-            holder.art_username.setText( status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
+            holder.art_pp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("accountId", status.getAccount().getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
+            holder.art_media.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, MediaActivity.class);
+                    Bundle b = new Bundle();
+                    intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
+                    b.putInt("position", 0);
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
+            holder.art_author.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    b.putParcelable("status", status);
+                    intent.putExtras(b);
+                    if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                        ((Activity) context).finish();
+                    context.startActivity(intent);
+                }
+            });
+            if( status.getDisplayNameSpan() != null && status.getDisplayNameSpan().toString().trim().length() > 0)
+                holder.art_username.setText( status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
+            else
+                holder.art_username.setText( status.getAccount().getUsername());
+
             holder.art_acct.setText(String.format("@%s", status.getAccount().getAcct()));
+
         }else if( viewHolder.getItemViewType() == DISPLAYED_STATUS || viewHolder.getItemViewType() == FOCUSED_STATUS || viewHolder.getItemViewType() == COMPACT_STATUS){
             final ViewHolder holder = (ViewHolder) viewHolder;
             final Status status = statuses.get(position);

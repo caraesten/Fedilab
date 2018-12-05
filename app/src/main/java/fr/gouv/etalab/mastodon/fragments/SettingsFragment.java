@@ -411,6 +411,27 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
+        boolean display_art = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true);
+        final CheckBox set_display_art = rootView.findViewById(R.id.set_display_art);
+        set_display_art.setChecked(display_art);
+
+        set_display_art.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_ART, set_display_art.isChecked());
+                editor.apply();
+                if( getActivity() != null)
+                    getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                if(getActivity() != null)
+                    getActivity().finish();
+                startActivity(intent);
+            }
+        });
+
         boolean disableGif = sharedpreferences.getBoolean(Helper.SET_DISABLE_GIF, false);
         final CheckBox set_disable_gif = rootView.findViewById(R.id.set_disable_gif);
         set_disable_gif.setChecked(disableGif);

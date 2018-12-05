@@ -205,7 +205,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private String instance_id;
     private int style;
     private Activity activity;
-
+    private HashMap<String, Integer> tabPosition = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -313,7 +313,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconArt = tabPublic.getCustomView().findViewById(R.id.tab_icon);
+        ImageView iconArt = tabArt.getCustomView().findViewById(R.id.tab_icon);
         iconArt.setImageResource(R.drawable.ic_color_lens);
 
         if( theme == THEME_LIGHT){
@@ -689,20 +689,32 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
         startSreaming();
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
 
 
         tabLayout.addTab(tabHome);
         tabLayout.addTab(tabNotif);
-        if( display_direct)
+        tabPosition.put("home",0);
+        tabPosition.put("notifications",1);
+        int i = 2;
+        if( display_direct) {
             tabLayout.addTab(tabDirect);
-        if( display_local)
+            tabPosition.put("direct",i);
+            i++;
+        }
+        if( display_local) {
             tabLayout.addTab(tabLocal);
-        if( display_global)
+            tabPosition.put("local",i);
+            i++;
+        }
+        if( display_global) {
             tabLayout.addTab(tabPublic);
-        if( display_art)
+            tabPosition.put("global",i);
+            i++;
+        }
+        if( display_art) {
             tabLayout.addTab(tabArt);
+            tabPosition.put("art",i);
+        }
 
         //Display filter for notification when long pressing the tab
         final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
@@ -830,7 +842,7 @@ public abstract class BaseMainActivity extends BaseActivity
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true))
             countPage++;
 
-        viewPager.setOffscreenPageLimit(countPage<=4?countPage:4);
+        viewPager.setOffscreenPageLimit(countPage);
         main_app_container = findViewById(R.id.main_app_container);
         adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
@@ -852,10 +864,16 @@ public abstract class BaseMainActivity extends BaseActivity
                 viewPager.setVisibility(View.VISIBLE);
                 delete_instance.setVisibility(View.GONE);
                 Helper.switchLayout(BaseMainActivity.this);
-                if( tab.getPosition() != 1 )
-                    toot.show();
-                else
+                if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))) {
                     toot.hide();
+                    federatedTimelines.hide();
+                }else {
+                    toot.show();
+                    if( !displayFollowInstance)
+                        federatedTimelines.hide();
+                    else
+                        federatedTimelines.show();
+                }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 if( tab.getCustomView() != null) {
@@ -891,10 +909,16 @@ public abstract class BaseMainActivity extends BaseActivity
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
                 }
-                if( tab.getPosition() != 1 )
-                    toot.show();
-                else
+                if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))) {
                     toot.hide();
+                    federatedTimelines.hide();
+                }else {
+                    toot.show();
+                    if( !displayFollowInstance)
+                        federatedTimelines.hide();
+                    else
+                        federatedTimelines.show();
+                }
 
                 if( viewPager.getAdapter() != null) {
                     Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
@@ -925,25 +949,38 @@ public abstract class BaseMainActivity extends BaseActivity
                                 updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL, 0);
                             else if (display_global)
                                 updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                            else if(display_art)
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.ART, 0);
                             displayStatusFragment = ((DisplayStatusFragment) fragment);
                             displayStatusFragment.scrollToTop();
                             break;
                         case 3:
                             if (display_local && display_direct){
                                 updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL, 0);
-                            }else if (display_global && !display_direct){
+                            }else if (display_global && !display_direct && display_local){
                                 updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
-                            } else if (display_global ) {
+                            } else if (display_global && !display_local && display_direct) {
                                 updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                            }else if (display_art ) {
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.ART, 0);
                             }
                             displayStatusFragment = ((DisplayStatusFragment) fragment);
                             displayStatusFragment.scrollToTop();
                             break;
                         case 4:
-                            if( countPage == 5) {
+                            if( display_global && display_local && display_direct) {
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                            }else {
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.ART, 0);
+                            }
+                            displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            displayStatusFragment.scrollToTop();
+                            break;
+                        case 5:
+                            if( countPage == 6) {
                                 displayStatusFragment = ((DisplayStatusFragment) fragment);
                                 displayStatusFragment.scrollToTop();
-                                updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
+                                updateTimeLine(RetrieveFeedsAsyncTask.Type.ART, 0);
                             }
                             break;
                         case 1:
@@ -2366,28 +2403,23 @@ public abstract class BaseMainActivity extends BaseActivity
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            }else if (position == 3 && display_global && !display_direct){
+            }else if (position == 3 && display_global && (display_direct && !display_local) || (!display_direct && display_local)){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            } else if (position == 3 && display_global ){
-                statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
-                statusFragment.setArguments(bundle);
-                return statusFragment;
-            }else if (position == 3 ){
+            } else if (position == 3 && display_art){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.ART);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
             }
-            else if (position == 4 && display_global && countPage == 5){
+            else if (position == 4 && display_global && display_local && display_direct){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
                 statusFragment.setArguments(bundle);
                 return statusFragment;
-            } else if (position == 4 && !display_global && countPage == 5){
+            } else if (position == 4 && display_art){
                 statusFragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.ART);
                 statusFragment.setArguments(bundle);

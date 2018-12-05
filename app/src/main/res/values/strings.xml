@@ -685,6 +685,7 @@
     <string name="tags_stored">The tag has been stored!</string>
     <string name="tags_renamed">The tag has been changed!</string>
     <string name="tags_deleted">The tag has been deleted!</string>
+    <string name="set_display_art">Display Art timeline</string>
 
     <string-array name="filter_expire">
         <item>Never</item>
