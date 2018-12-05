@@ -1,3 +1,4 @@
+[![pipeline status](https://gitlab.com/tom79/mastalab/badges/develop/pipeline.svg)](https://gitlab.com/tom79/mastalab/commits/develop)
 
 ## Mastalab is a multi-accounts client for Mastodon [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [<img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"/>](https://liberapay.com/tom79/donate)
 
