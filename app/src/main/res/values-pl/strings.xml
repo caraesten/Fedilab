@@ -617,6 +617,7 @@
     <string name="tags_stored">Tag został zapisany!</string>
     <string name="tags_renamed">Tag został zmieniony!</string>
     <string name="tags_deleted">Tag został usunięty!</string>
+    <string name="set_display_art">Display Art timeline</string>
     <string-array name="filter_expire">
         <item>Nigdy</item>
         <item>30 minut</item>
