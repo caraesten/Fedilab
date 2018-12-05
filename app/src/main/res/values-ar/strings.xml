@@ -624,6 +624,7 @@
     <string name="tags_stored">تم حفظ الوسم!</string>
     <string name="tags_renamed">تم تعديل الوسم بنجاح!</string>
     <string name="tags_deleted">تم حذف الوسم!</string>
+    <string name="set_display_art">Display Art timeline</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>
