@@ -1179,20 +1179,26 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             switch (status.getVisibility()){
                 case "direct":
                     holder.status_reblog_count.setVisibility(View.GONE);
+                    holder.spark_button_reblog.setVisibility(View.GONE);
                     break;
                 case "private":
                     boolean isOwner = status.getAccount().getId().equals(userId);
-                    if( isOwner)
+                    if( isOwner) {
                         holder.status_reblog_count.setVisibility(View.VISIBLE);
-                    else
+                        holder.spark_button_reblog.setVisibility(View.VISIBLE);
+                    }else {
                         holder.status_reblog_count.setVisibility(View.GONE);
+                        holder.spark_button_reblog.setVisibility(View.GONE);
+                    }
                     break;
                 case "public":
                 case "unlisted":
                     holder.status_reblog_count.setVisibility(View.VISIBLE);
+                    holder.spark_button_reblog.setVisibility(View.VISIBLE);
                     break;
                 default:
                     holder.status_reblog_count.setVisibility(View.VISIBLE);
+                    holder.spark_button_reblog.setVisibility(View.VISIBLE);
             }
 
             switch (status.getVisibility()){
@@ -1233,6 +1239,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             else {
                 status.setBoostAnimated(false);
+                holder.spark_button_reblog.setChecked(true);
                 holder.spark_button_reblog.setAnimationSpeed(1.0f);
                 holder.spark_button_reblog.playAnimation();
             }

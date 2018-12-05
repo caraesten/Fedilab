@@ -384,6 +384,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 } else {
                     holder.spark_button_fav.setChecked(false);
                 }
+            }else {
+                status.setFavAnimated(false);
+                holder.spark_button_fav.setChecked(true);
+                holder.spark_button_fav.setAnimationSpeed(1.0f);
+                holder.spark_button_fav.playAnimation();
             }
             if( !status.isBoostAnimated()){
                 if( status.isReblogged()|| (status.getReblog() != null && status.getReblog().isReblogged())) {
@@ -391,7 +396,16 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }else {
                     holder.spark_button_reblog.setChecked(false);
                 }
+            }else {
+                status.setBoostAnimated(false);
+                holder.spark_button_reblog.setChecked(true);
+                holder.spark_button_reblog.setAnimationSpeed(1.0f);
+                holder.spark_button_reblog.playAnimation();
+
             }
+
+
+
             if( theme == THEME_DARK)
                 changeDrawableColor(context, R.drawable.ic_reply,R.color.action_dark);
             else if(theme == THEME_BLACK)
@@ -483,19 +497,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
             }
 
-
-            if( status.isFavAnimated()){
-                holder.spark_button_fav.setAnimationSpeed(1.0f);
-                holder.spark_button_fav.playAnimation();
-                status.setFavAnimated(false);
-            }
-
-            if( status.isBoostAnimated()){
-                holder.spark_button_reblog.setAnimationSpeed(1.0f);
-                holder.spark_button_reblog.playAnimation();
-                status.setBoostAnimated(false);
-            }
-
             holder.spark_button_fav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -549,13 +550,16 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 case "direct":
                 case "private":
                     holder.status_reblog_count.setVisibility(View.GONE);
+                    holder.spark_button_reblog.setVisibility(View.GONE);
                     break;
                 case "public":
                 case "unlisted":
                     holder.status_reblog_count.setVisibility(View.VISIBLE);
+                    holder.spark_button_reblog.setVisibility(View.VISIBLE);
                     break;
                 default:
                     holder.status_reblog_count.setVisibility(View.VISIBLE);
+                    holder.spark_button_reblog.setVisibility(View.VISIBLE);
             }
 
 
