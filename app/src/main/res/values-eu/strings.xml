@@ -613,6 +613,7 @@
     <string name="tags_stored">Etiketa gorde da!</string>
     <string name="tags_renamed">Etiketa aldatu da!</string>
     <string name="tags_deleted">Etiketa ezabatu da!</string>
+    <string name="set_display_art">Display Art timeline</string>
     <string-array name="filter_expire">
         <item>Inoiz ez</item>
         <item>30 minutu</item>
