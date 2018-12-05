@@ -611,6 +611,7 @@
     <string name="tags_stored">標籤已儲存！</string>
     <string name="tags_renamed">標籤已變更！</string>
     <string name="tags_deleted">標籤已刪除！</string>
+    <string name="set_display_art">Display Art timeline</string>
     <string-array name="filter_expire">
         <item>永不</item>
         <item>30 分鐘</item>

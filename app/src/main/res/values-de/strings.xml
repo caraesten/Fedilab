@@ -610,6 +610,7 @@
     <string name="tags_stored">Die Markierung wurde gespeichert!</string>
     <string name="tags_renamed">Die Markierung wurde geändert!</string>
     <string name="tags_deleted">Die Markierung wurde gelöscht!</string>
+    <string name="set_display_art">Display Art timeline</string>
     <string-array name="filter_expire">
         <item>Nie</item>
         <item>30 Minuten</item>

@@ -620,6 +620,7 @@
     <string name="tags_stored">Тег был сохранен!</string>
     <string name="tags_renamed">Тег был изменен!</string>
     <string name="tags_deleted">Тег был удален!</string>
+    <string name="set_display_art">Display Art timeline</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>
