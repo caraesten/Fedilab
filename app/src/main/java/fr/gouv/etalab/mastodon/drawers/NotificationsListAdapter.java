@@ -303,7 +303,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             changeDrawableColor(context, R.drawable.ic_remove_red_eye,R.color.black);
             changeDrawableColor(context, holder.notification_delete,R.color.black);
         }
-
+        holder.spark_button_fav.pressOnTouch(false);
+        holder.spark_button_reblog.pressOnTouch(false);
         holder.spark_button_fav.setActiveImageTint(R.color.marked_icon);
         holder.spark_button_reblog.setActiveImageTint(R.color.boost_icon);
         holder.spark_button_fav.setDisableCircle(true);
@@ -594,20 +595,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
             });
 
-            holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CrossActions.doCrossAction(context, null, status, null, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, true);
-                }
-            });
 
-            holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CrossActions.doCrossAction(context, null, status, null, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, true);
-
-                }
-            });
 
             holder.status_reply.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -617,7 +605,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             });
 
             if( !status.getVisibility().equals("direct"))
-            holder.status_favorite_count.setOnLongClickListener(new View.OnLongClickListener() {
+            holder.spark_button_fav.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     CrossActions.doCrossAction(context, null, status, null, status.isFavourited()? API.StatusAction.UNFAVOURITE:API.StatusAction.FAVOURITE, notificationsListAdapter, NotificationsListAdapter.this, false);
@@ -633,7 +621,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 }
             });
             if( !status.getVisibility().equals("direct"))
-            holder.status_reblog_count.setOnLongClickListener(new View.OnLongClickListener() {
+            holder.spark_button_reblog.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     CrossActions.doCrossAction(context, null, status, null, status.isReblogged()? API.StatusAction.UNREBLOG:API.StatusAction.REBLOG, notificationsListAdapter, NotificationsListAdapter.this, false);

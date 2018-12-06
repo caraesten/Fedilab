@@ -713,6 +713,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             //Redraws top icons (boost/reply)
             final float scale = context.getResources().getDisplayMetrics().density;
+            holder.spark_button_fav.pressOnTouch(false);
+            holder.spark_button_reblog.pressOnTouch(false);
             holder.spark_button_fav.setActiveImage(R.drawable.ic_star);
             holder.spark_button_fav.setInactiveImage(R.drawable.ic_star_border);
             holder.spark_button_fav.setDisableCircle(true);
@@ -1250,6 +1252,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_content_translated_container.setVisibility(View.GONE);
             }
 
+            //TODO:It sounds that sometimes this value is null - need deeper investigation
+            if( status.getVisibility() == null)
+                status.setVisibility("public");
+
             switch (status.getVisibility()){
                 case "direct":
                     holder.status_reblog_count.setVisibility(View.GONE);
@@ -1501,7 +1507,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
 
             if( !status.getVisibility().equals("direct"))
-            holder.status_favorite_count.setOnLongClickListener(new View.OnLongClickListener() {
+            holder.spark_button_fav.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     CrossActions.doCrossAction(context, type, status, null, API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, false);
@@ -1509,7 +1515,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
             if( !status.getVisibility().equals("direct"))
-            holder.status_reblog_count.setOnLongClickListener(new View.OnLongClickListener() {
+            holder.spark_button_reblog.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     CrossActions.doCrossAction(context, type, status, null, API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, false);
