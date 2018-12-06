@@ -206,6 +206,8 @@ public abstract class BaseMainActivity extends BaseActivity
     private int style;
     private Activity activity;
     private HashMap<String, Integer> tabPosition = new HashMap<>();
+    private FloatingActionButton federatedTimelines;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -339,7 +341,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }else {
             style = R.style.Dialog;
         }
-       FloatingActionButton federatedTimelines = findViewById(R.id.federated_timeline);
+       federatedTimelines = findViewById(R.id.federated_timeline);
 
         delete_instance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2725,6 +2727,24 @@ public abstract class BaseMainActivity extends BaseActivity
             startService(streamingIntent);
         }
 
+    }
+
+    public void manageFloatingButton(boolean display){
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
+        if(display){
+            toot.show();
+            if( !displayFollowInstance)
+                federatedTimelines.hide();
+            else
+                federatedTimelines.show();
+        }else{
+            toot.hide();
+            federatedTimelines.hide();
+        }
+    }
+    public boolean getFloatingVisibility(){
+        return toot.getVisibility() == View.VISIBLE;
     }
 
     public void refreshButton(){
