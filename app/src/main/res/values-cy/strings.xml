@@ -6,7 +6,7 @@
     <string name="action_about">Amdano</string>
     <string name="action_about_instance">Am yr achos hwn</string>
     <string name="action_privacy">Preifatrwydd</string>
-    <string name="action_cache">Cache</string>
+    <string name="action_cache">Storfa</string>
     <string name="action_logout">Allgofnodi</string>
     <string name="login">Mewngofnodi</string>
     <!-- common -->
@@ -18,7 +18,7 @@
     <string name="download_file">Lawrlwytho %1$s</string>
     <string name="download_over">Lawrlwytho wedi\'i gwblhau</string>
     <string name="save_file">Cadw %1$s</string>
-    <string name="save_over">Media saved</string>
+    <string name="save_over">Arbedwyd y deunydd</string>
     <string name="download_from" formatted="false">Ffeil: %1$s</string>
     <string name="password">Cyfrinair</string>
     <string name="email">E-bost</string>
@@ -27,10 +27,10 @@
     <string name="tags">Tagiau</string>
     <string name="token">Tocyn</string>
     <string name="save">Cadw</string>
-    <string name="restore">Restore</string>
-    <string name="two_factor_authentification">Two-step authentication?</string>
-    <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
-    <string name="no_result">No results!</string>
+    <string name="restore">Adfer</string>
+    <string name="two_factor_authentification">Dilysu dau gam?</string>
+    <string name="other_instance">Achos arall heblaw mastodon.etalablgouv.fr?</string>
+    <string name="no_result">Dim canlyniadau!</string>
     <string name="instance">Achos</string>
     <string name="instance_example">Achos: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
