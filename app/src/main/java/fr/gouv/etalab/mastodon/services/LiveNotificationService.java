@@ -57,7 +57,6 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -186,11 +185,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             AsyncHttpRequest.setDefaultHeaders(headers, url);
             if( webSocketFutures.containsKey(urlKey)  ){
                 try {
-                    if( webSocketFutures.get(urlKey) != null && webSocketFutures.get(urlKey).get() != null)
+                    if( webSocketFutures.get(urlKey) != null && webSocketFutures.get(urlKey).get() != null && webSocketFutures.get(urlKey).get().isOpen())
                         webSocketFutures.get(urlKey).get().close();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
