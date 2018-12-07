@@ -603,7 +603,7 @@
     <string name="settings_title_battery">Optimisation de la batterie</string>
     <string name="set_change_locale">Changer de langue</string>
     <string name="default_language">Langue par défaut</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
+    <string name="truncate_long_toots">Tronquer les longs pouets</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">Afficher plus</string>
     <string name="hide_toot_truncate">Afficher moins</string>
