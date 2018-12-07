@@ -57,7 +57,6 @@ import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -65,9 +64,6 @@ import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 
-import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
-import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_REMOTE;
-import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_URL;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
@@ -879,10 +875,15 @@ public class Status implements Parcelable{
                                      Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
                                      Matcher matcherLink = link.matcher(url);
                                      if( matcherLink.find()){
-                                         Intent intent = new Intent(context, MainActivity.class);
-                                         intent.putExtra(INTENT_ACTION, SEARCH_REMOTE);
-                                         intent.putExtra(SEARCH_URL, url);
-                                         context.startActivity(intent);
+                                        if( matcherLink.group(3) != null && matcherLink.group(3).length() > 0 ){ //It's a toot
+                                            CrossActions.doCrossConversation(context, finalUrl);
+                                        }else{//It's an account
+                                            Account account = status.getAccount();
+                                            account.setAcct(matcherLink.group(2));
+                                            account.setInstance(matcherLink.group(1));
+                                            CrossActions.doCrossProfile(context, account);
+                                        }
+
                                      }else  {
                                          link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
                                          matcherLink = link.matcher(url);
