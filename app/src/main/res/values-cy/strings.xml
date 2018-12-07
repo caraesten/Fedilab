@@ -47,19 +47,19 @@
     <string name="translate_toot">Cyfieithu\'r tŵt hwn.</string>
     <string name="schedule">Amserlen</string>
     <string name="text_size">Meintiau testun ac eiconau</string>
-    <string name="text_size_change">Change the current text size:</string>
-    <string name="icon_size_change">Change the current icon size:</string>
+    <string name="text_size_change">Newid maint presennol y testun:</string>
+    <string name="icon_size_change">Newid maint presennol yr eicon:</string>
     <string name="next">Nesaf</string>
-    <string name="previous">Previous</string>
+    <string name="previous">Cynt</string>
     <string name="open_with">Agor gyda</string>
-    <string name="validate">Validate</string>
+    <string name="validate">Dilysu</string>
     <string name="media">Cyfryngau</string>
-    <string name="share_with">Share with</string>
-    <string name="shared_via">Shared via Mastalab</string>
-    <string name="replies">Replies</string>
+    <string name="share_with">Rhannu gyda</string>
+    <string name="shared_via">Rhannwyd drwy Mastalab</string>
+    <string name="replies">Ymatebion</string>
     <string name="username">Enwdefnyddiwr</string>
     <string name="drafts">Drafftiau</string>
-    <string name="new_data">New data are available! Do you want to display them?</string>
+    <string name="new_data">Mae data newydd ar gael! A ydych eisiau eu harddangos?</string>
     <string name="favourite">Ffefrynnau</string>
     <string name="follow">Dilynwyr newydd</string>
     <string name="mention">Mentions</string>
@@ -67,66 +67,66 @@
     <string name="show_boosts">Dangos hybiadau</string>
     <string name="show_replies">Dangos atebion</string>
     <string name="action_open_in_web">Agor mewn porwr</string>
-    <string name="translate">Translate</string>
-    <string name="please_wait">Please, wait few seconds before making this action.</string>
+    <string name="translate">Cyfieithu</string>
+    <string name="please_wait">Arhoswch rhai eiliadau cyn gweithredu\'r cam hwn os gwelwch yn dda.</string>
     <!--- Menu -->
     <string name="home_menu">Hafan</string>
     <string name="local_menu">Llinell amser lleol</string>
     <string name="global_menu">Llinell amser ffederasiwn</string>
-    <string name="neutral_menu_title">Options</string>
+    <string name="neutral_menu_title">Opsiynau</string>
     <string name="favorites_menu">Ffefrynnau</string>
-    <string name="communication_menu_title">Communication</string>
+    <string name="communication_menu_title">Cyfathrebu</string>
     <string name="muted_menu">Defnyddwyr mud</string>
     <string name="blocked_menu">Defnyddwyr wedi’u blocio</string>
     <string name="remote_follow_menu">Remote follow</string>
     <string name="notifications">Hysbysiadau</string>
     <string name="follow_request">Dilyn ceisiadau</string>
-    <string name="optimization">Optimization</string>
-    <string name="settings">Settings</string>
-    <string name="profile">Profile</string>
-    <string name="make_a_choice">What do you want to do?</string>
-    <string name="delete_account_title">Delete an account</string>
-    <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-    <string name="send_email">Send an email</string>
-    <string name="choose_file">Please select a file</string>
-    <string name="choose_file_error">No file explorer found!</string>
-    <string name="click_to_change">Click on the path to change it</string>
-    <string name="failed">Failed!</string>
+    <string name="optimization">Optimeiddiad</string>
+    <string name="settings">Gosodiadau</string>
+    <string name="profile">Proffil</string>
+    <string name="make_a_choice">Beth ydych eisiau ei wneud?</string>
+    <string name="delete_account_title">Dileu y cyfrif</string>
+    <string name="delete_account_message" formatted="false">Dileu y cyfrif %1$s o\'r rhaglen?</string>
+    <string name="send_email">Anfon e-bost</string>
+    <string name="choose_file">Dewiswch ffeil os gwelwch yn dda</string>
+    <string name="choose_file_error">Ni ganfyddwyd archwiliwr ffeil!</string>
+    <string name="click_to_change">Cliciwch ar y llwybr i\'w newid</string>
+    <string name="failed">Methwyd!</string>
     <string name="scheduled_toots">Tŵt Newydd</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-    <string name="insert_emoji">Insert emoji</string>
-    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-    <string name="live_notif">Live notifications</string>
+    <string name="disclaimer_full">Gall y wybodaeth isod roi adlewyrchiad anghyflawn o broffil y defnyddiwr.</string>
+    <string name="insert_emoji">Mewnosod emoji</string>
+    <string name="no_emoji">Ni gasglwyd emoji dethol gan yr ap am y tro.</string>
+    <string name="live_notif">Hysbysiadau byw</string>
     <!-- Status -->
-    <string name="no_status">No toot to display</string>
-    <string name="fav_added">The toot was added to favourites</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
+    <string name="no_status">Dim tŵt i\'w arddangos</string>
+    <string name="fav_added">Ychwanegwyd y tŵt i\'r ffefrynnau</string>
+    <string name="fav_removed">Gwaredwyd y tŵt o\'r ffefrynnau!</string>
     <string name="reblog_added">The toot was boosted!</string>
     <string name="reblog_removed">The toot is no longer boosted!</string>
     <string name="reblog_by">Boosted by %1$s</string>
-    <string name="favourite_add">Add this toot to your favourites?</string>
-    <string name="favourite_remove">Remove this toot from your favourites?</string>
+    <string name="favourite_add">Ychwanegu\'r tŵt hwn i\'ch ffefrynnau?</string>
+    <string name="favourite_remove">Cael gwared o\'r tŵt hwn o\'ch ffefrynnau?</string>
     <string name="reblog_add">Boost this toot?</string>
     <string name="reblog_remove">Unboost this toot?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
+    <string name="pin_add">Pinio\'r tŵt hwn?</string>
+    <string name="pin_remove">Dadbinio\'r tŵt hwn?</string>
     <string name="more_action_1">Mudo</string>
     <string name="more_action_2">Blocio</string>
-    <string name="more_action_3">Report</string>
-    <string name="more_action_4">Remove</string>
-    <string name="more_action_5">Copy</string>
+    <string name="more_action_3">Cwyno</string>
+    <string name="more_action_4">Dileu</string>
+    <string name="more_action_5">Copïo</string>
     <string name="more_action_6">Rhannu</string>
-    <string name="more_action_7">Mention</string>
-    <string name="more_action_8">Timed mute</string>
+    <string name="more_action_7">Crybwyll</string>
+    <string name="more_action_8">Tawelu am gyfnod</string>
     <string name="more_action_9">Delete &amp; re-draft</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
-        <item>Block this account?</item>
-        <item>Report this toot?</item>
-        <item>Block this domain?</item>
+        <item>Tawelu\'r cyfrif hwn?</item>
+        <item>Blocio\'r cyfrif hwn?</item>
+        <item>Cwyno am y tŵt hwn?</item>
+        <item>Blocio\'r parth hwn?</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
+        <item>Cael gwared ar y tŵt hwn?</item>
         <item>Delete &amp; re-draft this toot?</item>
     </string-array>
     <plurals name="preview_replies">
