@@ -33,17 +33,17 @@
     <string name="no_result">Dim canlyniadau!</string>
     <string name="instance">Achos</string>
     <string name="instance_example">Achos: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
+    <string name="toast_account_changed" formatted="false">Nawr yn gweithio gyda\'r cyfrif %1$s</string>
     <string name="add_account">Ychwanegu cyfrif</string>
-    <string name="clipboard">The content of the toot has been copied to the clipboard</string>
-    <string name="change">Change</string>
-    <string name="choose_picture">Select a picture…</string>
-    <string name="clear">Clean</string>
+    <string name="clipboard">Mae cynnwys y tŵt wedi ei gopio i\'r clipfwrdd</string>
+    <string name="change">Newid</string>
+    <string name="choose_picture">Dewis llun…</string>
+    <string name="clear">Glân</string>
     <string name="microphone">Meicroffon</string>
     <string name="camera">Camera</string>
-    <string name="speech_prompt">Please, say something</string>
-    <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-    <string name="delete_all">Delete all</string>
+    <string name="speech_prompt">Dwedwch rhywbeth os gwelwch yn dda</string>
+    <string name="speech_not_supported">Sori! Nid yw\'ch dyfais yn cefnogi mewnbwn llais!</string>
+    <string name="delete_all">Dileu i gyd</string>
     <string name="translate_toot">Cyfieithu\'r tŵt hwn.</string>
     <string name="schedule">Amserlen</string>
     <string name="text_size">Meintiau testun ac eiconau</string>
