@@ -1103,19 +1103,21 @@ public class API {
             apiResponseReply.setStatuses(new ArrayList<>());
             if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0){
                 for( Status status: apiResponse.getStatuses()){
-                    if( status.getMedia_attachments().size() > 1){
-                        String statusSerialized = Helper.statusToStringStorage(status);
-                        for(Attachment attachment: status.getMedia_attachments()){
-                            ArrayList<Attachment> attachments = new ArrayList<>();
-                            attachments.add(attachment);
-                            Status newStatus = Helper.restoreStatusFromString(statusSerialized);
-                            if( newStatus == null)
-                                break;
-                            newStatus.setMedia_attachments(attachments);
-                            apiResponseReply.getStatuses().add(newStatus);
+                    if( status.getMedia_attachments() != null ) {
+                        if (status.getMedia_attachments().size() > 1) {
+                            String statusSerialized = Helper.statusToStringStorage(status);
+                            for (Attachment attachment : status.getMedia_attachments()) {
+                                ArrayList<Attachment> attachments = new ArrayList<>();
+                                attachments.add(attachment);
+                                Status newStatus = Helper.restoreStatusFromString(statusSerialized);
+                                if (newStatus == null)
+                                    break;
+                                newStatus.setMedia_attachments(attachments);
+                                apiResponseReply.getStatuses().add(newStatus);
+                            }
+                        } else if (status.getMedia_attachments().size() == 1) {
+                            apiResponseReply.getStatuses().add(status);
                         }
-                    }else if (status.getMedia_attachments().size() == 1) {
-                        apiResponseReply.getStatuses().add(status);
                     }
                 }
             }
