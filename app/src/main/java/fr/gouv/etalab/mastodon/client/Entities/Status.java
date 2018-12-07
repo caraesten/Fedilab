@@ -130,16 +130,16 @@ public class Status implements Parcelable{
         in_reply_to_id = in.readString();
         conversationId = in.readString();
         in_reply_to_account_id = in.readString();
+        content = in.readString();
+        contentCW = in.readString();
+        created_at =  (java.util.Date) in.readSerializable();
+        visibility = in.readString();
+        media_attachments = in.readArrayList(Attachment.class.getClassLoader());
         reblog = in.readParcelable(Status.class.getClassLoader());
-        card = in.readParcelable(Card.class.getClassLoader());
         account = in.readParcelable(Account.class.getClassLoader());
         application = in.readParcelable(Application.class.getClassLoader());
         mentions = in.readArrayList(Mention.class.getClassLoader());
-        media_attachments = in.readArrayList(Attachment.class.getClassLoader());
-        emojis = in.readArrayList(Emojis.class.getClassLoader());
         tags = in.readArrayList(Tag.class.getClassLoader());
-        content = in.readString();
-        created_at =  (java.util.Date) in.readSerializable();
         contentTranslated = in.readString();
         reblogs_count = in.readInt();
         itemViewType = in.readInt();
@@ -149,8 +149,6 @@ public class Status implements Parcelable{
         favourited = in.readByte() != 0;
         muted = in.readByte() != 0;
         sensitive = in.readByte() != 0;
-        contentCW = in.readString();
-        visibility = in.readString();
         language = in.readString();
         attachmentShown = in.readByte() != 0;
         spoilerShown = in.readByte() != 0;
@@ -158,6 +156,8 @@ public class Status implements Parcelable{
         isTranslationShown = in.readByte() != 0;
         isNew = in.readByte() != 0;
         pinned = in.readByte() != 0;
+        emojis = in.readArrayList(Emojis.class.getClassLoader());
+        card = in.readParcelable(Card.class.getClassLoader());
     }
 
     @Override
@@ -168,16 +168,16 @@ public class Status implements Parcelable{
         dest.writeString(in_reply_to_id);
         dest.writeString(conversationId);
         dest.writeString(in_reply_to_account_id);
+        dest.writeString(content);
+        dest.writeString(contentCW);
+        dest.writeSerializable(created_at);
+        dest.writeString(visibility);
+        dest.writeList(media_attachments);
         dest.writeParcelable(reblog, flags);
-        dest.writeParcelable(card, flags);
         dest.writeParcelable(account, flags);
         dest.writeParcelable(application, flags);
         dest.writeList(mentions);
-        dest.writeList(media_attachments);
-        dest.writeList(emojis);
         dest.writeList(tags);
-        dest.writeString(content);
-        dest.writeSerializable(created_at);
         dest.writeString(contentTranslated);
         dest.writeInt(reblogs_count);
         dest.writeInt(itemViewType);
@@ -187,8 +187,6 @@ public class Status implements Parcelable{
         dest.writeByte((byte) (favourited ? 1 : 0));
         dest.writeByte((byte) (muted ? 1 : 0));
         dest.writeByte((byte) (sensitive ? 1 : 0));
-        dest.writeString(contentCW);
-        dest.writeString(visibility);
         dest.writeString(language);
         dest.writeByte((byte) (attachmentShown ? 1 : 0));
         dest.writeByte((byte) (spoilerShown ? 1 : 0));
@@ -196,6 +194,8 @@ public class Status implements Parcelable{
         dest.writeByte((byte) (isTranslationShown ? 1 : 0));
         dest.writeByte((byte) (isNew ? 1 : 0));
         dest.writeByte((byte) (pinned ? 1 : 0));
+        dest.writeList(emojis);
+        dest.writeParcelable(card, flags);
     }
 
 
@@ -487,11 +487,16 @@ public class Status implements Parcelable{
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
         spannableStringContent = new SpannableString(status.getReblog() != null ?status.getReblog().getContent():status.getContent());
+        String spoilerText = "";
+        if( status.getReblog() != null && status.getReblog().getSpoiler_text() != null)
+            spoilerText = status.getReblog().getSpoiler_text();
+        else if( status.getSpoiler_text() != null)
+            spoilerText = status.getSpoiler_text();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), Html.FROM_HTML_MODE_LEGACY));
+            spannableStringCW = new SpannableString(Html.fromHtml(spoilerText, Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
-            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text()));
+            spannableStringCW = new SpannableString(Html.fromHtml(spoilerText));
         if( spannableStringContent.length() > 0)
             status.setContentSpan(treatment(context, spannableStringContent, status));
         if( spannableStringCW.length() > 0)

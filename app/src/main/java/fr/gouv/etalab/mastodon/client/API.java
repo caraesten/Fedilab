@@ -3528,7 +3528,8 @@ public class API {
             String errorM = jsonObject.get("error").toString();
             message = "Error " + statusCode + " : " + errorM;
         } catch (JSONException e) {
-            e.printStackTrace();
+            String errorM = error.getMessage().split(".")[0];
+            message = "Error " + statusCode + " : " + errorM;
         }
         APIError.setError(message);
         apiResponse.setError(APIError);
