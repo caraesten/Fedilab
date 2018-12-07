@@ -161,32 +161,32 @@
     <string name="toot_select_image_error">Roedd gwall!</string>
     <string name="toot_delete_media">Dileu\'r cyfryngau hyn?</string>
     <string name="toot_error_no_content">Mae eich tŵt yn wag!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
-    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
+    <string name="toot_visibility_tilte">Gwelededd y tŵt</string>
+    <string name="toots_visibility_tilte">Gwelededd y tŵt fel y mae hi: </string>
+    <string name="toot_sent">Mae\'r tŵt wedi\'i anfon!</string>
+    <string name="toot_reply_content_title">Yr ydych yn ymateb i\'r tŵt hwn:</string>
     <string name="toot_sensitive">Cynnwys sensitif?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
+        <item>Cyhoeddi ar ffrydiau cyhoeddus</item>
+        <item>Peidio a chyhoeddi ar ffrydiau cyhoeddus</item>
         <item>Cyhoeddi i ddilynwyr yn unig</item>
-        <item>Post to mentioned users only</item>
+        <item>Cyhoeddi i ddefnyddwyr sy\'n cael eu crybwyll yn unig</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
-    <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="no_draft">Dim drafftiau!</string>
+    <string name="choose_toot">Dewiswch dŵt</string>
+    <string name="choose_accounts">Dewiswch gyfrif</string>
+    <string name="select_accounts">Dewiswch ambell gyfrif</string>
+    <string name="remove_draft">Dileu\'r drafft?</string>
+    <string name="show_reply">Cliciwch ar y botwm i ddangos y tŵt gwreiddiol</string>
+    <string name="upload_form_description">Disgrifio i\'r rheini â nam ar eu golwg</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">Dim disgrifiad ar gael!</string>
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
+    <string name="about_developer">Datblygwr:</string>
+    <string name="about_license">Trwydded: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Source code: </string>
+    <string name="about_code">Cod ffynhonnell: </string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_thekinrar">Search instances:</string>
     <string name="about_thekinrar_action">instances.social</string>
