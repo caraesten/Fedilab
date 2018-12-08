@@ -2346,7 +2346,7 @@ public class Helper {
                 return;
             }
         }
-        if( url == null) {
+        if( url == null || url.contains("missing.png")) {
             try {
                 Glide.with(imageView.getContext())
                         .load(R.drawable.missing)
