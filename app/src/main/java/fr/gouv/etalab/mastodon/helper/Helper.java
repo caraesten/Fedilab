@@ -388,7 +388,8 @@ public class Helper {
 
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_A-zÀ-ÿ]+)");
     public static final Pattern twitterPattern = Pattern.compile("((@[\\w]+)@twitter\\.com)");
-    private static final Pattern mentionPattern = Pattern.compile("(@[\\w]+)");
+    private static final Pattern mentionPattern = Pattern.compile("(@[\\w_]+(\\s|$))");
+    private static final Pattern mentionLongPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+[.][a-z]{2,10})");
 
     //Event Type
     public enum EventStreaming{
@@ -2648,13 +2649,36 @@ public class Helper {
         String[] splitContent = content.split("(\\.\\s){1}");
         ArrayList<String> splitToot = new ArrayList<>();
         StringBuilder tempContent = new StringBuilder(splitContent[0]);
+        ArrayList<String> mentions = new ArrayList<>();
+        Matcher matcher = mentionLongPattern.matcher(content);
+        while (matcher.find()) {
+            String mentionLong = matcher.group(1);
+            mentions.add(mentionLong);
+        }
+        matcher = mentionPattern.matcher(content);
+        while (matcher.find()) {
+            String mentionLong = matcher.group(1);
+            mentions.add(mentionLong);
+        }
+        StringBuilder mentionString = new StringBuilder();
+        for(String mention: mentions){
+            mentionString.append(mention).append(" ");
+        }
+        int mentionLength = mentionString.length();
+        int maxCharsMention = maxChars - mentionLength;
         for(int i= 0 ; i < splitContent.length ; i++){
-            if( i < (splitContent.length-1) && (tempContent.length() + splitContent[i+1].length()) < (maxChars-10)) {
+            if (i < (splitContent.length - 1) && (tempContent.length() + splitContent[i + 1].length()) < (maxChars - 10)) {
                 tempContent.append(". ").append(splitContent[i + 1]);
-            }else {
+            } else {
                 splitToot.add(tempContent.toString());
-                if( i < (splitContent.length-1) )
-                    tempContent = new StringBuilder(splitContent[i+1]);
+                if (i < (splitContent.length - 1)) {
+                    if( maxCharsMention > 0){
+                        maxChars = maxCharsMention;
+                        tempContent = new StringBuilder(mentionString+splitContent[i + 1]);
+                    }else{
+                        tempContent = new StringBuilder(splitContent[i + 1]);
+                    }
+                }
             }
         }
         int i=1;
