@@ -2943,6 +2943,60 @@ public class Helper {
 
     }
 
+    public static RetrieveFeedsAsyncTask.Type timelineType(Context context, int position){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        boolean display_direct = sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true);
+        boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
+        boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
+        boolean display_art = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true);
+        if (position == 0) {
+            return RetrieveFeedsAsyncTask.Type.HOME;
+        }else if(position == 2) {
+            if( display_direct) {
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+
+                if (instanceVersion != null) {
+                    Version currentVersion = new Version(instanceVersion);
+                    Version minVersion = new Version("2.6");
+                    if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                        boolean old_direct_timeline = sharedpreferences.getBoolean(Helper.SET_OLD_DIRECT_TIMELINE, false);
+                        if( !old_direct_timeline)
+                            return RetrieveFeedsAsyncTask.Type.CONVERSATION;
+                        else
+                            return RetrieveFeedsAsyncTask.Type.DIRECT;
+                    } else {
+                        return RetrieveFeedsAsyncTask.Type.DIRECT;
+                    }
+                }else{
+                    return RetrieveFeedsAsyncTask.Type.DIRECT;
+                }
+            }if( display_local)
+                return RetrieveFeedsAsyncTask.Type.LOCAL;
+            if( display_global)
+                return RetrieveFeedsAsyncTask.Type.PUBLIC;
+            if( display_art)
+                return RetrieveFeedsAsyncTask.Type.ART;
+        }else if( position == 3){
+            if( display_direct && display_local)
+                return RetrieveFeedsAsyncTask.Type.LOCAL;
+            if( display_global)
+                return RetrieveFeedsAsyncTask.Type.PUBLIC;
+            if( display_art)
+                return RetrieveFeedsAsyncTask.Type.ART;
+        }else if (position == 4){
+            if( display_direct && display_local && display_global)
+                return RetrieveFeedsAsyncTask.Type.PUBLIC;
+            if( display_art)
+                return RetrieveFeedsAsyncTask.Type.ART;
+        }else if (position == 5){
+            if( display_direct && display_local && display_global && display_art)
+                return RetrieveFeedsAsyncTask.Type.ART;
+        }
+        return RetrieveFeedsAsyncTask.Type.TAG;
+    }
+
     public static boolean containsCaseInsensitive(String s, List<String> l){
         for (String string : l){
             if (string.equalsIgnoreCase(s)){
