@@ -76,11 +76,12 @@ putApkOnTags:
     - curl -s --request $METHOD --data-urlencode "description@/tmp/text" --header "${HEADER}" "${RELEASE_URL}"
   only:
     - tags
-  pouet-it:
-    image: hatsoftwares/pouet-it-from-ci:latest
-    script:
-      - cd /opt/pouet-it-from-ci
-      - export MESSAGE=$(echo -e "I just released a new version of ${CI_PROJECT_NAME} !\n${CI_PROJECT_URL}/tags/${CI_COMMIT_TAG}")
-      - carton exec ./pouet-it-from-ci.pl
-    only:
-      - tags
+    
+pouet-it:
+  image: hatsoftwares/pouet-it-from-ci:latest
+  script:
+    - cd /opt/pouet-it-from-ci
+    - export MESSAGE=$(echo -e "I just released a new version of ${CI_PROJECT_NAME} !\n${CI_PROJECT_URL}/tags/${CI_COMMIT_TAG}")
+    - carton exec ./pouet-it-from-ci.pl
+  only:
+    - tags
