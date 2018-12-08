@@ -43,8 +43,10 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.koushikdutta.async.ByteBufferList;
+import com.koushikdutta.async.DataEmitter;
 import com.koushikdutta.async.callback.CompletedCallback;
-import com.koushikdutta.async.future.Future;
+import com.koushikdutta.async.callback.DataCallback;
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.AsyncHttpRequest;
 import com.koushikdutta.async.http.Headers;
@@ -90,7 +92,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     boolean backgroundProcess;
     private static Thread thread;
     private NetworkStateReceiver networkStateReceiver;
-    private static HashMap<String, Future<WebSocket>> webSocketFutures = new HashMap<>();
+    private static HashMap<String, WebSocket> webSocketFutures = new HashMap<>();
 
     public void onCreate() {
         super.onCreate();
@@ -167,6 +169,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         restartServiceIntent.setPackage(getPackageName());
         PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
         AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        assert alarmService != null;
         alarmService.set(
                 AlarmManager.ELAPSED_REALTIME,
                 SystemClock.elapsedRealtime() + 1000,
@@ -185,8 +188,8 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             AsyncHttpRequest.setDefaultHeaders(headers, url);
             if( webSocketFutures.containsKey(urlKey)  ){
                 try {
-                    if( webSocketFutures.get(urlKey) != null && webSocketFutures.get(urlKey).get() != null && webSocketFutures.get(urlKey).get().isOpen())
-                        webSocketFutures.get(urlKey).get().close();
+                    if( webSocketFutures.get(urlKey) != null && webSocketFutures.get(urlKey).isOpen())
+                        webSocketFutures.get(urlKey).close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -201,9 +204,10 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     e.printStackTrace();
                 }
             }
-            Future<WebSocket> webSocketFuture = AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
+            AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
                 @Override
                 public void onCompleted(Exception ex, WebSocket webSocket) {
+                    webSocketFutures.put(account.getAcct()+"@"+account.getInstance(), webSocket);
                     if (ex != null) {
                         ex.printStackTrace();
                         return;
@@ -220,8 +224,10 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     webSocket.setClosedCallback(new CompletedCallback() {
                         @Override
                         public void onCompleted(Exception ex) {
-                            if( ex != null){
-                                webSocket.close();
+                            try {
+                                if (ex != null)
+                                    webSocket.close();
+                            } finally {
                                 if( webSocketFutures != null && webSocketFutures.containsKey(urlKey))
                                     webSocketFutures.remove(urlKey);
                                 taks(account);
@@ -230,12 +236,17 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                                     registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
                                 }
                             }
-
+                        }
+                    });
+                    webSocket.setDataCallback(new DataCallback() {
+                        public void onDataAvailable(DataEmitter emitter, ByteBufferList byteBufferList) {
+                            // note that this data has been read
+                            byteBufferList.recycle();
                         }
                     });
                 }
             });
-            webSocketFutures.put(urlKey, webSocketFuture);
+
 
         }
     }
