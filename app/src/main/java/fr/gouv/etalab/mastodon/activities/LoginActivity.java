@@ -420,9 +420,9 @@ public class LoginActivity extends BaseActivity {
                 parameters.put(Helper.CLIENT_SECRET, sharedpreferences.getString(Helper.CLIENT_SECRET, null));
                 parameters.put("grant_type", "password");
                 try {
-                    parameters.put("username",URLEncoder.encode(login_uid.getText().toString().trim(), "UTF-8"));
+                    parameters.put("username",URLEncoder.encode(login_uid.getText().toString().trim().toLowerCase(), "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
-                    parameters.put("username",login_uid.getText().toString().trim());
+                    parameters.put("username",login_uid.getText().toString().trim().toLowerCase());
                 }
                 try {
                     parameters.put("password",URLEncoder.encode(login_passwd.getText().toString(), "UTF-8"));
