@@ -189,7 +189,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private AlertDialog dialogTrans;
     private AlertDialog alertDialogEmoji;
     private String mentionAccount;
-    private String idRedirect;
+    private Status idRedirect;
     private String userId, instance;
     private Account account;
     private ArrayList<String> splitToot;
@@ -327,7 +327,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             sharedContentIni = b.getString("sharedContent", null);
             sharedSubject = b.getString("sharedSubject", null);
             mentionAccount = b.getString("mentionAccount", null);
-            idRedirect =  b.getString("idRedirect");
+            idRedirect =  b.getParcelable("idRedirect");
             removed = b.getBoolean("removed");
             visibility = b.getString("visibility", null);
             restoredScheduled = b.getBoolean("restoredScheduled", false);
@@ -501,7 +501,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             public void onClick(View v) {
                 toot_it.setEnabled(false);
                 if(toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0){
-                    Toasty.error(getApplicationContext(),getString(R.string.toot_error_no_content),Toast.LENGTH_LONG).show();
+                    Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                     toot_it.setEnabled(true);
                     return;
                 }
@@ -1690,7 +1690,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                     if( idRedirect == null)
                         b.putParcelable("status", status);
                     else {
-                        b.putString("status", idRedirect);
+                        b.putParcelable("status", idRedirect);
                     }
                     intent.putExtras(b);
                     startActivity(intent);
