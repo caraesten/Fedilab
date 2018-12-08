@@ -476,7 +476,7 @@
         - Check that your instance is not down\n\n
         - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
         - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on Github at https://github.com/stom79/mastalab/issues
+        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
     </string>
     <string name="media_ready">تم تحميل الوسائط. اضغط هنا للعرض.</string>
     <string name="data_export_start">يمكن أن تستغرق هذه العملية وقتًا طويلًا. سوف نقوم بإشعارك عند تتمتها.</string>
@@ -624,7 +624,7 @@
     <string name="tags_stored">تم حفظ الوسم!</string>
     <string name="tags_renamed">تم تعديل الوسم بنجاح!</string>
     <string name="tags_deleted">تم حذف الوسم!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="set_display_art">إظهار الخيط الفني</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>

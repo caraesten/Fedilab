@@ -127,7 +127,7 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Usunąć ten wpis?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>Usunąć i przeredagować ten wpis?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d odpowiedzi</item>
