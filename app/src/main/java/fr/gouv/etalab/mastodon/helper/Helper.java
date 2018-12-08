@@ -388,7 +388,8 @@ public class Helper {
 
     public static final Pattern hashtagPattern = Pattern.compile("(#[\\w_A-zÀ-ÿ]+)");
     public static final Pattern twitterPattern = Pattern.compile("((@[\\w]+)@twitter\\.com)");
-    private static final Pattern mentionPattern = Pattern.compile("(@[\\w]+)");
+    private static final Pattern mentionPattern = Pattern.compile("(@[\\w_]+(\\s|$))");
+    private static final Pattern mentionLongPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+[.][a-z]{2,10})");
 
     //Event Type
     public enum EventStreaming{
@@ -2345,7 +2346,7 @@ public class Helper {
                 return;
             }
         }
-        if( url == null) {
+        if( url == null || url.contains("missing.png")) {
             try {
                 Glide.with(imageView.getContext())
                         .load(R.drawable.missing)
@@ -2648,13 +2649,36 @@ public class Helper {
         String[] splitContent = content.split("(\\.\\s){1}");
         ArrayList<String> splitToot = new ArrayList<>();
         StringBuilder tempContent = new StringBuilder(splitContent[0]);
+        ArrayList<String> mentions = new ArrayList<>();
+        Matcher matcher = mentionLongPattern.matcher(content);
+        while (matcher.find()) {
+            String mentionLong = matcher.group(1);
+            mentions.add(mentionLong);
+        }
+        matcher = mentionPattern.matcher(content);
+        while (matcher.find()) {
+            String mentionLong = matcher.group(1);
+            mentions.add(mentionLong);
+        }
+        StringBuilder mentionString = new StringBuilder();
+        for(String mention: mentions){
+            mentionString.append(mention).append(" ");
+        }
+        int mentionLength = mentionString.length();
+        int maxCharsMention = maxChars - mentionLength;
         for(int i= 0 ; i < splitContent.length ; i++){
-            if( i < (splitContent.length-1) && (tempContent.length() + splitContent[i+1].length()) < (maxChars-10)) {
+            if (i < (splitContent.length - 1) && (tempContent.length() + splitContent[i + 1].length()) < (maxChars - 10)) {
                 tempContent.append(". ").append(splitContent[i + 1]);
-            }else {
+            } else {
                 splitToot.add(tempContent.toString());
-                if( i < (splitContent.length-1) )
-                    tempContent = new StringBuilder(splitContent[i+1]);
+                if (i < (splitContent.length - 1)) {
+                    if( maxCharsMention > 0){
+                        maxChars = maxCharsMention;
+                        tempContent = new StringBuilder(mentionString+splitContent[i + 1]);
+                    }else{
+                        tempContent = new StringBuilder(splitContent[i + 1]);
+                    }
+                }
             }
         }
         int i=1;
@@ -2917,6 +2941,60 @@ public class Helper {
         }
         return index;
 
+    }
+
+    public static RetrieveFeedsAsyncTask.Type timelineType(Context context, int position){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        boolean display_direct = sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true);
+        boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
+        boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
+        boolean display_art = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true);
+        if (position == 0) {
+            return RetrieveFeedsAsyncTask.Type.HOME;
+        }else if(position == 2) {
+            if( display_direct) {
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+
+                if (instanceVersion != null) {
+                    Version currentVersion = new Version(instanceVersion);
+                    Version minVersion = new Version("2.6");
+                    if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                        boolean old_direct_timeline = sharedpreferences.getBoolean(Helper.SET_OLD_DIRECT_TIMELINE, false);
+                        if( !old_direct_timeline)
+                            return RetrieveFeedsAsyncTask.Type.CONVERSATION;
+                        else
+                            return RetrieveFeedsAsyncTask.Type.DIRECT;
+                    } else {
+                        return RetrieveFeedsAsyncTask.Type.DIRECT;
+                    }
+                }else{
+                    return RetrieveFeedsAsyncTask.Type.DIRECT;
+                }
+            }if( display_local)
+                return RetrieveFeedsAsyncTask.Type.LOCAL;
+            if( display_global)
+                return RetrieveFeedsAsyncTask.Type.PUBLIC;
+            if( display_art)
+                return RetrieveFeedsAsyncTask.Type.ART;
+        }else if( position == 3){
+            if( display_direct && display_local)
+                return RetrieveFeedsAsyncTask.Type.LOCAL;
+            if( display_global)
+                return RetrieveFeedsAsyncTask.Type.PUBLIC;
+            if( display_art)
+                return RetrieveFeedsAsyncTask.Type.ART;
+        }else if (position == 4){
+            if( display_direct && display_local && display_global)
+                return RetrieveFeedsAsyncTask.Type.PUBLIC;
+            if( display_art)
+                return RetrieveFeedsAsyncTask.Type.ART;
+        }else if (position == 5){
+            if( display_direct && display_local && display_global && display_art)
+                return RetrieveFeedsAsyncTask.Type.ART;
+        }
+        return RetrieveFeedsAsyncTask.Type.TAG;
     }
 
     public static boolean containsCaseInsensitive(String s, List<String> l){

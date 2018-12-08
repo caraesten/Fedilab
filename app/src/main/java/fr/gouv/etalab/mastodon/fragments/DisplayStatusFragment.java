@@ -178,6 +178,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
             {
+                if (type != RetrieveFeedsAsyncTask.Type.ART && context instanceof  BaseMainActivity ) {
+                    if( dy < 0 && !((BaseMainActivity)context).getFloatingVisibility() )
+                        ((BaseMainActivity) context).manageFloatingButton(true);
+                    if( dy > 0 && ((BaseMainActivity)context).getFloatingVisibility() )
+                        ((BaseMainActivity) context).manageFloatingButton(false);
+                }
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                 if(dy > 0){
                     int visibleItemCount = mLayoutManager.getChildCount();

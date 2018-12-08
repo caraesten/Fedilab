@@ -57,7 +57,6 @@ import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -65,9 +64,6 @@ import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 
-import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
-import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_REMOTE;
-import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_URL;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
@@ -134,16 +130,16 @@ public class Status implements Parcelable{
         in_reply_to_id = in.readString();
         conversationId = in.readString();
         in_reply_to_account_id = in.readString();
+        content = in.readString();
+        contentCW = in.readString();
+        created_at =  (java.util.Date) in.readSerializable();
+        visibility = in.readString();
+        media_attachments = in.readArrayList(Attachment.class.getClassLoader());
         reblog = in.readParcelable(Status.class.getClassLoader());
-        card = in.readParcelable(Card.class.getClassLoader());
         account = in.readParcelable(Account.class.getClassLoader());
         application = in.readParcelable(Application.class.getClassLoader());
         mentions = in.readArrayList(Mention.class.getClassLoader());
-        media_attachments = in.readArrayList(Attachment.class.getClassLoader());
-        emojis = in.readArrayList(Emojis.class.getClassLoader());
         tags = in.readArrayList(Tag.class.getClassLoader());
-        content = in.readString();
-        created_at =  (java.util.Date) in.readSerializable();
         contentTranslated = in.readString();
         reblogs_count = in.readInt();
         itemViewType = in.readInt();
@@ -153,8 +149,6 @@ public class Status implements Parcelable{
         favourited = in.readByte() != 0;
         muted = in.readByte() != 0;
         sensitive = in.readByte() != 0;
-        contentCW = in.readString();
-        visibility = in.readString();
         language = in.readString();
         attachmentShown = in.readByte() != 0;
         spoilerShown = in.readByte() != 0;
@@ -162,6 +156,8 @@ public class Status implements Parcelable{
         isTranslationShown = in.readByte() != 0;
         isNew = in.readByte() != 0;
         pinned = in.readByte() != 0;
+        emojis = in.readArrayList(Emojis.class.getClassLoader());
+        card = in.readParcelable(Card.class.getClassLoader());
     }
 
     @Override
@@ -172,16 +168,16 @@ public class Status implements Parcelable{
         dest.writeString(in_reply_to_id);
         dest.writeString(conversationId);
         dest.writeString(in_reply_to_account_id);
+        dest.writeString(content);
+        dest.writeString(contentCW);
+        dest.writeSerializable(created_at);
+        dest.writeString(visibility);
+        dest.writeList(media_attachments);
         dest.writeParcelable(reblog, flags);
-        dest.writeParcelable(card, flags);
         dest.writeParcelable(account, flags);
         dest.writeParcelable(application, flags);
         dest.writeList(mentions);
-        dest.writeList(media_attachments);
-        dest.writeList(emojis);
         dest.writeList(tags);
-        dest.writeString(content);
-        dest.writeSerializable(created_at);
         dest.writeString(contentTranslated);
         dest.writeInt(reblogs_count);
         dest.writeInt(itemViewType);
@@ -191,8 +187,6 @@ public class Status implements Parcelable{
         dest.writeByte((byte) (favourited ? 1 : 0));
         dest.writeByte((byte) (muted ? 1 : 0));
         dest.writeByte((byte) (sensitive ? 1 : 0));
-        dest.writeString(contentCW);
-        dest.writeString(visibility);
         dest.writeString(language);
         dest.writeByte((byte) (attachmentShown ? 1 : 0));
         dest.writeByte((byte) (spoilerShown ? 1 : 0));
@@ -200,6 +194,8 @@ public class Status implements Parcelable{
         dest.writeByte((byte) (isTranslationShown ? 1 : 0));
         dest.writeByte((byte) (isNew ? 1 : 0));
         dest.writeByte((byte) (pinned ? 1 : 0));
+        dest.writeList(emojis);
+        dest.writeParcelable(card, flags);
     }
 
 
@@ -491,11 +487,16 @@ public class Status implements Parcelable{
         if( (status.getReblog() != null && status.getReblog().getContent() == null) || (status.getReblog() == null && status.getContent() == null))
             return;
         spannableStringContent = new SpannableString(status.getReblog() != null ?status.getReblog().getContent():status.getContent());
+        String spoilerText = "";
+        if( status.getReblog() != null && status.getReblog().getSpoiler_text() != null)
+            spoilerText = status.getReblog().getSpoiler_text();
+        else if( status.getSpoiler_text() != null)
+            spoilerText = status.getSpoiler_text();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text(), Html.FROM_HTML_MODE_LEGACY));
+            spannableStringCW = new SpannableString(Html.fromHtml(spoilerText, Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
-            spannableStringCW = new SpannableString(Html.fromHtml(status.getReblog() != null ?status.getReblog().getSpoiler_text():status.getSpoiler_text()));
+            spannableStringCW = new SpannableString(Html.fromHtml(spoilerText));
         if( spannableStringContent.length() > 0)
             status.setContentSpan(treatment(context, spannableStringContent, status));
         if( spannableStringCW.length() > 0)
@@ -879,10 +880,15 @@ public class Status implements Parcelable{
                                      Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
                                      Matcher matcherLink = link.matcher(url);
                                      if( matcherLink.find()){
-                                         Intent intent = new Intent(context, MainActivity.class);
-                                         intent.putExtra(INTENT_ACTION, SEARCH_REMOTE);
-                                         intent.putExtra(SEARCH_URL, url);
-                                         context.startActivity(intent);
+                                        if( matcherLink.group(3) != null && matcherLink.group(3).length() > 0 ){ //It's a toot
+                                            CrossActions.doCrossConversation(context, finalUrl);
+                                        }else{//It's an account
+                                            Account account = status.getAccount();
+                                            account.setAcct(matcherLink.group(2));
+                                            account.setInstance(matcherLink.group(1));
+                                            CrossActions.doCrossProfile(context, account);
+                                        }
+
                                      }else  {
                                          link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/watch\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
                                          matcherLink = link.matcher(url);

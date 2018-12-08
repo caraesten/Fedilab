@@ -206,6 +206,8 @@ public abstract class BaseMainActivity extends BaseActivity
     private int style;
     private Activity activity;
     private HashMap<String, Integer> tabPosition = new HashMap<>();
+    private FloatingActionButton federatedTimelines;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -339,7 +341,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }else {
             style = R.style.Dialog;
         }
-       FloatingActionButton federatedTimelines = findViewById(R.id.federated_timeline);
+       federatedTimelines = findViewById(R.id.federated_timeline);
 
         delete_instance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2362,79 +2364,13 @@ public abstract class BaseMainActivity extends BaseActivity
             }else if( position == 1) {
                 notificationsFragment = new DisplayNotificationsFragment();
                 return notificationsFragment;
-            }else if( position == 2 && display_direct) {
+            }else {
                 statusFragment = new DisplayStatusFragment();
-
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
-                boolean old_direct_timeline = sharedpreferences.getBoolean(Helper.SET_OLD_DIRECT_TIMELINE, false);
-                if (instanceVersion != null) {
-                    Version currentVersion = new Version(instanceVersion);
-                    Version minVersion = new Version("2.6");
-                    if( old_direct_timeline)
-                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.DIRECT);
-                    else if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
-                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.CONVERSATION);
-                    } else {
-                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.DIRECT);
-                    }
-                }else{
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.DIRECT);
+                bundle.putSerializable("type", Helper.timelineType(getApplicationContext(), position));
+                if( Helper.timelineType(getApplicationContext(), position) == RetrieveFeedsAsyncTask.Type.TAG){
+                    if( tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null)
+                        bundle.putString("tag", tabLayout.getTabAt(position).getText().toString());
                 }
-                statusFragment.setArguments(bundle);
-                return statusFragment;
-            }else if(position == 2 && display_local ){
-                statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
-                statusFragment.setArguments(bundle);
-                return statusFragment;
-            }else if(position == 2 && display_global ){
-                statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
-                statusFragment.setArguments(bundle);
-                return statusFragment;
-            }else if(position == 2 && display_art ){
-                statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.ART);
-                statusFragment.setArguments(bundle);
-                return statusFragment;
-            } else if (position == 3 && display_local && display_direct){
-                statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.LOCAL);
-                statusFragment.setArguments(bundle);
-                return statusFragment;
-            }else if (position == 3 && display_global && (display_direct && !display_local) || (!display_direct && display_local)){
-                statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
-                statusFragment.setArguments(bundle);
-                return statusFragment;
-            } else if (position == 3 && display_art){
-                statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.ART);
-                statusFragment.setArguments(bundle);
-                return statusFragment;
-            }
-            else if (position == 4 && display_global && display_local && display_direct){
-                statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PUBLIC);
-                statusFragment.setArguments(bundle);
-                return statusFragment;
-            } else if (position == 4 && display_art){
-                statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.ART);
-                statusFragment.setArguments(bundle);
-                return statusFragment;
-            } else if (position == 5 && countPage == 6){
-                statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.ART);
-                statusFragment.setArguments(bundle);
-                return statusFragment;
-            }
-            else{ //Here it's a search fragment
-                statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.TAG);
-                if( tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null)
-                    bundle.putString("tag", tabLayout.getTabAt(position).getText().toString());
                 statusFragment.setArguments(bundle);
                 return statusFragment;
             }
@@ -2725,6 +2661,24 @@ public abstract class BaseMainActivity extends BaseActivity
             startService(streamingIntent);
         }
 
+    }
+
+    public void manageFloatingButton(boolean display){
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
+        if(display){
+            toot.show();
+            if( !displayFollowInstance)
+                federatedTimelines.hide();
+            else
+                federatedTimelines.show();
+        }else{
+            toot.hide();
+            federatedTimelines.hide();
+        }
+    }
+    public boolean getFloatingVisibility(){
+        return toot.getVisibility() == View.VISIBLE;
     }
 
     public void refreshButton(){
