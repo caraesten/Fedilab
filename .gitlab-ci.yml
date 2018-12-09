@@ -84,7 +84,7 @@ pouet-it:
     - cd /opt/pouet-it-from-ci
     # Make the project name first letter uppercase
     - export project="$(tr '[:lower:]' '[:upper:]' <<< ${CI_PROJECT_NAME:0:1})${CI_PROJECT_NAME:1}"
-    - export MESSAGE=$(echo -e "I just released a new version of #${project}!\n${CI_PROJECT_URL}/tags/${CI_COMMIT_TAG}")
+    - export MESSAGE=$(echo -e "I just released a new version of "'#'"${project}!""\n${CI_PROJECT_URL}/tags/${CI_COMMIT_TAG}")
     - carton exec ./pouet-it-from-ci.pl
   only:
     - tags
