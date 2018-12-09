@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 18;
+    public static final int DB_VERSION = 19;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -61,6 +61,8 @@ public class Sqlite extends SQLiteOpenHelper {
     //Table for tags cache
     static final String TABLE_CACHE_TAGS = "CACHE_TAGS";
 
+    //Table for scheduling boosts
+    static final String TABLE_BOOST_SCHEDULE = "BOOST_SCHEDULE";
 
     static final String COL_USER_ID = "USER_ID";
     static final String COL_USERNAME = "USERNAME";
@@ -195,6 +197,14 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_TAGS + " TEXT NOT NULL)";
 
+
+
+    private static final String CREATE_TABLE_BOOST_SCHEDULE = "CREATE TABLE " + TABLE_BOOST_SCHEDULE + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "
+            + COL_STATUS_SERIALIZED + " TEXT NOT NULL, "+ COL_DATE_SCHEDULED + " TEXT, "
+            + COL_IS_SCHEDULED + " INTEGER NOT NULL, " + COL_SENT + " INTEGER NOT NULL, " + COL_DATE_SENT + " TEXT)";
+
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -220,6 +230,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_INSTANCES);
         db.execSQL(CREATE_TABLE_PEERTUBE_FAVOURITES);
         db.execSQL(CREATE_TABLE_CACHE_TAGS);
+        db.execSQL(CREATE_TABLE_BOOST_SCHEDULE);
     }
 
     @Override
@@ -269,6 +280,8 @@ public class Sqlite extends SQLiteOpenHelper {
             case 17:
                 db.execSQL("DROP TABLE IF EXISTS '" + TABLE_TIMELINE_CACHE + "'");
                 db.execSQL(CREATE_TABLE_CACHE_TAGS);
+            case 18:
+                db.execSQL(CREATE_TABLE_BOOST_SCHEDULE);
             default:
                 break;
         }

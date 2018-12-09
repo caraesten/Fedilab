@@ -34,6 +34,8 @@ public class ApplicationJob implements JobCreator {
                 return new HomeTimelineSyncJob();
             case ScheduledTootsSyncJob.SCHEDULED_TOOT:
                 return new ScheduledTootsSyncJob();
+            case ScheduledBoostsSyncJob.SCHEDULED_BOOST:
+                return new ScheduledBoostsSyncJob();
             default:
                 return null;
         }

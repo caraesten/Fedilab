@@ -114,6 +114,7 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveCardInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
+import fr.gouv.etalab.mastodon.jobs.ScheduledBoostsSyncJob;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
@@ -1600,6 +1601,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     else
                         popup.getMenu().findItem(R.id.action_bookmark).setTitle(R.string.bookmark_add);
                     final String[] stringArrayConf;
+                    if( status.getVisibility().equals("direct") || (status.getVisibility().equals("private") && !isOwner))
+                        popup.getMenu().findItem(R.id.action_schedule_boost).setVisible(false);
                     if( isOwner) {
                         popup.getMenu().findItem(R.id.action_block).setVisible(false);
                         popup.getMenu().findItem(R.id.action_mute).setVisible(false);
@@ -1644,6 +1647,81 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         //noinspection deprecation
                                         builderInner.setMessage(Html.fromHtml(status.getContent()));
                                 break;
+                                case R.id.action_schedule_boost:
+                                    AlertDialog.Builder dialogBuilderBoost = new AlertDialog.Builder(context, style);
+                                    LayoutInflater inflaterBoost = ((Activity)context).getLayoutInflater();
+                                    @SuppressLint("InflateParams") View dialogViewBoost = inflaterBoost.inflate(R.layout.datetime_picker, null);
+                                    dialogBuilderBoost.setView(dialogViewBoost);
+                                    final AlertDialog alertDialogBoost = dialogBuilderBoost.create();
+
+                                    final DatePicker datePickerBoost = dialogViewBoost.findViewById(R.id.date_picker);
+                                    final TimePicker timePickerBoost = dialogViewBoost.findViewById(R.id.time_picker);
+                                    timePickerBoost.setIs24HourView(true);
+                                    Button date_time_cancelBoost = dialogViewBoost.findViewById(R.id.date_time_cancel);
+                                    final ImageButton date_time_previousBoost = dialogViewBoost.findViewById(R.id.date_time_previous);
+                                    final ImageButton date_time_nextBoost = dialogViewBoost.findViewById(R.id.date_time_next);
+                                    final ImageButton date_time_setBoost = dialogViewBoost.findViewById(R.id.date_time_set);
+
+                                    //Buttons management
+                                    date_time_cancelBoost.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            alertDialogBoost.dismiss();
+                                        }
+                                    });
+                                    date_time_nextBoost.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            datePickerBoost.setVisibility(View.GONE);
+                                            timePickerBoost.setVisibility(View.VISIBLE);
+                                            date_time_previousBoost.setVisibility(View.VISIBLE);
+                                            date_time_nextBoost.setVisibility(View.GONE);
+                                            date_time_setBoost.setVisibility(View.VISIBLE);
+                                        }
+                                    });
+                                    date_time_previousBoost.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            datePickerBoost.setVisibility(View.VISIBLE);
+                                            timePickerBoost.setVisibility(View.GONE);
+                                            date_time_previousBoost.setVisibility(View.GONE);
+                                            date_time_nextBoost.setVisibility(View.VISIBLE);
+                                            date_time_setBoost.setVisibility(View.GONE);
+                                        }
+                                    });
+                                    date_time_setBoost.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            int hour, minute;
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                hour = timePickerBoost.getHour();
+                                                minute = timePickerBoost.getMinute();
+                                            }else {
+                                                //noinspection deprecation
+                                                hour = timePickerBoost.getCurrentHour();
+                                                //noinspection deprecation
+                                                minute = timePickerBoost.getCurrentMinute();
+                                            }
+                                            Calendar calendar = new GregorianCalendar(datePickerBoost.getYear(),
+                                                    datePickerBoost.getMonth(),
+                                                    datePickerBoost.getDayOfMonth(),
+                                                    hour,
+                                                    minute);
+                                            long time = calendar.getTimeInMillis();
+                                            if( (time - new Date().getTime()) < 60000 ){
+                                                Toasty.warning(context, context.getString(R.string.toot_scheduled_date), Toast.LENGTH_LONG).show();
+                                            }else {
+                                                //Schedules the toot
+                                                ScheduledBoostsSyncJob.schedule(context,status, time);
+                                                //Clear content
+                                                Toasty.info(context, context.getString(R.string.boost_scheduled), Toast.LENGTH_LONG).show();
+                                                alertDialogBoost.dismiss();
+                                            }
+                                        }
+                                    });
+                                    alertDialogBoost.show();
+
+                                    return true;
                                 case R.id.action_info:
                                     Intent intent = new Intent(context, TootInfoActivity.class);
                                     Bundle b = new Bundle();

@@ -28,6 +28,8 @@ import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,15 +37,19 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveScheduledTootsAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.drawers.ScheduledTootsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveScheduledTootsInterface;
+import fr.gouv.etalab.mastodon.sqlite.BoostScheduleDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
-import fr.gouv.etalab.mastodon.R;
+
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -59,13 +65,23 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
     private RelativeLayout mainLoader, textviewNoAction;
     private ListView lv_scheduled_toots;
     private TextView warning_battery_message;
+    private typeOfSchedule type;
+
+    public enum typeOfSchedule{
+        TOOT,
+        BOOST
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_scheduled_toots, container, false);
         context = getContext();
-
+        Bundle bundle = this.getArguments();
+        assert bundle != null;
+        type = (typeOfSchedule) bundle.get("type");
+        if( type == null)
+            type = typeOfSchedule.TOOT;
         lv_scheduled_toots = rootView.findViewById(R.id.lv_scheduled_toots);
 
         mainLoader = rootView.findViewById(R.id.loader);
@@ -75,7 +91,10 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
 
         //Removes all scheduled toots that have sent
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        new StatusStoredDAO(context, db).removeAllSent();
+        if( type == typeOfSchedule.TOOT)
+            new StatusStoredDAO(context, db).removeAllSent();
+        else if( type == typeOfSchedule.BOOST)
+            new BoostScheduleDAO(context, db).removeAllSent();
         return rootView;
     }
 
@@ -84,7 +103,7 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
     public void onResume(){
         super.onResume();
         //Retrieves scheduled toots
-        asyncTask = new RetrieveScheduledTootsAsyncTask(context, DisplayScheduledTootsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveScheduledTootsAsyncTask(context, type,DisplayScheduledTootsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             final PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
             final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -161,11 +180,24 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
 
         mainLoader.setVisibility(View.GONE);
         if( storedStatuses != null && storedStatuses.size() > 0 ){
-            ScheduledTootsListAdapter scheduledTootsListAdapter = new ScheduledTootsListAdapter(context, storedStatuses, textviewNoAction);
+            ScheduledTootsListAdapter scheduledTootsListAdapter = new ScheduledTootsListAdapter(context, type, storedStatuses, textviewNoAction);
             lv_scheduled_toots.setAdapter(scheduledTootsListAdapter);
             textviewNoAction.setVisibility(View.GONE);
         }else {
             textviewNoAction.setVisibility(View.VISIBLE);
+            if( type == typeOfSchedule.BOOST) {
+                TextView no_action_text = textviewNoAction.findViewById(R.id.no_action_text);
+                TextView no_action_text_subtitle = textviewNoAction.findViewById(R.id.no_action_text_subtitle);
+                no_action_text.setText(context.getString(R.string.no_scheduled_boosts));
+
+                Spanned message;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    message = Html.fromHtml(context.getString(R.string.no_scheduled_boosts_indications), Html.FROM_HTML_MODE_LEGACY);
+                else
+                    //noinspection deprecation
+                    message = Html.fromHtml(context.getString(R.string.no_scheduled_boosts_indications));
+                no_action_text_subtitle.setText(message, TextView.BufferType.SPANNABLE);
+            }
         }
     }
 }

@@ -120,8 +120,8 @@ import fr.gouv.etalab.mastodon.fragments.DisplayHowToFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayMutedInstanceFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
-import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
+import fr.gouv.etalab.mastodon.fragments.TabLayoutScheduleFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.fragments.WhoToFollowFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
@@ -2118,10 +2118,10 @@ public abstract class BaseMainActivity extends BaseActivity
                     .replace(R.id.main_app_container, accountsFragment, fragmentTag).commit();
         }else if (id == R.id.nav_scheduled) {
             toot.show();
-            DisplayScheduledTootsFragment displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
+            TabLayoutScheduleFragment tabLayoutScheduleFragment = new TabLayoutScheduleFragment();
             fragmentTag = "SCHEDULED";
             fragmentManager.beginTransaction()
-                    .replace(R.id.main_app_container, displayScheduledTootsFragment, fragmentTag).commit();
+                    .replace(R.id.main_app_container, tabLayoutScheduleFragment, fragmentTag).commit();
         }else if (id == R.id.nav_drafts) {
             DisplayDraftsFragment displayDraftsFragment = new DisplayDraftsFragment();
             fragmentTag = "DRAFTS";
