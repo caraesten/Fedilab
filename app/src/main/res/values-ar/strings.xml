@@ -626,9 +626,9 @@
     <string name="tags_deleted">تم حذف الوسم!</string>
     <string name="set_display_art">إظهار الخيط الفني</string>
     <string name="schedule_boost">برمجة الترقية</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
+    <string name="boost_scheduled">تمت برمجة الترقية!</string>
+    <string name="no_scheduled_boosts">ليس هناك أية برمجة للترقية للعرض!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[افتح قائمة تبويق ما ثم اختر <b>برمجة ترقية</b>.]]></string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>
