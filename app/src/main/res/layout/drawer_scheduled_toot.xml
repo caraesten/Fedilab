@@ -22,6 +22,14 @@
     android:orientation="horizontal"
     android:id="@+id/scheduled_toot_container"
     >
+    <ImageView
+        android:id="@+id/scheduled_toot_pp"
+        android:layout_gravity="center_vertical|top"
+        android:gravity="center_vertical|top"
+        android:layout_width="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="50dp"
+        tools:ignore="ContentDescription" />
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -31,7 +39,6 @@
         android:orientation="vertical">
         <TextView
             android:id="@+id/scheduled_toot_title"
-            android:textStyle="bold"
             android:maxLines="3"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"

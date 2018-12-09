@@ -95,6 +95,7 @@ public class TabLayoutScheduleFragment extends Fragment {
                     bundle = new Bundle();
                     bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.BOOST);
                     displayScheduledTootsFragment.setArguments(bundle);
+                    return displayScheduledTootsFragment;
                 default:
                     displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
                     bundle = new Bundle();

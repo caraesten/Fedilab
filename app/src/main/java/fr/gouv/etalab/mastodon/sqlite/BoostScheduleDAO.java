@@ -51,11 +51,11 @@ public class BoostScheduleDAO {
     /**
      * Insert a status in database
      * @param status Status
-     * @param id long
      * @param jobId int
      * @return boolean
      */
-    public long insert(Status status, long id, int jobId, Date date_scheduled ) {
+    public long insert(Status status, int jobId, Date date_scheduled ) {
+
         ContentValues values = new ContentValues();
         String serializedStatus = Helper.statusToStringStorage(status);
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -64,7 +64,6 @@ public class BoostScheduleDAO {
         if( userId == null || instance == null)
             return -1;
         values.put(Sqlite.COL_STATUS_SERIALIZED, serializedStatus);
-        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
         values.put(Sqlite.COL_INSTANCE, instance);
         values.put(Sqlite.COL_USER_ID, userId);
         values.put(Sqlite.COL_SENT, 0);
@@ -75,6 +74,7 @@ public class BoostScheduleDAO {
         try{
             last_id = db.insert(Sqlite.TABLE_BOOST_SCHEDULE, null, values);
         }catch (Exception e) {
+            e.printStackTrace();
             last_id =  -1;
         }
         return last_id;
@@ -100,12 +100,12 @@ public class BoostScheduleDAO {
      * @param scheduled_date Date
      * @return boolean
      */
-    public int updateScheduledDate(int jobid, Date scheduled_date) {
+    public int updateScheduledDate(int statusStoredId, int jobid, Date scheduled_date) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_DATE_SCHEDULED, Helper.dateToString(scheduled_date));
         return db.update(Sqlite.TABLE_BOOST_SCHEDULE,
-                values, Sqlite.COL_IS_SCHEDULED + " =  ? ",
-                new String[]{String.valueOf(jobid)});
+                values, Sqlite.COL_IS_SCHEDULED + " =  ? AND " + Sqlite.COL_ID + " = ?",
+                new String[]{String.valueOf(jobid), String.valueOf(statusStoredId)});
     }
 
     /**
@@ -152,6 +152,7 @@ public class BoostScheduleDAO {
             Cursor c = db.query(Sqlite.TABLE_BOOST_SCHEDULE, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_IS_SCHEDULED + " != 0 AND " + Sqlite.COL_SENT + " = 0", null, null, null, Sqlite.COL_DATE_SCHEDULED + " ASC", null);
             return cursorToListStatuses(c);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -164,7 +165,7 @@ public class BoostScheduleDAO {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_BOOST_SCHEDULE, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " +Sqlite.COL_IS_SCHEDULED + " != 0 AND " + Sqlite.COL_SENT + " = 0", null, null, null, Sqlite.COL_DATE_CREATION + " DESC", null);
+            Cursor c = db.query(Sqlite.TABLE_BOOST_SCHEDULE, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " +Sqlite.COL_IS_SCHEDULED + " != 0 AND " + Sqlite.COL_SENT + " = 0", null, null, null, Sqlite.COL_DATE_SCHEDULED + " DESC", null);
             return cursorToListStatuses(c);
         } catch (Exception e) {
             return null;
@@ -180,7 +181,7 @@ public class BoostScheduleDAO {
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = Helper.getLiveInstance(context);
-            Cursor c = db.query(Sqlite.TABLE_BOOST_SCHEDULE, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " +Sqlite.COL_IS_SCHEDULED + " != 0 AND " + Sqlite.COL_SENT + " = 1", null, null, null, Sqlite.COL_DATE_CREATION + " DESC", null);
+            Cursor c = db.query(Sqlite.TABLE_BOOST_SCHEDULE, null, Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " +Sqlite.COL_IS_SCHEDULED + " != 0 AND " + Sqlite.COL_SENT + " = 1", null, null, null, Sqlite.COL_DATE_SCHEDULED + " DESC", null);
             return cursorToListStatuses(c);
         } catch (Exception e) {
             return null;
@@ -237,7 +238,6 @@ public class BoostScheduleDAO {
         storedStatus.setStatusReply(null);
         storedStatus.setSent(c.getInt(c.getColumnIndex(Sqlite.COL_SENT)) == 1);
         storedStatus.setJobId(c.getInt(c.getColumnIndex(Sqlite.COL_IS_SCHEDULED)));
-        storedStatus.setCreation_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_CREATION))));
         storedStatus.setScheduled_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_SCHEDULED))));
         storedStatus.setSent_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_SENT))));
         storedStatus.setUserId(c.getString(c.getColumnIndex(Sqlite.COL_USER_ID)));
@@ -268,11 +268,9 @@ public class BoostScheduleDAO {
                 continue;
             }
             storedStatus.setStatus(status);
-            Status statusReply = Helper.restoreStatusFromString(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_REPLY_SERIALIZED)));
-            storedStatus.setStatusReply(statusReply);
+            storedStatus.setStatusReply(null);
             storedStatus.setSent(c.getInt(c.getColumnIndex(Sqlite.COL_SENT)) == 1);
             storedStatus.setJobId(c.getInt(c.getColumnIndex(Sqlite.COL_IS_SCHEDULED)) );
-            storedStatus.setCreation_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_CREATION))));
             storedStatus.setScheduled_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_SCHEDULED))));
             storedStatus.setSent_date(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_DATE_SENT))));
             storedStatus.setUserId(c.getString(c.getColumnIndex(Sqlite.COL_USER_ID)));

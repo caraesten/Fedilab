@@ -28,6 +28,8 @@ import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -75,7 +77,8 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
 
         View rootView = inflater.inflate(R.layout.fragment_scheduled_toots, container, false);
         context = getContext();
-        Bundle bundle = new Bundle();
+        Bundle bundle = this.getArguments();
+        assert bundle != null;
         type = (typeOfSchedule) bundle.get("type");
         if( type == null)
             type = typeOfSchedule.TOOT;
@@ -177,11 +180,24 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
 
         mainLoader.setVisibility(View.GONE);
         if( storedStatuses != null && storedStatuses.size() > 0 ){
-            ScheduledTootsListAdapter scheduledTootsListAdapter = new ScheduledTootsListAdapter(context, storedStatuses, textviewNoAction);
+            ScheduledTootsListAdapter scheduledTootsListAdapter = new ScheduledTootsListAdapter(context, type, storedStatuses, textviewNoAction);
             lv_scheduled_toots.setAdapter(scheduledTootsListAdapter);
             textviewNoAction.setVisibility(View.GONE);
         }else {
             textviewNoAction.setVisibility(View.VISIBLE);
+            if( type == typeOfSchedule.BOOST) {
+                TextView no_action_text = textviewNoAction.findViewById(R.id.no_action_text);
+                TextView no_action_text_subtitle = textviewNoAction.findViewById(R.id.no_action_text_subtitle);
+                no_action_text.setText(context.getString(R.string.no_scheduled_boosts));
+
+                Spanned message;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    message = Html.fromHtml(context.getString(R.string.no_scheduled_boosts_indications), Html.FROM_HTML_MODE_LEGACY);
+                else
+                    //noinspection deprecation
+                    message = Html.fromHtml(context.getString(R.string.no_scheduled_boosts_indications));
+                no_action_text_subtitle.setText(message, TextView.BufferType.SPANNABLE);
+            }
         }
     }
 }

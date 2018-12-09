@@ -19,12 +19,20 @@
         android:title="@string/action_open_in_web"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/action_mute"
-        android:title="@string/more_action_1"
+        android:id="@+id/action_share"
+        android:title="@string/more_action_6"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_timed_mute"
         android:title="@string/more_action_8"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_schedule_boost"
+        android:title="@string/schedule_boost"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_mute"
+        android:title="@string/more_action_1"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_block"
@@ -49,10 +57,6 @@
     <item
         android:id="@+id/action_copy"
         android:title="@string/more_action_5"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_share"
-        android:title="@string/more_action_6"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_mention"
