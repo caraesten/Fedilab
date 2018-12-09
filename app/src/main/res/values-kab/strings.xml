@@ -339,38 +339,38 @@
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>Black</item>
+        <item>Tebrek</item>
+        <item>Aceɛlal</item>
+        <item>Aberkan</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
+        <item>Ala</item>
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
     </string-array>
     <string name="set_led_colour">Set LED colour:</string>
     <string-array name="led_colours">
-        <item>Blue</item>
+        <item>Azegzaw</item>
         <item>Cyan</item>
         <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>Adal</item>
+        <item>Azeggaγ</item>
+        <item>Awraγ</item>
+        <item>Amellal</item>
     </string-array>
     <string name="set_title_news">News</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
     <string name="action_follow">Follow</string>
     <string name="action_unfollow">Unfollow</string>
-    <string name="action_block">Block</string>
-    <string name="action_unblock">Unblock</string>
-    <string name="action_mute">Mute</string>
+    <string name="action_block">Seḥbes</string>
+    <string name="action_unblock">Eks asewḥel</string>
+    <string name="action_mute">Susem</string>
     <string name="action_no_action">No action</string>
     <string name="action_unmute">Unmute</string>
     <string name="request_sent">Request sent</string>
     <string name="followed_by">Follows you</string>
-    <string name="action_search">Search</string>
+    <string name="action_search">Nadi</string>
     <string name="set_capitalize">First letter in capital for replies</string>
     <string name="set_resize_picture">Resize pictures</string>
     <!-- Quick settings for notifications -->
@@ -386,7 +386,7 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
+    <string name="action_sync">Mtawi</string>
     <string name="action_filter">Filter</string>
     <string name="owner_cached_toots">Your toots</string>
     <string name="v_public">Public</string>
@@ -400,9 +400,9 @@
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
-        <item>No</item>
+        <item>Ala</item>
         <item>Only</item>
-        <item>Both</item>
+        <item>I sin</item>
     </string-array>
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
@@ -412,7 +412,7 @@
         Deleting the application immediately removes these data.\n
         &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
     </string>
-    <string name="privacy_authorizations_title">Permissions:</string>
+    <string name="privacy_authorizations_title">Issirgen:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
@@ -442,11 +442,11 @@
     <string name="thanks_text_dev">        Thank you to:
     </string>
     <string name="filter_regex">Filter out by regular expressions</string>
-    <string name="search">Search</string>
-    <string name="delete">Delete</string>
+    <string name="search">Nadi</string>
+    <string name="delete">Kkes</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
     <!-- About lists -->
-    <string name="action_lists">Lists</string>
+    <string name="action_lists">Tibdarin</string>
     <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
     <string name="action_lists_add_to">Add to list</string>
@@ -476,14 +476,14 @@
     <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
     <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
     <!-- Proxy -->
-    <string name="proxy_set">Proxy</string>
+    <string name="proxy_set">Apṛuksi</string>
     <string name="proxy_type">Type</string>
     <string name="proxy_enable">Enable proxy?</string>
     <string name="poxy_host">Host</string>
     <string name="poxy_port">Port</string>
     <string name="poxy_login">Login</string>
-    <string name="poxy_password">Password</string>
-    <string name="set_theme">Theme:</string>
+    <string name="poxy_password">Awal uffir</string>
+    <string name="set_theme">Asentel:</string>
     <string name="set_compact_mode">Compact mode</string>
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
@@ -492,7 +492,7 @@
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-    <string name="which_language">Translate in</string>
+    <string name="which_language">Suqel s</string>
     <string name="crash_title">Mastalab has stopped :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
@@ -589,8 +589,8 @@
     <string name="no_peertube_instances">No Peertube instances</string>
     <string name="no_mastodon_instances">No Mastodon instances</string>
     <string name="no_lists">No lists</string>
-    <string name="videos">Videos</string>
-    <string name="channels">Channels</string>
+    <string name="videos">Tividyutin</string>
+    <string name="channels">Ibuda</string>
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
@@ -603,7 +603,7 @@
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
+    <string name="set_change_locale">Beddel tutlayt</string>
     <string name="default_language">Default language</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
@@ -620,12 +620,12 @@
     <string name="no_scheduled_boosts">No scheduled boost to display!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string-array name="filter_expire">
-        <item>Never</item>
+        <item>Werǧin</item>
         <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>1 n usrag</item>
+        <item>6 n usrag</item>
+        <item>12 n usrag</item>
+        <item>1 wass</item>
+        <item>1 umalas</item>
     </string-array>
 </resources>
