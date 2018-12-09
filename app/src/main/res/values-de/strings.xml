@@ -611,6 +611,10 @@
     <string name="tags_renamed">Die Markierung wurde geändert!</string>
     <string name="tags_deleted">Die Markierung wurde gelöscht!</string>
     <string name="set_display_art">Display Art timeline</string>
+    <string name="schedule_boost">Schedule boost</string>
+    <string name="boost_scheduled">The boost is scheduled!</string>
+    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string-array name="filter_expire">
         <item>Nie</item>
         <item>30 Minuten</item>
