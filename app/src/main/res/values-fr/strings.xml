@@ -609,9 +609,9 @@
     <string name="hide_toot_truncate">Afficher moins</string>
     <string name="manage_tags">Gestion des étiquettes</string>
     <string name="tags_already_stored">Cette étiquette existe déjà !</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
+    <string name="tags_stored">L’étiquette a été restaurée !</string>
+    <string name="tags_renamed">L’étiquette a été modifiée !</string>
+    <string name="tags_deleted">L’étiquette a été supprimée !</string>
     <string name="set_display_art">Afficher le fil artistique</string>
     <string name="schedule_boost">Programmer un boost</string>
     <string name="boost_scheduled">Le boost est programmé !</string>
