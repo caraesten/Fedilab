@@ -613,10 +613,10 @@
     <string name="tags_renamed">The tag has been changed!</string>
     <string name="tags_deleted">The tag has been deleted!</string>
     <string name="set_display_art">Afficher le fil artistique</string>
-    <string name="schedule_boost">Programmer le boost</string>
-    <string name="boost_scheduled">Le boost est planifié !</string>
+    <string name="schedule_boost">Programmer un boost</string>
+    <string name="boost_scheduled">Le boost est programmé !</string>
     <string name="no_scheduled_boosts">Aucun boost programmé à afficher !</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Ouvrez le menu d’un pouet puis choisissez <b>Planifier un boost</b>.]]></string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Ouvrez le menu d’un pouet puis choisissez <b>Programmer un boost</b>.]]></string>
     <string-array name="filter_expire">
         <item>Jamais</item>
         <item>30 minutes</item>
