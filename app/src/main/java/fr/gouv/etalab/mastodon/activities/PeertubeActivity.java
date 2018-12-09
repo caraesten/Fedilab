@@ -292,6 +292,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         videoView.setVideoURI(uri);
         videoView.getCurrentPosition();
         fullScreenMediaController = new FullScreenMediaController(PeertubeActivity.this, peertube);
+        fullScreenMediaController.setPadding(0, 0, 0, (int)Helper.convertDpToPixel(25, PeertubeActivity.this));
         fullScreenMediaController.setAnchorView(videoView);
         videoView.setMediaController(fullScreenMediaController);
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
