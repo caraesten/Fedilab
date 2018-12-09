@@ -24,7 +24,7 @@
     <string name="email">Email</string>
     <string name="accounts">Comptes</string>
     <string name="toots">Pouets</string>
-    <string name="tags">Tags</string>
+    <string name="tags">Étiquettes</string>
     <string name="token">Jeton</string>
     <string name="save">Sauvegarder</string>
     <string name="restore">Restaurer</string>
@@ -607,8 +607,8 @@
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">Afficher plus</string>
     <string name="hide_toot_truncate">Afficher moins</string>
-    <string name="manage_tags">Gestion des tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
+    <string name="manage_tags">Gestion des étiquettes</string>
+    <string name="tags_already_stored">Cette étiquette existe déjà !</string>
     <string name="tags_stored">The tag has been stored!</string>
     <string name="tags_renamed">The tag has been changed!</string>
     <string name="tags_deleted">The tag has been deleted!</string>
