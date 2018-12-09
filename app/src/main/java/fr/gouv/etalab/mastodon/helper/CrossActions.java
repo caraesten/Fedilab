@@ -139,9 +139,11 @@ public class CrossActions {
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
-            new PostActionAsyncTask(context, currentAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            if (confirmation)
+                displayConfirmationDialogCrossAction(context, currentAccount, doAction, status, onPostActionInterface);
+            else
+                new PostActionAsyncTask(context, currentAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else if (accounts.size() == 1 || undoAction) {
-
 
             if (confirmation)
                 displayConfirmationDialog(context, doAction, status, baseAdapter, onPostActionInterface);
@@ -169,7 +171,6 @@ public class CrossActions {
                     dialog.dismiss();
                 }
             });
-            boolean finalConfirmation = confirmation;
             builderSingle.setAdapter(accountsSearchAdapter, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -177,37 +178,33 @@ public class CrossActions {
                     String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                     Account loggedAccount = new AccountDAO(context, db).getAccountByID(userId);
-                    if (finalConfirmation)
-                        displayConfirmationDialogCrossAction(context, selectedAccount, targetedAccount, doAction, type, status, baseAdapter, onPostActionInterface);
-                    else {
-                        if( targetedAccount == null){
-                            if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
-                                new PostActionAsyncTask(context, selectedAccount, doAction, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }else{ //Account is from another instance
-                                new PostActionAsyncTask(context, selectedAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    if( targetedAccount == null){
+                        if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
+                            new PostActionAsyncTask(context, selectedAccount, doAction, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }else{ //Account is from another instance
+                            new PostActionAsyncTask(context, selectedAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+                        if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
+                            if (doAction == API.StatusAction.REBLOG) {
+                                status.setReblogged(true);
+                                if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+                                    status.setBoostAnimated(true);
+                            } else if (doAction == API.StatusAction.FAVOURITE) {
+                                status.setFavourited(true);
+                                if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+                                    status.setFavAnimated(true);
+                            } else if (doAction == API.StatusAction.PIN) {
+                                status.setPinned(true);
                             }
-                            if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
-                                if (doAction == API.StatusAction.REBLOG) {
-                                    status.setReblogged(true);
-                                    if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
-                                        status.setBoostAnimated(true);
-                                } else if (doAction == API.StatusAction.FAVOURITE) {
-                                    status.setFavourited(true);
-                                    if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
-                                        status.setFavAnimated(true);
-                                } else if (doAction == API.StatusAction.PIN) {
-                                    status.setPinned(true);
-                                }
-                                baseAdapter.notifyDataSetChanged();
+                            baseAdapter.notifyDataSetChanged();
+                        }
+                    }else{
+                        new PostActionAsyncTask(context, selectedAccount, targetedAccount, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
+                            if (doAction == API.StatusAction.FOLLOW) {
+                                targetedAccount.setFollowing(true);
                             }
-                        }else{
-                            new PostActionAsyncTask(context, selectedAccount, targetedAccount, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
-                                if (doAction == API.StatusAction.FOLLOW) {
-                                    targetedAccount.setFollowing(true);
-                                }
-                                baseAdapter.notifyDataSetChanged();
-                            }
+                            baseAdapter.notifyDataSetChanged();
                         }
                     }
                     dialog.dismiss();
@@ -724,7 +721,7 @@ public class CrossActions {
      * @param action int
      * @param status Status
      */
-    private static void displayConfirmationDialogCrossAction(final Context context,Account selectedAccount, Account targetedAccount, final API.StatusAction action, RetrieveFeedsAsyncTask.Type type, final Status status, final RecyclerView.Adapter baseAdapter, final OnPostActionInterface onPostActionInterface){
+    private static void displayConfirmationDialogCrossAction(final Context context,Account currentAccount, final API.StatusAction action, final Status status, final OnPostActionInterface onPostActionInterface){
 
         String title = null;
         if( action == API.StatusAction.FAVOURITE){
@@ -753,39 +750,7 @@ public class CrossActions {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                        Account loggedAccount = new AccountDAO(context, db).getAccountByID(userId);
-                        if( targetedAccount == null){
-                            if(loggedAccount.getInstance().equals(selectedAccount.getInstance())){
-                                new PostActionAsyncTask(context, selectedAccount, action, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }else{ //Account is from another instance
-                                new PostActionAsyncTask(context, selectedAccount, status, action, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }
-                            if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
-                                if (action == API.StatusAction.REBLOG) {
-                                    status.setReblogged(true);
-                                    if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
-                                        status.setBoostAnimated(true);
-                                } else if (action == API.StatusAction.FAVOURITE) {
-                                    status.setFavourited(true);
-                                    if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
-                                        status.setFavAnimated(true);
-                                } else if (action == API.StatusAction.PIN) {
-                                    status.setPinned(true);
-                                }
-                                baseAdapter.notifyDataSetChanged();
-                            }
-                        }else{
-                            new PostActionAsyncTask(context, selectedAccount, targetedAccount, action, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            if( selectedAccount.getInstance().equals(loggedAccount.getInstance()) && selectedAccount.getId().equals(loggedAccount.getId())) {
-                                if (action == API.StatusAction.FOLLOW) {
-                                    targetedAccount.setFollowing(true);
-                                }
-                                baseAdapter.notifyDataSetChanged();
-                            }
-                        }
+                        new PostActionAsyncTask(context, currentAccount, status, action, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         dialog.dismiss();
                     }
                 })
