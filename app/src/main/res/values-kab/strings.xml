@@ -191,7 +191,7 @@
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
+    <string name="no_accounts">Ulac kra n umiḍan ara d-nesken</string>
     <string name="no_follow_request">No follow request</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Following \n %1$s</string>
@@ -272,7 +272,7 @@
     <string name="set_notifications_page">Number of notifications per load</string>
     <string name="set_attachment_always">Always</string>
     <string name="set_attachment_wifi">WIFI</string>
-    <string name="set_attachment_ask">Ask</string>
+    <string name="set_attachment_ask">Suter</string>
     <string name="set_attachment_action">Load the media</string>
     <string name="load_attachment">Load the pictures</string>
     <string name="load_attachment_spoiler">Show more…</string>
@@ -294,28 +294,28 @@
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">Advanced settings</string>
+    <string name="settings_title_more_options">Iγewwaṛen leqqayen</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Silent Notifications</string>
-    <string name="set_night_mode">Night mode</string>
+    <string name="set_night_mode">Askar n yiḍ</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-    <string name="settings_title_profile">Edit profile</string>
+    <string name="settings_title_profile">Zreg alegdis</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Lock account</string>
-    <string name="set_save_changes">Save changes</string>
+    <string name="set_save_changes">Sekles ibeddilen</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
     <string name="set_fit_preview">Fit preview images</string>
     <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
     <string name="settings_title_hour">Time slot for notifications:</string>
-    <string name="settings_time_from">Between</string>
-    <string name="settings_time_to">and</string>
+    <string name="settings_time_from">Ger</string>
+    <string name="settings_time_to">d</string>
     <string name="settings_time_greater">The time must be greater than %1$s</string>
     <string name="settings_time_lower">The time must be lower than %1$s</string>
-    <string name="settings_hour_init">Start time</string>
-    <string name="settings_hour_end">End time</string>
+    <string name="settings_hour_init">Akud n tazwara</string>
+    <string name="settings_hour_end">Azemz n tagara</string>
     <string name="embedded_browser">Use the built-in browser</string>
     <string name="custom_tabs">Custom tabs</string>
     <string name="use_javascript">Enable Javascript</string>
@@ -328,14 +328,14 @@
         <item>Low battery drain</item>
     </string-array>
     <string-array name="settings_menu_tabs">
-        <item>Tabs</item>
-        <item>Menu</item>
-        <item>Tabs and menu</item>
+        <item>Iccaren</item>
+        <item>Umuγ</item>
+        <item>Iccaren d wumuγ</item>
     </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
-        <item>No</item>
+        <item>Ala</item>
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
