@@ -614,6 +614,10 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="tags_renamed">The tag has been changed!</string>
     <string name="tags_deleted">The tag has been deleted!</string>
     <string name="set_display_art">Display Art timeline</string>
+    <string name="schedule_boost">Schedule boost</string>
+    <string name="boost_scheduled">The boost is scheduled!</string>
+    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string-array name="filter_expire">
         <item>Never</item>
         <item>30 minutes</item>
