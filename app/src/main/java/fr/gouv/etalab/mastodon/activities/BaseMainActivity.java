@@ -725,6 +725,11 @@ public abstract class BaseMainActivity extends BaseActivity
             tabPosition.put("art",i);
         }
 
+        if( i > 3 && !Helper.isTablet(getApplicationContext())){
+            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }else{
+            tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }
         //Display filter for notification when long pressing the tab
         final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
         tabStrip.getChildAt(1).setOnLongClickListener(new View.OnLongClickListener() {
