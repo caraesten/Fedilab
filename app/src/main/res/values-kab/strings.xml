@@ -203,7 +203,7 @@
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
     <string name="remove_scheduled">Delete scheduled toot?</string>
-    <string name="media_count">Media: %d</string>
+    <string name="media_count">Allal n teγwalt: %d</string>
     <string name="toot_scheduled">The toot has been scheduled!</string>
     <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
@@ -231,9 +231,9 @@
     <string name="delete_notification">The notification has been deleted!</string>
     <string name="delete_notification_all">All notifications have been deleted!</string>
     <!-- HEADER -->
-    <string name="following">Following</string>
-    <string name="followers">Followers</string>
-    <string name="pinned_toots">Pinned</string>
+    <string name="following">Ittafar</string>
+    <string name="followers">Imeḍfaṛen</string>
+    <string name="pinned_toots">Inta</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
     <string name="no_internet">No Internet connection!</string>
@@ -270,23 +270,23 @@
     <string name="set_toots_page">Number of toots per load</string>
     <string name="set_accounts_page">Number of accounts per load</string>
     <string name="set_notifications_page">Number of notifications per load</string>
-    <string name="set_attachment_always">Always</string>
+    <string name="set_attachment_always">Yal tikelt</string>
     <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Suter</string>
     <string name="set_attachment_action">Load the media</string>
-    <string name="load_attachment">Load the pictures</string>
-    <string name="load_attachment_spoiler">Show more…</string>
-    <string name="load_attachment_spoiler_less">Show less…</string>
+    <string name="load_attachment">Sali-d tugniwin</string>
+    <string name="load_attachment_spoiler">Sken ugar…</string>
+    <string name="load_attachment_spoiler_less">Sken kra…</string>
     <string name="load_sensitive_attachment">Sensitive content</string>
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_display_local">Display local timeline</string>
     <string name="set_display_global">Display federated timeline</string>
     <string name="set_disable_gif">Disable GIF avatars</string>
-    <string name="set_folder_title">Path: </string>
+    <string name="set_folder_title">Abrid: </string>
     <string name="set_auto_store_toot">Save drafts automatically</string>
     <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
-    <string name="settings_title_notifications">Manage notifications</string>
+    <string name="settings_title_notifications">Sefrek ilγuten</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
     <string name="set_notif_follow_share">Notify when someone boosts your status</string>
@@ -364,7 +364,7 @@
     <string name="action_follow">Follow</string>
     <string name="action_unfollow">Unfollow</string>
     <string name="action_block">Seḥbes</string>
-    <string name="action_unblock">Eks asewḥel</string>
+    <string name="action_unblock">Serreḥ</string>
     <string name="action_mute">Susem</string>
     <string name="action_no_action">No action</string>
     <string name="action_unmute">Unmute</string>
@@ -395,7 +395,7 @@
     <string name="v_direct">Direct</string>
     <string name="v_keywords">Some keywords…</string>
     <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
+    <string name="show_pinned">Sseken-ed wid yentan</string>
     <string name="filter_no_result">No matching result found!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
@@ -562,7 +562,7 @@
     <string name="how_to_videos">How To Videos</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
     <string name="no_blocked_domain">No blocked domains!</string>
-    <string name="unblock_domain_confirm">Unblock domain</string>
+    <string name="unblock_domain_confirm">Serreḥ i taγult</string>
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
     <string name="block_domain_confirm_message">Are you sure to block %s?</string>
     <string name="blocked_domains">Blocked domains</string>
