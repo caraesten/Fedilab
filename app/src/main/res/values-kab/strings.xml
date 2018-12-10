@@ -25,12 +25,12 @@
     <string name="accounts">Imiḍan</string>
     <string name="toots">Toots</string>
     <string name="tags">Tags</string>
-    <string name="token">Token</string>
+    <string name="token">Ajiṭun</string>
     <string name="save">Aḥrez</string>
     <string name="restore">Err-d</string>
     <string name="two_factor_authentification">Asesteb s snat n tarrayin?</string>
     <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
-    <string name="no_result">No results!</string>
+    <string name="no_result">Ulac igemmaḍ!</string>
     <string name="instance">Instance</string>
     <string name="instance_example">Instance: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
@@ -38,7 +38,7 @@
     <string name="clipboard">The content of the toot has been copied to the clipboard</string>
     <string name="change">Beddel</string>
     <string name="choose_picture">Fren tugna…</string>
-    <string name="clear">Clean</string>
+    <string name="clear">Sfeḍ</string>
     <string name="microphone">Asawaḍ</string>
     <string name="camera">Takamiṛat</string>
     <string name="speech_prompt">Please, say something</string>
