@@ -701,6 +701,10 @@
     <string name="emoji_picker">Emoji picker</string>
     <string name="refresh">Refresh</string>
     <string name="expand_conversation">Expand the conversation</string>
+    <string name="remove_account">Remove an account</string>
+    <string name="delete_domain">Delete the blocked domain</string>
+    <string name="custom_emoji_picker">Custom emoji picker</string>
+    <string name="play_video">Play video</string>
 
     <string-array name="filter_expire">
         <item>Never</item>

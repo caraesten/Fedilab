@@ -30,7 +30,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_margin="10dp"
-        tools:ignore="ContentDescription"/>
+        android:contentDescription="@string/profile_picture"/>
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
@@ -56,6 +56,7 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_gravity="center"
         app:fabSize="mini"
+        android:contentDescription="@string/follow_account"
         android:id="@+id/account_follow"
         android:textAllCaps="false"
         android:src="@drawable/ic_user_plus"

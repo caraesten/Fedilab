@@ -92,8 +92,10 @@ public class AccountsInAListAdapter extends RecyclerView.Adapter implements OnLi
 
         if( actionType == type.CURRENT){
             holder.account_action.setImageResource(R.drawable.ic_close);
+            holder.account_action.setContentDescription(context.getString(R.string.remove_account));
         }else if(actionType == type.SEARCH){
             holder.account_action.setImageResource(R.drawable.ic_add);
+            holder.account_action.setContentDescription(context.getString(R.string.add_account));
         }
         holder.account_action.setOnClickListener(new View.OnClickListener() {
             @Override

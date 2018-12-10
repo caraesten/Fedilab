@@ -17,7 +17,6 @@
 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="2dp"
@@ -29,7 +28,7 @@
         android:id="@+id/account_pp"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/profile_picture" />
     <TextView
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"

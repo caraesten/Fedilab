@@ -33,7 +33,7 @@
             android:layout_margin="10dp"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/profile_picture"  />
         <LinearLayout
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
@@ -60,6 +60,7 @@
             android:layout_gravity="center"
             app:fabSize="mini"
             android:id="@+id/account_follow"
+            android:contentDescription="@string/follow_account"
             android:textAllCaps="false"
             android:src="@drawable/ic_user_plus"
             android:gravity="center"

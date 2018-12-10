@@ -30,7 +30,7 @@
         android:id="@+id/emoji_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/custom_emoji_picker"  />
     <TextView
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"

@@ -15,13 +15,10 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_image"
-    >
+    android:background="@color/background_image">
     <ImageView
         android:id="@+id/back_ground_image"
         android:alpha="0.2"
@@ -29,7 +26,7 @@
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:layout_height="wrap_content"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/profile_banner" />
     <RelativeLayout
         android:padding="@dimen/fab_margin"
         android:layout_width="match_parent"
@@ -43,7 +40,7 @@
             android:adjustViewBounds="true"
             android:layout_centerHorizontal="true"
             android:layout_height="80dp"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/profile_picture" />
         <!-- Screen name -->
         <TextView
             android:layout_marginTop="10dp"
