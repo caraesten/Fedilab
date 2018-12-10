@@ -297,19 +297,19 @@
     <string name="set_folder_title">Llwybr: </string>
     <string name="set_auto_store_toot">Arbed drafft yn ddiofyn</string>
     <string name="set_bubble_counter">Display counters</string>
-    <string name="set_auto_add_media_url">Add URL of media in toots</string>
+    <string name="set_auto_add_media_url">Ychwanegu URL o\'r cyfryngau yn y tŵtiau</string>
     <string name="settings_title_notifications">Manage notifications</string>
-    <string name="set_notif_follow">Notify when someone follows you</string>
-    <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
+    <string name="set_notif_follow">Hysbysu pryd mae rhywun yn eich dilyn chi</string>
+    <string name="set_notif_follow_ask">Hysbysu pryd mae rhywun yn gwneud cais i\'ch dilyn chi</string>
     <string name="set_notif_follow_share">Notify when someone boosts your status</string>
     <string name="set_notif_follow_add">Notify when someone favourites your status</string>
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">Advanced settings</string>
+    <string name="settings_title_more_options">Gosodiadau uwch</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
-    <string name="set_notify">Notify?</string>
-    <string name="set_notif_silent">Silent Notifications</string>
+    <string name="set_notify">Hsybysu?</string>
+    <string name="set_notif_silent">Hysbysiadau distaw</string>
     <string name="set_night_mode">Night mode</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Golygu proffil</string>
@@ -322,12 +322,12 @@
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
     <string name="settings_title_hour">Time slot for notifications:</string>
-    <string name="settings_time_from">Between</string>
-    <string name="settings_time_to">and</string>
-    <string name="settings_time_greater">The time must be greater than %1$s</string>
-    <string name="settings_time_lower">The time must be lower than %1$s</string>
-    <string name="settings_hour_init">Start time</string>
-    <string name="settings_hour_end">End time</string>
+    <string name="settings_time_from">Rhwng</string>
+    <string name="settings_time_to">ac</string>
+    <string name="settings_time_greater">Rhaid i\'r amser fod yn fwy na %1$s</string>
+    <string name="settings_time_lower">Rhad i\'r amser fod yn is na %1$s</string>
+    <string name="settings_hour_init">Amser dechrau</string>
+    <string name="settings_hour_end">Amser gorffen</string>
     <string name="embedded_browser">Use the built-in browser</string>
     <string name="custom_tabs">Custom tabs</string>
     <string name="use_javascript">Enable Javascript</string>
@@ -340,9 +340,9 @@
         <item>Low battery drain</item>
     </string-array>
     <string-array name="settings_menu_tabs">
-        <item>Tabs</item>
-        <item>Menu</item>
-        <item>Tabs and menu</item>
+        <item>Tabiau</item>
+        <item>Dewislen</item>
+        <item>Tabiau a dewislen</item>
     </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
