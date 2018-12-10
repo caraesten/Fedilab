@@ -276,6 +276,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             if( attachment != null && attachment.getDescription() != null && !attachment.getDescription().equals("null")){
                 media_description.setText(attachment.getDescription());
                 media_description.setVisibility(View.VISIBLE);
+                imageView.setContentDescription(attachment.getDescription());
             }else{
                 media_description.setText("");
                 media_description.setVisibility(View.GONE);

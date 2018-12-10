@@ -24,8 +24,8 @@
     app:isSwipeFromEdge="true"
     app:maskAlpha="125"
     app:swipeBackFactor="0.5">
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -66,12 +66,13 @@
             android:id="@+id/media_picture_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <!-- Description is set dynamically -->
             <com.github.chrisbanes.photoview.PhotoView
                 android:visibility="gone"
                 android:id="@+id/media_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:ignore="ContentDescription" />
+                />
             <TextView
                 android:visibility="gone"
                 android:gravity="center"
@@ -101,7 +102,7 @@
             android:layout_alignParentLeft="true"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/previous" />
         <ImageView
             android:visibility="gone"
             android:layout_margin="5dp"
@@ -112,7 +113,7 @@
             android:layout_alignParentRight="true"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/next" />
 
 
 
@@ -129,6 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_close"
+            android:contentDescription="@string/close"
             />
 
         <ImageButton
@@ -144,6 +146,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_save_white"
+            android:contentDescription="@string/download"
             />
 
         <TextView

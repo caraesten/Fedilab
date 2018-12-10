@@ -84,6 +84,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             app:srcCompat="@drawable/ic_mail_outline"
+            android:contentDescription="@string/contact_instance_admin"
             tools:ignore="VectorDrawableCompat" />
     </LinearLayout>
     <!-- Main Loader -->

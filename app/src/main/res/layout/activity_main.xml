@@ -120,6 +120,7 @@
         </RelativeLayout>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/toot"
+            android:contentDescription="@string/toot_it"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -129,6 +130,7 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/delete_all"
             android:visibility="gone"
+            android:contentDescription="@string/delete_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -138,6 +140,7 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_new"
             android:visibility="gone"
+            android:contentDescription="@string/add_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -148,6 +151,7 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/federated_timeline"
             android:layout_width="wrap_content"
+            android:contentDescription="@string/follow_instance"
             android:layout_height="wrap_content"
             app:fabSize="mini"
             android:layout_gravity="bottom|start"

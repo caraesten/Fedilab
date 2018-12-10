@@ -15,9 +15,7 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -56,7 +54,7 @@
             android:src="@drawable/ic_skip_previous"
             android:layout_height="40dp"
             style="@style/Base.Widget.AppCompat.Button"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/previous" />
         <ImageButton
             android:id="@+id/date_time_next"
             android:layout_marginStart="10dp"
@@ -65,7 +63,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             style="@style/Base.Widget.AppCompat.Button"
-            tools:ignore="ContentDescription"/>
+            android:contentDescription="@string/next"/>
         <ImageButton
             android:visibility="gone"
             android:layout_marginStart="10dp"
@@ -75,7 +73,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             style="@style/Base.Widget.AppCompat.Button"
-            tools:ignore="ContentDescription"/>
+            android:contentDescription="@string/validate"/>
     </LinearLayout>
 
 </LinearLayout>
