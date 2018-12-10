@@ -325,7 +325,7 @@
     <string-array name="battery_profiles">
         <item>Décharge normale de la batterie</item>
         <item>Décharge modérée de la batterie</item>
-        <item>Low battery drain</item>
+        <item>Décharge faible de la batterie</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Onglets</item>
@@ -592,10 +592,10 @@
     <string name="set_display_emoji">Utiliser les EmojiOne</string>
     <string name="information">information</string>
     <string name="set_display_card">Afficher les aperçus dans tous les pouets</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="thanks_text_ux">Nouveau·lle UX/UI Designer·use</string>
     <string name="set_old_direct_timeline">Utiliser le fil direct antérieur à Mastodon 2.6</string>
     <string name="set_display_video_preview">Afficher les aperçus des vidéos</string>
-    <string name="thanks_text_support">Gitlab Support</string>
+    <string name="thanks_text_support">Support de Gitlab</string>
     <string name="action_bug_report">Signaler un bug</string>
     <string name="no_mail_client">Aucun client de messagerie n’est installé.</string>
     <string name="bug_report_mail">Envoyer un rapport de bogue</string>
@@ -604,7 +604,7 @@
     <string name="set_change_locale">Changer de langue</string>
     <string name="default_language">Langue par défaut</string>
     <string name="truncate_long_toots">Tronquer les longs pouets</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
+    <string name="set_truncate_toot">Tronquer les pouets sur les lignes «x». Zéro signifie désactivé.</string>
     <string name="display_toot_truncate">Afficher plus</string>
     <string name="hide_toot_truncate">Afficher moins</string>
     <string name="manage_tags">Gestion des étiquettes</string>
