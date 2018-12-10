@@ -632,7 +632,7 @@
     <string name="mastohost_logo">MastoHost logo</string>
     <string name="emoji_picker">Emoji picker</string>
     <string name="refresh">Odśwież</string>
-    <string name="expand_conversation">Expand the conversation</string>
+    <string name="expand_conversation">Rozszerz rozmowę</string>
     <string name="remove_account">Usuń konto</string>
     <string name="delete_domain">Usuń zablokowaną domenę</string>
     <string name="custom_emoji_picker">Custom emoji picker</string>
