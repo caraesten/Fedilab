@@ -172,13 +172,13 @@
     <string name="choose_toot">Choose a toot</string>
     <string name="choose_accounts">Fren amiḍan</string>
     <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
+    <string name="remove_draft">Kkes arewway?</string>
     <string name="show_reply">Click on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
     <string name="instance_no_description">No description available!</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
+    <string name="about_vesrion">Lqem %1$s</string>
     <string name="about_developer">Aneflay:</string>
     <string name="about_license">Turagt: </string>
     <string name="about_license_action">GNU GPL V3</string>
@@ -198,7 +198,7 @@
     <string name="followers_cnt">Followers \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
     <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="reject">Agi</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
