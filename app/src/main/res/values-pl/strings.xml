@@ -312,7 +312,7 @@
     <string name="set_save_changes">Zapisz zmiany</string>
     <string name="set_header_picture_overlay">Wybierz zdjęcie nagłówka</string>
     <string name="set_fit_preview">Pokaż całość</string>
-    <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+    <string name="set_automatically_split_toot">Automatycznie rozdzielaj wpisy na ponad 500 znaków w odpowiedziach</string>
     <string name="note_no_space">Przekroczono limit 160 dozwolonych znaków!</string>
     <string name="username_no_space">Przekroczono limit 30 dozwolonych znaków!</string>
     <string name="settings_title_hour">Odstęp czasu dla powiadomień:</string>
@@ -500,7 +500,7 @@
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Obserwuj instancję</string>
-    <string name="toast_instance_already_added">You already follow this instance!</string>
+    <string name="toast_instance_already_added">Już obserwujesz tą instancję!</string>
     <string name="toast_instance_followed">Instancja jest śledzona!</string>
     <string name="action_partnership">Partnerstwa</string>
     <string name="neutral_menu_information">Informacje</string>
