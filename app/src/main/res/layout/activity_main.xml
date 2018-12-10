@@ -47,7 +47,7 @@
                     android:id="@+id/iconbar"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    tools:ignore="ContentDescription" />
+                    android:contentDescription="@string/open_menu" />
                 <LinearLayout
                     android:id="@+id/toolbar_search_container"
                     android:layout_width="match_parent"
@@ -79,6 +79,7 @@
                         android:visibility="gone"
                         android:id="@+id/delete_instance"
                         android:src="@drawable/ic_delete"
+                        android:contentDescription="@string/delete_instance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <android.support.v7.widget.SearchView

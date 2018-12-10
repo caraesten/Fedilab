@@ -52,7 +52,7 @@
                 android:layout_width="100dp"
                 android:scaleType="fitXY"
                 android:layout_height="100dp"
-                tools:ignore="ContentDescription" />
+                android:contentDescription="@string/profile_picture" />
             <LinearLayout
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
@@ -99,7 +99,7 @@
                 android:minHeight="100dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:ignore="ContentDescription" />
+                android:contentDescription="@string/profile_banner" />
             <TextView
                 android:visibility="gone"
                 android:id="@+id/set_header_picture_overlay"

@@ -318,6 +318,13 @@ public abstract class BaseMainActivity extends BaseActivity
         ImageView iconArt = tabArt.getCustomView().findViewById(R.id.tab_icon);
         iconArt.setImageResource(R.drawable.ic_color_lens);
 
+        iconHome.setContentDescription(getString(R.string.home_menu));
+        iconNotif.setContentDescription(getString(R.string.notifications));
+        iconDirect.setContentDescription(getString(R.string.direct_message));
+        iconLocal.setContentDescription(getString(R.string.local_menu));
+        iconGlobal.setContentDescription(getString(R.string.global_menu));
+        iconArt.setContentDescription(getString(R.string.art_menu));
+
         if( theme == THEME_LIGHT){
             iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
