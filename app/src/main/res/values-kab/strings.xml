@@ -146,7 +146,7 @@
     <string name="date_hours">%d h</string>
     <string name="date_day">%d d</string>
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Warning</string>
+    <string name="toot_cw_placeholder">Acaγli</string>
     <string name="toot_placeholder">What is on your mind?</string>
     <string name="toot_it">TOOT!</string>
     <string name="cw">cw</string>
