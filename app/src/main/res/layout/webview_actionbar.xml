@@ -26,7 +26,7 @@
         android:id="@+id/webview_favicon"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/favicon"/>
     <TextView
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"

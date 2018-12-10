@@ -16,17 +16,15 @@
     see <http://www.gnu.org/licenses>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/tab_icon"
         android:layout_centerInParent="true"
         android:scaleType="fitXY"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        tools:ignore="ContentDescription" />
+        />
     <TextView
         android:visibility="gone"
         android:id="@+id/tab_counter"

@@ -16,12 +16,10 @@
     see <http://www.gnu.org/licenses>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:id="@+id/scheduled_toot_container"
-    >
+    android:id="@+id/scheduled_toot_container">
     <ImageView
         android:id="@+id/scheduled_toot_pp"
         android:layout_gravity="center_vertical|top"
@@ -29,7 +27,7 @@
         android:layout_width="50dp"
         android:layout_marginTop="5dp"
         android:layout_height="50dp"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/profile_picture" />
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -54,7 +52,7 @@
                 android:id="@+id/scheduled_toot_privacy"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                tools:ignore="ContentDescription" />
+                android:contentDescription="@string/toot_visibility_tilte"/>
             <TextView
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
@@ -106,5 +104,5 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:padding="10dp"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/delete" />
 </LinearLayout>

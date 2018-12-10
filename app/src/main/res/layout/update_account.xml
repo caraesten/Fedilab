@@ -15,8 +15,7 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+<LinearLayout android:layout_width="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
@@ -35,5 +34,5 @@
         android:scaleType="center"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_cancel"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/cancel" />
 </LinearLayout>

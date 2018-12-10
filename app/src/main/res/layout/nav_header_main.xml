@@ -28,7 +28,7 @@
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/profile_banner" />
     <LinearLayout
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:id="@+id/profilePicture"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                tools:ignore="ContentDescription" />
+                android:contentDescription="@string/profile_picture"/>
             <LinearLayout
                 android:id="@+id/more_option_container"
                 android:layout_width="0dp"
@@ -63,7 +63,7 @@
                 android:id="@+id/header_option_menu"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                tools:ignore="ContentDescription" />
+                android:contentDescription="@string/truncate_long_toots" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -104,7 +104,7 @@
             android:id="@+id/header_option_info"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/information"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -50,7 +50,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/status_account_profile"
-                    tools:ignore="ContentDescription" />
+                    android:contentDescription="@string/profile_picture" />
 
                 <LinearLayout
                     android:id="@+id/conversation_pp"
@@ -65,7 +65,7 @@
                         android:scaleType="centerCrop"
                         android:adjustViewBounds="true"
                         android:layout_height="match_parent"
-                        tools:ignore="ContentDescription" />
+                        android:contentDescription="@string/profile_picture" />
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -80,7 +80,7 @@
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:adjustViewBounds="true"
-                            tools:ignore="ContentDescription" />
+                            android:contentDescription="@string/profile_picture" />
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -95,7 +95,7 @@
                                 android:scaleType="fitCenter"
                                 android:adjustViewBounds="true"
                                 android:layout_height="match_parent"
-                                tools:ignore="ContentDescription" />
+                                android:contentDescription="@string/profile_picture" />
                             <ImageView
                                 android:id="@+id/conversation_pp_4"
                                 android:layout_width="0dp"
@@ -103,7 +103,7 @@
                                 android:scaleType="fitCenter"
                                 android:adjustViewBounds="true"
                                 android:layout_height="match_parent"
-                                tools:ignore="ContentDescription" />
+                                android:contentDescription="@string/profile_picture" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -116,7 +116,7 @@
                     android:layout_centerHorizontal="true"
                     android:visibility="gone"
                     android:id="@+id/status_account_profile_boost"
-                    tools:ignore="ContentDescription" />
+                    android:contentDescription="@string/profile_picture" />
                 <ImageView
                     android:id="@+id/status_account_profile_boost_by"
                     android:layout_height="30dp"
@@ -126,7 +126,7 @@
                     android:layout_marginTop="25dp"
                     style="?attr/shapeBorder"
                     android:visibility="gone"
-                    tools:ignore="ContentDescription" />
+                    android:contentDescription="@string/profile_picture" />
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout
@@ -315,7 +315,7 @@
                 android:gravity="center"
                 android:scaleType="centerCrop"
                 android:layout_height="60dp"
-                tools:ignore="ContentDescription" />
+                android:contentDescription="@string/card_view_image"/>
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dp"
@@ -370,7 +370,7 @@
                     android:layout_width="30dp"
                     android:src="@drawable/video_preview"
                     android:layout_height="30dp"
-                    tools:ignore="ContentDescription" />
+                    android:contentDescription="@string/play_video"/>
             </RelativeLayout>
             <WebView
                 android:visibility="gone"
@@ -410,7 +410,7 @@
                             android:scaleType="fitCenter"
                             android:adjustViewBounds="true"
                             android:layout_height="match_parent"
-                            tools:ignore="ContentDescription" />
+                             />
                         <ImageView
                             android:id="@+id/status_prev1_play_h"
                             android:visibility="gone"
@@ -418,7 +418,7 @@
                             android:layout_width="20dp"
                             android:src="@drawable/ic_play_arrow"
                             android:layout_height="20dp"
-                            tools:ignore="ContentDescription" />
+                            android:contentDescription="@string/play_video" />
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="0dp"
@@ -433,7 +433,7 @@
                             android:layout_width="match_parent"
                             android:adjustViewBounds="true"
                             android:layout_height="match_parent"
-                            tools:ignore="ContentDescription" />
+                             />
                         <ImageView
                             android:id="@+id/status_prev2_play_h"
                             android:visibility="gone"
@@ -441,7 +441,7 @@
                             android:layout_width="20dp"
                             android:src="@drawable/ic_play_arrow"
                             android:layout_height="20dp"
-                            tools:ignore="ContentDescription" />
+                            android:contentDescription="@string/play_video" />
                     </RelativeLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -465,7 +465,7 @@
                             android:scaleType="fitCenter"
                             android:adjustViewBounds="true"
                             android:layout_height="match_parent"
-                            tools:ignore="ContentDescription" />
+                            />
                         <ImageView
                             android:id="@+id/status_prev3_play_h"
                             android:visibility="gone"
@@ -473,7 +473,7 @@
                             android:layout_width="20dp"
                             android:src="@drawable/ic_play_arrow"
                             android:layout_height="20dp"
-                            tools:ignore="ContentDescription" />
+                            android:contentDescription="@string/play_video" />
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="0dp"
@@ -488,7 +488,7 @@
                             android:scaleType="fitCenter"
                             android:adjustViewBounds="true"
                             android:layout_height="match_parent"
-                            tools:ignore="ContentDescription" />
+                             />
                         <ImageView
                             android:id="@+id/status_prev4_play_h"
                             android:visibility="gone"
@@ -496,7 +496,7 @@
                             android:layout_width="20dp"
                             android:src="@drawable/ic_play_arrow"
                             android:layout_height="20dp"
-                            tools:ignore="ContentDescription" />
+                            android:contentDescription="@string/play_video" />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -508,7 +508,7 @@
                 android:layout_width="wrap_content"
                 android:src="@drawable/ic_remove_red_eye_img"
                 android:layout_height="wrap_content"
-                tools:ignore="ContentDescription" />
+                android:contentDescription="@string/hide_media"/>
         </RelativeLayout>
         <LinearLayout
             android:visibility="gone"
@@ -528,7 +528,7 @@
                     android:layout_width="match_parent"
                     android:scaleType="centerCrop"
                     android:layout_height="match_parent"
-                    tools:ignore="ContentDescription" />
+                    />
                 <ImageView
                     android:id="@+id/status_prev1_play"
                     android:visibility="gone"
@@ -536,7 +536,7 @@
                     android:layout_width="20dp"
                     android:src="@drawable/ic_play_arrow"
                     android:layout_height="20dp"
-                    tools:ignore="ContentDescription" />
+                    android:contentDescription="@string/play_video" />
                 <ImageView
                     android:id="@+id/hide_preview"
                     android:layout_alignParentStart="true"
@@ -545,7 +545,7 @@
                     android:layout_width="wrap_content"
                     android:src="@drawable/ic_remove_red_eye_img"
                     android:layout_height="wrap_content"
-                    tools:ignore="ContentDescription" />
+                    android:contentDescription="@string/hide_media" />
             </RelativeLayout>
             <LinearLayout
                 android:orientation="vertical"
@@ -565,7 +565,7 @@
                         android:layout_width="match_parent"
                         android:scaleType="centerCrop"
                         android:layout_height="match_parent"
-                        tools:ignore="ContentDescription" />
+                         />
                     <ImageView
                         android:visibility="gone"
                         android:id="@+id/status_prev2_play"
@@ -573,7 +573,7 @@
                         android:layout_width="20dp"
                         android:src="@drawable/ic_play_arrow"
                         android:layout_height="20dp"
-                        tools:ignore="ContentDescription" />
+                        android:contentDescription="@string/play_video"/>
                 </RelativeLayout>
 
                 <LinearLayout
@@ -593,7 +593,7 @@
                             android:layout_width="match_parent"
                             android:scaleType="centerCrop"
                             android:layout_height="match_parent"
-                            tools:ignore="ContentDescription" />
+                            />
                         <ImageView
                             android:id="@+id/status_prev3_play"
                             android:layout_centerInParent="true"
@@ -601,7 +601,7 @@
                             android:src="@drawable/ic_play_arrow"
                             android:visibility="gone"
                             android:layout_height="20dp"
-                            tools:ignore="ContentDescription" />
+                            android:contentDescription="@string/play_video"/>
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_marginLeft="2dp"
@@ -615,7 +615,7 @@
                             android:layout_width="match_parent"
                             android:scaleType="centerCrop"
                             android:layout_height="match_parent"
-                            tools:ignore="ContentDescription" />
+                             />
                         <ImageView
                             android:id="@+id/status_prev4_play"
                             android:layout_centerInParent="true"
@@ -623,7 +623,7 @@
                             android:layout_width="20dp"
                             android:src="@drawable/ic_play_arrow"
                             android:layout_height="20dp"
-                            tools:ignore="ContentDescription" />
+                            android:contentDescription="@string/play_video"/>
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -693,7 +693,7 @@
             android:src="@drawable/ic_fiber_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/new_toot" />
         <TextView
             android:drawablePadding="2dp"
             android:layout_gravity="center_vertical"
@@ -715,6 +715,7 @@
                 app:sparkbutton_activeImage="@drawable/ic_repeat_boost"
                 app:sparkbutton_inActiveImage="@drawable/ic_repeat"
                 app:sparkbutton_iconSize="20dp"
+                android:contentDescription="@string/reblog"
                 />
             <TextView
                 android:drawablePadding="2dp"
@@ -735,6 +736,7 @@
                 android:id="@+id/spark_button_fav"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:contentDescription="@string/favourite"
                 app:sparkbutton_activeImage="@drawable/ic_star"
                 app:sparkbutton_inActiveImage="@drawable/ic_star_border"
                 app:sparkbutton_iconSize="20dp"
@@ -752,6 +754,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
             android:id="@+id/status_pin"
+            android:contentDescription="@string/pin_add"
             android:layout_gravity="center_vertical"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -765,9 +768,10 @@
             <ImageView
                 android:id="@+id/status_privacy"
                 android:layout_gravity="center_vertical"
+                android:contentDescription="@string/toot_visibility_tilte"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                tools:ignore="ContentDescription" />
+                />
             <ImageView
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
@@ -775,7 +779,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/ic_more_horiz"
-                tools:ignore="ContentDescription" />
+                android:contentDescription="@string/display_toot_truncate" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

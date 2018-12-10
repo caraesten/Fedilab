@@ -28,7 +28,7 @@
         android:adjustViewBounds="true"
         android:id="@+id/media_picture"
         android:layout_width="match_parent"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/media_description" />
     <EditText
         android:layout_alignBottom="@+id/media_picture"
         android:id="@+id/media_description"

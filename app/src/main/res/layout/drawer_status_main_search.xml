@@ -16,7 +16,6 @@
     see <http://www.gnu.org/licenses>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/main_container"
@@ -48,7 +47,7 @@
             android:layout_width="50dp"
             android:layout_gravity="center_horizontal|top"
             android:gravity="center_horizontal|top"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/profile_picture" />
         <LinearLayout
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"

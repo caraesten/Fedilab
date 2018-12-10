@@ -16,11 +16,9 @@
     see <http://www.gnu.org/licenses>.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -103,7 +101,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Base.Widget.AppCompat.Button.Colored"
                     android:src="@drawable/ic_insert_photo"
-                    tools:ignore="ContentDescription" />
+                    android:contentDescription="@string/toot_select_image"  />
                 <ImageButton
                     android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
@@ -112,7 +110,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Base.Widget.AppCompat.Button.Colored"
                     android:src="@drawable/ic_public"
-                    tools:ignore="ContentDescription" />
+                    android:contentDescription="@string/toot_visibility_tilte"/>
                 <Button
                     android:id="@+id/toot_cw"
                     android:padding="5dp"
@@ -128,6 +126,7 @@
                     android:layout_gravity="center"
                     android:padding="2dp"
                     android:scaleType="fitXY"
+                    android:contentDescription="@string/emoji_picker"
                     android:src="@drawable/emoji_one_category_smileysandpeople"
                     style="?attr/borderlessColored"
                     android:layout_width="30dp"
