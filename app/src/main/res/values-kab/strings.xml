@@ -168,7 +168,7 @@
         <item>Post to followers only</item>
         <item>Post to mentioned users only</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
+    <string name="no_draft">Wlac irewwayen!</string>
     <string name="choose_toot">Choose a toot</string>
     <string name="choose_accounts">Fren amiḍan</string>
     <string name="select_accounts">Select some accounts</string>
