@@ -615,10 +615,10 @@
     <string name="tags_renamed">L\'etichetta è stata modificata!</string>
     <string name="tags_deleted">L\'etichetta è stata eliminata!</string>
     <string name="set_display_art">Mostra la timeline Arte</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
+    <string name="schedule_boost">Programma boost</string>
+    <string name="boost_scheduled">Il boost è programmato!</string>
+    <string name="no_scheduled_boosts">Nessun boost programmato da mostrare!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Apri il menu di un toot e poi premi <b>Programma boost</b>.]]></string>
     <string-array name="filter_expire">
         <item>Mai</item>
         <item>30 minuti</item>
