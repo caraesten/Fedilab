@@ -256,7 +256,7 @@
     <string name="toast_follow">Dilynwyd y cyfrif!</string>
     <string name="toast_unfollow">Nid yw\'r cyfrif yn cael ei ddilyn mwyach!</string>
     <string name="toast_reblog">Mae\'r tŵt wedi\'i hybu!</string>
-    <string name="toast_unreblog">The toot is no longer boosted!</string>
+    <string name="toast_unreblog">Nid yw\'r tŵt wedi\'i hybu mwyach!</string>
     <string name="toast_favourite">The toot was added to your favourites!</string>
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
     <string name="toast_report">The toot was reported!</string>
