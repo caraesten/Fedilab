@@ -323,9 +323,9 @@
     <string name="use_cookies">Permitir testemuños de terceiros</string>
     <string name="settings_ui_layout">Aspecto das liñas temporais: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Consumo normal de batería</item>
+        <item>Consumo moderado de batería</item>
+        <item>Consumo baixo de batería</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Pestanas</item>
@@ -591,10 +591,10 @@
     <string name="no_lists">Sen listas</string>
     <string name="videos">Vídeos</string>
     <string name="channels">Canles</string>
-    <string name="set_display_emoji">Use Emoji One</string>
-    <string name="information">Information</string>
-    <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="set_display_emoji">Utilizar Emoji One</string>
+    <string name="information">Información</string>
+    <string name="set_display_card">Mostrar vista previa en todos os toots</string>
+    <string name="thanks_text_ux">Deseñador/a da nova UX/UI</string>
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string name="set_display_video_preview">Display video previews</string>
     <string name="thanks_text_support">Gitlab Support</string>
