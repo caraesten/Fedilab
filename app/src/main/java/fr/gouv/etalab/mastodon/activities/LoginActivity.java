@@ -725,7 +725,7 @@ public class LoginActivity extends BaseActivity {
                 }
 
             })
-            .targetView(login_passwd)
+            .targetView(login_two_step)
             .show();
     }
 
