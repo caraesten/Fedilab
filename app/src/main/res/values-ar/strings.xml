@@ -335,9 +335,9 @@
     <string name="use_cookies">تقبُّل كعكات الطرف الثالث</string>
     <string name="settings_ui_layout">نسق الخيوط: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>استخدام عادي لطاقة البطارية</item>
+        <item>استخدام متوسط لطاقة البطارية</item>
+        <item>استخدام طفيف لطاقة البطارية</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>التبويب</item>
@@ -636,18 +636,18 @@
     <string name="profile_banner">رأسية الصفحة الشخصية</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
     <string name="add_new">إضافة</string>
-    <string name="mastohost_logo">MastoHost logo</string>
+    <string name="mastohost_logo">شعار ماستوهوست</string>
     <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
+    <string name="refresh">تحديث</string>
+    <string name="expand_conversation">توسيع المحادثة</string>
+    <string name="remove_account">إزالة حساب</string>
+    <string name="delete_domain">حذف النطاق المحظور</string>
     <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
-    <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
-    <string name="favicon">Favicon</string>
+    <string name="play_video">تشغيل الفيديو</string>
+    <string name="new_toot">تبويق جديد</string>
+    <string name="card_view_image">صورة البطاقة</string>
+    <string name="hide_media">إخفاء الوسائط</string>
+    <string name="favicon">أيقونة المفضلة</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
