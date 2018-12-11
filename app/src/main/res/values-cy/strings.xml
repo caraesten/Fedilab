@@ -384,37 +384,37 @@
     <string name="followed_by">Yn eich dilyn chi</string>
     <string name="action_search">Chwilio</string>
     <string name="set_capitalize">Llythyren gyntaf yn llythyren fawr mewn ymatebion</string>
-    <string name="set_resize_picture">Resize pictures</string>
+    <string name="set_resize_picture">Newid maint lluniau</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push notifications</string>
-    <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+    <string name="settings_popup_title">Hysbysiadau push</string>
+    <string name="settings_popup_message">        Cadarnhewch yr hysbysiadau push yr ydych am eu derbyn.
+        Mae modd galluogi neu diffodd yr hysbysiadau hyn wedyn yn gosodiadau (Tab hysbysiadau).
     </string>
-    <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-    <string name="settings_popup_notification">For unread notifications?</string>
+    <string name="settings_popup_timeline">Ar gyfer tŵtiau heb eu darllen yn y ffrwd?</string>
+    <string name="settings_popup_notification">Ar gyfer hysbysiadau heb eu darllen?</string>
     <!-- CACHE -->
-    <string name="cache_title">Clear cache</string>
-    <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+    <string name="cache_title">Clirio\'r storfa</string>
+    <string name="cache_message">Mae %1$s o ddata yn y storfa.\n\nHoffech chi ei ddileu?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="toast_cache_clear">Cliriwyd y storfa! Rhyddhawyd %1$s</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Synchronize</string>
-    <string name="action_filter">Filter</string>
-    <string name="owner_cached_toots">Your toots</string>
+    <string name="action_filter">Hidlo</string>
+    <string name="owner_cached_toots">Eich tŵtiau</string>
     <string name="v_public">Cyhoeddus</string>
-    <string name="v_unlisted">Unlisted</string>
+    <string name="v_unlisted">Heb ei restru</string>
     <string name="v_private">Preifat</string>
     <string name="v_direct">Preifat</string>
-    <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
-    <string name="filter_no_result">No matching result found!</string>
+    <string name="v_keywords">Rhai allweddeiriau…</string>
+    <string name="show_media">Dangos cyfryngau</string>
+    <string name="show_pinned">Dangos yr hyn sydd wedi ei binio</string>
+    <string name="filter_no_result">Dim byd cyfatebol wedi ei ganfod!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="data_backup_success">Mae %1$s o dŵtiau newydd wedi eu mewnforio</string>
     <string-array name="filter_select">
         <item>Na</item>
-        <item>Only</item>
-        <item>Both</item>
+        <item>Yn unig</item>
+        <item>Y ddau</item>
     </string-array>
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
@@ -451,28 +451,27 @@
     </string>
     <string name="thanks_text">        Thank you to Stéphane for the logo.
     </string>
-    <string name="thanks_text_dev">        Thank you to:
-    </string>
+    <string name="thanks_text_dev">Diolch i:    </string>
     <string name="filter_regex">Filter out by regular expressions</string>
     <string name="search">Chwilio</string>
     <string name="delete">Dileu</string>
-    <string name="fetch_more_toots">Fetch more toots…</string>
+    <string name="fetch_more_toots">Nôl mwy o dŵtiau…</string>
     <!-- About lists -->
     <string name="action_lists">Rhestrau</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+    <string name="action_lists_confirm_delete">A ydych chi\'n sicr eich bod eisiau dileu y rhestr hon am byth?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-    <string name="action_lists_add_to">Add to list</string>
-    <string name="action_lists_remove_from">Remove from list</string>
-    <string name="action_lists_create">Add list</string>
-    <string name="action_lists_delete">Delete list</string>
-    <string name="action_lists_update">Edit list</string>
-    <string name="action_lists_title_placeholder">New list title</string>
-    <string name="action_lists_search_users">Search among people you follow</string>
-    <string name="action_lists_owner">Your lists</string>
+    <string name="action_lists_add_to">Ychwanegu i\'r rhestr</string>
+    <string name="action_lists_remove_from">Dileu o\'r rhestr</string>
+    <string name="action_lists_create">Ychwanegu rhestr</string>
+    <string name="action_lists_delete">Dileu rhestr</string>
+    <string name="action_lists_update">Golygu rhestr</string>
+    <string name="action_lists_title_placeholder">Teitl y rhestr newydd</string>
+    <string name="action_lists_search_users">Chwilo ymysg pobl yr ydych yn eu nabod</string>
+    <string name="action_lists_owner">Eich rhestrau</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s has moved to %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
-    <string name="issue_login_title">Authentication does not work?</string>
+    <string name="account_moved_to">Mae %1$s wedi symud i %2$s</string>
+    <string name="show_boost_count">Dangos nifer hybiadau/ffefrynnau</string>
+    <string name="issue_login_title">Dilysu ddim yn gweithio?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
@@ -483,10 +482,10 @@
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
-    <string name="data_export">Export statuses</string>
-    <string name="data_export_toots">Export statuses for %1$s</string>
-    <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+    <string name="data_export">Allforio statysau</string>
+    <string name="data_export_toots">Allforio statysau ar gyfer %1$s</string>
+    <string name="data_export_success">Mae %1$s o dŵtiau o\'r %2$s wedi eu hallforio.</string>
+    <string name="data_export_error">Aeth rhywbeth o\'i le tra\'n allforio data i %1$s</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Type</string>
