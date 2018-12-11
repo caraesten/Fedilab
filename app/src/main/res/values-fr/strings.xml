@@ -604,7 +604,7 @@
     <string name="set_change_locale">Changer de langue</string>
     <string name="default_language">Langue par défaut</string>
     <string name="truncate_long_toots">Tronquer les longs pouets</string>
-    <string name="set_truncate_toot">Tronquer les pouets sur les lignes «x». Zéro signifie désactivé.</string>
+    <string name="set_truncate_toot">Tronquer les pouets dépassant « x » lignes. Zéro signifie désactivé.</string>
     <string name="display_toot_truncate">Afficher plus</string>
     <string name="hide_toot_truncate">Afficher moins</string>
     <string name="manage_tags">Gestion des étiquettes</string>
