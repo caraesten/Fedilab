@@ -319,21 +319,21 @@
     <string name="set_header_picture_overlay">Dewis llun pennawd</string>
     <string name="set_fit_preview">Ffitio delweddau rhagweld</string>
     <string name="set_automatically_split_toot">Hollti tŵtiau dros 500 nodyn yn ymatebion</string>
-    <string name="note_no_space">You have reached the 160 characters allowed!</string>
-    <string name="username_no_space">You have reached the 30 characters allowed!</string>
-    <string name="settings_title_hour">Time slot for notifications:</string>
+    <string name="note_no_space">Yr ydych wedi llewnwi\'r 160 nodyn a ganiateir!</string>
+    <string name="username_no_space">Yr ydych wedi llenwi y 30 nodyn a ganiateir!</string>
+    <string name="settings_title_hour">Slot amser ar gyfer hysbysiadau:</string>
     <string name="settings_time_from">Rhwng</string>
     <string name="settings_time_to">ac</string>
     <string name="settings_time_greater">Rhaid i\'r amser fod yn fwy na %1$s</string>
     <string name="settings_time_lower">Rhad i\'r amser fod yn is na %1$s</string>
     <string name="settings_hour_init">Amser dechrau</string>
     <string name="settings_hour_end">Amser gorffen</string>
-    <string name="embedded_browser">Use the built-in browser</string>
+    <string name="embedded_browser">Defnyddio\'r porwr rhagosodedig</string>
     <string name="custom_tabs">Custom tabs</string>
-    <string name="use_javascript">Enable Javascript</string>
-    <string name="expand_cw">Automatically expand cw</string>
-    <string name="use_cookies">Allow third-party cookies</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="use_javascript">Caniatau Javascript</string>
+    <string name="expand_cw">Ehangu cw yn awtomataidd</string>
+    <string name="use_cookies">Caniatau cwcis trydydd parti</string>
+    <string name="settings_ui_layout">Gosodiad ar gyfer ffrydiau: </string>
     <string-array name="battery_profiles">
         <item>Normal battery drain</item>
         <item>Medium battery drain</item>
@@ -349,7 +349,7 @@
         <item>DeepL</item>
         <item>Na</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">Eich allwedd API, mae modd ei adael yn wag i Yandex</string>
     <string-array name="settings_theme">
         <item>Tywyll</item>
         <item>Golau</item>
