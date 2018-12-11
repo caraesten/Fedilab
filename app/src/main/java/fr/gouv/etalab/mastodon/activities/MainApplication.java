@@ -14,9 +14,11 @@ package fr.gouv.etalab.mastodon.activities;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.evernote.android.job.JobManager;
 import com.franmontiel.localechanger.LocaleChanger;
@@ -37,7 +39,7 @@ import fr.gouv.etalab.mastodon.jobs.NotificationsSyncJob;
  */
 
 
-public class MainApplication extends Application{
+public class MainApplication extends MultiDexApplication {
 
 
     @Override
@@ -57,5 +59,13 @@ public class MainApplication extends Application{
             LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
         }catch (Exception ignored){ignored.printStackTrace();}
         Toasty.Config.getInstance().apply();
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context base)
+    {
+        super.attachBaseContext(base);
+        MultiDex.install(MainApplication.this);
     }
 }
