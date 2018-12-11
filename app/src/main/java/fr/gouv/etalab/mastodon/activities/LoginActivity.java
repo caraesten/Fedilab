@@ -19,11 +19,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -47,6 +49,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.elconfidencial.bubbleshowcase.BubbleShowCase;
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,6 +90,7 @@ public class LoginActivity extends BaseActivity {
     private EditText login_passwd;
     boolean isLoadingInstance = false;
     private String oldSearch;
+    private ImageView info_uid, info_instance, info_pwd, info_2FA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +175,38 @@ public class LoginActivity extends BaseActivity {
             login_instance = findViewById(R.id.login_instance);
             login_uid = findViewById(R.id.login_uid);
             login_passwd = findViewById(R.id.login_passwd);
+            info_uid = findViewById(R.id.info_uid);
+            info_instance = findViewById(R.id.info_instance);
+            info_pwd = findViewById(R.id.info_pwd);
+            info_2FA = findViewById(R.id.info_2FA);
 
+            info_instance.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showcaseInstance(false);
+                }
+            });
+
+            info_uid.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showCaseLogin(false);
+                }
+            });
+            info_pwd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showCasePassword(false);
+                }
+            });
+            info_2FA.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showCase2FA(false);
+                }
+            });
+
+            showcaseInstance(true);
 
             login_instance.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -254,6 +292,7 @@ public class LoginActivity extends BaseActivity {
             connectionButton.setEnabled(false);
             login_two_step = findViewById(R.id.login_two_step);
             login_two_step.setVisibility(View.GONE);
+            info_2FA.setVisibility(View.GONE);
             login_two_step.setPaintFlags(login_two_step.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             login_two_step.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -275,6 +314,7 @@ public class LoginActivity extends BaseActivity {
                 public void onFocusChange(View v, boolean hasFocus) {
                     connectionButton.setEnabled(false);
                     login_two_step.setVisibility(View.INVISIBLE);
+                    info_2FA.setVisibility(View.INVISIBLE);
                     TextInputLayout login_instance_layout = findViewById(R.id.login_instance_layout);
                     if (!hasFocus) {
                         retrievesClientId();
@@ -372,6 +412,8 @@ public class LoginActivity extends BaseActivity {
                               editor.apply();
                               connectionButton.setEnabled(true);
                               login_two_step.setVisibility(View.VISIBLE);
+                              info_2FA.setVisibility(View.VISIBLE);
+                              showCase2FA(true);
                               if( client_id_for_webview){
                                   boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
                                   if( embedded_browser) {
@@ -525,4 +567,166 @@ public class LoginActivity extends BaseActivity {
         queryString += "&" + Helper.SCOPE +"=" + Helper.OAUTH_SCOPES;
         return Helper.instanceWithProtocol(instance) + Helper.EP_AUTHORIZE + "?" + queryString;
     }
+
+
+
+    private void showcaseInstance(final boolean loop){
+
+        BubbleShowCaseBuilder showCaseBuilder = new BubbleShowCaseBuilder(LoginActivity.this)
+                .title(getString(R.string.instance))
+                .description(getString(R.string.showcase_instance))
+                .arrowPosition(BubbleShowCase.ArrowPosition.TOP)
+                .backgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4))
+                .textColor(Color.WHITE)
+                .titleTextSize(17)
+                .descriptionTextSize(15);
+            if( loop)
+                showCaseBuilder.showOnce("BUBBLE_SHOW_CASE_INSTANCE_ID");
+            showCaseBuilder.listener(new BubbleShowCaseListener (){
+                    @Override
+                    public void onTargetClick(BubbleShowCase bubbleShowCase) {
+                        if( loop) {
+                            bubbleShowCase.finishSequence();
+                            showCaseLogin(true);
+                        }
+                    }
+                    @Override
+                    public void onCloseActionImageClick(BubbleShowCase bubbleShowCase) {
+                        if(loop) {
+                            bubbleShowCase.finishSequence();
+                            showCaseLogin(true);
+                        }
+                    }
+
+                    @Override
+                    public void onBubbleClick(BubbleShowCase bubbleShowCase) {
+
+                    }
+
+                    @Override
+                    public void onBackgroundDimClick(BubbleShowCase bubbleShowCase) {
+
+                    }
+
+            })
+            .targetView(login_instance)
+            .show();
+    }
+    private void showCaseLogin(final boolean loop){
+        BubbleShowCaseBuilder showCaseBuilder = new BubbleShowCaseBuilder(LoginActivity.this) //Activity instance
+                .title(getString(R.string.login))
+                .description(getString(R.string.showcase_uid))
+                .arrowPosition(BubbleShowCase.ArrowPosition.TOP)
+                .backgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4))
+                .textColor(Color.WHITE)
+                .titleTextSize(17)
+                .descriptionTextSize(15);
+            if( loop)
+                showCaseBuilder.showOnce("BUBBLE_SHOW_CASE_UID_ID");
+            showCaseBuilder.listener(new BubbleShowCaseListener (){
+                    @Override
+                    public void onTargetClick(BubbleShowCase bubbleShowCase) {
+                        if( loop) {
+                            bubbleShowCase.finishSequence();
+                            showCasePassword(true);
+                        }
+                    }
+
+                    @Override
+                    public void onCloseActionImageClick(BubbleShowCase bubbleShowCase) {
+                        if( loop) {
+                            bubbleShowCase.finishSequence();
+                            showCasePassword(true);
+                        }
+                    }
+
+                    @Override
+                    public void onBubbleClick(BubbleShowCase bubbleShowCase) {
+
+                    }
+
+                    @Override
+                    public void onBackgroundDimClick(BubbleShowCase bubbleShowCase) {
+                    }
+
+                })
+                .targetView(login_uid)
+                .show();
+    }
+
+    private void showCasePassword(boolean loop){
+        BubbleShowCaseBuilder showCaseBuilder = new BubbleShowCaseBuilder(LoginActivity.this)
+                .title(getString(R.string.password))
+                .description(getString(R.string.showcase_pwd))
+                .arrowPosition(BubbleShowCase.ArrowPosition.BOTTOM)
+                .backgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4))
+                .textColor(Color.WHITE)
+                .titleTextSize(17)
+                .descriptionTextSize(15);
+            if( loop)
+                showCaseBuilder.showOnce("BUBBLE_SHOW_CASE_PASSWORD_ID");
+            showCaseBuilder.listener(new BubbleShowCaseListener (){
+                    @Override
+                    public void onTargetClick(BubbleShowCase bubbleShowCase) {
+
+                    }
+
+                    @Override
+                    public void onCloseActionImageClick(BubbleShowCase bubbleShowCase) {
+
+                    }
+
+                    @Override
+                    public void onBubbleClick(BubbleShowCase bubbleShowCase) {
+
+                    }
+
+                    @Override
+                    public void onBackgroundDimClick(BubbleShowCase bubbleShowCase) {
+
+                    }
+
+                })
+                .targetView(login_passwd)
+                .show();
+    }
+
+
+    private void showCase2FA(boolean loop){
+        BubbleShowCaseBuilder showCaseBuilder = new BubbleShowCaseBuilder(LoginActivity.this)
+                .title(getString(R.string.two_factor_authentification))
+                .description(getString(R.string.showcase_2FA))
+                .arrowPosition(BubbleShowCase.ArrowPosition.BOTTOM)
+                .backgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4))
+                .textColor(Color.WHITE)
+                .titleTextSize(17)
+                .descriptionTextSize(15);
+            if( loop)
+                showCaseBuilder.showOnce("BUBBLE_SHOW_CASE_2FA_ID");
+            showCaseBuilder.listener(new BubbleShowCaseListener (){
+                @Override
+                public void onTargetClick(BubbleShowCase bubbleShowCase) {
+
+                }
+
+                @Override
+                public void onCloseActionImageClick(BubbleShowCase bubbleShowCase) {
+
+                }
+
+                @Override
+                public void onBubbleClick(BubbleShowCase bubbleShowCase) {
+
+                }
+
+                @Override
+                public void onBackgroundDimClick(BubbleShowCase bubbleShowCase) {
+
+                }
+
+            })
+            .targetView(login_passwd)
+            .show();
+    }
+
 }
