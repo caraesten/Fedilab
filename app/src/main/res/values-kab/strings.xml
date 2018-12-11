@@ -648,4 +648,14 @@
         <item>1 wass</item>
         <item>1 umalas</item>
     </string-array>
+    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+        You can start writing first letters and names will be suggested.\n\n
+        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    </string>
+    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    </string>
+    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    </string>
+    <string name="more_information">More information</string>
+    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
 </resources>
