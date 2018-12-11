@@ -361,7 +361,7 @@
         <item>1 Mb</item>
         <item>2 Mb</item>
     </string-array>
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">Gosod lliw LED:</string>
     <string-array name="led_colours">
         <item>Glas</item>
         <item>Cyan</item>
@@ -371,19 +371,19 @@
         <item>Melyn</item>
         <item>Gwyn</item>
     </string-array>
-    <string name="set_title_news">News</string>
-    <string name="set_notification_news">Notify for new toots on the home timeline</string>
+    <string name="set_title_news">Newyddion</string>
+    <string name="set_notification_news">Hysbysu tŵtiau newydd ar y ffrwd gartref</string>
     <string name="action_follow">Dilyn</string>
     <string name="action_unfollow">Dad-ddilyn</string>
     <string name="action_block">Blocio</string>
     <string name="action_unblock">Dadflocio</string>
     <string name="action_mute">Mudo</string>
-    <string name="action_no_action">No action</string>
+    <string name="action_no_action">Dim gweithred</string>
     <string name="action_unmute">Dad-dawelu</string>
-    <string name="request_sent">Request sent</string>
+    <string name="request_sent">Cais wedi ei anfon</string>
     <string name="followed_by">Yn eich dilyn chi</string>
     <string name="action_search">Chwilio</string>
-    <string name="set_capitalize">First letter in capital for replies</string>
+    <string name="set_capitalize">Llythyren gyntaf yn llythyren fawr mewn ymatebion</string>
     <string name="set_resize_picture">Resize pictures</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push notifications</string>
