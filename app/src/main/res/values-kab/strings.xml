@@ -381,7 +381,7 @@
     <string name="settings_popup_timeline">For unread toots in home time-line?</string>
     <string name="settings_popup_notification">For unread notifications?</string>
     <!-- CACHE -->
-    <string name="cache_title">Clear cache</string>
+    <string name="cache_title">Sfeḍ tuffirt</string>
     <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
@@ -394,7 +394,7 @@
     <string name="v_private">Private</string>
     <string name="v_direct">Direct</string>
     <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
+    <string name="show_media">Sken all n teγwalt</string>
     <string name="show_pinned">Sseken-ed wid yentan</string>
     <string name="filter_no_result">No matching result found!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
@@ -479,8 +479,8 @@
     <string name="proxy_set">Apṛuksi</string>
     <string name="proxy_type">Type</string>
     <string name="proxy_enable">Enable proxy?</string>
-    <string name="poxy_host">Host</string>
-    <string name="poxy_port">Port</string>
+    <string name="poxy_host">Asenneftaγ</string>
+    <string name="poxy_port">Awwur</string>
     <string name="poxy_login">Login</string>
     <string name="poxy_password">Awal uffir</string>
     <string name="set_theme">Asentel:</string>
@@ -488,7 +488,7 @@
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
-    <string name="no_account_yet">No account yet?</string>
+    <string name="no_account_yet">Ur tesɛiḍ ara amiḍan?</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
