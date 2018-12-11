@@ -87,7 +87,7 @@
     <string name="make_a_choice">What do you want to do?</string>
     <string name="delete_account_title">Kkes amiḍan</string>
     <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-    <string name="send_email">Send an email</string>
+    <string name="send_email">Azen imayl</string>
     <string name="choose_file">Ma ulac aγilif, fren afaylu</string>
     <string name="choose_file_error">No file explorer found!</string>
     <string name="click_to_change">Click on the path to change it</string>
@@ -189,7 +189,7 @@
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
-    <string name="conversation">Conversation</string>
+    <string name="conversation">Adiwenni</string>
     <!-- Accounts -->
     <string name="no_accounts">Ulac kra n umiḍan ara d-nesken</string>
     <string name="no_follow_request">No follow request</string>
@@ -213,7 +213,7 @@
     <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
     <!-- Notifications -->
     <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned you</string>
+    <string name="notif_mention">yuder-ik id</string>
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">i ḍferek id</string>
@@ -236,7 +236,7 @@
     <string name="pinned_toots">Inta</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
-    <string name="no_internet">No Internet connection!</string>
+    <string name="no_internet">Ulac tuqqna γer Internet!</string>
     <string name="toast_block">The account was blocked!</string>
     <string name="toast_unblock">The account is no longer blocked!</string>
     <string name="toast_mute">The account was muted!</string>
@@ -273,7 +273,7 @@
     <string name="set_attachment_always">Yal tikelt</string>
     <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Suter</string>
-    <string name="set_attachment_action">Load the media</string>
+    <string name="set_attachment_action">Salid allal n teγwalt</string>
     <string name="load_attachment">Sali-d tugniwin</string>
     <string name="load_attachment_spoiler">Sken ugar…</string>
     <string name="load_attachment_spoiler_less">Sken kra…</string>
