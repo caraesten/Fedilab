@@ -312,7 +312,7 @@
     <string name="set_save_changes">Zapisz zmiany</string>
     <string name="set_header_picture_overlay">Wybierz zdjęcie nagłówka</string>
     <string name="set_fit_preview">Pokaż całość</string>
-    <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+    <string name="set_automatically_split_toot">Automatycznie rozdzielaj wpisy na ponad 500 znaków w odpowiedziach</string>
     <string name="note_no_space">Przekroczono limit 160 dozwolonych znaków!</string>
     <string name="username_no_space">Przekroczono limit 30 dozwolonych znaków!</string>
     <string name="settings_title_hour">Odstęp czasu dla powiadomień:</string>
@@ -500,8 +500,8 @@
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Obserwuj instancję</string>
-    <string name="toast_instance_already_added">You already follow this instance!</string>
-    <string name="toast_instance_followed">The instance is followed!</string>
+    <string name="toast_instance_already_added">Już obserwujesz tą instancję!</string>
+    <string name="toast_instance_followed">Instancja jest śledzona!</string>
     <string name="action_partnership">Partnerstwa</string>
     <string name="neutral_menu_information">Informacje</string>
     <string name="hide_boost">Ukryj podbicia od %s</string>
@@ -510,10 +510,10 @@
     <string name="show_boost">Pokazuj podbicia od %s</string>
     <string name="unendorse">Nie polecaj na profilu</string>
     <string name="show_everything">Ukryj wszystko od %s</string>
-    <string name="toast_endorse">The account is now featured on profile</string>
-    <string name="toast_unendorse">The account is no longer featured on profile</string>
-    <string name="toast_show_boost">Boosts are now shown!</string>
-    <string name="toast_hide_boost">Boosts are now hidden!</string>
+    <string name="toast_endorse">Konto jest teraz polecane na profilu</string>
+    <string name="toast_unendorse">Konto nie jest już polecane na profilu</string>
+    <string name="toast_show_boost">Podbicia są teraz pokazywane!</string>
+    <string name="toast_hide_boost">Podbicia są teraz ukrywane!</string>
     <string name="direct_message">Bezpośrednia wiadomość</string>
     <string name="filters">Filtry</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
@@ -527,7 +527,7 @@
     <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
     <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
     <string name="context_whole_word">Cały wyraz</string>
-    <string name="filter_context">Filter contexts</string>
+    <string name="filter_context">Filtruj konteksty</string>
     <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
     <string name="filter_expire">Wygasaj po</string>
     <string name="add_new_filter">Dodaj nowy filtr</string>
@@ -552,10 +552,10 @@
     <string name="retrieve_remote_account">Fetching remote account</string>
     <string name="expand_image">Automatically expand hidden media</string>
     <string name="set_display_follow_instance">Display follow instances button</string>
-    <string name="channel_notif_follow">New follow</string>
+    <string name="channel_notif_follow">Nowy śledzący</string>
     <string name="channel_notif_boost">Nowe Podbicie</string>
     <string name="channel_notif_fav">New Favourite</string>
-    <string name="channel_notif_mention">New Mention</string>
+    <string name="channel_notif_mention">Nowe Wspomnienie</string>
     <string name="channel_notif_toot">Nowy Wpis</string>
     <string name="channel_notif_backup">Kopia zapasowa wpisów</string>
     <string name="channel_notif_media">Pobrane Media</string>
@@ -582,7 +582,7 @@
     <string name="duration_video">Długość: %s</string>
     <string name="add_remote_instance">Dodaj instancję</string>
     <string name="comment_no_allowed_peertube">Komentarze nie są włączone na tym filmie!</string>
-    <string name="pickup_resolution">Pick up a resolution</string>
+    <string name="pickup_resolution">Wybierz rozdzielczość</string>
     <string name="peertube_favorites">Peertube favourites</string>
     <string name="bookmark_add_peertube">Dodano film do zakładek!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
@@ -596,7 +596,7 @@
     <string name="channels">Kanały</string>
     <string name="set_display_emoji">Użyj Emoji One</string>
     <string name="information">Informacja</string>
-    <string name="set_display_card">Display previews in all toots</string>
+    <string name="set_display_card">Wyświetlaj podgląd we wszystkich wpisach</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string name="set_display_video_preview">Wyświetl podglądy filmów</string>
@@ -618,10 +618,30 @@
     <string name="tags_renamed">Tag został zmieniony!</string>
     <string name="tags_deleted">Tag został usunięty!</string>
     <string name="set_display_art">Display Art timeline</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
+    <string name="schedule_boost">Zaplanuj podbicie</string>
+    <string name="boost_scheduled">Podbicie jest zaplanowane!</string>
+    <string name="no_scheduled_boosts">Brak zaplanowanych podbić!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
+    <string name="art_menu">Art timeline</string>
+    <string name="open_menu">Otwórz menu</string>
+    <string name="app_logo">Logo aplikacji</string>
+    <string name="profile_picture">Zdjęcie profilowe</string>
+    <string name="profile_banner">Profile banner</string>
+    <string name="contact_instance_admin">Contact admin of the instance</string>
+    <string name="add_new">Dodaj nowy</string>
+    <string name="mastohost_logo">MastoHost logo</string>
+    <string name="emoji_picker">Emoji picker</string>
+    <string name="refresh">Odśwież</string>
+    <string name="expand_conversation">Rozszerz rozmowę</string>
+    <string name="remove_account">Usuń konto</string>
+    <string name="delete_domain">Usuń zablokowaną domenę</string>
+    <string name="custom_emoji_picker">Custom emoji picker</string>
+    <string name="play_video">Odtwórz film</string>
+    <string name="new_toot">Nowy wpis</string>
+    <string name="card_view_image">Image of the card</string>
+    <string name="hide_media">Ukryj media</string>
+    <string name="favicon">Favicon</string>
+    <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
         <item>Nigdy</item>
         <item>30 minut</item>
@@ -631,4 +651,14 @@
         <item>1 dzień</item>
         <item>1 tydzień</item>
     </string-array>
+    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+        You can start writing first letters and names will be suggested.\n\n
+        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    </string>
+    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    </string>
+    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    </string>
+    <string name="more_information">More information</string>
+    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
 </resources>

@@ -323,9 +323,9 @@
     <string name="use_cookies">Permitir testemuños de terceiros</string>
     <string name="settings_ui_layout">Aspecto das liñas temporais: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Consumo normal de batería</item>
+        <item>Consumo moderado de batería</item>
+        <item>Consumo baixo de batería</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Pestanas</item>
@@ -591,34 +591,54 @@
     <string name="no_lists">Sen listas</string>
     <string name="videos">Vídeos</string>
     <string name="channels">Canles</string>
-    <string name="set_display_emoji">Use Emoji One</string>
-    <string name="information">Information</string>
-    <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
+    <string name="set_display_emoji">Utilizar Emoji One</string>
+    <string name="information">Información</string>
+    <string name="set_display_card">Mostrar vista previa en todos os toots</string>
+    <string name="thanks_text_ux">Deseñador/a da nova UX/UI</string>
+    <string name="set_old_direct_timeline">Utilizar a liña temporal directa previa a Mastodon 2.6</string>
+    <string name="set_display_video_preview">Mostrar vista previa de vídeos</string>
+    <string name="thanks_text_support">Soporte Gitlab</string>
+    <string name="action_bug_report">Informe de fallos</string>
+    <string name="no_mail_client">Non ten instalado un cliente de correo-e.</string>
+    <string name="bug_report_mail">Envíe un informe de fallos</string>
+    <string name="account_id_clipbloard">Copiouse o id de conta ao portapapeis!</string>
+    <string name="settings_title_battery">Optimizacións da batería</string>
+    <string name="set_change_locale">Cambiar o idioma</string>
+    <string name="default_language">Idioma por omisión</string>
+    <string name="truncate_long_toots">Cortar en varios os toots longos</string>
+    <string name="set_truncate_toot">Repartir os toots superiores a \'x\' liñas. Cero significa desactivado.</string>
+    <string name="display_toot_truncate">Mostrar máis</string>
+    <string name="hide_toot_truncate">Mostrar menos</string>
+    <string name="manage_tags">Xestionar etiquetas</string>
+    <string name="tags_already_stored">A etiqueta xa existe!</string>
+    <string name="tags_stored">Gardouse a etiqueta!</string>
+    <string name="tags_renamed">A etiqueta foi cambiada!</string>
+    <string name="tags_deleted">Eliminouse a etiqueta!</string>
+    <string name="set_display_art">Mostrar liña temporal Art</string>
+    <string name="schedule_boost">Programar promoción</string>
+    <string name="boost_scheduled">A promoción foi programada!</string>
+    <string name="no_scheduled_boosts">Non ten promocións programadas que mostrar!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Abra o menú de un toot e escolla <b>Programar promoción</b>.]]></string>
+    <string name="art_menu">Liña temporal Art</string>
+    <string name="open_menu">Abrir menú</string>
+    <string name="app_logo">Logo da aplicación</string>
+    <string name="profile_picture">Imaxe de perfil</string>
+    <string name="profile_banner">Banda do perfil</string>
+    <string name="contact_instance_admin">Contacte coa administración da instancia</string>
+    <string name="add_new">Engadir novo</string>
+    <string name="mastohost_logo">Logo MastoHost</string>
+    <string name="emoji_picker">Selector Emoji</string>
+    <string name="refresh">Actualizar</string>
+    <string name="expand_conversation">Despregar a conversa</string>
+    <string name="remove_account">Eliminar conta</string>
+    <string name="delete_domain">Eliminar o dominio bloqueado</string>
+    <string name="custom_emoji_picker">Selector emoji personalizado</string>
+    <string name="play_video">Reproducir vídeo</string>
+    <string name="new_toot">Novo toot</string>
+    <string name="card_view_image">Imaxe da tarxeta</string>
+    <string name="hide_media">Ocultar medios</string>
+    <string name="favicon">Favicon</string>
+    <string name="media_description">Medios aos que engadir descrición</string>
     <string-array name="filter_expire">
         <item>Nunca</item>
         <item>30 minutos</item>
@@ -628,4 +648,14 @@
         <item>1 día</item>
         <item>1 semana</item>
     </string-array>
+    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+        You can start writing first letters and names will be suggested.\n\n
+        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    </string>
+    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    </string>
+    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    </string>
+    <string name="more_information">More information</string>
+    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
 </resources>

@@ -24,7 +24,7 @@
     <string name="email">Email</string>
     <string name="accounts">Comptes</string>
     <string name="toots">Pouets</string>
-    <string name="tags">Tags</string>
+    <string name="tags">Étiquettes</string>
     <string name="token">Jeton</string>
     <string name="save">Sauvegarder</string>
     <string name="restore">Restaurer</string>
@@ -323,9 +323,9 @@
     <string name="use_cookies">Autoriser les cookies tiers</string>
     <string name="settings_ui_layout">Disposition des fils : </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Décharge normale de la batterie</item>
+        <item>Décharge modérée de la batterie</item>
+        <item>Décharge faible de la batterie</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Onglets</item>
@@ -592,10 +592,10 @@
     <string name="set_display_emoji">Utiliser les EmojiOne</string>
     <string name="information">information</string>
     <string name="set_display_card">Afficher les aperçus dans tous les pouets</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="thanks_text_ux">Nouveau·lle UX/UI Designer·use</string>
     <string name="set_old_direct_timeline">Utiliser le fil direct antérieur à Mastodon 2.6</string>
     <string name="set_display_video_preview">Afficher les aperçus des vidéos</string>
-    <string name="thanks_text_support">Gitlab Support</string>
+    <string name="thanks_text_support">Support de Gitlab</string>
     <string name="action_bug_report">Signaler un bug</string>
     <string name="no_mail_client">Aucun client de messagerie n’est installé.</string>
     <string name="bug_report_mail">Envoyer un rapport de bogue</string>
@@ -604,19 +604,39 @@
     <string name="set_change_locale">Changer de langue</string>
     <string name="default_language">Langue par défaut</string>
     <string name="truncate_long_toots">Tronquer les longs pouets</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
+    <string name="set_truncate_toot">Tronquer les pouets dépassant « x » lignes. Zéro signifie désactivé.</string>
     <string name="display_toot_truncate">Afficher plus</string>
     <string name="hide_toot_truncate">Afficher moins</string>
-    <string name="manage_tags">Gestion des tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
+    <string name="manage_tags">Gestion des étiquettes</string>
+    <string name="tags_already_stored">Cette étiquette existe déjà !</string>
+    <string name="tags_stored">L’étiquette a été restaurée !</string>
+    <string name="tags_renamed">L’étiquette a été modifiée !</string>
+    <string name="tags_deleted">L’étiquette a été supprimée !</string>
     <string name="set_display_art">Afficher le fil artistique</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
+    <string name="schedule_boost">Programmer un boost</string>
+    <string name="boost_scheduled">Le boost est programmé !</string>
+    <string name="no_scheduled_boosts">Aucun boost programmé à afficher !</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Ouvrez le menu d’un pouet puis choisissez <b>Programmer un boost</b>.]]></string>
+    <string name="art_menu">Fil artistique</string>
+    <string name="open_menu">Ouvrir le menu</string>
+    <string name="app_logo">Logo de l’application</string>
+    <string name="profile_picture">Photo du profil</string>
+    <string name="profile_banner">Bannière du profil</string>
+    <string name="contact_instance_admin">Contact admin of the instance</string>
+    <string name="add_new">Ajouter un nouveau</string>
+    <string name="mastohost_logo">Logo de MastoHost</string>
+    <string name="emoji_picker">Sélecteur d’émojis</string>
+    <string name="refresh">Actualiser</string>
+    <string name="expand_conversation">Développer la conversation</string>
+    <string name="remove_account">Supprimer un compte</string>
+    <string name="delete_domain">Supprimer le domaine bloqué</string>
+    <string name="custom_emoji_picker">Sélecteur d’émojis personnalisé</string>
+    <string name="play_video">Lire la vidéo</string>
+    <string name="new_toot">Nouveau pouet</string>
+    <string name="card_view_image">Image de la carte</string>
+    <string name="hide_media">Masquer les médias</string>
+    <string name="favicon">Favicon</string>
+    <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
         <item>Jamais</item>
         <item>30 minutes</item>
@@ -626,4 +646,14 @@
         <item>1 jour</item>
         <item>1 semaine</item>
     </string-array>
+    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+        You can start writing first letters and names will be suggested.\n\n
+        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    </string>
+    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    </string>
+    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    </string>
+    <string name="more_information">More information</string>
+    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
 </resources>

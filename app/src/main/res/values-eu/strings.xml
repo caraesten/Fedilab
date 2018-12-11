@@ -614,10 +614,30 @@
     <string name="tags_renamed">Etiketa aldatu da!</string>
     <string name="tags_deleted">Etiketa ezabatu da!</string>
     <string name="set_display_art">Bistaratu arte denbora-lerroa</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
+    <string name="schedule_boost">Programatu bultzada</string>
+    <string name="boost_scheduled">Bultzada programatu da!</string>
+    <string name="no_scheduled_boosts">Ez dago programatutako bultzadarik bistaratzeko!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Ireko toot baten menua eta hautatu <b>programatu bultzada</b>.]]></string>
+    <string name="art_menu">Arte denbora-lerroa</string>
+    <string name="open_menu">Ireki menua</string>
+    <string name="app_logo">Aplikazioaren logoa</string>
+    <string name="profile_picture">Profilaren Irudia</string>
+    <string name="profile_banner">Profileko banda</string>
+    <string name="contact_instance_admin">Kontaktatu instantziaren administratzailearekin</string>
+    <string name="add_new">Gehitu berria</string>
+    <string name="mastohost_logo">MastoHost logoa</string>
+    <string name="emoji_picker">Emoji hautatzailea</string>
+    <string name="refresh">Berritu</string>
+    <string name="expand_conversation">Hedatu elkarrizketa</string>
+    <string name="remove_account">Kendu kontu bat</string>
+    <string name="delete_domain">Ezabat blokeatutako domeinua</string>
+    <string name="custom_emoji_picker">Emoji pertsonalizatuen hautatzailea</string>
+    <string name="play_video">Erreproduzitu bideoa</string>
+    <string name="new_toot">Toot berria</string>
+    <string name="card_view_image">Txartelaren irudia</string>
+    <string name="hide_media">Ezkutatu multimedia</string>
+    <string name="favicon">Gune-ikurra</string>
+    <string name="media_description">Deskripzioa gehitzeko multimedia</string>
     <string-array name="filter_expire">
         <item>Inoiz ez</item>
         <item>30 minutu</item>
@@ -627,4 +647,14 @@
         <item>egun 1</item>
         <item>aste 1</item>
     </string-array>
+    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
+        You can start writing first letters and names will be suggested.\n\n
+        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    </string>
+    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    </string>
+    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    </string>
+    <string name="more_information">More information</string>
+    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
 </resources>
