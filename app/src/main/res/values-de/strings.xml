@@ -21,7 +21,7 @@
     <string name="save_over">Datei gespeichert</string>
     <string name="download_from" formatted="false">Datei: %1$s</string>
     <string name="password">Passwort</string>
-    <string name="email">E-Mail-Adresse</string>
+    <string name="email">E-Mail</string>
     <string name="accounts">Konten</string>
     <string name="toots">Toots</string>
     <string name="tags">Schlagwörter (tags)</string>
@@ -644,13 +644,13 @@
         <item>1 Tag</item>
         <item>1 Woche</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">In dieses Feld solltest du den Hostnamen deiner Instanz eintragen\nSolltest du also zum Beispiel einen Account auf https://mastodon.social erstellt haben,\nschreibe einfach <b>mastodon.social</b>(ohne https://) in das Feld.\n
+        Sobald du die ersten Buchstaben eintippst erhälst du Namensvorschläge.\n\n
+        ⚠ Der Login-Button wird nur funktionieren, wenn der Instanzname korrekt und die Instanz erreichbar ist!
     </string>
     <string name="showcase_uid">Tragen Sie hier die eMail-Adresse ein, die mit ihrem Mastodon-Account verbunden ist.</string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">Als letzten Schritt gib bitte dein Passwort ein und klicke auf Anmelden.
     </string>
     <string name="more_information">Mehr Informationen</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="showcase_2FA">Falls du 2FA (Zwei-Faktor-Authentisierung) verwendest, musst du diesen Link verwenden.\nDu kannst ihn ebenfalls verwenden, wenn du eine Zugangsdaten hier nicht eingeben möchtest.</string>
 </resources>
