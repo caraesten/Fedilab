@@ -25,12 +25,12 @@
     <string name="accounts">Konten</string>
     <string name="toots">Toots</string>
     <string name="tags">Schlagwörter (tags)</string>
-    <string name="token">Zeichen</string>
+    <string name="token">Token</string>
     <string name="save">Speichern</string>
     <string name="restore">Wiederherstellen</string>
-    <string name="two_factor_authentification">2-Faktor-Authentifizierung?</string>
+    <string name="two_factor_authentification">Zwei-Faktor-Authentifizierung?</string>
     <string name="other_instance">Andere Instanz als mastodon.etalab.gouv.fr?</string>
-    <string name="no_result">Kein Ergebnis!</string>
+    <string name="no_result">Keine Ergebnisse.</string>
     <string name="instance">Instanz</string>
     <string name="instance_example">Instanz: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Konto %1$s wird verwendet</string>
