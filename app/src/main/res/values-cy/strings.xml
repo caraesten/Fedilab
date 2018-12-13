@@ -594,7 +594,7 @@
     <string name="peertube_favorites">Peertube favourites</string>
     <string name="bookmark_add_peertube">Mae\'r fideo wedi ei ychwanegu i\'r llyfrnodau!</string>
     <string name="bookmark_remove_peertube">Mae\'r fideo wedi ei ddileu o\'r llyfrnodau!</string>
-    <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+    <string name="bookmark_peertube_empty">Nid oes fideos Peertube yn eich ffefrynnau!</string>
     <string name="channel">Sianel</string>
     <string name="no_peertube_channels">No Peertube channels</string>
     <string name="no_peertube_instances">No Peertube instances</string>
