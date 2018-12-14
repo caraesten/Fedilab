@@ -596,11 +596,11 @@
     <string name="bookmark_remove_peertube">Mae\'r fideo wedi ei ddileu o\'r llyfrnodau!</string>
     <string name="bookmark_peertube_empty">Nid oes fideos Peertube yn eich ffefrynnau!</string>
     <string name="channel">Sianel</string>
-    <string name="no_peertube_channels">No Peertube channels</string>
-    <string name="no_peertube_instances">No Peertube instances</string>
-    <string name="no_mastodon_instances">No Mastodon instances</string>
+    <string name="no_peertube_channels">Dim sianeli Peertube</string>
+    <string name="no_peertube_instances">Dim achosion Peertube</string>
+    <string name="no_mastodon_instances">Dim achosion Mastodon</string>
     <string name="no_lists">Dim rhestrau</string>
-    <string name="videos">Videos</string>
+    <string name="videos">Fideos</string>
     <string name="channels">Sianeli</string>
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Gwybodaeth</string>
@@ -614,8 +614,8 @@
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
+    <string name="set_change_locale">Newid iaith</string>
+    <string name="default_language">Iaith diofyn</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">Display more</string>
