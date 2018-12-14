@@ -123,7 +123,7 @@
         <item>¿Silenciar esta cuenta?</item>
         <item>¿Bloquear esta cuenta?</item>
         <item>¿Reportar este toot?</item>
-        <item>Block this domain?</item>
+        <item>¿Bloquear este dominio?</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>¿Remover este toot?</item>
@@ -323,9 +323,9 @@
     <string name="use_cookies">Permitir cookies de terceros</string>
     <string name="settings_ui_layout">Diseño para líneas de tiempo: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Descarga normal de batería</item>
+        <item>Descarga media de batería</item>
+        <item>Descarga baja de batería</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Pestañas</item>
@@ -514,7 +514,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="context_public">Linea de tiempo publica</string>
     <string name="context_notification">Notificaciones</string>
     <string name="context_conversation">Conversaciones</string>
-    <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
+    <string name="filter_keyword_explanations">Será igualada independientemente del uso de mayúsculas/minúsculas o de advertencias de contenido de un toot</string>
     <string name="context_drop">Soltar en vez de ocultar</string>
     <string name="context_drop_explanations">Toots filtrados desaparecerán irreversiblemente, aún si el filtro sea removido</string>
     <string name="context_whole_word_explanations">Cuando la palabra clave o frase es solamente alfanumérica, solo aplica si coincide con toda la palabra</string>
@@ -531,17 +531,17 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="follow_account">Seguir</string>
     <string name="select_all">Seleccionar todo</string>
     <string name="unselect_all">Deseleccionar todo</string>
-    <string name="follow_trunk">%s is followed!</string>
+    <string name="follow_trunk">¡%s es seguido!</string>
     <string name="create_list_trunk">Creando la lista %s</string>
-    <string name="add_account_list_trunk">Adding accounts to the list</string>
-    <string name="account_added_list_trunk">Accounts were added to the list</string>
-    <string name="adding_account_list_trunk">Adding accounts to the list</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
-    <string name="about_trunk">Who to follow</string>
+    <string name="add_account_list_trunk">Añadiendo cuentas a la lista</string>
+    <string name="account_added_list_trunk">Las cuentas fueron añadidas a la lista</string>
+    <string name="adding_account_list_trunk">Añadiendo cuentas a la lista</string>
+    <string name="action_list_add">Todavía no has creado una lista. Haz clic en el botón \"+\" para añadir una nueva.</string>
+    <string name="action_remote_instance_add">No estás siguiendo ninguna instancia remota. Haz clic en el botón \"+\" para añadir una nueva.</string>
+    <string name="about_trunk">A quiénes seguir</string>
     <string name="about_trunk_action">Trunk API</string>
-    <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
-    <string name="retrieve_remote_account">Fetching remote account</string>
+    <string name="toast_impossible_to_follow">La(s) cuenta(s) no puede(n) ser seguida(s)</string>
+    <string name="retrieve_remote_account">Compilando cuenta remota</string>
     <string name="expand_image">Automatically expand hidden media</string>
     <string name="set_display_follow_instance">Display follow instances button</string>
     <string name="channel_notif_follow">New follow</string>
