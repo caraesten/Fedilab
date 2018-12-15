@@ -491,6 +491,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                     }else { //If it's an Art timeline not allowing NSFW
                         ArrayList<Status> safeStatuses = new ArrayList<>();
+
                         for(Status status: statuses){
                             if( !status.isSensitive())
                             safeStatuses.add(status);
@@ -498,6 +499,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         this.statuses.addAll(safeStatuses);
                         statusListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
                     }
+
+
                 }
                 if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
                     //Update the id of the last toot retrieved

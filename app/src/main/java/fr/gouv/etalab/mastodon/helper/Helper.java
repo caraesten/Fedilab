@@ -340,6 +340,7 @@ public class Helper {
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS = "set_automatically_split_toots";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";
     public static final String SET_TRUNCATE_TOOTS_SIZE = "set_truncate_toots_size";
+    public static final String SET_ART_WITH_NSFW = "set_art_with_nsfw";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -2707,65 +2708,68 @@ public class Helper {
         else
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
 
-            String content = status.getContent();
-            if( status.getSpoiler_text() != null)
-                content += " "+ status.getSpoiler_text();
-            boolean addToot = true; //Flag to tell if the current toot will be added.
-            if( status.getAccount()  == null)
-                addToot = false;
-            if(addToot && MainActivity.filters != null){
-                for(Filters mfilter: filters){
-                    ArrayList<String> filterContext = mfilter.getContext();
-                    if(
-                            (type == RetrieveFeedsAsyncTask.Type.HOME && filterContext.contains("home")) ||
-                                    (type == RetrieveFeedsAsyncTask.Type.LOCAL && filterContext.contains("public")) ||
-                                    (type == RetrieveFeedsAsyncTask.Type.PUBLIC && filterContext.contains("public"))
+        String content = status.getContent();
+        if( status.getSpoiler_text() != null)
+            content += " "+ status.getSpoiler_text();
+        boolean addToot = true; //Flag to tell if the current toot will be added.
+        if( status.getAccount()  == null)
+            addToot = false;
+        boolean show_nsfw = sharedpreferences.getBoolean(Helper.SET_ART_WITH_NSFW, false);
+        if( type == RetrieveFeedsAsyncTask.Type.ART && !show_nsfw && status.isSensitive()) {
+            addToot = false;
+        }
+        if(addToot && MainActivity.filters != null){
+            for(Filters mfilter: filters){
+                ArrayList<String> filterContext = mfilter.getContext();
+                if(
+                        (type == RetrieveFeedsAsyncTask.Type.HOME && filterContext.contains("home")) ||
+                                (type == RetrieveFeedsAsyncTask.Type.LOCAL && filterContext.contains("public")) ||
+                                (type == RetrieveFeedsAsyncTask.Type.PUBLIC && filterContext.contains("public"))
 
-                            ) {
-                        if (mfilter.isWhole_word() && content.contains(mfilter.getPhrase())) {
-                            addToot = false;
-                        } else {
-                            try {
-                                Pattern filterPattern = Pattern.compile("(" + mfilter.getPhrase() + ")", Pattern.CASE_INSENSITIVE);
-                                Matcher matcher = filterPattern.matcher(content);
-                                if (matcher.find())
-                                    addToot = false;
-                            } catch (Exception ignored) { }
-                        }
+                        ) {
+                    if (mfilter.isWhole_word() && content.contains(mfilter.getPhrase())) {
+                        addToot = false;
+                    } else {
+                        try {
+                            Pattern filterPattern = Pattern.compile("(" + mfilter.getPhrase() + ")", Pattern.CASE_INSENSITIVE);
+                            Matcher matcher = filterPattern.matcher(content);
+                            if (matcher.find())
+                                addToot = false;
+                        } catch (Exception ignored) { }
                     }
                 }
             }
-            if( addToot && filter != null && filter.length() > 0){
-                try {
-                    Pattern filterPattern = Pattern.compile("(" + filter + ")", Pattern.CASE_INSENSITIVE);
-                    Matcher matcher = filterPattern.matcher(content);
-                    if (matcher.find())
-                        addToot = false;
-                }catch (Exception ignored){ }
-            }
-            if(addToot) {
-                if (type == RetrieveFeedsAsyncTask.Type.HOME) {
-                    if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
-                        addToot = false;
-                    else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
-                        addToot = false;
-                    }
-                } else {
-                    if (context instanceof ShowAccountActivity) {
-                        if (status.getReblog() != null && !((ShowAccountActivity) context).showBoosts())
-                            addToot = false;
-                        else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !((ShowAccountActivity) context).showReplies())
-                            addToot = false;
-                    }
+        }
+        if( addToot && filter != null && filter.length() > 0){
+            try {
+                Pattern filterPattern = Pattern.compile("(" + filter + ")", Pattern.CASE_INSENSITIVE);
+                Matcher matcher = filterPattern.matcher(content);
+                if (matcher.find())
+                    addToot = false;
+            }catch (Exception ignored){ }
+        }
+        if(addToot) {
+            if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+                if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
+                    addToot = false;
+                else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
+                    addToot = false;
                 }
-            }
-            if( addToot){
-                if (timedMute != null && timedMute.size() > 0) {
-                    if (timedMute.contains(status.getAccount().getId()))
+            } else {
+                if (context instanceof ShowAccountActivity) {
+                    if (status.getReblog() != null && !((ShowAccountActivity) context).showBoosts())
+                        addToot = false;
+                    else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !((ShowAccountActivity) context).showReplies())
                         addToot = false;
                 }
             }
-
+        }
+        if( addToot){
+            if (timedMute != null && timedMute.size() > 0) {
+                if (timedMute.contains(status.getAccount().getId()))
+                    addToot = false;
+            }
+        }
         return addToot;
     }
 

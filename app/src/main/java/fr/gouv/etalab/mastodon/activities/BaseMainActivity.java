@@ -183,7 +183,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
     public static List<Filters> filters = new ArrayList<>();
-    private DisplayStatusFragment homeFragment, federatedFragment, localFragment;
+    private DisplayStatusFragment homeFragment, federatedFragment, localFragment, artFragment;
     private DisplayNotificationsFragment notificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
     private static BroadcastReceiver receive_data, receive_federated_data, receive_local_data;
@@ -192,7 +192,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public static int countNewNotifications = 0;
     private String userIdService;
     public static String lastHomeId = null, lastNotificationId = null;
-    boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies;
+    boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies , show_nsfw;
     String show_filtered;
     private AppBarLayout appBar;
     private String bookmark;
@@ -848,6 +848,13 @@ public abstract class BaseMainActivity extends BaseActivity
             });
         if( tabPosition.containsKey("local"))
             tabStrip.getChildAt(tabPosition.get("local")).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return manageFilters(tabStrip, sharedpreferences);
+                }
+            });
+        if( tabPosition.containsKey("art"))
+            tabStrip.getChildAt(tabPosition.get("art")).setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     return manageFilters(tabStrip, sharedpreferences);
@@ -1566,9 +1573,10 @@ public abstract class BaseMainActivity extends BaseActivity
         //Only shown if the tab has focus
         if(
                 (homeFragment != null && homeFragment.getUserVisibleHint()) ||
-                        (federatedFragment != null && federatedFragment.getUserVisibleHint()) ||
-                        (localFragment != null && localFragment.getUserVisibleHint())
-                ){
+                (federatedFragment != null && federatedFragment.getUserVisibleHint()) ||
+                (localFragment != null && localFragment.getUserVisibleHint()) ||
+                (artFragment != null && artFragment.getUserVisibleHint())
+        ){
             PopupMenu popup = null;
             if(homeFragment != null && homeFragment.getUserVisibleHint())
                 popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(0));
@@ -1576,6 +1584,55 @@ public abstract class BaseMainActivity extends BaseActivity
                 popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(tabPosition.get("local")));
             else if(federatedFragment != null && federatedFragment.getUserVisibleHint()){
                 popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(tabPosition.get("global")));
+            }else if(artFragment != null && artFragment.getUserVisibleHint()){
+                popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(tabPosition.get("art")));
+                popup.getMenuInflater()
+                        .inflate(R.menu.option_tag_timeline, popup.getMenu());
+                Menu menu = popup.getMenu();
+
+                show_nsfw = sharedpreferences.getBoolean(Helper.SET_ART_WITH_NSFW, false);
+                final MenuItem itemShowNSFW = menu.findItem(R.id.action_show_nsfw);
+                final MenuItem itemMedia = menu.findItem(R.id.action_show_media_only);
+                final MenuItem itemDelete = menu.findItem(R.id.action_delete);
+                itemMedia.setVisible(false);
+                itemDelete.setVisible(false);
+                itemShowNSFW.setChecked(show_nsfw);
+                popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                    @Override
+                    public void onDismiss(PopupMenu menu) {
+                        refreshFilters();
+                    }
+                });
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                        item.setActionView(new View(getApplicationContext()));
+                        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                            @Override
+                            public boolean onMenuItemActionExpand(MenuItem item) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onMenuItemActionCollapse(MenuItem item) {
+                                return false;
+                            }
+                        });
+                        switch (item.getItemId()) {
+
+                            case R.id.action_show_nsfw:
+                                show_nsfw = !show_nsfw;
+                                itemShowNSFW.setChecked(show_nsfw);
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putBoolean(Helper.SET_ART_WITH_NSFW, show_nsfw);
+                                editor.apply();
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                popup.show();
+                return false;
             }
             if( popup == null)
                 return true;
@@ -1709,6 +1766,8 @@ public abstract class BaseMainActivity extends BaseActivity
             localFragment.refreshFilter();
         if(federatedFragment != null)
             federatedFragment.refreshFilter();
+        if(artFragment != null)
+            artFragment.refreshFilter();
     }
 
     @Override
@@ -2394,19 +2453,16 @@ public abstract class BaseMainActivity extends BaseActivity
                 homeFragment = (DisplayStatusFragment) createdFragment;
             }else if( position == 1){
                 notificationsFragment = (DisplayNotificationsFragment) createdFragment;
-            }else if( position ==2 && countPage > 2){
-                if( !display_direct && display_local)
+            }else{
+                if( display_local && position == tabPosition.get("local"))
                     localFragment = (DisplayStatusFragment) createdFragment;
-                else if (!display_local)
+                else if( display_global && position == tabPosition.get("global"))
                     federatedFragment = (DisplayStatusFragment) createdFragment;
-            }else if (position == 3 && countPage > 3){
-                if( display_local)
-                    localFragment = (DisplayStatusFragment) createdFragment;
-                else if (display_global)
-                    federatedFragment = (DisplayStatusFragment) createdFragment;
-            }else if( position == 4 && countPage > 4)
-                if( display_global)
-                    federatedFragment = (DisplayStatusFragment) createdFragment;
+                else if( display_art && position == tabPosition.get("art"))
+                    artFragment = (DisplayStatusFragment) createdFragment;
+
+            }
+
             return createdFragment;
         }
 
