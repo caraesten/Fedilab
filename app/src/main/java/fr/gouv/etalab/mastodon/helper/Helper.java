@@ -2574,6 +2574,7 @@ public class Helper {
     }
 
 
+
     public static void refreshSearchTag(Context context, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<String> searches = new SearchDAO(context, db).getAllSearch();
@@ -2616,6 +2617,8 @@ public class Helper {
 
         }
     }
+
+
 
 
     public static void removeSearchTag(String keyword, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
@@ -3036,7 +3039,7 @@ public class Helper {
         }
     }
 
-    public static RetrieveFeedsAsyncTask.Type timelineType(Context context, int position){
+    public static RetrieveFeedsAsyncTask.Type timelineType(Context context, int position, int pageCount){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean display_direct = sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true);
         boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
@@ -3044,7 +3047,7 @@ public class Helper {
         boolean display_art = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true);
         if (position == 0) {
             return RetrieveFeedsAsyncTask.Type.HOME;
-        }else if(position == 2) {
+        }else if(position == 2 && pageCount > 2) {
             if( display_direct) {
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
@@ -3071,19 +3074,19 @@ public class Helper {
                 return RetrieveFeedsAsyncTask.Type.PUBLIC;
             if( display_art)
                 return RetrieveFeedsAsyncTask.Type.ART;
-        }else if( position == 3){
+        }else if( position == 3 && pageCount > 3){
             if( display_direct && display_local)
                 return RetrieveFeedsAsyncTask.Type.LOCAL;
             if( display_global)
                 return RetrieveFeedsAsyncTask.Type.PUBLIC;
             if( display_art)
                 return RetrieveFeedsAsyncTask.Type.ART;
-        }else if (position == 4){
+        }else if (position == 4 && pageCount > 4){
             if( display_direct && display_local && display_global)
                 return RetrieveFeedsAsyncTask.Type.PUBLIC;
             if( display_art)
                 return RetrieveFeedsAsyncTask.Type.ART;
-        }else if (position == 5){
+        }else if (position == 5 && pageCount > 5){
             if( display_direct && display_local && display_global && display_art)
                 return RetrieveFeedsAsyncTask.Type.ART;
         }

@@ -42,6 +42,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -109,6 +110,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
@@ -181,7 +183,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
     public static List<Filters> filters = new ArrayList<>();
-    private DisplayStatusFragment homeFragment, federatedFragment, localFragment, artFragment;
+    private DisplayStatusFragment homeFragment, federatedFragment, localFragment;
     private DisplayNotificationsFragment notificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
     private static BroadcastReceiver receive_data, receive_federated_data, receive_local_data;
@@ -827,30 +829,6 @@ public abstract class BaseMainActivity extends BaseActivity
             }
         });
 
-        if( tabStrip.getChildCount() > 2 && !display_direct)
-            tabStrip.getChildAt(2).setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return manageFilters(tabStrip, sharedpreferences);
-                }
-            });
-        else if ( tabStrip.getChildCount() > 3 && display_direct)
-            tabStrip.getChildAt(3).setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return manageFilters(tabStrip, sharedpreferences);
-                }
-            });
-        if( tabStrip.getChildCount() == 5)
-        tabStrip.getChildAt(4).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return manageFilters(tabStrip, sharedpreferences);
-            }
-        });
-
-
-
         countPage = 2;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true))
             countPage++;
@@ -860,6 +838,21 @@ public abstract class BaseMainActivity extends BaseActivity
             countPage++;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true))
             countPage++;
+
+        if( tabPosition.containsKey("global"))
+            tabStrip.getChildAt(tabPosition.get("global")).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return manageFilters(tabStrip, sharedpreferences);
+                }
+            });
+        if( tabPosition.containsKey("local"))
+            tabStrip.getChildAt(tabPosition.get("local")).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return manageFilters(tabStrip, sharedpreferences);
+                }
+            });
 
         viewPager.setOffscreenPageLimit(countPage);
         main_app_container = findViewById(R.id.main_app_container);
@@ -997,10 +990,10 @@ public abstract class BaseMainActivity extends BaseActivity
                             break;
                         case 5:
                             if( countPage == 6) {
-                                displayStatusFragment = ((DisplayStatusFragment) fragment);
-                                displayStatusFragment.scrollToTop();
                                 updateTimeLine(RetrieveFeedsAsyncTask.Type.ART, 0);
                             }
+                            displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            displayStatusFragment.scrollToTop();
                             break;
                         case 1:
                             DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
@@ -1580,12 +1573,9 @@ public abstract class BaseMainActivity extends BaseActivity
             if(homeFragment != null && homeFragment.getUserVisibleHint())
                 popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(0));
             else if(localFragment != null && localFragment.getUserVisibleHint())
-                popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(2));
+                popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(tabPosition.get("local")));
             else if(federatedFragment != null && federatedFragment.getUserVisibleHint()){
-                if( !display_local && display_global)
-                    popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(2));
-                else
-                    popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(3));
+                popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(tabPosition.get("global")));
             }
             if( popup == null)
                 return true;
@@ -2338,7 +2328,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
 
-
+    public static HashMap<String, DisplayStatusFragment> tagFragment = new HashMap<>();
     /**
      * Page Adapter for settings
      */
@@ -2383,10 +2373,12 @@ public abstract class BaseMainActivity extends BaseActivity
                 return notificationsFragment;
             }else {
                 statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", Helper.timelineType(getApplicationContext(), position));
-                if( Helper.timelineType(getApplicationContext(), position) == RetrieveFeedsAsyncTask.Type.TAG){
-                    if( tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null)
+                bundle.putSerializable("type", Helper.timelineType(getApplicationContext(), position, countPage));
+                if( Helper.timelineType(getApplicationContext(), position, countPage) == RetrieveFeedsAsyncTask.Type.TAG){
+                    if( tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null) {
                         bundle.putString("tag", tabLayout.getTabAt(position).getText().toString());
+                        tagFragment.put(tabLayout.getTabAt(position).getText().toString(), statusFragment);
+                    }
                 }
                 statusFragment.setArguments(bundle);
                 return statusFragment;
@@ -2398,41 +2390,23 @@ public abstract class BaseMainActivity extends BaseActivity
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
             // save the appropriate reference depending on position
-            switch (position) {
-                case 0:
-                    homeFragment = (DisplayStatusFragment) createdFragment;
-                    break;
-                case 1:
-                    notificationsFragment = (DisplayNotificationsFragment) createdFragment;
-                    break;
-                case 2:
-                    if( !display_direct && display_local)
-                        localFragment = (DisplayStatusFragment) createdFragment;
-                    else if ( !display_direct && display_global)
-                        federatedFragment = (DisplayStatusFragment) createdFragment;
-                    else
-                        artFragment = (DisplayStatusFragment) createdFragment;
-                case 3:
-                    if( display_direct && display_local)
-                        localFragment = (DisplayStatusFragment) createdFragment;
-                    else if( !display_direct && display_local && display_global)
-                        federatedFragment = (DisplayStatusFragment) createdFragment;
-                    else if( display_direct && display_global)
-                        federatedFragment = (DisplayStatusFragment) createdFragment;
-                    else
-                        artFragment = (DisplayStatusFragment) createdFragment;
-                    break;
-                case 4:
-                    if( display_direct && display_local && display_global)
-                        federatedFragment = (DisplayStatusFragment) createdFragment;
-                    else
-                        artFragment = (DisplayStatusFragment) createdFragment;
-                    break;
-                case 5:
-                    if( display_direct && display_local && display_global && display_art)
-                        artFragment = (DisplayStatusFragment) createdFragment;
-                    break;
-            }
+            if( position == 0){
+                homeFragment = (DisplayStatusFragment) createdFragment;
+            }else if( position == 1){
+                notificationsFragment = (DisplayNotificationsFragment) createdFragment;
+            }else if( position ==2 && countPage > 2){
+                if( !display_direct && display_local)
+                    localFragment = (DisplayStatusFragment) createdFragment;
+                else if (!display_local)
+                    federatedFragment = (DisplayStatusFragment) createdFragment;
+            }else if (position == 3 && countPage > 3){
+                if( display_local)
+                    localFragment = (DisplayStatusFragment) createdFragment;
+                else if (display_global)
+                    federatedFragment = (DisplayStatusFragment) createdFragment;
+            }else if( position == 4 && countPage > 4)
+                if( display_global)
+                    federatedFragment = (DisplayStatusFragment) createdFragment;
             return createdFragment;
         }
 
@@ -2445,59 +2419,125 @@ public abstract class BaseMainActivity extends BaseActivity
 
     private void attacheDelete(int position){
         LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
-        String title = tabLayout.getTabAt(position).getText().toString().trim();
-        SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
-                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                String tag = tabLayout.getTabAt(position).getText().toString().trim();
+                SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                PopupMenu popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(position));
+                popup.getMenuInflater()
+                        .inflate(R.menu.option_tag_timeline, popup.getMenu());
+                Menu menu = popup.getMenu();
+                final MenuItem itemMediaOnly = menu.findItem(R.id.action_show_media_only);
+                final MenuItem itemShowNSFW = menu.findItem(R.id.action_show_nsfw);
+                List<TagTimeline> tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTimelineInfo(tag);
+                boolean mediaOnly = false;
+                boolean showNSFW = false;
+                if( tagTimelines != null && tagTimelines.size() > 0 ) {
+                    mediaOnly = tagTimelines.get(0).isART();
+                    showNSFW = tagTimelines.get(0).isNSFW();
+                }
+                itemMediaOnly.setChecked(mediaOnly);
+                itemShowNSFW.setChecked(showNSFW);
+                popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        new SearchDAO(BaseMainActivity.this, db).remove(title);
-                        String tag;
-                        if( position > 0 && tabLayout.getTabAt(position - 1).getText() != null) {
-                            tag = tabLayout.getTabAt(position - 1).getText().toString();
-                        }else if( tabLayout.getTabCount() > 1 && tabLayout.getTabAt(1).getText() != null) {
-                            tag = tabLayout.getTabAt(1).getText().toString();
-                        }else //Last element
-                            tag = "";
-                        Helper.removeTab(tabLayout, adapter, position);
-                        adapter = new BaseMainActivity.PagerAdapter
-                                (getSupportFragmentManager(), tabLayout.getTabCount());
-                        viewPager.setAdapter(adapter);
-                        for(int i = 0; i < tabLayout.getTabCount() ; i++ ){
-                            if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(tag.trim())){
-                                tabLayout.getTabAt(i).select();
-                                break;
+                    public void onDismiss(PopupMenu menu) {
+                        FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+                        fragTransaction.detach(tagFragment.get(tag));
+                        fragTransaction.attach(tagFragment.get(tag));
+                        fragTransaction.commit();
+                    }
+                });
+                boolean finalMediaOnly = mediaOnly;
+                boolean finalShowNSFW = showNSFW;
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                        item.setActionView(new View(getApplicationContext()));
+                        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                            @Override
+                            public boolean onMenuItemActionExpand(MenuItem item) {
+                                return false;
                             }
 
+                            @Override
+                            public boolean onMenuItemActionCollapse(MenuItem item) {
+                                return false;
+                            }
+                        });
+                        switch (item.getItemId()) {
+                            case R.id.action_show_media_only:
+                                TagTimeline tagTimeline = new TagTimeline();
+                                tagTimeline.setName(tag.trim());
+                                tagTimeline.setART(!finalMediaOnly);
+                                tagTimeline.setNSFW(finalShowNSFW);
+                                itemMediaOnly.setChecked(!finalMediaOnly);
+                                new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline);
+                                break;
+                            case R.id.action_show_nsfw:
+                                tagTimeline = new TagTimeline();
+                                tagTimeline.setName(tag.trim());
+                                tagTimeline.setART(finalMediaOnly);
+                                tagTimeline.setNSFW(!finalShowNSFW);
+                                itemShowNSFW.setChecked(!finalShowNSFW);
+                                new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline);
+                                break;
+                            case R.id.action_delete:
+                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
+                                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        new SearchDAO(BaseMainActivity.this, db).remove(tag);
+                                        String tag;
+                                        if( position > 0 && tabLayout.getTabAt(position - 1).getText() != null) {
+                                            tag = tabLayout.getTabAt(position - 1).getText().toString();
+                                        }else if( tabLayout.getTabCount() > 1 && tabLayout.getTabAt(1).getText() != null) {
+                                            tag = tabLayout.getTabAt(1).getText().toString();
+                                        }else //Last element
+                                            tag = "";
+                                        Helper.removeTab(tabLayout, adapter, position);
+                                        adapter = new BaseMainActivity.PagerAdapter
+                                                (getSupportFragmentManager(), tabLayout.getTabCount());
+                                        viewPager.setAdapter(adapter);
+                                        for(int i = 0; i < tabLayout.getTabCount() ; i++ ){
+                                            if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(tag.trim())){
+                                                tabLayout.getTabAt(i).select();
+                                                break;
+                                            }
+
+                                        }
+                                    }
+                                });
+                                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                dialogBuilder.setMessage(getString(R.string.delete) + ": " + tag);
+                                AlertDialog alertDialog = dialogBuilder.create();
+                                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialogInterface) {
+                                        //Hide keyboard
+                                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                        assert imm != null;
+                                        imm.hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
+                                    }
+                                });
+                                if( alertDialog.getWindow() != null )
+                                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                                alertDialog.show();
+                                return false;
                         }
+                        return false;
                     }
                 });
-                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-                dialogBuilder.setMessage(getString(R.string.delete) + ": " + title);
-                AlertDialog alertDialog = dialogBuilder.create();
-                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        //Hide keyboard
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        assert imm != null;
-                        imm.hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
-                    }
-                });
-                if( alertDialog.getWindow() != null )
-                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                alertDialog.show();
+                popup.show();
                 return false;
             }
         });
+
     }
 
     public void updateHomeCounter(){

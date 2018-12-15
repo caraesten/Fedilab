@@ -105,6 +105,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.CustomTextView;
@@ -152,6 +153,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private List<String> timedMute;
     private boolean redraft;
     private Status toot;
+    private TagTimeline tagTimeline;
 
     public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
         super();
@@ -165,6 +167,21 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         this.targetedId = targetedId;
         this.translator = translator;
         redraft = false;
+    }
+
+    public StatusListAdapter(Context context, TagTimeline tagTimeline, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
+        super();
+        this.context = context;
+        this.statuses = statuses;
+        this.isOnWifi = isOnWifi;
+        this.behaviorWithAttachments = behaviorWithAttachments;
+        layoutInflater = LayoutInflater.from(this.context);
+        statusListAdapter = this;
+        this.type = RetrieveFeedsAsyncTask.Type.TAG;
+        this.targetedId = targetedId;
+        this.translator = translator;
+        redraft = false;
+        this.tagTimeline = tagTimeline;
     }
 
     public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
@@ -221,7 +238,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        if( type != RetrieveFeedsAsyncTask.Type.ART && (holder.getItemViewType() == DISPLAYED_STATUS || holder.getItemViewType() == COMPACT_STATUS)) {
+        if( type != RetrieveFeedsAsyncTask.Type.ART && (tagTimeline == null || !tagTimeline.isART()) && (holder.getItemViewType() == DISPLAYED_STATUS || holder.getItemViewType() == COMPACT_STATUS)) {
             final ViewHolder viewHolder = (ViewHolder) holder;
             // Bug workaround for losing text selection ability, see:
             // https://code.google.com/p/android/issues/detail?id=208169
@@ -426,7 +443,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if( type == RetrieveFeedsAsyncTask.Type.ART)
+        if( type == RetrieveFeedsAsyncTask.Type.ART || (tagTimeline != null && tagTimeline.isART()))
             return new ViewHolderArt(layoutInflater.inflate(R.layout.drawer_art, parent, false));
         else if( viewType == DISPLAYED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
@@ -445,7 +462,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        if( type == RetrieveFeedsAsyncTask.Type.ART) {
+        if( type == RetrieveFeedsAsyncTask.Type.ART || (tagTimeline != null && tagTimeline.isART())) {
             final ViewHolderArt holder = (ViewHolderArt) viewHolder;
             final Status status = statuses.get(viewHolder.getAdapterPosition());
 

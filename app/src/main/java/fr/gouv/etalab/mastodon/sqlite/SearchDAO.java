@@ -66,6 +66,23 @@ public class SearchDAO {
     }
 
 
+    //------- UPDATES  -------
+
+    /**
+     * update tag timeline info in database
+     * @param tagTimeline TagTimeline
+     */
+    public void updateSearch(TagTimeline tagTimeline) {
+        ContentValues values = new ContentValues();
+        values.put(Sqlite.COL_IS_ART, tagTimeline.isART()?1:0);
+        values.put(Sqlite.COL_IS_NSFW, tagTimeline.isNSFW()?1:0);
+        //Inserts search
+        try{
+            db.update(Sqlite.TABLE_SEARCH,  values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_KEYWORDS + " = ?", new String[]{userId, tagTimeline.getName()});
+        }catch (Exception ignored) {}
+    }
+
+
     //------- REMOVE  -------
 
     /***

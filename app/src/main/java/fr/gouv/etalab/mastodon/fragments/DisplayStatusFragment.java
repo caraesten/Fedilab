@@ -52,6 +52,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Conversation;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.drawers.PeertubeAdapter;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -61,6 +62,7 @@ import fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService;
 import fr.gouv.etalab.mastodon.services.StreamingLocalTimelineService;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
+import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
@@ -100,6 +102,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String search_peertube, remote_channel_name;
     private String initialBookMark;
     private boolean fetchMoreButtonDisplayed;
+    private TagTimeline tagTimeline;
 
     public DisplayStatusFragment(){
     }
@@ -117,6 +120,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         fetchMoreButtonDisplayed = false;
         showPinned = false;
         showReply = false;
+        tagTimeline = null;
         if (bundle != null) {
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedId", null);
@@ -156,7 +160,15 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         Account account = new AccountDAO(context, db).getAccountByID(userId);
         mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
 
-        if( search_peertube == null && (instanceType == null || instanceType.equals("MASTODON"))) {
+        if( type == RetrieveFeedsAsyncTask.Type.TAG && tag != null) {
+            BaseMainActivity.displayPeertube = null;
+            List<TagTimeline> tagTimelines = new SearchDAO(context, db).getTimelineInfo(tag);
+            if( tagTimelines != null && tagTimelines.size() > 0) {
+                tagTimeline = tagTimelines.get(0);
+                statusListAdapter = new StatusListAdapter(context, tagTimeline, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+                lv_status.setAdapter(statusListAdapter);
+            }
+        }else if( search_peertube == null && (instanceType == null || instanceType.equals("MASTODON"))) {
             BaseMainActivity.displayPeertube = null;
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
             lv_status.setAdapter(statusListAdapter);
@@ -474,8 +486,18 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     }
 
                 }else {
-                    this.statuses.addAll(statuses);
-                    statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
+                    if( tagTimeline == null || !tagTimeline.isART() || (tagTimeline.isART() && tagTimeline.isNSFW())) {
+                        this.statuses.addAll(statuses);
+                        statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
+                    }else { //If it's an Art timeline not allowing NSFW
+                        ArrayList<Status> safeStatuses = new ArrayList<>();
+                        for(Status status: statuses){
+                            if( !status.isSensitive())
+                            safeStatuses.add(status);
+                        }
+                        this.statuses.addAll(safeStatuses);
+                        statusListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
+                    }
                 }
                 if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
                     //Update the id of the last toot retrieved
