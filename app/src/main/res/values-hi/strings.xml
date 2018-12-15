@@ -26,12 +26,12 @@
     <string name="toots">संदेश</string>
     <string name="tags">टैग्स</string>
     <string name="token">टोकन</string>
-    <string name="save">Save</string>
-    <string name="restore">Restore</string>
-    <string name="two_factor_authentification">Two-step authentication?</string>
-    <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
-    <string name="no_result">No results!</string>
-    <string name="instance">Instance</string>
+    <string name="save">सहेजें</string>
+    <string name="restore">पहले जैसा करें</string>
+    <string name="two_factor_authentification">दो-चरणीय प्रमाणीकरण</string>
+    <string name="other_instance">mastodon.etalab.gouv.fr के अलावा कोई अन्य इंस्टेंस?</string>
+    <string name="no_result">कोई परिणाम नहीं!</string>
+    <string name="instance">इंस्टेंस</string>
     <string name="instance_example">Instance: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
     <string name="add_account">Add an account</string>
