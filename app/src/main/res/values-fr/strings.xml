@@ -654,4 +654,6 @@ Le bouton de connection s\'activera une fois qu\'un domaine valide serra renseig
     </string>
     <string name="more_information">Plus d’informations</string>
     <string name="showcase_2FA">Si vous utilisez 2FA (authentification à deux facteurs), vous devez utiliser ce lien. \nVous pouvez également l’utiliser si vous ne souhaitez pas saisir vos identifiants ici.</string>
+    <!-- languages not translated -->
+    <!-- end languages -->
 </resources>
