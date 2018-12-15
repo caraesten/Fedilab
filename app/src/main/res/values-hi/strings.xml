@@ -35,9 +35,9 @@
     <string name="instance_example">इंस्टेंस: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">अब इस खाते के साथ काम करता है %1$s</string>
     <string name="add_account">खाता जोड़ें</string>
-    <string name="clipboard">The content of the toot has been copied to the clipboard</string>
-    <string name="change">Change</string>
-    <string name="choose_picture">Select a picture…</string>
+    <string name="clipboard">इस संदेश के विषय वस्तु की प्रतिलिपि को क्लिपबोर्ड में छाप दिया गया है</string>
+    <string name="change">बदलें</string>
+    <string name="choose_picture">एक चित्र चुनें</string>
     <string name="clear">Clean</string>
     <string name="microphone">Microphone</string>
     <string name="camera">Camera</string>
