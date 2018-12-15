@@ -104,9 +104,9 @@
     <string name="reblog_added">The toot was boosted!</string>
     <string name="reblog_removed">The toot is no longer boosted!</string>
     <string name="reblog_by">बूस्ट किया %1$s</string>
-    <string name="favourite_add">Add this toot to your favourites?</string>
-    <string name="favourite_remove">Remove this toot from your favourites?</string>
-    <string name="reblog_add">Boost this toot?</string>
+    <string name="favourite_add">इस संदेश को अपने फ़ेवरेट्स में जोड़े?</string>
+    <string name="favourite_remove">इस संदेश को अपने फ़ेवरेट्स से हटाएं?</string>
+    <string name="reblog_add">इस संदेश को बूस्ट करें?</string>
     <string name="reblog_remove">Unboost this toot?</string>
     <string name="pin_add">Pin this toot?</string>
     <string name="pin_remove">Unpin this toot?</string>
