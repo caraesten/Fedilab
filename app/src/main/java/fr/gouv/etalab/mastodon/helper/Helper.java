@@ -2412,7 +2412,9 @@ public class Helper {
 
 
     public static void installProvider(){
-        Security.insertProviderAt(Conscrypt.newProvider(),1);
+        try {
+            Security.insertProviderAt(Conscrypt.newProvider(),1);
+        }catch (Exception ignored){}
     }
 
 

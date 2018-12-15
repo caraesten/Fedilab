@@ -474,10 +474,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             Glide.with(context)
                 .load(status.getMedia_attachments().get(0).getPreview_url())
                 .into(holder.art_media);
-            Glide.with(context)
-                    .load(status.getAccount().getAvatar())
-                    .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(10)))
-                    .into(holder.art_pp);
+            if( status.getAccount() != null && status.getAccount().getAvatar() != null)
+                Glide.with(context)
+                        .load(status.getAccount().getAvatar())
+                        .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(10)))
+                        .into(holder.art_pp);
             holder.art_pp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
