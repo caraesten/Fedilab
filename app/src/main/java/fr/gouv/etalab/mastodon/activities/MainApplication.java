@@ -53,8 +53,8 @@ public class MainApplication extends MultiDexApplication {
         try {
             List<Locale> SUPPORTED_LOCALES = new ArrayList<>();
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.getDefault()));
-            Locale defaultLocale = Helper.restoreLocaleFromString(defaultLocaleString);
+            String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, Helper.getDefaultLocale());
+            Locale defaultLocale = new Locale(defaultLocaleString);
             SUPPORTED_LOCALES.add(defaultLocale);
             LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
         }catch (Exception ignored){ignored.printStackTrace();}

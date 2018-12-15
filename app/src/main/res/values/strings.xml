@@ -753,6 +753,13 @@
     <string name="basque" translatable="false">Euskara</string>
     <string name="hindi" translatable="false">हिंदी</string>
     <string name="japanese" translatable="false">日本語</string>
+    <string name="dutch" translatable="false">Nederlands</string>
+    <string name="galician" translatable="false">Galego</string>
+    <string name="greek" translatable="false">Ελληνικά</string>
+    <string name="portuguese" translatable="false">Português</string>
+    <string name="serbian" translatable="false">Српски</string>
+    <string name="ukrainian" translatable="false">Українська</string>
+    <string name="russian" translatable="false">Русский</string>
     <!-- end languages -->
 
 </resources>

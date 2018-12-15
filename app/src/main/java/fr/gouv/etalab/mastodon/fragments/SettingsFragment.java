@@ -636,6 +636,8 @@ public class SettingsFragment extends Fragment {
         });
 
 
+        String currentLanguage = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, Helper.localeToStringStorage(Locale.getDefault()));
+        Locale currentLocale = Helper.restoreLocaleFromString(currentLanguage);
         final Spinner set_change_locale = rootView.findViewById(R.id.set_change_locale);
         ArrayAdapter<String> adapterLocale = new ArrayAdapter<>(context,
                 android.R.layout.simple_spinner_dropdown_item, Helper.getLocales(context));
@@ -651,75 +653,78 @@ public class SettingsFragment extends Fragment {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         case 0:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.getDefault()));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, Helper.getDefaultLocale());
                             editor.commit();
                             break;
                         case 1:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.ENGLISH));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "en");
                             editor.commit();
                             break;
                         case 2:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.FRANCE));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "fr");
                             editor.commit();
                             break;
                         case 3:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.GERMAN));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "de");
                             editor.commit();
                             break;
                         case 4:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.ITALIAN));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "it");
                             editor.commit();
                             break;
                         case 5:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.JAPAN));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ja");
                             editor.commit();
                             break;
                         case 6:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.SIMPLIFIED_CHINESE));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW,"zh-TW");
                             editor.commit();
                             break;
                         case 7:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.TRADITIONAL_CHINESE));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "zh-CN");
                             editor.commit();
                             break;
                         case 8:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("eu")));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "eu");
                             editor.commit();
                             break;
                         case 9:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("ar")));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ar");
                             editor.commit();
                             break;
                         case 10:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("nl")));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "nl");
                             editor.commit();
                             break;
                         case 11:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("gl")));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "gl");
                             editor.commit();
                             break;
                         case 12:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("el")));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "el");
                             editor.commit();
                             break;
                         case 13:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("pt")));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "pt");
                             editor.commit();
                             break;
                         case 14:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("es")));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "es");
                             editor.commit();
                             break;
                         case 15:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("pl")));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "pl");
                             editor.commit();
                             break;
                         case 16:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("sr")));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "sr");
                             editor.commit();
                             break;
                         case 17:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(new Locale("uk")));
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "uk");
+                            editor.commit();
+                        case 18:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ru");
                             editor.commit();
                             break;
                     }

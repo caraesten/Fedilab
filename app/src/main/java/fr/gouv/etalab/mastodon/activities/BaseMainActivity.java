@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.net.Uri;
@@ -725,7 +726,9 @@ public abstract class BaseMainActivity extends BaseActivity
             tabPosition.put("art",i);
         }
 
-        if( i > 3 && !Helper.isTablet(getApplicationContext())){
+        if( (getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE)
+            tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        else if( i > 3 && !Helper.isTablet(getApplicationContext())){
             tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         }else{
             tabLayout.setTabMode(TabLayout.MODE_FIXED);

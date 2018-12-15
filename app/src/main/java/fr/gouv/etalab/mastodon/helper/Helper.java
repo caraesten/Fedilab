@@ -282,7 +282,7 @@ public class Helper {
     public static final String SET_DISPLAY_VIDEO_PREVIEWS= "set_display_video_previews";
     public static final String SET_OLD_DIRECT_TIMELINE = "sset_old_direct_timeline";
     public static final String SET_BATTERY_PROFILE = "set_battery_profile";
-    public static final String SET_DEFAULT_LOCALE = "set_default_locale";
+    public static final String SET_DEFAULT_LOCALE_NEW = "set_default_locale_new";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
@@ -2900,47 +2900,140 @@ public class Helper {
         }
     }
 
-
     public static String[] getLocales(Context context){
-        String[] locale = new String[18];
+        String[] locale = new String[19];
         locale[0] = context.getString(R.string.default_language);
-        locale[1] = Locale.ENGLISH.getDisplayLanguage();
-        locale[2] = Locale.FRANCE.getDisplayLanguage();
-        locale[3] = Locale.GERMAN.getDisplayLanguage();
-        locale[4] = Locale.ITALIAN.getDisplayLanguage();
-        locale[5] = Locale.JAPAN.getDisplayLanguage();
-        locale[6] = Locale.SIMPLIFIED_CHINESE.getDisplayLanguage();
-        locale[7] = Locale.TRADITIONAL_CHINESE.getDisplayLanguage();
-        locale[8] = new Locale("eu").getDisplayLanguage();
-        locale[9] = new Locale("ar").getDisplayLanguage();
-        locale[10] = new Locale("nl").getDisplayLanguage();
-        locale[11] = new Locale("gl").getDisplayLanguage();
-        locale[12] = new Locale("el").getDisplayLanguage();
-        locale[13] = new Locale("pt").getDisplayLanguage();
-        locale[14] = new Locale("es").getDisplayLanguage();
-        locale[15] = new Locale("pl").getDisplayLanguage();
-        locale[16] = new Locale("sr").getDisplayLanguage();
-        locale[17] = new Locale("uk").getDisplayLanguage();
+        locale[1] = context.getString(R.string.english);
+        locale[2] = context.getString(R.string.french);
+        locale[3] = context.getString(R.string.german);
+        locale[4] = context.getString(R.string.italian);
+        locale[5] = context.getString(R.string.japanese);
+        locale[6] = context.getString(R.string.simplified_chinese);
+        locale[7] = context.getString(R.string.traditional_chinese);
+        locale[8] = context.getString(R.string.basque);
+        locale[9] = context.getString(R.string.arabic);
+        locale[10] = context.getString(R.string.dutch);
+        locale[11] = context.getString(R.string.galician);
+        locale[12] = context.getString(R.string.greek);
+        locale[13] = context.getString(R.string.portuguese);
+        locale[14] = context.getString(R.string.spanish);
+        locale[15] = context.getString(R.string.polish);
+        locale[16] = context.getString(R.string.serbian);
+        locale[17] = context.getString(R.string.ukrainian);
+        locale[18] = context.getString(R.string.russian);
+        return locale;
+    }
+
+
+    public static String getLocalesTwoChars(int stringLocaleId){
+        switch (stringLocaleId){
+            case R.string.default_language:
+                return Locale.getDefault().getLanguage();
+            case R.string.english:
+                return "en";
+            case R.string.french:
+                return "fr";
+            case R.string.arabic:
+                return "ar";
+            case R.string.kabyle:
+                return "kab";
+            case R.string.italian:
+                return "it";
+            case R.string.catalan:
+                return "ca";
+            case R.string.german:
+                return "de";
+            case R.string.spanish:
+                return "es";
+            case R.string.welsh:
+                return "cy";
+            case R.string.polish:
+                return "pl";
+            case R.string.traditional_chinese:
+                return "zh-TW";
+            case R.string.simplified_chinese:
+                return "zh-CN";
+            case R.string.basque:
+                return "eu";
+            case R.string.hindi:
+                return "hi";
+            case R.string.japanese:
+                return "ja";
+            case R.string.dutch:
+                return "nl";
+            case R.string.galician:
+                return "gl";
+            case R.string.greek:
+                return "el";
+            case R.string.portuguese:
+                return "pt";
+            case R.string.serbian:
+                return "sr";
+            case R.string.ukrainian:
+                return "uk";
+            case R.string.russian:
+                return "ru";
+            default:
+                return Locale.getDefault().getLanguage();
+        }
+    }
+
+    public static String getDefaultLocale(){
+        String locale = Locale.getDefault().getCountry();
+        if( locale.startsWith("zh")){
+            if(  Locale.getDefault().getLanguage().equals("TW") || Locale.getDefault().getLanguage().equals("CN"))
+                locale = Locale.getDefault().getCountry() + "-" + Locale.getDefault().getLanguage();
+            else
+                locale = Locale.getDefault().getCountry() + "-TW";
+        }
         return locale;
     }
 
     public static int languageSpinnerPosition(Context context){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE, Helper.localeToStringStorage(Locale.getDefault()));
-        Locale defaultLocale = Helper.restoreLocaleFromString(defaultLocaleString);
-        if( defaultLocale == null)
-            return 0;
-        String language = defaultLocale.getDisplayLanguage();
-        String[] locales = getLocales(context);
-        int index = 0;
-        for (int i=0;i<locales.length;i++) {
-            if (locales[i].equals(language)) {
-                index = i;
-                break;
-            }
+        String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, "NOT_DEFINED");
+        switch (defaultLocaleString){
+            case "NOT_DEFINED":
+                return 0;
+            case "en":
+                return 1;
+            case "fr":
+                return 2;
+            case "de":
+                return 3;
+            case "it":
+                return 4;
+            case "ja":
+                return 5;
+            case "zh-TW":
+                return 6;
+            case "zh-CN":
+                return 7;
+            case "eu":
+                return 8;
+            case "ar":
+                return 9;
+            case "nl":
+                return 10;
+            case "gl":
+                return 11;
+            case "el":
+                return 12;
+            case "pt":
+                return 13;
+            case "es":
+                return 14;
+            case "pl":
+                return 15;
+            case "sr":
+                return 16;
+            case "uk":
+                return 17;
+            case "ru":
+                return 18;
+            default:
+                return 0;
         }
-        return index;
-
     }
 
     public static RetrieveFeedsAsyncTask.Type timelineType(Context context, int position){
