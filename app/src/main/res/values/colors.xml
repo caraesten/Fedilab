@@ -12,10 +12,10 @@
     <color name="header3D">#607D8B</color>
 
     <color name="dark_text_toot_header">#d9d9d9</color>
-    <color name="dark_link_toot">#0099ff</color>
+
 
     <color name="black_text_toot_header">#d9d9d9</color>
-    <color name="black_link_toot">#0099ff</color>
+
 
     <color name="dark_text">#f3f3f3</color>
     <color name="dark_icon">#606984</color>
@@ -96,4 +96,7 @@
     <color name="cardBorderBlack">#d9d9d9</color>
 
 
+    <color name="black_link_toot">#27a7fc</color>
+    <color name="dark_link_toot">#27a7fc</color>
+    <color name="light_link_toot">#27a7fc</color>
 </resources>

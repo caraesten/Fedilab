@@ -784,7 +784,7 @@ public class Status implements Parcelable{
                                 else if (theme == THEME_BLACK)
                                     ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
                                 else if (theme == THEME_LIGHT)
-                                    ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                    ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
                             }
                         },
                         matchStart, matchEnd,
@@ -824,7 +824,7 @@ public class Status implements Parcelable{
                         else if (theme == THEME_BLACK)
                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
                         else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
@@ -851,7 +851,7 @@ public class Status implements Parcelable{
                                      else if (theme == THEME_BLACK)
                                          ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
                                      else if (theme == THEME_LIGHT)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                         ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
                                  }
                              },
                                     startPosition, endPosition,
@@ -918,7 +918,7 @@ public class Status implements Parcelable{
                                      else if (theme == THEME_BLACK)
                                          ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
                                      else if (theme == THEME_LIGHT)
-                                         ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                         ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
                                  }
                              },
                                     startPosition, endPosition,
@@ -961,7 +961,7 @@ public class Status implements Parcelable{
                                          else if (theme == THEME_BLACK)
                                              ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
                                          else if (theme == THEME_LIGHT)
-                                             ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                             ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
                                      }
                                  },
                                 startPosition, endPosition,
@@ -992,7 +992,7 @@ public class Status implements Parcelable{
                                                              else if (theme == THEME_BLACK)
                                                                  ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
                                                              else if (theme == THEME_LIGHT)
-                                                                 ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                                                 ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
                                                          }
                                                      },
                                     startPosition, endPosition,
@@ -1025,7 +1025,7 @@ public class Status implements Parcelable{
                         else if (theme == THEME_BLACK)
                             ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
                         else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
                     }
                 }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
