@@ -41,10 +41,10 @@
     <string name="clear">साफ करें</string>
     <string name="microphone">ध्वनिग्राही</string>
     <string name="camera">कैमरा</string>
-    <string name="speech_prompt">Please, say something</string>
-    <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-    <string name="delete_all">Delete all</string>
-    <string name="translate_toot">Translate this toot.</string>
+    <string name="speech_prompt">कृपया कुछ कहिये</string>
+    <string name="speech_not_supported">क्षमा करें! आपका यंत्र वाणी इंपुट का समर्थन नहीं करता है</string>
+    <string name="delete_all">सब हटाएँ</string>
+    <string name="translate_toot">इस संदेश का अनुवाद करें</string>
     <string name="schedule">Schedule</string>
     <string name="text_size">Text and icon sizes</string>
     <string name="text_size_change">Change the current text size:</string>
