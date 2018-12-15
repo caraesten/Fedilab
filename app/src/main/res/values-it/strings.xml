@@ -619,26 +619,26 @@
     <string name="boost_scheduled">Il boost è programmato!</string>
     <string name="no_scheduled_boosts">Nessun boost programmato da mostrare!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Apri il menu di un toot e poi premi <b>Programma boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
-    <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
-    <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
+    <string name="art_menu">Timeline Arte</string>
+    <string name="open_menu">Apri menu</string>
+    <string name="app_logo">Logo dell\'applicazione</string>
+    <string name="profile_picture">Immagine di profilo</string>
+    <string name="profile_banner">Immagine di copertina</string>
+    <string name="contact_instance_admin">Contatta l\'amministratore dell\'istanza</string>
+    <string name="add_new">Aggiungi nuovo</string>
+    <string name="mastohost_logo">Logo di MastoHost</string>
+    <string name="emoji_picker">Selettore di emoji</string>
+    <string name="refresh">Aggiorna</string>
+    <string name="expand_conversation">Espandi la conversazione</string>
+    <string name="remove_account">Rimuovi un account</string>
+    <string name="delete_domain">Elimina il dominio bloccato</string>
+    <string name="custom_emoji_picker">Selettore di emoji personalizzate</string>
+    <string name="play_video">Riproduci video</string>
+    <string name="new_toot">Nuovo toot</string>
+    <string name="card_view_image">Immagine della scheda</string>
+    <string name="hide_media">Nascondi media</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Media per l\'aggiunta di una descrizione</string>
     <string-array name="filter_expire">
         <item>Mai</item>
         <item>30 minuti</item>
@@ -648,14 +648,18 @@
         <item>1 giorno</item>
         <item>1 settimana</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        In questo campo, devi scrivere il nome della tua istanza.\nPer esempio, se hai creato il tuo account su https://mastodon.social\nscrivi solo <b>mastodon.social</b> (senza https://)\n
+        Puoi iniziare a digitare le prime lettere ed i nomi verranno suggeriti.\n\n
+        ⚠ Il pulsante di accesso funzionerà solo se il nome dell\'istanza è valido e l\'istanza è online!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        In questo campo, scrivi l\'indirizzo email collegato al tuo account Mastodon.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        L\'ultimo passaggio è inserire la tua password e premere Accedi.
     </string>
-    <string name="more_information">More information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="more_information">Più informazioni</string>
+    <string name="showcase_2FA">Se utilizzi il 2FA (Autenticazione a 2 fattori), hai bisogno di questo collegamento.\nPuoi anche usarlo se non vuoi inserire le tue credenziali qui.</string>
+    <!-- languages not translated -->
+    <string name="show_media_only">Media only</string>
+    <string name="show_media_nsfw">Show NSFW</string>
+    <!-- end languages -->
 </resources>

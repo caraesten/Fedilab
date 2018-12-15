@@ -648,14 +648,19 @@
         <item>1 día</item>
         <item>1 semana</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        En este campo, debe escribir o nome do servidor da súa instancia.\nPor exemplo, se creou a súa conta en https://mastodon.social\ndebe escribir <b>mastodon.social</b> (sen https://)\n
+        Pode iniciar a escribir o nome e irá obtendo suxestións de servidores.\n\n
+        ⚠ O botón de conexión só estará activo se o nome da instancia é válido e a instancia está activa!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        En este campo, escriba o correo electrónico ligado a súa conta en Mastodon.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        O último paso é introducir o contrasinal e pulsa en Conectar.
+
     </string>
-    <string name="more_information">More information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="more_information">Máis información</string>
+    <string name="showcase_2FA">Se utiliza 2FA (doble factor de autenticación), debe utilizar esta ligazón.\nTamén pode utilizalo se non quere introducir as súas credenciais aquí.</string>
+    <!-- languages not translated -->
+    <string name="show_media_only">Media only</string>
+    <string name="show_media_nsfw">Show NSFW</string>
+    <!-- end languages -->
 </resources>

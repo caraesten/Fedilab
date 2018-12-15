@@ -605,30 +605,30 @@
     <string name="settings_title_battery">Accuoptimalisatie</string>
     <string name="set_change_locale">Taal veranderen</string>
     <string name="default_language">Standaardtaal</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
+    <string name="truncate_long_toots">Lange toots afbreken</string>
+    <string name="set_truncate_toot">Toots langer dan \'x\' regels afbreken. Nul is niet afbreken.</string>
     <string name="display_toot_truncate">Display more</string>
     <string name="hide_toot_truncate">Display less</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="manage_tags">Tags beheren</string>
+    <string name="tags_already_stored">Dit tag bestaat al!</string>
+    <string name="tags_stored">De tag is opgeslagen!</string>
+    <string name="tags_renamed">De dag is veranderd!</string>
+    <string name="tags_deleted">De tag is verwijderd!</string>
+    <string name="set_display_art">Toon Art tijdlijn</string>
     <string name="schedule_boost">Schedule boost</string>
     <string name="boost_scheduled">The boost is scheduled!</string>
     <string name="no_scheduled_boosts">No scheduled boost to display!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
+    <string name="art_menu">Art tijdlijn</string>
     <string name="open_menu">Open menu</string>
     <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
+    <string name="profile_picture">Profielfoto</string>
     <string name="profile_banner">Profile banner</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
+    <string name="add_new">Nieuw toevoegen</string>
     <string name="mastohost_logo">MastoHost logo</string>
     <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
+    <string name="refresh">Verversen</string>
     <string name="expand_conversation">Expand the conversation</string>
     <string name="remove_account">Remove an account</string>
     <string name="delete_domain">Delete the blocked domain</string>
@@ -658,4 +658,8 @@
     </string>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <!-- languages not translated -->
+    <string name="show_media_only">Media only</string>
+    <string name="show_media_nsfw">Show NSFW</string>
+    <!-- end languages -->
 </resources>
