@@ -18,23 +18,23 @@
     <string name="download_file">Prenos %1$s</string>
     <string name="download_over">Prenos je zaključen</string>
     <string name="save_file">Shrani %1$s</string>
-    <string name="save_over">Media saved</string>
-    <string name="download_from" formatted="false">File: %1$s</string>
-    <string name="password">Password</string>
-    <string name="email">Email</string>
-    <string name="accounts">Accounts</string>
-    <string name="toots">Toots</string>
-    <string name="tags">Tags</string>
-    <string name="token">Token</string>
-    <string name="save">Save</string>
-    <string name="restore">Restore</string>
-    <string name="two_factor_authentification">Two-step authentication?</string>
-    <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
-    <string name="no_result">No results!</string>
-    <string name="instance">Instance</string>
-    <string name="instance_example">Instance: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
-    <string name="add_account">Add an account</string>
+    <string name="save_over">Vsebina je shranjena</string>
+    <string name="download_from" formatted="false">Datoteka: %1$s</string>
+    <string name="password">Geslo</string>
+    <string name="email">Naslov e-pošte</string>
+    <string name="accounts">Računi</string>
+    <string name="toots">Objave Toots</string>
+    <string name="tags">Oznake</string>
+    <string name="token">Žeton</string>
+    <string name="save">Shrani</string>
+    <string name="restore">Obnovi</string>
+    <string name="two_factor_authentification">Želite dvostopenjsko prijavljanje? </string>
+    <string name="other_instance">Želite strežnik, ki ni \"mastodon.etalab.gouv.fr\"?</string>
+    <string name="no_result">Ni rezultatov.</string>
+    <string name="instance">Instanca strežnika</string>
+    <string name="instance_example">Instanca: mastodon.social</string>
+    <string name="toast_account_changed" formatted="false">Zdaj deluje na računu %1$s</string>
+    <string name="add_account">Dodajte račun</string>
     <string name="clipboard">The content of the toot has been copied to the clipboard</string>
     <string name="change">Change</string>
     <string name="choose_picture">Select a picture…</string>
