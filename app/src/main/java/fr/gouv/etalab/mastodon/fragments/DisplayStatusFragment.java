@@ -485,7 +485,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         }
                     }
 
-                }else {
+                }else if ( statusListAdapter != null){
                     if( tagTimeline == null || !tagTimeline.isART() || (tagTimeline.isART() && tagTimeline.isNSFW())) {
                         this.statuses.addAll(statuses);
                         statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
@@ -499,8 +499,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         this.statuses.addAll(safeStatuses);
                         statusListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
                     }
-
-
                 }
                 if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
                     //Update the id of the last toot retrieved
