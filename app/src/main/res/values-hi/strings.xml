@@ -18,11 +18,11 @@
     <string name="download_file">डाउन्लोड %1$s</string>
     <string name="download_over">डाउनलोड संपन्न</string>
     <string name="save_file">संचित करें %1$s</string>
-    <string name="save_over">Media saved</string>
-    <string name="download_from" formatted="false">File: %1$s</string>
-    <string name="password">Password</string>
-    <string name="email">Email</string>
-    <string name="accounts">Accounts</string>
+    <string name="save_over">मीडिया संचित कर लिया गया है</string>
+    <string name="download_from" formatted="false">फ़ाइल: %1$s</string>
+    <string name="password">पासवर्ड</string>
+    <string name="email">ईमेल</string>
+    <string name="accounts">खाते</string>
     <string name="toots">Toots</string>
     <string name="tags">Tags</string>
     <string name="token">Token</string>
