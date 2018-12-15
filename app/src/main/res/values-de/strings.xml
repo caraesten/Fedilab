@@ -653,4 +653,6 @@
     </string>
     <string name="more_information">Mehr Informationen</string>
     <string name="showcase_2FA">Falls du 2FA (Zwei-Faktor-Authentisierung) verwendest, musst du diesen Link verwenden.\nDu kannst ihn ebenfalls verwenden, wenn du eine Zugangsdaten hier nicht eingeben möchtest.</string>
+    <!-- languages not translated -->
+    <!-- end languages -->
 </resources>
