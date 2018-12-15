@@ -17,7 +17,7 @@
     <string name="download">डाउन्लोड</string>
     <string name="download_file">डाउन्लोड %1$s</string>
     <string name="download_over">डाउनलोड संपन्न</string>
-    <string name="save_file">Save %1$s</string>
+    <string name="save_file">संचित करें %1$s</string>
     <string name="save_over">Media saved</string>
     <string name="download_from" formatted="false">File: %1$s</string>
     <string name="password">Password</string>
