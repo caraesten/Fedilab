@@ -660,5 +660,7 @@
     <string name="more_information">Máis información</string>
     <string name="showcase_2FA">Se utiliza 2FA (doble factor de autenticación), debe utilizar esta ligazón.\nTamén pode utilizalo se non quere introducir as súas credenciais aquí.</string>
     <!-- languages not translated -->
+    <string name="show_media_only">Media only</string>
+    <string name="show_media_nsfw">Show NSFW</string>
     <!-- end languages -->
 </resources>
