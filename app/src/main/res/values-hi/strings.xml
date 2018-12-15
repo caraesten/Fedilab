@@ -10,13 +10,13 @@
     <string name="action_logout">लॉग आउट</string>
     <string name="login">प्रवेश</string>
     <!-- common -->
-    <string name="close">Close</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="cancel">Cancel</string>
-    <string name="download">Download</string>
-    <string name="download_file">Download %1$s</string>
-    <string name="download_over">Download complete</string>
+    <string name="close">बंद करें</string>
+    <string name="yes">हाँ</string>
+    <string name="no">नहीं</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="download">डाउन्लोड</string>
+    <string name="download_file">डाउन्लोड %1$s</string>
+    <string name="download_over">डाउनलोड संपन्न</string>
     <string name="save_file">Save %1$s</string>
     <string name="save_over">Media saved</string>
     <string name="download_from" formatted="false">File: %1$s</string>
