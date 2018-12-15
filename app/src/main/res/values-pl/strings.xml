@@ -488,7 +488,7 @@
     <string name="poxy_password">Hasło</string>
     <string name="set_theme">Motyw:</string>
     <string name="set_compact_mode">Tryb kompaktowy</string>
-    <string name="set_share_details">Add toot details when sharing</string>
+    <string name="set_share_details">Dodaj szczegóły wpisu podczas udostępniania</string>
     <string name="support_the_app_on_liberapay">Wesprzyj tą aplikacje na Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
     <string name="no_account_yet">Nie masz jeszcze konta?</string>
