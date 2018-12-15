@@ -735,4 +735,24 @@
     </string>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+
+
+    <!-- languages not translated -->
+    <string name="english" translatable="false">English</string>
+    <string name="french" translatable="false">Français</string>
+    <string name="arabic" translatable="false">العربية</string>
+    <string name="kabyle" translatable="false">Taqbaylit</string>
+    <string name="italian" translatable="false">Italiano</string>
+    <string name="catalan" translatable="false">Català</string>
+    <string name="german" translatable="false">Deutsch</string>
+    <string name="spanish" translatable="false">Español</string>
+    <string name="welsh" translatable="false">Cymraeg</string>
+    <string name="polish" translatable="false">Polski</string>
+    <string name="traditional_chinese" translatable="false">繁體中文</string>
+    <string name="simplified_chinese" translatable="false">简体中文</string>
+    <string name="basque" translatable="false">Euskara</string>
+    <string name="hindi" translatable="false">हिंदी</string>
+    <string name="japanese" translatable="false">日本語</string>
+    <!-- end languages -->
+
 </resources>
