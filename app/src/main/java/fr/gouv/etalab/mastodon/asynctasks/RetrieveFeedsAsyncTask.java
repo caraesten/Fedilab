@@ -25,10 +25,12 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
+import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.helper.FilterToots;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
+import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 
@@ -189,7 +191,18 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getStatusbyId(targetedID);
                 break;
             case TAG:
-                apiResponse = api.getPublicTimelineTag(tag, false, max_id);
+                List<TagTimeline> tagTimelines = new SearchDAO(contextReference.get(), db).getTimelineInfo(tag);
+                if( tagTimelines != null && tagTimelines.size() > 0){
+                    TagTimeline tagTimeline = tagTimelines.get(0);
+                    boolean isArt = tagTimeline.isART();
+                    if( isArt)
+                        apiResponse = api.getCustomArtTimeline(false, tag, max_id);
+                    else
+                        apiResponse = api.getPublicTimelineTag(tag, false, max_id);
+                }else{
+                    apiResponse = api.getPublicTimelineTag(tag, false, max_id);
+                }
+
                 break;
             case ART:
                 apiResponse = api.getArtTimeline(false, max_id);

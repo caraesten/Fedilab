@@ -1086,7 +1086,13 @@ public class API {
 
 
 
+    public APIResponse getCustomArtTimeline(boolean local, String tag, String max_id){
+        return getArtTimeline(local, tag, max_id);
+    }
 
+    public APIResponse getArtTimeline(boolean local, String max_id){
+        return getArtTimeline(local, null, max_id);
+    }
     /**
      * Retrieves art timeline
      * @param local boolean only local timeline
@@ -1094,8 +1100,10 @@ public class API {
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    public APIResponse getArtTimeline(boolean local, String max_id){
-        APIResponse apiResponse = getPublicTimelineTag("mastoart", local, true, max_id, null, tootPerPage);
+    private APIResponse getArtTimeline(boolean local, String tag, String max_id){
+        if( tag == null)
+            tag = "mastoart";
+        APIResponse apiResponse = getPublicTimelineTag(tag, local, true, max_id, null, tootPerPage);
         APIResponse apiResponseReply = new APIResponse();
         if( apiResponse != null){
             apiResponseReply.setMax_id(apiResponse.getMax_id());

@@ -23,6 +23,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.helper.Helper;
 
 
@@ -130,6 +132,43 @@ public class SearchDAO {
         List<String> searches = new ArrayList<>();
         while (c.moveToNext() ) {
             searches.add(c.getString(c.getColumnIndex(Sqlite.COL_KEYWORDS)));
+        }
+        //Close the cursor
+        c.close();
+        //Search list is returned
+        return searches;
+    }
+
+
+    /**
+     * Returns TagTimeline information by its keyword in db
+     * @return info List<TagTimeline>
+     */
+    public List<TagTimeline> getTimelineInfo(String keyword){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_SEARCH, null, Sqlite.COL_KEYWORDS + " = \"" + keyword + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, null, null);
+            return cursorToTagTimelineSearch(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /***
+     * Method to hydrate stored search from database
+     * @param c Cursor
+     * @return List<String>
+     */
+    private List<TagTimeline> cursorToTagTimelineSearch(Cursor c){
+        //No element found
+        if (c.getCount() == 0)
+            return null;
+        List<TagTimeline> searches = new ArrayList<>();
+        while (c.moveToNext() ) {
+            TagTimeline tagTimeline = new TagTimeline();
+            tagTimeline.setName(c.getString(c.getColumnIndex(Sqlite.COL_KEYWORDS)));
+            tagTimeline.setART(c.getInt(c.getColumnIndex(Sqlite.COL_IS_ART))==1);
+            tagTimeline.setNSFW(c.getInt(c.getColumnIndex(Sqlite.COL_IS_NSFW))==1);
+            searches.add(tagTimeline);
         }
         //Close the cursor
         c.close();
