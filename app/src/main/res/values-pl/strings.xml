@@ -496,9 +496,9 @@
     <string name="delete_instance">Usunąć tą instancję?</string>
     <string name="warning_delete_instance">Usuniesz %s z obserwowanych instancji.</string>
     <string name="which_language">Przetłumacz na</string>
-    <string name="crash_title">Mastalab has stopped :(</string>
-    <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
+    <string name="crash_title">Mastalab został zatrzymany :(</string>
+    <string name="crash_message">Możesz wysłać mi email z raportem o błędzie. To pomoże go naprawić :)\n\nMożesz dopisać coś więcej. Dziękuję!</string>
+    <string name="send_crash_report">Poprosić o wysłanie raportów o awariach przez e-mail?</string>
     <string name="follow_instance">Obserwuj instancję</string>
     <string name="toast_instance_already_added">Już obserwujesz tą instancję!</string>
     <string name="toast_instance_followed">Instancja jest śledzona!</string>
