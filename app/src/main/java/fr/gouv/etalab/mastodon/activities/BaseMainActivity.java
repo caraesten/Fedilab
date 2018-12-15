@@ -258,6 +258,7 @@ public abstract class BaseMainActivity extends BaseActivity
         setSupportActionBar(toolbar);
         toolbarTitle  = toolbar.findViewById(R.id.toolbar_title);
         toolbar_search = toolbar.findViewById(R.id.toolbar_search);
+        delete_instance = findViewById(R.id.delete_instance);
         if( theme == THEME_LIGHT) {
             ImageView icon = toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_button);
             ImageView close = toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
@@ -268,9 +269,10 @@ public abstract class BaseMainActivity extends BaseActivity
             EditText editText = toolbar_search.findViewById(android.support.v7.appcompat.R.id.search_src_text);
             editText.setHintTextColor(getResources().getColor(R.color.dark_icon));
             editText.setTextColor(getResources().getColor(R.color.dark_icon));
+            changeDrawableColor(BaseMainActivity.this,delete_instance, R.color.dark_icon);
         }
         tabLayout = findViewById(R.id.tabLayout);
-        delete_instance = findViewById(R.id.delete_instance);
+
         viewPager = findViewById(R.id.viewpager);
         TabLayout.Tab tabHome = tabLayout.newTab();
         TabLayout.Tab tabNotif = tabLayout.newTab();
