@@ -35,23 +35,23 @@
     <string name="instance_example">Instanca: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Zdaj deluje na računu %1$s</string>
     <string name="add_account">Dodajte račun</string>
-    <string name="clipboard">The content of the toot has been copied to the clipboard</string>
-    <string name="change">Change</string>
-    <string name="choose_picture">Select a picture…</string>
-    <string name="clear">Clean</string>
-    <string name="microphone">Microphone</string>
-    <string name="camera">Camera</string>
-    <string name="speech_prompt">Please, say something</string>
-    <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-    <string name="delete_all">Delete all</string>
-    <string name="translate_toot">Translate this toot.</string>
-    <string name="schedule">Schedule</string>
-    <string name="text_size">Text and icon sizes</string>
-    <string name="text_size_change">Change the current text size:</string>
-    <string name="icon_size_change">Change the current icon size:</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="open_with">Open with</string>
+    <string name="clipboard">Vsebina objave je bila kopirana v odložišče</string>
+    <string name="change">Spremeni</string>
+    <string name="choose_picture">Izberite sliko …</string>
+    <string name="clear">Počisti</string>
+    <string name="microphone">Mikrofon</string>
+    <string name="camera">Kamera</string>
+    <string name="speech_prompt">Prosimo, povejte kar želite</string>
+    <string name="speech_not_supported">Oprostite. Glasovni vnos ni podprt na vaši napravi.</string>
+    <string name="delete_all">Izbriši vse</string>
+    <string name="translate_toot">Prevedi to objavo.</string>
+    <string name="schedule">Nastavi čas objave</string>
+    <string name="text_size">Velikost besedila in ikon</string>
+    <string name="text_size_change">Spremeni trenutno velikost besedila:</string>
+    <string name="icon_size_change">Spremeni trenutno velikost ikon:</string>
+    <string name="next">Naprej</string>
+    <string name="previous">Nazaj</string>
+    <string name="open_with">Odpri s pomočjo</string>
     <string name="validate">Validate</string>
     <string name="media">Media</string>
     <string name="share_with">Share with</string>
@@ -103,31 +103,31 @@
     <string name="fav_removed">The toot was removed from favourites!</string>
     <string name="reblog_added">The toot was boosted!</string>
     <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
-    <string name="favourite_add">Add this toot to your favourites?</string>
-    <string name="favourite_remove">Remove this toot from your favourites?</string>
-    <string name="reblog_add">Boost this toot?</string>
-    <string name="reblog_remove">Unboost this toot?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
-    <string name="more_action_1">Mute</string>
-    <string name="more_action_2">Block</string>
-    <string name="more_action_3">Report</string>
-    <string name="more_action_4">Remove</string>
-    <string name="more_action_5">Copy</string>
-    <string name="more_action_6">Share</string>
-    <string name="more_action_7">Mention</string>
-    <string name="more_action_8">Timed mute</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="reblog_by">Ojačano za %1$s</string>
+    <string name="favourite_add">Naj dodam to objavo med priljubljene?</string>
+    <string name="favourite_remove">Naj odstranim to objavo iz priljubljenih?</string>
+    <string name="reblog_add">Naj ojačam to objavo?</string>
+    <string name="reblog_remove">Naj utišam to objavo?</string>
+    <string name="pin_add">Naj pripnem to objavo?</string>
+    <string name="pin_remove">Naj odpnem to objavo?</string>
+    <string name="more_action_1">Utišaj</string>
+    <string name="more_action_2">Blokiraj</string>
+    <string name="more_action_3">Prijavi objavo</string>
+    <string name="more_action_4">Odstrani</string>
+    <string name="more_action_5">Kopiraj</string>
+    <string name="more_action_6">Deli</string>
+    <string name="more_action_7">Citiraj</string>
+    <string name="more_action_8">Začasno utišaj</string>
+    <string name="more_action_9">Zibriši in začni znova</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
-        <item>Block this account?</item>
-        <item>Report this toot?</item>
-        <item>Block this domain?</item>
+        <item>Naj utišam ta račun?</item>
+        <item>Naj blokiram ta račun?</item>
+        <item>Želite prijaviti sporne vsebine v tej objavi?</item>
+        <item>Želite blokirati to domeno?</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>Želite odstraniti to objavo?</item>
+        <item>Želite izbrisati to objavo in začeti znova?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d reply</item>
@@ -665,5 +665,7 @@
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
+    <string name="show_media_only">Media only</string>
+    <string name="show_media_nsfw">Show NSFW</string>
     <!-- end languages -->
 </resources>
