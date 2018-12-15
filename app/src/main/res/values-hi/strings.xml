@@ -32,9 +32,9 @@
     <string name="other_instance">mastodon.etalab.gouv.fr के अलावा कोई अन्य इंस्टेंस?</string>
     <string name="no_result">कोई परिणाम नहीं!</string>
     <string name="instance">इंस्टेंस</string>
-    <string name="instance_example">Instance: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
-    <string name="add_account">Add an account</string>
+    <string name="instance_example">इंस्टेंस: mastodon.social</string>
+    <string name="toast_account_changed" formatted="false">अब इस खाते के साथ काम करता है %1$s</string>
+    <string name="add_account">खाता जोड़ें</string>
     <string name="clipboard">The content of the toot has been copied to the clipboard</string>
     <string name="change">Change</string>
     <string name="choose_picture">Select a picture…</string>
