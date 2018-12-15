@@ -52,7 +52,7 @@
     <string name="next">Naprej</string>
     <string name="previous">Nazaj</string>
     <string name="open_with">Odpri s pomočjo</string>
-    <string name="validate">Validate</string>
+    <string name="validate">Potrdi</string>
     <string name="media">Vsebine</string>
     <string name="share_with">Deli z</string>
     <string name="shared_via">Deljeno z Mastalab</string>
@@ -207,7 +207,7 @@
     <string name="remove_scheduled">Želite izbrisati načrtovano objavo?</string>
     <string name="media_count">Media: %d</string>
     <string name="toot_scheduled">Čas objave Toot-a je na urniku. </string>
-    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
+    <string name="toot_scheduled_date">Planiran čas objave morate določiti kasneje od tega trenutka.</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
@@ -259,7 +259,7 @@
     <string name="toast_unpin">The toot was unpinned!</string>
     <string name="toast_error">Oops ! An error occurred!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-    <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
+    <string name="toast_error_instance">Domena strežniške instance ni videti veljavna.</string>
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
     <string name="toast_error_search">An error occurred while searching!</string>
     <string name="toast_error_login">Can not log in!</string>
@@ -299,7 +299,7 @@
     <string name="set_notif_follow_add">Notify when someone favourites your status</string>
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Vprašaj me za potrditev preden ojačam</string>
-    <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
+    <string name="set_share_validation_fav">Pred dodajanjem med priljubljene me vprašaj za potrditev</string>
     <string name="settings_title_more_options">Advanced settings</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
