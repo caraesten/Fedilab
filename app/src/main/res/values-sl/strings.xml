@@ -654,9 +654,9 @@
         <item>1 day</item>
         <item>1 week</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        V to polje vpišite ime gostitelja vaše instance.\nNaprimer: Če ste ustarili račun na strežniku: https://mastodon.social\nVpišite le ime:<b>mastodon.social</b> (brez https://)\n
+        Ob vpisu prvih nekaj črk vam bomo podali namige možnih imen gostiteljev.\n\n
+        ⚠ Gumb Prijava deluje le, ko je instanca strežnika veljavna in delujoča!
     </string>
     <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
     </string>
