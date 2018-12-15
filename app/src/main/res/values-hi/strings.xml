@@ -23,9 +23,9 @@
     <string name="password">पासवर्ड</string>
     <string name="email">ईमेल</string>
     <string name="accounts">खाते</string>
-    <string name="toots">Toots</string>
-    <string name="tags">Tags</string>
-    <string name="token">Token</string>
+    <string name="toots">संदेश</string>
+    <string name="tags">टैग्स</string>
+    <string name="token">टोकन</string>
     <string name="save">Save</string>
     <string name="restore">Restore</string>
     <string name="two_factor_authentification">Two-step authentication?</string>
