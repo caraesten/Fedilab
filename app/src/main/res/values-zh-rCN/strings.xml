@@ -650,4 +650,6 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
     </string>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <!-- languages not translated -->
+    <!-- end languages -->
 </resources>
