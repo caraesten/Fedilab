@@ -181,32 +181,32 @@
     <string name="instance_no_description">No description available!</string>
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
+    <string name="about_developer">Razvijalec:</string>
+    <string name="about_license">Licenca: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Source code: </string>
-    <string name="about_yandex">Translation of toots:</string>
-    <string name="about_thekinrar">Search instances:</string>
+    <string name="about_code">Izvorna koda: </string>
+    <string name="about_yandex">Prevajanje objav:</string>
+    <string name="about_thekinrar">Iskanje instanc:</string>
     <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Icon designer:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="thanks_text_logo">Oblikovalec ikone: </string>
+    <string name="thanks_text_banner">Oblikovalec plakata: </string>
     <!-- Conversation -->
-    <string name="conversation">Conversation</string>
+    <string name="conversation">Pogovor</string>
     <!-- Accounts -->
     <string name="no_accounts">No account to display</string>
-    <string name="no_follow_request">No follow request</string>
-    <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
-    <string name="followers_cnt">Followers \n %1$s</string>
-    <string name="pins_cnt">Pinned \n %d</string>
-    <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="no_follow_request">Ni zahtev po spremljanju</string>
+    <string name="status_cnt">Objave Toot \n %1$s</string>
+    <string name="following_cnt">Spremljate \n %1$s</string>
+    <string name="followers_cnt">Spremljevalci \n %1$s</string>
+    <string name="pins_cnt">Pripeto \n %d</string>
+    <string name="authorize">Avtorizacija</string>
+    <string name="reject">Zavrni</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
-    <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Delete scheduled toot?</string>
+    <string name="no_scheduled_toots">Nimate časovno načrtovanih objav Toot.</string>
+    <string name="no_scheduled_toots_indications">Sestavite objavo Toot in nato izberite <b>Nastavi čas objave</b> iz menija.</string>
+    <string name="remove_scheduled">Želite izbrisati načrtovano objavo?</string>
     <string name="media_count">Media: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
+    <string name="toot_scheduled">Čas objave Toot-a je na urniku. </string>
     <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- timed mute -->
@@ -624,7 +624,7 @@
     <string name="schedule_boost">Doliči čas ojačanja</string>
     <string name="boost_scheduled">Določili ste čas ojačanja.</string>
     <string name="no_scheduled_boosts">Nimate časovno načrtovanih ojačanj.</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Odprite meni objave Toot in nato izberite <b></b>]]></string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Odprite meni objave in nato izberite <b>Doliči čas ojačanja</b>.]]></string>
     <string name="art_menu">Art timeline</string>
     <string name="open_menu">Open menu</string>
     <string name="app_logo">Logo of the application</string>
