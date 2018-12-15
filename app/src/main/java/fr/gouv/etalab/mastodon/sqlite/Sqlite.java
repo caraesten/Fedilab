@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 19;
+    public static final int DB_VERSION = 20;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -56,7 +56,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String TABLE_PEERTUBE_FAVOURITES = "PEERTUBE_FAVOURITES";
 
     //Table for timeline cache
-    static final String TABLE_TIMELINE_CACHE = "TIMELINE_CACHE";
+    private static final String TABLE_TIMELINE_CACHE = "TIMELINE_CACHE";
 
     //Table for tags cache
     static final String TABLE_CACHE_TAGS = "CACHE_TAGS";
@@ -121,9 +121,13 @@ public class Sqlite extends SQLiteOpenHelper {
 
 
     static final String COL_KEYWORDS = "KEYWORDS";
+    static final String COL_IS_ART= "IS_ART";
+    static final String COL_IS_NSFW= "IS_NSFW";
     private final String CREATE_TABLE_SEARCH = "CREATE TABLE " + TABLE_SEARCH + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COL_KEYWORDS + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, " + COL_DATE_CREATION + " TEXT NOT NULL)";
+            + COL_KEYWORDS + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, "
+            + COL_IS_ART + " INTEGER  DEFAULT 0, " + COL_IS_NSFW + " INTEGER  DEFAULT 0, "
+            + COL_DATE_CREATION + " TEXT NOT NULL)";
 
     static final String COL_TARGETED_USER_ID = "TARGETED_USER_ID";
     static final String COL_DATE_END = "DATE_END";
@@ -282,6 +286,11 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL(CREATE_TABLE_CACHE_TAGS);
             case 18:
                 db.execSQL(CREATE_TABLE_BOOST_SCHEDULE);
+            case 19:
+                if( oldVersion > 6) {
+                    db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_IS_ART + " INTEGER  DEFAULT 0");
+                    db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_IS_NSFW + " INTEGER  DEFAULT 0");
+                }
             default:
                 break;
         }
