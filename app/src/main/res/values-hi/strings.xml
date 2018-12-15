@@ -117,16 +117,16 @@
     <string name="more_action_5">प्रतिलिपि बनाएँ</string>
     <string name="more_action_6">सांझा करें</string>
     <string name="more_action_7">उल्लेख</string>
-    <string name="more_action_8">समयबद्ध माॅन करें</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_8">समयबद्ध मौन करें</string>
+    <string name="more_action_9">हटाएं और दोबारा लिखे</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
-        <item>Block this account?</item>
-        <item>Report this toot?</item>
-        <item>Block this domain?</item>
+        <item>इस खाते को मौन करें?</item>
+        <item>इस खाते को अवरुद्ध करें?</item>
+        <item>इस संदेश को रिपोर्ट करें?</item>
+        <item>इस इंस्टेंस को अवरुद्ध करें?</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
+        <item>इस संदेश को हटाएं?</item>
         <item>Delete &amp; re-draft this toot?</item>
     </string-array>
     <plurals name="preview_replies">
