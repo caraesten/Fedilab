@@ -51,7 +51,7 @@
     <string name="icon_size_change">अाइकाॅन के वर्तमान आकार को बदलें:</string>
     <string name="next">अगला</string>
     <string name="previous">पिछला</string>
-    <string name="open_with">Open with</string>
+    <string name="open_with">के साथ खोलें</string>
     <string name="validate">Validate</string>
     <string name="media">Media</string>
     <string name="share_with">Share with</string>
@@ -103,7 +103,7 @@
     <string name="fav_removed">The toot was removed from favourites!</string>
     <string name="reblog_added">The toot was boosted!</string>
     <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
+    <string name="reblog_by">बूस्ट किया %1$s</string>
     <string name="favourite_add">Add this toot to your favourites?</string>
     <string name="favourite_remove">Remove this toot from your favourites?</string>
     <string name="reblog_add">Boost this toot?</string>
