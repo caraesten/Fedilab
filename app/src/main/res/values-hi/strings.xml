@@ -38,9 +38,9 @@
     <string name="clipboard">इस संदेश के विषय वस्तु की प्रतिलिपि को क्लिपबोर्ड में छाप दिया गया है</string>
     <string name="change">बदलें</string>
     <string name="choose_picture">एक चित्र चुनें</string>
-    <string name="clear">Clean</string>
-    <string name="microphone">Microphone</string>
-    <string name="camera">Camera</string>
+    <string name="clear">साफ करें</string>
+    <string name="microphone">ध्वनिग्राही</string>
+    <string name="camera">कैमरा</string>
     <string name="speech_prompt">Please, say something</string>
     <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
     <string name="delete_all">Delete all</string>
