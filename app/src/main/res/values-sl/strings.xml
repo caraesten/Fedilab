@@ -64,7 +64,7 @@
     <string name="follow">Novi spremljevalci</string>
     <string name="mention">Omembe</string>
     <string name="reblog">Ojačitve</string>
-    <string name="show_boosts">Show boosts</string>
+    <string name="show_boosts">Prikaži ojačanja</string>
     <string name="show_replies">Show replies</string>
     <string name="action_open_in_web">Open in browser</string>
     <string name="translate">Translate</string>
@@ -216,7 +216,7 @@
     <!-- Notifications -->
     <string name="no_notifications">No notification to display</string>
     <string name="notif_mention">mentioned you</string>
-    <string name="notif_reblog">boosted your status</string>
+    <string name="notif_reblog">je ojačal tvoj status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">followed you</string>
     <string name="notif_pouet">New toot from %1$s</string>
@@ -249,8 +249,8 @@
     <string name="toast_unmute">The account is no longer muted!</string>
     <string name="toast_follow">The account was followed!</string>
     <string name="toast_unfollow">The account is no longer followed!</string>
-    <string name="toast_reblog">The toot was boosted!</string>
-    <string name="toast_unreblog">The toot is no longer boosted!</string>
+    <string name="toast_reblog">Objava je bila ojačana.</string>
+    <string name="toast_unreblog">Objava ni več ojačana.</string>
     <string name="toast_favourite">The toot was added to your favourites!</string>
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
     <string name="toast_report">The toot was reported!</string>
@@ -295,10 +295,10 @@
     <string name="settings_title_notifications">Manage notifications</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
-    <string name="set_notif_follow_share">Notify when someone boosts your status</string>
+    <string name="set_notif_follow_share">Obveščaj me, ko nekdo ojača moj status</string>
     <string name="set_notif_follow_add">Notify when someone favourites your status</string>
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-    <string name="set_share_validation">Show confirmation dialog before boosting</string>
+    <string name="set_share_validation">Vprašaj me za potrditev preden ojačam</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
     <string name="settings_title_more_options">Advanced settings</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
@@ -465,7 +465,7 @@
     <string name="action_lists_owner">Your lists</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
+    <string name="show_boost_count">Prikazuj števec ojačanj in priljulbjenih</string>
     <string name="issue_login_title">Authentication does not work?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
@@ -507,16 +507,16 @@
     <string name="toast_instance_followed">The instance is followed!</string>
     <string name="action_partnership">Partnerships</string>
     <string name="neutral_menu_information">Information</string>
-    <string name="hide_boost">Hide boosts from %s</string>
+    <string name="hide_boost">Skrij ojačanja pred %s</string>
     <string name="endorse">Feature on profile</string>
     <string name="hide_everything">Hide everything from %s</string>
-    <string name="show_boost">Show boosts from %s</string>
+    <string name="show_boost">Prikaži ojačanja uporabnika %s</string>
     <string name="unendorse">Don\'t feature on profile</string>
     <string name="show_everything">Show everything from %s</string>
     <string name="toast_endorse">The account is now featured on profile</string>
     <string name="toast_unendorse">The account is no longer featured on profile</string>
-    <string name="toast_show_boost">Boosts are now shown!</string>
-    <string name="toast_hide_boost">Boosts are now hidden!</string>
+    <string name="toast_show_boost">Ojačanja so zdaj prikazana.</string>
+    <string name="toast_hide_boost">Ojačanja so zdaj skrita.</string>
     <string name="direct_message">Direct message</string>
     <string name="filters">Filters</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
@@ -622,9 +622,9 @@
     <string name="tags_deleted">The tag has been deleted!</string>
     <string name="set_display_art">Display Art timeline</string>
     <string name="schedule_boost">Doliči čas ojačanja</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
+    <string name="boost_scheduled">Določili ste čas ojačanja.</string>
+    <string name="no_scheduled_boosts">Nimate časovno načrtovanih ojačanj.</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Odprite meni objave Toot in nato izberite <b></b>]]></string>
     <string name="art_menu">Art timeline</string>
     <string name="open_menu">Open menu</string>
     <string name="app_logo">Logo of the application</string>
