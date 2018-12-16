@@ -438,7 +438,7 @@
     <string name="privacy_API_yandex_authorizations">        本应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的功能。\n
         Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text">        感谢 Stéphane 的 logo 设计。
+    <string name="thanks_text">        感谢 Stéphane 的徽标设计。
     </string>
     <string name="thanks_text_dev">        致谢：
     </string>
@@ -612,42 +612,42 @@
     <string name="hide_toot_truncate">收起</string>
     <string name="manage_tags">管理标签</string>
     <string name="tags_already_stored">该标签已经存在！</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="tags_stored">该标签已储存！</string>
+    <string name="tags_renamed">该标签已更改！</string>
+    <string name="tags_deleted">该标签已删除！</string>
+    <string name="set_display_art">显示艺术时间线</string>
     <string name="schedule_boost">定时转嘟</string>
     <string name="boost_scheduled">转嘟将在预定时间发布！</string>
     <string name="no_scheduled_boosts">没有预定的转嘟可以显示！</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[打开嘟文的菜单，然后选择 <b>定时转嘟</b>。]]></string>
-    <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
-    <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
-    <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
-    <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="art_menu">艺术时间线</string>
+    <string name="open_menu">打开菜单</string>
+    <string name="app_logo">应用程序的徽标</string>
+    <string name="profile_picture">个人资料图片</string>
+    <string name="profile_banner">个人资料横幅</string>
+    <string name="contact_instance_admin">联系该实例的管理员</string>
+    <string name="add_new">新添</string>
+    <string name="mastohost_logo">MastoHost 徽标</string>
+    <string name="emoji_picker">表情符号选择器</string>
+    <string name="refresh">刷新</string>
+    <string name="expand_conversation">展开对话</string>
+    <string name="remove_account">移除帐户</string>
+    <string name="delete_domain">删除屏蔽的域名</string>
+    <string name="custom_emoji_picker">自定义表情符号选择器</string>
+    <string name="play_video">播放视频</string>
+    <string name="new_toot">新嘟文</string>
+    <string name="card_view_image">卡片图像</string>
+    <string name="hide_media">隐藏媒体</string>
+    <string name="favicon">网站图标</string>
+    <string name="media_description">要添加描述的媒体</string>
     <string-array name="filter_expire">
-        <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>从不</item>
+        <item>30 分钟</item>
+        <item>1 小时</item>
+        <item>6 小时</item>
+        <item>12 小时</item>
+        <item>1 天</item>
+        <item>1 星期</item>
     </string-array>
     <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
