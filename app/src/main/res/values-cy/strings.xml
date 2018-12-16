@@ -125,6 +125,10 @@
         <item>Cwyno am y tŵt hwn?</item>
         <item>Blocio\'r parth hwn?</item>
     </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Cael gwared ar y tŵt hwn?</item>
         <item>Delete &amp; re-draft this toot?</item>
