@@ -166,6 +166,11 @@
                     android:id="@+id/settings_time_to"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <Spinner
+                    android:id="@+id/action_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/action_notification"/>
             </LinearLayout>
             <!-- MORE OPTIONS SETTINGS -->
             <TextView

@@ -283,12 +283,15 @@ public class Helper {
     public static final String SET_OLD_DIRECT_TIMELINE = "sset_old_direct_timeline";
     public static final String SET_BATTERY_PROFILE = "set_battery_profile";
     public static final String SET_DEFAULT_LOCALE_NEW = "set_default_locale_new";
+    public static final String SET_NOTIFICATION_ACTION = "set_notification_action";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
+
+
 
     public static final int BATTERY_PROFILE_NORMAL = 1;
     public static final int BATTERY_PROFILE_MEDIUM = 2;
@@ -303,6 +306,9 @@ public class Helper {
     public static final int TRANS_YANDEX = 0;
     public static final int TRANS_DEEPL = 1;
     public static final int TRANS_NONE = 2;
+
+    public static final int ACTION_SILENT = 0;
+    public static final int ACTION_ACTIVE = 1;
 
     public static final String SET_TRANS_FORCED = "set_trans_forced";
     public static final String SET_NOTIFY = "set_notify";
