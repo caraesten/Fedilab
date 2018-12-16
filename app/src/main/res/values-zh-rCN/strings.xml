@@ -324,9 +324,9 @@
     <string name="use_cookies">允许第三方 cookie</string>
     <string name="settings_ui_layout">时间线布局： </string>
     <string-array name="battery_profiles">
-        <item>正常电池消耗</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>正常耗电</item>
+        <item>中度耗电</item>
+        <item>最低耗电</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>选项卡</item>
@@ -336,7 +336,7 @@
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
-        <item>否　</item>
+        <item>否</item>
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
