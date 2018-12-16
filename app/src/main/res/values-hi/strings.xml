@@ -71,13 +71,13 @@
     <string name="please_wait">इस क्रिया को करने से पहले कृपया कुछ सेकेंड ठहरे।</string>
     <!--- Menu -->
     <string name="home_menu">मुख्यपृष्ठ</string>
-    <string name="local_menu">लोकल टाइमलाइन</string>
-    <string name="global_menu">Federated timeline</string>
-    <string name="neutral_menu_title">Options</string>
-    <string name="favorites_menu">Favourites</string>
-    <string name="communication_menu_title">Communication</string>
-    <string name="muted_menu">Muted users</string>
-    <string name="blocked_menu">Blocked users</string>
+    <string name="local_menu">लोकल टाइम्लाइन</string>
+    <string name="global_menu">फ़ेडरेटेड टाइम्लाइन</string>
+    <string name="neutral_menu_title">विकल्प</string>
+    <string name="favorites_menu">पसंदीदा</string>
+    <string name="communication_menu_title">संचार</string>
+    <string name="muted_menu">मौन किये गये उप्योगकर्ता</string>
+    <string name="blocked_menu">अवरुद्ध किये गये उप्योगकर्ता</string>
     <string name="remote_follow_menu">Remote follow</string>
     <string name="notifications">Notifications</string>
     <string name="follow_request">Follow requests</string>
