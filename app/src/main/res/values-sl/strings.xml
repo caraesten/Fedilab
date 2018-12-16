@@ -94,8 +94,8 @@
     <string name="failed">Ni uspelo.</string>
     <string name="scheduled_toots">Načrtovane objave</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-    <string name="insert_emoji">Vstavi čustvenček</string>
-    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+    <string name="insert_emoji">Vstavi čustvenčka</string>
+    <string name="no_emoji">Aplikacija trenutno še nima zbranih čustvenčkov po meri.</string>
     <string name="live_notif">Obvestila v živo</string>
     <!-- Status -->
     <string name="no_status">Ni objav za prikaz</string>
@@ -305,7 +305,7 @@
     <string name="set_share_validation">Vprašaj me za potrditev preden ojačam</string>
     <string name="set_share_validation_fav">Pred dodajanjem med priljubljene me vprašaj za potrditev</string>
     <string name="settings_title_more_options">Napredne nastavitve</string>
-    <string name="set_wifi_only">Notify in WIFI only</string>
+    <string name="set_wifi_only">Obveščanj le v omrežju WiFi</string>
     <string name="set_notify">Obveščanje?</string>
     <string name="set_notif_silent">Tiha obvestila</string>
     <string name="set_night_mode">Nočni način</string>
@@ -315,7 +315,7 @@
     <string name="set_lock_account">Zakleni račun</string>
     <string name="set_save_changes">Shrani spremembe</string>
     <string name="set_header_picture_overlay">Izberi sliko za glavo strani</string>
-    <string name="set_fit_preview">Fit preview images</string>
+    <string name="set_fit_preview">Prilagajaj velikost slike</string>
     <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
@@ -376,7 +376,7 @@
     <string name="action_block">Blokiraj</string>
     <string name="action_unblock">Odblokiraj</string>
     <string name="action_mute">Utišaj</string>
-    <string name="action_no_action">No action</string>
+    <string name="action_no_action">Brez dejanja</string>
     <string name="action_unmute">Dovoli govor</string>
     <string name="request_sent">Zahteva je poslana</string>
     <string name="followed_by">Vas spremlja</string>
@@ -601,7 +601,7 @@
     <string name="no_lists">Ni seznamov</string>
     <string name="videos">Videi</string>
     <string name="channels">Kanali</string>
-    <string name="set_display_emoji">Use Emoji One</string>
+    <string name="set_display_emoji">Uporabi čustvenčke Emoji One</string>
     <string name="information">Informacije</string>
     <string name="set_display_card">Display previews in all toots</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
@@ -637,16 +637,16 @@
     <string name="contact_instance_admin">Contact admin of the instance</string>
     <string name="add_new">Dodaj novo</string>
     <string name="mastohost_logo">Logotip MastoHost</string>
-    <string name="emoji_picker">Emoji picker</string>
+    <string name="emoji_picker">Nabor čustvenčkov</string>
     <string name="refresh">Osveži</string>
     <string name="expand_conversation">Razširi ta pogovor</string>
     <string name="remove_account">Odstrani račun</string>
     <string name="delete_domain">Izbriši blokirano domeno</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
+    <string name="custom_emoji_picker">Nabor čustvenčkov po meri</string>
     <string name="play_video">Predvajaj video</string>
     <string name="new_toot">Nova objava</string>
-    <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
+    <string name="card_view_image">Slika kartice</string>
+    <string name="hide_media">Skrij vsebino</string>
     <string name="favicon">Favicon</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
