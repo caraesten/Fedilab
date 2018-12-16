@@ -520,10 +520,10 @@
     <string name="context_public">公共时间线</string>
     <string name="context_notification">通知</string>
     <string name="context_conversation">对话</string>
-    <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-    <string name="context_drop">Drop instead of hide</string>
-    <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
-    <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
+    <string name="filter_keyword_explanations">匹配将忽略嘟文的文本大小写或内容警告</string>
+    <string name="context_drop">丢弃而不是隐藏</string>
+    <string name="context_drop_explanations">筛选的嘟文将永久消失，即使后来移除筛选器</string>
+    <string name="context_whole_word_explanations">如果关键词或短语只为字母数字时，将只在词语完全匹配时才会应用</string>
     <string name="context_whole_word">Whole word</string>
     <string name="filter_context">Filter contexts</string>
     <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
