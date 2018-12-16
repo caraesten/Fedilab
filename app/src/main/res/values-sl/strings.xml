@@ -98,7 +98,7 @@
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">Obvestila v živo</string>
     <!-- Status -->
-    <string name="no_status">No toot to display</string>
+    <string name="no_status">Ni objav za prikaz</string>
     <string name="fav_added">The toot was added to favourites</string>
     <string name="fav_removed">The toot was removed from favourites!</string>
     <string name="reblog_added">Objava je ojačana.</string>
@@ -167,7 +167,7 @@
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
     <string name="toot_sent">The toot has been sent!</string>
     <string name="toot_reply_content_title">You are replying to this toot:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="toot_sensitive">Občutljiva vsebina?</string>
     <string-array name="toot_visibility">
         <item>Post to public timelines</item>
         <item>Do not post to public timelines</item>
@@ -266,7 +266,7 @@
     <string name="toast_error_instance">Domena strežniške instance ni videti veljavna.</string>
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
     <string name="toast_error_search">An error occurred while searching!</string>
-    <string name="toast_error_login">Can not log in!</string>
+    <string name="toast_error_login">Prijava ni mogoča.</string>
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
     <string name="nothing_to_do">No action can be taken</string>
     <string name="toast_saved">The media has been saved!</string>
@@ -285,9 +285,9 @@
     <string name="set_attachment_ask">Vprašaj me</string>
     <string name="set_attachment_action">Load the media</string>
     <string name="load_attachment">Load the pictures</string>
-    <string name="load_attachment_spoiler">Show more…</string>
-    <string name="load_attachment_spoiler_less">Show less…</string>
-    <string name="load_sensitive_attachment">Sensitive content</string>
+    <string name="load_attachment_spoiler">Prikaži več …</string>
+    <string name="load_attachment_spoiler_less">Prikaži manj …</string>
+    <string name="load_sensitive_attachment">Občutljiva vsebina</string>
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_display_local">Display local timeline</string>
     <string name="set_display_global">Display federated timeline</string>
@@ -339,35 +339,35 @@
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Zavihki</item>
-        <item>Menu</item>
-        <item>Tabs and menu</item>
+        <item>Meni</item>
+        <item>Zavihki in meni</item>
     </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
-        <item>No</item>
+        <item>Ne</item>
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>Black</item>
+        <item>Temna</item>
+        <item>Svetla</item>
+        <item>Črna</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
+        <item>Ne</item>
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
     </string-array>
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">Barva lučke LED:</string>
     <string-array name="led_colours">
-        <item>Blue</item>
+        <item>Modra</item>
         <item>Cyan</item>
-        <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>Vijolična</item>
+        <item>Zelena</item>
+        <item>Rdeča</item>
+        <item>Rumena</item>
+        <item>Bela</item>
     </string-array>
     <string name="set_title_news">News</string>
     <string name="set_notification_news">Obveščaj me o novih objavah Toot na domači časovnici</string>
