@@ -353,21 +353,21 @@
     <string name="set_led_colour">设置 LED 颜色：</string>
     <string-array name="led_colours">
         <item>蓝色</item>
-        <item>蓝绿色</item>
+        <item>青色</item>
         <item>洋红色</item>
         <item>绿色</item>
         <item>红色</item>
         <item>黄色</item>
         <item>白色</item>
     </string-array>
-    <string name="set_title_news">新闻</string>
+    <string name="set_title_news">更新</string>
     <string name="set_notification_news">当首页时间线上有新的嘟文时通知您</string>
     <string name="action_follow">关注</string>
     <string name="action_unfollow">取消关注</string>
     <string name="action_block">屏蔽</string>
     <string name="action_unblock">取消屏蔽</string>
     <string name="action_mute">静音</string>
-    <string name="action_no_action">无动作</string>
+    <string name="action_no_action">无操作</string>
     <string name="action_unmute">取消静音</string>
     <string name="request_sent">请求已发送</string>
     <string name="followed_by">关注您</string>
@@ -376,8 +376,8 @@
     <string name="set_resize_picture">调整图片大小</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">推送通知</string>
-    <string name="settings_popup_message">请确认要接收的推送通知。
-         您可以稍后在设置 (通知选项卡) 中启用或禁用这些通知。   
+    <string name="settings_popup_message">        请确认要接收的推送通知。
+        您可以稍后在设置（通知选项卡）中启用或禁用这些通知。
     </string>
     <string name="settings_popup_timeline">针对主页时间线的未读嘟文？</string>
     <string name="settings_popup_notification">针对未读通知？</string>
