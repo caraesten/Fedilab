@@ -149,11 +149,11 @@
     <string name="toot_placeholder">你在想什么？</string>
     <string name="toot_it">嘟嘟！</string>
     <string name="cw">内容警告</string>
-    <string name="toot_title">写一条嘟文</string>
-    <string name="toot_title_reply">回复一条嘟文</string>
+    <string name="toot_title">编写嘟文</string>
+    <string name="toot_title_reply">回复嘟文</string>
     <string name="toot_no_space">您已达到允许的 500 字符上限！</string>
-    <string name="toot_select_image">选择一个媒体</string>
-    <string name="toot_select_image_error">在选择媒体时出现了错误！</string>
+    <string name="toot_select_image">选择媒体</string>
+    <string name="toot_select_image_error">选择媒体时出现了错误！</string>
     <string name="toot_delete_media">删除此媒体吗？</string>
     <string name="toot_error_no_content">您的嘟文是空的！</string>
     <string name="toot_visibility_tilte">嘟文的可见性</string>
