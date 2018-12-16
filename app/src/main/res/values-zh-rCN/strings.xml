@@ -126,8 +126,8 @@
         <item>是否屏蔽此域名？</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>通知</item>
+        <item>静音</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>移除这条嘟文吗？</item>
@@ -649,18 +649,18 @@
         <item>1 天</item>
         <item>1 星期</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        您需要在此字段中填入您的实例主机名。\n例如，您在 https://mastodon.social\n 上创建了帐户，直接填入 <b>mastodon.social</b>（不需要 https://）\n
+        您开始填入首个字母后会提示主机名。\n\n
+        ⚠ 登入按钮只有在实例名有效且该实例已上线时有效！
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        在此字段中，填写连接到您 Mastondon 帐户的电子邮件。
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        最后一步是输入您的密码，然后点击登入。
     </string>
-    <string name="more_information">More information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="more_information">更多信息</string>
+    <string name="showcase_2FA">如果您使用 2FA（双因素身份验证），则需要使用此链接。\n如果您不想在此处输入凭据，也可以使用它。</string>
     <!-- languages not translated -->
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_only">仅限媒体</string>
+    <string name="show_media_nsfw">显示 NSFW</string>
     <!-- end languages -->
 </resources>
