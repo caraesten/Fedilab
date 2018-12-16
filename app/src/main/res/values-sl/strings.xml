@@ -231,10 +231,10 @@
         <item quantity="other">in še %d obvestil</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
-        <item quantity="two">and %d other toots to discover</item>
-        <item quantity="few">and %d other toots to discover</item>
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="one">in še ena zanimiva objava</item>
+        <item quantity="two">in še %d zanimivi objavi</item>
+        <item quantity="few">in še %d zanimive objave</item>
+        <item quantity="other">in še %d zanimivih objav</item>
     </plurals>
     <string name="delete_notification_ask">Naj izbrišem to obvestilo?</string>
     <string name="delete_notification_ask_all">Naj izbrišem vsa obvestila?</string>
@@ -255,9 +255,9 @@
     <string name="toast_unfollow">Ta račun nima več spremljevalcev.</string>
     <string name="toast_reblog">Objava je bila ojačana.</string>
     <string name="toast_unreblog">Objava ni več ojačana.</string>
-    <string name="toast_favourite">The toot was added to your favourites!</string>
-    <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-    <string name="toast_report">The toot was reported!</string>
+    <string name="toast_favourite">Objava Toot je dodana med priljubljene.</string>
+    <string name="toast_unfavourite">Objava odstranjena iz priljubljenih.</string>
+    <string name="toast_report">Prijavljeno zaradi sporne vsebine.</string>
     <string name="toast_unstatus">The toot was deleted!</string>
     <string name="toast_pin">Objava je pripeta.</string>
     <string name="toast_unpin">Objava ni več pripeta.</string>
@@ -437,11 +437,11 @@
         <b>&#9888; Te akcije se izvedejo le, ko jih zahteva uporabnik.</b>
     </string>
     <string name="privacy_API_title">Tracking and Libraries</string>
-    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+    <string name="privacy_API">        Aplikacija <b>ne uporablja analitičnih orodij</b> (merjenje občinstva, spremljanje napak, itd.) in ne vsebuje oglasov.\n\n
+        Uporaba knjižnic je omejena na: \n
+        - <b>Glide</b>: za uporavljanje medijskih vsebin\n
+        - <b>Android-Job</b>: za upravljanje sistemskih storitev\n
+        - <b>PhotoView</b>: za upravljanje slik\n
     </string>
     <string name="privacy_API_yandex_title">Prevajanje objav Toot</string>
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
@@ -504,7 +504,7 @@
     <string name="warning_delete_instance">Iz vašega seznama spremljanih instanc boste zbrisali %s.</string>
     <string name="which_language">Translate in</string>
     <string name="crash_title">Mastalab has stopped :(</string>
-    <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
+    <string name="crash_message">Poročilo o zrušitvi lahko posredujete po e-pošti. To nam bo v pomoč pri odpravi napak :)\n\nPriložite lahko tudi dodatno vsebino. Hvala!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Spremljanje instance</string>
     <string name="toast_instance_already_added">To instanco že spremljate.</string>
