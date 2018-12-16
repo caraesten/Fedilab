@@ -59,10 +59,10 @@
     <string name="replies">जवाब</string>
     <string name="username">उपयोगकर्ता का नाम</string>
     <string name="drafts">मसौदे</string>
-    <string name="new_data">New data are available! Do you want to display them?</string>
-    <string name="favourite">Favourites</string>
-    <string name="follow">New followers</string>
-    <string name="mention">Mentions</string>
+    <string name="new_data">नए डेटा उपलब्ध है! क्या आप उन्हें प्रदर्शित करना चाहेंगे?</string>
+    <string name="favourite">पसंदीदा</string>
+    <string name="follow">नए अनुयायी</string>
+    <string name="mention">उल्लेख</string>
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Show boosts</string>
     <string name="show_replies">Show replies</string>
