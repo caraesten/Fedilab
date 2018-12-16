@@ -435,19 +435,21 @@
         -<b>PhotoView</b>：用于管理图像\n
     </string>
     <string name="privacy_API_yandex_title">嘟文的翻译</string>
-    <string name="privacy_API_yandex_authorizations">本应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的能力。\n
-Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/legal/confidential/?lang=en
+    <string name="privacy_API_yandex_authorizations">        本应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的功能。\n
+        Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text">感谢 Stéphane 的 logo 设计。    </string>
-    <string name="thanks_text_dev">感谢致以:    </string>
+    <string name="thanks_text">        感谢 Stéphane 的 logo 设计。
+    </string>
+    <string name="thanks_text_dev">        致谢：
+    </string>
     <string name="filter_regex">按正则表达式进行筛选</string>
     <string name="search">搜索​​​​</string>
     <string name="delete">删除</string>
-    <string name="fetch_more_toots">获取更多嘟文...</string>
+    <string name="fetch_more_toots">获取更多嘟文…</string>
     <!-- About lists -->
     <string name="action_lists">列表</string>
     <string name="action_lists_confirm_delete">您确实要永久删除此列表吗？</string>
-    <string name="action_lists_empty_content">这张列表上还没有内容，当此列表的成员发布新状态时, 它们将出现在此处。</string>
+    <string name="action_lists_empty_content">这张列表上还没有内容。当此列表的成员发布新状态时，它们将出现在此处。</string>
     <string name="action_lists_add_to">添加到列表</string>
     <string name="action_lists_remove_from">从列表中移除</string>
     <string name="action_lists_create">新建列表</string>
