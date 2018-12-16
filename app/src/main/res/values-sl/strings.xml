@@ -80,7 +80,7 @@
     <string name="blocked_menu">Blokirani uporabniki</string>
     <string name="remote_follow_menu">Oddaljeno spremljanje</string>
     <string name="notifications">Obvestila</string>
-    <string name="follow_request">Follow requests</string>
+    <string name="follow_request">Zahteve za spremljanje</string>
     <string name="optimization">Optimization</string>
     <string name="settings">Settings</string>
     <string name="profile">Profile</string>
@@ -96,7 +96,7 @@
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
     <string name="insert_emoji">Vstavi čustvenček</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-    <string name="live_notif">Live notifications</string>
+    <string name="live_notif">Obvestila v živo</string>
     <!-- Status -->
     <string name="no_status">No toot to display</string>
     <string name="fav_added">The toot was added to favourites</string>
@@ -126,8 +126,8 @@
         <item>Želite blokirati to domeno?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Obvesti</item>
+        <item>Tiho</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Želite odstraniti to objavo?</item>
@@ -198,7 +198,7 @@
     <string name="conversation">Pogovor</string>
     <!-- Accounts -->
     <string name="no_accounts">No account to display</string>
-    <string name="no_follow_request">Ni zahtev po spremljanju</string>
+    <string name="no_follow_request">Ni zahtev za spremljanje</string>
     <string name="status_cnt">Objave Toot \n %1$s</string>
     <string name="following_cnt">Spremljate \n %1$s</string>
     <string name="followers_cnt">Spremljevalci \n %1$s</string>
@@ -222,7 +222,7 @@
     <string name="notif_mention">mentioned you</string>
     <string name="notif_reblog">je ojačal tvoj status</string>
     <string name="notif_favourite">favourited your status</string>
-    <string name="notif_follow">followed you</string>
+    <string name="notif_follow">spremlja vas</string>
     <string name="notif_pouet">New toot from %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">in še eno obvestilo</item>
@@ -241,8 +241,8 @@
     <string name="delete_notification">Obvestilo je izbrisano.</string>
     <string name="delete_notification_all">Vsa obvestila so izbrisana.</string>
     <!-- HEADER -->
-    <string name="following">Following</string>
-    <string name="followers">Followers</string>
+    <string name="following">Spremljanje</string>
+    <string name="followers">Spremljevalci</string>
     <string name="pinned_toots">Pinned</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
@@ -251,8 +251,8 @@
     <string name="toast_unblock">The account is no longer blocked!</string>
     <string name="toast_mute">The account was muted!</string>
     <string name="toast_unmute">The account is no longer muted!</string>
-    <string name="toast_follow">The account was followed!</string>
-    <string name="toast_unfollow">The account is no longer followed!</string>
+    <string name="toast_follow">Ta račun ima spremljevalce.</string>
+    <string name="toast_unfollow">Ta račun nima več spremljevalcev.</string>
     <string name="toast_reblog">Objava je bila ojačana.</string>
     <string name="toast_unreblog">Objava ni več ojačana.</string>
     <string name="toast_favourite">The toot was added to your favourites!</string>
@@ -296,9 +296,9 @@
     <string name="set_auto_store_toot">Save drafts automatically</string>
     <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
-    <string name="settings_title_notifications">Manage notifications</string>
-    <string name="set_notif_follow">Notify when someone follows you</string>
-    <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
+    <string name="settings_title_notifications">Upravljanje obvestil</string>
+    <string name="set_notif_follow">Obveščaj me o novih spremljevalcih</string>
+    <string name="set_notif_follow_ask">Obveščaj me o novih zahtevah za spremljanje</string>
     <string name="set_notif_follow_share">Obveščaj me, ko nekdo ojača moj status</string>
     <string name="set_notif_follow_add">Notify when someone favourites your status</string>
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
@@ -307,7 +307,7 @@
     <string name="settings_title_more_options">Advanced settings</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
-    <string name="set_notif_silent">Silent Notifications</string>
+    <string name="set_notif_silent">Tiha obvestila</string>
     <string name="set_night_mode">Night mode</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Edit profile</string>
@@ -319,7 +319,7 @@
     <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
-    <string name="settings_title_hour">Time slot for notifications:</string>
+    <string name="settings_title_hour">Časovni okvir za obvestila:</string>
     <string name="settings_time_from">Between</string>
     <string name="settings_time_to">and</string>
     <string name="settings_time_greater">The time must be greater than %1$s</string>
@@ -370,26 +370,26 @@
         <item>White</item>
     </string-array>
     <string name="set_title_news">News</string>
-    <string name="set_notification_news">Notify for new toots on the home timeline</string>
-    <string name="action_follow">Follow</string>
-    <string name="action_unfollow">Unfollow</string>
+    <string name="set_notification_news">Obveščaj me o novih objavah Toot na domači časovnici</string>
+    <string name="action_follow">Spremljaj</string>
+    <string name="action_unfollow">Ne spremljaj več</string>
     <string name="action_block">Block</string>
     <string name="action_unblock">Unblock</string>
     <string name="action_mute">Mute</string>
     <string name="action_no_action">No action</string>
     <string name="action_unmute">Unmute</string>
     <string name="request_sent">Request sent</string>
-    <string name="followed_by">Follows you</string>
+    <string name="followed_by">Vas spremlja</string>
     <string name="action_search">Search</string>
     <string name="set_capitalize">First letter in capital for replies</string>
     <string name="set_resize_picture">Resize pictures</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push notifications</string>
-    <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+    <string name="settings_popup_title">Potisna obvestila</string>
+    <string name="settings_popup_message">        Prosimo, potrdite potisna obvestila, ki jih želite prejemati.
+        Te nastavitve lahko kasneje omogočite ali onemogočite v nastavitvah (na zavihku Obvestila).
     </string>
     <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-    <string name="settings_popup_notification">For unread notifications?</string>
+    <string name="settings_popup_notification">Za neprebrana obvestila?</string>
     <!-- CACHE -->
     <string name="cache_title">Clear cache</string>
     <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
@@ -506,9 +506,9 @@
     <string name="crash_title">Mastalab has stopped :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
-    <string name="follow_instance">Follow instance</string>
+    <string name="follow_instance">Spremljanje instance</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
-    <string name="toast_instance_followed">The instance is followed!</string>
+    <string name="toast_instance_followed">Ta instanca je spremljana.</string>
     <string name="action_partnership">Partnerships</string>
     <string name="neutral_menu_information">Information</string>
     <string name="hide_boost">Skrij ojačanja pred %s</string>
@@ -527,7 +527,7 @@
     <string name="filter_keyword">Keyword or phrase</string>
     <string name="context_home">Home timeline</string>
     <string name="context_public">Public timelines</string>
-    <string name="context_notification">Notifications</string>
+    <string name="context_notification">Obvestila</string>
     <string name="context_conversation">Conversations</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
     <string name="context_drop">Drop instead of hide</string>
@@ -541,12 +541,12 @@
     <string name="action_filter_delete">Delete filter?</string>
     <string name="action_update_filter">Update filter</string>
     <string name="action_filter_create">Create filter</string>
-    <string name="how_to_follow">Whom to follow</string>
+    <string name="how_to_follow">Koga naj spremlajm</string>
     <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
-    <string name="follow_account">Follow</string>
+    <string name="follow_account">Spremljaj</string>
     <string name="select_all">Select all</string>
     <string name="unselect_all">Unselect all</string>
-    <string name="follow_trunk">%s is followed!</string>
+    <string name="follow_trunk">%s je spremljan.</string>
     <string name="create_list_trunk">Creating the list %s</string>
     <string name="add_account_list_trunk">Adding accounts to the list</string>
     <string name="account_added_list_trunk">Accounts were added to the list</string>
@@ -566,7 +566,7 @@
     <string name="channel_notif_toot">New Toot</string>
     <string name="channel_notif_backup">Toots Backup</string>
     <string name="channel_notif_media">Media Download</string>
-    <string name="set_notif_sound">Change notification sound</string>
+    <string name="set_notif_sound">Spremeni zvok ob obvestilih</string>
     <string name="select_sound">Select Tone</string>
     <string name="set_enable_time_slot">Enable time slot</string>
     <string name="how_to_videos">How To Videos</string>
