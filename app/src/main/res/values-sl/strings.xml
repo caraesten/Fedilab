@@ -65,13 +65,13 @@
     <string name="mention">Omembe</string>
     <string name="reblog">Ojačitve</string>
     <string name="show_boosts">Prikaži ojačanja</string>
-    <string name="show_replies">Show replies</string>
-    <string name="action_open_in_web">Open in browser</string>
-    <string name="translate">Translate</string>
-    <string name="please_wait">Please, wait few seconds before making this action.</string>
+    <string name="show_replies">Prikaži odgovore</string>
+    <string name="action_open_in_web">Odpri v brskalniku</string>
+    <string name="translate">Prevedi</string>
+    <string name="please_wait">Prosimo, počakajte nekaj sekund preden opravite to dejanje.</string>
     <!--- Menu -->
-    <string name="home_menu">Home</string>
-    <string name="local_menu">Local timeline</string>
+    <string name="home_menu">Domov</string>
+    <string name="local_menu">Lokalna časovnica</string>
     <string name="global_menu">Federated timeline</string>
     <string name="neutral_menu_title">Options</string>
     <string name="favorites_menu">Favourites</string>
