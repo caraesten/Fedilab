@@ -462,38 +462,39 @@
     <string name="account_moved_to">%1$s 已被移动到 %2$s</string>
     <string name="show_boost_count">显示转嘟/收藏数目</string>
     <string name="issue_login_title">身份验证不起作用？</string>
-    <string name="issue_login_message"><b>有用的检查可能有助于解决问题:</b>\n\n 
-- 检查实例名是否拼写错误\n\n 
-- 检查您的实例确实存在\n\n 
-- 如果您使用双重认证 (2FA), 请使用底部的链接 (一旦实例名填好后)\n\n 
-- 您也可这个链接而不使用双重认证(2FA)\n\n 
-- 如果仍不工作，请向https://github.com/stom79/mastalab/issues提交问题。 </string>
-    <string name="media_ready">媒体已加载。单击此处显示它。</string>
-    <string name="data_export_start">此操作可能会很长。当它完成时，您将会收到通知。</string>
-    <string name="data_export_running">仍在运行，请稍候.……</string>
+    <string name="issue_login_message">        <b>以下是一些可能有用的检查：</b>\n\n 
+        - 检查实例名是否拼写错误\n\n 
+        - 检查您的实例是否下线\n\n 
+        - 如果您使用双因素身份验证（2FA），请使用底部的链接（实例名填好后）\n\n 
+        - 您也可以使用这个链接但不使用双因素身份验证（2FA）\n\n 
+        - 如果仍不工作，请向 https://github.com/stom79/mastalab/issues 提交问题。
+    </string>
+    <string name="media_ready">媒体已加载。单击此处显示。</string>
+    <string name="data_export_start">此操作可能会很久。完成时会通知您。</string>
+    <string name="data_export_running">仍在运行，请稍候……</string>
     <string name="data_export">导出状态</string>
     <string name="data_export_toots">导出 %1$s 的状态</string>
     <string name="data_export_success">%2$s 条嘟文中的 %1$s 条已被导出。</string>
-    <string name="data_export_error">为 %1$s 导出数据时出现了错误</string>
+    <string name="data_export_error">导出 %1$s 的数据时出现错误</string>
     <!-- Proxy -->
     <string name="proxy_set">代理</string>
     <string name="proxy_type">类型</string>
-    <string name="proxy_enable">是否启用代理服务器？</string>
+    <string name="proxy_enable">启用代理？</string>
     <string name="poxy_host">主机</string>
     <string name="poxy_port">端口</string>
-    <string name="poxy_login">登录</string>
+    <string name="poxy_login">用户名</string>
     <string name="poxy_password">密码</string>
     <string name="set_theme">主题：</string>
     <string name="set_compact_mode">紧凑模式</string>
-    <string name="set_share_details">在分享时添加嘟文的详细信息</string>
+    <string name="set_share_details">分享时添加嘟文的详细信息</string>
     <string name="support_the_app_on_liberapay">在 Liberapay 上支持这个应用</string>
     <string name="alert_regex">正则表达式中有错误！</string>
-    <string name="no_account_yet">No account yet?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-    <string name="delete_instance">Delete this instance?</string>
-    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-    <string name="which_language">Translate in</string>
-    <string name="crash_title">Mastalab has stopped :(</string>
+    <string name="no_account_yet">还没有帐户吗？</string>
+    <string name="toast_instance_unavailable">未在此实例中找到时间线！</string>
+    <string name="delete_instance">删除此实例？</string>
+    <string name="warning_delete_instance">您将从下列实例中删除 %s。</string>
+    <string name="which_language">翻译为</string>
+    <string name="crash_title">Mastalab 已停止 :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Follow instance</string>
