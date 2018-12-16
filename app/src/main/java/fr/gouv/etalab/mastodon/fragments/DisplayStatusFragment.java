@@ -625,8 +625,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      * @param sinceId String
      */
     public void retrieveMissingToots(String sinceId){
-        if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+        if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, remoteInstance, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else if(type == RetrieveFeedsAsyncTask.Type.TAG)
+            asyncTask = new RetrieveMissingFeedsAsyncTask(context, tag, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -744,9 +746,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 int position = 0;
                 insertedConversation = statuses.size();
                 if( this.statuses != null) {
-                    long initialConversationId = -1;
-                    if( this.statuses.size() > 0 )
-                        initialConversationId = Long.parseLong(this.statuses.get(0).getConversationId());
                     for (Iterator<Status> it = this.statuses.iterator(); it.hasNext(); ) {
                         Status status = it.next();
                         for (Status status1 : statuses) {

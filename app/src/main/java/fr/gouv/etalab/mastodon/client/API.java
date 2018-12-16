@@ -1087,11 +1087,19 @@ public class API {
 
 
     public APIResponse getCustomArtTimeline(boolean local, String tag, String max_id){
-        return getArtTimeline(local, tag, max_id);
+        return getArtTimeline(local, tag, max_id, null);
     }
 
     public APIResponse getArtTimeline(boolean local, String max_id){
-        return getArtTimeline(local, null, max_id);
+        return getArtTimeline(local, null, max_id, null);
+    }
+
+    public APIResponse getCustomArtTimelineSinceId(boolean local, String tag, String since_id){
+        return getArtTimeline(local, tag, null, since_id);
+    }
+
+    public APIResponse getArtTimelineSinceId(boolean local, String since_id){
+        return getArtTimeline(local, null, null, since_id);
     }
     /**
      * Retrieves art timeline
@@ -1099,10 +1107,10 @@ public class API {
      * @param max_id String id max
      * @return APIResponse
      */
-    private APIResponse getArtTimeline(boolean local, String tag, String max_id){
+    private APIResponse getArtTimeline(boolean local, String tag, String max_id, String since_id){
         if( tag == null)
             tag = "mastoart";
-        APIResponse apiResponse = getPublicTimelineTag(tag, local, true, max_id, null, tootPerPage);
+        APIResponse apiResponse = getPublicTimelineTag(tag, local, true, max_id, since_id, tootPerPage);
         APIResponse apiResponseReply = new APIResponse();
         if( apiResponse != null){
             apiResponseReply.setMax_id(apiResponse.getMax_id());
@@ -1136,6 +1144,18 @@ public class API {
     @SuppressWarnings("SameParameterValue")
     public APIResponse getPublicTimelineTag(String tag, boolean local, String max_id){
         return getPublicTimelineTag(tag, local, false, max_id, null, tootPerPage);
+    }
+
+    /**
+     * Retrieves public tag timeline *synchronously*
+     * @param tag String
+     * @param local boolean only local timeline
+     * @param since_id String since id
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    public APIResponse getPublicTimelineTagSinceId(String tag, boolean local, String since_id){
+        return getPublicTimelineTag(tag, local, false, null, since_id, tootPerPage);
     }
     /**
      * Retrieves public tag timeline *synchronously*

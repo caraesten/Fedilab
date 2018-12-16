@@ -2983,16 +2983,6 @@ public class Helper {
         }
     }
 
-    public static String getDefaultLocale(){
-        String locale = Locale.getDefault().getCountry();
-        if( locale.startsWith("zh")){
-            if(  Locale.getDefault().getLanguage().equals("TW") || Locale.getDefault().getLanguage().equals("CN"))
-                locale = Locale.getDefault().getCountry() + "-" + Locale.getDefault().getLanguage();
-            else
-                locale = Locale.getDefault().getCountry() + "-TW";
-        }
-        return locale;
-    }
 
     public static int languageSpinnerPosition(Context context){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
