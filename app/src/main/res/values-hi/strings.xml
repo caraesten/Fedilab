@@ -71,7 +71,7 @@
     <string name="please_wait">इस क्रिया को करने से पहले कृपया कुछ सेकेंड ठहरे।</string>
     <!--- Menu -->
     <string name="home_menu">मुख्यपृष्ठ</string>
-    <string name="local_menu">Local timeline</string>
+    <string name="local_menu">लोकल टाइमलाइन</string>
     <string name="global_menu">Federated timeline</string>
     <string name="neutral_menu_title">Options</string>
     <string name="favorites_menu">Favourites</string>
