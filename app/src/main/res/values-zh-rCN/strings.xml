@@ -168,7 +168,7 @@
     <string-array name="toot_visibility">
         <item>发布到公共时间线</item>
         <item>不发布到公共时间线</item>
-        <item>仅发送给关注者</item>
+        <item>仅发送给粉丝</item>
         <item>仅发布给提及用户</item>
     </string-array>
     <string name="no_draft">没有草稿！</string>
@@ -543,8 +543,8 @@
     <string name="account_added_list_trunk">帐号已添加到列表</string>
     <string name="adding_account_list_trunk">正在添加帐号到列表</string>
     <string name="action_list_add">您还未创建列表。点击“+”按钮新建一个。</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
-    <string name="about_trunk">Who to follow</string>
+    <string name="action_remote_instance_add">您没有关注任何远程实例。点击“+”按钮以添加新实例。</string>
+    <string name="about_trunk">关注推荐</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">无法关注帐号</string>
     <string name="retrieve_remote_account">获取远程帐号</string>
