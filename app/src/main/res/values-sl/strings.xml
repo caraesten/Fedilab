@@ -479,8 +479,8 @@
         - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
     </string>
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
-    <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-    <string name="data_export_running">Still running, please wait…</string>
+    <string name="data_export_start">Ta akcija lahko traja precej dolgo. Obvestili vas bomo, ko bo zaključeno.</string>
+    <string name="data_export_running">Se še izvaja. Prosimo, počakajte …</string>
     <string name="data_export">Izvoz statusov</string>
     <string name="data_export_toots">Izvoz statusov za %1$s</string>
     <string name="data_export_success">Izvoženih je %1$s objav Toot od skupno %2$s.</string>
@@ -650,26 +650,26 @@
     <string name="favicon">Favicon</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
-        <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>Nikoli</item>
+        <item>30 minut</item>
+        <item>1 uro</item>
+        <item>6 ur</item>
+        <item>12 ur</item>
+        <item>1 dan</item>
+        <item>1 teden</item>
     </string-array>
     <string name="showcase_instance">        V to polje vpišite ime gostitelja vaše instance.\nNaprimer: Če ste ustarili račun na strežniku: https://mastodon.social\nVpišite le ime:<b>mastodon.social</b> (brez https://)\n
         Ob vpisu prvih nekaj črk vam bomo podali namige možnih imen gostiteljev.\n\n
         ⚠ Gumb Prijava deluje le, ko je instanca strežnika veljavna in delujoča!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        V to polje vpišite naslov e-pošte, ki je vezana na vaš račun Mastodon.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        Zadnji korak je vpis gesla in potrditev s pritiskom na gumb Prijava.
     </string>
-    <string name="more_information">More information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="more_information">Več informacij</string>
+    <string name="showcase_2FA">Uporabite to povezavo, če uporabljate dvostopenjsko prijavljanje (2FA).\nLahko jo uporabite tudi, če tu ne želite vnašati svojih prijavnih podatkov.</string>
     <!-- languages not translated -->
-    <string name="show_media_only">Media only</string>
+    <string name="show_media_only">Samo vsebine</string>
     <string name="show_media_nsfw">Show NSFW</string>
     <!-- end languages -->
 </resources>
