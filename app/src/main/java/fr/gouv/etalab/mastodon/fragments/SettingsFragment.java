@@ -653,7 +653,7 @@ public class SettingsFragment extends Fragment {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
                         case 0:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, Helper.getDefaultLocale());
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, Locale.getDefault().getLanguage());
                             editor.commit();
                             break;
                         case 1:
