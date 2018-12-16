@@ -125,6 +125,10 @@
         <item>Anmäl den här tooten?</item>
         <item>Blockera denna domän?</item>
     </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Ta bort denna toot?</item>
         <item>Ta bort &amp; skriv om denna toot?</item>
