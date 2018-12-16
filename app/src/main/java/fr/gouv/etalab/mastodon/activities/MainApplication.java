@@ -53,15 +53,19 @@ public class MainApplication extends MultiDexApplication {
         try {
             List<Locale> SUPPORTED_LOCALES = new ArrayList<>();
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, Helper.getDefaultLocale());
-            Locale defaultLocale;
-            if( defaultLocaleString.equals("zh-CN"))
-                defaultLocale = Locale.SIMPLIFIED_CHINESE;
-            else if( defaultLocaleString.equals("zh-TW"))
-                defaultLocale = Locale.TRADITIONAL_CHINESE;
-            else
-                defaultLocale = new Locale(defaultLocaleString);
-            SUPPORTED_LOCALES.add(defaultLocale);
+            String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, null);
+            if( defaultLocaleString != null){
+                Locale defaultLocale;
+                if( defaultLocaleString.equals("zh-CN"))
+                    defaultLocale = Locale.SIMPLIFIED_CHINESE;
+                else if( defaultLocaleString.equals("zh-TW"))
+                    defaultLocale = Locale.TRADITIONAL_CHINESE;
+                else
+                    defaultLocale = new Locale(defaultLocaleString);
+                SUPPORTED_LOCALES.add(defaultLocale);
+            }else {
+                SUPPORTED_LOCALES.add(Locale.getDefault());
+            }
             LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
         }catch (Exception ignored){ignored.printStackTrace();}
         Toasty.Config.getInstance().apply();
