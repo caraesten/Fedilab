@@ -218,32 +218,32 @@
     <string name="no_notifications">没有通知可以显示</string>
     <string name="notif_mention">提及了您</string>
     <string name="notif_reblog">转嘟了您的状态</string>
-    <string name="notif_favourite">收藏您的状态</string>
+    <string name="notif_favourite">收藏了您的状态</string>
     <string name="notif_follow">关注了您</string>
-    <string name="notif_pouet">新的嘟文来自 %1$s</string>
+    <string name="notif_pouet">来自 %1$s 的新嘟文</string>
     <plurals name="other_notifications">
-        <item quantity="other">和另外一个通知</item>
+        <item quantity="other">和另外 %d 条通知</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="other">和 %d 条其它的嘟文等待发现</item>
+        <item quantity="other">和另外 %d 条嘟文等待发现</item>
     </plurals>
     <string name="delete_notification_ask">删除一条通知吗？</string>
     <string name="delete_notification_ask_all">删除所有通知吗？</string>
     <string name="delete_notification">已删除该通知！</string>
     <string name="delete_notification_all">已删除所有通知！</string>
     <!-- HEADER -->
-    <string name="following">正在关注</string>
-    <string name="followers">关注者</string>
-    <string name="pinned_toots">已置顶</string>
+    <string name="following">关注</string>
+    <string name="followers">粉丝</string>
+    <string name="pinned_toots">置顶</string>
     <!-- TOAST -->
-    <string name="client_error">无法获取客户id！</string>
+    <string name="client_error">无法获取客户端 ID！</string>
     <string name="no_internet">没有互联网连接！</string>
-    <string name="toast_block">该帐户已被屏蔽！</string>
-    <string name="toast_unblock">该帐户不再被屏蔽！</string>
-    <string name="toast_mute">该帐户已被静音！</string>
-    <string name="toast_unmute">该帐户不再被静音！</string>
-    <string name="toast_follow">已关注此账户！</string>
-    <string name="toast_unfollow">已不再关注此账户！</string>
+    <string name="toast_block">该帐号已被屏蔽！</string>
+    <string name="toast_unblock">该帐号不再被屏蔽！</string>
+    <string name="toast_mute">该帐号已被静音！</string>
+    <string name="toast_unmute">该帐号不再被静音！</string>
+    <string name="toast_follow">已关注此帐号！</string>
+    <string name="toast_unfollow">已不再关注此帐号！</string>
     <string name="toast_reblog">嘟文已被转嘟！</string>
     <string name="toast_unreblog">嘟文已不再被转嘟！</string>
     <string name="toast_favourite">嘟文被添加进了您的收藏夹!</string>
