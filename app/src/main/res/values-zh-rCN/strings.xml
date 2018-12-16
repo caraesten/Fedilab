@@ -420,7 +420,7 @@
         - <b>READ_EXTERNAL_STORAGE</b>:  用于将媒体添加到嘟文.\n
         - <b>BOOT_COMPLETED</b>: 用于启动通知服务.\n
         - <b>WAKE_LOCK</b>: 在通知服务期间使用。    </string>
-    <string name="privacy_API_authorizations_title">API 权限:</string>
+    <string name="privacy_API_authorizations_title">API 权限：</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>: 读取数据.\n
         - <b>Write</b>: 开机自检状态和上载状态的媒体. \n
         - <b>Follow</b>: 跟踪、追随、阻止、取消阻止. \n\n
