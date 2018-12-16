@@ -177,7 +177,7 @@
     <!-- Instance -->
     <string name="instance_no_description">没有可用的描述！</string>
     <!-- About -->
-    <string name="about_vesrion">发布版 %1$s</string>
+    <string name="about_vesrion">版本 %1$s</string>
     <string name="about_developer">开发者：</string>
     <string name="about_license">许可协议： </string>
     <string name="about_license_action">GNU GPL V3</string>
