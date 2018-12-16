@@ -95,14 +95,14 @@
     <string name="scheduled_toots">Scheduled toots</string>
     <string name="disclaimer_full">नीचे दिये गये जानकारी उप्योगकर्ता का वर्णन अधूरा दर्शा सकता है।</string>
     <string name="insert_emoji">इमोजी डाले</string>
-    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-    <string name="live_notif">Live notifications</string>
+    <string name="no_emoji">इस वक्त एप ने कस्टम इमोजियों को एकत्र नहीं किया।</string>
+    <string name="live_notif">लाईव सूचनाएं</string>
     <!-- Status -->
-    <string name="no_status">No toot to display</string>
-    <string name="fav_added">The toot was added to favourites</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
+    <string name="no_status">दिखाने के लिये एक भी संदेश नहीं है</string>
+    <string name="fav_added">संदेश को पसंदीदा पृष्ठ में जोड़ दिया गया है</string>
+    <string name="fav_removed">संदेश को पसंदीदा पृष्ठ से हटा दिया गया है</string>
+    <string name="reblog_added">संदेश को बूस्ट कर दिया गया है!</string>
+    <string name="reblog_removed">संदेश अब बूस्ट नहीं है!</string>
     <string name="reblog_by">बूस्ट किया %1$s</string>
     <string name="favourite_add">इस संदेश को अपने फ़ेवरेट्स में जोड़े?</string>
     <string name="favourite_remove">इस संदेश को अपने फ़ेवरेट्स से हटाएं?</string>
@@ -184,7 +184,7 @@
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Source code: </string>
     <string name="about_yandex">Translation of toots:</string>
-    <string name="about_thekinrar">Search instances:</string>
+    <string name="about_thekinrar">इंस्टेंसेस खोजे:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
