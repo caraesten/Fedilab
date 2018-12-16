@@ -81,17 +81,17 @@
     <string name="remote_follow_menu">Oddaljeno spremljanje</string>
     <string name="notifications">Obvestila</string>
     <string name="follow_request">Zahteve za spremljanje</string>
-    <string name="optimization">Optimization</string>
-    <string name="settings">Settings</string>
-    <string name="profile">Profile</string>
-    <string name="make_a_choice">What do you want to do?</string>
-    <string name="delete_account_title">Delete an account</string>
-    <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-    <string name="send_email">Send an email</string>
-    <string name="choose_file">Please select a file</string>
-    <string name="choose_file_error">No file explorer found!</string>
-    <string name="click_to_change">Click on the path to change it</string>
-    <string name="failed">Failed!</string>
+    <string name="optimization">Optimizacija</string>
+    <string name="settings">Nastavitve</string>
+    <string name="profile">Profil</string>
+    <string name="make_a_choice">Kaj želite storiti?</string>
+    <string name="delete_account_title">Brisanje računa</string>
+    <string name="delete_account_message" formatted="false">Ali želite iz aplikacije izbrisati račun %1$s?</string>
+    <string name="send_email">Pošlji e-pošto</string>
+    <string name="choose_file">Prosimo izberite datoteko</string>
+    <string name="choose_file_error">Ne najdem aplikacije za upravljanje datotek.</string>
+    <string name="click_to_change">Pritisnite na pot, če jo želite spremeniti.</string>
+    <string name="failed">Ni uspelo.</string>
     <string name="scheduled_toots">Načrtovane objave</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
     <string name="insert_emoji">Vstavi čustvenček</string>
@@ -174,11 +174,11 @@
         <item>Objavi le spremljevalcem</item>
         <item>Post to mentioned users only</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
+    <string name="no_draft">Ni osnutkov.</string>
     <string name="choose_toot">Choose a toot</string>
     <string name="choose_accounts">Choose an account</string>
     <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
+    <string name="remove_draft">Naj odstranim osnutek?</string>
     <string name="show_reply">Click on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
@@ -271,12 +271,12 @@
     <string name="nothing_to_do">No action can be taken</string>
     <string name="toast_saved">The media has been saved!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
-    <string name="toast_toot_saved">Draft saved!</string>
+    <string name="toast_toot_saved">Osnutek je shranjen.</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
     <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">Optimisation of loading</string>
+    <string name="settings_title_optimisation">Optimizacija nalaganja</string>
     <string name="set_toots_page">Number of toots per load</string>
     <string name="set_accounts_page">Number of accounts per load</string>
     <string name="set_notifications_page">Količina obvestil ob vsakem nalaganju</string>
@@ -304,7 +304,7 @@
     <string name="set_notif_follow_mention">Obveščaj me, ko me kdo omeni</string>
     <string name="set_share_validation">Vprašaj me za potrditev preden ojačam</string>
     <string name="set_share_validation_fav">Pred dodajanjem med priljubljene me vprašaj za potrditev</string>
-    <string name="settings_title_more_options">Advanced settings</string>
+    <string name="settings_title_more_options">Napredne nastavitve</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Tiha obvestila</string>
@@ -431,10 +431,10 @@
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
     <string name="privacy_API_authorizations_title">API permissions:</string>
-    <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+    <string name="privacy_API_authorizations">        - <b>Branje</b>: Branje podatkov.\n
+        - <b>Pisanje</b>: Objava statusov in prilaganje vsebin le-tem.\n
+        - <b>Spremljanje</b>: Spremljanje, prekinitev spremljanj, blokiranje, odblokiranje.\n\n
+        <b>&#9888; Te akcije se izvedejo le, ko jih zahteva uporabnik.</b>
     </string>
     <string name="privacy_API_title">Tracking and Libraries</string>
     <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
@@ -501,7 +501,7 @@
     <string name="no_account_yet">No account yet?</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
     <string name="delete_instance">Delete this instance?</string>
-    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
+    <string name="warning_delete_instance">Iz vašega seznama spremljanih instanc boste zbrisali %s.</string>
     <string name="which_language">Translate in</string>
     <string name="crash_title">Mastalab has stopped :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
@@ -542,7 +542,7 @@
     <string name="action_update_filter">Update filter</string>
     <string name="action_filter_create">Create filter</string>
     <string name="how_to_follow">Koga naj spremlajm</string>
-    <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
+    <string name="action_who_to_follow_empty_content">Trenutno na seznamu ni računov.</string>
     <string name="follow_account">Spremljaj</string>
     <string name="select_all">Select all</string>
     <string name="unselect_all">Unselect all</string>
@@ -612,7 +612,7 @@
     <string name="no_mail_client">There are no email clients installed.</string>
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
+    <string name="settings_title_battery">Optimizacija porabe energije</string>
     <string name="set_change_locale">Change the language</string>
     <string name="default_language">Default language</string>
     <string name="truncate_long_toots">Truncate long toots</string>
