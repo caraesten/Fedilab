@@ -40,7 +40,7 @@
     <string name="choose_picture">Velg et bilde…</string>
     <string name="clear">Ren</string>
     <string name="microphone">Mikrofon</string>
-    <string name="camera">Camera</string>
+    <string name="camera">Kamera</string>
     <string name="speech_prompt">Si noe, vær så snill</string>
     <string name="speech_not_supported">Beklager! Enheten støtter ikke taleinngangen!</string>
     <string name="delete_all">Slette alle</string>
@@ -117,29 +117,29 @@
     <string name="more_action_5">Kopiere</string>
     <string name="more_action_6">Dele</string>
     <string name="more_action_7">Nevne</string>
-    <string name="more_action_8">Timed mute</string>
+    <string name="more_action_8">Tidsbestemt dempet</string>
     <string name="more_action_9">Slett og kladd på nytt</string>
     <string-array name="more_action_confirm">
         <item>Slå av denne kontoen?</item>
         <item>Blokker denne kontoen?</item>
         <item>Rapporter denne tooten?</item>
-        <item>Block this domain?</item>
+        <item>Blokkere dette domenet?</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Fjern denne tooten?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>Slette og kladde denne tooten på nytt?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d svar</item>
         <item quantity="other">%d svar</item>
     </plurals>
-    <string name="set_display_bookmark_button">Display the bookmark button</string>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
-    <string name="bookmarks_empty">No bookmarks to display</string>
-    <string name="status_bookmarked">Status has been added to bookmarks!</string>
-    <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+    <string name="set_display_bookmark_button">Vis bokmerke-knappen</string>
+    <string name="bookmarks">Bokmerker</string>
+    <string name="bookmark_add">Legg til bokmerke</string>
+    <string name="bookmark_remove">Fjern fra bokmerker</string>
+    <string name="bookmarks_empty">Ingen bokmerker å vise</string>
+    <string name="status_bookmarked">Statusen er lagt til bokmerker!</string>
+    <string name="status_unbookmarked">Statusen ble fjernet fra bokmerker!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -208,9 +208,9 @@
     <string name="toot_scheduled_date">Den planlagte datoen må være større enn den nåværende timen!</string>
     <string name="warning_battery">Batterisparer er aktivert! Det virker kanskje ikke som forventet.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_date_error">Tiden for demping bør være mer enn ett minutt.</string>
+    <string name="timed_mute_date">%1$s er dempet til %2$s. \n Du kan slå på denne kontoen igjen fra han/hennes profil.</string>
+    <string name="timed_mute_profile">%1$s er dempet til %2$s. \n Klikk her for å slå kontoen igjen.</string>
     <!-- Notifications -->
     <string name="no_notifications">Ingen melding for å vise</string>
     <string name="notif_mention">nevnte deg</string>
@@ -276,7 +276,7 @@
     <string name="set_attachment_action">Legg i mediet</string>
     <string name="load_attachment">Legg bildene</string>
     <string name="load_attachment_spoiler">Vis mer…</string>
-    <string name="load_attachment_spoiler_less">Show less…</string>
+    <string name="load_attachment_spoiler_less">Vis færre…</string>
     <string name="load_sensitive_attachment">Følsomt innhold</string>
     <string name="set_display_reply">Vis tidligere melding i svar</string>
     <string name="set_display_local">Vis lokal tidslinje</string>
@@ -302,11 +302,11 @@
     <string name="set_nsfw_timeout">NSFW vise timeout (sekunder, 0 betyr av)</string>
     <string name="settings_title_profile">Rediger profil</string>
     <string name="set_profile_description">Bio…</string>
-    <string name="set_lock_account">Lock account</string>
+    <string name="set_lock_account">Lås konto</string>
     <string name="set_save_changes">Lagre endringer</string>
     <string name="set_header_picture_overlay">Velg et topptekstbilde</string>
-    <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+    <string name="set_fit_preview">Tilpass forhåndsvisningsbilder</string>
+    <string name="set_automatically_split_toot">Del opp toots over 500 tegn i svar</string>
     <string name="note_no_space">Du har nådd de 160 tegnene som er tillatt!</string>
     <string name="username_no_space">Du har nådd de 30 tegnene som er tillatt!</string>
     <string name="settings_title_hour">Tidsspor for varsler:</string>
@@ -317,15 +317,15 @@
     <string name="settings_hour_init">Starttid</string>
     <string name="settings_hour_end">Sluttid</string>
     <string name="embedded_browser">Bruk den innebygde nettleseren</string>
-    <string name="custom_tabs">Custom tabs</string>
+    <string name="custom_tabs">Egendefinerte kategorier</string>
     <string name="use_javascript">Aktiver Javascript</string>
-    <string name="expand_cw">Automatically expand cw</string>
+    <string name="expand_cw">Utvid cw automatisk</string>
     <string name="use_cookies">Tillat cookies fra tredjeparter</string>
     <string name="settings_ui_layout">Oppsett for tidslinjer: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Normal batteribruk</item>
+        <item>Middels batteri</item>
+        <item>Lav batteribruk</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Tabs</item>
@@ -337,14 +337,14 @@
         <item>DeepL</item>
         <item>Nei</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">API-nøkkel, du kan la den stå tom for Yandex</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>Black</item>
+        <item>Mørk</item>
+        <item>Lys</item>
+        <item>Svart</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
+        <item>Nei</item>
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
@@ -371,8 +371,8 @@
     <string name="request_sent">Forespørsel sendt</string>
     <string name="followed_by">Følger deg</string>
     <string name="action_search">Søke</string>
-    <string name="set_capitalize">First letter in capital for replies</string>
-    <string name="set_resize_picture">Resize pictures</string>
+    <string name="set_capitalize">Stor forbokstav i svar</string>
+    <string name="set_resize_picture">Endre størrelsen på bilder</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Trykk på varsler</string>
     <string name="settings_popup_message">Vennligst bekreft push notifications som du vil motta.
@@ -385,17 +385,17 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cachen ble ryddet! %1$s ble utgitt</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
+    <string name="action_sync">Synkroniser</string>
     <string name="action_filter">Filter</string>
-    <string name="owner_cached_toots">Your toots</string>
-    <string name="v_public">Public</string>
-    <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
-    <string name="v_direct">Direct</string>
-    <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
-    <string name="filter_no_result">No matching result found!</string>
+    <string name="owner_cached_toots">Dine toots</string>
+    <string name="v_public">Offentlig</string>
+    <string name="v_unlisted">Ikke listet</string>
+    <string name="v_private">Privat</string>
+    <string name="v_direct">Direkte</string>
+    <string name="v_keywords">Noen søkeord…</string>
+    <string name="show_media">Vis media</string>
+    <string name="show_pinned">Vis låste</string>
+    <string name="filter_no_result">Ingen treff!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
@@ -502,15 +502,15 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="toast_endorse">The account is now featured on profile</string>
     <string name="toast_unendorse">The account is no longer featured on profile</string>
     <string name="toast_show_boost">Boosts are now shown!</string>
-    <string name="toast_hide_boost">Boosts are now hidden!</string>
-    <string name="direct_message">Direct message</string>
-    <string name="filters">Filters</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-    <string name="filter_keyword">Keyword or phrase</string>
-    <string name="context_home">Home timeline</string>
-    <string name="context_public">Public timelines</string>
-    <string name="context_notification">Notifications</string>
-    <string name="context_conversation">Conversations</string>
+    <string name="toast_hide_boost">Boosts er nå skjult!</string>
+    <string name="direct_message">Direktemelding</string>
+    <string name="filters">Filtre</string>
+    <string name="action_filters_empty_content">Ingen filtre for å vise. Du kan opprette et ved å klikke på \"+\"-knappen.</string>
+    <string name="filter_keyword">Nøkkelord eller et uttrykk</string>
+    <string name="context_home">Lokal tidslinje</string>
+    <string name="context_public">Offentlig tidslinjer</string>
+    <string name="context_notification">Varsler</string>
+    <string name="context_conversation">Samtaler</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
     <string name="context_drop">Drop instead of hide</string>
     <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
