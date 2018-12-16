@@ -120,25 +120,25 @@
     <string name="more_action_8">定时静音</string>
     <string name="more_action_9">删除并加入草稿</string>
     <string-array name="more_action_confirm">
-        <item>是否将此帐户静音？</item>
-        <item>是否将此帐户屏蔽？</item>
+        <item>是否禁音此帐户？</item>
+        <item>是否屏蔽此帐户？</item>
         <item>举报这条嘟文吗？</item>
-        <item>Block this domain?</item>
+        <item>是否屏蔽此域名？</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>移除这条嘟文吗？</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>删除并重新添加这条嘟文到草稿里？</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="other">%d 个回复</item>
+        <item quantity="other">%d 条回复</item>
     </plurals>
-    <string name="set_display_bookmark_button">显示书签按键</string>
+    <string name="set_display_bookmark_button">显示书签按钮</string>
     <string name="bookmarks">书签</string>
     <string name="bookmark_add">加入书签</string>
     <string name="bookmark_remove">移除书签</string>
-    <string name="bookmarks_empty">没有要显示的书签</string>
-    <string name="status_bookmarked">状态已被加入到书签！</string>
-    <string name="status_unbookmarked">状态已被从书签移除！</string>
+    <string name="bookmarks_empty">没有书签可以显示</string>
+    <string name="status_bookmarked">状态已添加到书签！</string>
+    <string name="status_unbookmarked">状态已从书签移除！</string>
     <!-- Date -->
     <string name="date_seconds">%d 秒</string>
     <string name="date_minutes">%d 分</string>
