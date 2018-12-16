@@ -63,7 +63,7 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static android.app.Activity.RESULT_OK;
-import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.BACK_TO_SETTINGS;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.SET_YANDEX_API_KEY;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -404,7 +404,7 @@ public class SettingsFragment extends Fragment {
                 if( getActivity() != null)
                     getActivity().recreate();
                 Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                intent.putExtra(INTENT_ACTION, BACK_TO_SETTINGS);
                 if(getActivity() != null)
                     getActivity().finish();
                 startActivity(intent);
@@ -425,7 +425,7 @@ public class SettingsFragment extends Fragment {
                 if( getActivity() != null)
                     getActivity().recreate();
                 Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                intent.putExtra(INTENT_ACTION, BACK_TO_SETTINGS);
                 if(getActivity() != null)
                     getActivity().finish();
                 startActivity(intent);
@@ -624,7 +624,7 @@ public class SettingsFragment extends Fragment {
                     if (getActivity() != null)
                         getActivity().recreate();
                     Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                    intent.putExtra(INTENT_ACTION, BACK_TO_SETTINGS);
                     startActivity(intent);
                 }
                 count1++;
@@ -955,7 +955,7 @@ public class SettingsFragment extends Fragment {
                     if( getActivity() != null)
                         getActivity().recreate();
                     Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(INTENT_ACTION, CHANGE_THEME_INTENT);
+                    intent.putExtra(INTENT_ACTION, BACK_TO_SETTINGS);
                     startActivity(intent);
                 }
                 count3++;

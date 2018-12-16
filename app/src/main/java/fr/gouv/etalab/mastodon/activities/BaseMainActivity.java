@@ -147,7 +147,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import static fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
 import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.BACKUP_INTENT;
-import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_THEME_INTENT;
+import static fr.gouv.etalab.mastodon.helper.Helper.BACK_TO_SETTINGS;
 import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
@@ -1825,7 +1825,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 toolbarTitle.setText(instance);
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
                 changeUser(BaseMainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
-            }else if( extras.getInt(INTENT_ACTION) == CHANGE_THEME_INTENT){
+            }else if( extras.getInt(INTENT_ACTION) == BACK_TO_SETTINGS){
                 unCheckAllMenuItems(navigationView);
                 navigationView.setCheckedItem(R.id.nav_settings);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_settings, 0);

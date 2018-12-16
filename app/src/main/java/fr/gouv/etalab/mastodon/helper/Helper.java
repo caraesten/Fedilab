@@ -239,7 +239,7 @@ public class Helper {
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
     public static final int HOME_TIMELINE_INTENT = 2;
-    public static final int CHANGE_THEME_INTENT = 3;
+    public static final int BACK_TO_SETTINGS = 3;
     public static final int CHANGE_USER_INTENT = 4;
     public static final int ADD_USER_INTENT = 5;
     public static final int BACKUP_INTENT = 6;
@@ -1447,9 +1447,6 @@ public class Helper {
                 editor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
                 editor.apply();
                 activity.recreate();
-                Intent intent = new Intent(activity, MainActivity.class);
-                activity.finish();
-                activity.startActivity(intent);
             }
         });
         buttonDark.setOnClickListener(new View.OnClickListener() {
@@ -1460,9 +1457,6 @@ public class Helper {
                 editor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
                 editor.apply();
                 activity.recreate();
-                Intent intent = new Intent(activity, MainActivity.class);
-                activity.finish();
-                activity.startActivity(intent);
             }
         });
         buttonBlack.setOnClickListener(new View.OnClickListener() {
@@ -1473,9 +1467,6 @@ public class Helper {
                 editor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
                 editor.apply();
                 activity.recreate();
-                Intent intent = new Intent(activity, MainActivity.class);
-                activity.finish();
-                activity.startActivity(intent);
             }
         });
 
