@@ -96,6 +96,7 @@ public class Status implements Parcelable{
     private boolean attachmentShown = false;
     private boolean spoilerShown = false;
     private ArrayList<Attachment> media_attachments;
+    private Attachment art_attachment;
     private List<Mention> mentions;
     private List<Emojis> emojis;
     private List<Tag> tags;
@@ -1189,5 +1190,13 @@ public class Status implements Parcelable{
 
     public void setFavAnimated(boolean favAnimated) {
         isFavAnimated = favAnimated;
+    }
+
+    public Attachment getArt_attachment() {
+        return art_attachment;
+    }
+
+    public void setArt_attachment(Attachment art_attachment) {
+        this.art_attachment = art_attachment;
     }
 }

@@ -1099,7 +1099,6 @@ public class API {
      * @param max_id String id max
      * @return APIResponse
      */
-    @SuppressWarnings("SameParameterValue")
     private APIResponse getArtTimeline(boolean local, String tag, String max_id){
         if( tag == null)
             tag = "mastoart";
@@ -1112,19 +1111,13 @@ public class API {
             if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0){
                 for( Status status: apiResponse.getStatuses()){
                     if( status.getMedia_attachments() != null ) {
-                        if (status.getMedia_attachments().size() > 1) {
-                            String statusSerialized = Helper.statusToStringStorage(status);
-                            for (Attachment attachment : status.getMedia_attachments()) {
-                                ArrayList<Attachment> attachments = new ArrayList<>();
-                                attachments.add(attachment);
-                                Status newStatus = Helper.restoreStatusFromString(statusSerialized);
-                                if (newStatus == null)
-                                    break;
-                                newStatus.setMedia_attachments(attachments);
-                                apiResponseReply.getStatuses().add(newStatus);
-                            }
-                        } else if (status.getMedia_attachments().size() == 1) {
-                            apiResponseReply.getStatuses().add(status);
+                        String statusSerialized = Helper.statusToStringStorage(status);
+                        for (Attachment attachment : status.getMedia_attachments()) {
+                            Status newStatus = Helper.restoreStatusFromString(statusSerialized);
+                            if (newStatus == null)
+                                break;
+                            newStatus.setArt_attachment(attachment);
+                            apiResponseReply.getStatuses().add(newStatus);
                         }
                     }
                 }

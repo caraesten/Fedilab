@@ -462,10 +462,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 Status.transform(context, status);
             if( !status.isEmojiFound())
                 Status.makeEmojis(context, this, status);
-
-            Glide.with(context)
-                .load(status.getMedia_attachments().get(0).getPreview_url())
-                .into(holder.art_media);
+            if( status.getArt_attachment() != null)
+                Glide.with(context)
+                    .load(status.getArt_attachment().getPreview_url())
+                    .into(holder.art_media);
             if( status.getAccount() != null && status.getAccount().getAvatar() != null)
                 Glide.with(context)
                         .load(status.getAccount().getAvatar())
