@@ -82,19 +82,19 @@
     <string name="notifications">सूचनाएँ</string>
     <string name="follow_request">Follow requests</string>
     <string name="optimization">बेहतरी</string>
-    <string name="settings">Settings</string>
-    <string name="profile">Profile</string>
-    <string name="make_a_choice">What do you want to do?</string>
-    <string name="delete_account_title">Delete an account</string>
-    <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-    <string name="send_email">Send an email</string>
-    <string name="choose_file">Please select a file</string>
-    <string name="choose_file_error">No file explorer found!</string>
-    <string name="click_to_change">Click on the path to change it</string>
-    <string name="failed">Failed!</string>
+    <string name="settings">सैटिंग्स</string>
+    <string name="profile">वर्णन</string>
+    <string name="make_a_choice">आप क्या करना चाहेंगे?</string>
+    <string name="delete_account_title">खाता नष्ट करें</string>
+    <string name="delete_account_message" formatted="false">%1$s खाते को एप्लीकेशन से हटाएं?</string>
+    <string name="send_email">ईमेल भेजें</string>
+    <string name="choose_file">कृपया एक फ़ाइल चुनें</string>
+    <string name="choose_file_error">फ़ाइल एक्सप्लोरर नहीं मिला!</string>
+    <string name="click_to_change">मार्ग को बदलने के लिये उस पर क्लिक कीजिये</string>
+    <string name="failed">असफल!</string>
     <string name="scheduled_toots">Scheduled toots</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-    <string name="insert_emoji">Insert emoji</string>
+    <string name="disclaimer_full">नीचे दिये गये जानकारी उप्योगकर्ता का वर्णन अधूरा दर्शा सकता है।</string>
+    <string name="insert_emoji">इमोजी डाले</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">Live notifications</string>
     <!-- Status -->
