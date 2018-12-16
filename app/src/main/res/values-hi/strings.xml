@@ -125,6 +125,10 @@
         <item>इस संदेश को रिपोर्ट करें?</item>
         <item>इस इंस्टेंस को अवरुद्ध करें?</item>
     </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
     <string-array name="more_action_owner_confirm">
         <item>इस संदेश को हटाएं?</item>
         <item>संदेश हटाएं और दोबारा लिखे?</item>
