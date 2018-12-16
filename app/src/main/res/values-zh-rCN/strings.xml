@@ -19,7 +19,7 @@
     <string name="download_over">下载完成</string>
     <string name="save_file">保存 %1$s</string>
     <string name="save_over">媒体已保存</string>
-    <string name="download_from" formatted="false">文件: %1$s</string>
+    <string name="download_from" formatted="false">文件：%1$s</string>
     <string name="password">密码</string>
     <string name="email">电子邮箱</string>
     <string name="accounts">帐户</string>
