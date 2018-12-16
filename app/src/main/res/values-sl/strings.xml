@@ -171,7 +171,7 @@
     <string-array name="toot_visibility">
         <item>Post to public timelines</item>
         <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
+        <item>Objavi le spremljevalcem</item>
         <item>Post to mentioned users only</item>
     </string-array>
     <string name="no_draft">No drafts!</string>
@@ -300,8 +300,8 @@
     <string name="set_notif_follow">Obveščaj me o novih spremljevalcih</string>
     <string name="set_notif_follow_ask">Obveščaj me o novih zahtevah za spremljanje</string>
     <string name="set_notif_follow_share">Obveščaj me, ko nekdo ojača moj status</string>
-    <string name="set_notif_follow_add">Notify when someone favourites your status</string>
-    <string name="set_notif_follow_mention">Notify when someone mentions you</string>
+    <string name="set_notif_follow_add">Obveščaj me, ko kdo moj status doda med priljubljene</string>
+    <string name="set_notif_follow_mention">Obveščaj me, ko me kdo omeni</string>
     <string name="set_share_validation">Vprašaj me za potrditev preden ojačam</string>
     <string name="set_share_validation_fav">Pred dodajanjem med priljubljene me vprašaj za potrditev</string>
     <string name="settings_title_more_options">Advanced settings</string>
@@ -465,7 +465,7 @@
     <string name="action_lists_delete">Delete list</string>
     <string name="action_lists_update">Edit list</string>
     <string name="action_lists_title_placeholder">New list title</string>
-    <string name="action_lists_search_users">Search among people you follow</string>
+    <string name="action_lists_search_users">Išči med svojimi spremljevalci</string>
     <string name="action_lists_owner">Your lists</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
@@ -507,7 +507,7 @@
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Spremljanje instance</string>
-    <string name="toast_instance_already_added">You already follow this instance!</string>
+    <string name="toast_instance_already_added">To instanco že spremljate.</string>
     <string name="toast_instance_followed">Ta instanca je spremljana.</string>
     <string name="action_partnership">Partnerships</string>
     <string name="neutral_menu_information">Information</string>
@@ -552,14 +552,14 @@
     <string name="account_added_list_trunk">Accounts were added to the list</string>
     <string name="adding_account_list_trunk">Adding accounts to the list</string>
     <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
-    <string name="about_trunk">Who to follow</string>
+    <string name="action_remote_instance_add">Ne spremljate nobenim oddaljenim instancam. Pritisnite gumb \"+\", da dodajte novo.</string>
+    <string name="about_trunk">Koga naj spremlajm</string>
     <string name="about_trunk_action">Trunk API</string>
-    <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
+    <string name="toast_impossible_to_follow">Tega računa ne morete spremljati</string>
     <string name="retrieve_remote_account">Fetching remote account</string>
     <string name="expand_image">Automatically expand hidden media</string>
-    <string name="set_display_follow_instance">Display follow instances button</string>
-    <string name="channel_notif_follow">New follow</string>
+    <string name="set_display_follow_instance">Prikaži gumb za spremljanje instance</string>
+    <string name="channel_notif_follow">Novi spremljevalci</string>
     <string name="channel_notif_boost">Novo ojačanje</string>
     <string name="channel_notif_fav">New Favourite</string>
     <string name="channel_notif_mention">New Mention</string>
