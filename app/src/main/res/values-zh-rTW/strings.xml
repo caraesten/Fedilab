@@ -125,6 +125,10 @@
         <item>回報此嘟文？</item>
         <item>是否封鎖該網域？</item>
     </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
     <string-array name="more_action_owner_confirm">
         <item>移除此嘟文？</item>
         <item>刪除 &amp; 將此嘟文重新變為草稿</item>
