@@ -394,12 +394,12 @@
     <string name="v_unlisted">未列出</string>
     <string name="v_private">私密</string>
     <string name="v_direct">直接</string>
-    <string name="v_keywords">一些关键词...</string>
+    <string name="v_keywords">一些关键词…</string>
     <string name="show_media">显示媒体</string>
-    <string name="show_pinned">显示被置顶</string>
-    <string name="filter_no_result">没发现匹配的结果！</string>
-    <string name="data_backup_toots">备份嘟文约 %1$s</string>
-    <string name="data_backup_success">%1$s新的嘟文已被导入</string>
+    <string name="show_pinned">显示置顶</string>
+    <string name="filter_no_result">未找到匹配的结果！</string>
+    <string name="data_backup_toots">备份 %1$s 的嘟文</string>
+    <string name="data_backup_success">已导入 %1$s 的新嘟文</string>
     <string-array name="filter_select">
         <item>否</item>
         <item>仅</item>
