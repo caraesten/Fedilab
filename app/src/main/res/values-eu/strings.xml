@@ -125,6 +125,10 @@
         <item>Salatu toot hau?</item>
         <item>Blokeatu domeinu hau?</item>
     </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Kendu toot hau?</item>
         <item>Ezabatu eta berridatzi toot hau?</item>

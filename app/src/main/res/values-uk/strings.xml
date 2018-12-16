@@ -125,6 +125,10 @@
         <item>Поскаржитися на цей дмух?</item>
         <item>Блокувати цей домен?</item>
     </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Видалити цей дмух?</item>
         <item>Видалити &amp; переробити цей гудок?</item>

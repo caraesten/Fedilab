@@ -125,6 +125,10 @@
         <item>¿Reportar este toot?</item>
         <item>¿Bloquear este dominio?</item>
     </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
     <string-array name="more_action_owner_confirm">
         <item>¿Remover este toot?</item>
         <item>Borrar &amp; redactar este Toot?</item>

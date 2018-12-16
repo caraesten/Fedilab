@@ -125,6 +125,10 @@
         <item>Rapporter denne tooten?</item>
         <item>Blokkere dette domenet?</item>
     </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Fjern denne tooten?</item>
         <item>Slette og kladde denne tooten på nytt?</item>

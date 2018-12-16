@@ -45,7 +45,7 @@
     <string name="speech_not_supported">抱歉！您的设备不支持语音输入。</string>
     <string name="delete_all">全部删除</string>
     <string name="translate_toot">翻译这条嘟文。</string>
-    <string name="schedule">定时发布</string>
+    <string name="schedule">定时</string>
     <string name="text_size">文本和图标大小</string>
     <string name="text_size_change">更改当前文本大小：</string>
     <string name="icon_size_change">更改当前图标大小：</string>
@@ -60,7 +60,7 @@
     <string name="username">用户名</string>
     <string name="drafts">草稿</string>
     <string name="new_data">有新的数据可用！是否要显示它们？</string>
-    <string name="favourite">收藏</string>
+    <string name="favourite">收藏夹</string>
     <string name="follow">新关注者</string>
     <string name="mention">提及</string>
     <string name="reblog">转嘟</string>
@@ -74,7 +74,7 @@
     <string name="local_menu">本地时间线</string>
     <string name="global_menu">联合时间线</string>
     <string name="neutral_menu_title">选项</string>
-    <string name="favorites_menu">收藏</string>
+    <string name="favorites_menu">收藏夹</string>
     <string name="communication_menu_title">交流</string>
     <string name="muted_menu">静音用户</string>
     <string name="blocked_menu">屏蔽用户</string>
@@ -92,20 +92,20 @@
     <string name="choose_file_error">找不到文件资源管理器！</string>
     <string name="click_to_change">点按路径以更改</string>
     <string name="failed">失败！</string>
-    <string name="scheduled_toots">定时</string>
+    <string name="scheduled_toots">定时嘟文</string>
     <string name="disclaimer_full">以下信息可能不够完整反映该用户的资料。</string>
     <string name="insert_emoji">插入表情符号</string>
     <string name="no_emoji">该应用程序当前没有收集自定义表情。</string>
     <string name="live_notif">实时通知</string>
     <!-- Status -->
     <string name="no_status">没有嘟文可以显示</string>
-    <string name="fav_added">已将嘟文加入收藏</string>
-    <string name="fav_removed">已从收藏中移除该嘟文！</string>
+    <string name="fav_added">已将嘟文加入收藏夹</string>
+    <string name="fav_removed">已从收藏夹中移除该嘟文！</string>
     <string name="reblog_added">此嘟文已被转嘟！</string>
     <string name="reblog_removed">此嘟文已不被转嘟！</string>
     <string name="reblog_by">由 %1$s 转嘟</string>
-    <string name="favourite_add">添加此嘟文到您的收藏中？</string>
-    <string name="favourite_remove">从您的收藏中移除此嘟文？</string>
+    <string name="favourite_add">添加此嘟文到您的收藏夹中？</string>
+    <string name="favourite_remove">从您的收藏夹中移除此嘟文？</string>
     <string name="reblog_add">转嘟这条嘟文吗？</string>
     <string name="reblog_remove">取消转嘟这条嘟文吗？</string>
     <string name="pin_add">置顶此嘟文吗？</string>
@@ -124,6 +124,10 @@
         <item>是否屏蔽此帐户？</item>
         <item>举报这条嘟文吗？</item>
         <item>是否屏蔽此域名？</item>
+    </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>移除这条嘟文吗？</item>
@@ -192,63 +196,63 @@
     <!-- Accounts -->
     <string name="no_accounts">没有帐户可以显示</string>
     <string name="no_follow_request">无关注请求</string>
-    <string name="status_cnt">嘟文 \n %1$s</string>
-    <string name="following_cnt">关注 \n %1$s</string>
-    <string name="followers_cnt">粉丝\n %1$s</string>
-    <string name="pins_cnt">置顶 \n %d</string>
+    <string name="status_cnt">嘟文\n%1$s</string>
+    <string name="following_cnt">关注\n%1$s</string>
+    <string name="followers_cnt">粉丝\n%1$s</string>
+    <string name="pins_cnt">置顶\n%d</string>
     <string name="authorize">授权</string>
     <string name="reject">拒绝</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">没有预定的嘟文可以显示！</string>
-    <string name="no_scheduled_toots_indications">编写一条嘟文，然后从顶部菜单中选择 <b>预定</b>。</string>
-    <string name="remove_scheduled">删除该预定嘟文吗？</string>
-    <string name="media_count">媒体: %d</string>
+    <string name="no_scheduled_toots">没有定时嘟文可以显示！</string>
+    <string name="no_scheduled_toots_indications">编写一条嘟文，然后从顶部菜单中选择 <b>定时</b>。</string>
+    <string name="remove_scheduled">删除该定时嘟文吗？</string>
+    <string name="media_count">媒体：%d</string>
     <string name="toot_scheduled">嘟文将在预定时间发送！</string>
     <string name="toot_scheduled_date">预定的时间必须比现在晚一小时！</string>
     <string name="warning_battery">已启用省电模式！它可能无法按预期工作。</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">静音时间应超过1分钟。</string>
-    <string name="timed_mute_date">%1$s 已被静音直至 %2$s.\n 您可在他/她的档案页取消静音。</string>
-    <string name="timed_mute_profile">%1$s 已被静音直至 %2$s.\n 点击这里取消该用户的静音。</string>
+    <string name="timed_mute_date_error">静音时间应超过 1 分钟。</string>
+    <string name="timed_mute_date">%1$s 已被静音至 %2$s。\n您可以从他的档案页中取消静音。</string>
+    <string name="timed_mute_profile">%1$s 已被静音至 %2$s。\n点击这里取消该帐号的静音。</string>
     <!-- Notifications -->
-    <string name="no_notifications">没有要显示的通知</string>
+    <string name="no_notifications">没有通知可以显示</string>
     <string name="notif_mention">提及了您</string>
     <string name="notif_reblog">转嘟了您的状态</string>
-    <string name="notif_favourite">收藏您的状态</string>
+    <string name="notif_favourite">收藏了您的状态</string>
     <string name="notif_follow">关注了您</string>
-    <string name="notif_pouet">新的嘟文来自 %1$s</string>
+    <string name="notif_pouet">来自 %1$s 的新嘟文</string>
     <plurals name="other_notifications">
-        <item quantity="other">和另外一个通知</item>
+        <item quantity="other">和另外 %d 条通知</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="other">和 %d 条其它的嘟文等待发现</item>
+        <item quantity="other">和另外 %d 条嘟文等待发现</item>
     </plurals>
     <string name="delete_notification_ask">删除一条通知吗？</string>
     <string name="delete_notification_ask_all">删除所有通知吗？</string>
     <string name="delete_notification">已删除该通知！</string>
     <string name="delete_notification_all">已删除所有通知！</string>
     <!-- HEADER -->
-    <string name="following">正在关注</string>
-    <string name="followers">关注者</string>
-    <string name="pinned_toots">已置顶</string>
+    <string name="following">关注</string>
+    <string name="followers">粉丝</string>
+    <string name="pinned_toots">置顶</string>
     <!-- TOAST -->
-    <string name="client_error">无法获取客户id！</string>
+    <string name="client_error">无法获取客户端 ID！</string>
     <string name="no_internet">没有互联网连接！</string>
-    <string name="toast_block">该帐户已被屏蔽！</string>
-    <string name="toast_unblock">该帐户不再被屏蔽！</string>
-    <string name="toast_mute">该帐户已被静音！</string>
-    <string name="toast_unmute">该帐户不再被静音！</string>
-    <string name="toast_follow">已关注此账户！</string>
-    <string name="toast_unfollow">已不再关注此账户！</string>
-    <string name="toast_reblog">嘟文已被转嘟！</string>
-    <string name="toast_unreblog">嘟文已不再被转嘟！</string>
-    <string name="toast_favourite">嘟文被添加进了您的收藏夹!</string>
-    <string name="toast_unfavourite">已从您的收藏中移除该 toot！</string>
-    <string name="toast_report">嘟文已被举报！</string>
-    <string name="toast_unstatus">嘟文已被删除！</string>
-    <string name="toast_pin">嘟文已被置顶！</string>
-    <string name="toast_unpin">嘟文已被取消置顶！</string>
-    <string name="toast_error">哎呀！出现了一个错误！</string>
+    <string name="toast_block">该帐号已被屏蔽！</string>
+    <string name="toast_unblock">该帐号不再被屏蔽！</string>
+    <string name="toast_mute">该帐号已被静音！</string>
+    <string name="toast_unmute">该帐号不再被静音！</string>
+    <string name="toast_follow">已关注此帐号！</string>
+    <string name="toast_unfollow">已不再关注此帐号！</string>
+    <string name="toast_reblog">该嘟文已被转嘟！</string>
+    <string name="toast_unreblog">该嘟文已不再被转嘟！</string>
+    <string name="toast_favourite">该嘟文已添加到您的收藏夹！</string>
+    <string name="toast_unfavourite">该嘟文已从您的收藏夹中移除！</string>
+    <string name="toast_report">该嘟文已被举报！</string>
+    <string name="toast_unstatus">该嘟文已被删除！</string>
+    <string name="toast_pin">该嘟文已被置顶！</string>
+    <string name="toast_unpin">该嘟文已被取消置顶！</string>
+    <string name="toast_error">哎呀！发生错误！</string>
     <string name="toast_code_error">发生错误！该实例未返回认证代码！</string>
     <string name="toast_error_instance">该实例域名似乎是无效的！</string>
     <string name="toast_error_loading_account">在帐户间切换时发生错误！</string>
@@ -607,10 +611,10 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
     <string name="tags_renamed">The tag has been changed!</string>
     <string name="tags_deleted">The tag has been deleted!</string>
     <string name="set_display_art">Display Art timeline</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
+    <string name="schedule_boost">定时转嘟</string>
+    <string name="boost_scheduled">转嘟将在预定时间发布！</string>
+    <string name="no_scheduled_boosts">没有预定的转嘟可以显示！</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[打开嘟文的菜单，然后选择 <b>定时转嘟</b>。]]></string>
     <string name="art_menu">Art timeline</string>
     <string name="open_menu">Open menu</string>
     <string name="app_logo">Logo of the application</string>

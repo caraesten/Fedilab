@@ -125,6 +125,10 @@
         <item>Пожаловаться на этот тут?</item>
         <item>Заблокировать этот домен?</item>
     </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Удалить этот тут?</item>
         <item>Удалить &amp; переписать этот тут?</item>

@@ -125,6 +125,10 @@
         <item>Zgłosić ten wpis?</item>
         <item>Zablokować tę domenę?</item>
     </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Usunąć ten wpis?</item>
         <item>Usunąć i przeredagować ten wpis?</item>

@@ -125,6 +125,10 @@
         <item>Signaler ce pouet ?</item>
         <item>Désirez-vous bloquer ce domaine ?</item>
     </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Supprimer ce pouet ?</item>
         <item>Supprimer &amp; réécrire ce pouet ?</item>
