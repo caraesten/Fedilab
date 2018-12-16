@@ -19,7 +19,7 @@
     <string name="download_over">下载完成</string>
     <string name="save_file">保存 %1$s</string>
     <string name="save_over">媒体已保存</string>
-    <string name="download_from" formatted="false">文件: %1$s</string>
+    <string name="download_from" formatted="false">文件：%1$s</string>
     <string name="password">密码</string>
     <string name="email">电子邮箱</string>
     <string name="accounts">帐户</string>
@@ -29,23 +29,23 @@
     <string name="save">保存</string>
     <string name="restore">恢复</string>
     <string name="two_factor_authentification">两步验证？</string>
-    <string name="other_instance">mastodon.etalab.gouv.fr 之外的其他实例...？</string>
+    <string name="other_instance">mastodon.etalab.gouv.fr 之外的其他实例？</string>
     <string name="no_result">没有结果！</string>
     <string name="instance">实例</string>
-    <string name="instance_example">实例: mastodon.social</string>
+    <string name="instance_example">实例：mastodon.social</string>
     <string name="toast_account_changed" formatted="false">现在使用 %1$s 这个帐户</string>
     <string name="add_account">添加帐户</string>
-    <string name="clipboard">已将嘟文的内容复制到剪贴板</string>
-    <string name="change">变更</string>
+    <string name="clipboard">已复制嘟文的内容到剪贴板</string>
+    <string name="change">更改</string>
     <string name="choose_picture">选择图片…</string>
     <string name="clear">清理</string>
-    <string name="microphone">麦克风</string>
+    <string name="microphone">话筒</string>
     <string name="camera">相机</string>
     <string name="speech_prompt">请说点什么</string>
     <string name="speech_not_supported">抱歉！您的设备不支持语音输入。</string>
-    <string name="delete_all">删除全部</string>
+    <string name="delete_all">全部删除</string>
     <string name="translate_toot">翻译这条嘟文。</string>
-    <string name="schedule">任务计划</string>
+    <string name="schedule">定时发布</string>
     <string name="text_size">文本和图标大小</string>
     <string name="text_size_change">更改当前文本大小：</string>
     <string name="icon_size_change">更改当前图标大小：</string>
@@ -70,14 +70,14 @@
     <string name="translate">翻译</string>
     <string name="please_wait">请等待几秒钟，再进行此操作。</string>
     <!--- Menu -->
-    <string name="home_menu">首页</string>
+    <string name="home_menu">主页</string>
     <string name="local_menu">本地时间线</string>
     <string name="global_menu">联合时间线</string>
     <string name="neutral_menu_title">选项</string>
     <string name="favorites_menu">收藏</string>
     <string name="communication_menu_title">交流</string>
     <string name="muted_menu">静音用户</string>
-    <string name="blocked_menu">被屏蔽用户</string>
+    <string name="blocked_menu">屏蔽用户</string>
     <string name="remote_follow_menu">跨站关注</string>
     <string name="notifications">通知</string>
     <string name="follow_request">关注请求</string>
@@ -86,59 +86,59 @@
     <string name="profile">个人资料</string>
     <string name="make_a_choice">您想要做什么？</string>
     <string name="delete_account_title">删除帐户</string>
-    <string name="delete_account_message" formatted="false">是否从应用程序中删除帐户 %1$s ？</string>
+    <string name="delete_account_message" formatted="false">是否从应用程序中删除帐户 %1$s？</string>
     <string name="send_email">发送电子邮件</string>
     <string name="choose_file">请选择一个文件</string>
     <string name="choose_file_error">找不到文件资源管理器！</string>
     <string name="click_to_change">点按路径以更改</string>
     <string name="failed">失败！</string>
-    <string name="scheduled_toots">预定toots</string>
-    <string name="disclaimer_full">下面的信息可能不完全反映该用户的资料。</string>
-    <string name="insert_emoji">插入 emoji 表情</string>
+    <string name="scheduled_toots">定时</string>
+    <string name="disclaimer_full">以下信息可能不够完整反映该用户的资料。</string>
+    <string name="insert_emoji">插入表情符号</string>
     <string name="no_emoji">该应用程序当前没有收集自定义表情。</string>
     <string name="live_notif">实时通知</string>
     <!-- Status -->
     <string name="no_status">没有嘟文可以显示</string>
-    <string name="fav_added">已将 嘟文加入收藏</string>
+    <string name="fav_added">已将嘟文加入收藏</string>
     <string name="fav_removed">已从收藏中移除该嘟文！</string>
     <string name="reblog_added">此嘟文已被转嘟！</string>
     <string name="reblog_removed">此嘟文已不被转嘟！</string>
     <string name="reblog_by">由 %1$s 转嘟</string>
-    <string name="favourite_add">将这条嘟文添加到您的收藏中吗？</string>
-    <string name="favourite_remove">从您的收藏中移除这条嘟文吗？</string>
+    <string name="favourite_add">添加此嘟文到您的收藏中？</string>
+    <string name="favourite_remove">从您的收藏中移除此嘟文？</string>
     <string name="reblog_add">转嘟这条嘟文吗？</string>
     <string name="reblog_remove">取消转嘟这条嘟文吗？</string>
-    <string name="pin_add">将这条嘟文置顶吗？</string>
-    <string name="pin_remove">取消这条嘟文的置顶吗？</string>
+    <string name="pin_add">置顶此嘟文吗？</string>
+    <string name="pin_remove">取消此嘟文的置顶吗？</string>
     <string name="more_action_1">静音</string>
     <string name="more_action_2">屏蔽</string>
     <string name="more_action_3">举报</string>
     <string name="more_action_4">移除</string>
     <string name="more_action_5">复制</string>
-    <string name="more_action_6">共享</string>
+    <string name="more_action_6">分享</string>
     <string name="more_action_7">提及</string>
     <string name="more_action_8">定时静音</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_9">删除并加入草稿</string>
     <string-array name="more_action_confirm">
-        <item>是否将此帐户静音？</item>
-        <item>是否将此帐户屏蔽？</item>
+        <item>是否禁音此帐户？</item>
+        <item>是否屏蔽此帐户？</item>
         <item>举报这条嘟文吗？</item>
-        <item>Block this domain?</item>
+        <item>是否屏蔽此域名？</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>移除这条嘟文吗？</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>删除并重新添加这条嘟文到草稿里？</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="other">%d 个回复</item>
+        <item quantity="other">%d 条回复</item>
     </plurals>
-    <string name="set_display_bookmark_button">显示书签按键</string>
+    <string name="set_display_bookmark_button">显示书签按钮</string>
     <string name="bookmarks">书签</string>
     <string name="bookmark_add">加入书签</string>
     <string name="bookmark_remove">移除书签</string>
-    <string name="bookmarks_empty">没有要显示的书签</string>
-    <string name="status_bookmarked">状态已被加入到书签！</string>
-    <string name="status_unbookmarked">状态已被从书签移除！</string>
+    <string name="bookmarks_empty">没有书签可以显示</string>
+    <string name="status_bookmarked">状态已添加到书签！</string>
+    <string name="status_unbookmarked">状态已从书签移除！</string>
     <!-- Date -->
     <string name="date_seconds">%d 秒</string>
     <string name="date_minutes">%d 分</string>
@@ -149,11 +149,11 @@
     <string name="toot_placeholder">你在想什么？</string>
     <string name="toot_it">嘟嘟！</string>
     <string name="cw">内容警告</string>
-    <string name="toot_title">写一条嘟文</string>
-    <string name="toot_title_reply">回复一条嘟文</string>
+    <string name="toot_title">编写嘟文</string>
+    <string name="toot_title_reply">回复嘟文</string>
     <string name="toot_no_space">您已达到允许的 500 字符上限！</string>
-    <string name="toot_select_image">选择一个媒体</string>
-    <string name="toot_select_image_error">在选择媒体时出现了错误！</string>
+    <string name="toot_select_image">选择媒体</string>
+    <string name="toot_select_image_error">选择媒体时出现了错误！</string>
     <string name="toot_delete_media">删除此媒体吗？</string>
     <string name="toot_error_no_content">您的嘟文是空的！</string>
     <string name="toot_visibility_tilte">嘟文的可见性</string>
@@ -162,22 +162,22 @@
     <string name="toot_reply_content_title">您正在回复此嘟文：</string>
     <string name="toot_sensitive">敏感内容？</string>
     <string-array name="toot_visibility">
-        <item>张贴到公共时间线</item>
-        <item>不张贴到公共时间线</item>
-        <item>仅张贴给关注者</item>
-        <item>仅张贴给所述用户</item>
+        <item>发布到公共时间线</item>
+        <item>不发布到公共时间线</item>
+        <item>仅发送给关注者</item>
+        <item>仅发布给提及用户</item>
     </string-array>
     <string name="no_draft">没有草稿！</string>
-    <string name="choose_toot">选择一条 toot</string>
-    <string name="choose_accounts">选择帐号</string>
-    <string name="select_accounts">选择一些帐户</string>
-    <string name="remove_draft">删除草稿吗？</string>
+    <string name="choose_toot">选择嘟文</string>
+    <string name="choose_accounts">选择一个帐号</string>
+    <string name="select_accounts">选择一些帐号</string>
+    <string name="remove_draft">移除草稿？</string>
     <string name="show_reply">点击按钮以显示原始嘟文</string>
-    <string name="upload_form_description">描述给视觉障碍人士</string>
+    <string name="upload_form_description">给视觉障碍人士的描述</string>
     <!-- Instance -->
     <string name="instance_no_description">没有可用的描述！</string>
     <!-- About -->
-    <string name="about_vesrion">发布版 %1$s</string>
+    <string name="about_vesrion">版本 %1$s</string>
     <string name="about_developer">开发者：</string>
     <string name="about_license">许可协议： </string>
     <string name="about_license_action">GNU GPL V3</string>
@@ -190,12 +190,12 @@
     <!-- Conversation -->
     <string name="conversation">会话</string>
     <!-- Accounts -->
-    <string name="no_accounts">没有要显示的帐户</string>
+    <string name="no_accounts">没有帐户可以显示</string>
     <string name="no_follow_request">无关注请求</string>
     <string name="status_cnt">嘟文 \n %1$s</string>
     <string name="following_cnt">关注 \n %1$s</string>
-    <string name="followers_cnt">关注者\n %1$s</string>
-    <string name="pins_cnt">置顶显示的 \n %d</string>
+    <string name="followers_cnt">粉丝\n %1$s</string>
+    <string name="pins_cnt">置顶 \n %d</string>
     <string name="authorize">授权</string>
     <string name="reject">拒绝</string>
     <!-- Scheduled toots -->

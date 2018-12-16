@@ -659,7 +659,7 @@
     <string name="more_information">Più informazioni</string>
     <string name="showcase_2FA">Se utilizzi il 2FA (Autenticazione a 2 fattori), hai bisogno di questo collegamento.\nPuoi anche usarlo se non vuoi inserire le tue credenziali qui.</string>
     <!-- languages not translated -->
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_only">Solo media</string>
+    <string name="show_media_nsfw">Mostra NSFW</string>
     <!-- end languages -->
 </resources>
