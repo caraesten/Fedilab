@@ -484,7 +484,7 @@
     <string name="data_export">Izvoz statusov</string>
     <string name="data_export_toots">Izvoz statusov za %1$s</string>
     <string name="data_export_success">Izvoženih je %1$s objav Toot od skupno %2$s.</string>
-    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+    <string name="data_export_error">Med izvažanjem podatkov za %1$s je nekaj šlo narobe</string>
     <!-- Proxy -->
     <string name="proxy_set">Posredniški strežnik</string>
     <string name="proxy_type">Tip proksija</string>
