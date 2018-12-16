@@ -28,7 +28,7 @@
     <string name="token">Žeton</string>
     <string name="save">Shrani</string>
     <string name="restore">Obnovi</string>
-    <string name="two_factor_authentification">Želite dvostopenjsko prijavljanje? </string>
+    <string name="two_factor_authentification">Želite dvostopenjsko prijavljanje (2FA)? </string>
     <string name="other_instance">Želite strežnik, ki ni \"mastodon.etalab.gouv.fr\"?</string>
     <string name="no_result">Ni rezultatov.</string>
     <string name="instance">Instanca strežnika</string>
@@ -223,7 +223,7 @@
     <string name="notif_reblog">je ojačal tvoj status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">spremlja vas</string>
-    <string name="notif_pouet">New toot from %1$s</string>
+    <string name="notif_pouet">Nova objava uporabnika %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">in še eno obvestilo</item>
         <item quantity="two">in še %d obvestili</item>
@@ -243,7 +243,7 @@
     <!-- HEADER -->
     <string name="following">Spremljanje</string>
     <string name="followers">Spremljevalci</string>
-    <string name="pinned_toots">Pinned</string>
+    <string name="pinned_toots">Pripeto</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
     <string name="no_internet">No Internet connection!</string>
@@ -259,8 +259,8 @@
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
     <string name="toast_report">The toot was reported!</string>
     <string name="toast_unstatus">The toot was deleted!</string>
-    <string name="toast_pin">The toot was pinned!</string>
-    <string name="toast_unpin">The toot was unpinned!</string>
+    <string name="toast_pin">Objava je pripeta.</string>
+    <string name="toast_unpin">Objava ni več pripeta.</string>
     <string name="toast_error">Ups, prišlo je do napake.</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
     <string name="toast_error_instance">Domena strežniške instance ni videti veljavna.</string>
@@ -405,7 +405,7 @@
     <string name="v_direct">Direct</string>
     <string name="v_keywords">Some keywords…</string>
     <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
+    <string name="show_pinned">Prikaži pripeto</string>
     <string name="filter_no_result">No matching result found!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
@@ -471,12 +471,12 @@
     <string name="account_moved_to">%1$s has moved to %2$s</string>
     <string name="show_boost_count">Prikazuj števec ojačanj in priljulbjenih</string>
     <string name="issue_login_title">Authentication does not work?</string>
-    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
+    <string name="issue_login_message">        <b>Sledi nekaj točk, ki so vam lahko v pomoč:</b>\n\n
+        - Preverite, da nimate napak v imenu instance.\n\n
+        - Preverite, da je instanca deujoča.\n\n
+        - Če uporabljate dvostopenjsko prijavljanje (2FA), uporabite spodnjo povezavo (zatem, ko je vpisano ime instance).\n\n
+        - To povezavo lahko uporabite tudi brez dvostopenjskega prijavljanja.\n\n
+        - Če našteto ne pomaga, prosimo, prijavite napako na GitLab naslovu: https://gitlab.com/tom79/mastalab/issues
     </string>
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">Ta akcija lahko traja precej dolgo. Obvestili vas bomo, ko bo zaključeno.</string>
