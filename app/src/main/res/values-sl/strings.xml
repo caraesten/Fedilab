@@ -362,22 +362,22 @@
     <string name="set_led_colour">Barva lučke LED:</string>
     <string-array name="led_colours">
         <item>Modra</item>
-        <item>Cyan</item>
+        <item>Zelenomodra</item>
         <item>Vijolična</item>
         <item>Zelena</item>
         <item>Rdeča</item>
         <item>Rumena</item>
         <item>Bela</item>
     </string-array>
-    <string name="set_title_news">News</string>
+    <string name="set_title_news">Nove objave</string>
     <string name="set_notification_news">Obveščaj me o novih objavah Toot na domači časovnici</string>
     <string name="action_follow">Spremljaj</string>
     <string name="action_unfollow">Ne spremljaj več</string>
-    <string name="action_block">Block</string>
-    <string name="action_unblock">Unblock</string>
-    <string name="action_mute">Mute</string>
+    <string name="action_block">Blokiraj</string>
+    <string name="action_unblock">Odblokiraj</string>
+    <string name="action_mute">Utišaj</string>
     <string name="action_no_action">No action</string>
-    <string name="action_unmute">Unmute</string>
+    <string name="action_unmute">Dovoli govor</string>
     <string name="request_sent">Zahteva je poslana</string>
     <string name="followed_by">Vas spremlja</string>
     <string name="action_search">Išči</string>
@@ -398,7 +398,7 @@
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sinhroniziraj</string>
     <string name="action_filter">Filtriraj</string>
-    <string name="owner_cached_toots">Your toots</string>
+    <string name="owner_cached_toots">Tvoje objave</string>
     <string name="v_public">Public</string>
     <string name="v_unlisted">Ni na seznamu</string>
     <string name="v_private">Private</string>
@@ -486,13 +486,13 @@
     <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
     <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
     <!-- Proxy -->
-    <string name="proxy_set">Proxy</string>
-    <string name="proxy_type">Type</string>
-    <string name="proxy_enable">Enable proxy?</string>
-    <string name="poxy_host">Host</string>
-    <string name="poxy_port">Port</string>
-    <string name="poxy_login">Login</string>
-    <string name="poxy_password">Password</string>
+    <string name="proxy_set">Posredniški strežnik</string>
+    <string name="proxy_type">Tip proksija</string>
+    <string name="proxy_enable">Omogočim proksi?</string>
+    <string name="poxy_host">Gostitelj</string>
+    <string name="poxy_port">Vrata</string>
+    <string name="poxy_login">Prijava</string>
+    <string name="poxy_password">Geslo</string>
     <string name="set_theme">Theme:</string>
     <string name="set_compact_mode">Compact mode</string>
     <string name="set_share_details">Add toot details when sharing</string>
