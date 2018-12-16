@@ -63,11 +63,11 @@
     <string name="favourite">पसंदीदा</string>
     <string name="follow">नए अनुयायी</string>
     <string name="mention">उल्लेख</string>
-    <string name="reblog">Boosts</string>
-    <string name="show_boosts">Show boosts</string>
-    <string name="show_replies">Show replies</string>
-    <string name="action_open_in_web">Open in browser</string>
-    <string name="translate">Translate</string>
+    <string name="reblog">बूस्ट</string>
+    <string name="show_boosts">बूस्ट दिखाए</string>
+    <string name="show_replies">जवाबों को दिखाए</string>
+    <string name="action_open_in_web">ब्राउज़र में खोलें</string>
+    <string name="translate">अनुवाद करें</string>
     <string name="please_wait">Please, wait few seconds before making this action.</string>
     <!--- Menu -->
     <string name="home_menu">Home</string>
