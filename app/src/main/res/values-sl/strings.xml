@@ -457,8 +457,8 @@
     <string name="fetch_more_toots">Zajemi več objav Toot …</string>
     <!-- About lists -->
     <string name="action_lists">Seznami</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-    <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+    <string name="action_lists_confirm_delete">Ste prepričani, da želite dokončno izbrisati ta seznam?</string>
+    <string name="action_lists_empty_content">Na tem seznamu še ni ničesar. Na njem bodo vidni statusi članov, ko le-ti objavijo nove statuse.</string>
     <string name="action_lists_add_to">Dodaj na seznam</string>
     <string name="action_lists_remove_from">Odstrani s seznama</string>
     <string name="action_lists_create">Dodaj seznam</string>
@@ -466,7 +466,7 @@
     <string name="action_lists_update">Uredi seznam</string>
     <string name="action_lists_title_placeholder">Naslov novega seznama</string>
     <string name="action_lists_search_users">Išči med svojimi spremljevalci</string>
-    <string name="action_lists_owner">Your lists</string>
+    <string name="action_lists_owner">Tvoji seznami</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
     <string name="show_boost_count">Prikazuj števec ojačanj in priljulbjenih</string>
@@ -547,11 +547,11 @@
     <string name="select_all">Select all</string>
     <string name="unselect_all">Unselect all</string>
     <string name="follow_trunk">%s je spremljan.</string>
-    <string name="create_list_trunk">Creating the list %s</string>
-    <string name="add_account_list_trunk">Adding accounts to the list</string>
-    <string name="account_added_list_trunk">Accounts were added to the list</string>
-    <string name="adding_account_list_trunk">Adding accounts to the list</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
+    <string name="create_list_trunk">Ustvarjanje seznama %s</string>
+    <string name="add_account_list_trunk">Dodajanje računov na seznam</string>
+    <string name="account_added_list_trunk">Računi so dodani na seznam</string>
+    <string name="adding_account_list_trunk">Dodajanje računov na seznam</string>
+    <string name="action_list_add">Seznama še niste ustvarili. Pritisnite gumb \"+\", da ustvarite nov seznam.</string>
     <string name="action_remote_instance_add">Ne spremljate nobenim oddaljenim instancam. Pritisnite gumb \"+\", da dodajte novo.</string>
     <string name="about_trunk">Koga naj spremlajm</string>
     <string name="about_trunk_action">Trunk API</string>
@@ -598,7 +598,7 @@
     <string name="no_peertube_channels">No Peertube channels</string>
     <string name="no_peertube_instances">No Peertube instances</string>
     <string name="no_mastodon_instances">No Mastodon instances</string>
-    <string name="no_lists">No lists</string>
+    <string name="no_lists">Ni seznamov</string>
     <string name="videos">Videos</string>
     <string name="channels">Channels</string>
     <string name="set_display_emoji">Use Emoji One</string>
