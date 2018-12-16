@@ -289,25 +289,25 @@
     <string name="set_auto_add_media_url">在嘟文中添加媒体的 URL</string>
     <string name="settings_title_notifications">管理通知</string>
     <string name="set_notif_follow">当有人关注您时通知</string>
-    <string name="set_notif_follow_ask">当有人请求关注您时通知您</string>
-    <string name="set_notif_follow_share">当某人转嘟您的状态时通知您</string>
-    <string name="set_notif_follow_add">当某人收藏您的状态时通知您</string>
-    <string name="set_notif_follow_mention">当有人提到您时通知您</string>
+    <string name="set_notif_follow_ask">当有人请求关注您时通知</string>
+    <string name="set_notif_follow_share">当某人转嘟您的状态时通知</string>
+    <string name="set_notif_follow_add">当某人收藏您的状态时通知</string>
+    <string name="set_notif_follow_mention">当有人提到您时通知</string>
     <string name="set_share_validation">转嘟前显示确认对话框</string>
-    <string name="set_share_validation_fav">在添加到收藏夹之前显示确认对话框</string>
+    <string name="set_share_validation_fav">添加到收藏夹前显示确认对话框</string>
     <string name="settings_title_more_options">高级设置</string>
-    <string name="set_wifi_only">仅当使用WiFi时通知</string>
+    <string name="set_wifi_only">仅当使用 WiFi 时通知</string>
     <string name="set_notify">开启通知？</string>
     <string name="set_notif_silent">静音通知</string>
     <string name="set_night_mode">夜间模式</string>
-    <string name="set_nsfw_timeout">NSFW 查看超时 (秒, 0 表示关闭)</string>
+    <string name="set_nsfw_timeout">NSFW 查看超时（秒，0 表示关闭）</string>
     <string name="settings_title_profile">编辑个人资料</string>
     <string name="set_profile_description">简介…</string>
-    <string name="set_lock_account">锁定账户</string>
+    <string name="set_lock_account">锁定帐户</string>
     <string name="set_save_changes">保存修改</string>
     <string name="set_header_picture_overlay">选择页眉图片</string>
-    <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+    <string name="set_fit_preview">适应预览图像</string>
+    <string name="set_automatically_split_toot">自动在回复中拆分超过 500 字符的嘟文</string>
     <string name="note_no_space">您已达到允许的 160 字符上限！</string>
     <string name="username_no_space">您已达到允许的 30 字符上限！</string>
     <string name="settings_title_hour">通知的时间段：</string>
@@ -318,13 +318,13 @@
     <string name="settings_hour_init">起始时间</string>
     <string name="settings_hour_end">结束时间</string>
     <string name="embedded_browser">使用内置浏览器</string>
-    <string name="custom_tabs">定制选项卡</string>
+    <string name="custom_tabs">自定义标签页</string>
     <string name="use_javascript">启用 Javascript</string>
     <string name="expand_cw">自动展开带有警告的内容</string>
     <string name="use_cookies">允许第三方 cookie</string>
     <string name="settings_ui_layout">时间线布局： </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
+        <item>正常电池消耗</item>
         <item>Medium battery drain</item>
         <item>Low battery drain</item>
     </string-array>
