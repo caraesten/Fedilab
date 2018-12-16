@@ -68,9 +68,9 @@
     <string name="show_replies">जवाबों को दिखाए</string>
     <string name="action_open_in_web">ब्राउज़र में खोलें</string>
     <string name="translate">अनुवाद करें</string>
-    <string name="please_wait">Please, wait few seconds before making this action.</string>
+    <string name="please_wait">इस क्रिया को करने से पहले कृपया कुछ सेकेंड ठहरे।</string>
     <!--- Menu -->
-    <string name="home_menu">Home</string>
+    <string name="home_menu">मुख्यपृष्ठ</string>
     <string name="local_menu">Local timeline</string>
     <string name="global_menu">Federated timeline</string>
     <string name="neutral_menu_title">Options</string>
