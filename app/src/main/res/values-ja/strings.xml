@@ -125,6 +125,10 @@
         <item>このトゥートを報告しますか？</item>
         <item>Block this domain?</item>
     </string-array>
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
     <string-array name="more_action_owner_confirm">
         <item>このトゥートを削除しますか？</item>
         <item>このトゥートを削除して書き直しますか？</item>
