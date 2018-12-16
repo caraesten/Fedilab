@@ -198,13 +198,11 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
-        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         if( initialStatus != null)
             statuses.add(initialStatus);
         else
             statuses.add(detailsStatus);
-        statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, 0, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+        statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, 0, null, isOnWifi, statuses);
 
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);

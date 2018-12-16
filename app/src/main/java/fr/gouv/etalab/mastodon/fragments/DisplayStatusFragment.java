@@ -146,9 +146,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         assert context != null;
         sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isOnWifi = Helper.isOnWIFI(context);
-        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
-        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         lv_status = rootView.findViewById(R.id.lv_status);
         mainLoader =  rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_status);
@@ -165,12 +163,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             List<TagTimeline> tagTimelines = new SearchDAO(context, db).getTimelineInfo(tag);
             if( tagTimelines != null && tagTimelines.size() > 0) {
                 tagTimeline = tagTimelines.get(0);
-                statusListAdapter = new StatusListAdapter(context, tagTimeline, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+                statusListAdapter = new StatusListAdapter(context, tagTimeline, targetedId, isOnWifi, this.statuses);
                 lv_status.setAdapter(statusListAdapter);
             }
         }else if( search_peertube == null && (instanceType == null || instanceType.equals("MASTODON"))) {
             BaseMainActivity.displayPeertube = null;
-            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, this.statuses);
             lv_status.setAdapter(statusListAdapter);
         }else {
             BaseMainActivity.displayPeertube = remoteInstance;

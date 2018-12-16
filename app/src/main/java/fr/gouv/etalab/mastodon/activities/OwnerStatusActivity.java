@@ -164,11 +164,9 @@ public class OwnerStatusActivity extends BaseActivity implements OnRetrieveFeeds
         firstLoad = true;
         swiped = false;
         boolean isOnWifi = Helper.isOnWIFI(OwnerStatusActivity.this);
-        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         lv_status.addItemDecoration(new DividerItemDecoration(OwnerStatusActivity.this, DividerItemDecoration.VERTICAL));
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        statusListAdapter = new StatusListAdapter(OwnerStatusActivity.this, RetrieveFeedsAsyncTask.Type.CACHE_STATUS, userId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+        statusListAdapter = new StatusListAdapter(OwnerStatusActivity.this, RetrieveFeedsAsyncTask.Type.CACHE_STATUS, userId, isOnWifi, this.statuses);
         lv_status.setAdapter(statusListAdapter);
         mLayoutManager = new LinearLayoutManager(OwnerStatusActivity.this);
         lv_status.setLayoutManager(mLayoutManager);

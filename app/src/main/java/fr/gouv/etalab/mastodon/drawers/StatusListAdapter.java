@@ -140,61 +140,53 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private List<Status> statuses;
     private LayoutInflater layoutInflater;
     private boolean isOnWifi;
-    private int translator;
-    private int behaviorWithAttachments;
     private StatusListAdapter statusListAdapter;
     private RetrieveFeedsAsyncTask.Type type;
     private String targetedId;
     private final int HIDDEN_STATUS = 0;
-    public static final int DISPLAYED_STATUS = 1;
-    public static final int FOCUSED_STATUS = 2;
-    public static final int COMPACT_STATUS = 3;
+    private static final int DISPLAYED_STATUS = 1;
+    static final int FOCUSED_STATUS = 2;
+    private static final int COMPACT_STATUS = 3;
     private int conversationPosition;
     private List<String> timedMute;
     private boolean redraft;
     private Status toot;
     private TagTimeline tagTimeline;
 
-    public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
+    public StatusListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
         this.context = context;
         this.statuses = statuses;
         this.isOnWifi = isOnWifi;
-        this.behaviorWithAttachments = behaviorWithAttachments;
         layoutInflater = LayoutInflater.from(this.context);
         statusListAdapter = this;
         this.type = type;
         this.targetedId = targetedId;
-        this.translator = translator;
         redraft = false;
     }
 
-    public StatusListAdapter(Context context, TagTimeline tagTimeline, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
+    public StatusListAdapter(Context context, TagTimeline tagTimeline, String targetedId, boolean isOnWifi, List<Status> statuses){
         super();
         this.context = context;
         this.statuses = statuses;
         this.isOnWifi = isOnWifi;
-        this.behaviorWithAttachments = behaviorWithAttachments;
         layoutInflater = LayoutInflater.from(this.context);
         statusListAdapter = this;
         this.type = RetrieveFeedsAsyncTask.Type.TAG;
         this.targetedId = targetedId;
-        this.translator = translator;
         redraft = false;
         this.tagTimeline = tagTimeline;
     }
 
-    public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, int behaviorWithAttachments, int translator, List<Status> statuses){
+    public StatusListAdapter(Context context, int position, String targetedId, boolean isOnWifi, List<Status> statuses){
         this.context = context;
         this.statuses = statuses;
         this.isOnWifi = isOnWifi;
-        this.behaviorWithAttachments = behaviorWithAttachments;
         layoutInflater = LayoutInflater.from(this.context);
         statusListAdapter = this;
         this.type = RetrieveFeedsAsyncTask.Type.CONTEXT;
         this.conversationPosition = position;
         this.targetedId = targetedId;
-        this.translator = translator;
         redraft = false;
     }
 
@@ -542,7 +534,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
             boolean confirmFav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
             boolean confirmBoost = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
-
+            int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
+            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
             if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
             else

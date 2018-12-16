@@ -341,6 +341,7 @@ public class Helper {
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";
     public static final String SET_TRUNCATE_TOOTS_SIZE = "set_truncate_toots_size";
     public static final String SET_ART_WITH_NSFW = "set_art_with_nsfw";
+
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -1050,15 +1051,7 @@ public class Helper {
      */
     public static String getLiveInstance(Context context){
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        if( userId == null) //User not authenticated
-            return null;
-        Account account = new AccountDAO(context, db).getAccountByID(userId);
-        if( account != null){
-            return account.getInstance().trim();
-        } //User not in db
-        return null;
+        return sharedpreferences.getString(Helper.PREF_INSTANCE, null);
     }
 
     public static String getLiveInstanceWithProtocol(Context context) {

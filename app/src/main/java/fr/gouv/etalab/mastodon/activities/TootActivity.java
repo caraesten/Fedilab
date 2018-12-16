@@ -118,7 +118,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
-import fr.gouv.etalab.mastodon.client.Glide.GlideApp;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.drawers.AccountsReplyAdapter;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
@@ -1477,7 +1476,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         final EditText input = popup_media_description.findViewById(R.id.media_description);
         input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(420)});
         final ImageView media_picture = popup_media_description.findViewById(R.id.media_picture);
-        GlideApp.with(getApplicationContext())
+        Glide.with(getApplicationContext())
                 .asBitmap()
                 .load(attachment.getUrl())
                 .into(new SimpleTarget<Bitmap>() {

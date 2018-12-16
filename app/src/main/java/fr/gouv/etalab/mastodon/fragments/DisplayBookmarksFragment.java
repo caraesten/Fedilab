@@ -102,12 +102,10 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
         }catch (Exception ignored){}
         final boolean isOnWifi = Helper.isOnWIFI(context);
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        final int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-        final int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         statuses = apiResponse.getStatuses();
         if( statuses != null && statuses.size() > 0) {
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(context);
-            statusListAdapter = new StatusListAdapter(context, RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+            statusListAdapter = new StatusListAdapter(context, RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, this.statuses);
             lv_status.setAdapter(statusListAdapter);
             lv_status.setLayoutManager(mLayoutManager);
         }else {
@@ -138,7 +136,7 @@ public class DisplayBookmarksFragment extends Fragment implements OnRetrieveFeed
                                     new StatusCacheDAO(context, db).removeAllStatus(StatusCacheDAO.STATUS_CACHE);
                                     statuses = new ArrayList<>();
                                     statuses.clear();
-                                    statusListAdapter = new StatusListAdapter(context, RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+                                    statusListAdapter = new StatusListAdapter(context, RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS, null, isOnWifi, statuses);
                                     lv_status.setAdapter(statusListAdapter);
                                     statusListAdapter.notifyDataSetChanged();
                                     textviewNoAction.setVisibility(View.VISIBLE);

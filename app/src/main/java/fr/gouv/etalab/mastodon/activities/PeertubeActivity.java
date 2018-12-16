@@ -398,10 +398,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         }else {
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean isOnWifi = Helper.isOnWIFI(PeertubeActivity.this);
-            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            StatusListAdapter statusListAdapter = new StatusListAdapter(PeertubeActivity.this, RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, userId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+            StatusListAdapter statusListAdapter = new StatusListAdapter(PeertubeActivity.this, RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, userId, isOnWifi, statuses);
             RecyclerView lv_comments = findViewById(R.id.peertube_comments);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(PeertubeActivity.this);
             lv_comments.setLayoutManager(mLayoutManager);
