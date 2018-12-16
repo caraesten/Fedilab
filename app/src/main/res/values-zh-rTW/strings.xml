@@ -645,11 +645,11 @@
         <item>1 天</item>
         <item>1 週</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        在此欄位，您必須填寫您的實體主機名稱。\n舉例來說，如果您在 https://mastodon.social 上建立帳號\n只要填寫 <b>mastodon.social</b>（不要填寫 https://）\n
+        您可以填寫首字母，然後就會有建議的名稱。\n\n
+        ⚠ 登入按鈕將只在實體名稱有效且實體正常運作時才會運作！
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        在此欄位，填寫要連結到您的 Mastodon 帳號的電子郵件。
     </string>
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
