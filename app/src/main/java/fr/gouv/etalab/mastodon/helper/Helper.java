@@ -1885,6 +1885,7 @@ public class Helper {
             return true;
         String dateIni = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
         String dateEnd = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
+        int notification = sharedpreferences.getInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_ACTIVE);
         Calendar now = Calendar.getInstance();
         int hour = now.get(Calendar.HOUR_OF_DAY);
         int minute = now.get(Calendar.MINUTE);
@@ -1903,7 +1904,12 @@ public class Helper {
             Date dateIniD = formatter.parse(dateIni);
             Date dateEndD = formatter.parse(dateEnd);
             Date currentDateD = formatter.parse(currentDate);
-            return currentDateD.before(dateEndD)&&currentDateD.after(dateIniD);
+            boolean canNotify = false;
+            if( currentDateD.before(dateEndD) && currentDateD.after(dateIniD) && notification == Helper.ACTION_ACTIVE)
+                canNotify = true;
+            else if ( currentDateD.after(dateEndD) && currentDateD.before(dateIniD) && notification == Helper.ACTION_SILENT )
+                canNotify = true;
+            return canNotify;
         } catch (java.text.ParseException e) {
             return true;
         }
