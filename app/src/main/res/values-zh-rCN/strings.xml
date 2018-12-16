@@ -92,7 +92,7 @@
     <string name="choose_file_error">找不到文件资源管理器！</string>
     <string name="click_to_change">点按路径以更改</string>
     <string name="failed">失败！</string>
-    <string name="scheduled_toots">定时嘟文</string>
+    <string name="scheduled_toots">定时</string>
     <string name="disclaimer_full">以下信息可能不够完整反映该用户的资料。</string>
     <string name="insert_emoji">插入表情符号</string>
     <string name="no_emoji">该应用程序当前没有收集自定义表情。</string>
@@ -190,12 +190,12 @@
     <!-- Conversation -->
     <string name="conversation">会话</string>
     <!-- Accounts -->
-    <string name="no_accounts">没有要显示的帐户</string>
+    <string name="no_accounts">没有帐户可以显示</string>
     <string name="no_follow_request">无关注请求</string>
     <string name="status_cnt">嘟文 \n %1$s</string>
     <string name="following_cnt">关注 \n %1$s</string>
-    <string name="followers_cnt">关注者\n %1$s</string>
-    <string name="pins_cnt">置顶显示的 \n %d</string>
+    <string name="followers_cnt">粉丝\n %1$s</string>
+    <string name="pins_cnt">置顶 \n %d</string>
     <string name="authorize">授权</string>
     <string name="reject">拒绝</string>
     <!-- Scheduled toots -->
