@@ -162,18 +162,18 @@
     <string name="toot_reply_content_title">您正在回复此嘟文：</string>
     <string name="toot_sensitive">敏感内容？</string>
     <string-array name="toot_visibility">
-        <item>张贴到公共时间线</item>
-        <item>不张贴到公共时间线</item>
-        <item>仅张贴给关注者</item>
-        <item>仅张贴给所述用户</item>
+        <item>发布到公共时间线</item>
+        <item>不发布到公共时间线</item>
+        <item>仅发送给关注者</item>
+        <item>仅发布给提及用户</item>
     </string-array>
     <string name="no_draft">没有草稿！</string>
-    <string name="choose_toot">选择一条 toot</string>
-    <string name="choose_accounts">选择帐号</string>
-    <string name="select_accounts">选择一些帐户</string>
-    <string name="remove_draft">删除草稿吗？</string>
+    <string name="choose_toot">选择嘟文</string>
+    <string name="choose_accounts">选择一个帐号</string>
+    <string name="select_accounts">选择一些帐号</string>
+    <string name="remove_draft">移除草稿？</string>
     <string name="show_reply">点击按钮以显示原始嘟文</string>
-    <string name="upload_form_description">描述给视觉障碍人士</string>
+    <string name="upload_form_description">给视觉障碍人士的描述</string>
     <!-- Instance -->
     <string name="instance_no_description">没有可用的描述！</string>
     <!-- About -->
