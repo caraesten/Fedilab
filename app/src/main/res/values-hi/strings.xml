@@ -183,9 +183,9 @@
     <string name="instance_no_description">कोई वर्णन उपलब्ध नहीं है!</string>
     <!-- About -->
     <string name="about_vesrion">रिलीज़ %1$s</string>
-    <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
-    <string name="about_license_action">GNU GPL V3</string>
+    <string name="about_developer">डैवलपर:</string>
+    <string name="about_license">लाइसेंस: </string>
+    <string name="about_license_action">जीएनयू जीपीएल वी३</string>
     <string name="about_code">Source code: </string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_thekinrar">इंस्टेंसेस खोजे:</string>
@@ -248,7 +248,7 @@
     <string name="toast_follow">The account was followed!</string>
     <string name="toast_unfollow">The account is no longer followed!</string>
     <string name="toast_reblog">The toot was boosted!</string>
-    <string name="toast_unreblog">The toot is no longer boosted!</string>
+    <string name="toast_unreblog">संदेश अब बूस्ट नहीं है!</string>
     <string name="toast_favourite">The toot was added to your favourites!</string>
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
     <string name="toast_report">The toot was reported!</string>
