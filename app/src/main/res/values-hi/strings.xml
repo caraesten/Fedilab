@@ -3,7 +3,7 @@
 <resources>
     <string name="navigation_drawer_open">मेन्यू खोलें</string>
     <string name="navigation_drawer_close">मेन्यू बंद करें</string>
-    <string name="action_about">About</string>
+    <string name="action_about">इसके बारे में</string>
     <string name="action_about_instance">इंस्टेंस के बारे में</string>
     <string name="action_privacy">निजता</string>
     <string name="action_cache">कैश</string>
@@ -126,8 +126,8 @@
         <item>इस इंस्टेंस को अवरुद्ध करें?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>सूचित करें</item>
+        <item>मौन</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>इस संदेश को हटाएं?</item>
@@ -138,12 +138,12 @@
         <item quantity="other">%d replies</item>
     </plurals>
     <string name="set_display_bookmark_button">Display the bookmark button</string>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
-    <string name="bookmarks_empty">No bookmarks to display</string>
-    <string name="status_bookmarked">Status has been added to bookmarks!</string>
-    <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+    <string name="bookmarks">बुकमार्क्स</string>
+    <string name="bookmark_add">बुकमार्क्स में जोड़ें</string>
+    <string name="bookmark_remove">बुकमार्क हटाएं</string>
+    <string name="bookmarks_empty">कोई बुकमार्क प्रदर्शित करने के लिये नहीं है</string>
+    <string name="status_bookmarked">संदेश को बुकमार्क्स में जोड़ दिया गया है!</string>
+    <string name="status_unbookmarked">संदेश को बुकमार्क्स से हटा दिया गया है!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
