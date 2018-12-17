@@ -221,10 +221,10 @@
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">followed you</string>
-    <string name="notif_pouet">New toot from %1$s</string>
+    <string name="notif_pouet">%1$s से नया संदेश</string>
     <plurals name="other_notifications">
-        <item quantity="one">and another notification</item>
-        <item quantity="other">and %d other notifications</item>
+        <item quantity="one">और अन्य सूचनाएं</item>
+        <item quantity="other">और %d अन्य सूचनाएं</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">and another toot to discover</item>
