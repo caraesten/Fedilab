@@ -156,10 +156,10 @@
     <string name="cw">cw</string>
     <string name="toot_title">संदेश लिखे</string>
     <string name="toot_title_reply">संदेश का जवाब दे</string>
-    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-    <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
+    <string name="toot_no_space">आप ५०० अक्षरों की सीमा तक पहुंच चुके हैं!</string>
+    <string name="toot_select_image">मीडिया को चुनें</string>
+    <string name="toot_select_image_error">मीडिया चुनते वक्त कुछ गड़बड़ी हो गई!</string>
+    <string name="toot_delete_media">इस मीडिया को मिटा दें?</string>
     <string name="toot_error_no_content">Your toot is empty!</string>
     <string name="toot_visibility_tilte">Visibility of the toot</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
