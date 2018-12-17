@@ -327,7 +327,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout left_buttons;
         Button status_show_more_content;
         SparkButton spark_button_fav, spark_button_reblog;
-
+        RelativeLayout horizontal_second_image;
         public View getView(){
             return itemView;
         }
@@ -410,6 +410,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_show_more_content = itemView.findViewById(R.id.status_show_more_content);
             spark_button_fav =  itemView.findViewById(R.id.spark_button_fav);
             spark_button_reblog =  itemView.findViewById(R.id.spark_button_reblog);
+            horizontal_second_image = itemView.findViewById(R.id.horizontal_second_image);
         }
     }
 
@@ -2161,6 +2162,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         if( attachments != null && attachments.size() > 0){
             int i = 0;
+            holder.horizontal_second_image.setVisibility(View.VISIBLE);
             if(fullAttachement)
                 holder.status_horizontal_document_container.setVisibility(View.VISIBLE);
             else
@@ -2173,6 +2175,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_prev2_h.setVisibility(View.GONE);
                     holder.status_prev3_h.setVisibility(View.GONE);
                     holder.status_prev4_h.setVisibility(View.GONE);
+                    holder.horizontal_second_image.setVisibility(View.GONE);
                 }
                 if( attachments.get(0).getUrl().trim().contains("missing.png"))
                     if(fullAttachement)
