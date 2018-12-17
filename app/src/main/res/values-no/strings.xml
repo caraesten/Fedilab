@@ -126,8 +126,8 @@
         <item>Blokkere dette domenet?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Varsle</item>
+        <item>Stille</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Fjern denne tooten?</item>
@@ -400,14 +400,14 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="show_media">Vis media</string>
     <string name="show_pinned">Vis låste</string>
     <string name="filter_no_result">Ingen treff!</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="data_backup_toots">Sikkerhetskopiering toots for %1$s</string>
+    <string name="data_backup_success">%1$s nye toots er importert</string>
     <string-array name="filter_select">
-        <item>No</item>
-        <item>Only</item>
-        <item>Both</item>
+        <item>Nei</item>
+        <item>Bare</item>
+        <item>Begge</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">Ingen toots ble funnet i databasen. Vennligst bruk Synkroniser-knappen i menyen for å hente dem.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Registrerte data</string>
     <string name="privacy_data">Bare grunnleggende informasjon fra kontoer lagres på enheten.
@@ -455,8 +455,8 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="action_lists_owner">Dine lister</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s er flyttet til %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
-    <string name="issue_login_title">Authentication does not work?</string>
+    <string name="show_boost_count">Vis antall boosts/favoritter</string>
+    <string name="issue_login_title">Får du ikke logget inn?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
@@ -464,25 +464,25 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
-    <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-    <string name="data_export_running">Still running, please wait…</string>
-    <string name="data_export">Export statuses</string>
-    <string name="data_export_toots">Export statuses for %1$s</string>
-    <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+    <string name="media_ready">Media er lastet. Klikk her for å vise.</string>
+    <string name="data_export_start">Denne handlingen kan lang tid. Du vil bli varslet når det er ferdig.</string>
+    <string name="data_export_running">Kjører fortsatt, vennligst vent…</string>
+    <string name="data_export">Eksporter statuser</string>
+    <string name="data_export_toots">Eksportere statuser for %1$s</string>
+    <string name="data_export_success">%1$s av %2$s toots ble eksportert.</string>
+    <string name="data_export_error">Noe gikk galt under eksport av data for %1$s</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Type</string>
-    <string name="proxy_enable">Enable proxy?</string>
+    <string name="proxy_enable">Aktivere proxy?</string>
     <string name="poxy_host">Host</string>
     <string name="poxy_port">Port</string>
-    <string name="poxy_login">Login</string>
-    <string name="poxy_password">Password</string>
-    <string name="set_theme">Theme:</string>
-    <string name="set_compact_mode">Compact mode</string>
-    <string name="set_share_details">Add toot details when sharing</string>
-    <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+    <string name="poxy_login">Brukernavn</string>
+    <string name="poxy_password">Passord</string>
+    <string name="set_theme">Tema:</string>
+    <string name="set_compact_mode">Kompakt modus</string>
+    <string name="set_share_details">Legg til toot-detaljer ved deling</string>
+    <string name="support_the_app_on_liberapay">Støtt denne applikasjonen med Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
     <string name="no_account_yet">No account yet?</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
