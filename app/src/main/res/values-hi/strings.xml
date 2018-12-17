@@ -237,11 +237,11 @@
     <!-- HEADER -->
     <string name="following">Following</string>
     <string name="followers">Followers</string>
-    <string name="pinned_toots">Pinned</string>
+    <string name="pinned_toots">जड़े हुए संदेश</string>
     <!-- TOAST -->
-    <string name="client_error">Unable to get client id!</string>
+    <string name="client_error">क्लाइंट आईडी हासिल करने में असफल!</string>
     <string name="no_internet">इंटरनेट कनेक्शन नहीं है!</string>
-    <string name="toast_block">The account was blocked!</string>
+    <string name="toast_block">इस खाते को अवरुद्ध कर दिया गया है!</string>
     <string name="toast_unblock">The account is no longer blocked!</string>
     <string name="toast_mute">The account was muted!</string>
     <string name="toast_unmute">The account is no longer muted!</string>
@@ -259,7 +259,7 @@
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
     <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-    <string name="toast_error_search">An error occurred while searching!</string>
+    <string name="toast_error_search">खोजने के दौरान गड़बड़ी हुई!</string>
     <string name="toast_error_login">लाॅगइन नहीं हो सका!</string>
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
     <string name="nothing_to_do">No action can be taken</string>
