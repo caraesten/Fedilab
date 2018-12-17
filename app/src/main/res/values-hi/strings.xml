@@ -217,9 +217,9 @@
     <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
     <!-- Notifications -->
     <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned you</string>
-    <string name="notif_reblog">boosted your status</string>
-    <string name="notif_favourite">favourited your status</string>
+    <string name="notif_mention">आपका उल्लेख किया</string>
+    <string name="notif_reblog">आपका संदेश बूस्ट किया</string>
+    <string name="notif_favourite">आपका संदेश पसंद किया</string>
     <string name="notif_follow">followed you</string>
     <string name="notif_pouet">%1$s से नया संदेश</string>
     <plurals name="other_notifications">
@@ -231,9 +231,9 @@
         <item quantity="other">and %d other toots to discover</item>
     </plurals>
     <string name="delete_notification_ask">सूचना मिटाएं?</string>
-    <string name="delete_notification_ask_all">Delete all notifications?</string>
-    <string name="delete_notification">The notification has been deleted!</string>
-    <string name="delete_notification_all">All notifications have been deleted!</string>
+    <string name="delete_notification_ask_all">सभी सूचनाओ को मिटाएं?</string>
+    <string name="delete_notification">इस सूचना को मिटा दिया गया है!</string>
+    <string name="delete_notification_all">सभी सूचनाओ को मिटा दिया गया है!</string>
     <!-- HEADER -->
     <string name="following">Following</string>
     <string name="followers">Followers</string>
@@ -243,7 +243,7 @@
     <string name="no_internet">इंटरनेट कनेक्शन नहीं है!</string>
     <string name="toast_block">इस खाते को अवरुद्ध कर दिया गया है!</string>
     <string name="toast_unblock">The account is no longer blocked!</string>
-    <string name="toast_mute">The account was muted!</string>
+    <string name="toast_mute">खाते को चुप कर दिया गया है!</string>
     <string name="toast_unmute">The account is no longer muted!</string>
     <string name="toast_follow">The account was followed!</string>
     <string name="toast_unfollow">The account is no longer followed!</string>
@@ -267,7 +267,7 @@
     <string name="toast_error_translate">अनुवाद करते समय गड़बड़ी हुई!</string>
     <string name="toast_toot_saved">मसौदा एकत्र हुआ!</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-    <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
+    <string name="toast_visibility_changed">%1$s खाते के संदेशो की दृश्यता को बदल दिया गया है</string>
     <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation of loading</string>
