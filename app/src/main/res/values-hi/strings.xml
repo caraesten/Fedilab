@@ -249,11 +249,11 @@
     <string name="toast_unfollow">The account is no longer followed!</string>
     <string name="toast_reblog">The toot was boosted!</string>
     <string name="toast_unreblog">संदेश अब बूस्ट नहीं है!</string>
-    <string name="toast_favourite">The toot was added to your favourites!</string>
-    <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-    <string name="toast_report">The toot was reported!</string>
-    <string name="toast_unstatus">The toot was deleted!</string>
-    <string name="toast_pin">The toot was pinned!</string>
+    <string name="toast_favourite">संदेश को आपके पसंदीदा पृष्ठ में जोड़ दिया गया है!</string>
+    <string name="toast_unfavourite">संदेश को आपके पसंदीदा पृष्ठ से हटा दिया गया है!</string>
+    <string name="toast_report">संदेश को रिपोर्ट कर दिया गया है!</string>
+    <string name="toast_unstatus">संदेश को मिटा दिया गया है!</string>
+    <string name="toast_pin">संदेश को जड़ दिया गया है!</string>
     <string name="toast_unpin">The toot was unpinned!</string>
     <string name="toast_error">Oops ! An error occurred!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
