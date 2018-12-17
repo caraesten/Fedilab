@@ -169,12 +169,12 @@
     <string-array name="toot_visibility">
         <item>सार्वजनिक टाइम्लाइन पर भेजें</item>
         <item>सार्वजनिक टाइम्लाइन पर मत भेजिए</item>
-        <item>Post to followers only</item>
+        <item>सिर्फ़ अनुयायियो को भेजें</item>
         <item>Post to mentioned users only</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
-    <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
+    <string name="no_draft">कोई मसौदा नहीं है!</string>
+    <string name="choose_toot">संदेश चुनें</string>
+    <string name="choose_accounts">खाता चुनें</string>
     <string name="select_accounts">Select some accounts</string>
     <string name="remove_draft">Remove draft?</string>
     <string name="show_reply">Click on the button to display the original toot</string>
