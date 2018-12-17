@@ -193,13 +193,13 @@
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
-    <string name="conversation">Conversation</string>
+    <string name="conversation">बातचीत</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
+    <string name="no_accounts">दिखाने के लिये कोई खाता नहीं है</string>
     <string name="no_follow_request">No follow request</string>
-    <string name="status_cnt">Toots \n %1$s</string>
+    <string name="status_cnt">संदेश \n %1$s</string>
     <string name="following_cnt">Following \n %1$s</string>
-    <string name="followers_cnt">Followers \n %1$s</string>
+    <string name="followers_cnt">अनुयायी \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
     <string name="authorize">Authorize</string>
     <string name="reject">Reject</string>
