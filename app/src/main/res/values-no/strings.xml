@@ -29,30 +29,30 @@
     <string name="save">Lagre</string>
     <string name="restore">Restaurere</string>
     <string name="two_factor_authentification">To-trinns autentisering?</string>
-    <string name="other_instance">Annet enn mastodon.etalab.gouv.fr?</string>
+    <string name="other_instance">Annen instanse enn mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Ingen resultater!</string>
-    <string name="instance">Forekomst</string>
-    <string name="instance_example">Tilfelle: mastodon.social</string>
+    <string name="instance">Instans</string>
+    <string name="instance_example">Instans: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Nå jobber med kontoen %1$s</string>
     <string name="add_account">Legg til en konto</string>
     <string name="clipboard">Innholdet av tooten er kopiert til utklippstavlen</string>
-    <string name="change">Endring</string>
+    <string name="change">Endre</string>
     <string name="choose_picture">Velg et bilde…</string>
-    <string name="clear">Ren</string>
+    <string name="clear">Fjern</string>
     <string name="microphone">Mikrofon</string>
     <string name="camera">Kamera</string>
     <string name="speech_prompt">Si noe, vær så snill</string>
     <string name="speech_not_supported">Beklager! Enheten støtter ikke taleinngangen!</string>
-    <string name="delete_all">Slette alle</string>
+    <string name="delete_all">Slett alt</string>
     <string name="translate_toot">Oversett denne tooten.</string>
-    <string name="schedule">Rute</string>
+    <string name="schedule">Planlegg</string>
     <string name="text_size">Tekst- og ikonstørrelser</string>
     <string name="text_size_change">Endre gjeldende tekststørrelse:</string>
     <string name="icon_size_change">Endre gjeldende ikonstørrelse:</string>
     <string name="next">Neste</string>
-    <string name="previous">Tidligere</string>
+    <string name="previous">Forrige</string>
     <string name="open_with">Åpne med</string>
-    <string name="validate">Validere</string>
+    <string name="validate">Valider</string>
     <string name="media">Media</string>
     <string name="share_with">Del med</string>
     <string name="shared_via">Delt via Mastalab</string>
@@ -63,22 +63,22 @@
     <string name="favourite">Favoritter</string>
     <string name="follow">Nye følgere</string>
     <string name="mention">Nevner</string>
-    <string name="reblog">Øker</string>
-    <string name="show_boosts">Vis øker</string>
+    <string name="reblog">Boosts</string>
+    <string name="show_boosts">Vis boosts</string>
     <string name="show_replies">Vis svar</string>
     <string name="action_open_in_web">Åpne i nettleseren</string>
-    <string name="translate">Oversette</string>
+    <string name="translate">Oversett</string>
     <string name="please_wait">Vennligst vent noen sekunder før du gjør denne handlingen.</string>
     <!--- Menu -->
     <string name="home_menu">Hjem</string>
     <string name="local_menu">Lokal tidslinje</string>
-    <string name="global_menu">Federated tidslinje</string>
+    <string name="global_menu">Forent tidslinje</string>
     <string name="neutral_menu_title">Alternativer</string>
     <string name="favorites_menu">Favoritter</string>
     <string name="communication_menu_title">Kommunikasjon</string>
-    <string name="muted_menu">Muted brukere</string>
+    <string name="muted_menu">Dempede brukere</string>
     <string name="blocked_menu">Blokkerte brukere</string>
-    <string name="remote_follow_menu">Fjernfølge</string>
+    <string name="remote_follow_menu">Fjernfølg</string>
     <string name="notifications">Varsler</string>
     <string name="follow_request">Følg forespørsler</string>
     <string name="optimization">Optimalisering</string>
@@ -110,7 +110,7 @@
     <string name="reblog_remove">Unboost denne tooten?</string>
     <string name="pin_add">Klem denne tooten?</string>
     <string name="pin_remove">Unpin denne tooten?</string>
-    <string name="more_action_1">Stum</string>
+    <string name="more_action_1">Demp</string>
     <string name="more_action_2">Blokkere</string>
     <string name="more_action_3">Rapportere</string>
     <string name="more_action_4">Fjerne</string>
@@ -126,8 +126,8 @@
         <item>Blokkere dette domenet?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Varsle</item>
+        <item>Stille</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Fjern denne tooten?</item>
@@ -400,14 +400,14 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="show_media">Vis media</string>
     <string name="show_pinned">Vis låste</string>
     <string name="filter_no_result">Ingen treff!</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="data_backup_toots">Sikkerhetskopiering toots for %1$s</string>
+    <string name="data_backup_success">%1$s nye toots er importert</string>
     <string-array name="filter_select">
-        <item>No</item>
-        <item>Only</item>
-        <item>Both</item>
+        <item>Nei</item>
+        <item>Bare</item>
+        <item>Begge</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">Ingen toots ble funnet i databasen. Vennligst bruk Synkroniser-knappen i menyen for å hente dem.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Registrerte data</string>
     <string name="privacy_data">Bare grunnleggende informasjon fra kontoer lagres på enheten.
@@ -455,8 +455,8 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="action_lists_owner">Dine lister</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s er flyttet til %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
-    <string name="issue_login_title">Authentication does not work?</string>
+    <string name="show_boost_count">Vis antall boosts/favoritter</string>
+    <string name="issue_login_title">Får du ikke logget inn?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
@@ -464,46 +464,46 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
-    <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-    <string name="data_export_running">Still running, please wait…</string>
-    <string name="data_export">Export statuses</string>
-    <string name="data_export_toots">Export statuses for %1$s</string>
-    <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+    <string name="media_ready">Media er lastet. Klikk her for å vise.</string>
+    <string name="data_export_start">Denne handlingen kan lang tid. Du vil bli varslet når det er ferdig.</string>
+    <string name="data_export_running">Kjører fortsatt, vennligst vent…</string>
+    <string name="data_export">Eksporter statuser</string>
+    <string name="data_export_toots">Eksportere statuser for %1$s</string>
+    <string name="data_export_success">%1$s av %2$s toots ble eksportert.</string>
+    <string name="data_export_error">Noe gikk galt under eksport av data for %1$s</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Type</string>
-    <string name="proxy_enable">Enable proxy?</string>
+    <string name="proxy_enable">Aktivere proxy?</string>
     <string name="poxy_host">Host</string>
     <string name="poxy_port">Port</string>
-    <string name="poxy_login">Login</string>
-    <string name="poxy_password">Password</string>
-    <string name="set_theme">Theme:</string>
-    <string name="set_compact_mode">Compact mode</string>
-    <string name="set_share_details">Add toot details when sharing</string>
-    <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-    <string name="alert_regex">There is an error in the regular expression!</string>
-    <string name="no_account_yet">No account yet?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-    <string name="delete_instance">Delete this instance?</string>
-    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-    <string name="which_language">Translate in</string>
-    <string name="crash_title">Mastalab has stopped :(</string>
-    <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
-    <string name="follow_instance">Follow instance</string>
-    <string name="toast_instance_already_added">You already follow this instance!</string>
-    <string name="toast_instance_followed">The instance is followed!</string>
-    <string name="action_partnership">Partnerships</string>
-    <string name="neutral_menu_information">Information</string>
-    <string name="hide_boost">Hide boosts from %s</string>
-    <string name="endorse">Feature on profile</string>
-    <string name="hide_everything">Hide everything from %s</string>
-    <string name="show_boost">Show boosts from %s</string>
-    <string name="unendorse">Don\'t feature on profile</string>
-    <string name="show_everything">Show everything from %s</string>
-    <string name="toast_endorse">The account is now featured on profile</string>
+    <string name="poxy_login">Brukernavn</string>
+    <string name="poxy_password">Passord</string>
+    <string name="set_theme">Tema:</string>
+    <string name="set_compact_mode">Kompakt modus</string>
+    <string name="set_share_details">Legg til toot-detaljer ved deling</string>
+    <string name="support_the_app_on_liberapay">Støtt denne applikasjonen med Liberapay</string>
+    <string name="alert_regex">Det er en feil i det regulære uttrykket!</string>
+    <string name="no_account_yet">Har du ikke en konto?</string>
+    <string name="toast_instance_unavailable">Fant ingen tidslinjer på denne instansen!</string>
+    <string name="delete_instance">Slette denne instansen?</string>
+    <string name="warning_delete_instance">Du er i ferd med å slette %s fra instansene du følger.</string>
+    <string name="which_language">Oversett med</string>
+    <string name="crash_title">Mastalab har stoppet :(</string>
+    <string name="crash_message">Du kan sende meg krasjrapporten på e-post. Det vil hjelpe til å fikse problemet :)\n\nDu kan også legge til ekstra informasjon du mener er nyttig. Tusen takk!</string>
+    <string name="send_crash_report">Spør om å sende krasjrapporter på e-post?</string>
+    <string name="follow_instance">Følg instanse</string>
+    <string name="toast_instance_already_added">Du følger allerede denne instansen!</string>
+    <string name="toast_instance_followed">Instansen følges!</string>
+    <string name="action_partnership">Partnerskap</string>
+    <string name="neutral_menu_information">Informasjon</string>
+    <string name="hide_boost">Skjul boosts fra %s</string>
+    <string name="endorse">Vis på profilen</string>
+    <string name="hide_everything">Skjul alt fra %s</string>
+    <string name="show_boost">Vis boosts fra %s</string>
+    <string name="unendorse">Ikke vis på profilen</string>
+    <string name="show_everything">Vis alt fra %s</string>
+    <string name="toast_endorse">Brukerkontoen blir når vist på profilen</string>
     <string name="toast_unendorse">The account is no longer featured on profile</string>
     <string name="toast_show_boost">Boosts are now shown!</string>
     <string name="toast_hide_boost">Boosts er nå skjult!</string>
@@ -576,56 +576,56 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube favourites</string>
-    <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-    <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-    <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
-    <string name="channel">Channel</string>
-    <string name="no_peertube_channels">No Peertube channels</string>
-    <string name="no_peertube_instances">No Peertube instances</string>
-    <string name="no_mastodon_instances">No Mastodon instances</string>
-    <string name="no_lists">No lists</string>
-    <string name="videos">Videos</string>
-    <string name="channels">Channels</string>
-    <string name="set_display_emoji">Use Emoji One</string>
-    <string name="information">Information</string>
-    <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
-    <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
+    <string name="peertube_favorites">Peertube-favoritter</string>
+    <string name="bookmark_add_peertube">Videoen er lagt til bokmerker!</string>
+    <string name="bookmark_remove_peertube">Videoen er fjernet fra bokmerker!</string>
+    <string name="bookmark_peertube_empty">Det er ingen Peertube-videoer blant favorittene dine!</string>
+    <string name="channel">Kanal</string>
+    <string name="no_peertube_channels">Ingen Peertube-kanaler</string>
+    <string name="no_peertube_instances">Ingen Peertube-instanser</string>
+    <string name="no_mastodon_instances">Ingen Mastodon-instanser</string>
+    <string name="no_lists">Ingen lister</string>
+    <string name="videos">Videoer</string>
+    <string name="channels">Kanaler</string>
+    <string name="set_display_emoji">Bruk Emoji One</string>
+    <string name="information">Informasjon</string>
+    <string name="set_display_card">Forhåndsvis alle toots</string>
+    <string name="thanks_text_ux">Ny UX/UI-designer</string>
+    <string name="set_old_direct_timeline">Bruk direktetidslinjen fra før Mastodon 2.6</string>
+    <string name="set_display_video_preview">Forhåndsvis videoer</string>
+    <string name="thanks_text_support">Gitlab brukerstøtte</string>
+    <string name="action_bug_report">Feilrapport</string>
+    <string name="no_mail_client">Ingen e-postklient er installert.</string>
+    <string name="bug_report_mail">Send feilrapport</string>
+    <string name="account_id_clipbloard">Id på brukerkonto er kopiert til utklippstavlen!</string>
+    <string name="settings_title_battery">Batteribruk</string>
+    <string name="set_change_locale">Endre språk</string>
+    <string name="default_language">Standardspråk</string>
+    <string name="truncate_long_toots">Avkort lange toots</string>
+    <string name="set_truncate_toot">Avkort toots lengre enn \'x\' linjer. Null betyr at toots ikke avkortes.</string>
+    <string name="display_toot_truncate">Vis mer</string>
+    <string name="hide_toot_truncate">Vis mindre</string>
+    <string name="manage_tags">Administrer stikkord</string>
+    <string name="tags_already_stored">Dette stikkordet eksisterer allerede!</string>
+    <string name="tags_stored">Stikkordet er lagret!</string>
+    <string name="tags_renamed">Stikkordet er endret!</string>
+    <string name="tags_deleted">Stikkordet er slettet!</string>
+    <string name="set_display_art">Vis kunsttidslinje</string>
+    <string name="schedule_boost">Planlegg boost</string>
+    <string name="boost_scheduled">Boosten er planlagt!</string>
+    <string name="no_scheduled_boosts">Ingen planlagte boosts å vise!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Åpne menyen på en toot, og velg <b>Planlegg boost</b>.]]></string>
+    <string name="art_menu">Kunsttidslinje</string>
+    <string name="open_menu">Åpne meny</string>
+    <string name="app_logo">Applikasjonens logo</string>
+    <string name="profile_picture">Profilbilde</string>
+    <string name="profile_banner">Profilfane</string>
+    <string name="contact_instance_admin">Kontakt instansadministratoren</string>
+    <string name="add_new">Legg til ny</string>
+    <string name="mastohost_logo">MasoHost-logo</string>
+    <string name="emoji_picker">Emoji-velger</string>
+    <string name="refresh">Oppdater</string>
+    <string name="expand_conversation">Utvid samtalen</string>
     <string name="remove_account">Remove an account</string>
     <string name="delete_domain">Delete the blocked domain</string>
     <string name="custom_emoji_picker">Custom emoji picker</string>
