@@ -126,8 +126,8 @@
         <item>Заблокировать этот домен?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Уведомлять</item>
+        <item>Беззвучный</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Удалить этот тут?</item>
@@ -629,26 +629,26 @@
     <string name="boost_scheduled">Продвижение запланировано!</string>
     <string name="no_scheduled_boosts">Нет запланированных продвижений для отображения!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Откройте меню тута и выберите <b>Запланировать продвижение</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
-    <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
-    <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
-    <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="art_menu">Лента Art</string>
+    <string name="open_menu">Открыть меню</string>
+    <string name="app_logo">Логотип приложения</string>
+    <string name="profile_picture">Изображение профиля</string>
+    <string name="profile_banner">Баннер профиля</string>
+    <string name="contact_instance_admin">Связаться с администратором сервера</string>
+    <string name="add_new">Добавить новое</string>
+    <string name="mastohost_logo">Логотип MastoHost</string>
+    <string name="emoji_picker">Выбор Emoji</string>
+    <string name="refresh">Обновить</string>
+    <string name="expand_conversation">Развернуть разговор</string>
+    <string name="remove_account">Удалить аккаунт</string>
+    <string name="delete_domain">Удалить заблокированный домен</string>
+    <string name="custom_emoji_picker">Пользовательский выбор Emoji</string>
+    <string name="play_video">Воспроизвести видео</string>
+    <string name="new_toot">Новый тут</string>
+    <string name="card_view_image">Изображение карты</string>
+    <string name="hide_media">Скрыть медиа</string>
+    <string name="favicon">Значок сайта</string>
+    <string name="media_description">Медиа для добавления описания</string>
     <string-array name="filter_expire">
         <item>Никогда</item>
         <item>30 минут</item>
@@ -658,15 +658,15 @@
         <item>1 день</item>
         <item>1 неделя</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        В этом поле вам нужно указать имя хоста вашего сервера.\nНапример, если вы создали свою учетную запись на https://mastodon.social\nJust write <b>mastodon.social</b> (без https://)\n
+        Вы можете начать писать первые буквы, чтобы получить предложения имен.\n\n
+        ⚠ Кнопка входа в систему будет работать только случае, если сервер включен и его имя корректно!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        В этом поле укажите адрес электронной почты, который привязан к вашему аккаунту Mastodon.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        Последний шаг - введите свой пароль и нажмите Войти.
     </string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Дополнительная информация</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
     <string name="show_media_only">Media only</string>
