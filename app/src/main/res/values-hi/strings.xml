@@ -290,7 +290,7 @@
     <string name="set_auto_store_toot">मसौदे स्वतः बचाएं</string>
     <string name="set_bubble_counter">काउंटर दिखाएं</string>
     <string name="set_auto_add_media_url">मीडिया के यूआरएल को संदेश में जोड़े</string>
-    <string name="settings_title_notifications">Manage notifications</string>
+    <string name="settings_title_notifications">सूचनाओ का नियंत्रण</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
     <string name="set_notif_follow_share">Notify when someone boosts your status</string>
@@ -300,9 +300,9 @@
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
     <string name="settings_title_more_options">Advanced settings</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
-    <string name="set_notify">Notify?</string>
-    <string name="set_notif_silent">Silent Notifications</string>
-    <string name="set_night_mode">Night mode</string>
+    <string name="set_notify">सूचित करें?</string>
+    <string name="set_notif_silent">शांत सूचनाएं</string>
+    <string name="set_night_mode">रात्रि मोड</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Edit profile</string>
     <string name="set_profile_description">Bio…</string>
