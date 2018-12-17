@@ -186,12 +186,12 @@
     <string name="about_developer">डैवलपर:</string>
     <string name="about_license">लाइसेंस: </string>
     <string name="about_license_action">जीएनयू जीपीएल वी३</string>
-    <string name="about_code">Source code: </string>
-    <string name="about_yandex">Translation of toots:</string>
+    <string name="about_code">सोर्से कोड: </string>
+    <string name="about_yandex">संदेशो का अनुवाद:</string>
     <string name="about_thekinrar">इंस्टेंसेस खोजे:</string>
     <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Icon designer:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="thanks_text_logo">आइकाॅन डिज़ाइनर:</string>
+    <string name="thanks_text_banner">बैनर डिज़ाइनर:</string>
     <!-- Conversation -->
     <string name="conversation">बातचीत</string>
     <!-- Accounts -->
@@ -202,12 +202,12 @@
     <string name="followers_cnt">अनुयायी \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
     <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="reject">अस्वीकार</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
     <string name="remove_scheduled">Delete scheduled toot?</string>
-    <string name="media_count">Media: %d</string>
+    <string name="media_count">मीडिया: %d</string>
     <string name="toot_scheduled">The toot has been scheduled!</string>
     <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
@@ -230,7 +230,7 @@
         <item quantity="one">and another toot to discover</item>
         <item quantity="other">and %d other toots to discover</item>
     </plurals>
-    <string name="delete_notification_ask">Delete a notification?</string>
+    <string name="delete_notification_ask">सूचना मिटाएं?</string>
     <string name="delete_notification_ask_all">Delete all notifications?</string>
     <string name="delete_notification">The notification has been deleted!</string>
     <string name="delete_notification_all">All notifications have been deleted!</string>
@@ -240,14 +240,14 @@
     <string name="pinned_toots">Pinned</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
-    <string name="no_internet">No Internet connection!</string>
+    <string name="no_internet">इंटरनेट कनेक्शन नहीं है!</string>
     <string name="toast_block">The account was blocked!</string>
     <string name="toast_unblock">The account is no longer blocked!</string>
     <string name="toast_mute">The account was muted!</string>
     <string name="toast_unmute">The account is no longer muted!</string>
     <string name="toast_follow">The account was followed!</string>
     <string name="toast_unfollow">The account is no longer followed!</string>
-    <string name="toast_reblog">The toot was boosted!</string>
+    <string name="toast_reblog">संदेश को बूस्ट कर दिया गया है!</string>
     <string name="toast_unreblog">संदेश अब बूस्ट नहीं है!</string>
     <string name="toast_favourite">संदेश को आपके पसंदीदा पृष्ठ में जोड़ दिया गया है!</string>
     <string name="toast_unfavourite">संदेश को आपके पसंदीदा पृष्ठ से हटा दिया गया है!</string>
@@ -264,8 +264,8 @@
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
     <string name="nothing_to_do">No action can be taken</string>
     <string name="toast_saved">The media has been saved!</string>
-    <string name="toast_error_translate">An error occurred while translating!</string>
-    <string name="toast_toot_saved">Draft saved!</string>
+    <string name="toast_error_translate">अनुवाद करते समय गड़बड़ी हुई!</string>
+    <string name="toast_toot_saved">मसौदा एकत्र हुआ!</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
     <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
