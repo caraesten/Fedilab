@@ -217,12 +217,15 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
         set_profile_name.setText(account.getDisplay_name());
         set_profile_name.setSelection(set_profile_name.getText().length());
 
-        final String content;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            content = Html.fromHtml(account.getNote(), Html.FROM_HTML_MODE_LEGACY).toString();
-        else
-            //noinspection deprecation
-            content = Html.fromHtml(account.getNote()).toString();
+        String content = account.getNote();
+        if( content != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                content = Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY).toString();
+            else
+                //noinspection deprecation
+                content = Html.fromHtml(content).toString();
+        }else
+            content = "";
         set_profile_description.setText(content);
 
         set_profile_save.setEnabled(true);
