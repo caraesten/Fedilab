@@ -486,7 +486,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 public void onClick(View v) {
                     Intent intent = new Intent(context, MediaActivity.class);
                     Bundle b = new Bundle();
-                    intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
+                    ArrayList<Attachment> attachments = new ArrayList<>();
+                    attachments.add(status.getArt_attachment());
+                    intent.putParcelableArrayListExtra("mediaArray", attachments);
                     b.putInt("position", 0);
                     intent.putExtras(b);
                     context.startActivity(intent);
