@@ -92,7 +92,7 @@
     <string name="choose_file_error">फ़ाइल एक्सप्लोरर नहीं मिला!</string>
     <string name="click_to_change">मार्ग को बदलने के लिये उस पर क्लिक कीजिये</string>
     <string name="failed">असफल!</string>
-    <string name="scheduled_toots">Scheduled toots</string>
+    <string name="scheduled_toots">परिगणित संदेश</string>
     <string name="disclaimer_full">नीचे दिये गये जानकारी उप्योगकर्ता का वर्णन अधूरा दर्शा सकता है।</string>
     <string name="insert_emoji">इमोजी डाले</string>
     <string name="no_emoji">इस वक्त एप ने कस्टम इमोजियों को एकत्र नहीं किया।</string>
@@ -134,10 +134,10 @@
         <item>संदेश हटाएं और दोबारा लिखे?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="one">%d reply</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="one">%d जवाब</item>
+        <item quantity="other">%d जवाब</item>
     </plurals>
-    <string name="set_display_bookmark_button">Display the bookmark button</string>
+    <string name="set_display_bookmark_button">बुकमार्क बटन को दिखाए</string>
     <string name="bookmarks">बुकमार्क्स</string>
     <string name="bookmark_add">बुकमार्क्स में जोड़ें</string>
     <string name="bookmark_remove">बुकमार्क हटाएं</string>
