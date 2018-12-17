@@ -1937,7 +1937,11 @@ public class Helper {
      */
     public static String localeToStringStorage(Locale locale){
         Gson gson = new Gson();
-        return gson.toJson(locale);
+        try {
+            return gson.toJson(locale);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -1947,7 +1951,11 @@ public class Helper {
      */
     public static String statusToStringStorage(Status status){
         Gson gson = new Gson();
-        return gson.toJson(status);
+        try {
+            return gson.toJson(status);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -1971,7 +1979,11 @@ public class Helper {
      */
     public static String cardToStringStorage(Card card){
         Gson gson = new Gson();
-        return gson.toJson(card);
+        try {
+            return gson.toJson(card);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -1995,7 +2007,11 @@ public class Helper {
      */
     public static String arrayToStringStorage(List<String> list){
         Gson gson = new Gson();
-        return gson.toJson(list);
+        try {
+            return gson.toJson(list);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -2019,7 +2035,11 @@ public class Helper {
      */
     public static String applicationToStringStorage(Application application){
         Gson gson = new Gson();
-        return gson.toJson(application);
+        try {
+            return gson.toJson(application);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -2063,7 +2083,6 @@ public class Helper {
         try {
             return gson.fromJson(serializedAccount, Account.class);
         }catch (Exception e){
-            e.printStackTrace();
             return null;
         }
     }
@@ -2076,7 +2095,11 @@ public class Helper {
      */
     public static String emojisToStringStorage(List<Emojis> emojis){
         Gson gson = new Gson();
-        return gson.toJson(emojis);
+        try {
+            return gson.toJson(emojis);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -2086,7 +2109,11 @@ public class Helper {
      */
     public static List<Emojis> restoreEmojisFromString(String serializedEmojis){
         Type listType = new TypeToken<ArrayList<Emojis>>(){}.getType();
-        return new Gson().fromJson(serializedEmojis, listType);
+        try {
+            return new Gson().fromJson(serializedEmojis, listType);
+        }catch (Exception e){
+            return null;
+        }
     }
 
 
@@ -2097,7 +2124,11 @@ public class Helper {
      */
     public static String attachmentToStringStorage(List<Attachment> attachments){
         Gson gson = new Gson();
-        return gson.toJson(attachments);
+        try {
+            return gson.toJson(attachments);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -2124,7 +2155,11 @@ public class Helper {
      */
     public static String mentionToStringStorage(List<Mention> mentions){
         Gson gson = new Gson();
-        return gson.toJson(mentions);
+        try {
+            return gson.toJson(mentions);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -2134,7 +2169,11 @@ public class Helper {
      */
     public static List<Mention> restoreMentionFromString(String serializedMention){
         Type listType = new TypeToken<ArrayList<Mention>>(){}.getType();
-        return new Gson().fromJson(serializedMention, listType);
+        try {
+            return new Gson().fromJson(serializedMention, listType);
+        }catch (Exception e){
+            return null;
+        }
     }
 
 
@@ -2145,7 +2184,11 @@ public class Helper {
      */
     public static String tagToStringStorage(List<Tag> tags){
         Gson gson = new Gson();
-        return gson.toJson(tags);
+        try {
+            return gson.toJson(tags);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -2155,7 +2198,11 @@ public class Helper {
      */
     public static List<Tag> restoreTagFromString(String serializedTag){
         Type listType = new TypeToken<ArrayList<Tag>>(){}.getType();
-        return new Gson().fromJson(serializedTag, listType);
+        try {
+            return new Gson().fromJson(serializedTag, listType);
+        }catch (Exception e){
+            return null;
+        }
     }
 
 

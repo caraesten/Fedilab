@@ -196,7 +196,8 @@ public class CrossActions {
                             } else if (doAction == API.StatusAction.PIN) {
                                 status.setPinned(true);
                             }
-                            baseAdapter.notifyDataSetChanged();
+                            if( baseAdapter != null)
+                                baseAdapter.notifyDataSetChanged();
                         }
                     }else{
                         new PostActionAsyncTask(context, selectedAccount, targetedAccount, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -204,7 +205,8 @@ public class CrossActions {
                             if (doAction == API.StatusAction.FOLLOW) {
                                 targetedAccount.setFollowing(true);
                             }
-                            baseAdapter.notifyDataSetChanged();
+                            if( baseAdapter != null)
+                                baseAdapter.notifyDataSetChanged();
                         }
                     }
                     dialog.dismiss();
