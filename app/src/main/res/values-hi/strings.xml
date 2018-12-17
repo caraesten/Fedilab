@@ -255,12 +255,12 @@
     <string name="toast_unstatus">संदेश को मिटा दिया गया है!</string>
     <string name="toast_pin">संदेश को जड़ दिया गया है!</string>
     <string name="toast_unpin">The toot was unpinned!</string>
-    <string name="toast_error">Oops ! An error occurred!</string>
+    <string name="toast_error">क्षमा करें ! कोई गड़बड़ी उत्पन्न हुई है!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
     <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
     <string name="toast_error_search">An error occurred while searching!</string>
-    <string name="toast_error_login">Can not log in!</string>
+    <string name="toast_error_login">लाॅगइन नहीं हो सका!</string>
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
     <string name="nothing_to_do">No action can be taken</string>
     <string name="toast_saved">The media has been saved!</string>
