@@ -175,14 +175,14 @@
     <string name="no_draft">कोई मसौदा नहीं है!</string>
     <string name="choose_toot">संदेश चुनें</string>
     <string name="choose_accounts">खाता चुनें</string>
-    <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="select_accounts">कुछ खातो को चुनें</string>
+    <string name="remove_draft">मसौदा हटाएं?</string>
+    <string name="show_reply">प्रारंभिक संदेश को दिखाने के लिये बटन पर क्लिक करें</string>
+    <string name="upload_form_description">नेत्रहीन लोगों के लिये वर्णन दे</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">कोई वर्णन उपलब्ध नहीं है!</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
+    <string name="about_vesrion">रिलीज़ %1$s</string>
     <string name="about_developer">Developer:</string>
     <string name="about_license">License: </string>
     <string name="about_license_action">GNU GPL V3</string>
