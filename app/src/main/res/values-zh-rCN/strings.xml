@@ -126,8 +126,8 @@
         <item>是否屏蔽此域名？</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>通知</item>
+        <item>静音</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>移除这条嘟文吗？</item>
@@ -168,7 +168,7 @@
     <string-array name="toot_visibility">
         <item>发布到公共时间线</item>
         <item>不发布到公共时间线</item>
-        <item>仅发送给关注者</item>
+        <item>仅发送给粉丝</item>
         <item>仅发布给提及用户</item>
     </string-array>
     <string name="no_draft">没有草稿！</string>
@@ -192,7 +192,7 @@
     <string name="thanks_text_logo">图标设计者：</string>
     <string name="thanks_text_banner">横幅设计者：</string>
     <!-- Conversation -->
-    <string name="conversation">会话</string>
+    <string name="conversation">对话</string>
     <!-- Accounts -->
     <string name="no_accounts">没有帐户可以显示</string>
     <string name="no_follow_request">无关注请求</string>
@@ -324,9 +324,9 @@
     <string name="use_cookies">允许第三方 cookie</string>
     <string name="settings_ui_layout">时间线布局： </string>
     <string-array name="battery_profiles">
-        <item>正常电池消耗</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>正常耗电</item>
+        <item>中度耗电</item>
+        <item>最低耗电</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>选项卡</item>
@@ -336,13 +336,13 @@
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
-        <item>否　</item>
+        <item>否</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">您的 API 密钥，对于 Yandex 您可以留空</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>Black</item>
+        <item>暗色</item>
+        <item>亮色</item>
+        <item>黑色</item>
     </string-array>
     <string-array name="settings_resize_picture">
         <item>否</item>
@@ -353,21 +353,21 @@
     <string name="set_led_colour">设置 LED 颜色：</string>
     <string-array name="led_colours">
         <item>蓝色</item>
-        <item>蓝绿色</item>
+        <item>青色</item>
         <item>洋红色</item>
         <item>绿色</item>
         <item>红色</item>
         <item>黄色</item>
         <item>白色</item>
     </string-array>
-    <string name="set_title_news">新闻</string>
+    <string name="set_title_news">更新</string>
     <string name="set_notification_news">当首页时间线上有新的嘟文时通知您</string>
     <string name="action_follow">关注</string>
     <string name="action_unfollow">取消关注</string>
     <string name="action_block">屏蔽</string>
     <string name="action_unblock">取消屏蔽</string>
     <string name="action_mute">静音</string>
-    <string name="action_no_action">无动作</string>
+    <string name="action_no_action">无操作</string>
     <string name="action_unmute">取消静音</string>
     <string name="request_sent">请求已发送</string>
     <string name="followed_by">关注您</string>
@@ -376,8 +376,8 @@
     <string name="set_resize_picture">调整图片大小</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">推送通知</string>
-    <string name="settings_popup_message">请确认要接收的推送通知。
-         您可以稍后在设置 (通知选项卡) 中启用或禁用这些通知。   
+    <string name="settings_popup_message">        请确认要接收的推送通知。
+        您可以稍后在设置（通知选项卡）中启用或禁用这些通知。
     </string>
     <string name="settings_popup_timeline">针对主页时间线的未读嘟文？</string>
     <string name="settings_popup_notification">针对未读通知？</string>
@@ -394,12 +394,12 @@
     <string name="v_unlisted">未列出</string>
     <string name="v_private">私密</string>
     <string name="v_direct">直接</string>
-    <string name="v_keywords">一些关键词...</string>
+    <string name="v_keywords">一些关键词…</string>
     <string name="show_media">显示媒体</string>
-    <string name="show_pinned">显示被置顶</string>
-    <string name="filter_no_result">没发现匹配的结果！</string>
-    <string name="data_backup_toots">备份嘟文约 %1$s</string>
-    <string name="data_backup_success">%1$s新的嘟文已被导入</string>
+    <string name="show_pinned">显示置顶</string>
+    <string name="filter_no_result">未找到匹配的结果！</string>
+    <string name="data_backup_toots">备份 %1$s 的嘟文</string>
+    <string name="data_backup_success">已导入 %1$s 的新嘟文</string>
     <string-array name="filter_select">
         <item>否</item>
         <item>仅</item>
@@ -414,38 +414,42 @@
         &#9888; 从不存储登录和密码。它们仅在具有实例的安全身份验证 (SSL) 期间使用。  
     </string>
     <string name="privacy_authorizations_title">权限：</string>
-    <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b>: 用于检测设备是否连接到 WIFI 网络.\n
-        - <b>INTERNET</b>: 用于查询实例..\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: 用于存储媒体或将应用程序移动到 SD 卡上。\n
-        - <b>READ_EXTERNAL_STORAGE</b>:  用于将媒体添加到嘟文.\n
-        - <b>BOOT_COMPLETED</b>: 用于启动通知服务.\n
-        - <b>WAKE_LOCK</b>: 在通知服务期间使用。    </string>
-    <string name="privacy_API_authorizations_title">API 权限:</string>
-    <string name="privacy_API_authorizations">        - <b>Read</b>: 读取数据.\n
-        - <b>Write</b>: 开机自检状态和上载状态的媒体. \n
-        - <b>Follow</b>: 跟踪、追随、阻止、取消阻止. \n\n
-        <b>&#9888; 这些操作仅在用户请求时执行. </b>    </string>
-    <string name="privacy_API_title">跟踪和库</string>
-    <string name="privacy_API">  本应用程序 <b>不使用跟踪工具</b>(类似观众测量、出错报告等等)， 并且不包含和植入任何广告。\n\n 
-  所使用的库也是最为精简的: \n 
-  -<b>Glide</b>: 用于管理媒体\n
-  -<b>Android-Job</b>: 用于管理服务\n
-  -<b>PhotoView</b>: 用于管理图片\n    
-      </string>
-    <string name="privacy_API_yandex_title">嘟文的翻译</string>
-    <string name="privacy_API_yandex_authorizations">本应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的能力。\n
-Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/legal/confidential/?lang=en
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>：用于检测设备是否连接到 WIFI 网络。\n
+        - <b>INTERNET</b>：用于查询实例。\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>：用于存储媒体或将应用程序移动到 SD 卡上。\n
+        - <b>READ_EXTERNAL_STORAGE</b>：用于添加媒体到嘟文。\n
+        - <b>BOOT_COMPLETED</b>：用于启动通知服务。\n
+        - <b>WAKE_LOCK</b>：在通知服务期间使用。
     </string>
-    <string name="thanks_text">感谢 Stéphane 的 logo 设计。    </string>
-    <string name="thanks_text_dev">感谢致以:    </string>
+    <string name="privacy_API_authorizations_title">API 权限：</string>
+    <string name="privacy_API_authorizations">        - <b>Read</b>：读取数据。\n
+        - <b>Write</b>：发布状态并上传用在状态上的媒体。 \n
+        - <b>Follow</b>：关注、取消关注、屏蔽、取消屏蔽。\n\n
+        <b>&#9888; 这些操作仅在用户请求时执行。</b>
+    </string>
+    <string name="privacy_API_title">跟踪和库</string>
+    <string name="privacy_API">        本应用程序 <b>不使用跟踪工具</b>（受众测量、错误报告等），并且不包含任何广告。\n\n 
+        所使用的库也是最为精简的：\n 
+        -<b>Glide</b>：用于管理媒体\n
+        -<b>Android-Job</b>：用于管理服务\n
+        -<b>PhotoView</b>：用于管理图像\n
+    </string>
+    <string name="privacy_API_yandex_title">嘟文的翻译</string>
+    <string name="privacy_API_yandex_authorizations">        本应用程序提供了使用设备的区域设置和 Yandex API 进行翻译的功能。\n
+        Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/legal/confidential/?lang=en
+    </string>
+    <string name="thanks_text">        感谢 Stéphane 的徽标设计。
+    </string>
+    <string name="thanks_text_dev">        致谢：
+    </string>
     <string name="filter_regex">按正则表达式进行筛选</string>
     <string name="search">搜索​​​​</string>
     <string name="delete">删除</string>
-    <string name="fetch_more_toots">获取更多嘟文...</string>
+    <string name="fetch_more_toots">获取更多嘟文…</string>
     <!-- About lists -->
     <string name="action_lists">列表</string>
     <string name="action_lists_confirm_delete">您确实要永久删除此列表吗？</string>
-    <string name="action_lists_empty_content">这张列表上还没有内容，当此列表的成员发布新状态时, 它们将出现在此处。</string>
+    <string name="action_lists_empty_content">这张列表上还没有内容。当此列表的成员发布新状态时，它们将出现在此处。</string>
     <string name="action_lists_add_to">添加到列表</string>
     <string name="action_lists_remove_from">从列表中移除</string>
     <string name="action_lists_create">新建列表</string>
@@ -458,204 +462,205 @@ Yandex 有适当的隐私政策，可以在这里找到：https://yandex.ru/lega
     <string name="account_moved_to">%1$s 已被移动到 %2$s</string>
     <string name="show_boost_count">显示转嘟/收藏数目</string>
     <string name="issue_login_title">身份验证不起作用？</string>
-    <string name="issue_login_message"><b>有用的检查可能有助于解决问题:</b>\n\n 
-- 检查实例名是否拼写错误\n\n 
-- 检查您的实例确实存在\n\n 
-- 如果您使用双重认证 (2FA), 请使用底部的链接 (一旦实例名填好后)\n\n 
-- 您也可这个链接而不使用双重认证(2FA)\n\n 
-- 如果仍不工作，请向https://github.com/stom79/mastalab/issues提交问题。 </string>
-    <string name="media_ready">媒体已加载。单击此处显示它。</string>
-    <string name="data_export_start">此操作可能会很长。当它完成时，您将会收到通知。</string>
-    <string name="data_export_running">仍在运行，请稍候.……</string>
+    <string name="issue_login_message">        <b>以下是一些可能有用的检查：</b>\n\n 
+        - 检查实例名是否拼写错误\n\n 
+        - 检查您的实例是否下线\n\n 
+        - 如果您使用双因素身份验证（2FA），请使用底部的链接（实例名填好后）\n\n 
+        - 您也可以使用这个链接但不使用双因素身份验证（2FA）\n\n 
+        - 如果仍不工作，请向 https://github.com/stom79/mastalab/issues 提交问题。
+    </string>
+    <string name="media_ready">媒体已加载。单击此处显示。</string>
+    <string name="data_export_start">此操作可能会很久。完成时会通知您。</string>
+    <string name="data_export_running">仍在运行，请稍候……</string>
     <string name="data_export">导出状态</string>
     <string name="data_export_toots">导出 %1$s 的状态</string>
     <string name="data_export_success">%2$s 条嘟文中的 %1$s 条已被导出。</string>
-    <string name="data_export_error">为 %1$s 导出数据时出现了错误</string>
+    <string name="data_export_error">导出 %1$s 的数据时出现错误</string>
     <!-- Proxy -->
     <string name="proxy_set">代理</string>
     <string name="proxy_type">类型</string>
-    <string name="proxy_enable">是否启用代理服务器？</string>
+    <string name="proxy_enable">启用代理？</string>
     <string name="poxy_host">主机</string>
     <string name="poxy_port">端口</string>
-    <string name="poxy_login">登录</string>
+    <string name="poxy_login">用户名</string>
     <string name="poxy_password">密码</string>
     <string name="set_theme">主题：</string>
     <string name="set_compact_mode">紧凑模式</string>
-    <string name="set_share_details">在分享时添加嘟文的详细信息</string>
+    <string name="set_share_details">分享时添加嘟文的详细信息</string>
     <string name="support_the_app_on_liberapay">在 Liberapay 上支持这个应用</string>
     <string name="alert_regex">正则表达式中有错误！</string>
-    <string name="no_account_yet">No account yet?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-    <string name="delete_instance">Delete this instance?</string>
-    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-    <string name="which_language">Translate in</string>
-    <string name="crash_title">Mastalab has stopped :(</string>
-    <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
-    <string name="follow_instance">Follow instance</string>
-    <string name="toast_instance_already_added">You already follow this instance!</string>
-    <string name="toast_instance_followed">The instance is followed!</string>
-    <string name="action_partnership">Partnerships</string>
-    <string name="neutral_menu_information">Information</string>
-    <string name="hide_boost">Hide boosts from %s</string>
-    <string name="endorse">Feature on profile</string>
-    <string name="hide_everything">Hide everything from %s</string>
-    <string name="show_boost">Show boosts from %s</string>
-    <string name="unendorse">Don\'t feature on profile</string>
-    <string name="show_everything">Show everything from %s</string>
-    <string name="toast_endorse">The account is now featured on profile</string>
-    <string name="toast_unendorse">The account is no longer featured on profile</string>
-    <string name="toast_show_boost">Boosts are now shown!</string>
-    <string name="toast_hide_boost">Boosts are now hidden!</string>
-    <string name="direct_message">Direct message</string>
-    <string name="filters">Filters</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-    <string name="filter_keyword">Keyword or phrase</string>
-    <string name="context_home">Home timeline</string>
-    <string name="context_public">Public timelines</string>
-    <string name="context_notification">Notifications</string>
-    <string name="context_conversation">Conversations</string>
-    <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-    <string name="context_drop">Drop instead of hide</string>
-    <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
-    <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-    <string name="context_whole_word">Whole word</string>
-    <string name="filter_context">Filter contexts</string>
-    <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-    <string name="filter_expire">Expire after</string>
-    <string name="add_new_filter">Add New Filter</string>
-    <string name="action_filter_delete">Delete filter?</string>
-    <string name="action_update_filter">Update filter</string>
-    <string name="action_filter_create">Create filter</string>
-    <string name="how_to_follow">Whom to follow</string>
-    <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
-    <string name="follow_account">Follow</string>
-    <string name="select_all">Select all</string>
-    <string name="unselect_all">Unselect all</string>
-    <string name="follow_trunk">%s is followed!</string>
-    <string name="create_list_trunk">Creating the list %s</string>
-    <string name="add_account_list_trunk">Adding accounts to the list</string>
-    <string name="account_added_list_trunk">Accounts were added to the list</string>
-    <string name="adding_account_list_trunk">Adding accounts to the list</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
-    <string name="about_trunk">Who to follow</string>
+    <string name="no_account_yet">还没有帐户吗？</string>
+    <string name="toast_instance_unavailable">未在此实例中找到时间线！</string>
+    <string name="delete_instance">删除此实例？</string>
+    <string name="warning_delete_instance">您将从下列实例中删除 %s。</string>
+    <string name="which_language">翻译为</string>
+    <string name="crash_title">Mastalab 已停止 :(</string>
+    <string name="crash_message">您可以通过电子邮件给我发送崩溃报告。这有助于修复问题 :)\n\n您可以添加其他内容。谢谢！</string>
+    <string name="send_crash_report">询问是否通过电子邮件发送崩溃报告？</string>
+    <string name="follow_instance">关注实例</string>
+    <string name="toast_instance_already_added">您已关注过该实例！</string>
+    <string name="toast_instance_followed">已关注此实例！</string>
+    <string name="action_partnership">合作伙伴</string>
+    <string name="neutral_menu_information">信息</string>
+    <string name="hide_boost">隐藏 %s 的转嘟</string>
+    <string name="endorse">推荐在个人页上</string>
+    <string name="hide_everything">隐藏来自 %s 所有内容</string>
+    <string name="show_boost">显示 %s 的转嘟</string>
+    <string name="unendorse">取消推荐在个人页上</string>
+    <string name="show_everything">显示来自 %s 的所有内容</string>
+    <string name="toast_endorse">该帐号现在已推荐到个人页上</string>
+    <string name="toast_unendorse">该帐号已不再推荐到个人页上</string>
+    <string name="toast_show_boost">现已显示转嘟！</string>
+    <string name="toast_hide_boost">现已隐藏转嘟！</string>
+    <string name="direct_message">直接发送消息</string>
+    <string name="filters">筛选器</string>
+    <string name="action_filters_empty_content">没有筛选器可以显示。您可以点击“+”按钮新建一个。</string>
+    <string name="filter_keyword">关键词或短语</string>
+    <string name="context_home">主时间线</string>
+    <string name="context_public">公共时间线</string>
+    <string name="context_notification">通知</string>
+    <string name="context_conversation">对话</string>
+    <string name="filter_keyword_explanations">匹配将忽略嘟文的文本大小写或内容警告</string>
+    <string name="context_drop">丢弃而不是隐藏</string>
+    <string name="context_drop_explanations">筛选的嘟文将永久消失，即使后来移除筛选器</string>
+    <string name="context_whole_word_explanations">如果关键词或短语只为字母数字时，将只在词语完全匹配时才会应用</string>
+    <string name="context_whole_word">完全匹配词语</string>
+    <string name="filter_context">筛选内容</string>
+    <string name="filter_context_explanations">筛选器将应用到的一个或多个内容</string>
+    <string name="filter_expire">过期于</string>
+    <string name="add_new_filter">新添筛选器</string>
+    <string name="action_filter_delete">删除筛选器？</string>
+    <string name="action_update_filter">更新筛选器</string>
+    <string name="action_filter_create">创建筛选器</string>
+    <string name="how_to_follow">关注推荐</string>
+    <string name="action_who_to_follow_empty_content">目前还没有可列出的帐号！</string>
+    <string name="follow_account">关注</string>
+    <string name="select_all">选择全部</string>
+    <string name="unselect_all">取消全选</string>
+    <string name="follow_trunk">已关注 %s！</string>
+    <string name="create_list_trunk">创建列表 %s</string>
+    <string name="add_account_list_trunk">添加帐号到列表</string>
+    <string name="account_added_list_trunk">帐号已添加到列表</string>
+    <string name="adding_account_list_trunk">正在添加帐号到列表</string>
+    <string name="action_list_add">您还未创建列表。点击“+”按钮新建一个。</string>
+    <string name="action_remote_instance_add">您没有关注任何远程实例。点击“+”按钮以添加新实例。</string>
+    <string name="about_trunk">关注推荐</string>
     <string name="about_trunk_action">Trunk API</string>
-    <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
-    <string name="retrieve_remote_account">Fetching remote account</string>
-    <string name="expand_image">Automatically expand hidden media</string>
-    <string name="set_display_follow_instance">Display follow instances button</string>
-    <string name="channel_notif_follow">New follow</string>
-    <string name="channel_notif_boost">New Boost</string>
-    <string name="channel_notif_fav">New Favourite</string>
-    <string name="channel_notif_mention">New Mention</string>
-    <string name="channel_notif_toot">New Toot</string>
-    <string name="channel_notif_backup">Toots Backup</string>
-    <string name="channel_notif_media">Media Download</string>
-    <string name="set_notif_sound">Change notification sound</string>
-    <string name="select_sound">Select Tone</string>
-    <string name="set_enable_time_slot">Enable time slot</string>
-    <string name="how_to_videos">How To Videos</string>
-    <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-    <string name="no_blocked_domain">No blocked domains!</string>
-    <string name="unblock_domain_confirm">Unblock domain</string>
-    <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?</string>
-    <string name="blocked_domains">Blocked domains</string>
-    <string name="block_domain">Block domain</string>
-    <string name="toast_block_domain">The domain is blocked</string>
-    <string name="toast_unblock_domain">The domain is no longer blocked!</string>
-    <string name="retrieve_remote_status">Fetching remote status</string>
-    <string name="comment">Comment</string>
-    <string name="peertube_instance">Peertube instance</string>
-    <string name="set_display_direct">Display private messages timeline</string>
-    <string name="set_keep_background_process">Keep background process when app is closed</string>
-    <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-    <string name="number_view_video">%s views</string>
-    <string name="duration_video">Duration: %s</string>
-    <string name="add_remote_instance">Add an instance</string>
-    <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
-    <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube favourites</string>
-    <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-    <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-    <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
-    <string name="channel">Channel</string>
-    <string name="no_peertube_channels">No Peertube channels</string>
-    <string name="no_peertube_instances">No Peertube instances</string>
-    <string name="no_mastodon_instances">No Mastodon instances</string>
-    <string name="no_lists">No lists</string>
-    <string name="videos">Videos</string>
-    <string name="channels">Channels</string>
-    <string name="set_display_emoji">Use Emoji One</string>
-    <string name="information">Information</string>
-    <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="toast_impossible_to_follow">无法关注帐号</string>
+    <string name="retrieve_remote_account">获取远程帐号</string>
+    <string name="expand_image">自动展开隐藏媒体</string>
+    <string name="set_display_follow_instance">显示关注实例按钮</string>
+    <string name="channel_notif_follow">新的粉丝</string>
+    <string name="channel_notif_boost">新的转嘟</string>
+    <string name="channel_notif_fav">新的收藏</string>
+    <string name="channel_notif_mention">新的提及</string>
+    <string name="channel_notif_toot">新的嘟文</string>
+    <string name="channel_notif_backup">嘟文备份</string>
+    <string name="channel_notif_media">媒体下载</string>
+    <string name="set_notif_sound">更改通知提示音</string>
+    <string name="select_sound">选择铃声</string>
+    <string name="set_enable_time_slot">启用时间段</string>
+    <string name="how_to_videos">如何录像</string>
+    <string name="retrieve_remote_conversation">正在获取远程线程！</string>
+    <string name="no_blocked_domain">没有屏蔽的域名！</string>
+    <string name="unblock_domain_confirm">取消屏蔽域名</string>
+    <string name="unblock_domain_confirm_message">您确定要取消屏蔽 %s 吗？</string>
+    <string name="block_domain_confirm_message">您确定要屏蔽 %s 吗？</string>
+    <string name="blocked_domains">屏蔽的域名</string>
+    <string name="block_domain">屏蔽域名</string>
+    <string name="toast_block_domain">该域名已被屏蔽</string>
+    <string name="toast_unblock_domain">该域名不再被屏蔽</string>
+    <string name="retrieve_remote_status">正在获取远程状态</string>
+    <string name="comment">评论</string>
+    <string name="peertube_instance">Peertube 实例</string>
+    <string name="set_display_direct">显示私人消息时间线</string>
+    <string name="set_keep_background_process">关闭应用时保留后台进程</string>
+    <string name="no_comments">使用右上角的按钮，成为第一个对此视频留言的人！</string>
+    <string name="number_view_video">%s 次观看</string>
+    <string name="duration_video">时长：%s</string>
+    <string name="add_remote_instance">添加实例</string>
+    <string name="comment_no_allowed_peertube">此视频未开启评论！</string>
+    <string name="pickup_resolution">选择分辨率</string>
+    <string name="peertube_favorites">Peertube 收藏夹</string>
+    <string name="bookmark_add_peertube">此视频已添加到书签！</string>
+    <string name="bookmark_remove_peertube">此视频已从书签中移除！</string>
+    <string name="bookmark_peertube_empty">您的收藏夹里没有 Peertube 视频。</string>
+    <string name="channel">频道</string>
+    <string name="no_peertube_channels">没有 Peertube 频道</string>
+    <string name="no_peertube_instances">没有 Peertube 实例</string>
+    <string name="no_mastodon_instances">没有 Mastodon 实例</string>
+    <string name="no_lists">没有列表</string>
+    <string name="videos">视频</string>
+    <string name="channels">频道</string>
+    <string name="set_display_emoji">使用 Emoji One</string>
+    <string name="information">信息</string>
+    <string name="set_display_card">显示所有嘟文中的预览</string>
+    <string name="thanks_text_ux">新 UX/UI 的设计师</string>
+    <string name="set_old_direct_timeline">使用 Mastodon 2.6 之前的直接时间线</string>
+    <string name="set_display_video_preview">显示视频预览</string>
+    <string name="thanks_text_support">Gitlab 支持</string>
+    <string name="action_bug_report">缺陷报告</string>
+    <string name="no_mail_client">未安装电子邮件客户端。</string>
+    <string name="bug_report_mail">发送缺陷报告</string>
+    <string name="account_id_clipbloard">帐号 ID 已复制到剪贴板！</string>
+    <string name="settings_title_battery">电池优化</string>
+    <string name="set_change_locale">更改语言</string>
+    <string name="default_language">默认语言</string>
+    <string name="truncate_long_toots">截断长嘟文</string>
+    <string name="set_truncate_toot">截断超过“x”行的嘟文。零代表禁用。</string>
+    <string name="display_toot_truncate">显示更多</string>
+    <string name="hide_toot_truncate">收起</string>
+    <string name="manage_tags">管理标签</string>
+    <string name="tags_already_stored">该标签已经存在！</string>
+    <string name="tags_stored">该标签已储存！</string>
+    <string name="tags_renamed">该标签已更改！</string>
+    <string name="tags_deleted">该标签已删除！</string>
+    <string name="set_display_art">显示艺术时间线</string>
     <string name="schedule_boost">定时转嘟</string>
     <string name="boost_scheduled">转嘟将在预定时间发布！</string>
     <string name="no_scheduled_boosts">没有预定的转嘟可以显示！</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[打开嘟文的菜单，然后选择 <b>定时转嘟</b>。]]></string>
-    <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
-    <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
-    <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
-    <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="art_menu">艺术时间线</string>
+    <string name="open_menu">打开菜单</string>
+    <string name="app_logo">应用程序的徽标</string>
+    <string name="profile_picture">个人资料图片</string>
+    <string name="profile_banner">个人资料横幅</string>
+    <string name="contact_instance_admin">联系该实例的管理员</string>
+    <string name="add_new">新添</string>
+    <string name="mastohost_logo">MastoHost 徽标</string>
+    <string name="emoji_picker">表情符号选择器</string>
+    <string name="refresh">刷新</string>
+    <string name="expand_conversation">展开对话</string>
+    <string name="remove_account">移除帐户</string>
+    <string name="delete_domain">删除屏蔽的域名</string>
+    <string name="custom_emoji_picker">自定义表情符号选择器</string>
+    <string name="play_video">播放视频</string>
+    <string name="new_toot">新嘟文</string>
+    <string name="card_view_image">卡片图像</string>
+    <string name="hide_media">隐藏媒体</string>
+    <string name="favicon">网站图标</string>
+    <string name="media_description">要添加描述的媒体</string>
     <string-array name="filter_expire">
-        <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>从不</item>
+        <item>30 分钟</item>
+        <item>1 小时</item>
+        <item>6 小时</item>
+        <item>12 小时</item>
+        <item>1 天</item>
+        <item>1 星期</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        您需要在此字段中填入您的实例主机名。\n例如，您在 https://mastodon.social\n 上创建了帐户，直接填入 <b>mastodon.social</b>（不需要 https://）\n
+        您开始填入首个字母后会提示主机名。\n\n
+        ⚠ 登入按钮只有在实例名有效且该实例已上线时有效！
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        在此字段中，填写连接到您 Mastondon 帐户的电子邮件。
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        最后一步是输入您的密码，然后点击登入。
     </string>
-    <string name="more_information">More information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="more_information">更多信息</string>
+    <string name="showcase_2FA">如果您使用 2FA（双因素身份验证），则需要使用此链接。\n如果您不想在此处输入凭据，也可以使用它。</string>
     <!-- languages not translated -->
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_only">仅限媒体</string>
+    <string name="show_media_nsfw">显示 NSFW</string>
     <!-- end languages -->
 </resources>

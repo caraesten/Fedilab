@@ -126,8 +126,8 @@
         <item>是否封鎖該網域？</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>通知</item>
+        <item>安靜</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>移除此嘟文？</item>
