@@ -667,9 +667,9 @@
     <string name="showcase_pwd">        Последний шаг - введите свой пароль и нажмите Войти.
     </string>
     <string name="more_information">Дополнительная информация</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="showcase_2FA">Если вы используете 2FA (двухфакторную аутентификацию), вам нужно использовать эту ссылку.\nТакже вы можете ее использовать, если не хотите вводить здесь свои учетные данные.</string>
     <!-- languages not translated -->
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_only">Только медиа</string>
+    <string name="show_media_nsfw">Показать NSFW</string>
     <!-- end languages -->
 </resources>
