@@ -162,13 +162,13 @@
     <string name="toot_delete_media">इस मीडिया को मिटा दें?</string>
     <string name="toot_error_no_content">आपने कुछ भी नहीं लिखा है!</string>
     <string name="toot_visibility_tilte">संदेश की दृश्यता</string>
-    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="toots_visibility_tilte">संदेशो की दृश्यता का पूर्व निर्धारित रूप: </string>
+    <string name="toot_sent">इस संदेश को भेज दिया गया है!</string>
+    <string name="toot_reply_content_title">आप इस संदेश का जवाब दे रहे हैं:</string>
+    <string name="toot_sensitive">संवेदनशील विषय वस्तु?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
+        <item>सार्वजनिक टाइम्लाइन पर भेजें</item>
+        <item>सार्वजनिक टाइम्लाइन पर मत भेजिए</item>
         <item>Post to followers only</item>
         <item>Post to mentioned users only</item>
     </string-array>
