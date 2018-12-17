@@ -160,8 +160,8 @@
     <string name="toot_select_image">मीडिया को चुनें</string>
     <string name="toot_select_image_error">मीडिया चुनते वक्त कुछ गड़बड़ी हो गई!</string>
     <string name="toot_delete_media">इस मीडिया को मिटा दें?</string>
-    <string name="toot_error_no_content">Your toot is empty!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
+    <string name="toot_error_no_content">आपने कुछ भी नहीं लिखा है!</string>
+    <string name="toot_visibility_tilte">संदेश की दृश्यता</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
     <string name="toot_sent">The toot has been sent!</string>
     <string name="toot_reply_content_title">You are replying to this toot:</string>
