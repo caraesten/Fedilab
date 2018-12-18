@@ -224,6 +224,7 @@ public class Helper {
     public static final String BOOKMARK_ID = "bookmark_id";
     public static final String LAST_HOMETIMELINE_NOTIFICATION_MAX_ID = "last_hometimeline_notification_max_id";
     public static final String SHOULD_CONTINUE_STREAMING = "should_continue_streaming";
+    public static final String SHOULD_CONTINUE_STREAMING_HOME = "should_continue_streaming_home";
     public static final String SHOULD_CONTINUE_STREAMING_FEDERATED = "should_continue_streaming_federated";
     public static final String SHOULD_CONTINUE_STREAMING_LOCAL = "should_continue_streaming_local";
     public static final String SEARCH_KEYWORD = "search_keyword";

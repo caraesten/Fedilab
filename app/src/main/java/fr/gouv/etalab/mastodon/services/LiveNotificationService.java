@@ -183,7 +183,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             headers.add("Connection", "Keep-Alive");
             headers.add("method", "GET");
             headers.add("scheme", "https");
-            String urlKey = "wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken();
+            String urlKey = "wss://" + account.getInstance() + "/api/v1/streaming/user/notification?access_token=" + account.getToken();
             Uri url = Uri.parse(urlKey);
             AsyncHttpRequest.setDefaultHeaders(headers, url);
             if( webSocketFutures.containsKey(urlKey)  ){
