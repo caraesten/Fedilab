@@ -23,7 +23,7 @@
     <string name="password">पासवर्ड</string>
     <string name="email">ईमेल</string>
     <string name="accounts">खाते</string>
-    <string name="toots">संदेश</string>
+    <string name="toots">लेख</string>
     <string name="tags">टैग्स</string>
     <string name="token">टोकन</string>
     <string name="save">सहेजें</string>
@@ -92,7 +92,7 @@
     <string name="choose_file_error">फ़ाइल एक्सप्लोरर नहीं मिला!</string>
     <string name="click_to_change">मार्ग को बदलने के लिये उस पर क्लिक कीजिये</string>
     <string name="failed">असफल!</string>
-    <string name="scheduled_toots">परिगणित संदेश</string>
+    <string name="scheduled_toots">परिगणित लेख</string>
     <string name="disclaimer_full">नीचे दिये गये जानकारी उप्योगकर्ता का वर्णन अधूरा दर्शा सकता है।</string>
     <string name="insert_emoji">इमोजी डाले</string>
     <string name="no_emoji">इस वक्त एप ने कस्टम इमोजियों को एकत्र नहीं किया।</string>
@@ -162,7 +162,7 @@
     <string name="toot_delete_media">इस मीडिया को मिटा दें?</string>
     <string name="toot_error_no_content">आपने कुछ भी नहीं लिखा है!</string>
     <string name="toot_visibility_tilte">संदेश की दृश्यता</string>
-    <string name="toots_visibility_tilte">संदेशो की दृश्यता का पूर्व निर्धारित रूप: </string>
+    <string name="toots_visibility_tilte">लेखो की दृश्यता का पूर्व निर्धारित रूप: </string>
     <string name="toot_sent">इस संदेश को भेज दिया गया है!</string>
     <string name="toot_reply_content_title">आप इस संदेश का जवाब दे रहे हैं:</string>
     <string name="toot_sensitive">संवेदनशील विषय वस्तु?</string>
@@ -187,7 +187,7 @@
     <string name="about_license">लाइसेंस: </string>
     <string name="about_license_action">जीएनयू जीपीएल वी३</string>
     <string name="about_code">सोर्से कोड: </string>
-    <string name="about_yandex">संदेशो का अनुवाद:</string>
+    <string name="about_yandex">लेखो का अनुवाद:</string>
     <string name="about_thekinrar">इंस्टेंसेस खोजे:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">आइकाॅन डिज़ाइनर:</string>
@@ -197,7 +197,7 @@
     <!-- Accounts -->
     <string name="no_accounts">दिखाने के लिये कोई खाता नहीं है</string>
     <string name="no_follow_request">No follow request</string>
-    <string name="status_cnt">संदेश \n %1$s</string>
+    <string name="status_cnt">लेख \n %1$s</string>
     <string name="following_cnt">Following \n %1$s</string>
     <string name="followers_cnt">अनुयायी \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
@@ -267,7 +267,7 @@
     <string name="toast_error_translate">अनुवाद करते समय गड़बड़ी हुई!</string>
     <string name="toast_toot_saved">मसौदा एकत्र हुआ!</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-    <string name="toast_visibility_changed">%1$s खाते के संदेशो की दृश्यता को बदल दिया गया है</string>
+    <string name="toast_visibility_changed">%1$s खाते के लेखो की दृश्यता को बदल दिया गया है</string>
     <string name="toast_empty_search">इंस्टेंस का नाम और आपका नाम खाली नहीं हो सकता!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation of loading</string>
@@ -289,7 +289,7 @@
     <string name="set_folder_title">Path: </string>
     <string name="set_auto_store_toot">मसौदे स्वतः बचाएं</string>
     <string name="set_bubble_counter">काउंटर दिखाएं</string>
-    <string name="set_auto_add_media_url">मीडिया के यूआरएल को संदेश में जोड़े</string>
+    <string name="set_auto_add_media_url">मीडिया के यूआरएल को लेख में जोड़े</string>
     <string name="settings_title_notifications">सूचनाओ का नियंत्रण</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
@@ -610,7 +610,7 @@
     <string name="set_change_locale">Change the language</string>
     <string name="default_language">Default language</string>
     <string name="truncate_long_toots">लंबे लेखो को छोटा करें</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
+    <string name="set_truncate_toot">\'x\' पंक्तियों से लंबे लेखो को छोटा करें। शून्य मतलब निष्क्रिय।</string>
     <string name="display_toot_truncate">Display more</string>
     <string name="hide_toot_truncate">Display less</string>
     <string name="manage_tags">Manage tags</string>
