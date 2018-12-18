@@ -52,7 +52,7 @@
     <string name="next">Γer sdat</string>
     <string name="previous">Γer deffir</string>
     <string name="open_with">Ldi s</string>
-    <string name="validate">Validate</string>
+    <string name="validate">Seγbel</string>
     <string name="media">Amidya</string>
     <string name="share_with">Bḍu d</string>
     <string name="shared_via">Bḍu s Mastalab</string>
@@ -564,7 +564,7 @@
     <string name="select_sound">Select Tone</string>
     <string name="set_enable_time_slot">Enable time slot</string>
     <string name="how_to_videos">How To Videos</string>
-    <string name="retrieve_remote_conversation">Fetching remote thread!</string>
+    <string name="retrieve_remote_conversation">Yettalid uqesseṛ anemgag!</string>
     <string name="no_blocked_domain">No blocked domains!</string>
     <string name="unblock_domain_confirm">Serreḥ i taγult</string>
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
