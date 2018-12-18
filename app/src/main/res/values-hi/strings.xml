@@ -204,11 +204,11 @@
     <string name="authorize">Authorize</string>
     <string name="reject">अस्वीकार</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
+    <string name="no_scheduled_toots">कोई परिगणित लेख दिखाने के लिये नहीं है!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Delete scheduled toot?</string>
+    <string name="remove_scheduled">परिगणित लेख को मिटाएं?</string>
     <string name="media_count">मीडिया: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
+    <string name="toot_scheduled">लेख को परिगणित कर दिया गया है!</string>
     <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- timed mute -->
