@@ -408,7 +408,7 @@
         <item>Only</item>
         <item>Both</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">डेटाबेस में कोई लेख नहीं मिला। उन्हें वापस पाने के लिये मेन्यू में मौजूद सिंक्रोनाइज़ बटन का इस्तेमाल करें।</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Recorded data</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
