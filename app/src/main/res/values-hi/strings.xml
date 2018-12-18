@@ -271,7 +271,7 @@
     <string name="toast_empty_search">इंस्टेंस का नाम और आपका नाम खाली नहीं हो सकता!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation of loading</string>
-    <string name="set_toots_page">Number of toots per load</string>
+    <string name="set_toots_page">लेखो की संख्या प्रति लोड</string>
     <string name="set_accounts_page">Number of accounts per load</string>
     <string name="set_notifications_page">Number of notifications per load</string>
     <string name="set_attachment_always">Always</string>
