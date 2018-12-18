@@ -101,9 +101,9 @@
     <string name="no_status">Dim tŵt i\'w arddangos</string>
     <string name="fav_added">Ychwanegwyd y tŵt i\'r ffefrynnau</string>
     <string name="fav_removed">Gwaredwyd y tŵt o\'r ffefrynnau!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
+    <string name="reblog_added">Hybwyd y tŵt!</string>
+    <string name="reblog_removed">Nid yw\'r tŵt wedi\'i hybu mwyach!</string>
+    <string name="reblog_by">Hybwyd gan %1$s</string>
     <string name="favourite_add">Ychwanegu\'r tŵt hwn i\'ch ffefrynnau?</string>
     <string name="favourite_remove">Cael gwared o\'r tŵt hwn o\'ch ffefrynnau?</string>
     <string name="reblog_add">Hybu\'r tŵt hwn?</string>
@@ -186,7 +186,7 @@
     <!-- Instance -->
     <string name="instance_no_description">Dim disgrifiad ar gael!</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
+    <string name="about_vesrion">Fersiwn %1$s</string>
     <string name="about_developer">Datblygwr:</string>
     <string name="about_license">Trwydded: </string>
     <string name="about_license_action">GNU GPL V3</string>
