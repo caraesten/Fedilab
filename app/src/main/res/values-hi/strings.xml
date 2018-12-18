@@ -205,7 +205,7 @@
     <string name="reject">अस्वीकार</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">कोई परिगणित लेख दिखाने के लिये नहीं है!</string>
-    <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
+    <string name="no_scheduled_toots_indications">लेख लिखने के बाद ऊपरी मेन्यू में से <b>परिगणित</b> को चुनें।</string>
     <string name="remove_scheduled">परिगणित लेख को मिटाएं?</string>
     <string name="media_count">मीडिया: %d</string>
     <string name="toot_scheduled">लेख को परिगणित कर दिया गया है!</string>
@@ -310,7 +310,7 @@
     <string name="set_save_changes">Save changes</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
     <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+    <string name="set_automatically_split_toot">जवाबो में ५०० अक्षरो से ज़्यादा वाले लेखो को स्वतः अलग करें</string>
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
     <string name="settings_title_hour">Time slot for notifications:</string>
@@ -364,7 +364,7 @@
         <item>White</item>
     </string-array>
     <string name="set_title_news">News</string>
-    <string name="set_notification_news">Notify for new toots on the home timeline</string>
+    <string name="set_notification_news">मुख्यपृष्ट पे नये लेखो के लिये सूचित करें</string>
     <string name="action_follow">Follow</string>
     <string name="action_unfollow">Unfollow</string>
     <string name="action_block">Block</string>
@@ -382,7 +382,7 @@
     <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
     </string>
-    <string name="settings_popup_timeline">For unread toots in home time-line?</string>
+    <string name="settings_popup_timeline">मुख्यपृष्ट में अपठित लेखो के लिये?</string>
     <string name="settings_popup_notification">For unread notifications?</string>
     <!-- CACHE -->
     <string name="cache_title">Clear cache</string>
