@@ -221,7 +221,7 @@
     <string name="timed_mute_profile">Mae %1$s wedi ei tawelu nes %2$s.\n Cliciwch yma i ddad-dawelu\'r cyfrif.</string>
     <!-- Notifications -->
     <string name="no_notifications">Dim hysbysiad i\'w arddangos</string>
-    <string name="notif_mention">mentioned you</string>
+    <string name="notif_mention">wedi\'ch crybwyll</string>
     <string name="notif_reblog">wedi hybu\'ch tŵt</string>
     <string name="notif_favourite">wedi nodi\'ch tŵt yn ffefryn</string>
     <string name="notif_follow">wedi\'ch dilyn chi</string>
@@ -235,8 +235,8 @@
         <item quantity="other">and %d other notifications</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="zero">and %d other toots to discover</item>
-        <item quantity="one">and another toot to discover</item>
+        <item quantity="zero">a tŵt arall i\'w ddarganfod</item>
+        <item quantity="one">a %d tŵt arall i\'w ddarganfod</item>
         <item quantity="two">and %d other toots to discover</item>
         <item quantity="few">and %d other toots to discover</item>
         <item quantity="many">and %d other toots to discover</item>
@@ -540,7 +540,7 @@
     <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
     <string name="context_whole_word">Gair cyfan</string>
     <string name="filter_context">Hidlo cyd-destunnau</string>
-    <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
+    <string name="filter_context_explanations">Un cyd-destun neu fwy lle dylai\'r hidlydd fod yn berthnasol</string>
     <string name="filter_expire">Yn dod i ben ar ôl</string>
     <string name="add_new_filter">Ychwanegu hidlydd newydd</string>
     <string name="action_filter_delete">Dileu hidlydd?</string>
