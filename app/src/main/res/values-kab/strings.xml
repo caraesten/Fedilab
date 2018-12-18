@@ -56,7 +56,7 @@
     <string name="media">Amidya</string>
     <string name="share_with">Bḍu d</string>
     <string name="shared_via">Bḍu s Mastalab</string>
-    <string name="replies">Replies</string>
+    <string name="replies">Tiririt</string>
     <string name="username">Isem n useqdac</string>
     <string name="drafts">Irewwayen</string>
     <string name="new_data">New data are available! Do you want to display them?</string>
@@ -193,7 +193,7 @@
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
-    <string name="conversation">Adiwenni</string>
+    <string name="conversation">Asqerdec</string>
     <!-- Accounts -->
     <string name="no_accounts">Ulac kra n umiḍan ara d-nesken</string>
     <string name="no_follow_request">No follow request</string>
@@ -485,7 +485,7 @@
     <string name="proxy_enable">Enable proxy?</string>
     <string name="poxy_host">Asenneftaγ</string>
     <string name="poxy_port">Awwur</string>
-    <string name="poxy_login">Isen n useqdac</string>
+    <string name="poxy_login">Isem n useqdac</string>
     <string name="poxy_password">Awal uffir</string>
     <string name="set_theme">Asentel:</string>
     <string name="set_compact_mode">Compact mode</string>
@@ -522,7 +522,7 @@
     <string name="context_home">Home timeline</string>
     <string name="context_public">Public timelines</string>
     <string name="context_notification">Ilγuyen</string>
-    <string name="context_conversation">Idiwenniyen</string>
+    <string name="context_conversation">Aqessaṛ</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
     <string name="context_drop">Drop instead of hide</string>
     <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
@@ -633,7 +633,7 @@
     <string name="mastohost_logo">MastoHost logo</string>
     <string name="emoji_picker">Emoji picker</string>
     <string name="refresh">Smiren</string>
-    <string name="expand_conversation">Expand the conversation</string>
+    <string name="expand_conversation">Simγur asqerdec</string>
     <string name="remove_account">Kkes amiḍan</string>
     <string name="delete_domain">Delete the blocked domain</string>
     <string name="custom_emoji_picker">Custom emoji picker</string>
