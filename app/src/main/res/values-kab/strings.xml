@@ -631,7 +631,7 @@
     <string name="contact_instance_admin">Contact admin of the instance</string>
     <string name="add_new">Rnu amaynut</string>
     <string name="mastohost_logo">Alugu n MastoHost</string>
-    <string name="emoji_picker">Emoji picker</string>
+    <string name="emoji_picker">Amsefran n emuji</string>
     <string name="refresh">Smiren</string>
     <string name="expand_conversation">Simγur aqesseṛ</string>
     <string name="remove_account">Kkes amiḍan</string>
@@ -645,7 +645,7 @@
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
         <item>Werǧin</item>
-        <item>30 minutes</item>
+        <item>30 n tesdatin</item>
         <item>1 n usrag</item>
         <item>6 n usrag</item>
         <item>12 n usrag</item>
