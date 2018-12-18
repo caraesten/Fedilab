@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Ldi umuγ</string>
     <string name="navigation_drawer_close">Mdel umuγ</string>
     <string name="action_about">Γef</string>
-    <string name="action_about_instance">About the instance</string>
+    <string name="action_about_instance">Γef uqeddac</string>
     <string name="action_privacy">Tabaḍnit</string>
     <string name="action_cache">Tazarkatut</string>
     <string name="action_logout">Ffeγ</string>
@@ -24,15 +24,15 @@
     <string name="email">Imayl</string>
     <string name="accounts">Imiḍan</string>
     <string name="toots">Toots</string>
-    <string name="tags">Tags</string>
+    <string name="tags">Tibzimin</string>
     <string name="token">Ajiṭun</string>
     <string name="save">Aḥrez</string>
     <string name="restore">Err-d</string>
     <string name="two_factor_authentification">Asesteb s snat n tarrayin?</string>
     <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Ulac igemmaḍ!</string>
-    <string name="instance">Instance</string>
-    <string name="instance_example">Instance: mastodon.social</string>
+    <string name="instance">Aqeddac</string>
+    <string name="instance_example">Aqeddac: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
     <string name="add_account">Rnu amiḍan</string>
     <string name="clipboard">The content of the toot has been copied to the clipboard</string>
@@ -613,7 +613,7 @@
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">Sken ddeqs</string>
     <string name="hide_toot_truncate">Sken kra kan</string>
-    <string name="manage_tags">Manage tags</string>
+    <string name="manage_tags">Sefrek tibzimin</string>
     <string name="tags_already_stored">The tag already exists!</string>
     <string name="tags_stored">The tag has been stored!</string>
     <string name="tags_renamed">The tag has been changed!</string>
@@ -660,7 +660,7 @@
     </string>
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Ugar n telγut</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
     <string name="show_media_only">Media only</string>
