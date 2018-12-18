@@ -402,7 +402,7 @@
     <string name="show_pinned">Show pinned</string>
     <string name="filter_no_result">No matching result found!</string>
     <string name="data_backup_toots">%1$s के लेखो को बैकअप करें</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="data_backup_success">%1$s नये लेख आयात कर लिये गये है</string>
     <string-array name="filter_select">
         <item>No</item>
         <item>Only</item>
@@ -437,7 +437,7 @@
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
     </string>
-    <string name="privacy_API_yandex_title">Translation of toots</string>
+    <string name="privacy_API_yandex_title">लेखो का अनुवाद</string>
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
@@ -448,7 +448,7 @@
     <string name="filter_regex">Filter out by regular expressions</string>
     <string name="search">Search</string>
     <string name="delete">Delete</string>
-    <string name="fetch_more_toots">Fetch more toots…</string>
+    <string name="fetch_more_toots">और लेख खोजिये...</string>
     <!-- About lists -->
     <string name="action_lists">Lists</string>
     <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
@@ -477,7 +477,7 @@
     <string name="data_export_running">Still running, please wait…</string>
     <string name="data_export">Export statuses</string>
     <string name="data_export_toots">Export statuses for %1$s</string>
-    <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
+    <string name="data_export_success">%2$s लेखो में से %1$s लेख आयात कर लिये गये है।</string>
     <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
@@ -558,7 +558,7 @@
     <string name="channel_notif_fav">New Favourite</string>
     <string name="channel_notif_mention">New Mention</string>
     <string name="channel_notif_toot">New Toot</string>
-    <string name="channel_notif_backup">Toots Backup</string>
+    <string name="channel_notif_backup">लेखो का बैकअप</string>
     <string name="channel_notif_media">Media Download</string>
     <string name="set_notif_sound">Change notification sound</string>
     <string name="select_sound">Select Tone</string>
@@ -597,7 +597,7 @@
     <string name="channels">Channels</string>
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Information</string>
-    <string name="set_display_card">Display previews in all toots</string>
+    <string name="set_display_card">सभी लेखो में पूर्वदर्शन लागू करें</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string name="set_display_video_preview">Display video previews</string>
@@ -609,7 +609,7 @@
     <string name="settings_title_battery">Optimization of the battery</string>
     <string name="set_change_locale">Change the language</string>
     <string name="default_language">Default language</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
+    <string name="truncate_long_toots">लंबे लेखो को छोटा करें</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">Display more</string>
     <string name="hide_toot_truncate">Display less</string>
