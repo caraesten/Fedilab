@@ -402,7 +402,7 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cliriwyd y storfa! Rhyddhawyd %1$s</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
+    <string name="action_sync">Cydamseru</string>
     <string name="action_filter">Hidlo</string>
     <string name="owner_cached_toots">Eich tŵtiau</string>
     <string name="v_public">Cyhoeddus</string>
@@ -420,7 +420,7 @@
         <item>Yn unig</item>
         <item>Y ddau</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">Ni ganfyddwyd unrhyw dŵtiau yn y gronfa data. Defnyddiwch y botwm cydamseru o\'r ddewislen i\'w dychwelyd.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Data a gofnodwyd</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
@@ -449,14 +449,14 @@
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
     </string>
-    <string name="privacy_API_yandex_title">Translation of toots</string>
+    <string name="privacy_API_yandex_title">Cyfieithiadau o\'r tŵtiau</string>
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
     <string name="thanks_text">        Thank you to Stéphane for the logo.
     </string>
     <string name="thanks_text_dev">Diolch i:    </string>
-    <string name="filter_regex">Filter out by regular expressions</string>
+    <string name="filter_regex">Hidlo drwy ddefnyddio mynegiadau rheolaidd</string>
     <string name="search">Chwilio</string>
     <string name="delete">Dileu</string>
     <string name="fetch_more_toots">Nôl mwy o dŵtiau…</string>
