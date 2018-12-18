@@ -65,7 +65,7 @@
     <string name="mention">Mentions</string>
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Show boosts</string>
-    <string name="show_replies">Show replies</string>
+    <string name="show_replies">Ssekned tiririt</string>
     <string name="action_open_in_web">Ldi deg iminig</string>
     <string name="translate">Suqel</string>
     <string name="please_wait">Please, wait few seconds before making this action.</string>
@@ -363,7 +363,7 @@
         <item>Awraγ</item>
         <item>Amellal</item>
     </string-array>
-    <string name="set_title_news">News</string>
+    <string name="set_title_news">Isalen</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
     <string name="action_follow">Ḍfeṛ</string>
     <string name="action_unfollow">Unfollow</string>
@@ -443,7 +443,7 @@
     </string>
     <string name="thanks_text">        Thank you to Stéphane for the logo.
     </string>
-    <string name="thanks_text_dev">        Thank you to:
+    <string name="thanks_text_dev">        Tanmirt i:
     </string>
     <string name="filter_regex">Filter out by regular expressions</string>
     <string name="search">Nadi</string>
@@ -516,7 +516,7 @@
     <string name="toast_show_boost">Boosts are now shown!</string>
     <string name="toast_hide_boost">Boosts are now hidden!</string>
     <string name="direct_message">Direct message</string>
-    <string name="filters">Filters</string>
+    <string name="filters">Imzizdigen</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
     <string name="filter_keyword">Keyword or phrase</string>
     <string name="context_home">Home timeline</string>
@@ -532,10 +532,10 @@
     <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
     <string name="filter_expire">Expire after</string>
     <string name="add_new_filter">Add New Filter</string>
-    <string name="action_filter_delete">Delete filter?</string>
+    <string name="action_filter_delete">Kkes imzizdig?</string>
     <string name="action_update_filter">Update filter</string>
-    <string name="action_filter_create">Create filter</string>
-    <string name="how_to_follow">Whom to follow</string>
+    <string name="action_filter_create">Snulfud imzizdig</string>
+    <string name="how_to_follow">Anwa ara tefṛeḍ</string>
     <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
     <string name="follow_account">Ḍfeṛ</string>
     <string name="select_all">Fren kullec</string>
@@ -570,7 +570,7 @@
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
     <string name="block_domain_confirm_message">Are you sure to block %s?</string>
     <string name="blocked_domains">Blocked domains</string>
-    <string name="block_domain">Block domain</string>
+    <string name="block_domain">Sewḥel taγult</string>
     <string name="toast_block_domain">The domain is blocked</string>
     <string name="toast_unblock_domain">The domain is no longer blocked!</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
@@ -579,12 +579,12 @@
     <string name="set_display_direct">Display private messages timeline</string>
     <string name="set_keep_background_process">Keep background process when app is closed</string>
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-    <string name="number_view_video">%s views</string>
+    <string name="number_view_video">%s n tiẓriwin</string>
     <string name="duration_video">Duration: %s</string>
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube favourites</string>
+    <string name="peertube_favorites">Imenyifen n PeerTube</string>
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
@@ -629,8 +629,8 @@
     <string name="profile_picture">Tugna n umaγnu</string>
     <string name="profile_banner">Profile banner</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
-    <string name="mastohost_logo">MastoHost logo</string>
+    <string name="add_new">Rnu amaynut</string>
+    <string name="mastohost_logo">Alugu n MastoHost</string>
     <string name="emoji_picker">Emoji picker</string>
     <string name="refresh">Smiren</string>
     <string name="expand_conversation">Simγur aqesseṛ</string>
