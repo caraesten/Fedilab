@@ -559,7 +559,7 @@
     <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
     <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
     <string name="about_trunk">Who to follow</string>
-    <string name="about_trunk_action">Trunk API</string>
+    <string name="about_trunk_action">API Trunk</string>
     <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
     <string name="retrieve_remote_account">Fetching remote account</string>
     <string name="expand_image">Automatically expand hidden media</string>
@@ -595,7 +595,7 @@
     <string name="add_remote_instance">Ychwanegu achos</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube favourites</string>
+    <string name="peertube_favorites">Ffefrynnau Peertube</string>
     <string name="bookmark_add_peertube">Mae\'r fideo wedi ei ychwanegu i\'r llyfrnodau!</string>
     <string name="bookmark_remove_peertube">Mae\'r fideo wedi ei ddileu o\'r llyfrnodau!</string>
     <string name="bookmark_peertube_empty">Nid oes fideos Peertube yn eich ffefrynnau!</string>
@@ -635,7 +635,7 @@
     <string name="no_scheduled_boosts">No scheduled boost to display!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
+    <string name="open_menu">Agor dewislen</string>
     <string name="app_logo">Logo of the application</string>
     <string name="profile_picture">Profile picture</string>
     <string name="profile_banner">Profile banner</string>
