@@ -101,9 +101,9 @@
     <string name="no_status">Dim tŵt i\'w arddangos</string>
     <string name="fav_added">Ychwanegwyd y tŵt i\'r ffefrynnau</string>
     <string name="fav_removed">Gwaredwyd y tŵt o\'r ffefrynnau!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
+    <string name="reblog_added">Hybwyd y tŵt!</string>
+    <string name="reblog_removed">Nid yw\'r tŵt wedi\'i hybu mwyach!</string>
+    <string name="reblog_by">Hybwyd gan %1$s</string>
     <string name="favourite_add">Ychwanegu\'r tŵt hwn i\'ch ffefrynnau?</string>
     <string name="favourite_remove">Cael gwared o\'r tŵt hwn o\'ch ffefrynnau?</string>
     <string name="reblog_add">Hybu\'r tŵt hwn?</string>
@@ -186,7 +186,7 @@
     <!-- Instance -->
     <string name="instance_no_description">Dim disgrifiad ar gael!</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
+    <string name="about_vesrion">Fersiwn %1$s</string>
     <string name="about_developer">Datblygwr:</string>
     <string name="about_license">Trwydded: </string>
     <string name="about_license_action">GNU GPL V3</string>
@@ -221,7 +221,7 @@
     <string name="timed_mute_profile">Mae %1$s wedi ei tawelu nes %2$s.\n Cliciwch yma i ddad-dawelu\'r cyfrif.</string>
     <!-- Notifications -->
     <string name="no_notifications">Dim hysbysiad i\'w arddangos</string>
-    <string name="notif_mention">mentioned you</string>
+    <string name="notif_mention">wedi\'ch crybwyll</string>
     <string name="notif_reblog">wedi hybu\'ch tŵt</string>
     <string name="notif_favourite">wedi nodi\'ch tŵt yn ffefryn</string>
     <string name="notif_follow">wedi\'ch dilyn chi</string>
@@ -235,8 +235,8 @@
         <item quantity="other">and %d other notifications</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="zero">and %d other toots to discover</item>
-        <item quantity="one">and another toot to discover</item>
+        <item quantity="zero">a tŵt arall i\'w ddarganfod</item>
+        <item quantity="one">a %d tŵt arall i\'w ddarganfod</item>
         <item quantity="two">and %d other toots to discover</item>
         <item quantity="few">and %d other toots to discover</item>
         <item quantity="many">and %d other toots to discover</item>
@@ -402,7 +402,7 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cliriwyd y storfa! Rhyddhawyd %1$s</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
+    <string name="action_sync">Cydamseru</string>
     <string name="action_filter">Hidlo</string>
     <string name="owner_cached_toots">Eich tŵtiau</string>
     <string name="v_public">Cyhoeddus</string>
@@ -420,7 +420,7 @@
         <item>Yn unig</item>
         <item>Y ddau</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">Ni ganfyddwyd unrhyw dŵtiau yn y gronfa data. Defnyddiwch y botwm cydamseru o\'r ddewislen i\'w dychwelyd.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Data a gofnodwyd</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
@@ -449,14 +449,14 @@
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
     </string>
-    <string name="privacy_API_yandex_title">Translation of toots</string>
+    <string name="privacy_API_yandex_title">Cyfieithiadau o\'r tŵtiau</string>
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
     <string name="thanks_text">        Thank you to Stéphane for the logo.
     </string>
     <string name="thanks_text_dev">Diolch i:    </string>
-    <string name="filter_regex">Filter out by regular expressions</string>
+    <string name="filter_regex">Hidlo drwy ddefnyddio mynegiadau rheolaidd</string>
     <string name="search">Chwilio</string>
     <string name="delete">Dileu</string>
     <string name="fetch_more_toots">Nôl mwy o dŵtiau…</string>
@@ -540,7 +540,7 @@
     <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
     <string name="context_whole_word">Gair cyfan</string>
     <string name="filter_context">Hidlo cyd-destunnau</string>
-    <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
+    <string name="filter_context_explanations">Un cyd-destun neu fwy lle dylai\'r hidlydd fod yn berthnasol</string>
     <string name="filter_expire">Yn dod i ben ar ôl</string>
     <string name="add_new_filter">Ychwanegu hidlydd newydd</string>
     <string name="action_filter_delete">Dileu hidlydd?</string>
@@ -559,7 +559,7 @@
     <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
     <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
     <string name="about_trunk">Who to follow</string>
-    <string name="about_trunk_action">Trunk API</string>
+    <string name="about_trunk_action">API Trunk</string>
     <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
     <string name="retrieve_remote_account">Fetching remote account</string>
     <string name="expand_image">Automatically expand hidden media</string>
@@ -595,7 +595,7 @@
     <string name="add_remote_instance">Ychwanegu achos</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube favourites</string>
+    <string name="peertube_favorites">Ffefrynnau Peertube</string>
     <string name="bookmark_add_peertube">Mae\'r fideo wedi ei ychwanegu i\'r llyfrnodau!</string>
     <string name="bookmark_remove_peertube">Mae\'r fideo wedi ei ddileu o\'r llyfrnodau!</string>
     <string name="bookmark_peertube_empty">Nid oes fideos Peertube yn eich ffefrynnau!</string>
@@ -635,7 +635,7 @@
     <string name="no_scheduled_boosts">No scheduled boost to display!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
+    <string name="open_menu">Agor dewislen</string>
     <string name="app_logo">Logo of the application</string>
     <string name="profile_picture">Profile picture</string>
     <string name="profile_banner">Profile banner</string>
