@@ -119,14 +119,12 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import org.conscrypt.Conscrypt;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -3145,36 +3143,5 @@ public class Helper {
 
     public static boolean isTablet(Context context){
         return context.getResources().getBoolean(R.bool.isTablet);
-    }
-
-
-    public static void appendLog(String text) {
-        File logFile = new File("sdcard/mastalab.log.file");
-        if (!logFile.exists())
-        {
-            try
-            {
-                logFile.createNewFile();
-            }
-            catch (IOException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        try
-        {
-            //BufferedWriter for performance, true to set append to file flag
-            BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true));
-            String date = dateToString(new Date());
-            buf.append(date + " - " +text);
-            buf.newLine();
-            buf.close();
-        }
-        catch (IOException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 }

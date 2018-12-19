@@ -100,11 +100,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         networkStateReceiver.addListener(this);
         registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
         startStream();
-        Helper.appendLog("---- onCreate -----");
     }
 
     private void startStream(){
-        Helper.appendLog("-> startStream");
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
@@ -136,7 +134,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Helper.appendLog("---- onStartCommand: ");
         if( intent == null || intent.getBooleanExtra("stop", false) ) {
             stopSelf();
         }
@@ -149,7 +146,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Helper.appendLog("---- onDestroy: ");
         networkStateReceiver.removeListener(this);
         unregisterReceiver(networkStateReceiver);
     }
@@ -165,12 +161,10 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         if(backgroundProcess){
             restart();
         }
-        Helper.appendLog("---- onTaskRemoved: ");
         super.onTaskRemoved(rootIntent);
     }
 
     private void restart(){
-        Helper.appendLog("---- restart:" );
         Intent restartServiceIntent = new Intent(LiveNotificationService.this, LiveNotificationService.class);
         restartServiceIntent.setPackage(getPackageName());
         PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
@@ -184,7 +178,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     private void taks(Account account) {
         if (account != null) {
-            Helper.appendLog("-> task: " + account.getAcct() + "@" + account.getInstance());
             Headers headers = new Headers();
             headers.add("Authorization", "Bearer " + account.getToken());
             headers.add("Connection", "Keep-Alive");
@@ -199,7 +192,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         webSocketFutures.get(urlKey).close();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Helper.appendLog("-> err closing socket: " + e.getMessage());
                 }
             }
             if( Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT ) {
@@ -208,10 +200,8 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setConnectAllAddresses(true);
                 } catch (KeyManagementException e) {
                     e.printStackTrace();
-                    Helper.appendLog("-> err1: " + e.getMessage());
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
-                    Helper.appendLog("-> err2: " + e.getMessage());
                 }
             }
             AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
@@ -220,7 +210,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     webSocketFutures.put(account.getAcct()+"@"+account.getInstance(), webSocket);
                     if (ex != null) {
                         ex.printStackTrace();
-                        Helper.appendLog("-> err3: " + ex.getMessage());
+                        startStream();
                         return;
                     }
                     webSocket.setStringCallback(new WebSocket.StringCallback() {
@@ -228,14 +218,13 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                             try {
                                 JSONObject eventJson = new JSONObject(s);
                                 onRetrieveStreaming(account, eventJson);
-                            } catch (JSONException ignored) {Helper.appendLog("-> err: " + ignored.getMessage());}
+                            } catch (JSONException ignored) {}
                         }
                     });
 
                     webSocket.setClosedCallback(new CompletedCallback() {
                         @Override
                         public void onCompleted(Exception ex) {
-                            Helper.appendLog("-> setClosedCallback: " + ex);
                             try {
                                 if (ex != null)
                                     webSocket.close();
@@ -276,7 +265,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         try {
-            Helper.appendLog("--> event : " + response.get("event").toString() + " - " + account.getAcct()+"@"+account.getInstance());
             switch (response.get("event").toString()) {
                 case "notification":
                     event = Helper.EventStreaming.NOTIFICATION;
@@ -413,16 +401,12 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     try {
                         dataId = response.getString("id");
                         b.putString("dataId", dataId);
-                    } catch (JSONException ignored) {
-                        Helper.appendLog("-> delete: " + ignored.getMessage());
-                    }
+                    } catch (JSONException ignored) { }
                     break;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Helper.appendLog("-> err5: " + e.getMessage());
         }
-        Helper.appendLog("-> canSendBroadCast: " + canSendBroadCast + " - " + account.getAcct() + "@" + account.getInstance());
         if( canSendBroadCast) {
             if (account != null)
                 b.putString("userIdService", account.getId());
@@ -435,13 +419,11 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     @Override
     public void networkAvailable() {
-        Helper.appendLog("-> networkAvailable: ");
         startStream();
     }
 
     @Override
     public void networkUnavailable() {
-        Helper.appendLog("-> networkUnavailable: " + thread);
         if( thread != null && thread.isAlive())
             thread.interrupt();
     }
