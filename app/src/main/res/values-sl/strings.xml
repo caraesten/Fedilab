@@ -451,7 +451,7 @@
     </string>
     <string name="thanks_text_dev">        Thank you to:
     </string>
-    <string name="filter_regex">Filter out by regular expressions</string>
+    <string name="filter_regex">Filtriraj s pomočjo regularnih izrazov</string>
     <string name="search">Išči</string>
     <string name="delete">Izbriši</string>
     <string name="fetch_more_toots">Zajemi več objav Toot …</string>
@@ -468,9 +468,9 @@
     <string name="action_lists_search_users">Išči med svojimi spremljevalci</string>
     <string name="action_lists_owner">Tvoji seznami</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s has moved to %2$s</string>
+    <string name="account_moved_to">%1$s je premaknjen na %2$s</string>
     <string name="show_boost_count">Prikazuj števec ojačanj in priljulbjenih</string>
-    <string name="issue_login_title">Authentication does not work?</string>
+    <string name="issue_login_title">Prijava ne deluje?</string>
     <string name="issue_login_message">        <b>Sledi nekaj točk, ki so vam lahko v pomoč:</b>\n\n
         - Preverite, da nimate napak v imenu instance.\n\n
         - Preverite, da je instanca deujoča.\n\n
@@ -498,7 +498,7 @@
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
-    <string name="no_account_yet">No account yet?</string>
+    <string name="no_account_yet">Še nimate računa?</string>
     <string name="toast_instance_unavailable">Na tej instanci ne najdem časovnic.</string>
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">Iz vašega seznama spremljanih instanc boste zbrisali %s.</string>
@@ -530,12 +530,12 @@
     <string name="context_notification">Obvestila</string>
     <string name="context_conversation">Pogovori</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-    <string name="context_drop">Drop instead of hide</string>
-    <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
-    <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-    <string name="context_whole_word">Whole word</string>
+    <string name="context_drop">Namesto skrivanja zavrži</string>
+    <string name="context_drop_explanations">Filtrirane objave Toot bodo nepovratno izginile, tudi če filter kasneje odstranite</string>
+    <string name="context_whole_word_explanations">Ko je ključna beseda ali fraza samo alfanumerična, bo filter uporabljen le, če se ujema cela beseda.</string>
+    <string name="context_whole_word">Cela beseda</string>
     <string name="filter_context">Konteksti filtra</string>
-    <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
+    <string name="filter_context_explanations">En ali več kontekstov na katerih naj se izvaja ta filter</string>
     <string name="filter_expire">Poteče čez</string>
     <string name="add_new_filter">Dodaj nov filter</string>
     <string name="action_filter_delete">Brisanje filtra?</string>
@@ -585,16 +585,16 @@
     <string name="set_display_direct">Prikaži časovnico zasebnih sporočil</string>
     <string name="set_keep_background_process">Ohrani proces v ozadju, ko je aplikacija zaprta</string>
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-    <string name="number_view_video">%s views</string>
-    <string name="duration_video">Duration: %s</string>
-    <string name="add_remote_instance">Add an instance</string>
+    <string name="number_view_video">%s ogledov</string>
+    <string name="duration_video">Trajanje: %s</string>
+    <string name="add_remote_instance">Dodaj instanco</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
     <string name="peertube_favorites">Peertube favourites</string>
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
-    <string name="channel">Channel</string>
+    <string name="channel">Kanal</string>
     <string name="no_peertube_channels">No Peertube channels</string>
     <string name="no_peertube_instances">No Peertube instances</string>
     <string name="no_mastodon_instances">No Mastodon instances</string>
