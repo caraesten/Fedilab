@@ -154,11 +154,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             }
         }
     }
-
-    static {
-        Helper.installProvider();
-    }
-
+    
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if( intent == null || intent.getBooleanExtra("stop", false) ) {
@@ -232,7 +228,8 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 public void onCompleted(Exception ex, WebSocket webSocket) {
                     webSocketFutures.put(account.getAcct()+"@"+account.getInstance(), webSocket);
                     if (ex != null) {
-                        startStream(account);
+                        if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT )
+                            startStream(account);
                         return;
                     }
                     webSocket.setStringCallback(new WebSocket.StringCallback() {
