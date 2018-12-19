@@ -731,16 +731,19 @@ public abstract class BaseMainActivity extends BaseActivity
         }
         if( display_local) {
             tabLayout.addTab(tabLocal);
+            tabPosition.put("local", i);
             typePosition.put(i, RetrieveFeedsAsyncTask.Type.LOCAL);
             i++;
         }
         if( display_global) {
             tabLayout.addTab(tabPublic);
+            tabPosition.put("global", i);
             typePosition.put(i, RetrieveFeedsAsyncTask.Type.PUBLIC);
             i++;
         }
         if( display_art) {
             tabLayout.addTab(tabArt);
+            tabPosition.put("art", i);
             typePosition.put(i, RetrieveFeedsAsyncTask.Type.ART);
         }
 
