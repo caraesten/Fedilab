@@ -169,8 +169,8 @@
     <string name="toot_reply_content_title">You are replying to this toot:</string>
     <string name="toot_sensitive">Občutljiva vsebina?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
+        <item>Objavi na javne časovnice</item>
+        <item>Ne objavi na javne časovnice</item>
         <item>Objavi le spremljevalcem</item>
         <item>Post to mentioned users only</item>
     </string-array>
@@ -388,13 +388,13 @@
     <string name="settings_popup_message">        Prosimo, potrdite potisna obvestila, ki jih želite prejemati.
         Te nastavitve lahko kasneje omogočite ali onemogočite v nastavitvah (na zavihku Obvestila).
     </string>
-    <string name="settings_popup_timeline">For unread toots in home time-line?</string>
+    <string name="settings_popup_timeline">Za neprebrane objave Toot domače časovnice?</string>
     <string name="settings_popup_notification">Za neprebrana obvestila?</string>
     <!-- CACHE -->
     <string name="cache_title">Počisti predpomnilnik</string>
     <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="toast_cache_clear">Predpomnilnik je izpraznjen. Sproščenih je: %1$s</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sinhroniziraj</string>
     <string name="action_filter">Filtriraj</string>
@@ -416,7 +416,7 @@
     </string-array>
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Recorded data</string>
+    <string name="privacy_data_title">Zabeleženi podatki</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
         Deleting the application immediately removes these data.\n
@@ -499,7 +499,7 @@
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
     <string name="no_account_yet">No account yet?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+    <string name="toast_instance_unavailable">Na tej instanci ne najdem časovnic.</string>
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">Iz vašega seznama spremljanih instanc boste zbrisali %s.</string>
     <string name="which_language">Translate in</string>
@@ -526,7 +526,7 @@
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
     <string name="filter_keyword">Ključna beseda ali fraza</string>
     <string name="context_home">Domača časovnica</string>
-    <string name="context_public">Public timelines</string>
+    <string name="context_public">Javne časovnice</string>
     <string name="context_notification">Obvestila</string>
     <string name="context_conversation">Conversations</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
@@ -563,7 +563,7 @@
     <string name="channel_notif_boost">Novo ojačanje</string>
     <string name="channel_notif_fav">New Favourite</string>
     <string name="channel_notif_mention">New Mention</string>
-    <string name="channel_notif_toot">New Toot</string>
+    <string name="channel_notif_toot">Nova objava Toot</string>
     <string name="channel_notif_backup">Toots Backup</string>
     <string name="channel_notif_media">Media Download</string>
     <string name="set_notif_sound">Spremeni zvok ob obvestilih</string>
@@ -582,7 +582,7 @@
     <string name="retrieve_remote_status">Fetching remote status</string>
     <string name="comment">Komentiraj</string>
     <string name="peertube_instance">Instanca Peertube</string>
-    <string name="set_display_direct">Display private messages timeline</string>
+    <string name="set_display_direct">Prikaži časovnico zasebnih sporočil</string>
     <string name="set_keep_background_process">Keep background process when app is closed</string>
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
     <string name="number_view_video">%s views</string>
@@ -605,7 +605,7 @@
     <string name="information">Informacije</string>
     <string name="set_display_card">Display previews in all toots</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
+    <string name="set_old_direct_timeline">Uporabi neposredno časovnico pred različico Mastodon 2.6</string>
     <string name="set_display_video_preview">Display video previews</string>
     <string name="thanks_text_support">Gitlab Support</string>
     <string name="action_bug_report">Poročilo o napaki</string>
@@ -624,12 +624,12 @@
     <string name="tags_stored">Oznaka je shranjena.</string>
     <string name="tags_renamed">The tag has been changed!</string>
     <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="set_display_art">Prikaži umetniško časovnico</string>
     <string name="schedule_boost">Doliči čas ojačanja</string>
     <string name="boost_scheduled">Določili ste čas ojačanja.</string>
     <string name="no_scheduled_boosts">Nimate časovno načrtovanih ojačanj.</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Odprite meni objave in nato izberite <b>Doliči čas ojačanja</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
+    <string name="art_menu">Umetniška časovnica</string>
     <string name="open_menu">Open menu</string>
     <string name="app_logo">Logo of the application</string>
     <string name="profile_picture">Profile picture</string>
