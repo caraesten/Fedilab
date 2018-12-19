@@ -210,6 +210,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     webSocketFutures.put(account.getAcct()+"@"+account.getInstance(), webSocket);
                     if (ex != null) {
                         ex.printStackTrace();
+                        startStream();
                         return;
                     }
                     webSocket.setStringCallback(new WebSocket.StringCallback() {
@@ -400,8 +401,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     try {
                         dataId = response.getString("id");
                         b.putString("dataId", dataId);
-                    } catch (JSONException ignored) {
-                    }
+                    } catch (JSONException ignored) { }
                     break;
             }
         } catch (Exception e) {
