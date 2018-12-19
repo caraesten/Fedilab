@@ -175,16 +175,16 @@
         <item>Post to mentioned users only</item>
     </string-array>
     <string name="no_draft">Ni osnutkov.</string>
-    <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
+    <string name="choose_toot">Izberi objavo Toot</string>
+    <string name="choose_accounts">Izberite račun</string>
+    <string name="select_accounts">Izberite nekaj računov</string>
     <string name="remove_draft">Naj odstranim osnutek?</string>
     <string name="show_reply">Click on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">Opis ni na voljo.</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
+    <string name="about_vesrion">Različica %1$s</string>
     <string name="about_developer">Razvijalec:</string>
     <string name="about_license">Licenca: </string>
     <string name="about_license_action">GNU GPL V3</string>
@@ -197,7 +197,7 @@
     <!-- Conversation -->
     <string name="conversation">Pogovor</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
+    <string name="no_accounts">Za prikaz ni nobenega računa</string>
     <string name="no_follow_request">Ni zahtev za spremljanje</string>
     <string name="status_cnt">Objave Toot \n %1$s</string>
     <string name="following_cnt">Spremljate \n %1$s</string>
@@ -267,7 +267,7 @@
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
     <string name="toast_error_search">An error occurred while searching!</string>
     <string name="toast_error_login">Prijava ni mogoča.</string>
-    <string name="toast_update_credential_ok">The profile data have been saved!</string>
+    <string name="toast_update_credential_ok">Podatki o profilu so shranjeni.</string>
     <string name="nothing_to_do">No action can be taken</string>
     <string name="toast_saved">The media has been saved!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
@@ -288,7 +288,7 @@
     <string name="load_attachment_spoiler">Prikaži več …</string>
     <string name="load_attachment_spoiler_less">Prikaži manj …</string>
     <string name="load_sensitive_attachment">Občutljiva vsebina</string>
-    <string name="set_display_reply">Display previous message in responses</string>
+    <string name="set_display_reply">V odgovorih prikazuj zgodovino sporočil </string>
     <string name="set_display_local">Prikaži lokalno časovnico</string>
     <string name="set_display_global">Prikaži združeno časovnico</string>
     <string name="set_disable_gif">Onemogoči animirane avatarje GIF</string>
@@ -407,8 +407,8 @@
     <string name="show_media">Prikaz vsebin</string>
     <string name="show_pinned">Prikaži pripeto</string>
     <string name="filter_no_result">Ne najdem ujemanj.</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="data_backup_toots">Arhiviraj objave za %1$s</string>
+    <string name="data_backup_success">Uvoženih je %1$s novih objav Toot</string>
     <string-array name="filter_select">
         <item>Ne</item>
         <item>Samo</item>
@@ -436,7 +436,7 @@
         - <b>Spremljanje</b>: Spremljanje, prekinitev spremljanj, blokiranje, odblokiranje.\n\n
         <b>&#9888; Te akcije se izvedejo le, ko jih zahteva uporabnik.</b>
     </string>
-    <string name="privacy_API_title">Tracking and Libraries</string>
+    <string name="privacy_API_title">Sledenje in knjižnice</string>
     <string name="privacy_API">        Aplikacija <b>ne uporablja analitičnih orodij</b> (merjenje občinstva, spremljanje napak, itd.) in ne vsebuje oglasov.\n\n
         Uporaba knjižnic je omejena na: \n
         - <b>Glide</b>: za uporavljanje medijskih vsebin\n
@@ -447,7 +447,7 @@
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text">        Thank you to Stéphane for the logo.
+    <string name="thanks_text">        Zahvala Stéphane za logotip.
     </string>
     <string name="thanks_text_dev">        Thank you to:
     </string>
@@ -528,7 +528,7 @@
     <string name="context_home">Domača časovnica</string>
     <string name="context_public">Javne časovnice</string>
     <string name="context_notification">Obvestila</string>
-    <string name="context_conversation">Conversations</string>
+    <string name="context_conversation">Pogovori</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
     <string name="context_drop">Drop instead of hide</string>
     <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
@@ -583,7 +583,7 @@
     <string name="comment">Komentiraj</string>
     <string name="peertube_instance">Instanca Peertube</string>
     <string name="set_display_direct">Prikaži časovnico zasebnih sporočil</string>
-    <string name="set_keep_background_process">Keep background process when app is closed</string>
+    <string name="set_keep_background_process">Ohrani proces v ozadju, ko je aplikacija zaprta</string>
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
     <string name="number_view_video">%s views</string>
     <string name="duration_video">Duration: %s</string>
@@ -613,7 +613,7 @@
     <string name="bug_report_mail">Pošlji poročilo o napaki</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimizacija porabe energije</string>
-    <string name="set_change_locale">Change the language</string>
+    <string name="set_change_locale">Spremeni jezik</string>
     <string name="default_language">Privzeti jezik</string>
     <string name="truncate_long_toots">Posekaj dolge objave</string>
     <string name="set_truncate_toot">Posekaj objave, ki presegajo \"x\" vrstic. Nič pomeni onemogočeno. </string>
@@ -630,9 +630,9 @@
     <string name="no_scheduled_boosts">Nimate časovno načrtovanih ojačanj.</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Odprite meni objave in nato izberite <b>Doliči čas ojačanja</b>.]]></string>
     <string name="art_menu">Umetniška časovnica</string>
-    <string name="open_menu">Open menu</string>
-    <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
+    <string name="open_menu">Odpri meni</string>
+    <string name="app_logo">Logotip aplikacije</string>
+    <string name="profile_picture">Profilna slika</string>
     <string name="profile_banner">Profile banner</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
     <string name="add_new">Dodaj novo</string>
