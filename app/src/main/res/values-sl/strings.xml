@@ -247,8 +247,8 @@
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
     <string name="no_internet">No Internet connection!</string>
-    <string name="toast_block">The account was blocked!</string>
-    <string name="toast_unblock">The account is no longer blocked!</string>
+    <string name="toast_block">Račun je blokiran.</string>
+    <string name="toast_unblock">Račun ni več blokiran.</string>
     <string name="toast_mute">The account was muted!</string>
     <string name="toast_unmute">The account is no longer muted!</string>
     <string name="toast_follow">Ta račun ima spremljevalce.</string>
@@ -564,18 +564,18 @@
     <string name="channel_notif_fav">New Favourite</string>
     <string name="channel_notif_mention">New Mention</string>
     <string name="channel_notif_toot">Nova objava Toot</string>
-    <string name="channel_notif_backup">Toots Backup</string>
+    <string name="channel_notif_backup">Arhivirani Tooti</string>
     <string name="channel_notif_media">Media Download</string>
     <string name="set_notif_sound">Spremeni zvok ob obvestilih</string>
-    <string name="select_sound">Select Tone</string>
+    <string name="select_sound">Izberite zvok</string>
     <string name="set_enable_time_slot">Enable time slot</string>
     <string name="how_to_videos">How To Videos</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-    <string name="no_blocked_domain">No blocked domains!</string>
+    <string name="no_blocked_domain">Ni blokiranih domen.</string>
     <string name="unblock_domain_confirm">Unblock domain</string>
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
     <string name="block_domain_confirm_message">Are you sure to block %s?</string>
-    <string name="blocked_domains">Blocked domains</string>
+    <string name="blocked_domains">Blokirane domene</string>
     <string name="block_domain">Blokada domene</string>
     <string name="toast_block_domain">Domena je blokirana</string>
     <string name="toast_unblock_domain">Domena ni več blokirana.</string>
