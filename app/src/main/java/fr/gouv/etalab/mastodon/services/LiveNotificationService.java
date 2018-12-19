@@ -219,8 +219,10 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 try {
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setSSLContext(new TLSSocketFactory().getSSLContext());
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setConnectAllAddresses(true);
-                } catch (KeyManagementException ignored) {
-                } catch (NoSuchAlgorithmException ignored) {
+                } catch (KeyManagementException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
                 }
             }
             AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user:notification&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
