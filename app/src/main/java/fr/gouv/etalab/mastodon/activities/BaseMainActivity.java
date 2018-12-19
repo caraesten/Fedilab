@@ -208,6 +208,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private int style;
     private Activity activity;
     private HashMap<String, Integer> tabPosition = new HashMap<>();
+    public static HashMap<Integer, RetrieveFeedsAsyncTask.Type> typePosition = new HashMap<>();
     private FloatingActionButton federatedTimelines;
 
     @Override
@@ -707,26 +708,40 @@ public abstract class BaseMainActivity extends BaseActivity
         tabLayout.addTab(tabHome);
         tabLayout.addTab(tabNotif);
         tabPosition.put("home",0);
+        typePosition.put(0, RetrieveFeedsAsyncTask.Type.HOME);
         tabPosition.put("notifications",1);
+        typePosition.put(1, null);
         int i = 2;
         if( display_direct) {
             tabLayout.addTab(tabDirect);
             tabPosition.put("direct",i);
+            String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+            if (instanceVersion != null) {
+                Version currentVersion = new Version(instanceVersion);
+                Version minVersion = new Version("2.6");
+                if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.CONVERSATION);
+                } else {
+                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.DIRECT);
+                }
+            }else{
+                typePosition.put(i, RetrieveFeedsAsyncTask.Type.DIRECT);
+            }
             i++;
         }
         if( display_local) {
             tabLayout.addTab(tabLocal);
-            tabPosition.put("local",i);
+            typePosition.put(i, RetrieveFeedsAsyncTask.Type.LOCAL);
             i++;
         }
         if( display_global) {
             tabLayout.addTab(tabPublic);
-            tabPosition.put("global",i);
+            typePosition.put(i, RetrieveFeedsAsyncTask.Type.PUBLIC);
             i++;
         }
         if( display_art) {
             tabLayout.addTab(tabArt);
-            tabPosition.put("art",i);
+            typePosition.put(i, RetrieveFeedsAsyncTask.Type.ART);
         }
 
         if( (getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE)
@@ -940,76 +955,18 @@ public abstract class BaseMainActivity extends BaseActivity
 
                 if( viewPager.getAdapter() != null) {
                     Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
-                    switch (tab.getPosition()) {
-                        case 0:
-                            DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            countNewStatus = 0;
-                            updateHomeCounter();
-                            displayStatusFragment.scrollToTop();
-                            break;
-                        case 2:
-                            if (display_direct) {
 
-                                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
-                                if (instanceVersion != null) {
-                                    Version currentVersion = new Version(instanceVersion);
-                                    Version minVersion = new Version("2.6");
-                                    if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
-                                        updateTimeLine(RetrieveFeedsAsyncTask.Type.CONVERSATION, 0);
-                                    } else {
-                                        updateTimeLine(RetrieveFeedsAsyncTask.Type.DIRECT, 0);
-                                    }
-                                }else{
-                                    updateTimeLine(RetrieveFeedsAsyncTask.Type.DIRECT, 0);
-                                }
-                            }else if (display_local)
-                                updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL, 0);
-                            else if (display_global)
-                                updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
-                            else if(display_art)
-                                updateTimeLine(RetrieveFeedsAsyncTask.Type.ART, 0);
-                            displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            displayStatusFragment.scrollToTop();
-                            break;
-                        case 3:
-                            if (display_local && display_direct){
-                                updateTimeLine(RetrieveFeedsAsyncTask.Type.LOCAL, 0);
-                            }else if (display_global && !display_direct && display_local){
-                                updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
-                            } else if (display_global && !display_local && display_direct) {
-                                updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
-                            }else if (display_art ) {
-                                updateTimeLine(RetrieveFeedsAsyncTask.Type.ART, 0);
-                            }
-                            displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            displayStatusFragment.scrollToTop();
-                            break;
-                        case 4:
-                            if( display_global && display_local && display_direct) {
-                                updateTimeLine(RetrieveFeedsAsyncTask.Type.PUBLIC, 0);
-                            }else {
-                                updateTimeLine(RetrieveFeedsAsyncTask.Type.ART, 0);
-                            }
-                            displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            displayStatusFragment.scrollToTop();
-                            break;
-                        case 5:
-                            if( countPage == 6) {
-                                updateTimeLine(RetrieveFeedsAsyncTask.Type.ART, 0);
-                            }
-                            displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            displayStatusFragment.scrollToTop();
-                            break;
-                        case 1:
-                            DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
-                            countNewNotifications = 0;
-                            updateNotifCounter();
-                            displayNotificationsFragment.scrollToTop();
-                            break;
-                        default:
-                            displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            displayStatusFragment.scrollToTop();
+                    DisplayStatusFragment displayStatusFragment;
+                    if (tab.getPosition() == 0) {
+                        displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        countNewStatus = 0;
+                        updateHomeCounter();
+                        displayStatusFragment.scrollToTop();
+                    } else if (tab.getPosition() > 1) {
+                        if (typePosition.containsKey(tab.getPosition()))
+                            updateTimeLine(typePosition.get(tab.getPosition()), 0);
+                        displayStatusFragment = ((DisplayStatusFragment) fragment);
+                        displayStatusFragment.scrollToTop();
                     }
                 }
                 if( tab.getCustomView() != null) {
@@ -2439,8 +2396,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 return notificationsFragment;
             }else {
                 statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", Helper.timelineType(getApplicationContext(), position, countPage));
-                if( Helper.timelineType(getApplicationContext(), position, countPage) == RetrieveFeedsAsyncTask.Type.TAG){
+                bundle.putSerializable("type", Helper.timelineType(position));
+                if( Helper.timelineType(position) == RetrieveFeedsAsyncTask.Type.TAG){
                     if( tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null) {
                         bundle.putString("tag", tabLayout.getTabAt(position).getText().toString());
                         tagFragment.put(tabLayout.getTabAt(position).getText().toString(), statusFragment);
