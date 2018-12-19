@@ -59,6 +59,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
 import fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService;
+import fr.gouv.etalab.mastodon.services.StreamingHomeTimelineService;
 import fr.gouv.etalab.mastodon.services.StreamingLocalTimelineService;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
@@ -90,7 +91,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String tag;
     private RecyclerView lv_status;
     private boolean showMediaOnly, showPinned, showReply;
-    private Intent streamingFederatedIntent, streamingLocalIntent;
+    private Intent streamingHomeIntent, streamingFederatedIntent, streamingLocalIntent;
     LinearLayoutManager mLayoutManager;
     boolean firstTootsLoaded;
     private String userId, instance;
@@ -568,8 +569,27 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         super.onResume();
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         int batteryProfile = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
-        if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
 
+
+        if (type == RetrieveFeedsAsyncTask.Type.HOME){
+            statusListAdapter.updateMuted(mutedAccount);
+            if( statuses != null && statuses.size() > 0)
+                retrieveMissingToots(statuses.get(0).getId());
+
+            if( getUserVisibleHint() ){
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, true);
+                editor.apply();
+                if(liveNotifications && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
+                    streamingHomeIntent = new Intent(context, StreamingHomeTimelineService.class);
+                    try {
+                        context.startService(streamingHomeIntent);
+                    }catch (Exception ignored){}
+                }
+                if( statuses != null && statuses.size() > 0)
+                    retrieveMissingToots(statuses.get(0).getId());
+            }
+        } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
             if( getUserVisibleHint() ){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
@@ -608,10 +628,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }
-        }else if (type == RetrieveFeedsAsyncTask.Type.HOME){
-            statusListAdapter.updateMuted(mutedAccount);
-            if( statuses != null && statuses.size() > 0)
-                retrieveMissingToots(statuses.get(0).getId());
         }else if (type == RetrieveFeedsAsyncTask.Type.TAG){
             if( getUserVisibleHint() ){
                 if( statuses != null && statuses.size() > 0)
@@ -646,8 +662,30 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         int batteryProfile = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
-        if (type == RetrieveFeedsAsyncTask.Type.HOME && visible && statuses != null && statuses.size() > 0) {
-            updateStatusLastId(statuses.get(0).getId());
+        if (type == RetrieveFeedsAsyncTask.Type.HOME ) {
+
+            if(visible && statuses != null && statuses.size() > 0)
+                updateStatusLastId(statuses.get(0).getId());
+            if (visible) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, true);
+                editor.apply();
+                if(liveNotifications  && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
+                    streamingHomeIntent = new Intent(context, StreamingHomeTimelineService.class);
+                    try {
+                        context.startService(streamingHomeIntent);
+                    }catch (Exception ignored){}
+                }
+                if( statuses != null && statuses.size() > 0)
+                    retrieveMissingToots(statuses.get(0).getId());
+            }else {
+                if( streamingHomeIntent != null ){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, false);
+                    editor.apply();
+                    context.stopService(streamingHomeIntent);
+                }
+            }
         } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC ){
             if (visible) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -696,7 +734,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onStop(){
         super.onStop();
-        if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && streamingFederatedIntent != null){
+        if( type == RetrieveFeedsAsyncTask.Type.HOME && streamingHomeIntent != null){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, false);
+            editor.apply();
+            context.stopService(streamingHomeIntent);
+        } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && streamingFederatedIntent != null){
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, false);
             editor.apply();

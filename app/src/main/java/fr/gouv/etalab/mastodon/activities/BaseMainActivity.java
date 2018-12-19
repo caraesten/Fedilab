@@ -186,7 +186,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private DisplayStatusFragment homeFragment, federatedFragment, localFragment, artFragment;
     private DisplayNotificationsFragment notificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
-    private static BroadcastReceiver receive_data, receive_federated_data, receive_local_data;
+    private static BroadcastReceiver receive_data, receive_home_data, receive_federated_data, receive_local_data;
     private boolean display_direct, display_local, display_global, display_art;
     public static int countNewStatus = 0;
     public static int countNewNotifications = 0;
@@ -2030,6 +2030,22 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         };
+        if( receive_home_data != null)
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_home_data);
+        receive_home_data = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Bundle b = intent.getExtras();
+                assert b != null;
+                userIdService = b.getString("userIdService", null);
+                if( userIdService != null && userIdService.equals(userId)) {
+                    Status status = b.getParcelable("data");
+                    if (homeFragment != null) {
+                        homeFragment.refresh(status);
+                    }
+                }
+            }
+        };
         if( receive_local_data != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_local_data);
         receive_local_data = new BroadcastReceiver() {
@@ -2047,6 +2063,7 @@ public abstract class BaseMainActivity extends BaseActivity
             }
         };
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(receive_home_data, new IntentFilter(Helper.RECEIVE_HOME_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
         LocalBroadcastManager.getInstance(this).registerReceiver(receive_local_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
 
@@ -2055,6 +2072,8 @@ public abstract class BaseMainActivity extends BaseActivity
     @Override
     public void onStop(){
         super.onStop();
+        if( receive_home_data != null)
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_home_data);
         if( receive_federated_data != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
         if( receive_local_data != null)

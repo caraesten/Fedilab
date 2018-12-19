@@ -154,7 +154,7 @@ public class StreamingHomeTimelineService extends IntentService {
                 b.putParcelable("data", status);
                 if( account != null)
                     b.putString("userIdService",account.getId());
-                Intent intentBC = new Intent(Helper.RECEIVE_FEDERATED_DATA);
+                Intent intentBC = new Intent(Helper.RECEIVE_HOME_DATA);
                 intentBC.putExtras(b);
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
             }
