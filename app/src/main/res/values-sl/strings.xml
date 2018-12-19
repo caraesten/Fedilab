@@ -100,7 +100,7 @@
     <!-- Status -->
     <string name="no_status">Ni objav za prikaz</string>
     <string name="fav_added">The toot was added to favourites</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
+    <string name="fav_removed">Objava Toot je odstranjena iz priljubljenih.</string>
     <string name="reblog_added">Objava je ojačana.</string>
     <string name="reblog_removed">Objava ni več ojačana.</string>
     <string name="reblog_by">Ojačano za %1$s</string>
@@ -258,7 +258,7 @@
     <string name="toast_favourite">Objava Toot je dodana med priljubljene.</string>
     <string name="toast_unfavourite">Objava odstranjena iz priljubljenih.</string>
     <string name="toast_report">Prijavljeno zaradi sporne vsebine.</string>
-    <string name="toast_unstatus">The toot was deleted!</string>
+    <string name="toast_unstatus">Objava Toot je izbrisana.</string>
     <string name="toast_pin">Objava je pripeta.</string>
     <string name="toast_unpin">Objava ni več pripeta.</string>
     <string name="toast_error">Ups, prišlo je do napake.</string>
@@ -523,7 +523,7 @@
     <string name="toast_hide_boost">Ojačanja so zdaj skrita.</string>
     <string name="direct_message">Neposredno sporočilo</string>
     <string name="filters">Filtri</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
+    <string name="action_filters_empty_content">Nimate filtrov. Pritisnite gumb \"+\", da ustvarite filter.</string>
     <string name="filter_keyword">Ključna beseda ali fraza</string>
     <string name="context_home">Domača časovnica</string>
     <string name="context_public">Javne časovnice</string>
@@ -534,11 +534,11 @@
     <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
     <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
     <string name="context_whole_word">Whole word</string>
-    <string name="filter_context">Filter contexts</string>
+    <string name="filter_context">Konteksti filtra</string>
     <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
     <string name="filter_expire">Poteče čez</string>
-    <string name="add_new_filter">Add New Filter</string>
-    <string name="action_filter_delete">Delete filter?</string>
+    <string name="add_new_filter">Dodaj nov filter</string>
+    <string name="action_filter_delete">Brisanje filtra?</string>
     <string name="action_update_filter">Posodobitev filtra</string>
     <string name="action_filter_create">Ustvarjanje filtra</string>
     <string name="how_to_follow">Koga naj spremlajm</string>
@@ -552,7 +552,7 @@
     <string name="account_added_list_trunk">Računi so dodani na seznam</string>
     <string name="adding_account_list_trunk">Dodajanje računov na seznam</string>
     <string name="action_list_add">Seznama še niste ustvarili. Pritisnite gumb \"+\", da ustvarite nov seznam.</string>
-    <string name="action_remote_instance_add">Ne spremljate nobenim oddaljenim instancam. Pritisnite gumb \"+\", da dodajte novo.</string>
+    <string name="action_remote_instance_add">Ne spremljate nobene oddaljene instance. Pritisnite gumb \"+\", da dodajte novo.</string>
     <string name="about_trunk">Koga naj spremlajm</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Tega računa ne morete spremljati</string>
