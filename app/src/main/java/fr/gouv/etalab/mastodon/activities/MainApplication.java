@@ -30,7 +30,6 @@ import java.util.Locale;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.jobs.ApplicationJob;
-import fr.gouv.etalab.mastodon.jobs.HomeTimelineSyncJob;
 import fr.gouv.etalab.mastodon.jobs.NotificationsSyncJob;
 
 /**
@@ -47,7 +46,6 @@ public class MainApplication extends MultiDexApplication {
         super.onCreate();
         JobManager.create(this).addJobCreator(new ApplicationJob());
         NotificationsSyncJob.schedule(false);
-        HomeTimelineSyncJob.schedule(false);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         try {

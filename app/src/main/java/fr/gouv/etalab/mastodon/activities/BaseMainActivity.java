@@ -195,7 +195,6 @@ public abstract class BaseMainActivity extends BaseActivity
     boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies , show_nsfw;
     String show_filtered;
     private AppBarLayout appBar;
-    private String bookmark;
     private String userId;
     private String instance;
     public int countPage;
@@ -1222,10 +1221,7 @@ public abstract class BaseMainActivity extends BaseActivity
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
 
-        //Get the previous bookmark value
-        //If null try to use the LAST_HOMETIMELINE_MAX_ID
-        String lastHomeTimeline = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
-        bookmark = sharedpreferences.getString(Helper.BOOKMARK_ID + userId + instance, lastHomeTimeline);
+
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
         if( account == null){
             Helper.logout(getApplicationContext());
@@ -2329,14 +2325,6 @@ public abstract class BaseMainActivity extends BaseActivity
         editor.putString(Helper.INSTANCE_VERSION + userId + instance, apiResponse.getInstance().getVersion());
         editor.apply();
         Helper.canPin = (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion));
-    }
-
-    public String getBookmark() {
-        return bookmark;
-    }
-
-    public void setBookmark(@SuppressWarnings("SameParameterValue") String bookmark) {
-        this.bookmark = bookmark;
     }
 
     @Override

@@ -997,22 +997,22 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( status.isFetchMore()) {
                 holder.fetch_more.setVisibility(View.VISIBLE);
                 holder.fetch_more.setEnabled(true);
-            }else {
-                holder.fetch_more.setVisibility(View.GONE);
-
-            }
-
-            holder.fetch_more.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                holder.fetch_more.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
                         status.setFetchMore(false);
                         holder.fetch_more.setEnabled(false);
                         holder.fetch_more.setVisibility(View.GONE);
                         DisplayStatusFragment homeFragment = ((BaseMainActivity) context).getHomeFragment();
                         if( homeFragment != null)
                             homeFragment.fetchMore(status.getId());
-                }
-            });
+                    }
+                });
+            }else {
+                holder.fetch_more.setVisibility(View.GONE);
+
+            }
+
 
             holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context,status.getMentions()), TextView.BufferType.SPANNABLE);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
