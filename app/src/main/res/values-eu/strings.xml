@@ -126,8 +126,8 @@
         <item>Blokeatu domeinu hau?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Jakinarazi</item>
+        <item>Isilik</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Kendu toot hau?</item>
@@ -659,10 +659,10 @@
     </string>
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Informazio gehiago</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_only">Multimedia besterik ez</string>
+    <string name="show_media_nsfw">Erakutsi NSFW</string>
     <!-- end languages -->
 </resources>
