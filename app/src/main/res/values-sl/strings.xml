@@ -277,8 +277,8 @@
     <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimizacija nalaganja</string>
-    <string name="set_toots_page">Number of toots per load</string>
-    <string name="set_accounts_page">Number of accounts per load</string>
+    <string name="set_toots_page">Količina objav Toot na vsak prenos</string>
+    <string name="set_accounts_page">Količina računov na vsak prenos</string>
     <string name="set_notifications_page">Količina obvestil ob vsakem nalaganju</string>
     <string name="set_attachment_always">Vedno</string>
     <string name="set_attachment_wifi">WiFi</string>
@@ -406,7 +406,7 @@
     <string name="v_keywords">Nekaj ključnih besed …</string>
     <string name="show_media">Prikaz vsebin</string>
     <string name="show_pinned">Prikaži pripeto</string>
-    <string name="filter_no_result">No matching result found!</string>
+    <string name="filter_no_result">Ne najdem ujemanj.</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
@@ -572,9 +572,9 @@
     <string name="how_to_videos">How To Videos</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
     <string name="no_blocked_domain">Ni blokiranih domen.</string>
-    <string name="unblock_domain_confirm">Unblock domain</string>
-    <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+    <string name="unblock_domain_confirm">Odstranitev blokade domene</string>
+    <string name="unblock_domain_confirm_message">Res želite odstraniti blokado %s?</string>
+    <string name="block_domain_confirm_message">Res želite blokirati %s?</string>
     <string name="blocked_domains">Blokirane domene</string>
     <string name="block_domain">Blokada domene</string>
     <string name="toast_block_domain">Domena je blokirana</string>
