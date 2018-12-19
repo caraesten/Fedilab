@@ -58,7 +58,9 @@ import org.json.JSONObject;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -90,7 +92,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     protected Account account;
     boolean backgroundProcess;
-    private static Thread thread;
+    private static HashMap<String, Thread>  threads = new HashMap<>();
     private NetworkStateReceiver networkStateReceiver;
     private static HashMap<String, WebSocket> webSocketFutures = new HashMap<>();
 
@@ -99,32 +101,57 @@ public class LiveNotificationService extends Service implements NetworkStateRece
         networkStateReceiver = new NetworkStateReceiver();
         networkStateReceiver.addListener(this);
         registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
-        startStream();
+        startStream(null);
     }
 
-    private void startStream(){
+    private void startStream(Account account){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if( liveNotifications ){
-            if( thread == null || !thread.isAlive()){
-                if(thread != null)
-                    thread.interrupt();
-                thread = new Thread() {
-                    @Override
-                    public void run() {
-                        List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
-                        if (accountStreams != null) {
-                            for (final Account accountStream : accountStreams) {
+            if( account == null){
+                Iterator it = threads.entrySet().iterator();
+                Thread thread;
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    if( pair.getValue() == null || !((Thread)pair.getValue()).isAlive()) {
+                        if ((pair.getValue()) != null)
+                            ((Thread) pair.getValue()).interrupt();
+                    }
+                    it.remove();
+                }
+                List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
+                if (accountStreams != null) {
+                    for (final Account accountStream : accountStreams) {
+                        thread = new Thread() {
+                            @Override
+                            public void run() {
                                 taks(accountStream);
                             }
-                        }
+                        };
+                        thread.start();
+                        threads.put(accountStream.getAcct()+"@"+accountStream.getInstance(), thread);
+                    }
+                }
+            }else {
+                String key = account.getAcct() + "@" + account.getInstance();
+                if(threads.containsKey(key)){
+                    if (threads.get(key) == null || !threads.get(key).isAlive()) {
+                        if (threads.get(key) != null)
+                            threads.get(key).interrupt();
+                    }
+                }
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        taks(account);
                     }
                 };
                 thread.start();
-            }
+                threads.put(account.getAcct()+"@"+account.getInstance(), thread);
 
+            }
         }
     }
 
@@ -183,34 +210,29 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             headers.add("Connection", "Keep-Alive");
             headers.add("method", "GET");
             headers.add("scheme", "https");
-            String urlKey = "wss://" + account.getInstance() + "/api/v1/streaming/user/notification?access_token=" + account.getToken();
+            String urlKey = "wss://" + account.getInstance() + "/api/v1/streaming/?stream=user:notification&access_token=" + account.getToken();
             Uri url = Uri.parse(urlKey);
             AsyncHttpRequest.setDefaultHeaders(headers, url);
             if( webSocketFutures.containsKey(urlKey)  ){
                 try {
                     if( webSocketFutures.get(urlKey) != null && webSocketFutures.get(urlKey).isOpen())
                         webSocketFutures.get(urlKey).close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                } catch (Exception ignored) {}
             }
             if( Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT ) {
                 try {
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setSSLContext(new TLSSocketFactory().getSSLContext());
                     AsyncHttpClient.getDefaultInstance().getSSLSocketMiddleware().setConnectAllAddresses(true);
-                } catch (KeyManagementException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
+                } catch (KeyManagementException ignored) {
+                } catch (NoSuchAlgorithmException ignored) {
                 }
             }
-            AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
+            AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user:notification&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
                 @Override
                 public void onCompleted(Exception ex, WebSocket webSocket) {
                     webSocketFutures.put(account.getAcct()+"@"+account.getInstance(), webSocket);
                     if (ex != null) {
-                        ex.printStackTrace();
-                        startStream();
+                        startStream(account);
                         return;
                     }
                     webSocket.setStringCallback(new WebSocket.StringCallback() {
@@ -226,8 +248,9 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         @Override
                         public void onCompleted(Exception ex) {
                             try {
-                                if (ex != null)
+                                if (ex != null) {
                                     webSocket.close();
+                                }
                             } finally {
                                 if( webSocketFutures != null && webSocketFutures.containsKey(urlKey))
                                     webSocketFutures.remove(urlKey);
@@ -258,7 +281,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             return;
         fr.gouv.etalab.mastodon.client.Entities.Status status ;
         final Notification notification;
-        String dataId = null;
+        String dataId;
         Bundle b = new Bundle();
         boolean canSendBroadCast = true;
         Helper.EventStreaming event = null;
@@ -390,12 +413,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                         }
                     }
                     break;
-                case "update":
-                    event = Helper.EventStreaming.UPDATE;
-                    status = API.parseStatuses(getApplicationContext(), new JSONObject(response.get("payload").toString()));
-                    status.setNew(true);
-                    b.putParcelable("data", status);
-                    break;
                 case "delete":
                     event = Helper.EventStreaming.DELETE;
                     try {
@@ -404,9 +421,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     } catch (JSONException ignored) { }
                     break;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) { }
         if( canSendBroadCast) {
             if (account != null)
                 b.putString("userIdService", account.getId());
@@ -419,12 +434,19 @@ public class LiveNotificationService extends Service implements NetworkStateRece
 
     @Override
     public void networkAvailable() {
-        startStream();
+        startStream(null);
     }
 
     @Override
     public void networkUnavailable() {
-        if( thread != null && thread.isAlive())
-            thread.interrupt();
+        Iterator it = threads.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            if (pair.getValue() == null || !((Thread) pair.getValue()).isAlive()) {
+                if ((pair.getValue()) != null)
+                    ((Thread) pair.getValue()).interrupt();
+            }
+            it.remove();
+        }
     }
 }

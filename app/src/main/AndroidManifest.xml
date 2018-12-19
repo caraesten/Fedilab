@@ -60,6 +60,9 @@
             </intent-filter>
         </receiver>
         <service
+            android:name=".services.StreamingHomeTimelineService"
+            android:exported="false"/>
+        <service
             android:name=".services.StreamingFederatedTimelineService"
             android:exported="false"/>
         <service
