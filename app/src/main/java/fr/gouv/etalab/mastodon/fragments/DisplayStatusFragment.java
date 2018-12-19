@@ -604,11 +604,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
         if (type == RetrieveFeedsAsyncTask.Type.HOME){
-            statusListAdapter.updateMuted(mutedAccount);
-            if( statuses != null && statuses.size() > 0)
-                retrieveMissingToots(statuses.get(0).getId());
-
             if( getUserVisibleHint() ){
+                statusListAdapter.updateMuted(mutedAccount);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, true);
                 editor.apply();

@@ -71,7 +71,7 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         List<fr.gouv.etalab.mastodon.client.Entities.Status> tempStatus = null;
         APIResponse apiResponse = null;
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
-            apiResponse = api.getHomeTimeline(since_id);
+            apiResponse = api.getHomeTimelineSinceId(since_id);
         else if( type == RetrieveFeedsAsyncTask.Type.DIRECT)
             apiResponse = api.getDirectTimelineSinceId(since_id);
         else if( type == RetrieveFeedsAsyncTask.Type.CONVERSATION)
