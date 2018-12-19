@@ -165,14 +165,14 @@
     <string name="toot_error_no_content">Vaš Toot je prazen.</string>
     <string name="toot_visibility_tilte">Vidnost objave Toot</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
+    <string name="toot_sent">Objava Toot je poslana.</string>
+    <string name="toot_reply_content_title">Odgovarjate na to objavo:</string>
     <string name="toot_sensitive">Občutljiva vsebina?</string>
     <string-array name="toot_visibility">
         <item>Objavi na javne časovnice</item>
         <item>Ne objavi na javne časovnice</item>
         <item>Objavi le spremljevalcem</item>
-        <item>Post to mentioned users only</item>
+        <item>Objavi le omenjenim uporabnikom</item>
     </string-array>
     <string name="no_draft">Ni osnutkov.</string>
     <string name="choose_toot">Izberi objavo Toot</string>
@@ -212,11 +212,11 @@
     <string name="media_count">Media: %d</string>
     <string name="toot_scheduled">Čas objave Toot-a je na urniku. </string>
     <string name="toot_scheduled_date">Planiran čas objave morate določiti kasneje od tega trenutka.</string>
-    <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+    <string name="warning_battery">Omogočen je ohranjevalnik baterije. Delovanje lahko odstopa od pričakovanega.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_date_error">Čas za utišanje računa naj bo daljši od minute.</string>
+    <string name="timed_mute_date">%1$s je utišan do %2$s.\nGovor lahko dovolite na profilu uporabnika.</string>
+    <string name="timed_mute_profile">%1$s je utišan do %2$s.\nPritisnite tu, če želite omogočiti govor.</string>
     <!-- Notifications -->
     <string name="no_notifications">Ni obvestil za prikaz</string>
     <string name="notif_mention">mentioned you</string>
@@ -246,11 +246,11 @@
     <string name="pinned_toots">Pripeto</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
-    <string name="no_internet">No Internet connection!</string>
+    <string name="no_internet">Ni internetne povezave.</string>
     <string name="toast_block">Račun je blokiran.</string>
     <string name="toast_unblock">Račun ni več blokiran.</string>
-    <string name="toast_mute">The account was muted!</string>
-    <string name="toast_unmute">The account is no longer muted!</string>
+    <string name="toast_mute">Račun je utišan.</string>
+    <string name="toast_unmute">Računu je omogočen govor.</string>
     <string name="toast_follow">Ta račun ima spremljevalce.</string>
     <string name="toast_unfollow">Ta račun nima več spremljevalcev.</string>
     <string name="toast_reblog">Objava je bila ojačana.</string>
@@ -502,7 +502,7 @@
     <string name="toast_instance_unavailable">Na tej instanci ne najdem časovnic.</string>
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">Iz vašega seznama spremljanih instanc boste zbrisali %s.</string>
-    <string name="which_language">Translate in</string>
+    <string name="which_language">Prevedi v</string>
     <string name="crash_title">Mastalab se je ustavil :(</string>
     <string name="crash_message">Poročilo o zrušitvi lahko posredujete po e-pošti. To nam bo v pomoč pri odpravi napak :)\n\nPriložite lahko tudi dodatno vsebino. Hvala!</string>
     <string name="send_crash_report">Vprašaj me za posredovanje poročila o zrušitvi.</string>
@@ -512,13 +512,13 @@
     <string name="action_partnership">Partnerstvo</string>
     <string name="neutral_menu_information">Informacije</string>
     <string name="hide_boost">Skrij ojačanja pred %s</string>
-    <string name="endorse">Feature on profile</string>
-    <string name="hide_everything">Hide everything from %s</string>
+    <string name="endorse">Izpostavi v profilu</string>
+    <string name="hide_everything">Skrij vse od %s</string>
     <string name="show_boost">Prikaži ojačanja uporabnika %s</string>
-    <string name="unendorse">Don\'t feature on profile</string>
-    <string name="show_everything">Show everything from %s</string>
-    <string name="toast_endorse">The account is now featured on profile</string>
-    <string name="toast_unendorse">The account is no longer featured on profile</string>
+    <string name="unendorse">Ne izpostavljaj v profilu</string>
+    <string name="show_everything">Prikaži vse od %s</string>
+    <string name="toast_endorse">Račun je izpostavljen v profilu</string>
+    <string name="toast_unendorse">Račun ni več izpostavljen v profilu</string>
     <string name="toast_show_boost">Ojačanja so zdaj prikazana.</string>
     <string name="toast_hide_boost">Ojačanja so zdaj skrita.</string>
     <string name="direct_message">Neposredno sporočilo</string>
@@ -633,7 +633,7 @@
     <string name="open_menu">Odpri meni</string>
     <string name="app_logo">Logotip aplikacije</string>
     <string name="profile_picture">Profilna slika</string>
-    <string name="profile_banner">Profile banner</string>
+    <string name="profile_banner">Plakat profila</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
     <string name="add_new">Dodaj novo</string>
     <string name="mastohost_logo">Logotip MastoHost</string>
@@ -647,7 +647,7 @@
     <string name="new_toot">Nova objava</string>
     <string name="card_view_image">Slika kartice</string>
     <string name="hide_media">Skrij vsebino</string>
-    <string name="favicon">Favicon</string>
+    <string name="favicon">Mala ikona</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
         <item>Nikoli</item>
