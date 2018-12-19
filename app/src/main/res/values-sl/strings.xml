@@ -289,8 +289,8 @@
     <string name="load_attachment_spoiler_less">Prikaži manj …</string>
     <string name="load_sensitive_attachment">Občutljiva vsebina</string>
     <string name="set_display_reply">Display previous message in responses</string>
-    <string name="set_display_local">Display local timeline</string>
-    <string name="set_display_global">Display federated timeline</string>
+    <string name="set_display_local">Prikaži lokalno časovnico</string>
+    <string name="set_display_global">Prikaži združeno časovnico</string>
     <string name="set_disable_gif">Onemogoči animirane avatarje GIF</string>
     <string name="set_folder_title">Pot: </string>
     <string name="set_auto_store_toot">Samodejno shranjevanje osnutkov</string>
