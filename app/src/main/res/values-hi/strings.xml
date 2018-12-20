@@ -169,7 +169,7 @@
     <string-array name="toot_visibility">
         <item>सार्वजनिक टाइम्लाइन पर भेजें</item>
         <item>सार्वजनिक टाइम्लाइन पर मत भेजिए</item>
-        <item>सिर्फ़ अनुयायियो को भेजें</item>
+        <item>केवल अनुयायियो को भेजें</item>
         <item>केवल अंकित उपयोगकर्ताओं को भेजें</item>
     </string-array>
     <string name="no_draft">कोई मसौदा नहीं है!</string>
@@ -235,14 +235,14 @@
     <string name="delete_notification">इस सूचना को मिटा दिया गया है!</string>
     <string name="delete_notification_all">सभी सूचनाओ को मिटा दिया गया है!</string>
     <!-- HEADER -->
-    <string name="following">Following</string>
+    <string name="following">अनुसरण</string>
     <string name="followers">अनुयायी</string>
     <string name="pinned_toots">जड़े हुए संदेश</string>
     <!-- TOAST -->
     <string name="client_error">क्लाइंट आईडी हासिल करने में असफल!</string>
     <string name="no_internet">इंटरनेट कनेक्शन नहीं है!</string>
     <string name="toast_block">इस खाते को अवरुद्ध कर दिया गया है!</string>
-    <string name="toast_unblock">खाता अब अवरुद्ध नहीं है!</string>
+    <string name="toast_unblock">यह खाता अब अवरुद्ध नहीं है!</string>
     <string name="toast_mute">खाते को चुप कर दिया गया है!</string>
     <string name="toast_unmute">खाता अब अवरुद्ध नहीं है!</string>
     <string name="toast_follow">The account was followed!</string>
