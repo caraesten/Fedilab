@@ -256,7 +256,7 @@
     <string name="toast_pin">लेख को जड़ दिया गया है!</string>
     <string name="toast_unpin">The toot was unpinned!</string>
     <string name="toast_error">क्षमा करें ! कोई गड़बड़ी उत्पन्न हुई है!</string>
-    <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
+    <string name="toast_code_error">एक गड़बड़ी हो गयी! इंस्टेंस ने अनुमति कोड वापस नहीं दिया!</string>
     <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
     <string name="toast_error_search">खोजने के दौरान गड़बड़ी हुई!</string>
