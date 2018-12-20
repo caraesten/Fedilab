@@ -126,8 +126,8 @@
         <item>Bloquear este dominio?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Notificar</item>
+        <item>Silencioso</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Eliminar este toot?</item>
@@ -664,7 +664,7 @@
     <string name="more_information">Máis información</string>
     <string name="showcase_2FA">Se utiliza 2FA (doble factor de autenticación), debe utilizar esta ligazón.\nTamén pode utilizalo se non quere introducir as súas credenciais aquí.</string>
     <!-- languages not translated -->
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_only">Só medios</string>
+    <string name="show_media_nsfw">Mostrar NSFW</string>
     <!-- end languages -->
 </resources>
