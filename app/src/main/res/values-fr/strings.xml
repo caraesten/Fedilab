@@ -652,7 +652,7 @@
     </string-array>
     <string name="showcase_instance">Renseignez le nom de domaine de votre instance dans ce champs.\nPar exemple, si vous avez créé un compte sur https://mastodon.social\nécrivez simplement <b>mastodon.social</b>(sans le https://)\n
 Commencez à saisir les premières lettres et des domaines vous seront suggérés. \n\n
-Le bouton de connection s’activera une fois qu’un domaine valide sera renseigné et que l’instance est active !    </string>
+Le bouton de connexion s’activera une fois qu’un domaine valide sera renseigné et que l’instance est active !    </string>
     <string name="showcase_uid">        Dans ce champs, saisissez l’adresse de courrier relative à votre compte Mastodon et/ou Pleroma.
     </string>
     <string name="showcase_pwd">        Dernière étape consiste à saisir votre mot de passe puis cliquer sur « Connexion ».
