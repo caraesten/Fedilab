@@ -126,8 +126,8 @@
         <item>هل تريد حظر هذا النطاق؟</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>إشعار</item>
+        <item>صامت</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>هل تود حذف هذا التبويق ؟</item>
@@ -620,7 +620,7 @@
     <string name="set_change_locale">تغيير اللغة</string>
     <string name="default_language">اللغة الافتراضية</string>
     <string name="truncate_long_toots">تقسيم التبويقات الطويلة</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
+    <string name="set_truncate_toot">اقتطاع التبويقات إلى \'س\' خطوط. الصفر يعني معطَّل.</string>
     <string name="display_toot_truncate">عرض المزيد</string>
     <string name="hide_toot_truncate">اعرض أقل</string>
     <string name="manage_tags">إدارة الوسوم</string>
@@ -638,7 +638,7 @@
     <string name="app_logo">شعار التطبيق</string>
     <string name="profile_picture">الصورة الشخصية</string>
     <string name="profile_banner">رأسية الصفحة الشخصية</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
+    <string name="contact_instance_admin">الاتصال بالمشرف على مثيل الخادوم</string>
     <string name="add_new">إضافة</string>
     <string name="mastohost_logo">شعار ماستوهوست</string>
     <string name="emoji_picker">منتقي الإيموجي</string>
@@ -666,14 +666,14 @@
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        في هذا الحقل، قم بكتابة عنوان بريك الإلكتروني المرتبط بحسابك على ماستدون.
     </string>
     <string name="showcase_pwd">        هذه هي الخطوة الأخيرة. ادخل كلمتك السرية ثم انقر على تسجيل الدخول.
     </string>
     <string name="more_information">تفاصيل أكثر</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_only">الوسائط فقط</string>
+    <string name="show_media_nsfw">عرض NSFW</string>
     <!-- end languages -->
 </resources>

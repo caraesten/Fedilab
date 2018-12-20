@@ -100,7 +100,7 @@
     <!-- Status -->
     <string name="no_status">Ni objav za prikaz</string>
     <string name="fav_added">The toot was added to favourites</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
+    <string name="fav_removed">Objava Toot je odstranjena iz priljubljenih.</string>
     <string name="reblog_added">Objava je ojačana.</string>
     <string name="reblog_removed">Objava ni več ojačana.</string>
     <string name="reblog_by">Ojačano za %1$s</string>
@@ -165,26 +165,26 @@
     <string name="toot_error_no_content">Vaš Toot je prazen.</string>
     <string name="toot_visibility_tilte">Vidnost objave Toot</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
+    <string name="toot_sent">Objava Toot je poslana.</string>
+    <string name="toot_reply_content_title">Odgovarjate na to objavo:</string>
     <string name="toot_sensitive">Občutljiva vsebina?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
+        <item>Objavi na javne časovnice</item>
+        <item>Ne objavi na javne časovnice</item>
         <item>Objavi le spremljevalcem</item>
-        <item>Post to mentioned users only</item>
+        <item>Objavi le omenjenim uporabnikom</item>
     </string-array>
     <string name="no_draft">Ni osnutkov.</string>
-    <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
+    <string name="choose_toot">Izberi objavo Toot</string>
+    <string name="choose_accounts">Izberite račun</string>
+    <string name="select_accounts">Izberite nekaj računov</string>
     <string name="remove_draft">Naj odstranim osnutek?</string>
     <string name="show_reply">Click on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">Opis ni na voljo.</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
+    <string name="about_vesrion">Različica %1$s</string>
     <string name="about_developer">Razvijalec:</string>
     <string name="about_license">Licenca: </string>
     <string name="about_license_action">GNU GPL V3</string>
@@ -197,7 +197,7 @@
     <!-- Conversation -->
     <string name="conversation">Pogovor</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
+    <string name="no_accounts">Za prikaz ni nobenega računa</string>
     <string name="no_follow_request">Ni zahtev za spremljanje</string>
     <string name="status_cnt">Objave Toot \n %1$s</string>
     <string name="following_cnt">Spremljate \n %1$s</string>
@@ -212,11 +212,11 @@
     <string name="media_count">Media: %d</string>
     <string name="toot_scheduled">Čas objave Toot-a je na urniku. </string>
     <string name="toot_scheduled_date">Planiran čas objave morate določiti kasneje od tega trenutka.</string>
-    <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+    <string name="warning_battery">Omogočen je ohranjevalnik baterije. Delovanje lahko odstopa od pričakovanega.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_date_error">Čas za utišanje računa naj bo daljši od minute.</string>
+    <string name="timed_mute_date">%1$s je utišan do %2$s.\nGovor lahko dovolite na profilu uporabnika.</string>
+    <string name="timed_mute_profile">%1$s je utišan do %2$s.\nPritisnite tu, če želite omogočiti govor.</string>
     <!-- Notifications -->
     <string name="no_notifications">Ni obvestil za prikaz</string>
     <string name="notif_mention">mentioned you</string>
@@ -246,11 +246,11 @@
     <string name="pinned_toots">Pripeto</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
-    <string name="no_internet">No Internet connection!</string>
-    <string name="toast_block">The account was blocked!</string>
-    <string name="toast_unblock">The account is no longer blocked!</string>
-    <string name="toast_mute">The account was muted!</string>
-    <string name="toast_unmute">The account is no longer muted!</string>
+    <string name="no_internet">Ni internetne povezave.</string>
+    <string name="toast_block">Račun je blokiran.</string>
+    <string name="toast_unblock">Račun ni več blokiran.</string>
+    <string name="toast_mute">Račun je utišan.</string>
+    <string name="toast_unmute">Računu je omogočen govor.</string>
     <string name="toast_follow">Ta račun ima spremljevalce.</string>
     <string name="toast_unfollow">Ta račun nima več spremljevalcev.</string>
     <string name="toast_reblog">Objava je bila ojačana.</string>
@@ -258,7 +258,7 @@
     <string name="toast_favourite">Objava Toot je dodana med priljubljene.</string>
     <string name="toast_unfavourite">Objava odstranjena iz priljubljenih.</string>
     <string name="toast_report">Prijavljeno zaradi sporne vsebine.</string>
-    <string name="toast_unstatus">The toot was deleted!</string>
+    <string name="toast_unstatus">Objava Toot je izbrisana.</string>
     <string name="toast_pin">Objava je pripeta.</string>
     <string name="toast_unpin">Objava ni več pripeta.</string>
     <string name="toast_error">Ups, prišlo je do napake.</string>
@@ -267,7 +267,7 @@
     <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
     <string name="toast_error_search">An error occurred while searching!</string>
     <string name="toast_error_login">Prijava ni mogoča.</string>
-    <string name="toast_update_credential_ok">The profile data have been saved!</string>
+    <string name="toast_update_credential_ok">Podatki o profilu so shranjeni.</string>
     <string name="nothing_to_do">No action can be taken</string>
     <string name="toast_saved">The media has been saved!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
@@ -277,8 +277,8 @@
     <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimizacija nalaganja</string>
-    <string name="set_toots_page">Number of toots per load</string>
-    <string name="set_accounts_page">Number of accounts per load</string>
+    <string name="set_toots_page">Količina objav Toot na vsak prenos</string>
+    <string name="set_accounts_page">Količina računov na vsak prenos</string>
     <string name="set_notifications_page">Količina obvestil ob vsakem nalaganju</string>
     <string name="set_attachment_always">Vedno</string>
     <string name="set_attachment_wifi">WiFi</string>
@@ -288,9 +288,9 @@
     <string name="load_attachment_spoiler">Prikaži več …</string>
     <string name="load_attachment_spoiler_less">Prikaži manj …</string>
     <string name="load_sensitive_attachment">Občutljiva vsebina</string>
-    <string name="set_display_reply">Display previous message in responses</string>
-    <string name="set_display_local">Display local timeline</string>
-    <string name="set_display_global">Display federated timeline</string>
+    <string name="set_display_reply">V odgovorih prikazuj zgodovino sporočil </string>
+    <string name="set_display_local">Prikaži lokalno časovnico</string>
+    <string name="set_display_global">Prikaži združeno časovnico</string>
     <string name="set_disable_gif">Onemogoči animirane avatarje GIF</string>
     <string name="set_folder_title">Pot: </string>
     <string name="set_auto_store_toot">Samodejno shranjevanje osnutkov</string>
@@ -388,13 +388,13 @@
     <string name="settings_popup_message">        Prosimo, potrdite potisna obvestila, ki jih želite prejemati.
         Te nastavitve lahko kasneje omogočite ali onemogočite v nastavitvah (na zavihku Obvestila).
     </string>
-    <string name="settings_popup_timeline">For unread toots in home time-line?</string>
+    <string name="settings_popup_timeline">Za neprebrane objave Toot domače časovnice?</string>
     <string name="settings_popup_notification">Za neprebrana obvestila?</string>
     <!-- CACHE -->
     <string name="cache_title">Počisti predpomnilnik</string>
     <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="toast_cache_clear">Predpomnilnik je izpraznjen. Sproščenih je: %1$s</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sinhroniziraj</string>
     <string name="action_filter">Filtriraj</string>
@@ -406,9 +406,9 @@
     <string name="v_keywords">Nekaj ključnih besed …</string>
     <string name="show_media">Prikaz vsebin</string>
     <string name="show_pinned">Prikaži pripeto</string>
-    <string name="filter_no_result">No matching result found!</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="filter_no_result">Ne najdem ujemanj.</string>
+    <string name="data_backup_toots">Arhiviraj objave za %1$s</string>
+    <string name="data_backup_success">Uvoženih je %1$s novih objav Toot</string>
     <string-array name="filter_select">
         <item>Ne</item>
         <item>Samo</item>
@@ -416,7 +416,7 @@
     </string-array>
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Recorded data</string>
+    <string name="privacy_data_title">Zabeleženi podatki</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
         Deleting the application immediately removes these data.\n
@@ -436,7 +436,7 @@
         - <b>Spremljanje</b>: Spremljanje, prekinitev spremljanj, blokiranje, odblokiranje.\n\n
         <b>&#9888; Te akcije se izvedejo le, ko jih zahteva uporabnik.</b>
     </string>
-    <string name="privacy_API_title">Tracking and Libraries</string>
+    <string name="privacy_API_title">Sledenje in knjižnice</string>
     <string name="privacy_API">        Aplikacija <b>ne uporablja analitičnih orodij</b> (merjenje občinstva, spremljanje napak, itd.) in ne vsebuje oglasov.\n\n
         Uporaba knjižnic je omejena na: \n
         - <b>Glide</b>: za uporavljanje medijskih vsebin\n
@@ -447,11 +447,11 @@
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text">        Thank you to Stéphane for the logo.
+    <string name="thanks_text">        Zahvala Stéphane za logotip.
     </string>
     <string name="thanks_text_dev">        Thank you to:
     </string>
-    <string name="filter_regex">Filter out by regular expressions</string>
+    <string name="filter_regex">Filtriraj s pomočjo regularnih izrazov</string>
     <string name="search">Išči</string>
     <string name="delete">Izbriši</string>
     <string name="fetch_more_toots">Zajemi več objav Toot …</string>
@@ -468,9 +468,9 @@
     <string name="action_lists_search_users">Išči med svojimi spremljevalci</string>
     <string name="action_lists_owner">Tvoji seznami</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s has moved to %2$s</string>
+    <string name="account_moved_to">%1$s je premaknjen na %2$s</string>
     <string name="show_boost_count">Prikazuj števec ojačanj in priljulbjenih</string>
-    <string name="issue_login_title">Authentication does not work?</string>
+    <string name="issue_login_title">Prijava ne deluje?</string>
     <string name="issue_login_message">        <b>Sledi nekaj točk, ki so vam lahko v pomoč:</b>\n\n
         - Preverite, da nimate napak v imenu instance.\n\n
         - Preverite, da je instanca deujoča.\n\n
@@ -498,11 +498,11 @@
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
-    <string name="no_account_yet">No account yet?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+    <string name="no_account_yet">Še nimate računa?</string>
+    <string name="toast_instance_unavailable">Na tej instanci ne najdem časovnic.</string>
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">Iz vašega seznama spremljanih instanc boste zbrisali %s.</string>
-    <string name="which_language">Translate in</string>
+    <string name="which_language">Prevedi v</string>
     <string name="crash_title">Mastalab se je ustavil :(</string>
     <string name="crash_message">Poročilo o zrušitvi lahko posredujete po e-pošti. To nam bo v pomoč pri odpravi napak :)\n\nPriložite lahko tudi dodatno vsebino. Hvala!</string>
     <string name="send_crash_report">Vprašaj me za posredovanje poročila o zrušitvi.</string>
@@ -512,33 +512,33 @@
     <string name="action_partnership">Partnerstvo</string>
     <string name="neutral_menu_information">Informacije</string>
     <string name="hide_boost">Skrij ojačanja pred %s</string>
-    <string name="endorse">Feature on profile</string>
-    <string name="hide_everything">Hide everything from %s</string>
+    <string name="endorse">Izpostavi v profilu</string>
+    <string name="hide_everything">Skrij vse od %s</string>
     <string name="show_boost">Prikaži ojačanja uporabnika %s</string>
-    <string name="unendorse">Don\'t feature on profile</string>
-    <string name="show_everything">Show everything from %s</string>
-    <string name="toast_endorse">The account is now featured on profile</string>
-    <string name="toast_unendorse">The account is no longer featured on profile</string>
+    <string name="unendorse">Ne izpostavljaj v profilu</string>
+    <string name="show_everything">Prikaži vse od %s</string>
+    <string name="toast_endorse">Račun je izpostavljen v profilu</string>
+    <string name="toast_unendorse">Račun ni več izpostavljen v profilu</string>
     <string name="toast_show_boost">Ojačanja so zdaj prikazana.</string>
     <string name="toast_hide_boost">Ojačanja so zdaj skrita.</string>
     <string name="direct_message">Neposredno sporočilo</string>
     <string name="filters">Filtri</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
+    <string name="action_filters_empty_content">Nimate filtrov. Pritisnite gumb \"+\", da ustvarite filter.</string>
     <string name="filter_keyword">Ključna beseda ali fraza</string>
     <string name="context_home">Domača časovnica</string>
-    <string name="context_public">Public timelines</string>
+    <string name="context_public">Javne časovnice</string>
     <string name="context_notification">Obvestila</string>
-    <string name="context_conversation">Conversations</string>
+    <string name="context_conversation">Pogovori</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-    <string name="context_drop">Drop instead of hide</string>
-    <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
-    <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-    <string name="context_whole_word">Whole word</string>
-    <string name="filter_context">Filter contexts</string>
-    <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
+    <string name="context_drop">Namesto skrivanja zavrži</string>
+    <string name="context_drop_explanations">Filtrirane objave Toot bodo nepovratno izginile, tudi če filter kasneje odstranite</string>
+    <string name="context_whole_word_explanations">Ko je ključna beseda ali fraza samo alfanumerična, bo filter uporabljen le, če se ujema cela beseda.</string>
+    <string name="context_whole_word">Cela beseda</string>
+    <string name="filter_context">Konteksti filtra</string>
+    <string name="filter_context_explanations">En ali več kontekstov na katerih naj se izvaja ta filter</string>
     <string name="filter_expire">Poteče čez</string>
-    <string name="add_new_filter">Add New Filter</string>
-    <string name="action_filter_delete">Delete filter?</string>
+    <string name="add_new_filter">Dodaj nov filter</string>
+    <string name="action_filter_delete">Brisanje filtra?</string>
     <string name="action_update_filter">Posodobitev filtra</string>
     <string name="action_filter_create">Ustvarjanje filtra</string>
     <string name="how_to_follow">Koga naj spremlajm</string>
@@ -552,7 +552,7 @@
     <string name="account_added_list_trunk">Računi so dodani na seznam</string>
     <string name="adding_account_list_trunk">Dodajanje računov na seznam</string>
     <string name="action_list_add">Seznama še niste ustvarili. Pritisnite gumb \"+\", da ustvarite nov seznam.</string>
-    <string name="action_remote_instance_add">Ne spremljate nobenim oddaljenim instancam. Pritisnite gumb \"+\", da dodajte novo.</string>
+    <string name="action_remote_instance_add">Ne spremljate nobene oddaljene instance. Pritisnite gumb \"+\", da dodajte novo.</string>
     <string name="about_trunk">Koga naj spremlajm</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Tega računa ne morete spremljati</string>
@@ -563,38 +563,38 @@
     <string name="channel_notif_boost">Novo ojačanje</string>
     <string name="channel_notif_fav">New Favourite</string>
     <string name="channel_notif_mention">New Mention</string>
-    <string name="channel_notif_toot">New Toot</string>
-    <string name="channel_notif_backup">Toots Backup</string>
+    <string name="channel_notif_toot">Nova objava Toot</string>
+    <string name="channel_notif_backup">Arhivirani Tooti</string>
     <string name="channel_notif_media">Media Download</string>
     <string name="set_notif_sound">Spremeni zvok ob obvestilih</string>
-    <string name="select_sound">Select Tone</string>
+    <string name="select_sound">Izberite zvok</string>
     <string name="set_enable_time_slot">Enable time slot</string>
     <string name="how_to_videos">How To Videos</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-    <string name="no_blocked_domain">No blocked domains!</string>
-    <string name="unblock_domain_confirm">Unblock domain</string>
-    <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?</string>
-    <string name="blocked_domains">Blocked domains</string>
+    <string name="no_blocked_domain">Ni blokiranih domen.</string>
+    <string name="unblock_domain_confirm">Odstranitev blokade domene</string>
+    <string name="unblock_domain_confirm_message">Res želite odstraniti blokado %s?</string>
+    <string name="block_domain_confirm_message">Res želite blokirati %s?</string>
+    <string name="blocked_domains">Blokirane domene</string>
     <string name="block_domain">Blokada domene</string>
     <string name="toast_block_domain">Domena je blokirana</string>
     <string name="toast_unblock_domain">Domena ni več blokirana.</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
     <string name="comment">Komentiraj</string>
     <string name="peertube_instance">Instanca Peertube</string>
-    <string name="set_display_direct">Display private messages timeline</string>
-    <string name="set_keep_background_process">Keep background process when app is closed</string>
+    <string name="set_display_direct">Prikaži časovnico zasebnih sporočil</string>
+    <string name="set_keep_background_process">Ohrani proces v ozadju, ko je aplikacija zaprta</string>
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-    <string name="number_view_video">%s views</string>
-    <string name="duration_video">Duration: %s</string>
-    <string name="add_remote_instance">Add an instance</string>
+    <string name="number_view_video">%s ogledov</string>
+    <string name="duration_video">Trajanje: %s</string>
+    <string name="add_remote_instance">Dodaj instanco</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
     <string name="peertube_favorites">Peertube favourites</string>
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
-    <string name="channel">Channel</string>
+    <string name="channel">Kanal</string>
     <string name="no_peertube_channels">No Peertube channels</string>
     <string name="no_peertube_instances">No Peertube instances</string>
     <string name="no_mastodon_instances">No Mastodon instances</string>
@@ -605,7 +605,7 @@
     <string name="information">Informacije</string>
     <string name="set_display_card">Display previews in all toots</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
+    <string name="set_old_direct_timeline">Uporabi neposredno časovnico pred različico Mastodon 2.6</string>
     <string name="set_display_video_preview">Display video previews</string>
     <string name="thanks_text_support">Gitlab Support</string>
     <string name="action_bug_report">Poročilo o napaki</string>
@@ -613,7 +613,7 @@
     <string name="bug_report_mail">Pošlji poročilo o napaki</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimizacija porabe energije</string>
-    <string name="set_change_locale">Change the language</string>
+    <string name="set_change_locale">Spremeni jezik</string>
     <string name="default_language">Privzeti jezik</string>
     <string name="truncate_long_toots">Posekaj dolge objave</string>
     <string name="set_truncate_toot">Posekaj objave, ki presegajo \"x\" vrstic. Nič pomeni onemogočeno. </string>
@@ -624,16 +624,16 @@
     <string name="tags_stored">Oznaka je shranjena.</string>
     <string name="tags_renamed">The tag has been changed!</string>
     <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="set_display_art">Prikaži umetniško časovnico</string>
     <string name="schedule_boost">Doliči čas ojačanja</string>
     <string name="boost_scheduled">Določili ste čas ojačanja.</string>
     <string name="no_scheduled_boosts">Nimate časovno načrtovanih ojačanj.</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Odprite meni objave in nato izberite <b>Doliči čas ojačanja</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
-    <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
+    <string name="art_menu">Umetniška časovnica</string>
+    <string name="open_menu">Odpri meni</string>
+    <string name="app_logo">Logotip aplikacije</string>
+    <string name="profile_picture">Profilna slika</string>
+    <string name="profile_banner">Plakat profila</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
     <string name="add_new">Dodaj novo</string>
     <string name="mastohost_logo">Logotip MastoHost</string>
@@ -647,7 +647,7 @@
     <string name="new_toot">Nova objava</string>
     <string name="card_view_image">Slika kartice</string>
     <string name="hide_media">Skrij vsebino</string>
-    <string name="favicon">Favicon</string>
+    <string name="favicon">Mala ikona</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
         <item>Nikoli</item>
