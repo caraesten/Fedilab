@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.client;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +57,8 @@ import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 
 /**
@@ -120,7 +123,14 @@ public class API {
         tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
         notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
-        this.instance = Helper.getLiveInstance(context);
+        if( Helper.getLiveInstance(context) != null)
+            this.instance = Helper.getLiveInstance(context);
+        else {
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            Account account = new AccountDAO(context, db).getAccountByID(userId);
+            this.instance = account.getInstance().trim();
+        }
         this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         apiResponse = new APIResponse();
         APIError = null;
