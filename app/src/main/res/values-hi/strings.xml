@@ -220,7 +220,7 @@
     <string name="notif_mention">आपका उल्लेख किया</string>
     <string name="notif_reblog">आपका संदेश बूस्ट किया</string>
     <string name="notif_favourite">आपका संदेश पसंद किया</string>
-    <string name="notif_follow">followed you</string>
+    <string name="notif_follow">आपका अनुयायी बन गये</string>
     <string name="notif_pouet">%1$s से नया संदेश</string>
     <plurals name="other_notifications">
         <item quantity="one">और अन्य सूचनाएं</item>
@@ -236,15 +236,15 @@
     <string name="delete_notification_all">सभी सूचनाओ को मिटा दिया गया है!</string>
     <!-- HEADER -->
     <string name="following">Following</string>
-    <string name="followers">Followers</string>
+    <string name="followers">अनुयायी</string>
     <string name="pinned_toots">जड़े हुए संदेश</string>
     <!-- TOAST -->
     <string name="client_error">क्लाइंट आईडी हासिल करने में असफल!</string>
     <string name="no_internet">इंटरनेट कनेक्शन नहीं है!</string>
     <string name="toast_block">इस खाते को अवरुद्ध कर दिया गया है!</string>
-    <string name="toast_unblock">The account is no longer blocked!</string>
+    <string name="toast_unblock">खाता अब अवरुद्ध नहीं है!</string>
     <string name="toast_mute">खाते को चुप कर दिया गया है!</string>
-    <string name="toast_unmute">The account is no longer muted!</string>
+    <string name="toast_unmute">खाता अब अवरुद्ध नहीं है!</string>
     <string name="toast_follow">The account was followed!</string>
     <string name="toast_unfollow">The account is no longer followed!</string>
     <string name="toast_reblog">संदेश को बूस्ट कर दिया गया है!</string>
