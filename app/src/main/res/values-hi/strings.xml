@@ -246,14 +246,14 @@
     <string name="toast_mute">खाते को चुप कर दिया गया है!</string>
     <string name="toast_unmute">खाता अब अवरुद्ध नहीं है!</string>
     <string name="toast_follow">इस खाते का अनुसरण कर लिया!</string>
-    <string name="toast_unfollow">The account is no longer followed!</string>
+    <string name="toast_unfollow">इस खाते का अब अनुसरण नहीं कर रहे!</string>
     <string name="toast_reblog">संदेश को बूस्ट कर दिया गया है!</string>
     <string name="toast_unreblog">संदेश अब बूस्ट नहीं है!</string>
     <string name="toast_favourite">संदेश को आपके पसंदीदा पृष्ठ में जोड़ दिया गया है!</string>
     <string name="toast_unfavourite">संदेश को आपके पसंदीदा पृष्ठ से हटा दिया गया है!</string>
     <string name="toast_report">संदेश को रिपोर्ट कर दिया गया है!</string>
     <string name="toast_unstatus">संदेश को मिटा दिया गया है!</string>
-    <string name="toast_pin">संदेश को जड़ दिया गया है!</string>
+    <string name="toast_pin">लेख को जड़ दिया गया है!</string>
     <string name="toast_unpin">The toot was unpinned!</string>
     <string name="toast_error">क्षमा करें ! कोई गड़बड़ी उत्पन्न हुई है!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
@@ -399,7 +399,7 @@
     <string name="v_direct">Direct</string>
     <string name="v_keywords">Some keywords…</string>
     <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
+    <string name="show_pinned">जड़े हुए दिखाएँ</string>
     <string name="filter_no_result">No matching result found!</string>
     <string name="data_backup_toots">%1$s के लेखो को बैकअप करें</string>
     <string name="data_backup_success">%1$s नये लेख आयात कर लिये गये है</string>
