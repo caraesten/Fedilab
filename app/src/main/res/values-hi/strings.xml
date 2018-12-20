@@ -198,7 +198,7 @@
     <string name="no_accounts">दिखाने के लिये कोई खाता नहीं है</string>
     <string name="no_follow_request">फ़ौलो करने की कोई गुज़ारिशें नहीं है</string>
     <string name="status_cnt">लेख \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
+    <string name="following_cnt">अनुसरण \n %1$s</string>
     <string name="followers_cnt">अनुयायी \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
     <string name="authorize">अधिकृत करें</string>
@@ -245,7 +245,7 @@
     <string name="toast_unblock">यह खाता अब अवरुद्ध नहीं है!</string>
     <string name="toast_mute">खाते को चुप कर दिया गया है!</string>
     <string name="toast_unmute">खाता अब अवरुद्ध नहीं है!</string>
-    <string name="toast_follow">The account was followed!</string>
+    <string name="toast_follow">इस खाते का अनुसरण कर लिया!</string>
     <string name="toast_unfollow">The account is no longer followed!</string>
     <string name="toast_reblog">संदेश को बूस्ट कर दिया गया है!</string>
     <string name="toast_unreblog">संदेश अब बूस्ट नहीं है!</string>
@@ -565,14 +565,14 @@
     <string name="set_enable_time_slot">Enable time slot</string>
     <string name="how_to_videos">How To Videos</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-    <string name="no_blocked_domain">No blocked domains!</string>
+    <string name="no_blocked_domain">कोई प्रतिबंधित डोमेन्स नहीं है!</string>
     <string name="unblock_domain_confirm">Unblock domain</string>
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
     <string name="block_domain_confirm_message">Are you sure to block %s?</string>
-    <string name="blocked_domains">Blocked domains</string>
+    <string name="blocked_domains">प्रतिबंधित डोमेन्स</string>
     <string name="block_domain">Block domain</string>
-    <string name="toast_block_domain">The domain is blocked</string>
-    <string name="toast_unblock_domain">The domain is no longer blocked!</string>
+    <string name="toast_block_domain">यह डोमेन प्रतिबंधित है</string>
+    <string name="toast_unblock_domain">यह डोमेन अब प्रतिबंधित नहीं है!</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
     <string name="comment">Comment</string>
     <string name="peertube_instance">Peertube instance</string>
@@ -635,7 +635,7 @@
     <string name="refresh">Refresh</string>
     <string name="expand_conversation">Expand the conversation</string>
     <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
+    <string name="delete_domain">प्रतिबंधित डोमेन को मिटा दें</string>
     <string name="custom_emoji_picker">Custom emoji picker</string>
     <string name="play_video">Play video</string>
     <string name="new_toot">New toot</string>
