@@ -620,7 +620,7 @@
     <string name="set_change_locale">تغيير اللغة</string>
     <string name="default_language">اللغة الافتراضية</string>
     <string name="truncate_long_toots">تقسيم التبويقات الطويلة</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
+    <string name="set_truncate_toot">اقتطاع التبويقات إلى \'س\' خطوط. الصفر يعني معطَّل.</string>
     <string name="display_toot_truncate">عرض المزيد</string>
     <string name="hide_toot_truncate">اعرض أقل</string>
     <string name="manage_tags">إدارة الوسوم</string>
@@ -666,7 +666,7 @@
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        في هذا الحقل، قم بكتابة عنوان بريك الإلكتروني المرتبط بحسابك على ماستدون.
     </string>
     <string name="showcase_pwd">        هذه هي الخطوة الأخيرة. ادخل كلمتك السرية ثم انقر على تسجيل الدخول.
     </string>
