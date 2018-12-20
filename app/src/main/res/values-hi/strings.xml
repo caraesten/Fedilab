@@ -78,9 +78,9 @@
     <string name="communication_menu_title">संचार</string>
     <string name="muted_menu">मौन किये गये उप्योगकर्ता</string>
     <string name="blocked_menu">प्रतिबंधित उप्योगकर्ता</string>
-    <string name="remote_follow_menu">Remote follow</string>
+    <string name="remote_follow_menu">दूरवर्ती फ़ौलो</string>
     <string name="notifications">सूचनाएँ</string>
-    <string name="follow_request">Follow requests</string>
+    <string name="follow_request">फ़ौलो करने की गुज़ारिशें</string>
     <string name="optimization">बेहतरी</string>
     <string name="settings">सैटिंग्स</string>
     <string name="profile">वर्णन</string>
