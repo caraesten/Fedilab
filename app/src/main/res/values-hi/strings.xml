@@ -213,10 +213,10 @@
     <string name="warning_battery">बैटरी बचत चालू है! उम्मीदों के मुताबिक शायद काम ना करें।</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">मौन करने का समय एक मिनट से अधिक होना चाहिये।</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_date">%1$s को खामोश कर दिया गया है %2$s तक।\n आप इस खाते का उसके प्रोफ़ाइल पेज से फिर से चालू कर सकते हैं।</string>
+    <string name="timed_mute_profile">%1$s को %2$s तक खामोश कर दिया है।\n फिर से चालू करने के लिये यहाँ क्लिक करें।</string>
     <!-- Notifications -->
-    <string name="no_notifications">No notification to display</string>
+    <string name="no_notifications">कोई सूचना दिखाने के लिये नहीं है</string>
     <string name="notif_mention">आपका उल्लेख किया</string>
     <string name="notif_reblog">आपका संदेश बूस्ट किया</string>
     <string name="notif_favourite">आपका संदेश पसंद किया</string>
