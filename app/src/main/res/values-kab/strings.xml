@@ -41,7 +41,7 @@
     <string name="clear">Sfeḍ</string>
     <string name="microphone">Asawaḍ</string>
     <string name="camera">Takamiṛat</string>
-    <string name="speech_prompt">Please, say something</string>
+    <string name="speech_prompt">Inid kra</string>
     <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
     <string name="delete_all">Kkes kullec</string>
     <string name="translate_toot">Translate this toot.</string>
