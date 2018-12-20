@@ -3082,7 +3082,7 @@ public class Helper {
     }
 
     public static RetrieveFeedsAsyncTask.Type timelineType(int position){
-        if(MainActivity.typePosition.size() < position)
+        if(MainActivity.typePosition.size() > position)
             return MainActivity.typePosition.get(position);
         else
             return RetrieveFeedsAsyncTask.Type.TAG;
