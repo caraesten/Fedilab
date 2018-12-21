@@ -62,7 +62,7 @@
     <string name="new_data">Nye data er tilgjengelige! Vil du vise dem?</string>
     <string name="favourite">Favoritter</string>
     <string name="follow">Nye følgere</string>
-    <string name="mention">Nevner</string>
+    <string name="mention">Nevninger</string>
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Vis boosts</string>
     <string name="show_replies">Vis svar</string>
@@ -80,47 +80,47 @@
     <string name="blocked_menu">Blokkerte brukere</string>
     <string name="remote_follow_menu">Fjernfølg</string>
     <string name="notifications">Varsler</string>
-    <string name="follow_request">Følg forespørsler</string>
+    <string name="follow_request">Forespørsler om følging</string>
     <string name="optimization">Optimalisering</string>
     <string name="settings">Innstillinger</string>
     <string name="profile">Profil</string>
     <string name="make_a_choice">Hva vil du gjøre?</string>
     <string name="delete_account_title">Slett en konto</string>
-    <string name="delete_account_message" formatted="false">Slett kontoen %1$s fra programmet?</string>
+    <string name="delete_account_message" formatted="false">Slett kontoen %1$s fra applikasjonen?</string>
     <string name="send_email">Send en epost</string>
     <string name="choose_file">Vennligst velg en fil</string>
     <string name="choose_file_error">Ingen filutforsker funnet!</string>
-    <string name="click_to_change">Klikk på banen for å endre den</string>
+    <string name="click_to_change">Klikk på filstien for å endre den</string>
     <string name="failed">Feilet!</string>
     <string name="scheduled_toots">Planlagte toots</string>
     <string name="disclaimer_full">Informasjon nedenfor kan gjenspeile brukerens profil ufullstendig.</string>
     <string name="insert_emoji">Sett inn emoji</string>
     <string name="no_emoji">Appen samler ikke tilpassede emojis for øyeblikket.</string>
-    <string name="live_notif">Live varsler</string>
+    <string name="live_notif">Direktevarsler</string>
     <!-- Status -->
-    <string name="no_status">Ingen toot å vise</string>
+    <string name="no_status">Ingen toots å vise</string>
     <string name="fav_added">Tooten ble lagt til i favoritter</string>
     <string name="fav_removed">Tooten ble fjernet fra favoritter!</string>
-    <string name="reblog_added">Tooten ble økt!</string>
-    <string name="reblog_removed">Tooten er ikke lenger økt!</string>
+    <string name="reblog_added">Tooten ble boostet!</string>
+    <string name="reblog_removed">Tooten er ikke lenger boostet!</string>
     <string name="reblog_by">Boostet av %1$s</string>
     <string name="favourite_add">Legg til denne tooten til dine favoritter?</string>
     <string name="favourite_remove">Fjern denne tooten fra favorittene dine?</string>
     <string name="reblog_add">Boost denne tooten?</string>
     <string name="reblog_remove">Unboost denne tooten?</string>
-    <string name="pin_add">Klem denne tooten?</string>
+    <string name="pin_add">Pin denne tooten?</string>
     <string name="pin_remove">Unpin denne tooten?</string>
     <string name="more_action_1">Demp</string>
-    <string name="more_action_2">Blokkere</string>
-    <string name="more_action_3">Rapportere</string>
-    <string name="more_action_4">Fjerne</string>
-    <string name="more_action_5">Kopiere</string>
-    <string name="more_action_6">Dele</string>
-    <string name="more_action_7">Nevne</string>
+    <string name="more_action_2">Blokker</string>
+    <string name="more_action_3">Rapporter</string>
+    <string name="more_action_4">Fjern</string>
+    <string name="more_action_5">Kopier</string>
+    <string name="more_action_6">Del</string>
+    <string name="more_action_7">Nevn</string>
     <string name="more_action_8">Tidsbestemt dempet</string>
     <string name="more_action_9">Slett og kladd på nytt</string>
     <string-array name="more_action_confirm">
-        <item>Slå av denne kontoen?</item>
+        <item>Demp denne kontoen?</item>
         <item>Blokker denne kontoen?</item>
         <item>Rapporter denne tooten?</item>
         <item>Blokkere dette domenet?</item>
@@ -161,8 +161,8 @@
     <string name="toot_select_image_error">Det oppsto en feil under valg av media!</string>
     <string name="toot_delete_media">Slett dette mediet?</string>
     <string name="toot_error_no_content">Din toot er tom!</string>
-    <string name="toot_visibility_tilte">Sikt på tooten</string>
-    <string name="toots_visibility_tilte">Synlighet av toots som standard: </string>
+    <string name="toot_visibility_tilte">Synlighet av tooten</string>
+    <string name="toots_visibility_tilte">Standardsynlighet på toots: </string>
     <string name="toot_sent">Tooten er sendt!</string>
     <string name="toot_reply_content_title">Du svarer på dette toot:</string>
     <string name="toot_sensitive">Følsomt innhold?</string>
@@ -191,24 +191,24 @@
     <string name="about_thekinrar">Søk forekomster:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Ikon designer:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="thanks_text_banner">Banner-designer:</string>
     <!-- Conversation -->
     <string name="conversation">Samtale</string>
     <!-- Accounts -->
     <string name="no_accounts">Ingen konto å vise</string>
-    <string name="no_follow_request">Ingen følg forespørsel</string>
+    <string name="no_follow_request">Ingen følg-forespørsel</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Følger \n %1$s</string>
     <string name="followers_cnt">Følgere \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
     <string name="authorize">Autorisere</string>
-    <string name="reject">Autorisere</string>
+    <string name="reject">Avslå</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Ingen planlagt toot å vise!</string>
-    <string name="no_scheduled_toots_indications">Skriv et toot og velg deretter <b> Planlegg </b> fra toppmenyen.</string>
+    <string name="no_scheduled_toots_indications">Skriv et toot og velg deretter <b>Planlegg</b> fra toppmenyen.</string>
     <string name="remove_scheduled">Slett planlagt toot?</string>
     <string name="media_count">Medier: %d</string>
-    <string name="toot_scheduled">Trollet har blitt planlagt!</string>
+    <string name="toot_scheduled">Tootet har blitt planlagt!</string>
     <string name="toot_scheduled_date">Den planlagte datoen må være større enn den nåværende timen!</string>
     <string name="warning_battery">Batterisparer er aktivert! Det virker kanskje ikke som forventet.</string>
     <!-- timed mute -->
@@ -216,9 +216,9 @@
     <string name="timed_mute_date">%1$s er dempet til %2$s. \n Du kan slå på denne kontoen igjen fra han/hennes profil.</string>
     <string name="timed_mute_profile">%1$s er dempet til %2$s. \n Klikk her for å slå kontoen igjen.</string>
     <!-- Notifications -->
-    <string name="no_notifications">Ingen melding for å vise</string>
+    <string name="no_notifications">Ingen varslinger for å vise</string>
     <string name="notif_mention">nevnte deg</string>
-    <string name="notif_reblog">økt statusen din</string>
+    <string name="notif_reblog">boostet statusen din</string>
     <string name="notif_favourite">favoriserte statusen din</string>
     <string name="notif_follow">fulgte deg</string>
     <string name="notif_pouet">Ny toot fra %1$s</string>
