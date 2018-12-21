@@ -765,6 +765,7 @@
     <string name="serbian" translatable="false">Српски</string>
     <string name="ukrainian" translatable="false">Українська</string>
     <string name="russian" translatable="false">Русский</string>
+    <string name="norwegian" translatable="false">Norsk</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
     <!-- end languages -->

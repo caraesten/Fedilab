@@ -726,6 +726,9 @@ public class SettingsFragment extends Fragment {
                         case 18:
                             editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ru");
                             editor.commit();
+                        case 19:
+                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "no");
+                            editor.commit();
                             break;
                     }
 

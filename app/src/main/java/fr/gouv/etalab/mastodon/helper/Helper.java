@@ -2956,7 +2956,7 @@ public class Helper {
     }
 
     public static String[] getLocales(Context context){
-        String[] locale = new String[19];
+        String[] locale = new String[20];
         locale[0] = context.getString(R.string.default_language);
         locale[1] = context.getString(R.string.english);
         locale[2] = context.getString(R.string.french);
@@ -2976,6 +2976,7 @@ public class Helper {
         locale[16] = context.getString(R.string.serbian);
         locale[17] = context.getString(R.string.ukrainian);
         locale[18] = context.getString(R.string.russian);
+        locale[19] = context.getString(R.string.norwegian);
         return locale;
     }
 
@@ -3028,6 +3029,8 @@ public class Helper {
                 return "uk";
             case R.string.russian:
                 return "ru";
+            case R.string.norwegian:
+                return "no";
             default:
                 return Locale.getDefault().getLanguage();
         }
@@ -3076,6 +3079,8 @@ public class Helper {
                 return 17;
             case "ru":
                 return 18;
+            case "no":
+                return 19;
             default:
                 return 0;
         }
