@@ -232,32 +232,32 @@
     </plurals>
     <string name="delete_notification_ask">Slett et varsel?</string>
     <string name="delete_notification_ask_all">Slett alle varsler?</string>
-    <string name="delete_notification">Meldingen er slettet!</string>
+    <string name="delete_notification">Varselet er slettet!</string>
     <string name="delete_notification_all">Alle varsler er slettet!</string>
     <!-- HEADER -->
-    <string name="following">Følgende</string>
-    <string name="followers">Etterfølgere</string>
+    <string name="following">Følger</string>
+    <string name="followers">Følgere</string>
     <string name="pinned_toots">Festet</string>
     <!-- TOAST -->
-    <string name="client_error">Kunne ikke få klient Id!</string>
+    <string name="client_error">Kunne ikke hente klient-id!</string>
     <string name="no_internet">Ingen Internett-tilkobling!</string>
     <string name="toast_block">Kontoen ble blokkert!</string>
     <string name="toast_unblock">Kontoen er ikke lenger blokkert!</string>
     <string name="toast_mute">Kontoen ble dempet!</string>
     <string name="toast_unmute">Kontoen er ikke lenger dempet!</string>
     <string name="toast_follow">Kontoen ble fulgt!</string>
-    <string name="toast_unfollow">Kontoen følger ikke lenger!</string>
+    <string name="toast_unfollow">Kontoen er ikke lenger fulgt!</string>
     <string name="toast_reblog">Tootet ble boostet!</string>
     <string name="toast_unreblog">Tootet er ikke lenger boostet!</string>
-    <string name="toast_favourite">Tippen ble lagt til dine favoritter!</string>
+    <string name="toast_favourite">Tootet ble lagt til dine favoritter!</string>
     <string name="toast_unfavourite">Tootet ble fjernet fra dine favoritter!</string>
     <string name="toast_report">Tootet ble rapportert!</string>
     <string name="toast_unstatus">Tootet ble slettet!</string>
-    <string name="toast_pin">Trekanten ble festet!</string>
-    <string name="toast_unpin">Trollet ble opphevet!</string>
+    <string name="toast_pin">Tootet ble festet!</string>
+    <string name="toast_unpin">Tootet ble løsnet!</string>
     <string name="toast_error">Ups! En feil oppstod!</string>
-    <string name="toast_code_error">En feil oppstod! Eksemplet returnerte ikke en autorisasjonskode!</string>
-    <string name="toast_error_instance">Instansdomenet ser ikke ut til å være gyldig!</string>
+    <string name="toast_code_error">En feil oppstod! Instansen returnerte ikke en autorisasjonskode!</string>
+    <string name="toast_error_instance">Adressen til instansen ser ikke ut til å være gyldig!</string>
     <string name="toast_error_loading_account">Det oppsto en feil under bytte mellom kontoer!</string>
     <string name="toast_error_search">Det oppsto en feil under søking!</string>
     <string name="toast_error_login">Kan ikke logge inn!</string>
@@ -272,8 +272,8 @@
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimalisering av lasting</string>
     <string name="set_toots_page">Antall toots per innlasting</string>
-    <string name="set_accounts_page">Antall kontoer per belastning</string>
-    <string name="set_notifications_page">Antall varsler per belastning</string>
+    <string name="set_accounts_page">Antall kontoer per innlasting</string>
+    <string name="set_notifications_page">Antall varsler per innlasting</string>
     <string name="set_attachment_always">Alltid</string>
     <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Spørre</string>
@@ -398,7 +398,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="v_direct">Direkte</string>
     <string name="v_keywords">Noen søkeord…</string>
     <string name="show_media">Vis media</string>
-    <string name="show_pinned">Vis låste</string>
+    <string name="show_pinned">Vis festede</string>
     <string name="filter_no_result">Ingen treff!</string>
     <string name="data_backup_toots">Sikkerhetskopier toots for %1$s</string>
     <string name="data_backup_success">%1$s nye toots er importert</string>
@@ -416,11 +416,11 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
  &#9888; Logg inn og passord lagres aldri. De brukes kun under sikker autentisering (SSL) med en forekomst.    </string>
     <string name="privacy_authorizations_title">Tillatelser:</string>
     <string name="privacy_authorizations"><b> ACCESS_NETWORK_STATE </b>: Brukes til å oppdage om enheten er koblet til et WIFI-nettverk. \n
-         - <b> INTERNET </b>: Brukes for spørringer til en forekomst. \n
+         - <b> INTERNET </b>: Brukes for spørringer til en instans. \n
          - <b> WRITE_EXTERNAL_STORAGE </b>: Brukes til å lagre media eller flytte appen på et SD-kort. \n
          - <b> READ_EXTERNAL_STORAGE </b>: Brukes til å legge til media til toots. \n
          - <b> BOOT_COMPLETED </b>: Brukes til å starte varslingstjenesten. \n
-         - <b> WAKE_LOCK </b>: Brukes under varslingstjenesten.    </string>
+         - <b> WAKE_LOCK </b>: Brukes under varsling.    </string>
     <string name="privacy_API_authorizations_title">API-tillatelser:</string>
     <string name="privacy_API_authorizations">- <b>Les</b>: Les data. \n
 - <b>Skriv</b>: Legg inn statuser og last opp medier for statuser. \n
@@ -433,8 +433,8 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
          - <b> Android-jobb </b>: For å administrere tjenester \n
          - <b> PhotoView </b>: For å administrere bilder \n    </string>
     <string name="privacy_API_yandex_title">Oversettelse av toots</string>
-    <string name="privacy_API_yandex_authorizations">Programmet tilbyr muligheten til å oversette toots ved hjelp av lokaliteten til enheten og Yandex API. \n
-         Yandex har sin riktige personvernpolicy som finnes her: https://yandex.ru/legal/confidential/?lang=en    </string>
+    <string name="privacy_API_yandex_authorizations">Programmet tilbyr muligheten til å oversette toots ved hjelp av lokasjonen til enheten og Yandex APIet. \n
+         Yandex har sin egen personvernerklæring som finnes her: https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="thanks_text">Takk til Stéphane for logoen.    </string>
     <string name="thanks_text_dev">Takk til:    </string>
     <string name="filter_regex">Filtrer ut med vanlige uttrykk</string>
@@ -468,7 +468,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="data_export_running">Kjører fortsatt, vennligst vent…</string>
     <string name="data_export">Eksporter statuser</string>
     <string name="data_export_toots">Eksportere statuser for %1$s</string>
-    <string name="data_export_success">%1$s av %2$s toots ble eksportert.</string>
+    <string name="data_export_success">%1$s av %2$s toots har blitt eksportert.</string>
     <string name="data_export_error">Noe gikk galt under eksport av data for %1$s</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
@@ -514,9 +514,9 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="context_public">Offentlig tidslinjer</string>
     <string name="context_notification">Varsler</string>
     <string name="context_conversation">Samtaler</string>
-    <string name="filter_keyword_explanations">Vil bli matchet uavhengig av store og små bokstaver i tekst eller Innholdsadvarsel på en toot</string>
+    <string name="filter_keyword_explanations">Vil bli matchet uavhengig av store og små bokstaver i tekst eller Innholdsadvarsel på et toot</string>
     <string name="context_drop">Forkast i stedet for å skjule</string>
-    <string name="context_drop_explanations">Filtrerte toots forsvinner irreversibelt, selv om filteret fjernes senere</string>
+    <string name="context_drop_explanations">Filtrerte toots vil ikke bli vist selv om filteret fjernes senere</string>
     <string name="context_whole_word_explanations">Når søkeordet eller setningen bare er alfanumerisk, aktiveres filteret bare hvis det samsvarer med hele ordet</string>
     <string name="context_whole_word">Hele ord</string>
     <string name="filter_context">Filterkontekst</string>
@@ -613,7 +613,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="schedule_boost">Planlegg boost</string>
     <string name="boost_scheduled">Boosten er planlagt!</string>
     <string name="no_scheduled_boosts">Ingen planlagte boosts å vise!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Åpne menyen på en toot, og velg <b>Planlegg boost</b>.]]></string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Åpne menyen på et toot, og velg <b>Planlegg boost</b>.]]></string>
     <string name="art_menu">Kunsttidslinje</string>
     <string name="open_menu">Åpne meny</string>
     <string name="app_logo">Applikasjonens logo</string>
