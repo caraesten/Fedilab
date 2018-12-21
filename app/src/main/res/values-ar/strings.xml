@@ -583,7 +583,7 @@
     <string name="block_domain">حظر النطاق</string>
     <string name="toast_block_domain">تم حظر النطاق</string>
     <string name="toast_unblock_domain">لقد تم إلغاء حظر هذا النطاق!</string>
-    <string name="retrieve_remote_status">جلب المنشور عن بُعد</string>
+    <string name="retrieve_remote_status">جارٍ جلب المنشور عن بُعد</string>
     <string name="comment">تعليق</string>
     <string name="peertube_instance">مثيل خادم بيرتيوب</string>
     <string name="set_display_direct">عرض الخيط المحلي للرسائل الخاصة</string>
@@ -611,7 +611,7 @@
     <string name="thanks_text_ux">مصمم واجهة المستخدم الجديدة</string>
     <string name="set_old_direct_timeline">استخدم الخيط المباشر المخصص لقبل لماستدون 2.6</string>
     <string name="set_display_video_preview">عرض معاينات الفيديوهات</string>
-    <string name="thanks_text_support">الدعم عبر غيت لاي</string>
+    <string name="thanks_text_support">الدعم عبر غيت لاب</string>
     <string name="action_bug_report">الابلاغ عن عِلّة</string>
     <string name="no_mail_client">لا توجد هناك برامج بريد الكترونية مثبتة.</string>
     <string name="bug_report_mail">إرسال تقرير الأعطاب</string>
