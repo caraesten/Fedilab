@@ -298,7 +298,7 @@
     <string name="set_notif_follow_mention">जब मेरा कोई उल्लेख करे तो मुझे सूचित करें</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">Advanced settings</string>
+    <string name="settings_title_more_options">अतिरिक्त सेटिंग्स</string>
     <string name="set_wifi_only">केवल वाईफ़ाई में सूचित करें</string>
     <string name="set_notify">सूचित करें?</string>
     <string name="set_notif_silent">शांत सूचनाएं</string>
@@ -443,8 +443,7 @@
     </string>
     <string name="thanks_text">        Thank you to Stéphane for the logo.
     </string>
-    <string name="thanks_text_dev">        Thank you to:
-    </string>
+    <string name="thanks_text_dev">इनको धन्यवाद:    </string>
     <string name="filter_regex">Filter out by regular expressions</string>
     <string name="search">खोजें</string>
     <string name="delete">मिटाएँ</string>
@@ -484,7 +483,7 @@
     <string name="proxy_type">प्रकार</string>
     <string name="proxy_enable">Enable proxy?</string>
     <string name="poxy_host">मेज़बान</string>
-    <string name="poxy_port">Port</string>
+    <string name="poxy_port">पोर्ट</string>
     <string name="poxy_login">लॉग इन</string>
     <string name="poxy_password">पासवर्ड</string>
     <string name="set_theme">Theme:</string>
@@ -492,11 +491,11 @@
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
-    <string name="no_account_yet">No account yet?</string>
+    <string name="no_account_yet">कोई खाता नहीं है?</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-    <string name="delete_instance">Delete this instance?</string>
+    <string name="delete_instance">इस इंस्टेंस को मिटाएँ?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-    <string name="which_language">Translate in</string>
+    <string name="which_language">अनुवाद करें</string>
     <string name="crash_title">Mastalab has stopped :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
