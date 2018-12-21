@@ -338,38 +338,38 @@
     </string-array>
     <string-array name="settings_translation">
         <item>यैंडैक्स</item>
-        <item>DeepL</item>
-        <item>No</item>
+        <item>डीपएल</item>
+        <item>नहीं</item>
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>Black</item>
+        <item>साँवला</item>
+        <item>सफेद</item>
+        <item>काला</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
-        <item>512 Kb</item>
-        <item>1 Mb</item>
-        <item>2 Mb</item>
+        <item>नहीं</item>
+        <item>५१२ केबी</item>
+        <item>१ एमबी</item>
+        <item>२ एमबी</item>
     </string-array>
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">एलईडी का रंग चुनें:</string>
     <string-array name="led_colours">
-        <item>Blue</item>
-        <item>Cyan</item>
-        <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>नीला</item>
+        <item>हरिनील</item>
+        <item>लाल बैंगनी</item>
+        <item>हरा</item>
+        <item>लाल</item>
+        <item>पीला</item>
+        <item>सफेद</item>
     </string-array>
-    <string name="set_title_news">News</string>
+    <string name="set_title_news">समाचार</string>
     <string name="set_notification_news">मुख्यपृष्ट पे नये लेखो के लिये सूचित करें</string>
     <string name="action_follow">Follow</string>
     <string name="action_unfollow">Unfollow</string>
-    <string name="action_block">Block</string>
+    <string name="action_block">प्रतिबंध</string>
     <string name="action_unblock">Unblock</string>
-    <string name="action_mute">Mute</string>
+    <string name="action_mute">खामोश</string>
     <string name="action_no_action">No action</string>
     <string name="action_unmute">Unmute</string>
     <string name="request_sent">Request sent</string>
