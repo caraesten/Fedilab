@@ -633,7 +633,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="card_view_image">Bilde på kortet</string>
     <string name="hide_media">Skjul media</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Media for å legge til en beskrivelse</string>
     <string-array name="filter_expire">
         <item>Aldri</item>
         <item>30 minutter</item>
@@ -643,16 +643,13 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
         <item>1 dag</item>
         <item>1 uke</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
-    </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
-    </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
-    </string>
+    <string name="showcase_instance">I dette feltet skriver du adressen til instansen. Hvis du opprettet en konto på https://mastodon.social\n, skriv mastodon.social (uten https://)\n
+Adresser vil bli foreslått når du begynner å skrive.\n\n
+⚠ Logg inn-knappen vil bare fungere hvis navnet på instansen er gyldig, og instansen er oppe (online)!    </string>
+    <string name="showcase_uid">Skriv e-postadressen tilknyttet Mastodon-kontoen din i dette feltet.    </string>
+    <string name="showcase_pwd">Siste steg er å oppgi passordet ditt, og trykke Logg inn.    </string>
     <string name="more_information">Mer informasjon</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="showcase_2FA">Hvis du bruker tofaktorautentisering (2FA), må du benytte deg av denne linken.\nDu kan også benytte deg av linken dersom du ikke vil skrive inn brukernavn og passord her, men heller logge inn via instansen.</string>
     <!-- languages not translated -->
     <string name="show_media_only">Kun media</string>
     <string name="show_media_nsfw">Vis NSFW</string>
