@@ -290,7 +290,7 @@
     <string name="set_auto_store_toot">Save drafts automatically</string>
     <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
-    <string name="settings_title_notifications">Manage notifications</string>
+    <string name="settings_title_notifications">දැනුම්දීම් කළමනාකරණය</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
     <string name="set_notif_follow_share">Notify when someone boosts your status</string>
@@ -339,7 +339,7 @@
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
-        <item>No</item>
+        <item>නැහැ</item>
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
