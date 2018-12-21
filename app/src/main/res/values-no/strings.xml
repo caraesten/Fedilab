@@ -24,7 +24,7 @@
     <string name="email">E-post</string>
     <string name="accounts">Kontoer</string>
     <string name="toots">Toots</string>
-    <string name="tags">Tags</string>
+    <string name="tags">Stikkord</string>
     <string name="token">Token</string>
     <string name="save">Lagre</string>
     <string name="restore">Gjenopprett</string>
@@ -568,7 +568,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="comment">Kommentar</string>
     <string name="peertube_instance">Peertube-instans</string>
     <string name="set_display_direct">Vis tidslinje med private meldinger</string>
-    <string name="set_keep_background_process">Behold bakgrunnsprosessen når app\'en er lukket</string>
+    <string name="set_keep_background_process">Behold bakgrunnsprosessen kjørende selv om applikasjonen er lukket</string>
     <string name="no_comments">Vær den første til å kommentere på denne videoen. Bruk knappen oppe til høyre!</string>
     <string name="number_view_video">%s visninger</string>
     <string name="duration_video">Varighet: %s</string>
@@ -597,7 +597,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="no_mail_client">Ingen e-postklient er installert.</string>
     <string name="bug_report_mail">Send feilrapport</string>
     <string name="account_id_clipbloard">Id på brukerkonto er kopiert til utklippstavlen!</string>
-    <string name="settings_title_battery">Batteribruk</string>
+    <string name="settings_title_battery">Optimalisering av batteriforbruk</string>
     <string name="set_change_locale">Endre språk</string>
     <string name="default_language">Standardspråk</string>
     <string name="truncate_long_toots">Avkort lange toots</string>
@@ -643,7 +643,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
         <item>1 dag</item>
         <item>1 uke</item>
     </string-array>
-    <string name="showcase_instance">I dette feltet skriver du adressen til instansen. Hvis du opprettet en konto på https://mastodon.social\n, skriv mastodon.social (uten https://)\n
+    <string name="showcase_instance">I dette feltet skriver du adressen til instansen. Hvis du opprettet en konto på https://mastodon.social\n, skriv <b>mastodon.social</b> (uten https://)\n
 Adresser vil bli foreslått når du begynner å skrive.\n\n
 ⚠ Logg inn-knappen vil bare fungere hvis navnet på instansen er gyldig, og instansen er oppe (online)!    </string>
     <string name="showcase_uid">Skriv e-postadressen tilknyttet Mastodon-kontoen din i dette feltet.    </string>
