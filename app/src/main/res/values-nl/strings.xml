@@ -658,9 +658,9 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="showcase_uid">In dit veld vul je het e-mailadres in dat is gekoppeld aan je Mastodon account.    </string>
     <string name="showcase_pwd">De laatste stap is het invoeren van je wachtwoord en op Login te klikken.    </string>
     <string name="more_information">Meer informatie</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="showcase_2FA">Als je 2FA (twee-factor-authenticatie) gebruikt, moet je deze link gebruiken.\nJe kunt het ook gebruiken als je je gegevens hier niet wilt invullen.</string>
     <!-- languages not translated -->
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_only">Alleen media</string>
+    <string name="show_media_nsfw">Toon NSFW</string>
     <!-- end languages -->
 </resources>
