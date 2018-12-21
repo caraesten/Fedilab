@@ -43,6 +43,7 @@ import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAfterBookmarkAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSearchAsyncTask;
@@ -56,6 +57,7 @@ import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.drawers.PeertubeAdapter;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsAfterBookmarkInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
 import fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService;
@@ -72,7 +74,7 @@ import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
  * Created by Thomas on 24/04/2017.
  * Fragment to display content related to status
  */
-public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface, OnRetrieveMissingFeedsInterface {
+public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface, OnRetrieveMissingFeedsInterface, OnRetrieveFeedsAfterBookmarkInterface {
 
 
     private boolean flag_loading;
@@ -468,64 +470,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
             //First toot are loaded as soon as the bookmark has been retrieved
             //Only for the Home timeline
+
             if( type == RetrieveFeedsAsyncTask.Type.HOME && !firstTootsLoaded){
-                asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 firstTootsLoaded = true;
             }
-
             //Let's deal with statuses
             if( statuses != null && statuses.size() > 0) {
-                if (type == RetrieveFeedsAsyncTask.Type.HOME) {
-                    //Toots are older than the bookmark:
-                    //Bookmark is null or greater id of returned status is lower than the bookmark id (+1 to exclude the bookmarked status).
-                    //The initialBookMark will be only set once for Home timeline when the fragment is created
-                    if( initialBookMark == null || Long.parseLong(statuses.get(0).getId()) + 1 < Long.parseLong(initialBookMark)){
-                        this.statuses.addAll(statuses);
-                        statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
-                    }else { //Toots are younger than the bookmark
-                        //Find the position of toots between those already present
-                        int position = 0;
-                        while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
-                            position++;
-                        }
-                        ArrayList<Status> tmpStatuses = new ArrayList<>();
-                        for (Status tmpStatus : statuses) {
-                            //Put the toot at its place in the list (id desc)
-                            if( !this.statuses.contains(tmpStatus) ) { //Element not already added
-                                //Mark status at new ones when their id is greater than the last read toot id
-                                if (lastReadToot != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadToot)) {
-                                    tmpStatus.setNew(true);
-                                    MainActivity.countNewStatus++;
-                                }
-                                tmpStatuses.add(tmpStatus);
-                            }
-                        }
-                        int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
-                        //Display the fetch more toot button
-                        if( tmpStatuses.size()  >= tootPerPage) {
-                            if (!fetchMoreButtonDisplayed && tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(initialBookMark)) {
-                                tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
-                                fetchMoreButtonDisplayed = true;
-                            }
-                        }
-                        this.statuses.addAll(position, tmpStatuses);
-                        statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
-                        if( tmpStatuses.size() < 3) //If new toots are only two
-                            lv_status.scrollToPosition(0);
-                        else {
-                            lv_status.scrollToPosition(position + tmpStatuses.size());
-                        }
-                    }
-
-                    //Update the id of the last toot retrieved
-                    if( MainActivity.lastHomeId == null || Long.parseLong(statuses.get(0).getId()) > Long.parseLong(MainActivity.lastHomeId))
-                        MainActivity.lastHomeId = statuses.get(0).getId();
-                    //Display new value in counter
-                    try {
-                        ((MainActivity) context).updateHomeCounter();
-                    }catch (Exception ignored){}
-
-                }else if ( statusListAdapter != null){
+                if ( statusListAdapter != null){
                     if( tagTimeline == null || !tagTimeline.isART() || (tagTimeline.isART() && tagTimeline.isNSFW())) {
                         this.statuses.addAll(statuses);
                         statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
@@ -833,7 +785,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         MainActivity.countNewStatus++;
                         inserted++;
                         this.statuses.add(0, statuses.get(i));
-
                     }
                 }
             }
@@ -853,6 +804,52 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     public void fetchMore(String max_id){
         fetchMoreButtonDisplayed = false;
-        asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    @Override
+    public void onRetrieveFeedsAfterBookmark(APIResponse apiResponse) {
+        if( apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
+            if( apiResponse == null)
+                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            else
+                Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            swipeRefreshLayout.setRefreshing(false);
+            flag_loading = false;
+            return;
+        }
+        List<Status> statuses = apiResponse.getStatuses();
+        //Find the position of toots between those already present
+        int position = 0;
+        while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
+            position++;
+        }
+        ArrayList<Status> tmpStatuses = new ArrayList<>();
+        for (Status tmpStatus : statuses) {
+            //Put the toot at its place in the list (id desc)
+            if( !this.statuses.contains(tmpStatus) ) { //Element not already added
+                //Mark status at new ones when their id is greater than the last read toot id
+                if (lastReadToot != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadToot)) {
+                    tmpStatus.setNew(true);
+                    MainActivity.countNewStatus++;
+                }
+                tmpStatuses.add(tmpStatus);
+            }
+        }
+        int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
+        //Display the fetch more toot button
+        if( tmpStatuses.size()  >= tootPerPage) {
+            if (!fetchMoreButtonDisplayed && tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(initialBookMark)) {
+                tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
+                fetchMoreButtonDisplayed = true;
+            }
+        }
+        this.statuses.addAll(position, tmpStatuses);
+        statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
+        if( tmpStatuses.size() < 3) //If new toots are only two
+            lv_status.scrollToPosition(0);
+        else {
+            lv_status.scrollToPosition(position + tmpStatuses.size());
+        }
     }
 }
