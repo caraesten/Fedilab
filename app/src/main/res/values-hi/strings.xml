@@ -298,7 +298,7 @@
     <string name="set_notif_follow_mention">जब मेरा कोई उल्लेख करे तो मुझे सूचित करें</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">Advanced settings</string>
+    <string name="settings_title_more_options">अतिरिक्त सेटिंग्स</string>
     <string name="set_wifi_only">केवल वाईफ़ाई में सूचित करें</string>
     <string name="set_notify">सूचित करें?</string>
     <string name="set_notif_silent">शांत सूचनाएं</string>
@@ -327,51 +327,51 @@
     <string name="use_cookies">Allow third-party cookies</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>सामान्य बैटरी बहाव</item>
+        <item>मध्यम बैटरी बहाव</item>
+        <item>कम बैटरी बहाव</item>
     </string-array>
     <string-array name="settings_menu_tabs">
-        <item>Tabs</item>
-        <item>Menu</item>
-        <item>Tabs and menu</item>
+        <item>टैब्स</item>
+        <item>मेन्यू</item>
+        <item>टैब्स एवं मेन्यू</item>
     </string-array>
     <string-array name="settings_translation">
-        <item>Yandex</item>
-        <item>DeepL</item>
-        <item>No</item>
+        <item>यैंडैक्स</item>
+        <item>डीपएल</item>
+        <item>नहीं</item>
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>Black</item>
+        <item>साँवला</item>
+        <item>सफेद</item>
+        <item>काला</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
-        <item>512 Kb</item>
-        <item>1 Mb</item>
-        <item>2 Mb</item>
+        <item>नहीं</item>
+        <item>५१२ केबी</item>
+        <item>१ एमबी</item>
+        <item>२ एमबी</item>
     </string-array>
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">एलईडी का रंग चुनें:</string>
     <string-array name="led_colours">
-        <item>Blue</item>
-        <item>Cyan</item>
-        <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>नीला</item>
+        <item>हरिनील</item>
+        <item>लाल बैंगनी</item>
+        <item>हरा</item>
+        <item>लाल</item>
+        <item>पीला</item>
+        <item>सफेद</item>
     </string-array>
-    <string name="set_title_news">News</string>
+    <string name="set_title_news">समाचार</string>
     <string name="set_notification_news">मुख्यपृष्ट पे नये लेखो के लिये सूचित करें</string>
     <string name="action_follow">Follow</string>
     <string name="action_unfollow">Unfollow</string>
-    <string name="action_block">Block</string>
+    <string name="action_block">प्रतिबंध</string>
     <string name="action_unblock">Unblock</string>
-    <string name="action_mute">Mute</string>
-    <string name="action_no_action">No action</string>
-    <string name="action_unmute">Unmute</string>
+    <string name="action_mute">खामोश</string>
+    <string name="action_no_action">कोई कार्यवाही नहीं</string>
+    <string name="action_unmute">मौन तोड़ें</string>
     <string name="request_sent">Request sent</string>
     <string name="followed_by">Follows you</string>
     <string name="action_search">Search</string>
@@ -443,24 +443,23 @@
     </string>
     <string name="thanks_text">        Thank you to Stéphane for the logo.
     </string>
-    <string name="thanks_text_dev">        Thank you to:
-    </string>
+    <string name="thanks_text_dev">इनको धन्यवाद:    </string>
     <string name="filter_regex">Filter out by regular expressions</string>
-    <string name="search">Search</string>
-    <string name="delete">Delete</string>
+    <string name="search">खोजें</string>
+    <string name="delete">मिटाएँ</string>
     <string name="fetch_more_toots">और लेख खोजिये...</string>
     <!-- About lists -->
-    <string name="action_lists">Lists</string>
+    <string name="action_lists">सूचियाँ</string>
     <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-    <string name="action_lists_add_to">Add to list</string>
-    <string name="action_lists_remove_from">Remove from list</string>
-    <string name="action_lists_create">Add list</string>
-    <string name="action_lists_delete">Delete list</string>
-    <string name="action_lists_update">Edit list</string>
-    <string name="action_lists_title_placeholder">New list title</string>
+    <string name="action_lists_add_to">सूची में जोड़ें</string>
+    <string name="action_lists_remove_from">सूची से निकालें</string>
+    <string name="action_lists_create">सूची जोड़ें</string>
+    <string name="action_lists_delete">सूची मिटाएँ</string>
+    <string name="action_lists_update">सूची संपादित करें</string>
+    <string name="action_lists_title_placeholder">नये सूची का शीर्षक</string>
     <string name="action_lists_search_users">Search among people you follow</string>
-    <string name="action_lists_owner">Your lists</string>
+    <string name="action_lists_owner">आपकी सूचियाँ</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
     <string name="show_boost_count">Show boosts/favourites count</string>
@@ -481,22 +480,22 @@
     <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
-    <string name="proxy_type">Type</string>
+    <string name="proxy_type">प्रकार</string>
     <string name="proxy_enable">Enable proxy?</string>
-    <string name="poxy_host">Host</string>
-    <string name="poxy_port">Port</string>
-    <string name="poxy_login">Login</string>
-    <string name="poxy_password">Password</string>
+    <string name="poxy_host">मेज़बान</string>
+    <string name="poxy_port">पोर्ट</string>
+    <string name="poxy_login">लॉग इन</string>
+    <string name="poxy_password">पासवर्ड</string>
     <string name="set_theme">Theme:</string>
     <string name="set_compact_mode">Compact mode</string>
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
-    <string name="no_account_yet">No account yet?</string>
+    <string name="no_account_yet">कोई खाता नहीं है?</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-    <string name="delete_instance">Delete this instance?</string>
+    <string name="delete_instance">इस इंस्टेंस को मिटाएँ?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-    <string name="which_language">Translate in</string>
+    <string name="which_language">अनुवाद करें</string>
     <string name="crash_title">Mastalab has stopped :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
