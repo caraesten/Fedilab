@@ -307,7 +307,7 @@
     <string name="settings_title_profile">Edit profile</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Lock account</string>
-    <string name="set_save_changes">Save changes</string>
+    <string name="set_save_changes">වෙනස් කිරීම් සුරකින්න</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
     <string name="set_fit_preview">Fit preview images</string>
     <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
@@ -316,13 +316,13 @@
     <string name="settings_title_hour">Time slot for notifications:</string>
     <string name="settings_time_from">Between</string>
     <string name="settings_time_to">and</string>
-    <string name="settings_time_greater">The time must be greater than %1$s</string>
-    <string name="settings_time_lower">The time must be lower than %1$s</string>
-    <string name="settings_hour_init">Start time</string>
-    <string name="settings_hour_end">End time</string>
+    <string name="settings_time_greater">වේලාව %1$s ට වඩා වැඩි විය යුතු යි</string>
+    <string name="settings_time_lower">වේලාව %1$s ට වඩා අඩු විය යුතු යි</string>
+    <string name="settings_hour_init">ආරම්භ වන වේලාව</string>
+    <string name="settings_hour_end">අවසන් වන වේලාව</string>
     <string name="embedded_browser">Use the built-in browser</string>
     <string name="custom_tabs">Custom tabs</string>
-    <string name="use_javascript">Enable Javascript</string>
+    <string name="use_javascript">Javascript සක්‍රිය කරන්න</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
@@ -341,37 +341,37 @@
         <item>DeepL</item>
         <item>නැහැ</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">ඔබේ API යතුර, Yandex සඳහා හිස්ව තැබීමට ඔබට හැකි ය</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>Black</item>
+        <item>අඳුරු</item>
+        <item>ආලෝකමත්</item>
+        <item>කළු</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
+        <item>නැහැ</item>
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
     </string-array>
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">LED වර්ණය තෝරන්න:</string>
     <string-array name="led_colours">
-        <item>Blue</item>
-        <item>Cyan</item>
-        <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>නිල්</item>
+        <item>මයුර නිල්</item>
+        <item>දම් පැහැ තද රතු</item>
+        <item>කොළ</item>
+        <item>රතු</item>
+        <item>කහ</item>
+        <item>සුදු</item>
     </string-array>
-    <string name="set_title_news">News</string>
+    <string name="set_title_news">පුවත්</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
     <string name="action_follow">Follow</string>
     <string name="action_unfollow">Unfollow</string>
-    <string name="action_block">Block</string>
-    <string name="action_unblock">Unblock</string>
-    <string name="action_mute">Mute</string>
-    <string name="action_no_action">No action</string>
-    <string name="action_unmute">Unmute</string>
+    <string name="action_block">අවහිර කරන්න</string>
+    <string name="action_unblock">අවහිර නොකරන්න</string>
+    <string name="action_mute">නිහඬ කරන්න</string>
+    <string name="action_no_action">ක්‍රියාවක් නැත</string>
+    <string name="action_unmute">නිහඬ බව නැති කරන්න</string>
     <string name="request_sent">Request sent</string>
     <string name="followed_by">Follows you</string>
     <string name="action_search">Search</string>
@@ -487,10 +487,10 @@
     <string name="poxy_port">Port</string>
     <string name="poxy_login">Login</string>
     <string name="poxy_password">Password</string>
-    <string name="set_theme">Theme:</string>
-    <string name="set_compact_mode">Compact mode</string>
+    <string name="set_theme">තේමාව:</string>
+    <string name="set_compact_mode">සංයුක්ත ආකාරය</string>
     <string name="set_share_details">Add toot details when sharing</string>
-    <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+    <string name="support_the_app_on_liberapay">Liberapay මගින් මෙම මෘදුකාංගයට සඳහා ආධාර කරන්න</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
     <string name="no_account_yet">No account yet?</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
@@ -645,12 +645,12 @@
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
         <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>මිනිත්තු 30</item>
+        <item>පැය 1</item>
+        <item>පැය 6</item>
+        <item>පැය 12</item>
+        <item>දින 1</item>
+        <item>සති 1</item>
     </string-array>
     <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
@@ -660,7 +660,7 @@
     </string>
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
-    <string name="more_information">More information</string>
+    <string name="more_information">තවත් තොරතුරු</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
     <string name="show_media_only">Media only</string>
