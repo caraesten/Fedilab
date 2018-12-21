@@ -126,8 +126,8 @@
         <item>Dit domein blokkeren?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Meld</item>
+        <item>Stil</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Toot verwijderen?</item>
@@ -611,17 +611,17 @@
     <string name="default_language">Standaardtaal</string>
     <string name="truncate_long_toots">Lange toots afbreken</string>
     <string name="set_truncate_toot">Toots langer dan \'x\' regels afbreken. Nul is niet afbreken.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
+    <string name="display_toot_truncate">Meer weergeven</string>
+    <string name="hide_toot_truncate">Minder weergeven</string>
     <string name="manage_tags">Tags beheren</string>
     <string name="tags_already_stored">Dit tag bestaat al!</string>
     <string name="tags_stored">De tag is opgeslagen!</string>
     <string name="tags_renamed">De dag is veranderd!</string>
     <string name="tags_deleted">De tag is verwijderd!</string>
     <string name="set_display_art">Toon Art tijdlijn</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
+    <string name="schedule_boost">Boost inplannen</string>
+    <string name="boost_scheduled">De boost is gepland!</string>
+    <string name="no_scheduled_boosts">Geen ingeplande boost om weer te geven!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string name="art_menu">Art tijdlijn</string>
     <string name="open_menu">Open menu</string>
