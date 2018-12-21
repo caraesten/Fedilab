@@ -836,6 +836,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 tmpStatuses.add(tmpStatus);
             }
         }
+        try {
+            ((MainActivity) context).updateHomeCounter();
+        }catch (Exception ignored){}
         int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         //Display the fetch more toot button
         if( tmpStatuses.size()  >= tootPerPage) {
