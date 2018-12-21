@@ -6,7 +6,7 @@
     <string name="action_about">Om</string>
     <string name="action_about_instance">Om instansen</string>
     <string name="action_privacy">Personvern</string>
-    <string name="action_cache">Cache</string>
+    <string name="action_cache">Mellomlager</string>
     <string name="action_logout">Logg ut</string>
     <string name="login">Logg Inn</string>
     <!-- common -->
@@ -90,7 +90,7 @@
     <string name="send_email">Send en epost</string>
     <string name="choose_file">Vennligst velg en fil</string>
     <string name="choose_file_error">Ingen filutforsker funnet!</string>
-    <string name="click_to_change">Klikk på filstien for å endre den</string>
+    <string name="click_to_change">Klikk på stien for å endre den</string>
     <string name="failed">Feilet!</string>
     <string name="scheduled_toots">Planlagte toots</string>
     <string name="disclaimer_full">Informasjon nedenfor kan gjenspeile brukerens profil ufullstendig.</string>
@@ -223,7 +223,7 @@
     <string name="notif_follow">fulgte deg</string>
     <string name="notif_pouet">Ny toot fra %1$s</string>
     <plurals name="other_notifications">
-        <item quantity="one">og %d andre varsler</item>
+        <item quantity="one">og et annet varsel</item>
         <item quantity="other">og %d andre varsler</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
@@ -266,9 +266,9 @@
     <string name="toast_saved">Media har blitt lagret!</string>
     <string name="toast_error_translate">Det oppstod en feil under oversettelsen!</string>
     <string name="toast_toot_saved">Utkast lagret!</string>
-    <string name="toast_error_char_limit">Er du sikker på at denne forekomsten tillater dette antall tegn? Vanligvis er denne verdien nær 500 tegn.</string>
+    <string name="toast_error_char_limit">Er du sikker på at denne instansen tillater dette antall tegn? Vanligvis er denne verdien nær 500 tegn.</string>
     <string name="toast_visibility_changed">Synligheten til toots er endret for kontoen %1$s</string>
-    <string name="toast_empty_search">Instansnavn og skjermnavn kan ikke være tomt!</string>
+    <string name="toast_empty_search">Instansnavn og brukernavn kan ikke være tomt!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimalisering av lasting</string>
     <string name="set_toots_page">Antall toots per innlasting</string>
@@ -276,63 +276,63 @@
     <string name="set_notifications_page">Antall varsler per innlasting</string>
     <string name="set_attachment_always">Alltid</string>
     <string name="set_attachment_wifi">WIFI</string>
-    <string name="set_attachment_ask">Spørre</string>
-    <string name="set_attachment_action">Legg i mediet</string>
-    <string name="load_attachment">Legg bildene</string>
+    <string name="set_attachment_ask">Spør</string>
+    <string name="set_attachment_action">Last mediet</string>
+    <string name="load_attachment">Last bildene</string>
     <string name="load_attachment_spoiler">Vis mer…</string>
-    <string name="load_attachment_spoiler_less">Vis færre…</string>
-    <string name="load_sensitive_attachment">Følsomt innhold</string>
-    <string name="set_display_reply">Vis tidligere melding i svar</string>
+    <string name="load_attachment_spoiler_less">Vis mindre…</string>
+    <string name="load_sensitive_attachment">Sensitivt innhold</string>
+    <string name="set_display_reply">Vis forrige melding i svar</string>
     <string name="set_display_local">Vis lokal tidslinje</string>
-    <string name="set_display_global">Vis føderert tidslinje</string>
+    <string name="set_display_global">Vis forent tidslinje</string>
     <string name="set_disable_gif">Deaktiver GIF-avatarer</string>
     <string name="set_folder_title">Sti: </string>
     <string name="set_auto_store_toot">Lagre utkast automatisk</string>
-    <string name="set_bubble_counter">Skjermer</string>
+    <string name="set_bubble_counter">Vis tellere</string>
     <string name="set_auto_add_media_url">Legg til URL til media i toots</string>
     <string name="settings_title_notifications">Administrer varsler</string>
-    <string name="set_notif_follow">Gi beskjed når noen følger deg</string>
-    <string name="set_notif_follow_ask">Gi beskjed når noen ber om å følge deg</string>
-    <string name="set_notif_follow_share">Gi beskjed når noen øker statusen din</string>
-    <string name="set_notif_follow_add">Gi beskjed når noen favoriserer statusen din</string>
-    <string name="set_notif_follow_mention">Gi beskjed når noen nevner deg</string>
-    <string name="set_share_validation">Vis bekreftelsesdialog før du øker</string>
+    <string name="set_notif_follow">Varlse når noen følger deg</string>
+    <string name="set_notif_follow_ask">Varsle når noen ber om å følge deg</string>
+    <string name="set_notif_follow_share">Varsle når noen booster statusen din</string>
+    <string name="set_notif_follow_add">Varsle når noen favoriserer statusen din</string>
+    <string name="set_notif_follow_mention">Varsle når noen nevner deg</string>
+    <string name="set_share_validation">Vis bekreftelsesdialog før du booster</string>
     <string name="set_share_validation_fav">Vis bekreftelsesdialog før du legger til i favoritter</string>
     <string name="settings_title_more_options">Avanserte innstillinger</string>
     <string name="set_wifi_only">Varsle kun på WIFI</string>
-    <string name="set_notify">Gi beskjed?</string>
-    <string name="set_notif_silent">Silent Notifications</string>
+    <string name="set_notify">Varsle?</string>
+    <string name="set_notif_silent">Dempede varslinger</string>
     <string name="set_night_mode">Nattmodus</string>
-    <string name="set_nsfw_timeout">NSFW vise timeout (sekunder, 0 betyr av)</string>
+    <string name="set_nsfw_timeout">NSFW visningspause (sekunder, 0 betyr av)</string>
     <string name="settings_title_profile">Rediger profil</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Lås konto</string>
     <string name="set_save_changes">Lagre endringer</string>
-    <string name="set_header_picture_overlay">Velg et topptekstbilde</string>
+    <string name="set_header_picture_overlay">Velg et toppbilde</string>
     <string name="set_fit_preview">Tilpass forhåndsvisningsbilder</string>
     <string name="set_automatically_split_toot">Del opp toots over 500 tegn i svar</string>
     <string name="note_no_space">Du har nådd de 160 tegnene som er tillatt!</string>
     <string name="username_no_space">Du har nådd de 30 tegnene som er tillatt!</string>
-    <string name="settings_title_hour">Tidsspor for varsler:</string>
+    <string name="settings_title_hour">Tidsvindu for varsler:</string>
     <string name="settings_time_from">Mellom</string>
     <string name="settings_time_to">og</string>
     <string name="settings_time_greater">Tiden må være større enn %1$s</string>
-    <string name="settings_time_lower">Tiden må være lavere enn %1$s</string>
+    <string name="settings_time_lower">Tiden må være mindre enn %1$s</string>
     <string name="settings_hour_init">Starttid</string>
     <string name="settings_hour_end">Sluttid</string>
     <string name="embedded_browser">Bruk den innebygde nettleseren</string>
-    <string name="custom_tabs">Egendefinerte kategorier</string>
+    <string name="custom_tabs">Egendefinerte faner</string>
     <string name="use_javascript">Aktiver Javascript</string>
     <string name="expand_cw">Utvid cw automatisk</string>
     <string name="use_cookies">Tillat cookies fra tredjeparter</string>
     <string name="settings_ui_layout">Oppsett for tidslinjer: </string>
     <string-array name="battery_profiles">
-        <item>Normal batteribruk</item>
-        <item>Middels batteri</item>
-        <item>Lav batteribruk</item>
+        <item>Normalt batteriforbruk</item>
+        <item>Middels batteriforbruk</item>
+        <item>Lavt batteriforbruk</item>
     </string-array>
     <string-array name="settings_menu_tabs">
-        <item>Tabs</item>
+        <item>Faner</item>
         <item>Meny</item>
         <item>Faner og meny</item>
     </string-array>
@@ -341,7 +341,7 @@
         <item>DeepL</item>
         <item>Nei</item>
     </string-array>
-    <string name="your_api_key">API-nøkkel, du kan la den stå tom for Yandex</string>
+    <string name="your_api_key">API-nøkkel, du kan la denne stå tom dersom Yandex benyttes</string>
     <string-array name="settings_theme">
         <item>Mørk</item>
         <item>Lys</item>
@@ -367,25 +367,25 @@
     <string name="set_notification_news">Varsle om nye toots på hjemmetidslinjen</string>
     <string name="action_follow">Følg</string>
     <string name="action_unfollow">Slutt å følge</string>
-    <string name="action_block">Blokkere</string>
-    <string name="action_unblock">Unblock</string>
-    <string name="action_mute">Stum</string>
+    <string name="action_block">Blokker</string>
+    <string name="action_unblock">Slutt å blokkere</string>
+    <string name="action_mute">Demp</string>
     <string name="action_no_action">Ingen handling</string>
-    <string name="action_unmute">Mikrofon</string>
+    <string name="action_unmute">Skru av demping</string>
     <string name="request_sent">Forespørsel sendt</string>
     <string name="followed_by">Følger deg</string>
-    <string name="action_search">Søke</string>
+    <string name="action_search">Søk</string>
     <string name="set_capitalize">Stor forbokstav i svar</string>
     <string name="set_resize_picture">Endre størrelsen på bilder</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Trykk på varsler</string>
+    <string name="settings_popup_title">Push-varsler</string>
     <string name="settings_popup_message">Vennligst bekreft push notifications som du vil motta.
 Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldinger-fanen).    </string>
     <string name="settings_popup_timeline">For uleste toots i hjemmetidslinjen?</string>
     <string name="settings_popup_notification">For uleste varsler?</string>
     <!-- CACHE -->
-    <string name="cache_title">Tøm cache</string>
-    <string name="cache_message">Det er %1$s med data i hurtigbufferen. \n \nVil du slette dem?</string>
+    <string name="cache_title">Tøm mellomlager</string>
+    <string name="cache_message">Det er %1$s med data i mellomlageret. \n \nVil du slette det?</string>
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cachen ble ryddet! %1$s ble utgitt</string>
     <!-- ACTIVITY CACHE -->
@@ -409,11 +409,11 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     </string-array>
     <string name="owner_cached_toots_empty">Ingen toots ble funnet i databasen. Vennligst bruk Synkroniser-knappen i menyen for å hente dem.</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Registrerte data</string>
+    <string name="privacy_data_title">Lagrede data</string>
     <string name="privacy_data">Bare grunnleggende informasjon fra kontoer lagres på enheten.
- Disse dataene er strengt konfidensielle og kan bare brukes av søknaden.
- Hvis du sletter programmet, fjerner du umiddelbart disse dataene. \n
- &#9888; Logg inn og passord lagres aldri. De brukes kun under sikker autentisering (SSL) med en forekomst.    </string>
+ Disse dataene er strengt konfidensielle og kan bare brukes av applikasjonen.
+ Hvis du sletter programmet, fjernes disse dataene. \n
+ &#9888; Brukernavn og passord lagres aldri. De brukes kun under sikker autentisering (SSL) med en instans.    </string>
     <string name="privacy_authorizations_title">Tillatelser:</string>
     <string name="privacy_authorizations"><b> ACCESS_NETWORK_STATE </b>: Brukes til å oppdage om enheten er koblet til et WIFI-nettverk. \n
          - <b> INTERNET </b>: Brukes for spørringer til en instans. \n
@@ -427,30 +427,30 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
 - <b>Følg</b>: Følg, unollow, block, unblock. \n \n
 <b>⚠ Disse handlingene utføres bare når brukeren ber om dem.</b>    </string>
     <string name="privacy_API_title">Sporing og biblioteker</string>
-    <string name="privacy_API">Søknaden <b> bruker ikke sporingsverktøy </b> (målgruppemåling, feilrapportering, etc.) og inneholder ingen reklame. \n \n
-         Bruken av biblioteker minimeres: \n
-         - <b> Glid </b>: For å administrere media \n
-         - <b> Android-jobb </b>: For å administrere tjenester \n
-         - <b> PhotoView </b>: For å administrere bilder \n    </string>
+    <string name="privacy_API">Applikasjonen<b> bruker ikke sporingsverktøy </b> (målgruppemåling, feilrapportering, etc.), og inneholder ingen reklame. \n \n
+         Bruken av biblioteker er minmal: \n
+         - <b>Glide</b>: For å administrere media \n
+         - <b>Android-job</b>: For å administrere tjenester \n
+         - <b>PhotoView</b>: For å administrere bilder \n    </string>
     <string name="privacy_API_yandex_title">Oversettelse av toots</string>
     <string name="privacy_API_yandex_authorizations">Programmet tilbyr muligheten til å oversette toots ved hjelp av lokasjonen til enheten og Yandex APIet. \n
          Yandex har sin egen personvernerklæring som finnes her: https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="thanks_text">Takk til Stéphane for logoen.    </string>
     <string name="thanks_text_dev">Takk til:    </string>
-    <string name="filter_regex">Filtrer ut med vanlige uttrykk</string>
-    <string name="search">Søke</string>
+    <string name="filter_regex">Filtrer ut med regulære uttrykk</string>
+    <string name="search">Søk</string>
     <string name="delete">Slett</string>
     <string name="fetch_more_toots">Hent flere toots…</string>
     <!-- About lists -->
     <string name="action_lists">Lister</string>
     <string name="action_lists_confirm_delete">Er du sikker på at du vil slette denne listen permanent?</string>
     <string name="action_lists_empty_content">Det er ingenting i denne listen enda. Når medlemmer av denne listen legger inn nye statuser, vises de her.</string>
-    <string name="action_lists_add_to">Legg til i listen</string>
+    <string name="action_lists_add_to">Legg til i liste</string>
     <string name="action_lists_remove_from">Fjern fra liste</string>
     <string name="action_lists_create">Legg til liste</string>
     <string name="action_lists_delete">Slett liste</string>
     <string name="action_lists_update">Rediger liste</string>
-    <string name="action_lists_title_placeholder">Ny tittel tittel</string>
+    <string name="action_lists_title_placeholder">Ny tittel på liste</string>
     <string name="action_lists_search_users">Søk blant personer du følger</string>
     <string name="action_lists_owner">Dine lister</string>
     <!-- Migration -->
@@ -463,8 +463,8 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
 - Hvis du bruker tofaktorautentisering (2FA), vennligst benytt linken på bunnen (etter at adressen til instansen er fylt inn)\n\n
 - Du kan også benytte denne linken for å logge inn med 2FA\n\n
 - Hvis det fortsatt ikke fungerer å koble til instansen, vennligst opprett en sak på GitLab, https://gitlab.com/tom79/mastalab/issues\n\n    </string>
-    <string name="media_ready">Media er lastet. Klikk her for å vise.</string>
-    <string name="data_export_start">Denne handlingen kan lang tid. Du vil bli varslet når det er ferdig.</string>
+    <string name="media_ready">Mediet er lastet. Klikk her for å vise.</string>
+    <string name="data_export_start">Denne handlingen kan ta lang tid. Du vil bli varslet når det er ferdig.</string>
     <string name="data_export_running">Kjører fortsatt, vennligst vent…</string>
     <string name="data_export">Eksporter statuser</string>
     <string name="data_export_toots">Eksportere statuser for %1$s</string>
@@ -601,7 +601,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="set_change_locale">Endre språk</string>
     <string name="default_language">Standardspråk</string>
     <string name="truncate_long_toots">Avkort lange toots</string>
-    <string name="set_truncate_toot">Avkort toots lengre enn \'x\' linjer. 0 (null) betyr at toots ikke avkortes.</string>
+    <string name="set_truncate_toot">Avkort toots lengre enn \'x\' linjer. 0 betyr at toots ikke avkortes.</string>
     <string name="display_toot_truncate">Vis mer</string>
     <string name="hide_toot_truncate">Vis mindre</string>
     <string name="manage_tags">Administrer stikkord</string>
