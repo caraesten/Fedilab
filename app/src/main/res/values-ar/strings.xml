@@ -79,16 +79,16 @@
     <string name="muted_menu">الحسابات المكتومة</string>
     <string name="blocked_menu">الحسابات المحظورة</string>
     <string name="remote_follow_menu">تابع عن بعد</string>
-    <string name="notifications">الإخطارات</string>
+    <string name="notifications">الإشعارات</string>
     <string name="follow_request">طلبات المتابعة</string>
     <string name="optimization">التحسينات</string>
     <string name="settings">الإعدادات</string>
     <string name="profile">الملف الشخصي</string>
-    <string name="make_a_choice">ماذا تريد أن تفعل ؟</string>
+    <string name="make_a_choice">ماذا تريد أن تفعل؟</string>
     <string name="delete_account_title">حذف حساب</string>
     <string name="delete_account_message" formatted="false">هل تود إزالة حساب %1$s من التطبيق ؟</string>
     <string name="send_email">إرسال بريد إلكتروني</string>
-    <string name="choose_file">يرجى تحديد ملف</string>
+    <string name="choose_file">يرجى اختيار ملف</string>
     <string name="choose_file_error">لم يتم العثور على أي تطبيق لإدارة الملفات!</string>
     <string name="click_to_change">اضغط على رابط المسار لتعديله</string>
     <string name="failed">فشل!</string>
@@ -96,7 +96,7 @@
     <string name="disclaimer_full">قد لا تعكِس المعلومات أدناه كامل الملف الشخصي للمستخدِم.</string>
     <string name="insert_emoji">إضافة إيموجو</string>
     <string name="no_emoji">ليس بإمكان التطبيق حاليًا حصاد الإيموجي الخاصة.</string>
-    <string name="live_notif">الإخطارات الحية</string>
+    <string name="live_notif">الإشعارات الحية</string>
     <!-- Status -->
     <string name="no_status">لا توجد هناك أية تبويقات لعرضها</string>
     <string name="fav_added">تمت إضافة التبويق إلى مفضلاتك</string>
@@ -106,9 +106,9 @@
     <string name="reblog_by">رقاه %1$s</string>
     <string name="favourite_add">هل تود إضافة هذا التبويق إلى مفضلاتك ؟</string>
     <string name="favourite_remove">هل تود إزالة هذا التبويق من مفضلاتك ؟</string>
-    <string name="reblog_add">هل تود ترقية هذا التبويق ؟</string>
-    <string name="reblog_remove">هل تود إلغاء ترقية هذا التبويق ؟</string>
-    <string name="pin_add">هل تود تدبيس هذا التبويق ؟</string>
+    <string name="reblog_add">هل تود ترقية هذا التبويق؟</string>
+    <string name="reblog_remove">هل تود إلغاء ترقية هذا التبويق؟</string>
+    <string name="pin_add">هل تود تدبيس هذا التبويق؟</string>
     <string name="pin_remove">هل تود فك تدبيس هذا التبويق ؟</string>
     <string name="more_action_1">كتم</string>
     <string name="more_action_2">حظر</string>
