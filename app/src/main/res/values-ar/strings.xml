@@ -155,7 +155,7 @@
     <string name="date_day">%d يو</string>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">تحذير</string>
-    <string name="toot_placeholder">ما الجديد ؟</string>
+    <string name="toot_placeholder">فيم تفكر؟</string>
     <string name="toot_it">بوِّق!</string>
     <string name="cw">ت.م</string>
     <string name="toot_title">تحرير تبويق</string>
@@ -163,13 +163,13 @@
     <string name="toot_no_space">لقد بلغت حد الـ 500 حرف المسموح به!</string>
     <string name="toot_select_image">تحديد وسائط</string>
     <string name="toot_select_image_error">طرأ هناك خطأ أثناء اختيار الوسائط!</string>
-    <string name="toot_delete_media">هل تود حذف هذه الصورة ؟</string>
+    <string name="toot_delete_media">هل تود حذف هذه الصورة؟</string>
     <string name="toot_error_no_content">إن تبويقك فارغ!</string>
     <string name="toot_visibility_tilte">طريقة نشر التبويق</string>
-    <string name="toots_visibility_tilte">أسلوب نشر التبويقات: </string>
+    <string name="toots_visibility_tilte">الأسلوب الافتراضي لنشر التبويقات: </string>
     <string name="toot_sent">تم إرسال التبويق!</string>
     <string name="toot_reply_content_title">بصدد الرد على هذا التبويق:</string>
-    <string name="toot_sensitive">محتوى حساس ؟</string>
+    <string name="toot_sensitive">محتوى حساس؟</string>
     <string-array name="toot_visibility">
         <item>أنشر على الخيوط العمومية</item>
         <item>لا تقم بالنشر على الخيوط العمومية</item>
@@ -180,7 +180,7 @@
     <string name="choose_toot">اختر تبويقا</string>
     <string name="choose_accounts">اختر حسابا</string>
     <string name="select_accounts">قم باختيار بعض من الحسابات</string>
-    <string name="remove_draft">هل تود حذف المسودة ؟</string>
+    <string name="remove_draft">هل تود حذف المسودة؟</string>
     <string name="show_reply">اضغط على الزر لعرض التبويق الأصلي</string>
     <string name="upload_form_description">وصف للمعاقين بصريا</string>
     <!-- Instance -->
@@ -302,7 +302,7 @@
     <string name="set_auto_store_toot">حفظ تلقائي للمسودات</string>
     <string name="set_bubble_counter">عرض العدادات</string>
     <string name="set_auto_add_media_url">إضافة روابط الوسائط في التبويقات</string>
-    <string name="settings_title_notifications">إدارة الإخطارات</string>
+    <string name="settings_title_notifications">إدارة الإشعارات</string>
     <string name="set_notif_follow">تنبيهي عندما يتبعني أحدهم</string>
     <string name="set_notif_follow_ask">تنبيهي عندما أتلقى طلبا بالمتابعة</string>
     <string name="set_notif_follow_share">تنبيهي عندما يقوم أحدهم بترقية منشوري</string>
@@ -325,7 +325,7 @@
     <string name="set_automatically_split_toot">تقسيم التبويقات التي تفوق الـ 500 حرف عند الرد</string>
     <string name="note_no_space">لقد بلغت حد الـ 160 حرف المسموح به!</string>
     <string name="username_no_space">لقد بلغت حد الـ 30 حرف المسموح به!</string>
-    <string name="settings_title_hour">فترة استقبال الإخطارات:</string>
+    <string name="settings_title_hour">فترة استقبال الإشعارات:</string>
     <string name="settings_time_from">بين</string>
     <string name="settings_time_to">و</string>
     <string name="settings_time_greater">يجب أن تكون المدة الزمنية أكبر مِن %1$s</string>
@@ -344,13 +344,13 @@
         <item>استخدام طفيف لطاقة البطارية</item>
     </string-array>
     <string-array name="settings_menu_tabs">
-        <item>التبويب</item>
+        <item>التبويبات</item>
         <item>القائمة</item>
-        <item>التبويبات و القائمة</item>
+        <item>التبويبات والقائمة</item>
     </string-array>
     <string-array name="settings_translation">
         <item>يانديكس</item>
-        <item>لا</item>
+        <item>DeepL</item>
         <item>لا</item>
     </string-array>
     <string name="your_api_key">مفتاح API، يمكن تركه فارغا عند استخدام ياندكس</string>
@@ -375,7 +375,7 @@
         <item>أصفر</item>
         <item>أبيض</item>
     </string-array>
-    <string name="set_title_news">الجديد</string>
+    <string name="set_title_news">الأخبار</string>
     <string name="set_notification_news">الإخطار عن التبويقات الجديدة على الخط الرئيسي</string>
     <string name="action_follow">اتبع</string>
     <string name="action_unfollow">إلغاء المتابعة</string>
@@ -465,7 +465,7 @@
     <string name="action_lists_empty_content">لا تزال هذه القائمة فارغة إلى حد الآن. سوف تظهر هنا تبويقات الأعضاء المنتمين إليها حالَما يقومون بالنشر.</string>
     <string name="action_lists_add_to">إضافة إلى القائمة</string>
     <string name="action_lists_remove_from">إزالة من القائمة</string>
-    <string name="action_lists_create">إضافة قائمة جديدة</string>
+    <string name="action_lists_create">إنشاء قائمة جديدة</string>
     <string name="action_lists_delete">حذف القائمة</string>
     <string name="action_lists_update">تعديل القائمة</string>
     <string name="action_lists_title_placeholder">عنوان جديد للقائمة</string>
@@ -473,8 +473,8 @@
     <string name="action_lists_owner">قوائمك</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s انتقلَ إلى %2$s</string>
-    <string name="show_boost_count">عرض عدد الترقيات و المفضلة</string>
-    <string name="issue_login_title">هل المصادقة لا تعمل ؟</string>
+    <string name="show_boost_count">عرض عدد الترقيات والمفضلة</string>
+    <string name="issue_login_title">هل المصادقة لا تعمل؟</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
@@ -492,7 +492,7 @@
     <!-- Proxy -->
     <string name="proxy_set">البروكسي</string>
     <string name="proxy_type">النوع</string>
-    <string name="proxy_enable">تشغيل البروكسي ؟</string>
+    <string name="proxy_enable">تشغيل البروكسي؟</string>
     <string name="poxy_host">المضيف</string>
     <string name="poxy_port">المنفذ</string>
     <string name="poxy_login">اسم المستخدم</string>
@@ -502,7 +502,7 @@
     <string name="set_share_details">إضافة التفاصيل عند مشاركة تبويق ما</string>
     <string name="support_the_app_on_liberapay">ادعم التطبيق على ليبيراباي</string>
     <string name="alert_regex">هناك خطأ في العبارة المنطقية!</string>
-    <string name="no_account_yet">ليس لديك حساب بعد ؟</string>
+    <string name="no_account_yet">ليس لديك حساب بعد؟</string>
     <string name="toast_instance_unavailable">لم يتم العثور على أي خيط زمني في مثيل الخادم هذا!</string>
     <string name="delete_instance">هل تريد إزالة مثيل الخادم هذا؟</string>
     <string name="warning_delete_instance">إنّك بصدد حذف %s مِن قائمة مثيلات الخوادم التي تتبعها.</string>
@@ -530,7 +530,7 @@
     <string name="action_filters_empty_content">ليس هناك أي عامل تصفية بعدُ. يمكنك إنشاء واحد بالنقر على زر \"+\".</string>
     <string name="filter_keyword">كلمة مفتاحية أو عبارة</string>
     <string name="context_home">الخط الزمني الرئيسي</string>
-    <string name="context_public">الخط الزمني العمومي</string>
+    <string name="context_public">الخطوط الزمنية العمومية</string>
     <string name="context_notification">الإشعارات</string>
     <string name="context_conversation">المحادثات</string>
     <string name="filter_keyword_explanations">سوف يتم العثور عليه مهما كانت حالة الأحرف في النص أو حتى و إن كان داخل الويب و فيه تحذير عن المحتوى</string>
