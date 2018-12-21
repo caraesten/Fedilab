@@ -10,48 +10,48 @@
     <string name="action_logout">Logout</string>
     <string name="login">Login</string>
     <!-- common -->
-    <string name="close">Close</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="cancel">Cancel</string>
-    <string name="download">Download</string>
+    <string name="close">වසන්න</string>
+    <string name="yes">ඔව්</string>
+    <string name="no">නැහැ</string>
+    <string name="cancel">අවලංගු කරන්න</string>
+    <string name="download">බාගත කරන්න</string>
     <string name="download_file">Download %1$s</string>
-    <string name="download_over">Download complete</string>
+    <string name="download_over">බාගතවීම සම්පුර්ණයි</string>
     <string name="save_file">Save %1$s</string>
     <string name="save_over">Media saved</string>
     <string name="download_from" formatted="false">File: %1$s</string>
-    <string name="password">Password</string>
-    <string name="email">Email</string>
-    <string name="accounts">Accounts</string>
+    <string name="password">මුරපදය</string>
+    <string name="email">විද්‍යුත් තැපැල් ලිපිනය</string>
+    <string name="accounts">ගිණුම්</string>
     <string name="toots">Toots</string>
     <string name="tags">Tags</string>
     <string name="token">Token</string>
-    <string name="save">Save</string>
-    <string name="restore">Restore</string>
-    <string name="two_factor_authentification">Two-step authentication?</string>
+    <string name="save">සුරකින්න</string>
+    <string name="restore">ප්‍රතිස්ථාපනය කරන්න</string>
+    <string name="two_factor_authentification">ද්වි-පියවර සහතික කිරීම?</string>
     <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
-    <string name="no_result">No results!</string>
+    <string name="no_result">ප්‍රතිඵල නොමැත!</string>
     <string name="instance">Instance</string>
     <string name="instance_example">Instance: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
-    <string name="add_account">Add an account</string>
+    <string name="add_account">ගිණුමක් එක් කරන්න</string>
     <string name="clipboard">The content of the toot has been copied to the clipboard</string>
-    <string name="change">Change</string>
-    <string name="choose_picture">Select a picture…</string>
+    <string name="change">වෙනස් කරන්න</string>
+    <string name="choose_picture">පින්තූරයක් තෝරන්න…</string>
     <string name="clear">Clean</string>
-    <string name="microphone">Microphone</string>
-    <string name="camera">Camera</string>
-    <string name="speech_prompt">Please, say something</string>
+    <string name="microphone">මයික්‍රොෆෝනය</string>
+    <string name="camera">කැමරාව</string>
+    <string name="speech_prompt">කරුණාකර, යමක් කියන්න</string>
     <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-    <string name="delete_all">Delete all</string>
+    <string name="delete_all">සියල්ල මකන්න</string>
     <string name="translate_toot">Translate this toot.</string>
     <string name="schedule">Schedule</string>
-    <string name="text_size">Text and icon sizes</string>
-    <string name="text_size_change">Change the current text size:</string>
-    <string name="icon_size_change">Change the current icon size:</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="open_with">Open with</string>
+    <string name="text_size">අකුරු සහ ලාංඡනවල ප්‍රමාණය</string>
+    <string name="text_size_change">අකුරුවල වර්තමාන ප්‍රමාණය වෙනස් කරන්න:</string>
+    <string name="icon_size_change">ලාංඡනවල වර්තමාන ප්‍රමාණය වෙනස් කරන්න:</string>
+    <string name="next">ඊළඟ</string>
+    <string name="previous">පෙර</string>
+    <string name="open_with">සමඟින් විවෘත කරන්න</string>
     <string name="validate">Validate</string>
     <string name="media">Media</string>
     <string name="share_with">Share with</string>
@@ -79,24 +79,24 @@
     <string name="muted_menu">Muted users</string>
     <string name="blocked_menu">Blocked users</string>
     <string name="remote_follow_menu">Remote follow</string>
-    <string name="notifications">Notifications</string>
+    <string name="notifications">දැනුම්දීම්</string>
     <string name="follow_request">Follow requests</string>
     <string name="optimization">Optimization</string>
-    <string name="settings">Settings</string>
+    <string name="settings">සැකසුම්</string>
     <string name="profile">Profile</string>
-    <string name="make_a_choice">What do you want to do?</string>
-    <string name="delete_account_title">Delete an account</string>
-    <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-    <string name="send_email">Send an email</string>
-    <string name="choose_file">Please select a file</string>
+    <string name="make_a_choice">ඔබට අවශ්‍ය කුමක් කිරීමට ද?</string>
+    <string name="delete_account_title">ගිණුමක් මකන්න</string>
+    <string name="delete_account_message" formatted="false">%1$s ගිණුම මෘදුකාංගයෙන් මකා දමනවා ද?</string>
+    <string name="send_email">විද්‍යුත් ලිපියක් යවන්න</string>
+    <string name="choose_file">කරුණාකර ගොනුවක් තෝරන්න</string>
     <string name="choose_file_error">No file explorer found!</string>
     <string name="click_to_change">Click on the path to change it</string>
-    <string name="failed">Failed!</string>
+    <string name="failed">අසාර්ථකයි!</string>
     <string name="scheduled_toots">Scheduled toots</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
     <string name="insert_emoji">Insert emoji</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-    <string name="live_notif">Live notifications</string>
+    <string name="live_notif">සජීවී දැනුම්දීම්</string>
     <!-- Status -->
     <string name="no_status">No toot to display</string>
     <string name="fav_added">The toot was added to favourites</string>
@@ -110,32 +110,32 @@
     <string name="reblog_remove">Unboost this toot?</string>
     <string name="pin_add">Pin this toot?</string>
     <string name="pin_remove">Unpin this toot?</string>
-    <string name="more_action_1">Mute</string>
-    <string name="more_action_2">Block</string>
-    <string name="more_action_3">Report</string>
-    <string name="more_action_4">Remove</string>
-    <string name="more_action_5">Copy</string>
-    <string name="more_action_6">Share</string>
-    <string name="more_action_7">Mention</string>
+    <string name="more_action_1">නිහඬ කරන්න</string>
+    <string name="more_action_2">අවහිර කරන්න</string>
+    <string name="more_action_3">වාර්තා කරන්න</string>
+    <string name="more_action_4">ඉවත් කරන්න</string>
+    <string name="more_action_5">පිටපත් කරන්න</string>
+    <string name="more_action_6">බෙදාගන්න</string>
+    <string name="more_action_7">සඳහන් කරන්න</string>
     <string name="more_action_8">Timed mute</string>
     <string name="more_action_9">Delete &amp; re-draft</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
-        <item>Block this account?</item>
+        <item>මෙම ගිණුම නිහඬ කරනවා ද?</item>
+        <item>මෙම ගිණුම අවහිර කරනවා ද?</item>
         <item>Report this toot?</item>
-        <item>Block this domain?</item>
+        <item>මෙම අඩවිය අවහිර කරනවා ද?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>දැනුම්දෙන්න</item>
+        <item>නිශ්ශබ්ද</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Remove this toot?</item>
         <item>Delete &amp; re-draft this toot?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="one">%d reply</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="one">%d ප්‍රතිචාරය යි</item>
+        <item quantity="other">ප්‍රතිචාරය %d යි</item>
     </plurals>
     <string name="set_display_bookmark_button">Display the bookmark button</string>
     <string name="bookmarks">Bookmarks</string>
@@ -165,7 +165,7 @@
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
     <string name="toot_sent">The toot has been sent!</string>
     <string name="toot_reply_content_title">You are replying to this toot:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="toot_sensitive">සංවේදී අන්තර්ගතයක් ද?</string>
     <string-array name="toot_visibility">
         <item>Post to public timelines</item>
         <item>Do not post to public timelines</item>
@@ -174,19 +174,19 @@
     </string-array>
     <string name="no_draft">No drafts!</string>
     <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
+    <string name="choose_accounts">ගිණුමක් තෝරන්න</string>
+    <string name="select_accounts">ගිණුම් කිහිපයක් තෝරන්න</string>
     <string name="remove_draft">Remove draft?</string>
     <string name="show_reply">Click on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="upload_form_description">දෘශ්‍යාබාධිත අය සඳහා විස්තර කරන්න</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">විස්තරයක් නොමැත!</string>
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
     <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
+    <string name="about_license">බලපත්‍රය: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Source code: </string>
+    <string name="about_code">මූලාශ්‍ර කේතය: </string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_thekinrar">Search instances:</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -195,7 +195,7 @@
     <!-- Conversation -->
     <string name="conversation">Conversation</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
+    <string name="no_accounts">පෙන්වීමට ගිණුමක් නැත</string>
     <string name="no_follow_request">No follow request</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Following \n %1$s</string>
@@ -216,8 +216,8 @@
     <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
     <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
     <!-- Notifications -->
-    <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned you</string>
+    <string name="no_notifications">පෙන්වීමට දැනුම්දීම් නැත</string>
+    <string name="notif_mention">ඔබව සඳහන් කළා</string>
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">followed you</string>
@@ -242,9 +242,9 @@
     <string name="client_error">Unable to get client id!</string>
     <string name="no_internet">No Internet connection!</string>
     <string name="toast_block">The account was blocked!</string>
-    <string name="toast_unblock">The account is no longer blocked!</string>
-    <string name="toast_mute">The account was muted!</string>
-    <string name="toast_unmute">The account is no longer muted!</string>
+    <string name="toast_unblock">ගිණුම තවදුරටත් අවහිර කර නොමැත!</string>
+    <string name="toast_mute">ගිණුම නිහඬ කරන ලදී!</string>
+    <string name="toast_unmute">ගිණුම තවදුරටත් නිහඬ කර නොමැත!</string>
     <string name="toast_follow">The account was followed!</string>
     <string name="toast_unfollow">The account is no longer followed!</string>
     <string name="toast_reblog">The toot was boosted!</string>
@@ -255,14 +255,14 @@
     <string name="toast_unstatus">The toot was deleted!</string>
     <string name="toast_pin">The toot was pinned!</string>
     <string name="toast_unpin">The toot was unpinned!</string>
-    <string name="toast_error">Oops ! An error occurred!</string>
+    <string name="toast_error">අපොයි! දෝෂයක් සිදුවුණා!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
     <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
-    <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-    <string name="toast_error_search">An error occurred while searching!</string>
+    <string name="toast_error_loading_account">ගිණුම් අතර මාරුවනවිට දෝෂයක් සිදුවුණා!</string>
+    <string name="toast_error_search">සොයන අතරතුර දෝෂයක් සිදුවුණා!</string>
     <string name="toast_error_login">Can not log in!</string>
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
-    <string name="nothing_to_do">No action can be taken</string>
+    <string name="nothing_to_do">කිසිම ක්‍රියාමාර්ගයක් ගැනීමට නොහැක</string>
     <string name="toast_saved">The media has been saved!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
     <string name="toast_toot_saved">Draft saved!</string>
