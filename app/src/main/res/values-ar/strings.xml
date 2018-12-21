@@ -24,7 +24,7 @@
     <string name="email">البريد الإلكتروني</string>
     <string name="accounts">الحسابات</string>
     <string name="toots">التبويقات</string>
-    <string name="tags">الأوسمة</string>
+    <string name="tags">الوسوم</string>
     <string name="token">الرمز المميز</string>
     <string name="save">حفظ</string>
     <string name="restore">استعادة</string>
@@ -38,7 +38,7 @@
     <string name="clipboard">تم نسخ محتوى التبويق إلى الحافظة</string>
     <string name="change">تعديل</string>
     <string name="choose_picture">حدد صورة…</string>
-    <string name="clear">نظيف</string>
+    <string name="clear">تنظيف</string>
     <string name="microphone">الميكروفون</string>
     <string name="camera">آلة التصوير</string>
     <string name="speech_prompt">قل شيئا من فضلك</string>
@@ -46,7 +46,7 @@
     <string name="delete_all">حذف الكل</string>
     <string name="translate_toot">ترجم هذا التبويق.</string>
     <string name="schedule">برمجة</string>
-    <string name="text_size">حجم الخط و الأيقونات</string>
+    <string name="text_size">حجم الخط والأيقونات</string>
     <string name="text_size_change">تعديل حجم الخط الحالي:</string>
     <string name="icon_size_change">تعديل الحجم الحالي للأيقونات:</string>
     <string name="next">التالي</string>
@@ -120,9 +120,9 @@
     <string name="more_action_8">فترة الكتم</string>
     <string name="more_action_9">حذف وإعادة الصياغة</string>
     <string-array name="more_action_confirm">
-        <item>هل تود كتم هذا الحساب ؟</item>
-        <item>هل تود حجب هذا الحساب ؟</item>
-        <item>هل تود الإبلاغ عن هذا التبويق ؟</item>
+        <item>هل تود كتم هذا الحساب؟</item>
+        <item>هل تود حجب هذا الحساب؟</item>
+        <item>هل تود الإبلاغ عن هذا التبويق؟</item>
         <item>هل تريد حظر هذا النطاق؟</item>
     </string-array>
     <string-array name="action_notification">
@@ -130,7 +130,7 @@
         <item>صامت</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>هل تود حذف هذا التبويق ؟</item>
+        <item>هل تود حذف هذا التبويق؟</item>
         <item>هل تريد حقا حذف و إعادة صياغة هذا التبويق؟</item>
     </string-array>
     <plurals name="preview_replies">
