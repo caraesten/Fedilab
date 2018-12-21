@@ -965,7 +965,13 @@ public abstract class BaseMainActivity extends BaseActivity
                         countNewStatus = 0;
                         updateHomeCounter();
                         displayStatusFragment.scrollToTop();
-                    } else if (tab.getPosition() > 1) {
+                    } else if( tab.getPosition() == 1) {
+                        DisplayNotificationsFragment notificationsFragment = ((DisplayNotificationsFragment) fragment);
+                        countNewNotifications = 0;
+                        updateNotifCounter();
+                        notificationsFragment.scrollToTop();
+
+                    }else if (tab.getPosition() > 1) {
                         if (typePosition.containsKey(tab.getPosition()))
                             updateTimeLine(typePosition.get(tab.getPosition()), 0);
                         displayStatusFragment = ((DisplayStatusFragment) fragment);

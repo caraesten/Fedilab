@@ -830,10 +830,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             Long.parseLong(statuses.get(i).getId()) > Long.parseLong(this.statuses.get(0).getId())) {
                         if (type == RetrieveFeedsAsyncTask.Type.HOME)
                             statuses.get(i).setNew(true);
+                        MainActivity.countNewStatus++;
                         inserted++;
                         this.statuses.add(0, statuses.get(i));
-                        if (type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
-                            MainActivity.countNewStatus++;
+
                     }
                 }
             }
