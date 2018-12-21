@@ -14,7 +14,7 @@
     <string name="yes">Ja</string>
     <string name="no">Nei</string>
     <string name="cancel">Avbryt</string>
-    <string name="download">Nedlasting</string>
+    <string name="download">Last ned</string>
     <string name="download_file">Last ned %1$s</string>
     <string name="download_over">Nedlasting ferdig</string>
     <string name="save_file">Lagre %1$s</string>
@@ -25,15 +25,15 @@
     <string name="accounts">Kontoer</string>
     <string name="toots">Toots</string>
     <string name="tags">Tags</string>
-    <string name="token">Pollett</string>
+    <string name="token">Token</string>
     <string name="save">Lagre</string>
-    <string name="restore">Restaurere</string>
-    <string name="two_factor_authentification">To-trinns autentisering?</string>
-    <string name="other_instance">Annen instanse enn mastodon.etalab.gouv.fr?</string>
+    <string name="restore">Gjenopprett</string>
+    <string name="two_factor_authentification">Tofaktorautentisering?</string>
+    <string name="other_instance">Annen instans enn mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Ingen resultater!</string>
     <string name="instance">Instans</string>
     <string name="instance_example">Instans: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Nå jobber med kontoen %1$s</string>
+    <string name="toast_account_changed" formatted="false">Arbeider nå med %1$s</string>
     <string name="add_account">Legg til en konto</string>
     <string name="clipboard">Innholdet av tooten er kopiert til utklippstavlen</string>
     <string name="change">Endre</string>
