@@ -164,33 +164,33 @@
     <string name="toot_visibility_tilte">Synlighet av tooten</string>
     <string name="toots_visibility_tilte">Standardsynlighet på toots: </string>
     <string name="toot_sent">Tooten er sendt!</string>
-    <string name="toot_reply_content_title">Du svarer på dette toot:</string>
-    <string name="toot_sensitive">Følsomt innhold?</string>
+    <string name="toot_reply_content_title">Du svarer på dette tootet:</string>
+    <string name="toot_sensitive">Sensitivt innhold?</string>
     <string-array name="toot_visibility">
         <item>Post til offentlige tidslinjer</item>
-        <item>Ikke legg inn til offentlige tidslinjer</item>
-        <item>Legg kun til følgere</item>
-        <item>Legg kun til nevnte brukere</item>
+        <item>Ikke post til offentlige tidslinjer</item>
+        <item>Bare post til følgere</item>
+        <item>Bare post til nevnte brukere</item>
     </string-array>
     <string name="no_draft">Ingen utkast!</string>
     <string name="choose_toot">Velg et toot</string>
     <string name="choose_accounts">Velg en konto</string>
-    <string name="select_accounts">Velg noen kontoer</string>
+    <string name="select_accounts">Velg en eller flere kontoer</string>
     <string name="remove_draft">Fjern utkast?</string>
-    <string name="show_reply">Klikk på knappen for å vise originaltårnet</string>
-    <string name="upload_form_description">Beskriv for synskadede</string>
+    <string name="show_reply">Klikk på knappen for å vise originaltootet</string>
+    <string name="upload_form_description">Beskriv for synshemmede</string>
     <!-- Instance -->
     <string name="instance_no_description">Ingen beskrivelse tilgjengelig!</string>
     <!-- About -->
-    <string name="about_vesrion">Slett %1$s</string>
+    <string name="about_vesrion">Versjon %1$s</string>
     <string name="about_developer">Utvikler:</string>
-    <string name="about_license">Tillatelse: </string>
+    <string name="about_license">Lisens: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Kildekode: </string>
     <string name="about_yandex">Oversettelse av toots:</string>
-    <string name="about_thekinrar">Søk forekomster:</string>
+    <string name="about_thekinrar">Søk instanser:</string>
     <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Ikon designer:</string>
+    <string name="thanks_text_logo">Ikon-designer:</string>
     <string name="thanks_text_banner">Banner-designer:</string>
     <!-- Conversation -->
     <string name="conversation">Samtale</string>
@@ -209,7 +209,7 @@
     <string name="remove_scheduled">Slett planlagt toot?</string>
     <string name="media_count">Medier: %d</string>
     <string name="toot_scheduled">Tootet har blitt planlagt!</string>
-    <string name="toot_scheduled_date">Den planlagte datoen må være større enn den nåværende timen!</string>
+    <string name="toot_scheduled_date">Den planlagte datoen må være senere enn den nåværende timen!</string>
     <string name="warning_battery">Batterisparer er aktivert! Det virker kanskje ikke som forventet.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">Tiden for demping bør være mer enn ett minutt.</string>
@@ -227,8 +227,8 @@
         <item quantity="other">og %d andre varsler</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">og en annen toot å oppdage</item>
-        <item quantity="other">og en annen toot å oppdage</item>
+        <item quantity="one">og et annet toot å oppdage</item>
+        <item quantity="other">og %d andre toots å oppdage</item>
     </plurals>
     <string name="delete_notification_ask">Slett et varsel?</string>
     <string name="delete_notification_ask_all">Slett alle varsler?</string>
@@ -247,12 +247,12 @@
     <string name="toast_unmute">Kontoen er ikke lenger dempet!</string>
     <string name="toast_follow">Kontoen ble fulgt!</string>
     <string name="toast_unfollow">Kontoen følger ikke lenger!</string>
-    <string name="toast_reblog">Tooten ble økt!</string>
-    <string name="toast_unreblog">Tooten ble økt!</string>
+    <string name="toast_reblog">Tootet ble boostet!</string>
+    <string name="toast_unreblog">Tootet er ikke lenger boostet!</string>
     <string name="toast_favourite">Tippen ble lagt til dine favoritter!</string>
-    <string name="toast_unfavourite">Tooten ble fjernet fra dine favoritter!</string>
-    <string name="toast_report">Tooten ble rapportert!</string>
-    <string name="toast_unstatus">Tooten ble slettet!</string>
+    <string name="toast_unfavourite">Tootet ble fjernet fra dine favoritter!</string>
+    <string name="toast_report">Tootet ble rapportert!</string>
+    <string name="toast_unstatus">Tootet ble slettet!</string>
     <string name="toast_pin">Trekanten ble festet!</string>
     <string name="toast_unpin">Trollet ble opphevet!</string>
     <string name="toast_error">Ups! En feil oppstod!</string>
@@ -271,7 +271,7 @@
     <string name="toast_empty_search">Instansnavn og skjermnavn kan ikke være tomt!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimalisering av lasting</string>
-    <string name="set_toots_page">Antall toots per last</string>
+    <string name="set_toots_page">Antall toots per innlasting</string>
     <string name="set_accounts_page">Antall kontoer per belastning</string>
     <string name="set_notifications_page">Antall varsler per belastning</string>
     <string name="set_attachment_always">Alltid</string>
@@ -364,7 +364,7 @@
         <item>Hvit</item>
     </string-array>
     <string name="set_title_news">Nyheter</string>
-    <string name="set_notification_news">Varsle om nye toots på hjemme tidslinjen</string>
+    <string name="set_notification_news">Varsle om nye toots på hjemmetidslinjen</string>
     <string name="action_follow">Følg</string>
     <string name="action_unfollow">Slutt å følge</string>
     <string name="action_block">Blokkere</string>
@@ -400,7 +400,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="show_media">Vis media</string>
     <string name="show_pinned">Vis låste</string>
     <string name="filter_no_result">Ingen treff!</string>
-    <string name="data_backup_toots">Sikkerhetskopiering toots for %1$s</string>
+    <string name="data_backup_toots">Sikkerhetskopier toots for %1$s</string>
     <string name="data_backup_success">%1$s nye toots er importert</string>
     <string-array name="filter_select">
         <item>Nei</item>
@@ -601,7 +601,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="set_change_locale">Endre språk</string>
     <string name="default_language">Standardspråk</string>
     <string name="truncate_long_toots">Avkort lange toots</string>
-    <string name="set_truncate_toot">Avkort toots lengre enn \'x\' linjer. Null betyr at toots ikke avkortes.</string>
+    <string name="set_truncate_toot">Avkort toots lengre enn \'x\' linjer. 0 (null) betyr at toots ikke avkortes.</string>
     <string name="display_toot_truncate">Vis mer</string>
     <string name="hide_toot_truncate">Vis mindre</string>
     <string name="manage_tags">Administrer stikkord</string>
