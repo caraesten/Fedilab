@@ -99,4 +99,9 @@
     <color name="black_link_toot">#27a7fc</color>
     <color name="dark_link_toot">#27a7fc</color>
     <color name="light_link_toot">#27a7fc</color>
+
+
+    <!-- TOASTY -->
+    <color name="toasty_text">#d0cfcf</color>
+    <color name="toasty_background">#2e2e2e</color>
 </resources>
