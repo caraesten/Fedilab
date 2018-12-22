@@ -1263,12 +1263,11 @@ public class Helper {
         editor.putString(Helper.PREF_KEY_ID, account.getId());
         editor.putString(Helper.PREF_INSTANCE, account.getInstance().trim());
         editor.commit();
-        activity.recreate();
-        if( checkItem ) {
-            Intent intent = new Intent(activity, MainActivity.class);
-            intent.putExtra(INTENT_ACTION, CHANGE_USER_INTENT);
-            activity.startActivity(intent);
-        }
+        Intent changeAccount = new Intent(activity, MainActivity.class);
+        changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activity.finish();
+        activity.startActivity(changeAccount);
+
 
     }
 
@@ -2638,9 +2637,12 @@ public class Helper {
                 allTabCount -=1;
             }
         }
+        int i = countInitialTab;
         if( searches != null) {
             for (String search : searches) {
                 addTab(tableLayout, pagerAdapter, search);
+                BaseMainActivity.typePosition.put(i, RetrieveFeedsAsyncTask.Type.TAG);
+                i++;
             }
             if( searches.size() > 0 ){
                 tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -3087,13 +3089,6 @@ public class Helper {
             default:
                 return 0;
         }
-    }
-
-    public static RetrieveFeedsAsyncTask.Type timelineType(int position){
-        if(MainActivity.typePosition.size() > position)
-            return MainActivity.typePosition.get(position);
-        else
-            return RetrieveFeedsAsyncTask.Type.TAG;
     }
 
     public static boolean containsCaseInsensitive(String s, List<String> l){

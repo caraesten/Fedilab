@@ -74,7 +74,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         CACHE_BOOKMARKS_PEERTUBE,
         CACHE_STATUS,
         REMOTE_INSTANCE,
-        ART
+        ART,
+        NOTIFICATION
     }
 
 

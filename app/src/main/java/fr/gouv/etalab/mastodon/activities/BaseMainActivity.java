@@ -148,7 +148,6 @@ import static fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask.action.G
 import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.BACKUP_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.BACK_TO_SETTINGS;
-import static fr.gouv.etalab.mastodon.helper.Helper.CHANGE_USER_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INSTANCE_NAME;
@@ -708,7 +707,9 @@ public abstract class BaseMainActivity extends BaseActivity
         tabLayout.addTab(tabHome);
         tabLayout.addTab(tabNotif);
         tabPosition.put("home",0);
+        typePosition.put(0, RetrieveFeedsAsyncTask.Type.HOME);
         tabPosition.put("notifications",1);
+        typePosition.put(1, RetrieveFeedsAsyncTask.Type.NOTIFICATION);
         int i = 2;
         if( display_direct) {
             tabLayout.addTab(tabDirect);
@@ -1790,14 +1791,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 navigationView.setCheckedItem(R.id.nav_settings);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_settings, 0);
                 toolbarTitle.setText(R.string.settings);
-            }else if( extras.getInt(INTENT_ACTION) == CHANGE_USER_INTENT){
-                unCheckAllMenuItems(navigationView);
-                if( tabLayout.getTabAt(0) != null)
-                    //noinspection ConstantConditions
-                    tabLayout.getTabAt(0).select();
-                if( !toolbar_search.isIconified() ) {
-                    toolbar_search.setIconified(true);
-                }
             }else if (extras.getInt(INTENT_ACTION) == ADD_USER_INTENT){
                 this.recreate();
             }else if( extras.getInt(INTENT_ACTION) == BACKUP_INTENT){
@@ -2407,8 +2400,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 return notificationsFragment;
             }else {
                 statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", Helper.timelineType(position));
-                if( Helper.timelineType(position) == RetrieveFeedsAsyncTask.Type.TAG){
+                bundle.putSerializable("type", typePosition.get(position));
+                if( typePosition.get(position) == RetrieveFeedsAsyncTask.Type.TAG){
                     if( tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null) {
                         bundle.putString("tag", tabLayout.getTabAt(position).getText().toString());
                         tagFragment.put(tabLayout.getTabAt(position).getText().toString(), statusFragment);
