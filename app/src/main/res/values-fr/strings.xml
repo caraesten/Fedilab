@@ -126,8 +126,8 @@
         <item>Désirez-vous bloquer ce domaine ?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Notifier</item>
+        <item>Silencier</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Supprimer ce pouet ?</item>
@@ -660,13 +660,13 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="more_information">Plus d’informations</string>
     <string name="showcase_2FA">Si vous utilisez 2FA (authentification à deux facteurs), vous devez utiliser ce lien. \nVous pouvez également l’utiliser si vous ne souhaitez pas saisir vos identifiants ici.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
-    <string name="show_media_only">Media only</string>
+    <string name="languages">Langues</string>
+    <string name="show_media_only">Médias seulement</string>
     <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
+    <string name="crowdin_translations">Traductions de Crowdin</string>
     <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
+    <string name="translation_app">Traduire l’application</string>
+    <string name="about_crowdin">À propos de Crowdin</string>
     <string name="bot">Bot</string>
     <!-- end languages -->
 </resources>
