@@ -1486,7 +1486,7 @@ public class Helper {
         if( accounts != null && accounts.size() > 1) {
 
             FloatingActionButton.LayoutParams layoutparmansAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(35, activity), (int) Helper.convertDpToPixel(35, activity));
-            FloatingActionButton.LayoutParams layoutparmanImgAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(25, activity), (int) Helper.convertDpToPixel(25, activity));
+            FloatingActionButton.LayoutParams layoutparmanImgAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(35, activity), (int) Helper.convertDpToPixel(35, activity));
             MenuFloating actionButtonAcc = null;
             SharedPreferences mSharedPreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String currrentUserId = mSharedPreferences.getString(Helper.PREF_KEY_ID, null);
@@ -1496,6 +1496,19 @@ public class Helper {
                     ImageView finalIcon = icon;
                     Glide.with(activity.getApplicationContext())
                             .asBitmap()
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(270)))
+                            .listener(new RequestListener<Bitmap>(){
+
+                                @Override
+                                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                    return false;
+                                }
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                    finalIcon.setImageResource(R.drawable.missing);
+                                    return false;
+                                }
+                            })
                             .load(accountChoice.getAvatar())
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
@@ -1513,8 +1526,8 @@ public class Helper {
                     }
 
                     actionButtonAcc = actionButtonAccBuild
-                            .setContentView(finalIcon, layoutparmanImg)
-                            .setLayoutParams(layoutparmans)
+                            .setContentView(finalIcon, layoutparmanImgAcc)
+                            .setLayoutParams(layoutparmansAcc)
                             .setTag("ACCOUNT")
                             .intoView(more_account_container)
                             .build();
@@ -1532,17 +1545,56 @@ public class Helper {
                     ImageView itemIconAcc = new ImageView(activity);
                     Glide.with(activity.getApplicationContext())
                             .asBitmap()
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(270)))
                             .load(accountChoice.getAvatar())
+                            .listener(new RequestListener<Bitmap>(){
+
+                                @Override
+                                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                    return false;
+                                }
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                    itemIconAcc.setImageResource(R.drawable.missing);
+                                    return false;
+                                }
+                            })
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
                                 public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                                     itemIconAcc.setImageBitmap(resource);
                                 }
                             });
-                    SubActionButton subActionButtonAcc = itemBuilderAcc
-                            .setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular))
-                            .setContentView(itemIconAcc).build();
-                    actionMenuAccBuilder.addSubActionView(subActionButtonAcc);
+
+                    if( accounts.size() > 2 ) {
+                        SubActionButton.Builder subActionButtonAccBuilder = itemBuilderAcc;
+                        if (theme == THEME_LIGHT) {
+                            subActionButtonAccBuilder.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular));
+                        } else if (theme == THEME_DARK) {
+                            subActionButtonAccBuilder.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_dark));
+                        } else if (theme == THEME_BLACK) {
+                            subActionButtonAccBuilder.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_black));
+                        }
+                        SubActionButton subActionButtonAcc = subActionButtonAccBuilder.setContentView(itemIconAcc, layoutparmanImgAcc)
+                                .setLayoutParams(layoutparmansAcc)
+                                .build();
+
+                        subActionButtonAcc.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, accountChoice.getToken());
+                                editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
+                                editor.putString(Helper.PREF_INSTANCE, accountChoice.getInstance().trim());
+                                editor.commit();
+                                Intent changeAccount = new Intent(activity, MainActivity.class);
+                                changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                activity.finish();
+                                activity.startActivity(changeAccount);
+                            }
+                        });
+                        actionMenuAccBuilder.addSubActionView(subActionButtonAcc);
+                    }
                 }
             }
 
@@ -1551,27 +1603,49 @@ public class Helper {
                     .setEndAngle(135)
                     .build();
             if( actionButtonAcc != null) {
-                actionButtonAcc.setFocusableInTouchMode(true);
-                actionButtonAcc.setFocusable(true);
-                actionButtonAcc.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if(actionMenuAcc.isOpen())
-                            actionMenuAcc.close(true);
-                        else
-                            actionMenuAcc.open(true);
-                        return false;
-                    }
-                });
-                actionButtonAcc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        try {
-                            actionMenuAcc.close(true);
-                        }catch (Exception ignored){}
+                if( accounts.size() > 2){
+                    actionButtonAcc.setFocusableInTouchMode(true);
+                    actionButtonAcc.setFocusable(true);
+                    actionButtonAcc.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            if(actionMenuAcc.isOpen())
+                                actionMenuAcc.close(true);
+                            else
+                                actionMenuAcc.open(true);
+                            return false;
+                        }
+                    });
+                    actionButtonAcc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            try {
+                                actionMenuAcc.close(true);
+                            }catch (Exception ignored){}
 
-                    }
-                });
+                        }
+                    });
+                }else{
+                    actionButtonAcc.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            for(final Account accountChoice: accounts) {
+                                if (!currrentUserId.equals(accountChoice.getId())) {
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, accountChoice.getToken());
+                                    editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
+                                    editor.putString(Helper.PREF_INSTANCE, accountChoice.getInstance().trim());
+                                    editor.commit();
+                                    Intent changeAccount = new Intent(activity, MainActivity.class);
+                                    changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    activity.finish();
+                                    activity.startActivity(changeAccount);
+                                }
+                            }
+                        }
+                    });
+                }
+
             }
 
         }
