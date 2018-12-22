@@ -328,13 +328,13 @@
     <string name="settings_hour_end">End time</string>
     <string name="embedded_browser">Use the built-in browser</string>
     <string name="custom_tabs">Custom tabs</string>
-    <string name="use_javascript">Enable Javascript</string>
+    <string name="use_javascript">Povolit JavaScript</string>
     <string name="expand_cw">Automatically expand cw</string>
-    <string name="use_cookies">Allow third-party cookies</string>
+    <string name="use_cookies">Povolit soubory cookie třetích stran</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
+        <item>Normální využití baterie</item>
+        <item>Střední využití baterie</item>
         <item>Low battery drain</item>
     </string-array>
     <string-array name="settings_menu_tabs">
@@ -351,23 +351,23 @@
     <string-array name="settings_theme">
         <item>Dark</item>
         <item>Light</item>
-        <item>Black</item>
+        <item>Černá</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
+        <item>Ne</item>
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
     </string-array>
     <string name="set_led_colour">Set LED colour:</string>
     <string-array name="led_colours">
-        <item>Blue</item>
-        <item>Cyan</item>
-        <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>Modrá</item>
+        <item>Tyrkysová</item>
+        <item>Fialová</item>
+        <item>Zelená</item>
+        <item>Červená</item>
+        <item>Žlutá</item>
+        <item>Bílá</item>
     </string-array>
     <string name="set_title_news">News</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
@@ -380,7 +380,7 @@
     <string name="action_unmute">Unmute</string>
     <string name="request_sent">Request sent</string>
     <string name="followed_by">Follows you</string>
-    <string name="action_search">Search</string>
+    <string name="action_search">Hledat</string>
     <string name="set_capitalize">First letter in capital for replies</string>
     <string name="set_resize_picture">Resize pictures</string>
     <!-- Quick settings for notifications -->
@@ -391,12 +391,12 @@
     <string name="settings_popup_timeline">For unread toots in home time-line?</string>
     <string name="settings_popup_notification">For unread notifications?</string>
     <!-- CACHE -->
-    <string name="cache_title">Clear cache</string>
+    <string name="cache_title">Vyprázdnit cache</string>
     <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
+    <string name="action_sync">Synchronizovat</string>
     <string name="action_filter">Filter</string>
     <string name="owner_cached_toots">Your toots</string>
     <string name="v_public">Public</string>
@@ -410,8 +410,8 @@
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
-        <item>No</item>
-        <item>Only</item>
+        <item>Ne</item>
+        <item>Pouze</item>
         <item>Both</item>
     </string-array>
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
