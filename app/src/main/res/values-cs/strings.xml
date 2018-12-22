@@ -156,23 +156,23 @@
     <string name="toot_placeholder">Co se vám honí hlavou?</string>
     <string name="toot_it">TOOT!</string>
     <string name="cw">cw</string>
-    <string name="toot_title">Write a toot</string>
-    <string name="toot_title_reply">Reply to a toot</string>
-    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-    <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
-    <string name="toot_error_no_content">Your toot is empty!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
-    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="toot_title">Napsat toot</string>
+    <string name="toot_title_reply">Odpovědět na toot</string>
+    <string name="toot_no_space">Byl dosažen povolený limit 500 znaků!</string>
+    <string name="toot_select_image">Vybrat média</string>
+    <string name="toot_select_image_error">Nastala chyba při výběru média!</string>
+    <string name="toot_delete_media">Smazat médium?</string>
+    <string name="toot_error_no_content">Váš toot je prázdný!</string>
+    <string name="toot_visibility_tilte">Viditelnost tootu</string>
+    <string name="toots_visibility_tilte">Defaultní viditelnost tootu: </string>
+    <string name="toot_sent">Toot byl odeslán!</string>
+    <string name="toot_reply_content_title">Odpovídáte na tento toot:</string>
+    <string name="toot_sensitive">Citlivý obsah?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
-        <item>Post to mentioned users only</item>
+        <item>Posílat na veřejnou časovou osu</item>
+        <item>Neposílat na veřejnou časovou osu</item>
+        <item>Posílat pouze sledujícím</item>
+        <item>Posílat pouze zmíněným uživatelům</item>
     </string-array>
     <string name="no_draft">No drafts!</string>
     <string name="choose_toot">Choose a toot</string>
