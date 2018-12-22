@@ -618,13 +618,13 @@
     <string name="tags_stored">The tag has been stored!</string>
     <string name="tags_renamed">The tag has been changed!</string>
     <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="set_display_art">කලා කාල රේඛාව පෙන්වන්න</string>
     <string name="schedule_boost">Schedule boost</string>
     <string name="boost_scheduled">The boost is scheduled!</string>
     <string name="no_scheduled_boosts">No scheduled boost to display!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string name="art_menu">කලා කාල රේඛාව</string>
-    <string name="open_menu">Open menu</string>
+    <string name="open_menu">මෙනුව විවෘත කරන්න</string>
     <string name="app_logo">මෘදුකාංගයේ ලාංඡනය</string>
     <string name="profile_picture">Profile picture</string>
     <string name="profile_banner">Profile banner</string>
@@ -632,7 +632,7 @@
     <string name="add_new">Add new</string>
     <string name="mastohost_logo">MastoHost ලාංඡනය</string>
     <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
+    <string name="refresh">නැවුම් කරන්න</string>
     <string name="expand_conversation">සංවාදය දිගහරින්න</string>
     <string name="remove_account">ගිණුමක් ඉවත් කරන්න</string>
     <string name="delete_domain">අවහිර කළ අඩවිය මකන්න</string>
@@ -644,7 +644,7 @@
     <string name="favicon">Favicon</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
-        <item>Never</item>
+        <item>කවදාවත් එපා</item>
         <item>මිනිත්තු 30</item>
         <item>පැය 1</item>
         <item>පැය 6</item>
