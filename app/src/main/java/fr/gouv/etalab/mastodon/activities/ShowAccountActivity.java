@@ -125,10 +125,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private ViewPager mPager;
     private String accountId;
     private TabLayout tabLayout;
-    private TextView account_note, account_follow_request, account_type;
+    private TextView account_note, account_follow_request, account_type, account_bot;
     private String userId;
     private Relationship relationship;
-    private ImageView pp_actionBar;
     private FloatingActionButton header_edit_profile;
     private List<Status> pins;
     private String accountUrl;
@@ -183,6 +182,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_dn = findViewById(R.id.account_dn);
         account_un = findViewById(R.id.account_un);
         account_type = findViewById(R.id.account_type);
+        account_bot = findViewById(R.id.account_bot);
         if(b != null){
             accountId = b.getString("accountId");
             peertubeAccount = b.getBoolean("peertubeAccount", false);
@@ -525,10 +525,15 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if( peertubeAccount) {
             account_type.setVisibility(View.VISIBLE);
         }
+        //Bot account
+        if( account.isBot()){
+            account_bot.setVisibility(View.VISIBLE);
+        }
+
         TextView actionbar_title = findViewById(R.id.show_account_title);
         if( account.getAcct() != null)
             actionbar_title.setText(account.getAcct());
-        pp_actionBar = findViewById(R.id.pp_actionBar);
+        ImageView pp_actionBar = findViewById(R.id.pp_actionBar);
         if( account.getAvatar() != null){
             String url = account.getAvatar();
             if( url.startsWith("/") ){

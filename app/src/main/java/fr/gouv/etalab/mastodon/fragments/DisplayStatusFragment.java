@@ -778,13 +778,21 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             for (int i = statuses.size() - 1; i >= 0; i--) {
                 if( this.statuses != null) {
-                    if (this.statuses.size() == 0 ||
-                            Long.parseLong(statuses.get(i).getId()) > Long.parseLong(this.statuses.get(0).getId())) {
-                        if (type == RetrieveFeedsAsyncTask.Type.HOME)
-                            statuses.get(i).setNew(true);
-                        MainActivity.countNewStatus++;
-                        inserted++;
-                        this.statuses.add(0, statuses.get(i));
+                    if (this.statuses.size() == 0){
+                        if( type != RetrieveFeedsAsyncTask.Type.HOME){
+                            if( Long.parseLong(statuses.get(i).getId()) > Long.parseLong(this.statuses.get(0).getId())) {
+                                inserted++;
+                                this.statuses.add(0, statuses.get(i));
+                            }
+                        }else {
+                            if( Long.parseLong(statuses.get(i).getId()) > Long.parseLong(lastReadToot)) {
+                                statuses.get(i).setNew(true);
+                                MainActivity.countNewStatus++;
+                                inserted++;
+                                this.statuses.add(0, statuses.get(i));
+                            }
+                        }
+
                     }
                 }
             }
@@ -829,7 +837,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             //Put the toot at its place in the list (id desc)
             if( !this.statuses.contains(tmpStatus) ) { //Element not already added
                 //Mark status at new ones when their id is greater than the last read toot id
-                if (lastReadToot != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadToot)) {
+                if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadToot != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadToot)) {
                     tmpStatus.setNew(true);
                     MainActivity.countNewStatus++;
                 }

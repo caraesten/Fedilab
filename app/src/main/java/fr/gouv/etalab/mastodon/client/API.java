@@ -3316,6 +3316,11 @@ public class API {
             account.setFollowing_count(Integer.valueOf(resobj.get("following_count").toString()));
             account.setStatuses_count(Integer.valueOf(resobj.get("statuses_count").toString()));
             account.setNote(resobj.get("note").toString());
+            try {
+                account.setBot(Boolean.parseBoolean(resobj.get("bot").toString()));
+            }catch (Exception e){
+                account.setBot(false);
+            }
             try{
                 account.setMoved_to_account(parseAccountResponse(context, resobj.getJSONObject("moved")));
             }catch (Exception ignored){account.setMoved_to_account(null);}

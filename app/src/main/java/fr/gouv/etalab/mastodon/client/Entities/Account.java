@@ -93,7 +93,7 @@ public class Account implements Parcelable {
     private List<Emojis> emojis;
     private Account account;
     private String host;
-
+    private boolean isBot;
 
     protected Account(Parcel in) {
         id = in.readString();
@@ -105,6 +105,7 @@ public class Account implements Parcelable {
         displayNameSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
         noteSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
         locked = in.readByte() != 0;
+        isBot = in.readByte() != 0;
         followers_count = in.readInt();
         following_count = in.readInt();
         statuses_count = in.readInt();
@@ -146,6 +147,7 @@ public class Account implements Parcelable {
         TextUtils.writeToParcel(displayNameSpan, dest, flags);
         TextUtils.writeToParcel(noteSpan, dest, flags);
         dest.writeByte((byte) (locked ? 1 : 0));
+        dest.writeByte((byte) (isBot ? 1 : 0));
         dest.writeInt(followers_count);
         dest.writeInt(following_count);
         dest.writeInt(statuses_count);
@@ -238,6 +240,14 @@ public class Account implements Parcelable {
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public boolean isBot() {
+        return isBot;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
     }
 
 
