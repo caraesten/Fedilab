@@ -968,7 +968,7 @@ public class Helper {
 
         final String fileName = URLUtil.guessFileName(url, null, null);final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
-
+        String mime = getMimeType(url);
         try {
             File file;
             if( bitmap != null) {
@@ -977,7 +977,10 @@ public class Helper {
                 file.createNewFile();
 
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                if( mime !=null && (mime.contains("png") || mime.contains(".PNG")))
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                else
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
                 byte[] bitmapdata = bos.toByteArray();
 
                 FileOutputStream fos = new FileOutputStream(file);
