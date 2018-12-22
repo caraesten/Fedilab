@@ -660,7 +660,7 @@
     <string name="more_information">更多信息</string>
     <string name="showcase_2FA">如果您使用 2FA（双因素身份验证），则需要使用此链接。\n如果您不想在此处输入凭据，也可以使用它。</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">语言</string>
     <string name="show_media_only">仅限媒体</string>
     <string name="show_media_nsfw">显示 NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>
