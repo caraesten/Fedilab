@@ -62,26 +62,26 @@
     <string name="new_data">New data are available! Do you want to display them?</string>
     <string name="favourite">Favourites</string>
     <string name="follow">New followers</string>
-    <string name="mention">Mentions</string>
+    <string name="mention">සඳහන් කිරීම්</string>
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Show boosts</string>
-    <string name="show_replies">Show replies</string>
+    <string name="show_replies">ප්‍රතිචාර පෙන්වන්න</string>
     <string name="action_open_in_web">Open in browser</string>
-    <string name="translate">Translate</string>
-    <string name="please_wait">Please, wait few seconds before making this action.</string>
+    <string name="translate">පරිවර්තනය කරන්න</string>
+    <string name="please_wait">කරුණාකර, මෙම ක්‍රියාවට පෙර තත්පර කිහිපයක් රැඳී සිටින්න.</string>
     <!--- Menu -->
-    <string name="home_menu">Home</string>
+    <string name="home_menu">මුල</string>
     <string name="local_menu">Local timeline</string>
     <string name="global_menu">Federated timeline</string>
-    <string name="neutral_menu_title">Options</string>
-    <string name="favorites_menu">Favourites</string>
-    <string name="communication_menu_title">Communication</string>
-    <string name="muted_menu">Muted users</string>
-    <string name="blocked_menu">Blocked users</string>
+    <string name="neutral_menu_title">විකල්ප</string>
+    <string name="favorites_menu">ප්‍රියතම</string>
+    <string name="communication_menu_title">සන්නිවේදන</string>
+    <string name="muted_menu">නිහඬ කරන ලද පරිශීලකයන්</string>
+    <string name="blocked_menu">අවහිර කරන ලද පරිශීලකයන්</string>
     <string name="remote_follow_menu">Remote follow</string>
     <string name="notifications">දැනුම්දීම්</string>
     <string name="follow_request">Follow requests</string>
-    <string name="optimization">Optimization</string>
+    <string name="optimization">ප්‍රශස්තිකරණය</string>
     <string name="settings">සැකසුම්</string>
     <string name="profile">Profile</string>
     <string name="make_a_choice">ඔබට අවශ්‍ය කුමක් කිරීමට ද?</string>
@@ -138,10 +138,10 @@
         <item quantity="other">ප්‍රතිචාරය %d යි</item>
     </plurals>
     <string name="set_display_bookmark_button">Display the bookmark button</string>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
-    <string name="bookmarks_empty">No bookmarks to display</string>
+    <string name="bookmarks">පොත් යොමු</string>
+    <string name="bookmark_add">පොත් යොමුවලට එක් කරන්න</string>
+    <string name="bookmark_remove">පොත් යොමුව ඉවත් කරන්න</string>
+    <string name="bookmarks_empty">පෙන්වීමට පොත් යොමු නැත</string>
     <string name="status_bookmarked">Status has been added to bookmarks!</string>
     <string name="status_unbookmarked">Status was removed from bookmarks!</string>
     <!-- Date -->
