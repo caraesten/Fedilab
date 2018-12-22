@@ -161,7 +161,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         textviewNoAction =  rootView.findViewById(R.id.no_action);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
         Account account = new AccountDAO(context, db).getAccountByID(userId);
@@ -521,8 +520,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     //Update the id of the last toot retrieved
                     MainActivity.lastHomeId = status.getId();
                     statuses.add(0, status);
-                    if (!status.getAccount().getId().equals(userId))
+                    if (!status.getAccount().getId().equals(userId)) {
                         MainActivity.countNewStatus++;
+                    }
                     try {
                         ((MainActivity) context).updateHomeCounter();
                     }catch (Exception ignored){}

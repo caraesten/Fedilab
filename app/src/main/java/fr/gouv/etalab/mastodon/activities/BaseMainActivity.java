@@ -708,9 +708,7 @@ public abstract class BaseMainActivity extends BaseActivity
         tabLayout.addTab(tabHome);
         tabLayout.addTab(tabNotif);
         tabPosition.put("home",0);
-        typePosition.put(0, RetrieveFeedsAsyncTask.Type.HOME);
         tabPosition.put("notifications",1);
-        typePosition.put(1, null);
         int i = 2;
         if( display_direct) {
             tabLayout.addTab(tabDirect);
