@@ -667,5 +667,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="crowdin_manager">Crowdin manager</string>
     <string name="translation_app">Translation of the application</string>
     <string name="about_crowdin">About Crowdin</string>
+    <string name="bot">Bot</string>
     <!-- end languages -->
 </resources>
