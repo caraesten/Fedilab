@@ -664,7 +664,12 @@
     <string name="more_information">Máis información</string>
     <string name="showcase_2FA">Se utiliza 2FA (doble factor de autenticación), debe utilizar esta ligazón.\nTamén pode utilizalo se non quere introducir as súas credenciais aquí.</string>
     <!-- languages not translated -->
+    <string name="languages">Languages</string>
     <string name="show_media_only">Só medios</string>
     <string name="show_media_nsfw">Mostrar NSFW</string>
+    <string name="crowdin_translations">Crowdin translations</string>
+    <string name="crowdin_manager">Crowdin manager</string>
+    <string name="translation_app">Translation of the application</string>
+    <string name="about_crowdin">About Crowdin</string>
     <!-- end languages -->
 </resources>
