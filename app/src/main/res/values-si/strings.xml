@@ -662,7 +662,12 @@
     <string name="more_information">තවත් තොරතුරු</string>
     <string name="showcase_2FA">ඔබ 2FA (ද්වි-සාධක සහතික කිරීම) භාවිත කරන්නෙ නම්, ඔබ මෙම සබැඳිය භාවිත කිරීමට අවශ්‍ය යි.\nමෙහි ඔබේ තොරතුරු ඇතුළත් කිරීමට උවමනා නැතිනම් ද ඔබට එය භාවිත කළ හැකි යි.</string>
     <!-- languages not translated -->
+    <string name="languages">Languages</string>
     <string name="show_media_only">මාධ්‍ය පමණයි</string>
     <string name="show_media_nsfw">Show NSFW</string>
+    <string name="crowdin_translations">Crowdin translations</string>
+    <string name="crowdin_manager">Crowdin manager</string>
+    <string name="translation_app">Translation of the application</string>
+    <string name="about_crowdin">About Crowdin</string>
     <!-- end languages -->
 </resources>
