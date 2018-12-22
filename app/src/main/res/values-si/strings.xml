@@ -263,9 +263,9 @@
     <string name="toast_error_login">පූරනය වීමට නොහැකි යි!</string>
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
     <string name="nothing_to_do">කිසිම ක්‍රියාමාර්ගයක් ගැනීමට නොහැක</string>
-    <string name="toast_saved">The media has been saved!</string>
+    <string name="toast_saved">මාධ්‍යය සුරකින ලදී!</string>
     <string name="toast_error_translate">පරිවර්තනය කරන අතරතුර දෝෂයක් සිදුවුණා!</string>
-    <string name="toast_toot_saved">Draft saved!</string>
+    <string name="toast_toot_saved">කටුසටහන සුරකින ලදී!</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
     <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
