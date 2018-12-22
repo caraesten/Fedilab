@@ -665,8 +665,8 @@
     <string name="show_media_nsfw">顯示 NSFW</string>
     <string name="crowdin_translations">Crowdin 翻譯</string>
     <string name="crowdin_manager">Crowdin 管理員</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
-    <string name="bot">Bot</string>
+    <string name="translation_app">應用程式翻譯</string>
+    <string name="about_crowdin">關於 Crowdin</string>
+    <string name="bot">機器人</string>
     <!-- end languages -->
 </resources>
