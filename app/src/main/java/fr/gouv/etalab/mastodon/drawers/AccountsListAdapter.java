@@ -217,7 +217,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
                     if (targetedId == null || !targetedId.equals(account.getId())) {
                         Intent intent = new Intent(context, ShowAccountActivity.class);
                         Bundle b = new Bundle();
-                        b.putString("accountId", account.getId());
+                        b.putParcelable("account", account);
                         intent.putExtras(b);
                         context.startActivity(intent);
                     }

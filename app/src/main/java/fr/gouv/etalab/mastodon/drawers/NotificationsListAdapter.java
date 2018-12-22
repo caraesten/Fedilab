@@ -642,7 +642,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             public void onClick(View v) {
                 Intent intent = new Intent(context, ShowAccountActivity.class);
                 Bundle b = new Bundle();
-                b.putString("accountId", notification.getAccount().getId());
+                b.putParcelable("account", notification.getAccount());
                 intent.putExtras(b);
                 context.startActivity(intent);
             }

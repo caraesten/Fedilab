@@ -123,7 +123,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private FloatingActionButton account_follow;
 
     private ViewPager mPager;
-    private String accountId;
     private TabLayout tabLayout;
     private TextView account_note, account_follow_request, account_type, account_bot;
     private String userId;
@@ -141,6 +140,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private boolean show_boosts, show_replies;
     private boolean showMediaOnly, showPinned;
     private boolean peertubeAccount;
+    private ImageView pp_actionBar;
+    private String accountId;
 
     public enum action{
         FOLLOW,
@@ -184,10 +185,16 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_type = findViewById(R.id.account_type);
         account_bot = findViewById(R.id.account_bot);
         if(b != null){
-            accountId = b.getString("accountId");
+            account = b.getParcelable("account");
+            if( account == null){
+                accountId = b.getString("accountId");
+            }else {
+                accountId = account.getId();
+            }
             peertubeAccount = b.getBoolean("peertubeAccount", false);
-            new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new RetrieveAccountAsyncTask(getApplicationContext(),accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            if (account == null) {
+                new RetrieveAccountAsyncTask(getApplicationContext(), accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
         }else{
@@ -208,8 +215,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         tabLayout = findViewById(R.id.account_tabLayout);
 
         account_note = findViewById(R.id.account_note);
-
-
 
 
 
@@ -238,246 +243,23 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 showMenu(account_menu);
             }
         });
-
-
-    }
-
-    private void showMenu(View account_menu){
-        if( account == null)
-            return;
-        final PopupMenu popup = new PopupMenu(ShowAccountActivity.this, account_menu);
-        popup.getMenuInflater()
-                .inflate(R.menu.main_showaccount, popup.getMenu());
-
-        final String[] stringArrayConf;
-        final boolean isOwner = account.getId().equals(userId);
-        String[] splitAcct = account.getAcct().split("@");
-
-        if( splitAcct.length <= 1) {
-            popup.getMenu().findItem(R.id.action_follow_instance).setVisible(false);
-            popup.getMenu().findItem(R.id.action_block_instance).setVisible(false);
-
-        }if( isOwner) {
-            popup.getMenu().findItem(R.id.action_block).setVisible(false);
-            popup.getMenu().findItem(R.id.action_mute).setVisible(false);
-            popup.getMenu().findItem(R.id.action_mention).setVisible(false);
-            popup.getMenu().findItem(R.id.action_follow_instance).setVisible(false);
-            popup.getMenu().findItem(R.id.action_block_instance).setVisible(false);
-            popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
-            popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
-            popup.getMenu().findItem(R.id.action_direct_message).setVisible(false);
-            stringArrayConf =  getResources().getStringArray(R.array.more_action_owner_confirm);
-        }else {
-            popup.getMenu().findItem(R.id.action_block).setVisible(true);
-            popup.getMenu().findItem(R.id.action_mute).setVisible(true);
-            popup.getMenu().findItem(R.id.action_mention).setVisible(true);
-            stringArrayConf =  getResources().getStringArray(R.array.more_action_confirm);
+        if( account != null){
+            ManageAccount();
         }
-        if( peertubeAccount){
-            popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
-            popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
-            popup.getMenu().findItem(R.id.action_direct_message).setVisible(false);
-        }
-        if( relationship != null){
-            if( !relationship.isFollowing()) {
-                popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
-                popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
-            }
-            if(relationship.isEndorsed()){
-                popup.getMenu().findItem(R.id.action_endorse).setTitle(R.string.unendorse);
-            }else {
-                popup.getMenu().findItem(R.id.action_endorse).setTitle(R.string.endorse);
-            }
-            if(relationship.isShowing_reblogs()){
-                popup.getMenu().findItem(R.id.action_hide_boost).setTitle(getString(R.string.hide_boost, account.getUsername()));
-            }else {
-                popup.getMenu().findItem(R.id.action_hide_boost).setTitle(getString(R.string.show_boost, account.getUsername()));
-            }
-        }
-
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                AlertDialog.Builder builderInner;
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-                int style;
-                if (theme == Helper.THEME_DARK) {
-                    style = R.style.DialogDark;
-                } else if (theme == Helper.THEME_BLACK){
-                    style = R.style.DialogBlack;
-                }else {
-                    style = R.style.Dialog;
-                }
-                switch (item.getItemId()) {
-                    case R.id.action_follow_instance:
-                        String finalInstanceName = splitAcct[1];
-                        final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                        List<RemoteInstance> remoteInstances = new InstancesDAO(ShowAccountActivity.this, db).getInstanceByName(finalInstanceName);
-                        if( remoteInstances != null && remoteInstances.size() > 0 ){
-                            Toasty.info(getApplicationContext(), getString(R.string.toast_instance_already_added),Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putInt(INTENT_ACTION, SEARCH_INSTANCE);
-                            bundle.putString(INSTANCE_NAME,finalInstanceName);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                            return true;
-                        }
-                        new Thread(new Runnable(){
-                            @Override
-                            public void run() {
-                                try {
-                                    if( !peertubeAccount) {
-                                        //Here we can't know if the instance is a Mastodon one or not
-                                        try { //Testing Mastodon
-                                            new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/timelines/public?local=true", 10, null, null);
-                                        }catch (Exception ignored){
-                                            new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/videos/", 10, null, null);
-                                            peertubeAccount = true;
-                                        }
-                                    }
-                                    else
-                                        new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/videos/", 10, null, null);
-
-                                    runOnUiThread(new Runnable() {
-                                        public void run() {
-                                            final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                                            if( !peertubeAccount)
-                                                new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName, "MASTODON");
-                                            else
-                                                new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName, "PEERTUBE");
-                                            Toasty.success(getApplicationContext(), getString(R.string.toast_instance_followed),Toast.LENGTH_LONG).show();
-                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                            Bundle bundle = new Bundle();
-                                            bundle.putInt(INTENT_ACTION, SEARCH_INSTANCE);
-                                            bundle.putString(INSTANCE_NAME,finalInstanceName);
-                                            intent.putExtras(bundle);
-                                            startActivity(intent);
-                                        }
-                                    });
-                                } catch (final Exception e) {
-                                    e.printStackTrace();
-                                    runOnUiThread(new Runnable() {
-                                        public void run() {
-                                            Toasty.warning(getApplicationContext(), getString(R.string.toast_instance_unavailable),Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-                                }
-                            }
-                        }).start();
-                        return true;
-                    case R.id.action_endorse:
-                        if( relationship != null)
-                            if(relationship.isEndorsed()){
-                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNENDORSE, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }else {
-                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.ENDORSE, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }
-                        return true;
-                    case R.id.action_hide_boost:
-                        if( relationship != null)
-                            if(relationship.isShowing_reblogs()){
-                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.HIDE_BOOST, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }else {
-                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.SHOW_BOOST, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }
-                        return true;
-                    case R.id.action_direct_message:
-                        Intent intent = new Intent(getApplicationContext(), TootActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("mentionAccount", account.getAcct());
-                        b.putString("visibility", "direct");
-                        intent.putExtras(b);
-                        startActivity(intent);
-                        return true;
-                    case R.id.action_open_browser:
-                        if( accountUrl != null) {
-                            if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
-                                accountUrl = "http://" + accountUrl;
-                            Helper.openBrowser(ShowAccountActivity.this, accountUrl);
-                        }
-                        return true;
-                    case R.id.action_mention:
-                        intent = new Intent(getApplicationContext(), TootActivity.class);
-                        b = new Bundle();
-                        b.putString("mentionAccount", account.getAcct());
-                        intent.putExtras(b);
-                        startActivity(intent);
-                        return true;
-                    case R.id.action_mute:
-                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
-                        builderInner.setTitle(stringArrayConf[0]);
-                        doActionAccount = API.StatusAction.MUTE;
-                        break;
-                    case R.id.action_block:
-                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
-                        builderInner.setTitle(stringArrayConf[1]);
-                        doActionAccount = API.StatusAction.BLOCK;
-                        break;
-                    case R.id.action_block_instance:
-                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
-                        doActionAccount = API.StatusAction.BLOCK_DOMAIN;
-                        String domain = account.getAcct().split("@")[1];
-                        builderInner.setMessage(getString(R.string.block_domain_confirm_message, domain));
-                        break;
-                    default:
-                        return true;
-                }
-                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,int which) {
-                        String targetedId;
-                        if( item.getItemId() == R.id.action_block_instance){
-                            targetedId = account.getAcct().split("@")[1];
-                        }else {
-                            targetedId = account.getId();
-                        }
-                        new PostActionAsyncTask(getApplicationContext(), doActionAccount, targetedId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        dialog.dismiss();
-                    }
-                });
-                builderInner.show();
-                return true;
-            }
-        });
-        popup.show();
-    }
-    @Override
-    public void onPostAction(int statusCode,API.StatusAction statusAction, String targetedId, Error error) {
-        if( error != null){
-            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
-            return;
-        }
-        Helper.manageMessageStatusCode(getApplicationContext(), statusCode, statusAction);
-        new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
-
-    @Override
-    public void onRetrieveAccount(final Account account, Error error) {
-        if( error != null || account.getAcct() == null){
-            if( error == null)
-                Toasty.error(ShowAccountActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();
-            else
-                Toasty.error(ShowAccountActivity.this, error.getError(),Toast.LENGTH_LONG).show();
-            return;
-        }
-        this.account = account;
-        accountUrl = account.getUrl();
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+    private void ManageAccount(){
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        accountUrl = account.getUrl();
         if( theme == Helper.THEME_BLACK){
             changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.dark_icon);
         }else {
             changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
         }
+        new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
         String urlHeader = account.getHeader();
         if (urlHeader != null && urlHeader.startsWith("/")) {
             urlHeader = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + account.getHeader();
@@ -533,7 +315,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         TextView actionbar_title = findViewById(R.id.show_account_title);
         if( account.getAcct() != null)
             actionbar_title.setText(account.getAcct());
-        ImageView pp_actionBar = findViewById(R.id.pp_actionBar);
+        pp_actionBar = findViewById(R.id.pp_actionBar);
         if( account.getAvatar() != null){
             String url = account.getAvatar();
             if( url.startsWith("/") ){
@@ -570,9 +352,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         final Account authenticatedAccount = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-        boolean isTimedMute = new TempMuteDAO(getApplicationContext(), db).isTempMuted(authenticatedAccount, account.getId());
+        boolean isTimedMute = new TempMuteDAO(getApplicationContext(), db).isTempMuted(authenticatedAccount, accountId);
         if( isTimedMute){
-            String date_mute = new TempMuteDAO(getApplicationContext(), db).getMuteDateByID(authenticatedAccount, account.getId());
+            String date_mute = new TempMuteDAO(getApplicationContext(), db).getMuteDateByID(authenticatedAccount, accountId);
             if( date_mute != null) {
                 final TextView temp_mute = findViewById(R.id.temp_mute);
                 temp_mute.setVisibility(View.VISIBLE);
@@ -582,7 +364,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 temp_mute.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        new TempMuteDAO(getApplicationContext(), db).remove(authenticatedAccount, account.getId());
+                        new TempMuteDAO(getApplicationContext(), db).remove(authenticatedAccount, accountId);
                         Toasty.success(getApplicationContext(), getString(R.string.toast_unmute), Toast.LENGTH_LONG).show();
                         temp_mute.setVisibility(View.GONE);
                     }
@@ -828,7 +610,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         });
         SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
         account.setNoteSpan(spannableString);
-        account.makeEmojisAccountProfile(ShowAccountActivity.this, ShowAccountActivity.this);
+        account.makeEmojisAccountProfile(ShowAccountActivity.this, ShowAccountActivity.this, account);
         account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
         account_note.setMovementMethod(LinkMovementMethod.getInstance());
         if (!peertubeAccount && tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
@@ -960,13 +742,13 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     Toasty.info(getApplicationContext(), getString(R.string.nothing_to_do), Toast.LENGTH_LONG).show();
                 }else if( doAction == action.FOLLOW){
                     account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else if( doAction == action.UNFOLLOW){
                     account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNFOLLOW, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNFOLLOW, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else if( doAction == action.UNBLOCK){
                     account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNBLOCK, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNBLOCK, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         });
@@ -977,8 +759,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 return false;
             }
         });
-
     }
+
 
 
 
@@ -1034,7 +816,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if( relationship == null)
             return;
         account_follow.setEnabled(true);
-        if( accountId != null && accountId.equals(userId)){
+        if( account.getId() != null && account.getId().equals(userId)){
             account_follow.hide();
             header_edit_profile.show();
             header_edit_profile.bringToFront();
@@ -1076,14 +858,14 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 case 0:
                     if( ! peertubeAccount){
                         TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
-                        bundle.putString("targetedId", accountId);
+                        bundle.putString("targetedId", account.getId());
                         tabLayoutTootsFragment.setArguments(bundle);
                         return tabLayoutTootsFragment;
                     }else{
                         DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
                         bundle = new Bundle();
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
-                        bundle.putString("targetedId", accountId);
+                        bundle.putString("targetedId", account.getId());
                         bundle.putBoolean("showReply",false);
                         displayStatusFragment.setArguments(bundle);
                         return displayStatusFragment;
@@ -1092,7 +874,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     if( peertubeAccount){
                         DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                         bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.CHANNELS);
-                        bundle.putString("targetedId", accountId);
+                        bundle.putString("targetedId", account.getId());
                         bundle.putString("instance",account.getAcct().split("@")[1]);
                         bundle.putString("name",account.getAcct().split("@")[0]);
                         displayAccountsFragment.setArguments(bundle);
@@ -1100,7 +882,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     }else{
                         DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                         bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
-                        bundle.putString("targetedId", accountId);
+                        bundle.putString("targetedId", account.getId());
                         displayAccountsFragment.setArguments(bundle);
                         return displayAccountsFragment;
                     }
@@ -1108,7 +890,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 case 2:
                     DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
-                    bundle.putString("targetedId", accountId);
+                    bundle.putString("targetedId", account.getId());
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
 
@@ -1116,18 +898,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             return null;
         }
 
-        /*@NonNull
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
-            // save the appropriate reference depending on position
-            switch (position) {
-                case 0:
-                    displayStatusFragment = (DisplayStatusFragment) createdFragment;
-                    break;
-            }
-            return createdFragment;
-        }*/
 
         @Override
         public int getCount() {
@@ -1193,6 +963,238 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             }
         }
     }
+
+    private void showMenu(View account_menu){
+        if( account == null)
+            return;
+        final PopupMenu popup = new PopupMenu(ShowAccountActivity.this, account_menu);
+        popup.getMenuInflater()
+                .inflate(R.menu.main_showaccount, popup.getMenu());
+
+        final String[] stringArrayConf;
+        final boolean isOwner = account.getId().equals(userId);
+        String[] splitAcct = account.getAcct().split("@");
+
+        if( splitAcct.length <= 1) {
+            popup.getMenu().findItem(R.id.action_follow_instance).setVisible(false);
+            popup.getMenu().findItem(R.id.action_block_instance).setVisible(false);
+
+        }if( isOwner) {
+            popup.getMenu().findItem(R.id.action_block).setVisible(false);
+            popup.getMenu().findItem(R.id.action_mute).setVisible(false);
+            popup.getMenu().findItem(R.id.action_mention).setVisible(false);
+            popup.getMenu().findItem(R.id.action_follow_instance).setVisible(false);
+            popup.getMenu().findItem(R.id.action_block_instance).setVisible(false);
+            popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
+            popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
+            popup.getMenu().findItem(R.id.action_direct_message).setVisible(false);
+            stringArrayConf =  getResources().getStringArray(R.array.more_action_owner_confirm);
+        }else {
+            popup.getMenu().findItem(R.id.action_block).setVisible(true);
+            popup.getMenu().findItem(R.id.action_mute).setVisible(true);
+            popup.getMenu().findItem(R.id.action_mention).setVisible(true);
+            stringArrayConf =  getResources().getStringArray(R.array.more_action_confirm);
+        }
+        if( peertubeAccount){
+            popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
+            popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
+            popup.getMenu().findItem(R.id.action_direct_message).setVisible(false);
+        }
+        if( relationship != null){
+            if( !relationship.isFollowing()) {
+                popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
+                popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
+            }
+            if(relationship.isEndorsed()){
+                popup.getMenu().findItem(R.id.action_endorse).setTitle(R.string.unendorse);
+            }else {
+                popup.getMenu().findItem(R.id.action_endorse).setTitle(R.string.endorse);
+            }
+            if(relationship.isShowing_reblogs()){
+                popup.getMenu().findItem(R.id.action_hide_boost).setTitle(getString(R.string.hide_boost, account.getUsername()));
+            }else {
+                popup.getMenu().findItem(R.id.action_hide_boost).setTitle(getString(R.string.show_boost, account.getUsername()));
+            }
+        }
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                AlertDialog.Builder builderInner;
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
+                switch (item.getItemId()) {
+                    case R.id.action_follow_instance:
+                        String finalInstanceName = splitAcct[1];
+                        final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                        List<RemoteInstance> remoteInstances = new InstancesDAO(ShowAccountActivity.this, db).getInstanceByName(finalInstanceName);
+                        if( remoteInstances != null && remoteInstances.size() > 0 ){
+                            Toasty.info(getApplicationContext(), getString(R.string.toast_instance_already_added),Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(INTENT_ACTION, SEARCH_INSTANCE);
+                            bundle.putString(INSTANCE_NAME,finalInstanceName);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            return true;
+                        }
+                        new Thread(new Runnable(){
+                            @Override
+                            public void run() {
+                                try {
+                                    if( !peertubeAccount) {
+                                        //Here we can't know if the instance is a Mastodon one or not
+                                        try { //Testing Mastodon
+                                            new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/timelines/public?local=true", 10, null, null);
+                                        }catch (Exception ignored){
+                                            new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/videos/", 10, null, null);
+                                            peertubeAccount = true;
+                                        }
+                                    }
+                                    else
+                                        new HttpsConnection(ShowAccountActivity.this).get("https://" + finalInstanceName + "/api/v1/videos/", 10, null, null);
+
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                            if( !peertubeAccount)
+                                                new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName, "MASTODON");
+                                            else
+                                                new InstancesDAO(ShowAccountActivity.this, db).insertInstance(finalInstanceName, "PEERTUBE");
+                                            Toasty.success(getApplicationContext(), getString(R.string.toast_instance_followed),Toast.LENGTH_LONG).show();
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putInt(INTENT_ACTION, SEARCH_INSTANCE);
+                                            bundle.putString(INSTANCE_NAME,finalInstanceName);
+                                            intent.putExtras(bundle);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                } catch (final Exception e) {
+                                    e.printStackTrace();
+                                    runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            Toasty.warning(getApplicationContext(), getString(R.string.toast_instance_unavailable),Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }
+                        }).start();
+                        return true;
+                    case R.id.action_endorse:
+                        if( relationship != null)
+                            if(relationship.isEndorsed()){
+                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNENDORSE, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }else {
+                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.ENDORSE, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
+                        return true;
+                    case R.id.action_hide_boost:
+                        if( relationship != null)
+                            if(relationship.isShowing_reblogs()){
+                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.HIDE_BOOST, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }else {
+                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.SHOW_BOOST, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
+                        return true;
+                    case R.id.action_direct_message:
+                        Intent intent = new Intent(getApplicationContext(), TootActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("mentionAccount", account.getAcct());
+                        b.putString("visibility", "direct");
+                        intent.putExtras(b);
+                        startActivity(intent);
+                        return true;
+                    case R.id.action_open_browser:
+                        if( accountUrl != null) {
+                            if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
+                                accountUrl = "http://" + accountUrl;
+                            Helper.openBrowser(ShowAccountActivity.this, accountUrl);
+                        }
+                        return true;
+                    case R.id.action_mention:
+                        intent = new Intent(getApplicationContext(), TootActivity.class);
+                        b = new Bundle();
+                        b.putString("mentionAccount", account.getAcct());
+                        intent.putExtras(b);
+                        startActivity(intent);
+                        return true;
+                    case R.id.action_mute:
+                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
+                        builderInner.setTitle(stringArrayConf[0]);
+                        doActionAccount = API.StatusAction.MUTE;
+                        break;
+                    case R.id.action_block:
+                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
+                        builderInner.setTitle(stringArrayConf[1]);
+                        doActionAccount = API.StatusAction.BLOCK;
+                        break;
+                    case R.id.action_block_instance:
+                        builderInner = new AlertDialog.Builder(ShowAccountActivity.this, style);
+                        doActionAccount = API.StatusAction.BLOCK_DOMAIN;
+                        String domain = account.getAcct().split("@")[1];
+                        builderInner.setMessage(getString(R.string.block_domain_confirm_message, domain));
+                        break;
+                    default:
+                        return true;
+                }
+                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
+                        String targetedId;
+                        if( item.getItemId() == R.id.action_block_instance){
+                            targetedId = account.getAcct().split("@")[1];
+                        }else {
+                            targetedId = account.getId();
+                        }
+                        new PostActionAsyncTask(getApplicationContext(), doActionAccount, targetedId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.show();
+                return true;
+            }
+        });
+        popup.show();
+    }
+    @Override
+    public void onPostAction(int statusCode,API.StatusAction statusAction, String targetedId, Error error) {
+        if( error != null){
+            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+        Helper.manageMessageStatusCode(getApplicationContext(), statusCode, statusAction);
+        new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+
+    @Override
+    public void onRetrieveAccount(final Account account, Error error) {
+        if( error != null || account.getAcct() == null){
+            if( error == null)
+                Toasty.error(ShowAccountActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            else
+                Toasty.error(ShowAccountActivity.this, error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+        this.account = account;
+        ManageAccount();
+    }
+
+
 
     public boolean showReplies(){
         return show_replies;

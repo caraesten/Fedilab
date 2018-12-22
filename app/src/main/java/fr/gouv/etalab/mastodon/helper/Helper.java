@@ -1544,7 +1544,7 @@ public class Helper {
                 if (account != null) {
                     Intent intent = new Intent(activity, ShowAccountActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("accountId", account.getId());
+                    b.putParcelable("account", account);
                     intent.putExtras(b);
                     activity.startActivity(intent);
                 }

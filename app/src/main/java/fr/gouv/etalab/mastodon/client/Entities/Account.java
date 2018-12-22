@@ -99,6 +99,7 @@ public class Account implements Parcelable {
         id = in.readString();
         username = in.readString();
         emojis = in.readArrayList(Emojis.class.getClassLoader());
+        moved_to_account = in.readParcelable(Account.class.getClassLoader());
         acct = in.readString();
         display_name = in.readString();
         host =  in.readString();
@@ -141,6 +142,7 @@ public class Account implements Parcelable {
         dest.writeString(id);
         dest.writeString(username);
         dest.writeList(emojis);
+        dest.writeParcelable(moved_to_account, flags);
         dest.writeString(acct);
         dest.writeString(display_name);
         dest.writeString(host);
@@ -489,14 +491,14 @@ public class Account implements Parcelable {
             spannableString = new SpannableString(context.getString(R.string.account_moved_to, this.getAcct(), "@"+this.getMoved_to_account().getAcct()));
             int startPositionTar = spannableString.toString().indexOf("@"+this.getMoved_to_account().getAcct());
             int endPositionTar = startPositionTar + ("@"+this.getMoved_to_account().getAcct()).length();
-            final String idTar = this.getMoved_to_account().getId();
+            final Account idTar = this.getMoved_to_account();
             if( endPositionTar <= spannableString.toString().length() && endPositionTar >= startPositionTar)
                 spannableString.setSpan(new ClickableSpan() {
                             @Override
                             public void onClick(View textView) {
                                 Intent intent = new Intent(context, ShowAccountActivity.class);
                                 Bundle b = new Bundle();
-                                b.putString("accountId", idTar);
+                                b.putParcelable("account", idTar);
                                 intent.putExtras(b);
                                 context.startActivity(intent);
                             }
@@ -511,7 +513,7 @@ public class Account implements Parcelable {
         return spannableString;
     }
 
-    public void makeEmojisAccountProfile(final Context context, final OnRetrieveEmojiAccountInterface listener){
+    public void makeEmojisAccountProfile(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account){
         if( ((Activity)context).isFinishing() )
             return;
         if( fields == null)

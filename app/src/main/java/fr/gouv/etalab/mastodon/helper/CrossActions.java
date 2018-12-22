@@ -286,7 +286,7 @@ public class CrossActions {
                     //Flag it has a peertube account
                     if( remoteAccount.getHost() != null && remoteAccount.getAcct().split("@").length > 1)
                         b.putBoolean("peertubeAccount", true);
-                    b.putString("accountId", remoteAccounts.get(0).getId());
+                    b.putParcelable("account", remoteAccounts.get(0));
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }

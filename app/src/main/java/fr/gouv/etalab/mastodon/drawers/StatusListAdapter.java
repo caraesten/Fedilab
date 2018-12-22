@@ -477,7 +477,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShowAccountActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("accountId", status.getAccount().getId());
+                    b.putParcelable("account", status.getAccount());
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }
@@ -2080,7 +2080,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         if (targetedId == null || !targetedId.equals(status.getAccount().getId())) {
                             Intent intent = new Intent(context, ShowAccountActivity.class);
                             Bundle b = new Bundle();
-                            b.putString("accountId", status.getAccount().getId());
+                            b.putParcelable("account", status.getAccount());
                             intent.putExtras(b);
                             context.startActivity(intent);
                         }
@@ -2093,7 +2093,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         if (targetedId == null || !targetedId.equals(status.getReblog().getAccount().getId())) {
                             Intent intent = new Intent(context, ShowAccountActivity.class);
                             Bundle b = new Bundle();
-                            b.putString("accountId", status.getReblog().getAccount().getId());
+                            b.putParcelable("account", status.getReblog().getAccount());
                             intent.putExtras(b);
                             context.startActivity(intent);
                         }

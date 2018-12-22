@@ -2306,7 +2306,7 @@ public abstract class BaseMainActivity extends BaseActivity
         if( accounts !=null && accounts.size() > 0){
             Intent intent = new Intent(BaseMainActivity.this, ShowAccountActivity.class);
             Bundle b = new Bundle();
-            b.putString("accountId", accounts.get(0).getId());
+            b.putParcelable("account", accounts.get(0));
             intent.putExtras(b);
             startActivity(intent);
         }else if( statuses != null && statuses.size() > 0){
