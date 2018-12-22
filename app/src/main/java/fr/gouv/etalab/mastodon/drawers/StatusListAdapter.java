@@ -518,7 +518,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             final ViewHolder holder = (ViewHolder) viewHolder;
             final Status status = statuses.get(viewHolder.getAdapterPosition());
 
-
+            if( status == null)
+                return;
             status.setItemViewType(viewHolder.getItemViewType());
 
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
