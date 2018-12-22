@@ -1356,6 +1356,7 @@ public class Helper {
         TextView username = headerLayout.findViewById(R.id.username);
         TextView displayedName = headerLayout.findViewById(R.id.displayedName);
         LinearLayout more_option_container = headerLayout.findViewById(R.id.more_option_container);
+        LinearLayout more_account_container = headerLayout.findViewById(R.id.more_account_container);
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -1364,7 +1365,6 @@ public class Helper {
 
         FloatingActionButton.LayoutParams layoutparmans = new FloatingActionButton.LayoutParams((int)Helper.convertDpToPixel(35,activity),(int)Helper.convertDpToPixel(35,activity));
         FloatingActionButton.LayoutParams layoutparmanImg = new FloatingActionButton.LayoutParams((int)Helper.convertDpToPixel(25,activity),(int)Helper.convertDpToPixel(25,activity));
-        layoutparmans.setMargins((int)Helper.convertDpToPixel(20, activity),0,0,0);
         MenuFloating actionButton = null;
         if( theme == THEME_LIGHT) {
             icon.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush));
@@ -1395,7 +1395,6 @@ public class Helper {
                     .build();
         }
 
-
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(activity);
 
         // repeat many times:
@@ -1404,7 +1403,6 @@ public class Helper {
         SubActionButton buttonLight = itemBuilder
                 .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular))
                 .setContentView(itemIconLight).build();
-
 
         ImageView itemDark = new ImageView(activity);
         itemDark.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush_white));
@@ -1481,6 +1479,102 @@ public class Helper {
             }
         });
 
+
+        SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        final List<Account> accounts = new AccountDAO(activity, db).getAllAccount();
+
+        if( accounts != null && accounts.size() > 1) {
+
+            FloatingActionButton.LayoutParams layoutparmansAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(35, activity), (int) Helper.convertDpToPixel(35, activity));
+            FloatingActionButton.LayoutParams layoutparmanImgAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(25, activity), (int) Helper.convertDpToPixel(25, activity));
+            MenuFloating actionButtonAcc = null;
+            SharedPreferences mSharedPreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String currrentUserId = mSharedPreferences.getString(Helper.PREF_KEY_ID, null);
+            for(final Account accountChoice: accounts) {
+                if (currrentUserId != null && !currrentUserId.equals(accountChoice.getId())) {
+                    icon = new ImageView(activity);
+                    ImageView finalIcon = icon;
+                    Glide.with(activity.getApplicationContext())
+                            .asBitmap()
+                            .load(accountChoice.getAvatar())
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                    finalIcon.setImageBitmap(resource);
+                                }
+                            });
+                    MenuFloating.Builder actionButtonAccBuild = new MenuFloating.Builder(activity);
+                    if( theme == THEME_LIGHT) {
+                        actionButtonAccBuild.setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular));
+                    }else if( theme == THEME_DARK) {
+                        actionButtonAccBuild.setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_dark));
+                    }else if( theme == THEME_BLACK) {
+                        actionButtonAccBuild.setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_black));
+                    }
+
+                    actionButtonAcc = actionButtonAccBuild
+                            .setContentView(finalIcon, layoutparmanImg)
+                            .setLayoutParams(layoutparmans)
+                            .setTag("ACCOUNT")
+                            .intoView(more_account_container)
+                            .build();
+
+                    break;
+                }
+            }
+
+            FloatingActionMenu.Builder actionMenuAccBuilder = new FloatingActionMenu.Builder(activity);
+
+            for(final Account accountChoice: accounts) {
+                if (currrentUserId != null && !currrentUserId.equals(accountChoice.getId())) {
+                    SubActionButton.Builder itemBuilderAcc = new SubActionButton.Builder(activity);
+
+                    ImageView itemIconAcc = new ImageView(activity);
+                    Glide.with(activity.getApplicationContext())
+                            .asBitmap()
+                            .load(accountChoice.getAvatar())
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                    itemIconAcc.setImageBitmap(resource);
+                                }
+                            });
+                    SubActionButton subActionButtonAcc = itemBuilderAcc
+                            .setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular))
+                            .setContentView(itemIconAcc).build();
+                    actionMenuAccBuilder.addSubActionView(subActionButtonAcc);
+                }
+            }
+
+            FloatingActionMenu actionMenuAcc = actionMenuAccBuilder.attachTo(actionButtonAcc)
+                    .setStartAngle(0)
+                    .setEndAngle(135)
+                    .build();
+            if( actionButtonAcc != null) {
+                actionButtonAcc.setFocusableInTouchMode(true);
+                actionButtonAcc.setFocusable(true);
+                actionButtonAcc.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if(actionMenuAcc.isOpen())
+                            actionMenuAcc.close(true);
+                        else
+                            actionMenuAcc.open(true);
+                        return false;
+                    }
+                });
+                actionButtonAcc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        try {
+                            actionMenuAcc.close(true);
+                        }catch (Exception ignored){}
+
+                    }
+                });
+            }
+
+        }
         if( account == null ) {
             Helper.logout(activity);
             Intent myIntent = new Intent(activity, LoginActivity.class);
