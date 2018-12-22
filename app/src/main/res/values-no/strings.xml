@@ -651,7 +651,12 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="more_information">Mer informasjon</string>
     <string name="showcase_2FA">Hvis du bruker tofaktorautentisering (2FA), må du benytte deg av denne linken.\nDu kan også benytte deg av linken dersom du ikke vil skrive inn brukernavn og passord her, men heller logge inn via instansen.</string>
     <!-- languages not translated -->
+    <string name="languages">Languages</string>
     <string name="show_media_only">Kun media</string>
     <string name="show_media_nsfw">Vis NSFW</string>
+    <string name="crowdin_translations">Crowdin translations</string>
+    <string name="crowdin_manager">Crowdin manager</string>
+    <string name="translation_app">Translation of the application</string>
+    <string name="about_crowdin">About Crowdin</string>
     <!-- end languages -->
 </resources>
