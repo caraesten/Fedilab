@@ -561,14 +561,14 @@
     <string name="channel_notif_backup">Toots Backup</string>
     <string name="channel_notif_media">Media Download</string>
     <string name="set_notif_sound">Change notification sound</string>
-    <string name="select_sound">Select Tone</string>
+    <string name="select_sound">ගීත කණ්ඩය තෝරාගන්න</string>
     <string name="set_enable_time_slot">Enable time slot</string>
-    <string name="how_to_videos">How To Videos</string>
+    <string name="how_to_videos">\'කෙසේ ද?\' වීඩියෝ</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-    <string name="no_blocked_domain">No blocked domains!</string>
-    <string name="unblock_domain_confirm">Unblock domain</string>
-    <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+    <string name="no_blocked_domain">අවහිර කරන ලද අඩවි නොමැත!</string>
+    <string name="unblock_domain_confirm">අඩවිය අවහිර නොකරන්න</string>
+    <string name="unblock_domain_confirm_message">%s අවහිර නොකිරීම විශ්වාස ද?</string>
+    <string name="block_domain_confirm_message">%s අවහිර කිරීම විශ්වාස ද?</string>
     <string name="blocked_domains">අවහිර කරන ලද අඩවි</string>
     <string name="block_domain">අඩවිය අවහිර කරන්න</string>
     <string name="toast_block_domain">අඩවිය අවහිර කරන ලදී</string>
@@ -657,12 +657,12 @@
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
     </string>
     <string name="showcase_uid">මෙම ක්ෂේත්‍රයේ, ඔබගේ මැස්ටොඩෝන් ගිණුමට සම්බන්ධ කර ඇති විද්‍යුත් තැපැල් ලිපිනය ලියන්න.    </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        අවසාන පියවර ලෙස ඔබේ මුරපදය ඇතුළත් කර \'පුරන්න\' මත ඔබන්න.
     </string>
     <string name="more_information">තවත් තොරතුරු</string>
     <string name="showcase_2FA">ඔබ 2FA (ද්වි-සාධක සහතික කිරීම) භාවිත කරන්නෙ නම්, ඔබ මෙම සබැඳිය භාවිත කිරීමට අවශ්‍ය යි.\nමෙහි ඔබේ තොරතුරු ඇතුළත් කිරීමට උවමනා නැතිනම් ද ඔබට එය භාවිත කළ හැකි යි.</string>
     <!-- languages not translated -->
-    <string name="show_media_only">Media only</string>
+    <string name="show_media_only">මාධ්‍ය පමණයි</string>
     <string name="show_media_nsfw">Show NSFW</string>
     <!-- end languages -->
 </resources>
