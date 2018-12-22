@@ -75,7 +75,7 @@ public class MainApplication extends MultiDexApplication {
                 .setSuccessColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
                 .setWarningColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
                 .setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_text))
-                .apply(); 
+                .apply();
                     Toasty.Config.getInstance().apply();
                 }
 
