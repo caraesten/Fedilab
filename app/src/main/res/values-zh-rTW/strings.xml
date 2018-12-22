@@ -660,11 +660,11 @@
     <string name="more_information">更多資訊</string>
     <string name="showcase_2FA">如果您使用雙因素驗證，您必須使用此連結。\n您也可以在不想在此輸入憑證時使用它。</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">語言</string>
     <string name="show_media_only">僅媒體</string>
     <string name="show_media_nsfw">顯示 NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
+    <string name="crowdin_translations">Crowdin 翻譯</string>
+    <string name="crowdin_manager">Crowdin 管理員</string>
     <string name="translation_app">Translation of the application</string>
     <string name="about_crowdin">About Crowdin</string>
     <string name="bot">Bot</string>
