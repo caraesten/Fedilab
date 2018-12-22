@@ -497,7 +497,7 @@
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
     <string name="which_language">Suqel s</string>
-    <string name="crash_title">Mastalab has stopped :(</string>
+    <string name="crash_title">Yecceḍ Masṭalab :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Follow instance</string>
@@ -515,7 +515,7 @@
     <string name="toast_unendorse">The account is no longer featured on profile</string>
     <string name="toast_show_boost">Boosts are now shown!</string>
     <string name="toast_hide_boost">Boosts are now hidden!</string>
-    <string name="direct_message">Direct message</string>
+    <string name="direct_message">Izen usrid</string>
     <string name="filters">Imzizdigen</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
     <string name="filter_keyword">Keyword or phrase</string>
@@ -531,7 +531,7 @@
     <string name="filter_context">Filter contexts</string>
     <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
     <string name="filter_expire">Expire after</string>
-    <string name="add_new_filter">Add New Filter</string>
+    <string name="add_new_filter">Rnu imsizdeg amaynut</string>
     <string name="action_filter_delete">Kkes imzizdig?</string>
     <string name="action_update_filter">Update filter</string>
     <string name="action_filter_create">Snulfud imzizdig</string>
@@ -666,10 +666,10 @@
     <string name="languages">Tutlayin</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
+    <string name="crowdin_translations">Tisuqilin n Crowdin</string>
     <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
-    <string name="bot">Bot</string>
+    <string name="translation_app">Suqel asnas γer tutlayt nniḍen</string>
+    <string name="about_crowdin">Γef Crowdin</string>
+    <string name="bot">Buṭ</string>
     <!-- end languages -->
 </resources>
