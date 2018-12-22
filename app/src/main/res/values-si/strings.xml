@@ -282,13 +282,13 @@
     <string name="load_attachment_spoiler">තවත් පෙන්වන්න…</string>
     <string name="load_attachment_spoiler_less">අඩුවෙන් පෙන්වන්න…</string>
     <string name="load_sensitive_attachment">සංවේදී අන්තර්ගතයකි</string>
-    <string name="set_display_reply">Display previous message in responses</string>
+    <string name="set_display_reply">ප්‍රතිචාරවල පෙර පණිවිඩය පෙන්වන්න</string>
     <string name="set_display_local">Display local timeline</string>
     <string name="set_display_global">Display federated timeline</string>
     <string name="set_disable_gif">Disable GIF avatars</string>
     <string name="set_folder_title">Path: </string>
-    <string name="set_auto_store_toot">Save drafts automatically</string>
-    <string name="set_bubble_counter">Display counters</string>
+    <string name="set_auto_store_toot">කටුසටහන් ස්වයංක්‍රීයව සුරකින්න</string>
+    <string name="set_bubble_counter">ගණකයන් පෙන්වන්න</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
     <string name="settings_title_notifications">දැනුම්දීම් කළමනාකරණය</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
