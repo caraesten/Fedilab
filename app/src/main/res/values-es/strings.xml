@@ -658,7 +658,12 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
+    <string name="languages">Languages</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
+    <string name="crowdin_translations">Crowdin translations</string>
+    <string name="crowdin_manager">Crowdin manager</string>
+    <string name="translation_app">Translation of the application</string>
+    <string name="about_crowdin">About Crowdin</string>
     <!-- end languages -->
 </resources>
