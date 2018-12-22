@@ -623,7 +623,7 @@
     <string name="boost_scheduled">The boost is scheduled!</string>
     <string name="no_scheduled_boosts">No scheduled boost to display!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
+    <string name="art_menu">කලා කාල රේඛාව</string>
     <string name="open_menu">Open menu</string>
     <string name="app_logo">මෘදුකාංගයේ ලාංඡනය</string>
     <string name="profile_picture">Profile picture</string>
@@ -660,7 +660,7 @@
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
     <string name="more_information">තවත් තොරතුරු</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="showcase_2FA">ඔබ 2FA (ද්වි-සාධක සහතික කිරීම) භාවිත කරන්නෙ නම්, ඔබ මෙම සබැඳිය භාවිත කිරීමට අවශ්‍ය යි.\nමෙහි ඔබේ තොරතුරු ඇතුළත් කිරීමට උවමනා නැතිනම් ද ඔබට එය භාවිත කළ හැකි යි.</string>
     <!-- languages not translated -->
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
