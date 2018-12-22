@@ -785,7 +785,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 this.statuses.add(0, statuses.get(i));
                             }
                         }else {
-                            if( Long.parseLong(statuses.get(i).getId()) > Long.parseLong(lastReadToot)) {
+                            if( lastReadToot != null && Long.parseLong(statuses.get(i).getId()) > Long.parseLong(lastReadToot)) {
                                 statuses.get(i).setNew(true);
                                 MainActivity.countNewStatus++;
                                 inserted++;
