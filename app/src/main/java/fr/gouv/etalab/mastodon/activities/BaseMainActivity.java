@@ -2074,6 +2074,10 @@ public abstract class BaseMainActivity extends BaseActivity
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
             return false;
+        } else if( id == R.id.nav_language) {
+            Intent intent = new Intent(getApplicationContext(), LanguageActivity.class);
+            startActivity(intent);
+            return false;
         } else if( id == R.id.nav_partnership) {
             Intent intent = new Intent(getApplicationContext(), PartnerShipActivity.class);
             startActivity(intent);

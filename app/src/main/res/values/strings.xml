@@ -743,6 +743,7 @@
 
 
     <!-- languages not translated -->
+    <string name="languages">Languages</string>
     <string name="english" translatable="false">English</string>
     <string name="french" translatable="false">Français</string>
     <string name="arabic" translatable="false">العربية</string>
@@ -768,6 +769,10 @@
     <string name="norwegian" translatable="false">Norsk</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
+    <string name="crowdin_translations">Crowdin translations</string>
+    <string name="crowdin_manager">Crowdin manager</string>
+    <string name="translation_app">Translation of the application</string>
+    <string name="about_crowdin">About Crowdin</string>
     <!-- end languages -->
 
 </resources>

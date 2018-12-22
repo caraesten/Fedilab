@@ -76,9 +76,9 @@
                         android:icon="@drawable/ic_block"
                         android:title="@string/blocked_domains" />
                     <item
-                        android:id="@+id/nav_how_to"
-                        android:icon="@drawable/ic_videocam"
-                        android:title="@string/how_to_videos" />
+                        android:id="@+id/nav_language"
+                        android:icon="@drawable/ic_translate_menu"
+                        android:title="@string/languages" />
                 </group>
             </menu>
         </item>
@@ -87,6 +87,10 @@
             android:id="@+id/nav_main_info">
             <menu>
                 <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_how_to"
+                        android:icon="@drawable/ic_videocam"
+                        android:title="@string/how_to_videos" />
                     <item
                         android:id="@+id/nav_bug_report"
                         android:icon="@drawable/ic_bug_report"

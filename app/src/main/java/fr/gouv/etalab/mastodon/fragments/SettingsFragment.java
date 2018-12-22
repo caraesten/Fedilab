@@ -16,13 +16,11 @@ package fr.gouv.etalab.mastodon.fragments;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -51,8 +49,6 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
@@ -636,117 +632,6 @@ public class SettingsFragment extends Fragment {
         });
 
 
-        String currentLanguage = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, Helper.localeToStringStorage(Locale.getDefault()));
-        Locale currentLocale = Helper.restoreLocaleFromString(currentLanguage);
-        final Spinner set_change_locale = rootView.findViewById(R.id.set_change_locale);
-        ArrayAdapter<String> adapterLocale = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_dropdown_item, Helper.getLocales(context));
-
-        set_change_locale.setAdapter(adapterLocale);
-
-        int positionSpinnerLanguage = Helper.languageSpinnerPosition(context);
-        set_change_locale.setSelection(positionSpinnerLanguage);
-        set_change_locale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if( count2 > 0 ) {
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    switch (position) {
-                        case 0:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, Locale.getDefault().getLanguage());
-                            editor.commit();
-                            break;
-                        case 1:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "en");
-                            editor.commit();
-                            break;
-                        case 2:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "fr");
-                            editor.commit();
-                            break;
-                        case 3:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "de");
-                            editor.commit();
-                            break;
-                        case 4:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "it");
-                            editor.commit();
-                            break;
-                        case 5:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ja");
-                            editor.commit();
-                            break;
-                        case 6:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW,"zh-TW");
-                            editor.commit();
-                            break;
-                        case 7:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "zh-CN");
-                            editor.commit();
-                            break;
-                        case 8:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "eu");
-                            editor.commit();
-                            break;
-                        case 9:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ar");
-                            editor.commit();
-                            break;
-                        case 10:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "nl");
-                            editor.commit();
-                            break;
-                        case 11:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "gl");
-                            editor.commit();
-                            break;
-                        case 12:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "el");
-                            editor.commit();
-                            break;
-                        case 13:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "pt");
-                            editor.commit();
-                            break;
-                        case 14:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "es");
-                            editor.commit();
-                            break;
-                        case 15:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "pl");
-                            editor.commit();
-                            break;
-                        case 16:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "sr");
-                            editor.commit();
-                            break;
-                        case 17:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "uk");
-                            editor.commit();
-                        case 18:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "ru");
-                            editor.commit();
-                        case 19:
-                            editor.putString(Helper.SET_DEFAULT_LOCALE_NEW, "no");
-                            editor.commit();
-                            break;
-                    }
-
-                    PackageManager packageManager = context.getPackageManager();
-                    Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
-                    assert intent != null;
-                    ComponentName componentName = intent.getComponent();
-                    Intent mainIntent = Intent.makeRestartActivityTask(componentName);
-                    context.startActivity(mainIntent);
-                    Runtime.getRuntime().exit(0);
-                }
-                count2++;
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         // NSFW Timeout
         SeekBar nsfwTimeoutSeekBar = rootView.findViewById(R.id.set_nsfw_timeout);
