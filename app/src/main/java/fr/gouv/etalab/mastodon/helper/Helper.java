@@ -1587,6 +1587,7 @@ public class Helper {
                                 editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
                                 editor.putString(Helper.PREF_INSTANCE, accountChoice.getInstance().trim());
                                 editor.commit();
+                                Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct() + "@" + accountChoice.getInstance()), Toast.LENGTH_LONG).show();
                                 Intent changeAccount = new Intent(activity, MainActivity.class);
                                 changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 activity.finish();
