@@ -35,7 +35,7 @@
     <string name="instance_example">Instans: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Arbeider nå med %1$s</string>
     <string name="add_account">Legg til en konto</string>
-    <string name="clipboard">Innholdet av tooten er kopiert til utklippstavlen</string>
+    <string name="clipboard">Tootet er kopiert til utklippstavlen!</string>
     <string name="change">Endre</string>
     <string name="choose_picture">Velg et bilde…</string>
     <string name="clear">Fjern</string>
@@ -117,12 +117,12 @@
     <string name="more_action_5">Kopier</string>
     <string name="more_action_6">Del</string>
     <string name="more_action_7">Nevn</string>
-    <string name="more_action_8">Tidsbestemt dempet</string>
+    <string name="more_action_8">Demp tidsbestemt</string>
     <string name="more_action_9">Slett og kladd på nytt</string>
     <string-array name="more_action_confirm">
-        <item>Demp denne kontoen?</item>
-        <item>Blokker denne kontoen?</item>
-        <item>Rapporter denne tooten?</item>
+        <item>Dempe denne kontoen?</item>
+        <item>Blokkere denne kontoen?</item>
+        <item>Rapportere denne tooten?</item>
         <item>Blokkere dette domenet?</item>
     </string-array>
     <string-array name="action_notification">
@@ -143,7 +143,7 @@
     <string name="bookmark_remove">Fjern fra bokmerker</string>
     <string name="bookmarks_empty">Ingen bokmerker å vise</string>
     <string name="status_bookmarked">Tootet er lagt til bokmerker!</string>
-    <string name="status_unbookmarked">Statusen ble fjernet fra bokmerker!</string>
+    <string name="status_unbookmarked">Tootet er fjernet fra bokmerker!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -213,13 +213,13 @@
     <string name="warning_battery">Batterisparer er aktivert! Det virker kanskje ikke som forventet.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">Tiden for demping bør være mer enn ett minutt.</string>
-    <string name="timed_mute_date">%1$s er dempet til %2$s. \n Du kan slå på denne kontoen igjen fra han/hennes profil.</string>
+    <string name="timed_mute_date">%1$s er dempet til %2$s. \n Du kan også slå av demping manuelt igjen fra han/hennes profil.</string>
     <string name="timed_mute_profile">%1$s er dempet til %2$s. \n Klikk her for å slå kontoen igjen.</string>
     <!-- Notifications -->
     <string name="no_notifications">Ingen varslinger for å vise</string>
     <string name="notif_mention">nevnte deg</string>
-    <string name="notif_reblog">boostet statusen din</string>
-    <string name="notif_favourite">favoriserte statusen din</string>
+    <string name="notif_reblog">boostet tootet ditt</string>
+    <string name="notif_favourite">favoriserte tootet ditt</string>
     <string name="notif_follow">fulgte deg</string>
     <string name="notif_pouet">Ny toot fra %1$s</string>
     <plurals name="other_notifications">
@@ -293,8 +293,8 @@
     <string name="settings_title_notifications">Administrer varsler</string>
     <string name="set_notif_follow">Varlse når noen følger deg</string>
     <string name="set_notif_follow_ask">Varsle når noen ber om å følge deg</string>
-    <string name="set_notif_follow_share">Varsle når noen booster statusen din</string>
-    <string name="set_notif_follow_add">Varsle når noen favoriserer statusen din</string>
+    <string name="set_notif_follow_share">Varsle når noen booster tootene dine</string>
+    <string name="set_notif_follow_add">Varsle når noen favoriserer tootene dine</string>
     <string name="set_notif_follow_mention">Varsle når noen nevner deg</string>
     <string name="set_share_validation">Vis bekreftelsesdialog før du booster</string>
     <string name="set_share_validation_fav">Vis bekreftelsesdialog før du legger til i favoritter</string>
