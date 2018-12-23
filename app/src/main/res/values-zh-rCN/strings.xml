@@ -76,8 +76,8 @@
     <string name="neutral_menu_title">选项</string>
     <string name="favorites_menu">收藏夹</string>
     <string name="communication_menu_title">交流</string>
-    <string name="muted_menu">静音用户</string>
-    <string name="blocked_menu">屏蔽用户</string>
+    <string name="muted_menu">已静音用户</string>
+    <string name="blocked_menu">已屏蔽用户</string>
     <string name="remote_follow_menu">跨站关注</string>
     <string name="notifications">通知</string>
     <string name="follow_request">关注请求</string>
@@ -566,7 +566,7 @@
     <string name="unblock_domain_confirm">取消屏蔽域名</string>
     <string name="unblock_domain_confirm_message">您确定要取消屏蔽 %s 吗？</string>
     <string name="block_domain_confirm_message">您确定要屏蔽 %s 吗？</string>
-    <string name="blocked_domains">屏蔽的域名</string>
+    <string name="blocked_domains">已屏蔽域名</string>
     <string name="block_domain">屏蔽域名</string>
     <string name="toast_block_domain">该域名已被屏蔽</string>
     <string name="toast_unblock_domain">该域名不再被屏蔽</string>
@@ -663,10 +663,10 @@
     <string name="languages">语言</string>
     <string name="show_media_only">仅限媒体</string>
     <string name="show_media_nsfw">显示 NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
-    <string name="bot">Bot</string>
+    <string name="crowdin_translations">Crowdin 翻译</string>
+    <string name="crowdin_manager">Crowdin 管理员</string>
+    <string name="translation_app">应用程序的翻译</string>
+    <string name="about_crowdin">关于 Crowdin</string>
+    <string name="bot">机器人</string>
     <!-- end languages -->
 </resources>

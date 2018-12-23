@@ -660,7 +660,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="more_information">Meer informatie</string>
     <string name="showcase_2FA">Als je 2FA (twee-factor-authenticatie) gebruikt, moet je deze link gebruiken.\nJe kunt het ook gebruiken als je je gegevens hier niet wilt invullen.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">Talen</string>
     <string name="show_media_only">Alleen media</string>
     <string name="show_media_nsfw">Toon NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>

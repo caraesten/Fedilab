@@ -35,7 +35,7 @@
     <string name="instance_example">Instans: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Arbeider nå med %1$s</string>
     <string name="add_account">Legg til en konto</string>
-    <string name="clipboard">Innholdet av tooten er kopiert til utklippstavlen</string>
+    <string name="clipboard">Tootet er kopiert til utklippstavlen!</string>
     <string name="change">Endre</string>
     <string name="choose_picture">Velg et bilde…</string>
     <string name="clear">Fjern</string>
@@ -43,7 +43,7 @@
     <string name="camera">Kamera</string>
     <string name="speech_prompt">Si noe, vær så snill</string>
     <string name="speech_not_supported">Beklager! Enheten støtter ikke taleinngangen!</string>
-    <string name="delete_all">Slett alt</string>
+    <string name="delete_all">Vil du slette alt?</string>
     <string name="translate_toot">Oversett denne tooten.</string>
     <string name="schedule">Planlegg</string>
     <string name="text_size">Tekst- og ikonstørrelser</string>
@@ -52,7 +52,7 @@
     <string name="next">Neste</string>
     <string name="previous">Forrige</string>
     <string name="open_with">Åpne med</string>
-    <string name="validate">Valider</string>
+    <string name="validate">OK</string>
     <string name="media">Media</string>
     <string name="share_with">Del med</string>
     <string name="shared_via">Delt via Mastalab</string>
@@ -117,12 +117,12 @@
     <string name="more_action_5">Kopier</string>
     <string name="more_action_6">Del</string>
     <string name="more_action_7">Nevn</string>
-    <string name="more_action_8">Tidsbestemt dempet</string>
+    <string name="more_action_8">Demp tidsbestemt</string>
     <string name="more_action_9">Slett og kladd på nytt</string>
     <string-array name="more_action_confirm">
-        <item>Demp denne kontoen?</item>
-        <item>Blokker denne kontoen?</item>
-        <item>Rapporter denne tooten?</item>
+        <item>Dempe denne kontoen?</item>
+        <item>Blokkere denne kontoen?</item>
+        <item>Rapportere denne tooten?</item>
         <item>Blokkere dette domenet?</item>
     </string-array>
     <string-array name="action_notification">
@@ -142,15 +142,15 @@
     <string name="bookmark_add">Legg til bokmerke</string>
     <string name="bookmark_remove">Fjern fra bokmerker</string>
     <string name="bookmarks_empty">Ingen bokmerker å vise</string>
-    <string name="status_bookmarked">Statusen er lagt til bokmerker!</string>
-    <string name="status_unbookmarked">Statusen ble fjernet fra bokmerker!</string>
+    <string name="status_bookmarked">Tootet er lagt til bokmerker!</string>
+    <string name="status_unbookmarked">Tootet er fjernet fra bokmerker!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
     <string name="date_hours">%d h</string>
     <string name="date_day">%d d</string>
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Advarsel</string>
+    <string name="toot_cw_placeholder">Innholdsadvarsel</string>
     <string name="toot_placeholder">Hva tenker du på?</string>
     <string name="toot_it">TOOT!</string>
     <string name="cw">cw</string>
@@ -172,11 +172,11 @@
         <item>Bare post til følgere</item>
         <item>Bare post til nevnte brukere</item>
     </string-array>
-    <string name="no_draft">Ingen utkast!</string>
+    <string name="no_draft">Ingen lagrede utkast!</string>
     <string name="choose_toot">Velg et toot</string>
     <string name="choose_accounts">Velg en konto</string>
     <string name="select_accounts">Velg en eller flere kontoer</string>
-    <string name="remove_draft">Fjern utkast?</string>
+    <string name="remove_draft">Slette utkast?</string>
     <string name="show_reply">Klikk på knappen for å vise originaltootet</string>
     <string name="upload_form_description">Beskriv for synshemmede</string>
     <!-- Instance -->
@@ -204,22 +204,22 @@
     <string name="authorize">Autorisere</string>
     <string name="reject">Avslå</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">Ingen planlagt toot å vise!</string>
+    <string name="no_scheduled_toots">Ingen planlagte toots å vise!</string>
     <string name="no_scheduled_toots_indications">Skriv et toot og velg deretter <b>Planlegg</b> fra toppmenyen.</string>
-    <string name="remove_scheduled">Slett planlagt toot?</string>
+    <string name="remove_scheduled">Slette planlagt toot?</string>
     <string name="media_count">Medier: %d</string>
     <string name="toot_scheduled">Tootet har blitt planlagt!</string>
     <string name="toot_scheduled_date">Den planlagte datoen må være senere enn den nåværende timen!</string>
     <string name="warning_battery">Batterisparer er aktivert! Det virker kanskje ikke som forventet.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">Tiden for demping bør være mer enn ett minutt.</string>
-    <string name="timed_mute_date">%1$s er dempet til %2$s. \n Du kan slå på denne kontoen igjen fra han/hennes profil.</string>
+    <string name="timed_mute_date">%1$s er dempet til %2$s. \n Du kan også slå av demping manuelt igjen fra han/hennes profil.</string>
     <string name="timed_mute_profile">%1$s er dempet til %2$s. \n Klikk her for å slå kontoen igjen.</string>
     <!-- Notifications -->
     <string name="no_notifications">Ingen varslinger for å vise</string>
     <string name="notif_mention">nevnte deg</string>
-    <string name="notif_reblog">boostet statusen din</string>
-    <string name="notif_favourite">favoriserte statusen din</string>
+    <string name="notif_reblog">boostet tootet ditt</string>
+    <string name="notif_favourite">favoriserte tootet ditt</string>
     <string name="notif_follow">fulgte deg</string>
     <string name="notif_pouet">Ny toot fra %1$s</string>
     <plurals name="other_notifications">
@@ -293,8 +293,8 @@
     <string name="settings_title_notifications">Administrer varsler</string>
     <string name="set_notif_follow">Varlse når noen følger deg</string>
     <string name="set_notif_follow_ask">Varsle når noen ber om å følge deg</string>
-    <string name="set_notif_follow_share">Varsle når noen booster statusen din</string>
-    <string name="set_notif_follow_add">Varsle når noen favoriserer statusen din</string>
+    <string name="set_notif_follow_share">Varsle når noen booster tootene dine</string>
+    <string name="set_notif_follow_add">Varsle når noen favoriserer tootene dine</string>
     <string name="set_notif_follow_mention">Varsle når noen nevner deg</string>
     <string name="set_share_validation">Vis bekreftelsesdialog før du booster</string>
     <string name="set_share_validation_fav">Vis bekreftelsesdialog før du legger til i favoritter</string>
@@ -384,8 +384,8 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="settings_popup_timeline">For uleste toots i hjemmetidslinjen?</string>
     <string name="settings_popup_notification">For uleste varsler?</string>
     <!-- CACHE -->
-    <string name="cache_title">Tøm mellomlager</string>
-    <string name="cache_message">Det er %1$s med data i mellomlageret. \n \nVil du slette det?</string>
+    <string name="cache_title">Slett mellomlager</string>
+    <string name="cache_message">Det er %1$s med data i mellomlageret. \n \nVil du slette alle data fra mellomlageret?</string>
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cachen ble ryddet! %1$s ble utgitt</string>
     <!-- ACTIVITY CACHE -->
@@ -396,7 +396,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="v_unlisted">Ikke listet</string>
     <string name="v_private">Privat</string>
     <string name="v_direct">Direkte</string>
-    <string name="v_keywords">Noen søkeord…</string>
+    <string name="v_keywords">Søkeord…</string>
     <string name="show_media">Vis media</string>
     <string name="show_pinned">Vis festede</string>
     <string name="filter_no_result">Ingen treff!</string>
@@ -407,7 +407,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
         <item>Bare</item>
         <item>Begge</item>
     </string-array>
-    <string name="owner_cached_toots_empty">Ingen toots ble funnet i databasen. Vennligst bruk Synkroniser-knappen i menyen for å hente dem.</string>
+    <string name="owner_cached_toots_empty">Ingen toots ble funnet. Bruk Oppdater-knappen oppe til høyre for å hente dem.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Lagrede data</string>
     <string name="privacy_data">Bare grunnleggende informasjon fra kontoer lagres på enheten.
@@ -443,14 +443,14 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="fetch_more_toots">Hent flere toots…</string>
     <!-- About lists -->
     <string name="action_lists">Lister</string>
-    <string name="action_lists_confirm_delete">Er du sikker på at du vil slette denne listen permanent?</string>
-    <string name="action_lists_empty_content">Det er ingenting i denne listen enda. Når medlemmer av denne listen legger inn nye statuser, vises de her.</string>
+    <string name="action_lists_confirm_delete">Er du sikker på at du vil slette dette filteret?</string>
+    <string name="action_lists_empty_content">Det er ingenting i denne listen. Når medlemmer av denne listen legger inn nye statuser, vises de her.</string>
     <string name="action_lists_add_to">Legg til i liste</string>
     <string name="action_lists_remove_from">Fjern fra liste</string>
-    <string name="action_lists_create">Legg til liste</string>
+    <string name="action_lists_create">Opprett ny liste</string>
     <string name="action_lists_delete">Slett liste</string>
     <string name="action_lists_update">Rediger liste</string>
-    <string name="action_lists_title_placeholder">Ny tittel på liste</string>
+    <string name="action_lists_title_placeholder">Tittel på liste</string>
     <string name="action_lists_search_users">Søk blant personer du følger</string>
     <string name="action_lists_owner">Dine lister</string>
     <!-- Migration -->
@@ -508,7 +508,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="toast_hide_boost">Boosts er nå skjult!</string>
     <string name="direct_message">Direktemelding</string>
     <string name="filters">Filtre</string>
-    <string name="action_filters_empty_content">Ingen filtre for å vise. Du kan opprette et ved å klikke på \"+\"-knappen.</string>
+    <string name="action_filters_empty_content">Du har ikke opprettet noen filtre. Du kan opprette et filter ved å klikke på \"+\"-knappen.</string>
     <string name="filter_keyword">Nøkkelord eller et uttrykk</string>
     <string name="context_home">Lokal tidslinje</string>
     <string name="context_public">Offentlig tidslinjer</string>
@@ -536,7 +536,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="add_account_list_trunk">Legg til brukerkontoer i listen</string>
     <string name="account_added_list_trunk">Brukerkontoer ble lagt til listen</string>
     <string name="adding_account_list_trunk">Legger brukerkontoer til listen</string>
-    <string name="action_list_add">Du har ikke opprettet en liste ennå. Klikk på \"+\"-knappen for å legge til en ny.</string>
+    <string name="action_list_add">Du har ikke opprettet noen lister. Klikk på \"+\"-knappen for å opprette en ny.</string>
     <string name="action_remote_instance_add">Du følger ikke noen ekstern instanser. Klikk på \"+\"-knappen for å legge til en ny.</string>
     <string name="about_trunk">Hvem å følge</string>
     <string name="about_trunk_action">Trunk API</string>
@@ -557,7 +557,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="how_to_videos">Instruksjonsvideoer</string>
     <string name="retrieve_remote_conversation">Henter eksterne tråd!</string>
     <string name="no_blocked_domain">Ingen blokkerte domener!</string>
-    <string name="unblock_domain_confirm">Fjern blokkering av domenet</string>
+    <string name="unblock_domain_confirm">Oppheve blokkering av domenet?</string>
     <string name="unblock_domain_confirm_message">Er du sikker på at du vil å oppheve blokkering av %s?</string>
     <string name="block_domain_confirm_message">Er du sikker på at du vil blokkere %s?</string>
     <string name="blocked_domains">Blokkerte domener</string>
@@ -651,13 +651,13 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="more_information">Mer informasjon</string>
     <string name="showcase_2FA">Hvis du bruker tofaktorautentisering (2FA), må du benytte deg av denne linken.\nDu kan også benytte deg av linken dersom du ikke vil skrive inn brukernavn og passord her, men heller logge inn via instansen.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">Språk</string>
     <string name="show_media_only">Kun media</string>
     <string name="show_media_nsfw">Vis NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
-    <string name="bot">Bot</string>
+    <string name="crowdin_translations">Crowdin-oversettelser</string>
+    <string name="crowdin_manager">Crowdin-administrator</string>
+    <string name="translation_app">Oversettelse av applikasjonen</string>
+    <string name="about_crowdin">Om Crowdin</string>
+    <string name="bot">Robot</string>
     <!-- end languages -->
 </resources>

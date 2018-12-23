@@ -24,8 +24,8 @@
     <string name="email">විද්‍යුත් තැපැල් ලිපිනය</string>
     <string name="accounts">ගිණුම්</string>
     <string name="toots">Toots</string>
-    <string name="tags">Tags</string>
-    <string name="token">Token</string>
+    <string name="tags">හැඳුනුම් සංකේත</string>
+    <string name="token">ටෝකනය</string>
     <string name="save">සුරකින්න</string>
     <string name="restore">ප්‍රතිස්ථාපනය කරන්න</string>
     <string name="two_factor_authentification">ද්වි-පියවර සහතික කිරීම?</string>
@@ -33,7 +33,7 @@
     <string name="no_result">ප්‍රතිඵල නොමැත!</string>
     <string name="instance">Instance</string>
     <string name="instance_example">Instance: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
+    <string name="toast_account_changed" formatted="false">දැන් වැඩ කරන්නේ %1$s ගිණුම සමඟින්</string>
     <string name="add_account">ගිණුමක් එක් කරන්න</string>
     <string name="clipboard">The content of the toot has been copied to the clipboard</string>
     <string name="change">වෙනස් කරන්න</string>
@@ -42,10 +42,10 @@
     <string name="microphone">මයික්‍රොෆෝනය</string>
     <string name="camera">කැමරාව</string>
     <string name="speech_prompt">කරුණාකර, යමක් කියන්න</string>
-    <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
+    <string name="speech_not_supported">කණගාටුයි! හඬ මගින් ආදානය සඳහා ඔබගේ උපාංගය සහය දක්වන්නෙ නැත!</string>
     <string name="delete_all">සියල්ල මකන්න</string>
     <string name="translate_toot">Translate this toot.</string>
-    <string name="schedule">Schedule</string>
+    <string name="schedule">සැලසුම් කරන්න</string>
     <string name="text_size">අකුරු සහ ලාංඡනවල ප්‍රමාණය</string>
     <string name="text_size_change">අකුරුවල වර්තමාන ප්‍රමාණය වෙනස් කරන්න:</string>
     <string name="icon_size_change">ලාංඡනවල වර්තමාන ප්‍රමාණය වෙනස් කරන්න:</string>
@@ -58,9 +58,9 @@
     <string name="shared_via">Mastalab හරහා බෙදාගන්නා ලදී</string>
     <string name="replies">ප්‍රතිචාර</string>
     <string name="username">පරිශීලක නාමය</string>
-    <string name="drafts">Drafts</string>
-    <string name="new_data">New data are available! Do you want to display them?</string>
-    <string name="favourite">Favourites</string>
+    <string name="drafts">කටුසටහන්</string>
+    <string name="new_data">නව දත්ත ඇත! ඒවා දර්ශනය කිරීමට ඔබට අවශ්‍ය ද?</string>
+    <string name="favourite">ප්‍රියතම</string>
     <string name="follow">New followers</string>
     <string name="mention">සඳහන් කිරීම්</string>
     <string name="reblog">Boosts</string>
@@ -71,8 +71,8 @@
     <string name="please_wait">කරුණාකර, මෙම ක්‍රියාවට පෙර තත්පර කිහිපයක් රැඳී සිටින්න.</string>
     <!--- Menu -->
     <string name="home_menu">මුල</string>
-    <string name="local_menu">Local timeline</string>
-    <string name="global_menu">Federated timeline</string>
+    <string name="local_menu">ස්ථානීය කාල රේඛාව</string>
+    <string name="global_menu">ඒකාබද්ධ කාල රේඛාව</string>
     <string name="neutral_menu_title">විකල්ප</string>
     <string name="favorites_menu">ප්‍රියතම</string>
     <string name="communication_menu_title">සන්නිවේදන</string>
@@ -118,7 +118,7 @@
     <string name="more_action_6">බෙදාගන්න</string>
     <string name="more_action_7">සඳහන් කරන්න</string>
     <string name="more_action_8">Timed mute</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_9">මකාදමා, කටුසටහනකට</string>
     <string-array name="more_action_confirm">
         <item>මෙම ගිණුම නිහඬ කරනවා ද?</item>
         <item>මෙම ගිණුම අවහිර කරනවා ද?</item>
@@ -158,8 +158,8 @@
     <string name="toot_title_reply">Reply to a toot</string>
     <string name="toot_no_space">You have reached the 500 characters allowed!</string>
     <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
+    <string name="toot_select_image_error">මාධ්‍යය තෝරන අතරතුර දෝෂයක් සිදුවුණා!</string>
+    <string name="toot_delete_media">මෙම මාධ්‍යය මකනවා ද?</string>
     <string name="toot_error_no_content">Your toot is empty!</string>
     <string name="toot_visibility_tilte">Visibility of the toot</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
