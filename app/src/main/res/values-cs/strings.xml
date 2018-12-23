@@ -179,13 +179,13 @@
     <string name="choose_accounts">Vyberte účet</string>
     <string name="select_accounts">Vyberte účty</string>
     <string name="remove_draft">Odstranit koncept?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
+    <string name="show_reply">Klepněte na tlačítko pro zobrazení původního tootu</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">Popis není dostupný!</string>
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
+    <string name="about_developer">Vývojář:</string>
     <string name="about_license">Licence: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Zdrojový kód: </string>
@@ -195,7 +195,7 @@
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
-    <string name="conversation">Conversation</string>
+    <string name="conversation">Konverzace</string>
     <!-- Accounts -->
     <string name="no_accounts">No account to display</string>
     <string name="no_follow_request">No follow request</string>
@@ -203,8 +203,8 @@
     <string name="following_cnt">Following \n %1$s</string>
     <string name="followers_cnt">Followers \n %1$s</string>
     <string name="pins_cnt">Pinned \n %d</string>
-    <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="authorize">Povolit</string>
+    <string name="reject">Odmítnout</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
@@ -291,8 +291,8 @@
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_display_local">Zobrazit místní časovou osu</string>
     <string name="set_display_global">Zobrazit federovanou časovou osu</string>
-    <string name="set_disable_gif">Disable GIF avatars</string>
-    <string name="set_folder_title">Path: </string>
+    <string name="set_disable_gif">Zakázat GIF avatary</string>
+    <string name="set_folder_title">Cesta: </string>
     <string name="set_auto_store_toot">Ukládat koncepty automaticky</string>
     <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
@@ -349,8 +349,8 @@
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
+        <item>Tmavé</item>
+        <item>Světlé</item>
         <item>Černá</item>
     </string-array>
     <string-array name="settings_resize_picture">
@@ -373,8 +373,8 @@
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
     <string name="action_follow">Follow</string>
     <string name="action_unfollow">Unfollow</string>
-    <string name="action_block">Block</string>
-    <string name="action_unblock">Unblock</string>
+    <string name="action_block">Blokovat</string>
+    <string name="action_unblock">Odblokovat</string>
     <string name="action_mute">Mute</string>
     <string name="action_no_action">No action</string>
     <string name="action_unmute">Unmute</string>
@@ -397,7 +397,7 @@
     <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Synchronizovat</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_filter">Filtrovat</string>
     <string name="owner_cached_toots">Your toots</string>
     <string name="v_public">Public</string>
     <string name="v_unlisted">Unlisted</string>
@@ -461,12 +461,12 @@
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
     <string name="action_lists_add_to">Add to list</string>
     <string name="action_lists_remove_from">Remove from list</string>
-    <string name="action_lists_create">Add list</string>
-    <string name="action_lists_delete">Delete list</string>
-    <string name="action_lists_update">Edit list</string>
+    <string name="action_lists_create">Přidat seznam</string>
+    <string name="action_lists_delete">Odstranit seznam</string>
+    <string name="action_lists_update">Upravit seznam</string>
     <string name="action_lists_title_placeholder">New list title</string>
     <string name="action_lists_search_users">Search among people you follow</string>
-    <string name="action_lists_owner">Your lists</string>
+    <string name="action_lists_owner">Vaše seznamy</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
     <string name="show_boost_count">Show boosts/favourites count</string>
@@ -491,10 +491,10 @@
     <string name="proxy_enable">Enable proxy?</string>
     <string name="poxy_host">Host</string>
     <string name="poxy_port">Port</string>
-    <string name="poxy_login">Login</string>
-    <string name="poxy_password">Password</string>
-    <string name="set_theme">Theme:</string>
-    <string name="set_compact_mode">Compact mode</string>
+    <string name="poxy_login">Přihlašovací jméno</string>
+    <string name="poxy_password">Heslo</string>
+    <string name="set_theme">Motiv:</string>
+    <string name="set_compact_mode">Kompaktní mód</string>
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
@@ -522,9 +522,9 @@
     <string name="toast_show_boost">Boosts are now shown!</string>
     <string name="toast_hide_boost">Boosts are now hidden!</string>
     <string name="direct_message">Direct message</string>
-    <string name="filters">Filters</string>
+    <string name="filters">Filtry</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-    <string name="filter_keyword">Keyword or phrase</string>
+    <string name="filter_keyword">Klíčové slovo nebo fráze</string>
     <string name="context_home">Home timeline</string>
     <string name="context_public">Public timelines</string>
     <string name="context_notification">Notifications</string>
