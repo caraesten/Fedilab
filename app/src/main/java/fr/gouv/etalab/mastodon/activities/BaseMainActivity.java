@@ -57,7 +57,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -1476,7 +1475,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 Bundle b = intent.getExtras();
                 Helper.EventStreaming eventStreaming = (Helper.EventStreaming) intent.getSerializableExtra("eventStreaming");
                 assert b != null;
-                Log.v(Helper.TAG,"eventStreaming: " + eventStreaming);
                 userIdService = b.getString("userIdService", null);
                 if( userIdService != null && userIdService.equals(userId)) {
                     if (eventStreaming == Helper.EventStreaming.NOTIFICATION) {
@@ -1975,24 +1973,11 @@ public abstract class BaseMainActivity extends BaseActivity
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
                 assert b != null;
-                Helper.EventStreaming eventStreaming = (Helper.EventStreaming) intent.getSerializableExtra("eventStreaming");
-                Log.v(Helper.TAG,"eventStreamingHome: " + eventStreaming);
                 userIdService = b.getString("userIdService", null);
-                if (eventStreaming == Helper.EventStreaming.UPDATE) {
+                if( userIdService != null && userIdService.equals(userId)) {
                     Status status = b.getParcelable("data");
                     if (homeFragment != null) {
                         homeFragment.refresh(status);
-                    }
-                } else if (eventStreaming == Helper.EventStreaming.DELETE) {
-                    //noinspection unused
-                    String id = b.getString("id");
-                    if (notificationsFragment != null) {
-                        //noinspection StatementWithEmptyBody
-                        if (notificationsFragment.getUserVisibleHint()) {
-
-                        } else {
-
-                        }
                     }
                 }
             }

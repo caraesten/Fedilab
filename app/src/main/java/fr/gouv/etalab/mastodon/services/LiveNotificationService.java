@@ -35,7 +35,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -412,6 +411,15 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                             mainHandler.post(myRunnable);
                         }
                     }
+                    if( canSendBroadCast) {
+                        if (account != null)
+                            b.putString("userIdService", account.getId());
+                        Intent intentBC = new Intent(Helper.RECEIVE_DATA);
+                        intentBC.putExtra("eventStreaming", event);
+                        intentBC.putExtras(b);
+                        b.putParcelable("data", notification);
+                        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
+                    }
                     break;
                 case "delete":
                     event = Helper.EventStreaming.DELETE;
@@ -422,15 +430,6 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     break;
             }
         } catch (Exception ignored) { }
-        Log.v(Helper.TAG,"canSendBroadCast: " + canSendBroadCast);
-        if( canSendBroadCast) {
-            if (account != null)
-                b.putString("userIdService", account.getId());
-            Intent intentBC = new Intent(Helper.RECEIVE_DATA);
-            intentBC.putExtra("eventStreaming", event);
-            intentBC.putExtras(b);
-            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentBC);
-        }
     }
 
     @Override

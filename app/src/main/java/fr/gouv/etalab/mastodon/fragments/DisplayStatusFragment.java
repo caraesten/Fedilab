@@ -29,7 +29,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -557,7 +556,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
         if (type == RetrieveFeedsAsyncTask.Type.HOME){
-            Log.v(Helper.TAG, "onResume - getUserVisibleHint= " + getUserVisibleHint());
             if( getUserVisibleHint() ){
                 statusListAdapter.updateMuted(mutedAccount);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -569,7 +567,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         context.startService(streamingHomeIntent);
                     }catch (Exception ignored){}
                 }
-                Log.v(Helper.TAG, "onResume - statuses.size()= " + statuses.size());
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }
@@ -625,6 +622,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      * @param sinceId String
      */
     public void retrieveMissingToots(String sinceId){
+
+        if( type == RetrieveFeedsAsyncTask.Type.HOME)
+            asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, remoteInstance, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else if(type == RetrieveFeedsAsyncTask.Type.TAG)
@@ -860,10 +860,5 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
         this.statuses.addAll(position, tmpStatuses);
         statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
-        if( tmpStatuses.size() < 3) //If new toots are only two
-            lv_status.scrollToPosition(0);
-        else {
-            lv_status.scrollToPosition(position + tmpStatuses.size());
-        }
     }
 }
