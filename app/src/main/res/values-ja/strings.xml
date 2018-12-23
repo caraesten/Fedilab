@@ -582,7 +582,7 @@
     <string name="no_peertube_instances">No Peertube instances</string>
     <string name="no_mastodon_instances">No Mastodon instances</string>
     <string name="no_lists">No lists</string>
-    <string name="videos">Videos</string>
+    <string name="videos">動画</string>
     <string name="channels">Channels</string>
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Information</string>
@@ -652,13 +652,13 @@
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">言語</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>
     <string name="crowdin_manager">Crowdin manager</string>
     <string name="translation_app">Translation of the application</string>
     <string name="about_crowdin">About Crowdin</string>
-    <string name="bot">Bot</string>
+    <string name="bot">ボット</string>
     <!-- end languages -->
 </resources>
