@@ -68,7 +68,7 @@
     <string name="show_replies">Vis svar</string>
     <string name="action_open_in_web">Åpne i nettleseren</string>
     <string name="translate">Oversett</string>
-    <string name="please_wait">Vennligst vent noen sekunder før du gjør denne handlingen.</string>
+    <string name="please_wait">Vennligst vent noen sekunder før du utfører denne handlingen.</string>
     <!--- Menu -->
     <string name="home_menu">Hjem</string>
     <string name="local_menu">Lokal tidslinje</string>
@@ -277,7 +277,7 @@
     <string name="set_attachment_always">Alltid</string>
     <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Spør</string>
-    <string name="set_attachment_action">Last mediet</string>
+    <string name="set_attachment_action">Last media</string>
     <string name="load_attachment">Last bildene</string>
     <string name="load_attachment_spoiler">Vis mer…</string>
     <string name="load_attachment_spoiler_less">Vis mindre…</string>
@@ -303,7 +303,7 @@
     <string name="set_notify">Varsle?</string>
     <string name="set_notif_silent">Dempede varslinger</string>
     <string name="set_night_mode">Nattmodus</string>
-    <string name="set_nsfw_timeout">NSFW visningspause (sekunder, 0 betyr av)</string>
+    <string name="set_nsfw_timeout">NSFW visningspause i sekunder (0 betyr ingen visningspause)</string>
     <string name="settings_title_profile">Rediger profil</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Lås konto</string>
