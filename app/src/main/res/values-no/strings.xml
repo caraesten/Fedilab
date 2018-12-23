@@ -142,7 +142,7 @@
     <string name="bookmark_add">Legg til bokmerke</string>
     <string name="bookmark_remove">Fjern fra bokmerker</string>
     <string name="bookmarks_empty">Ingen bokmerker å vise</string>
-    <string name="status_bookmarked">Statusen er lagt til bokmerker!</string>
+    <string name="status_bookmarked">Tootet er lagt til bokmerker!</string>
     <string name="status_unbookmarked">Statusen ble fjernet fra bokmerker!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
@@ -396,7 +396,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="v_unlisted">Ikke listet</string>
     <string name="v_private">Privat</string>
     <string name="v_direct">Direkte</string>
-    <string name="v_keywords">Noen søkeord…</string>
+    <string name="v_keywords">Søkeord…</string>
     <string name="show_media">Vis media</string>
     <string name="show_pinned">Vis festede</string>
     <string name="filter_no_result">Ingen treff!</string>
@@ -443,8 +443,8 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="fetch_more_toots">Hent flere toots…</string>
     <!-- About lists -->
     <string name="action_lists">Lister</string>
-    <string name="action_lists_confirm_delete">Er du sikker på at du vil slette denne listen permanent?</string>
-    <string name="action_lists_empty_content">Det er ingenting i denne listen enda. Når medlemmer av denne listen legger inn nye statuser, vises de her.</string>
+    <string name="action_lists_confirm_delete">Er du sikker på at du vil slette dette filteret?</string>
+    <string name="action_lists_empty_content">Det er ingenting i denne listen. Når medlemmer av denne listen legger inn nye statuser, vises de her.</string>
     <string name="action_lists_add_to">Legg til i liste</string>
     <string name="action_lists_remove_from">Fjern fra liste</string>
     <string name="action_lists_create">Opprett ny liste</string>
@@ -508,7 +508,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="toast_hide_boost">Boosts er nå skjult!</string>
     <string name="direct_message">Direktemelding</string>
     <string name="filters">Filtre</string>
-    <string name="action_filters_empty_content">Ingen filtre for å vise. Du kan opprette et ved å klikke på \"+\"-knappen.</string>
+    <string name="action_filters_empty_content">Du har ikke opprettet noen filtre. Du kan opprette et filter ved å klikke på \"+\"-knappen.</string>
     <string name="filter_keyword">Nøkkelord eller et uttrykk</string>
     <string name="context_home">Lokal tidslinje</string>
     <string name="context_public">Offentlig tidslinjer</string>
@@ -536,7 +536,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="add_account_list_trunk">Legg til brukerkontoer i listen</string>
     <string name="account_added_list_trunk">Brukerkontoer ble lagt til listen</string>
     <string name="adding_account_list_trunk">Legger brukerkontoer til listen</string>
-    <string name="action_list_add">Du har ikke opprettet noen lister enda. Klikk på \"+\"-knappen for å opprette en ny.</string>
+    <string name="action_list_add">Du har ikke opprettet noen lister. Klikk på \"+\"-knappen for å opprette en ny.</string>
     <string name="action_remote_instance_add">Du følger ikke noen ekstern instanser. Klikk på \"+\"-knappen for å legge til en ny.</string>
     <string name="about_trunk">Hvem å følge</string>
     <string name="about_trunk_action">Trunk API</string>
