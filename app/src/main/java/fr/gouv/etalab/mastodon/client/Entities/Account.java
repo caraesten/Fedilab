@@ -613,6 +613,49 @@ public class Account implements Parcelable {
     }
 
 
+    public void makeAccountNameEmoji(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account){
+        if( ((Activity)context).isFinishing() )
+            return;
+        if( account.getDisplay_name() != null)
+            displayNameSpan = new SpannableString(account.getDisplay_name());
+        final List<Emojis> emojis = account.getEmojis();
+        if( emojis != null && emojis.size() > 0 ) {
+            final int[] i = {0};
+            for (final Emojis emoji : emojis) {
+                try {
+                    Glide.with(context)
+                            .asBitmap()
+                            .load(emoji.getUrl())
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                    final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                    if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
+                                        //emojis can be used several times so we have to loop
+                                        for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                            final int endPosition = startPosition + targetedEmoji.length();
+                                            if (endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition)
+                                                displayNameSpan.setSpan(
+                                                        new ImageSpan(context,
+                                                                Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                        (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                        endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                        }
+                                    }
+                                    i[0]++;
+                                    if (i[0] == (emojis.size())) {
+                                        if (listener != null)
+                                            listener.onRetrieveEmojiAccount(account);
+                                    }
+                                }
+                            });
+                }catch (Exception ignored){}
+
+            }
+        }
+    }
+
+
     public void makeEmojisAccount(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account){
         if( ((Activity)context).isFinishing() )
             return;
