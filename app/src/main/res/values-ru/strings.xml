@@ -669,7 +669,7 @@
     <string name="more_information">Дополнительная информация</string>
     <string name="showcase_2FA">Если вы используете 2FA (двухфакторную аутентификацию), вам нужно использовать эту ссылку.\nТакже вы можете ее использовать, если не хотите вводить здесь свои учетные данные.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">Языки</string>
     <string name="show_media_only">Только медиа</string>
     <string name="show_media_nsfw">Показать NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>
