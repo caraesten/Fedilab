@@ -43,7 +43,7 @@
     <string name="camera">Kamera</string>
     <string name="speech_prompt">Si noe, vær så snill</string>
     <string name="speech_not_supported">Beklager! Enheten støtter ikke taleinngangen!</string>
-    <string name="delete_all">Slett alt</string>
+    <string name="delete_all">Vil du slette alt?</string>
     <string name="translate_toot">Oversett denne tooten.</string>
     <string name="schedule">Planlegg</string>
     <string name="text_size">Tekst- og ikonstørrelser</string>
@@ -52,7 +52,7 @@
     <string name="next">Neste</string>
     <string name="previous">Forrige</string>
     <string name="open_with">Åpne med</string>
-    <string name="validate">Valider</string>
+    <string name="validate">OK</string>
     <string name="media">Media</string>
     <string name="share_with">Del med</string>
     <string name="shared_via">Delt via Mastalab</string>
@@ -172,7 +172,7 @@
         <item>Bare post til følgere</item>
         <item>Bare post til nevnte brukere</item>
     </string-array>
-    <string name="no_draft">Ingen utkast!</string>
+    <string name="no_draft">Ingen lagrede utkast!</string>
     <string name="choose_toot">Velg et toot</string>
     <string name="choose_accounts">Velg en konto</string>
     <string name="select_accounts">Velg en eller flere kontoer</string>
@@ -204,7 +204,7 @@
     <string name="authorize">Autorisere</string>
     <string name="reject">Avslå</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">Ingen planlagt toot å vise!</string>
+    <string name="no_scheduled_toots">Ingen planlagte toots å vise!</string>
     <string name="no_scheduled_toots_indications">Skriv et toot og velg deretter <b>Planlegg</b> fra toppmenyen.</string>
     <string name="remove_scheduled">Slett planlagt toot?</string>
     <string name="media_count">Medier: %d</string>
@@ -384,8 +384,8 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="settings_popup_timeline">For uleste toots i hjemmetidslinjen?</string>
     <string name="settings_popup_notification">For uleste varsler?</string>
     <!-- CACHE -->
-    <string name="cache_title">Tøm mellomlager</string>
-    <string name="cache_message">Det er %1$s med data i mellomlageret. \n \nVil du slette det?</string>
+    <string name="cache_title">Slett mellomlager</string>
+    <string name="cache_message">Det er %1$s med data i mellomlageret. \n \nVil du slette alle data fra mellomlageret?</string>
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cachen ble ryddet! %1$s ble utgitt</string>
     <!-- ACTIVITY CACHE -->
@@ -407,7 +407,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
         <item>Bare</item>
         <item>Begge</item>
     </string-array>
-    <string name="owner_cached_toots_empty">Ingen toots ble funnet i databasen. Vennligst bruk Synkroniser-knappen i menyen for å hente dem.</string>
+    <string name="owner_cached_toots_empty">Ingen toots ble funnet. Bruk Oppdater-knappen oppe til høyre for å hente dem.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Lagrede data</string>
     <string name="privacy_data">Bare grunnleggende informasjon fra kontoer lagres på enheten.
@@ -447,10 +447,10 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="action_lists_empty_content">Det er ingenting i denne listen enda. Når medlemmer av denne listen legger inn nye statuser, vises de her.</string>
     <string name="action_lists_add_to">Legg til i liste</string>
     <string name="action_lists_remove_from">Fjern fra liste</string>
-    <string name="action_lists_create">Legg til liste</string>
+    <string name="action_lists_create">Opprett ny liste</string>
     <string name="action_lists_delete">Slett liste</string>
     <string name="action_lists_update">Rediger liste</string>
-    <string name="action_lists_title_placeholder">Ny tittel på liste</string>
+    <string name="action_lists_title_placeholder">Tittel på liste</string>
     <string name="action_lists_search_users">Søk blant personer du følger</string>
     <string name="action_lists_owner">Dine lister</string>
     <!-- Migration -->
@@ -536,7 +536,7 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="add_account_list_trunk">Legg til brukerkontoer i listen</string>
     <string name="account_added_list_trunk">Brukerkontoer ble lagt til listen</string>
     <string name="adding_account_list_trunk">Legger brukerkontoer til listen</string>
-    <string name="action_list_add">Du har ikke opprettet en liste ennå. Klikk på \"+\"-knappen for å legge til en ny.</string>
+    <string name="action_list_add">Du har ikke opprettet noen lister enda. Klikk på \"+\"-knappen for å opprette en ny.</string>
     <string name="action_remote_instance_add">Du følger ikke noen ekstern instanser. Klikk på \"+\"-knappen for å legge til en ny.</string>
     <string name="about_trunk">Hvem å følge</string>
     <string name="about_trunk_action">Trunk API</string>
