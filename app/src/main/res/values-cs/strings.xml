@@ -528,7 +528,7 @@
     <string name="context_home">Home timeline</string>
     <string name="context_public">Public timelines</string>
     <string name="context_notification">Notifications</string>
-    <string name="context_conversation">Conversations</string>
+    <string name="context_conversation">Konverzace</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
     <string name="context_drop">Drop instead of hide</string>
     <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
@@ -539,13 +539,13 @@
     <string name="filter_expire">Expire after</string>
     <string name="add_new_filter">Add New Filter</string>
     <string name="action_filter_delete">Delete filter?</string>
-    <string name="action_update_filter">Update filter</string>
-    <string name="action_filter_create">Create filter</string>
+    <string name="action_update_filter">Aktualizovat filtr</string>
+    <string name="action_filter_create">Vytvořit filtr</string>
     <string name="how_to_follow">Whom to follow</string>
     <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
     <string name="follow_account">Follow</string>
-    <string name="select_all">Select all</string>
-    <string name="unselect_all">Unselect all</string>
+    <string name="select_all">Vybrat vše</string>
+    <string name="unselect_all">Zrušit výběr</string>
     <string name="follow_trunk">%s is followed!</string>
     <string name="create_list_trunk">Creating the list %s</string>
     <string name="add_account_list_trunk">Adding accounts to the list</string>
