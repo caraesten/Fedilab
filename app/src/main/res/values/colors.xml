@@ -102,6 +102,6 @@
 
 
     <!-- TOASTY -->
-    <color name="toasty_text">#d0cfcf</color>
-    <color name="toasty_background">#2e2e2e</color>
+    <color name="toasty_text">#2e2e2e</color>
+    <color name="toasty_background">#c8c8c8</color>
 </resources>
