@@ -861,4 +861,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         this.statuses.addAll(position, tmpStatuses);
         statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
     }
+
+    //Update last read toots value when pressing tab button
+    public void updateLastReadToot(){
+        if (type == RetrieveFeedsAsyncTask.Type.HOME && this.statuses != null && this.statuses.size() > 0) {
+            lastReadToot = this.statuses.get(0).getId();
+        }
+    }
 }

@@ -964,6 +964,7 @@ public abstract class BaseMainActivity extends BaseActivity
                         countNewStatus = 0;
                         updateHomeCounter();
                         displayStatusFragment.scrollToTop();
+                        displayStatusFragment.updateLastReadToot();
                     } else if( tab.getPosition() == 1) {
                         DisplayNotificationsFragment notificationsFragment = ((DisplayNotificationsFragment) fragment);
                         countNewNotifications = 0;
