@@ -1473,15 +1473,12 @@ public abstract class BaseMainActivity extends BaseActivity
             @Override
             public void onReceive(Context context, Intent intent) {
                 Bundle b = intent.getExtras();
-                Helper.EventStreaming eventStreaming = (Helper.EventStreaming) intent.getSerializableExtra("eventStreaming");
                 assert b != null;
                 userIdService = b.getString("userIdService", null);
                 if( userIdService != null && userIdService.equals(userId)) {
-                    if (eventStreaming == Helper.EventStreaming.NOTIFICATION) {
-                        Notification notification = b.getParcelable("data");
-                        if (notificationsFragment != null) {
-                            notificationsFragment.refresh(notification);
-                        }
+                    Notification notification = b.getParcelable("data");
+                    if (notificationsFragment != null) {
+                        notificationsFragment.refresh(notification);
                     }
                     updateNotifCounter();
                 }
