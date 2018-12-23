@@ -118,7 +118,7 @@
     <string name="more_action_6">බෙදාගන්න</string>
     <string name="more_action_7">සඳහන් කරන්න</string>
     <string name="more_action_8">Timed mute</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_9">මකාදමා, කටුසටහනකට</string>
     <string-array name="more_action_confirm">
         <item>මෙම ගිණුම නිහඬ කරනවා ද?</item>
         <item>මෙම ගිණුම අවහිර කරනවා ද?</item>
@@ -158,8 +158,8 @@
     <string name="toot_title_reply">Reply to a toot</string>
     <string name="toot_no_space">You have reached the 500 characters allowed!</string>
     <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
+    <string name="toot_select_image_error">මාධ්‍යය තෝරන අතරතුර දෝෂයක් සිදුවුණා!</string>
+    <string name="toot_delete_media">මෙම මාධ්‍යය මකනවා ද?</string>
     <string name="toot_error_no_content">Your toot is empty!</string>
     <string name="toot_visibility_tilte">Visibility of the toot</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
