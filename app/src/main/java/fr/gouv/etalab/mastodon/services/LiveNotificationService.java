@@ -136,10 +136,16 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 }
             }else {
                 String key = account.getAcct() + "@" + account.getInstance();
+                if(webSocketFutures.containsKey(key)){
+                    if (webSocketFutures.get(key) != null && webSocketFutures.get(key).isOpen()) {
+                        try {
+                            webSocketFutures.get(key).close();
+                        }catch (Exception ignored){}
+                    }
+                }
                 if(threads.containsKey(key)){
-                    if (threads.get(key) == null || !threads.get(key).isAlive()) {
-                        if (threads.get(key) != null)
-                            threads.get(key).interrupt();
+                    if (threads.get(key) != null && !threads.get(key).isAlive()) {
+                        threads.get(key).interrupt();
                     }
                 }
                 Thread thread = new Thread() {
