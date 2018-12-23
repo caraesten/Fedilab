@@ -24,8 +24,8 @@
     <string name="email">විද්‍යුත් තැපැල් ලිපිනය</string>
     <string name="accounts">ගිණුම්</string>
     <string name="toots">Toots</string>
-    <string name="tags">Tags</string>
-    <string name="token">Token</string>
+    <string name="tags">හැඳුනුම් සංකේත</string>
+    <string name="token">ටෝකනය</string>
     <string name="save">සුරකින්න</string>
     <string name="restore">ප්‍රතිස්ථාපනය කරන්න</string>
     <string name="two_factor_authentification">ද්වි-පියවර සහතික කිරීම?</string>
@@ -33,7 +33,7 @@
     <string name="no_result">ප්‍රතිඵල නොමැත!</string>
     <string name="instance">Instance</string>
     <string name="instance_example">Instance: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
+    <string name="toast_account_changed" formatted="false">දැන් වැඩ කරන්නේ %1$s ගිණුම සමඟින්</string>
     <string name="add_account">ගිණුමක් එක් කරන්න</string>
     <string name="clipboard">The content of the toot has been copied to the clipboard</string>
     <string name="change">වෙනස් කරන්න</string>
