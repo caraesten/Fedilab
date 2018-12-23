@@ -29,6 +29,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -556,6 +557,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
         if (type == RetrieveFeedsAsyncTask.Type.HOME){
+            Log.v(Helper.TAG, "onResume - getUserVisibleHint= " + getUserVisibleHint());
             if( getUserVisibleHint() ){
                 statusListAdapter.updateMuted(mutedAccount);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -567,6 +569,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         context.startService(streamingHomeIntent);
                     }catch (Exception ignored){}
                 }
+                Log.v(Helper.TAG, "onResume - statuses.size()= " + statuses.size());
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }

@@ -70,9 +70,9 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         API api = new API(this.contextReference.get());
         List<fr.gouv.etalab.mastodon.client.Entities.Status> tempStatus = null;
         APIResponse apiResponse = null;
-        if( type == RetrieveFeedsAsyncTask.Type.HOME)
+        if( type == RetrieveFeedsAsyncTask.Type.HOME) {
             apiResponse = api.getHomeTimelineSinceId(since_id);
-        else if( type == RetrieveFeedsAsyncTask.Type.DIRECT)
+        }else if( type == RetrieveFeedsAsyncTask.Type.DIRECT)
             apiResponse = api.getDirectTimelineSinceId(since_id);
         else if( type == RetrieveFeedsAsyncTask.Type.CONVERSATION)
             apiResponse = api.getConversationTimelineSinceId(since_id);
