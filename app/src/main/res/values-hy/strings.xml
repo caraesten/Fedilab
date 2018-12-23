@@ -644,7 +644,7 @@
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
         <item>Never</item>
-        <item>30 minutes</item>
+        <item>30 րոպե</item>
         <item>1 ժամ</item>
         <item>6 ժամ</item>
         <item>12 ժամ</item>
