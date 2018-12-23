@@ -72,7 +72,7 @@
     <!--- Menu -->
     <string name="home_menu">මුල</string>
     <string name="local_menu">ස්ථානීය කාල රේඛාව</string>
-    <string name="global_menu">Federated timeline</string>
+    <string name="global_menu">ඒකාබද්ධ කාල රේඛාව</string>
     <string name="neutral_menu_title">විකල්ප</string>
     <string name="favorites_menu">ප්‍රියතම</string>
     <string name="communication_menu_title">සන්නිවේදන</string>
