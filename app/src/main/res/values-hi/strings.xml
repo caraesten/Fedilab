@@ -321,9 +321,9 @@
     <string name="settings_hour_init">आरंभ समय</string>
     <string name="settings_hour_end">अंतिम समय</string>
     <string name="embedded_browser">Use the built-in browser</string>
-    <string name="custom_tabs">Custom tabs</string>
+    <string name="custom_tabs">कस्टम टैब्स</string>
     <string name="use_javascript">जावास्क्रिप्ट सक्रिय करें</string>
-    <string name="expand_cw">Automatically expand cw</string>
+    <string name="expand_cw">स्वतः सीडबल्यू खोलें</string>
     <string name="use_cookies">Allow third-party cookies</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
     <string-array name="battery_profiles">
