@@ -472,7 +472,7 @@
     </string>
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-    <string name="data_export_running">Still running, please wait…</string>
+    <string name="data_export_running">सक्रिय है, कृप्या प्रतीक्षा करे...</string>
     <string name="data_export">लेखों का निर्यात करें</string>
     <string name="data_export_toots">%1$s के लिये लेखों को निर्यात करें</string>
     <string name="data_export_success">%2$s लेखो में से %1$s लेख आयात कर लिये गये है।</string>
@@ -486,7 +486,7 @@
     <string name="poxy_login">लॉग इन</string>
     <string name="poxy_password">पासवर्ड</string>
     <string name="set_theme">रूपरंग:</string>
-    <string name="set_compact_mode">Compact mode</string>
+    <string name="set_compact_mode">काॅम्पैक्ट मोड</string>
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
