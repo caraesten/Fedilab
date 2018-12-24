@@ -401,7 +401,7 @@
     <string name="v_unlisted">Unlisted</string>
     <string name="v_private">निजी</string>
     <string name="v_direct">सीधा</string>
-    <string name="v_keywords">Some keywords…</string>
+    <string name="v_keywords">कुछ कुंजी शब्द...</string>
     <string name="show_media">मीडिया दिखाएँ</string>
     <string name="show_pinned">जड़े हुए दिखाएँ</string>
     <string name="filter_no_result">कोई मिलता-जुलता परिणाम नहीं मिला!</string>
@@ -414,7 +414,7 @@
     </string-array>
     <string name="owner_cached_toots_empty">डेटाबेस में कोई लेख नहीं मिला। उन्हें वापस पाने के लिये मेन्यू में मौजूद सिंक बटन का इस्तेमाल करें।</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Recorded data</string>
+    <string name="privacy_data_title">अभिलिखित डेटा</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
         Deleting the application immediately removes these data.\n
@@ -505,8 +505,8 @@
     <string name="follow_instance">इंस्टेंस का अनुसरण करें</string>
     <string name="toast_instance_already_added">आप इस इंस्टेंस का पहले से अनुसरण कर रहे हैं!</string>
     <string name="toast_instance_followed">इस इंस्टेंस का अनुसरण किया!</string>
-    <string name="action_partnership">Partnerships</string>
-    <string name="neutral_menu_information">Information</string>
+    <string name="action_partnership">साझेदारियां</string>
+    <string name="neutral_menu_information">जानकारी</string>
     <string name="hide_boost">Hide boosts from %s</string>
     <string name="endorse">Feature on profile</string>
     <string name="hide_everything">Hide everything from %s</string>
@@ -517,7 +517,7 @@
     <string name="toast_unendorse">The account is no longer featured on profile</string>
     <string name="toast_show_boost">Boosts are now shown!</string>
     <string name="toast_hide_boost">Boosts are now hidden!</string>
-    <string name="direct_message">Direct message</string>
+    <string name="direct_message">सीधा संदेश</string>
     <string name="filters">Filters</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
     <string name="filter_keyword">Keyword or phrase</string>
@@ -526,22 +526,22 @@
     <string name="context_notification">Notifications</string>
     <string name="context_conversation">Conversations</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-    <string name="context_drop">Drop instead of hide</string>
+    <string name="context_drop">छिपाने के बजाय हटा दें</string>
     <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
     <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-    <string name="context_whole_word">Whole word</string>
+    <string name="context_whole_word">पूरा शब्द</string>
     <string name="filter_context">Filter contexts</string>
     <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
     <string name="filter_expire">Expire after</string>
-    <string name="add_new_filter">Add New Filter</string>
-    <string name="action_filter_delete">Delete filter?</string>
-    <string name="action_update_filter">Update filter</string>
-    <string name="action_filter_create">Create filter</string>
+    <string name="add_new_filter">नयी छन्नी जोड़े</string>
+    <string name="action_filter_delete">छन्नी मिटाएं?</string>
+    <string name="action_update_filter">छन्नी का नवीनीकरण करें</string>
+    <string name="action_filter_create">छन्नी बनाएं</string>
     <string name="how_to_follow">किनका अनुसरण करें</string>
     <string name="action_who_to_follow_empty_content">इस समय कोई खाता सूचीबद्ध नहीं है!</string>
     <string name="follow_account">अनुसरण करें</string>
-    <string name="select_all">Select all</string>
-    <string name="unselect_all">Unselect all</string>
+    <string name="select_all">सभी चुनें</string>
+    <string name="unselect_all">सभी अचयनित करें</string>
     <string name="follow_trunk">%s का अनुसरण किया!</string>
     <string name="create_list_trunk">Creating the list %s</string>
     <string name="add_account_list_trunk">Adding accounts to the list</string>
