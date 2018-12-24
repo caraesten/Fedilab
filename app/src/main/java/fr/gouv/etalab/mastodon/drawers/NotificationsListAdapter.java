@@ -256,7 +256,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             notification.getAccount().setDisplay_name(typeString);
         }else
             holder.notification_type.setText(notification.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
-        notification.getAccount().makeEmojisAccount(context, NotificationsListAdapter.this, notification.getAccount());
+        notification.getAccount().makeAccountNameEmoji(context, NotificationsListAdapter.this, notification.getAccount());
         if( imgH != null) {
             holder.notification_type.setCompoundDrawablePadding((int)Helper.convertDpToPixel(5, context));
             imgH.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
