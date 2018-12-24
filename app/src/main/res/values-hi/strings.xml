@@ -78,9 +78,9 @@
     <string name="communication_menu_title">संचार</string>
     <string name="muted_menu">मौन किये गये उप्योगकर्ता</string>
     <string name="blocked_menu">प्रतिबंधित उप्योगकर्ता</string>
-    <string name="remote_follow_menu">दूरवर्ती फ़ौलो</string>
+    <string name="remote_follow_menu">दूरवर्ती अनुसरण</string>
     <string name="notifications">सूचनाएँ</string>
-    <string name="follow_request">फ़ौलो करने की गुज़ारिशें</string>
+    <string name="follow_request">अनुसरण करने की गुज़ारिशें</string>
     <string name="optimization">बेहतरी</string>
     <string name="settings">सैटिंग्स</string>
     <string name="profile">वर्णन</string>
@@ -196,7 +196,7 @@
     <string name="conversation">बातचीत</string>
     <!-- Accounts -->
     <string name="no_accounts">दिखाने के लिये कोई खाता नहीं है</string>
-    <string name="no_follow_request">फ़ौलो करने की कोई गुज़ारिशें नहीं है</string>
+    <string name="no_follow_request">अनुसरण करने की कोई गुज़ारिशें नहीं है</string>
     <string name="status_cnt">लेख \n %1$s</string>
     <string name="following_cnt">अनुसरण \n %1$s</string>
     <string name="followers_cnt">अनुयायी \n %1$s</string>
@@ -317,19 +317,19 @@
     <string name="set_automatically_split_toot">जवाबो में ५०० अक्षरो से ज़्यादा वाले लेखो को स्वतः अलग करें</string>
     <string name="note_no_space">आप अनुमत १६० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
     <string name="username_no_space">आप अनुमत ३० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
-    <string name="settings_title_hour">Time slot for notifications:</string>
+    <string name="settings_title_hour">सूचनाओं के लिये निर्धारित समय</string>
     <string name="settings_time_from">के बीच</string>
     <string name="settings_time_to">और</string>
     <string name="settings_time_greater">समय %1$s से अधिक होना चाहिये</string>
     <string name="settings_time_lower">समय %1$s से कम होना चाहिये</string>
     <string name="settings_hour_init">आरंभ समय</string>
     <string name="settings_hour_end">अंतिम समय</string>
-    <string name="embedded_browser">Use the built-in browser</string>
+    <string name="embedded_browser">आंतरिक ब्राउज़र का इस्तेमाल करें</string>
     <string name="custom_tabs">कस्टम टैब्स</string>
     <string name="use_javascript">जावास्क्रिप्ट सक्रिय करें</string>
     <string name="expand_cw">स्वतः cw खोलें</string>
     <string name="use_cookies">तीसरी पार्टी कुकीज़ को अनुमति दें</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="settings_ui_layout">टाइम्लाइनो का अभिन्यास: </string>
     <string-array name="battery_profiles">
         <item>सामान्य बैटरी बहाव</item>
         <item>मध्यम बैटरी बहाव</item>
@@ -345,7 +345,7 @@
         <item>डीपएल</item>
         <item>नहीं</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">आपका एपीआई कोड, आप इसे यैंडेक्स के लिये खाली छोड़ सकते है</string>
     <string-array name="settings_theme">
         <item>साँवला</item>
         <item>हल्का</item>
@@ -503,7 +503,7 @@
     <string name="crash_message">आप मुझे ईमेल के द्वारा क्रैश रिपोर्ट भेज सकते है। यह उसे ठीक करने में मदद देगी :)\n\nआप अतिरिक्त विषय वस्तु जोड़ सकते है। धन्यवाद!</string>
     <string name="send_crash_report">ईमेल के द्वारा क्रैश रिपोर्ट भेजने के लिये पूछे?</string>
     <string name="follow_instance">Follow instance</string>
-    <string name="toast_instance_already_added">You already follow this instance!</string>
+    <string name="toast_instance_already_added">आप इस इंस्टेंस का पहले से अनुसरण कर रहे हैं!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
     <string name="action_partnership">Partnerships</string>
     <string name="neutral_menu_information">Information</string>
@@ -549,7 +549,7 @@
     <string name="adding_account_list_trunk">Adding accounts to the list</string>
     <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
     <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
-    <string name="about_trunk">Who to follow</string>
+    <string name="about_trunk">किसका अनुसरण करें</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
     <string name="retrieve_remote_account">Fetching remote account</string>
