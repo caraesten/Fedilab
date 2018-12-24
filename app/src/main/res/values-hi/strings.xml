@@ -383,14 +383,14 @@
         You can enable or disable these notifications later in settings (Notifications tab).
     </string>
     <string name="settings_popup_timeline">मुख्यपृष्ट में अपठित लेखो के लिये?</string>
-    <string name="settings_popup_notification">For unread notifications?</string>
+    <string name="settings_popup_notification">अपठित सूचनाओं के लिये?</string>
     <!-- CACHE -->
-    <string name="cache_title">Clear cache</string>
-    <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
-    <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="cache_title">कैश साफ़ करें</string>
+    <string name="cache_message">कैश में %1$s डेटा है। \n\nक्या आप उन्हें मिटाना चाहेंगे?</string>
+    <string name="cache_units">एमबी</string>
+    <string name="toast_cache_clear">कैश को साफ़ कर दिया! %1$s मुक्त</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
+    <string name="action_sync">संकालन करें</string>
     <string name="action_filter">Filter</string>
     <string name="owner_cached_toots">आपके लेख</string>
     <string name="v_public">Public</string>
