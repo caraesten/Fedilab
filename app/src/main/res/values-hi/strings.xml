@@ -274,7 +274,7 @@
     <string name="toast_visibility_changed">%1$s खाते के लेखो की दृश्यता को बदल दिया गया है</string>
     <string name="toast_empty_search">इंस्टेंस का नाम और आपका नाम खाली नहीं हो सकता!</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">Optimisation of loading</string>
+    <string name="settings_title_optimisation">लोडिंग का इष्टतमीकरण</string>
     <string name="set_toots_page">लेखो की संख्या प्रति लोड</string>
     <string name="set_accounts_page">खातो की संख्या प्रति लोड</string>
     <string name="set_notifications_page">सूचनाओं की संख्या प्रति लोड</string>
