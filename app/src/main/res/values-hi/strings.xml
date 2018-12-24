@@ -521,10 +521,10 @@
     <string name="filters">Filters</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
     <string name="filter_keyword">Keyword or phrase</string>
-    <string name="context_home">Home timeline</string>
-    <string name="context_public">Public timelines</string>
-    <string name="context_notification">Notifications</string>
-    <string name="context_conversation">Conversations</string>
+    <string name="context_home">मुख्यपृष्ट</string>
+    <string name="context_public">सार्वजनिक टाइम्लाइन</string>
+    <string name="context_notification">सूचनाएँ</string>
+    <string name="context_conversation">वार्तालाप</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
     <string name="context_drop">छिपाने के बजाय हटा दें</string>
     <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
@@ -562,9 +562,9 @@
     <string name="channel_notif_toot">नया लेख</string>
     <string name="channel_notif_backup">लेखो का बैकअप</string>
     <string name="channel_notif_media">मीडिया डाउंलोड</string>
-    <string name="set_notif_sound">Change notification sound</string>
-    <string name="select_sound">Select Tone</string>
-    <string name="set_enable_time_slot">Enable time slot</string>
+    <string name="set_notif_sound">सूचना टोन को बदलें</string>
+    <string name="select_sound">टोन चुनें</string>
+    <string name="set_enable_time_slot">निर्धारित समय सक्रिय करें</string>
     <string name="how_to_videos">How To Videos</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
     <string name="no_blocked_domain">कोई प्रतिबंधित डोमेन्स नहीं है!</string>
