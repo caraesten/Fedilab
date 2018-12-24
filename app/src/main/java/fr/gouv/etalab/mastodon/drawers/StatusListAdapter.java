@@ -776,15 +776,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if( status.getReblog() == null && !isCompactMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
                 params.setMargins(0,-(int)Helper.convertDpToPixel(10, context),0,0);
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
-                    paramsB.setMargins(0,0,0,0);
+                    paramsB.setMargins(0,(int)Helper.convertDpToPixel(10, context),0,0);
                 else
                     paramsB.setMargins(0,(int)Helper.convertDpToPixel(15, context),0,0);
             }else if( !isCompactMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
-                if( status.getContent() == null || status.getContent().trim().equals(""))
-                    params.setMargins(0,-(int)Helper.convertDpToPixel(20, context),0,0);
-                else
-                    params.setMargins(0,0,0,0);
-                paramsB.setMargins(0,0,0,0);
+                if( status.getContent() == null || status.getContent().trim().equals("")) {
+                    params.setMargins(0, -(int) Helper.convertDpToPixel(20, context), 0, 0);
+                    paramsB.setMargins(0,(int) Helper.convertDpToPixel(20, context),0,0);
+                }else {
+                    params.setMargins(0, 0, 0, 0);
+                    paramsB.setMargins(0,0,0,0);
+                }
+
             }
 
 

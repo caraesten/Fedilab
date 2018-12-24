@@ -62,7 +62,7 @@ public class Account implements Parcelable {
     private String username;
     private SpannableString displayNameSpan;
     private String acct;
-    private String display_name;
+    private String display_name, stored_displayname;
     private boolean locked;
     private Date created_at;
     private int followers_count;
@@ -250,6 +250,14 @@ public class Account implements Parcelable {
 
     public void setBot(boolean bot) {
         isBot = bot;
+    }
+
+    public String getStored_displayname() {
+        return stored_displayname;
+    }
+
+    public void setStored_displayname(String stored_displayname) {
+        this.stored_displayname = stored_displayname;
     }
 
 

@@ -159,6 +159,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             style = R.style.Dialog;
         }
         Drawable imgH = null;
+        holder.status_date.setVisibility(View.VISIBLE);
         switch (type){
             case "mention":
                 holder.status_action_container.setVisibility(View.VISIBLE);
@@ -222,6 +223,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 break;
             case "follow":
                 holder.status_action_container.setVisibility(View.GONE);
+                holder.status_date.setVisibility(View.GONE);
                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_follow));
                 else
@@ -253,6 +255,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
         if( notification.getAccount().getdisplayNameSpan() == null) {
             holder.notification_type.setText(typeString);
+            notification.getAccount().setStored_displayname(notification.getAccount().getDisplay_name());
             notification.getAccount().setDisplay_name(typeString);
         }else
             holder.notification_type.setText(notification.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
@@ -642,6 +645,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             public void onClick(View v) {
                 Intent intent = new Intent(context, ShowAccountActivity.class);
                 Bundle b = new Bundle();
+                notification.getAccount().setDisplay_name(notification.getAccount().getStored_displayname());
                 b.putParcelable("account", notification.getAccount());
                 intent.putExtras(b);
                 context.startActivity(intent);
