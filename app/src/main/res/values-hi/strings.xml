@@ -296,8 +296,8 @@
     <string name="set_notif_follow_share">मेरे लेख बूस्ट होने पर मुझे सूचित करें</string>
     <string name="set_notif_follow_add">मेरे लेख पसंद होने पर मुझे सूचित करें</string>
     <string name="set_notif_follow_mention">जब मेरा कोई उल्लेख करे तो मुझे सूचित करें</string>
-    <string name="set_share_validation">Show confirmation dialog before boosting</string>
-    <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
+    <string name="set_share_validation">बूस्ट करने से पहले पूछे</string>
+    <string name="set_share_validation_fav">पसंदीदा में जोड़ने से पहले पूछे</string>
     <string name="settings_title_more_options">अतिरिक्त सेटिंग्स</string>
     <string name="set_wifi_only">केवल वाईफ़ाई में सूचित करें</string>
     <string name="set_notify">सूचित करें?</string>
@@ -309,9 +309,9 @@
     <string name="set_lock_account">खाते पर ताला लगाएं</string>
     <string name="set_save_changes">बदलाव सहेजें</string>
     <string name="set_header_picture_overlay">एक हैडर चित्र चुनें</string>
-    <string name="set_fit_preview">Fit preview images</string>
+    <string name="set_fit_preview">छवि पूर्वदर्शन को फ़िट करें</string>
     <string name="set_automatically_split_toot">जवाबो में ५०० अक्षरो से ज़्यादा वाले लेखो को स्वतः अलग करें</string>
-    <string name="note_no_space">You have reached the 160 characters allowed!</string>
+    <string name="note_no_space">आप नियमित १६० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
     <string name="settings_title_hour">Time slot for notifications:</string>
     <string name="settings_time_from">के बीच</string>
