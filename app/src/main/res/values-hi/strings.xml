@@ -502,7 +502,7 @@
     <string name="crash_title">मैस्टालैब रुक गया है :(</string>
     <string name="crash_message">आप मुझे ईमेल के द्वारा क्रैश रिपोर्ट भेज सकते है। यह उसे ठीक करने में मदद देगी :)\n\nआप अतिरिक्त विषय वस्तु जोड़ सकते है। धन्यवाद!</string>
     <string name="send_crash_report">ईमेल के द्वारा क्रैश रिपोर्ट भेजने के लिये पूछे?</string>
-    <string name="follow_instance">Follow instance</string>
+    <string name="follow_instance">इंस्टेंस का अनुसरण करें</string>
     <string name="toast_instance_already_added">आप इस इंस्टेंस का पहले से अनुसरण कर रहे हैं!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
     <string name="action_partnership">Partnerships</string>
@@ -537,7 +537,7 @@
     <string name="action_filter_delete">Delete filter?</string>
     <string name="action_update_filter">Update filter</string>
     <string name="action_filter_create">Create filter</string>
-    <string name="how_to_follow">Whom to follow</string>
+    <string name="how_to_follow">किनका अनुसरण करें</string>
     <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
     <string name="follow_account">अनुसरण करें</string>
     <string name="select_all">Select all</string>
