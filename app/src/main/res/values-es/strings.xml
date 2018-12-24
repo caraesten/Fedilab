@@ -126,8 +126,8 @@
         <item>¿Bloquear este dominio?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Notificar</item>
+        <item>Silencioso</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>¿Remover este toot?</item>
@@ -570,47 +570,47 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="toast_unblock_domain">¡Este dominio ya no está bloqueado!</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
     <string name="comment">Comentar</string>
-    <string name="peertube_instance">Peertube instance</string>
+    <string name="peertube_instance">Instancia de Peertube</string>
     <string name="set_display_direct">Display private messages timeline</string>
     <string name="set_keep_background_process">Keep background process when app is closed</string>
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
     <string name="number_view_video">%s views</string>
-    <string name="duration_video">Duration: %s</string>
-    <string name="add_remote_instance">Add an instance</string>
-    <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
+    <string name="duration_video">Duración: %s</string>
+    <string name="add_remote_instance">Añadir una instancia</string>
+    <string name="comment_no_allowed_peertube">¡Los comentarios no estan habilidatos para este video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube favourites</string>
-    <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-    <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
+    <string name="peertube_favorites">Peertube favoritos</string>
+    <string name="bookmark_add_peertube">¡Estado ha sido añadido a favoritos!</string>
+    <string name="bookmark_remove_peertube">¡Estado ha sido eliminado de tus favoritos!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
-    <string name="channel">Channel</string>
-    <string name="no_peertube_channels">No Peertube channels</string>
+    <string name="channel">Canal</string>
+    <string name="no_peertube_channels">No hay canales de Peertube</string>
     <string name="no_peertube_instances">No Peertube instances</string>
-    <string name="no_mastodon_instances">No Mastodon instances</string>
+    <string name="no_mastodon_instances">No hay instancias de Mastodon</string>
     <string name="no_lists">No lists</string>
     <string name="videos">Vídeos</string>
-    <string name="channels">Channels</string>
-    <string name="set_display_emoji">Use Emoji One</string>
-    <string name="information">Information</string>
+    <string name="channels">Canales</string>
+    <string name="set_display_emoji">Usar Emoji One</string>
+    <string name="information">Información</string>
     <string name="set_display_card">Display previews in all toots</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
+    <string name="thanks_text_support">Soporte de Gitlab</string>
+    <string name="action_bug_report">Informe de error</string>
+    <string name="no_mail_client">No hay clientes de correo electrónico instalados.</string>
+    <string name="bug_report_mail">Mandar un reporte del error</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
+    <string name="settings_title_battery">Optimización de la batería</string>
+    <string name="set_change_locale">Cambiar idioma</string>
+    <string name="default_language">Idioma predeterminado</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
+    <string name="display_toot_truncate">Mostrar más</string>
+    <string name="hide_toot_truncate">Mostrar menos</string>
+    <string name="manage_tags">Gestionar etiquetas</string>
+    <string name="tags_already_stored">¡Esa etiqueta ya existe!</string>
+    <string name="tags_stored">Se ha guardado la etiqueta.</string>
     <string name="tags_renamed">The tag has been changed!</string>
     <string name="tags_deleted">The tag has been deleted!</string>
     <string name="set_display_art">Display Art timeline</string>
@@ -660,11 +660,11 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <!-- languages not translated -->
     <string name="languages">Idiomas</string>
     <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
+    <string name="show_media_nsfw">Mostrar NSFW</string>
+    <string name="crowdin_translations">Traducciones de Crowdin</string>
+    <string name="crowdin_manager">Administrador de Crowdin</string>
+    <string name="translation_app">Traducir la Aplicación</string>
+    <string name="about_crowdin">Acerca de Crowdin</string>
     <string name="bot">Bot</string>
     <!-- end languages -->
 </resources>
