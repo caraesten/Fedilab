@@ -156,7 +156,7 @@
     <string name="cw">cw</string>
     <string name="toot_title">संदेश लिखे</string>
     <string name="toot_title_reply">संदेश का जवाब दे</string>
-    <string name="toot_no_space">आप ५०० अक्षरों की सीमा तक पहुंच चुके हैं!</string>
+    <string name="toot_no_space">आप अनुमत ५०० अक्षरों की सीमा तक पहुंच चुके हैं!</string>
     <string name="toot_select_image">मीडिया को चुनें</string>
     <string name="toot_select_image_error">मीडिया चुनते वक्त कुछ गड़बड़ी हो गई!</string>
     <string name="toot_delete_media">इस मीडिया को मिटा दें?</string>
@@ -311,8 +311,8 @@
     <string name="set_header_picture_overlay">एक हैडर चित्र चुनें</string>
     <string name="set_fit_preview">छवि पूर्वदर्शन को फ़िट करें</string>
     <string name="set_automatically_split_toot">जवाबो में ५०० अक्षरो से ज़्यादा वाले लेखो को स्वतः अलग करें</string>
-    <string name="note_no_space">आप नियमित १६० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
-    <string name="username_no_space">You have reached the 30 characters allowed!</string>
+    <string name="note_no_space">आप अनुमत १६० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
+    <string name="username_no_space">आप अनुमत ३० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
     <string name="settings_title_hour">Time slot for notifications:</string>
     <string name="settings_time_from">के बीच</string>
     <string name="settings_time_to">और</string>
