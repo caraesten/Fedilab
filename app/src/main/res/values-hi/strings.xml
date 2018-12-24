@@ -118,7 +118,7 @@
     <string name="more_action_6">सांझा करें</string>
     <string name="more_action_7">उल्लेख</string>
     <string name="more_action_8">समयबद्ध मौन करें</string>
-    <string name="more_action_9">हटाएं और दोबारा लिखे</string>
+    <string name="more_action_9">हटाएं &amp; दोबारा लिखे</string>
     <string-array name="more_action_confirm">
         <item>इस खाते को मौन करें?</item>
         <item>इस खाते को अवरुद्ध करें?</item>
@@ -370,7 +370,7 @@
     <string name="set_title_news">समाचार</string>
     <string name="set_notification_news">मुख्यपृष्ट पे नये लेखो के लिये सूचित करें</string>
     <string name="action_follow">अनुसरण करें</string>
-    <string name="action_unfollow">Unfollow</string>
+    <string name="action_unfollow">अनुसरण ना करें</string>
     <string name="action_block">प्रतिबंध</string>
     <string name="action_unblock">प्रतिबंध हटाएं</string>
     <string name="action_mute">खामोश</string>
@@ -400,7 +400,7 @@
     <string name="v_public">सार्वजनिक</string>
     <string name="v_unlisted">Unlisted</string>
     <string name="v_private">निजी</string>
-    <string name="v_direct">Direct</string>
+    <string name="v_direct">सीधा</string>
     <string name="v_keywords">Some keywords…</string>
     <string name="show_media">मीडिया दिखाएँ</string>
     <string name="show_pinned">जड़े हुए दिखाएँ</string>
@@ -504,7 +504,7 @@
     <string name="send_crash_report">ईमेल के द्वारा क्रैश रिपोर्ट भेजने के लिये पूछे?</string>
     <string name="follow_instance">इंस्टेंस का अनुसरण करें</string>
     <string name="toast_instance_already_added">आप इस इंस्टेंस का पहले से अनुसरण कर रहे हैं!</string>
-    <string name="toast_instance_followed">The instance is followed!</string>
+    <string name="toast_instance_followed">इस इंस्टेंस का अनुसरण किया!</string>
     <string name="action_partnership">Partnerships</string>
     <string name="neutral_menu_information">Information</string>
     <string name="hide_boost">Hide boosts from %s</string>
