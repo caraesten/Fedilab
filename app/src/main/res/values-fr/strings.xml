@@ -640,7 +640,7 @@
     <string name="card_view_image">Image de la carte</string>
     <string name="hide_media">Masquer les médias</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Image où la description va être ajoutée</string>
     <string-array name="filter_expire">
         <item>Jamais</item>
         <item>30 minutes</item>
@@ -662,11 +662,11 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <!-- languages not translated -->
     <string name="languages">Langues</string>
     <string name="show_media_only">Médias seulement</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_nsfw">Images sensibles</string>
     <string name="crowdin_translations">Traductions de Crowdin</string>
-    <string name="crowdin_manager">Crowdin manager</string>
+    <string name="crowdin_manager">Manager des traductions Crowdin</string>
     <string name="translation_app">Traduire l’application</string>
     <string name="about_crowdin">À propos de Crowdin</string>
-    <string name="bot">Bot</string>
+    <string name="bot">Robot</string>
     <!-- end languages -->
 </resources>
