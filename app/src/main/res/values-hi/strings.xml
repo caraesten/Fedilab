@@ -368,11 +368,11 @@
     <string name="action_follow">Follow</string>
     <string name="action_unfollow">Unfollow</string>
     <string name="action_block">प्रतिबंध</string>
-    <string name="action_unblock">Unblock</string>
+    <string name="action_unblock">प्रतिबंध हटाएं</string>
     <string name="action_mute">खामोश</string>
     <string name="action_no_action">कोई कार्यवाही नहीं</string>
     <string name="action_unmute">मौन तोड़ें</string>
-    <string name="request_sent">Request sent</string>
+    <string name="request_sent">अनुरोध भेज दिया</string>
     <string name="followed_by">Follows you</string>
     <string name="action_search">खोजें</string>
     <string name="set_capitalize">जवाबों में पहले अक्षर को बड़ा रखें</string>
