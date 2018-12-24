@@ -644,12 +644,12 @@
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
         <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>30 րոպե</item>
+        <item>1 ժամ</item>
+        <item>6 ժամ</item>
+        <item>12 ժամ</item>
+        <item>1 օր</item>
+        <item>1 շաբաթ</item>
     </string-array>
     <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
@@ -662,7 +662,7 @@
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">Լեզուներ</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>

@@ -156,7 +156,7 @@
     <string name="cw">cw</string>
     <string name="toot_title">संदेश लिखे</string>
     <string name="toot_title_reply">संदेश का जवाब दे</string>
-    <string name="toot_no_space">आप ५०० अक्षरों की सीमा तक पहुंच चुके हैं!</string>
+    <string name="toot_no_space">आप अनुमत ५०० अक्षरों की सीमा तक पहुंच चुके हैं!</string>
     <string name="toot_select_image">मीडिया को चुनें</string>
     <string name="toot_select_image_error">मीडिया चुनते वक्त कुछ गड़बड़ी हो गई!</string>
     <string name="toot_delete_media">इस मीडिया को मिटा दें?</string>
@@ -296,8 +296,8 @@
     <string name="set_notif_follow_share">मेरे लेख बूस्ट होने पर मुझे सूचित करें</string>
     <string name="set_notif_follow_add">मेरे लेख पसंद होने पर मुझे सूचित करें</string>
     <string name="set_notif_follow_mention">जब मेरा कोई उल्लेख करे तो मुझे सूचित करें</string>
-    <string name="set_share_validation">Show confirmation dialog before boosting</string>
-    <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
+    <string name="set_share_validation">बूस्ट करने से पहले पूछे</string>
+    <string name="set_share_validation_fav">पसंदीदा में जोड़ने से पहले पूछे</string>
     <string name="settings_title_more_options">अतिरिक्त सेटिंग्स</string>
     <string name="set_wifi_only">केवल वाईफ़ाई में सूचित करें</string>
     <string name="set_notify">सूचित करें?</string>
@@ -309,10 +309,10 @@
     <string name="set_lock_account">खाते पर ताला लगाएं</string>
     <string name="set_save_changes">बदलाव सहेजें</string>
     <string name="set_header_picture_overlay">एक हैडर चित्र चुनें</string>
-    <string name="set_fit_preview">Fit preview images</string>
+    <string name="set_fit_preview">छवि पूर्वदर्शन को फ़िट करें</string>
     <string name="set_automatically_split_toot">जवाबो में ५०० अक्षरो से ज़्यादा वाले लेखो को स्वतः अलग करें</string>
-    <string name="note_no_space">You have reached the 160 characters allowed!</string>
-    <string name="username_no_space">You have reached the 30 characters allowed!</string>
+    <string name="note_no_space">आप अनुमत १६० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
+    <string name="username_no_space">आप अनुमत ३० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
     <string name="settings_title_hour">Time slot for notifications:</string>
     <string name="settings_time_from">के बीच</string>
     <string name="settings_time_to">और</string>
@@ -321,10 +321,10 @@
     <string name="settings_hour_init">आरंभ समय</string>
     <string name="settings_hour_end">अंतिम समय</string>
     <string name="embedded_browser">Use the built-in browser</string>
-    <string name="custom_tabs">Custom tabs</string>
+    <string name="custom_tabs">कस्टम टैब्स</string>
     <string name="use_javascript">जावास्क्रिप्ट सक्रिय करें</string>
-    <string name="expand_cw">Automatically expand cw</string>
-    <string name="use_cookies">Allow third-party cookies</string>
+    <string name="expand_cw">स्वतः cw खोलें</string>
+    <string name="use_cookies">तीसरी पार्टी कुकीज़ को अनुमति दें</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
     <string-array name="battery_profiles">
         <item>सामान्य बैटरी बहाव</item>
@@ -344,7 +344,7 @@
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
         <item>साँवला</item>
-        <item>सफेद</item>
+        <item>हल्का</item>
         <item>काला</item>
     </string-array>
     <string-array name="settings_resize_picture">
@@ -368,47 +368,47 @@
     <string name="action_follow">Follow</string>
     <string name="action_unfollow">Unfollow</string>
     <string name="action_block">प्रतिबंध</string>
-    <string name="action_unblock">Unblock</string>
+    <string name="action_unblock">प्रतिबंध हटाएं</string>
     <string name="action_mute">खामोश</string>
     <string name="action_no_action">कोई कार्यवाही नहीं</string>
     <string name="action_unmute">मौन तोड़ें</string>
-    <string name="request_sent">Request sent</string>
+    <string name="request_sent">अनुरोध भेज दिया</string>
     <string name="followed_by">Follows you</string>
-    <string name="action_search">Search</string>
-    <string name="set_capitalize">First letter in capital for replies</string>
-    <string name="set_resize_picture">Resize pictures</string>
+    <string name="action_search">खोजें</string>
+    <string name="set_capitalize">जवाबों में पहले अक्षर को बड़ा रखें</string>
+    <string name="set_resize_picture">चित्रो का नाप बदलें</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push notifications</string>
+    <string name="settings_popup_title">पुश सूचनाएँ</string>
     <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
         You can enable or disable these notifications later in settings (Notifications tab).
     </string>
     <string name="settings_popup_timeline">मुख्यपृष्ट में अपठित लेखो के लिये?</string>
-    <string name="settings_popup_notification">For unread notifications?</string>
+    <string name="settings_popup_notification">अपठित सूचनाओं के लिये?</string>
     <!-- CACHE -->
-    <string name="cache_title">Clear cache</string>
-    <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
-    <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="cache_title">कैश साफ़ करें</string>
+    <string name="cache_message">कैश में %1$s डेटा है। \n\nक्या आप उन्हें मिटाना चाहेंगे?</string>
+    <string name="cache_units">एमबी</string>
+    <string name="toast_cache_clear">कैश को साफ़ कर दिया! %1$s मुक्त</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_sync">संकालन करें</string>
+    <string name="action_filter">छांटे</string>
     <string name="owner_cached_toots">आपके लेख</string>
-    <string name="v_public">Public</string>
+    <string name="v_public">सार्वजनिक</string>
     <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
+    <string name="v_private">निजी</string>
     <string name="v_direct">Direct</string>
     <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
+    <string name="show_media">मीडिया दिखाएँ</string>
     <string name="show_pinned">जड़े हुए दिखाएँ</string>
-    <string name="filter_no_result">No matching result found!</string>
+    <string name="filter_no_result">कोई मिलता-जुलता परिणाम नहीं मिला!</string>
     <string name="data_backup_toots">%1$s के लेखो को बैकअप करें</string>
     <string name="data_backup_success">%1$s नये लेख आयात कर लिये गये है</string>
     <string-array name="filter_select">
-        <item>No</item>
-        <item>Only</item>
-        <item>Both</item>
+        <item>नहीं</item>
+        <item>केवल</item>
+        <item>दोनों</item>
     </string-array>
-    <string name="owner_cached_toots_empty">डेटाबेस में कोई लेख नहीं मिला। उन्हें वापस पाने के लिये मेन्यू में मौजूद सिंक्रोनाइज़ बटन का इस्तेमाल करें।</string>
+    <string name="owner_cached_toots_empty">डेटाबेस में कोई लेख नहीं मिला। उन्हें वापस पाने के लिये मेन्यू में मौजूद सिंक बटन का इस्तेमाल करें।</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Recorded data</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
@@ -416,7 +416,7 @@
         Deleting the application immediately removes these data.\n
         &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
     </string>
-    <string name="privacy_authorizations_title">Permissions:</string>
+    <string name="privacy_authorizations_title">अनुमतियाँ:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
@@ -424,7 +424,7 @@
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
-    <string name="privacy_API_authorizations_title">API permissions:</string>
+    <string name="privacy_API_authorizations_title">API अनुमतियाँ:</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
@@ -441,8 +441,7 @@
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text">        Thank you to Stéphane for the logo.
-    </string>
+    <string name="thanks_text">लोगो के लिये स्टेफ़ैन को धन्यवाद।    </string>
     <string name="thanks_text_dev">इनको धन्यवाद:    </string>
     <string name="filter_regex">Filter out by regular expressions</string>
     <string name="search">खोजें</string>
@@ -461,7 +460,7 @@
     <string name="action_lists_search_users">Search among people you follow</string>
     <string name="action_lists_owner">आपकी सूचियाँ</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s has moved to %2$s</string>
+    <string name="account_moved_to">%1$s %2$s पे चले गये है</string>
     <string name="show_boost_count">Show boosts/favourites count</string>
     <string name="issue_login_title">Authentication does not work?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
@@ -471,34 +470,34 @@
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
-    <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-    <string name="data_export_running">Still running, please wait…</string>
-    <string name="data_export">Export statuses</string>
-    <string name="data_export_toots">Export statuses for %1$s</string>
+    <string name="media_ready">मीडिया को लोड कर दिया है। देखने के लिये यहाँ क्लिक करें।</string>
+    <string name="data_export_start">यह क्रिया काफी लंबी हो सकती है। पूरा होने पे आपको सूचित कर दिया जाएगा।</string>
+    <string name="data_export_running">सक्रिय है, कृप्या प्रतीक्षा करे...</string>
+    <string name="data_export">लेखों का निर्यात करें</string>
+    <string name="data_export_toots">%1$s के लिये लेखों को निर्यात करें</string>
     <string name="data_export_success">%2$s लेखो में से %1$s लेख आयात कर लिये गये है।</string>
-    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+    <string name="data_export_error">%1$s के लिये डेटा निर्यात करते समय गड़बड़ी हो गयी</string>
     <!-- Proxy -->
-    <string name="proxy_set">Proxy</string>
+    <string name="proxy_set">प्रॉक्सी</string>
     <string name="proxy_type">प्रकार</string>
-    <string name="proxy_enable">Enable proxy?</string>
+    <string name="proxy_enable">प्राॅक्सी चालू करें?</string>
     <string name="poxy_host">मेज़बान</string>
     <string name="poxy_port">पोर्ट</string>
     <string name="poxy_login">लॉग इन</string>
     <string name="poxy_password">पासवर्ड</string>
-    <string name="set_theme">Theme:</string>
-    <string name="set_compact_mode">Compact mode</string>
-    <string name="set_share_details">Add toot details when sharing</string>
-    <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-    <string name="alert_regex">There is an error in the regular expression!</string>
+    <string name="set_theme">रूपरंग:</string>
+    <string name="set_compact_mode">काॅम्पैक्ट मोड</string>
+    <string name="set_share_details">लेख को सांझा करते समय उसकी जानकारी जोड़ें</string>
+    <string name="support_the_app_on_liberapay">Liberapay पे एप का समर्थन करें</string>
+    <string name="alert_regex">रेग्यूलर अभिव्यंजना में एक गड़बड़ी है!</string>
     <string name="no_account_yet">कोई खाता नहीं है?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+    <string name="toast_instance_unavailable">इस इंस्टेंस पे कोई टाइम्लाइन नहीं मिली!</string>
     <string name="delete_instance">इस इंस्टेंस को मिटाएँ?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
     <string name="which_language">अनुवाद करें</string>
-    <string name="crash_title">Mastalab has stopped :(</string>
-    <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
+    <string name="crash_title">मैस्टालैब रुक गया है :(</string>
+    <string name="crash_message">आप मुझे ईमेल के द्वारा क्रैश रिपोर्ट भेज सकते है। यह उसे ठीक करने में मदद देगी :)\n\nआप अतिरिक्त विषय वस्तु जोड़ सकते है। धन्यवाद!</string>
+    <string name="send_crash_report">ईमेल के द्वारा क्रैश रिपोर्ट भेजने के लिये पूछे?</string>
     <string name="follow_instance">Follow instance</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
