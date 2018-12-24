@@ -369,7 +369,7 @@
     </string-array>
     <string name="set_title_news">समाचार</string>
     <string name="set_notification_news">मुख्यपृष्ट पे नये लेखो के लिये सूचित करें</string>
-    <string name="action_follow">Follow</string>
+    <string name="action_follow">अनुसरण करें</string>
     <string name="action_unfollow">Unfollow</string>
     <string name="action_block">प्रतिबंध</string>
     <string name="action_unblock">प्रतिबंध हटाएं</string>
@@ -377,7 +377,7 @@
     <string name="action_no_action">कोई कार्यवाही नहीं</string>
     <string name="action_unmute">मौन तोड़ें</string>
     <string name="request_sent">अनुरोध भेज दिया</string>
-    <string name="followed_by">Follows you</string>
+    <string name="followed_by">आपका अनुसरण कर रहे हैं</string>
     <string name="action_search">खोजें</string>
     <string name="set_capitalize">जवाबों में पहले अक्षर को बड़ा रखें</string>
     <string name="set_resize_picture">चित्रो का नाप बदलें</string>
@@ -461,7 +461,7 @@
     <string name="action_lists_delete">सूची मिटाएँ</string>
     <string name="action_lists_update">सूची संपादित करें</string>
     <string name="action_lists_title_placeholder">नये सूची का शीर्षक</string>
-    <string name="action_lists_search_users">Search among people you follow</string>
+    <string name="action_lists_search_users">उनमें खोजें जिनका आप अनुसरण करते हैं</string>
     <string name="action_lists_owner">आपकी सूचियाँ</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s %2$s पे चले गये है</string>
@@ -497,7 +497,7 @@
     <string name="no_account_yet">कोई खाता नहीं है?</string>
     <string name="toast_instance_unavailable">इस इंस्टेंस पे कोई टाइम्लाइन नहीं मिली!</string>
     <string name="delete_instance">इस इंस्टेंस को मिटाएँ?</string>
-    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
+    <string name="warning_delete_instance">आप %s को अपने अनुसरण करते इंस्टेंसो से मिटाने वाले है।</string>
     <string name="which_language">अनुवाद करें</string>
     <string name="crash_title">मैस्टालैब रुक गया है :(</string>
     <string name="crash_message">आप मुझे ईमेल के द्वारा क्रैश रिपोर्ट भेज सकते है। यह उसे ठीक करने में मदद देगी :)\n\nआप अतिरिक्त विषय वस्तु जोड़ सकते है। धन्यवाद!</string>
@@ -538,7 +538,7 @@
     <string name="action_update_filter">Update filter</string>
     <string name="action_filter_create">Create filter</string>
     <string name="how_to_follow">किनका अनुसरण करें</string>
-    <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
+    <string name="action_who_to_follow_empty_content">इस समय कोई खाता सूचीबद्ध नहीं है!</string>
     <string name="follow_account">अनुसरण करें</string>
     <string name="select_all">Select all</string>
     <string name="unselect_all">Unselect all</string>
@@ -554,8 +554,8 @@
     <string name="toast_impossible_to_follow">खाते का अनुसरण नहीं हो पाया</string>
     <string name="retrieve_remote_account">Fetching remote account</string>
     <string name="expand_image">Automatically expand hidden media</string>
-    <string name="set_display_follow_instance">Display follow instances button</string>
-    <string name="channel_notif_follow">New follow</string>
+    <string name="set_display_follow_instance">इंस्टेंस का अनुसरण बटन दिखाएं</string>
+    <string name="channel_notif_follow">नया अनुसरण</string>
     <string name="channel_notif_boost">New Boost</string>
     <string name="channel_notif_fav">New Favourite</string>
     <string name="channel_notif_mention">New Mention</string>
