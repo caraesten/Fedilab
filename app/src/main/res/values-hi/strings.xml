@@ -344,7 +344,7 @@
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
         <item>साँवला</item>
-        <item>सफेद</item>
+        <item>हल्का</item>
         <item>काला</item>
     </string-array>
     <string-array name="settings_resize_picture">
@@ -474,18 +474,18 @@
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
     <string name="data_export">लेखों का निर्यात करें</string>
-    <string name="data_export_toots">Export statuses for %1$s</string>
+    <string name="data_export_toots">%1$s के लिये लेखों को निर्यात करें</string>
     <string name="data_export_success">%2$s लेखो में से %1$s लेख आयात कर लिये गये है।</string>
-    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+    <string name="data_export_error">%1$s के लिये डेटा निर्यात करते समय गड़बड़ी हो गयी</string>
     <!-- Proxy -->
-    <string name="proxy_set">Proxy</string>
+    <string name="proxy_set">प्रॉक्सी</string>
     <string name="proxy_type">प्रकार</string>
-    <string name="proxy_enable">Enable proxy?</string>
+    <string name="proxy_enable">प्राॅक्सी चालू करें?</string>
     <string name="poxy_host">मेज़बान</string>
     <string name="poxy_port">पोर्ट</string>
     <string name="poxy_login">लॉग इन</string>
     <string name="poxy_password">पासवर्ड</string>
-    <string name="set_theme">Theme:</string>
+    <string name="set_theme">रूपरंग:</string>
     <string name="set_compact_mode">Compact mode</string>
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
