@@ -470,7 +470,7 @@
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
+    <string name="media_ready">मीडिया को लोड कर दिया है। देखने के लिये यहाँ क्लिक करें।</string>
     <string name="data_export_start">यह क्रिया काफी लंबी हो सकती है। पूरा होने पे आपको सूचित कर दिया जाएगा।</string>
     <string name="data_export_running">सक्रिय है, कृप्या प्रतीक्षा करे...</string>
     <string name="data_export">लेखों का निर्यात करें</string>
@@ -489,15 +489,15 @@
     <string name="set_compact_mode">काॅम्पैक्ट मोड</string>
     <string name="set_share_details">लेख को सांझा करते समय उसकी जानकारी जोड़ें</string>
     <string name="support_the_app_on_liberapay">Liberapay पे एप का समर्थन करें</string>
-    <string name="alert_regex">There is an error in the regular expression!</string>
+    <string name="alert_regex">रेग्यूलर अभिव्यंजना में एक गड़बड़ी है!</string>
     <string name="no_account_yet">कोई खाता नहीं है?</string>
     <string name="toast_instance_unavailable">इस इंस्टेंस पे कोई टाइम्लाइन नहीं मिली!</string>
     <string name="delete_instance">इस इंस्टेंस को मिटाएँ?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
     <string name="which_language">अनुवाद करें</string>
     <string name="crash_title">मैस्टालैब रुक गया है :(</string>
-    <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
+    <string name="crash_message">आप मुझे ईमेल के द्वारा क्रैश रिपोर्ट भेज सकते है। यह उसे ठीक करने में मदद देगी :)\n\nआप अतिरिक्त विषय वस्तु जोड़ सकते है। धन्यवाद!</string>
+    <string name="send_crash_report">ईमेल के द्वारा क्रैश रिपोर्ट भेजने के लिये पूछे?</string>
     <string name="follow_instance">Follow instance</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
