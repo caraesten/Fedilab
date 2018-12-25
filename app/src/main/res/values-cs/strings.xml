@@ -505,7 +505,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="crash_title">Mastalab přestal fungovat :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
-    <string name="follow_instance">Follow instance</string>
+    <string name="follow_instance">Sledovat instanci</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
     <string name="action_partnership">Partnerství</string>
@@ -554,9 +554,9 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
     <string name="about_trunk">Návrhy sledování</string>
     <string name="about_trunk_action">Trunk API</string>
-    <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
+    <string name="toast_impossible_to_follow">Účet/účty nemohou být sledovány</string>
     <string name="retrieve_remote_account">Načítám vzdálený účet</string>
-    <string name="expand_image">Automatically expand hidden media</string>
+    <string name="expand_image">Automaticky zobrazovat skrytá média</string>
     <string name="set_display_follow_instance">Display follow instances button</string>
     <string name="channel_notif_follow">New follow</string>
     <string name="channel_notif_boost">New Boost</string>
