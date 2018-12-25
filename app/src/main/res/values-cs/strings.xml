@@ -372,11 +372,11 @@
     <string name="set_title_news">Novinky</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
     <string name="action_follow">Následovat</string>
-    <string name="action_unfollow">Unfollow</string>
+    <string name="action_unfollow">Přestat sledovat</string>
     <string name="action_block">Blokovat</string>
     <string name="action_unblock">Odblokovat</string>
     <string name="action_mute">Ztlumit</string>
-    <string name="action_no_action">No action</string>
+    <string name="action_no_action">Žádná akce</string>
     <string name="action_unmute">Zrušit ztlumení</string>
     <string name="request_sent">Žádost odeslána</string>
     <string name="followed_by">Sleduje vás</string>
@@ -406,15 +406,15 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="v_keywords">Některá klíčová slova…</string>
     <string name="show_media">Zobrazit média</string>
     <string name="show_pinned">Zobrazit připnuté</string>
-    <string name="filter_no_result">No matching result found!</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
+    <string name="filter_no_result">Nebyly nalezeny odpovídající výsledky!</string>
+    <string name="data_backup_toots">Zálohovat toots %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
         <item>Ne</item>
         <item>Pouze</item>
         <item>Oba</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">V databázi nebyly nalezeny žádné toots. Prosím použijte synchronizační tlačítko v menu pro obnovení.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Zaznamenaná data</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
@@ -455,15 +455,15 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="delete">Odstranit</string>
     <string name="fetch_more_toots">Nahrát více toots…</string>
     <!-- About lists -->
-    <string name="action_lists">Lists</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+    <string name="action_lists">Seznamy</string>
+    <string name="action_lists_confirm_delete">Jsi si jist/a, že chceš trvale odstranit tento seznam?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
     <string name="action_lists_add_to">Přidat do seznamu</string>
     <string name="action_lists_remove_from">Odebrat ze seznamu</string>
     <string name="action_lists_create">Přidat seznam</string>
     <string name="action_lists_delete">Odstranit seznam</string>
     <string name="action_lists_update">Upravit seznam</string>
-    <string name="action_lists_title_placeholder">New list title</string>
+    <string name="action_lists_title_placeholder">Nový název seznamu</string>
     <string name="action_lists_search_users">Hledat mezi sledovanými lidmi</string>
     <string name="action_lists_owner">Vaše seznamy</string>
     <!-- Migration -->
@@ -479,7 +479,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     </string>
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-    <string name="data_export_running">Still running, please wait…</string>
+    <string name="data_export_running">Zpracovávám, prosím čekejte…</string>
     <string name="data_export">Export statuses</string>
     <string name="data_export_toots">Export statuses for %1$s</string>
     <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
@@ -524,8 +524,8 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="filters">Filtry</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
     <string name="filter_keyword">Klíčové slovo nebo fráze</string>
-    <string name="context_home">Home timeline</string>
-    <string name="context_public">Public timelines</string>
+    <string name="context_home">Lokální časová osa</string>
+    <string name="context_public">Veřejná časová osa</string>
     <string name="context_notification">Oznámení</string>
     <string name="context_conversation">Konverzace</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
@@ -545,11 +545,11 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="follow_account">Následovat</string>
     <string name="select_all">Vybrat vše</string>
     <string name="unselect_all">Zrušit výběr</string>
-    <string name="follow_trunk">%s is followed!</string>
-    <string name="create_list_trunk">Creating the list %s</string>
-    <string name="add_account_list_trunk">Adding accounts to the list</string>
-    <string name="account_added_list_trunk">Accounts were added to the list</string>
-    <string name="adding_account_list_trunk">Adding accounts to the list</string>
+    <string name="follow_trunk">%s je sledován!</string>
+    <string name="create_list_trunk">Vytvářím seznam %s</string>
+    <string name="add_account_list_trunk">Přidávám účty do seznamu</string>
+    <string name="account_added_list_trunk">Účty byly přidány do seznamu</string>
+    <string name="adding_account_list_trunk">Přidávám účty do seznamu</string>
     <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
     <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
     <string name="about_trunk">Návrhy sledování</string>
@@ -616,13 +616,13 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="default_language">Základní jazyk</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
+    <string name="display_toot_truncate">Zobrazit více</string>
+    <string name="hide_toot_truncate">Zobrazit méně</string>
+    <string name="manage_tags">Spravovat štítky</string>
+    <string name="tags_already_stored">Štítek již existuje!</string>
+    <string name="tags_stored">Štítek byl uložen!</string>
+    <string name="tags_renamed">Štítek byl změněn!</string>
+    <string name="tags_deleted">Štítek byl smazán!</string>
     <string name="set_display_art">Display Art timeline</string>
     <string name="schedule_boost">Schedule boost</string>
     <string name="boost_scheduled">The boost is scheduled!</string>
@@ -631,21 +631,21 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="art_menu">Art timeline</string>
     <string name="open_menu">Otevřete nabídku</string>
     <string name="app_logo">Logo aplikace</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
+    <string name="profile_picture">Profilový obrázek</string>
+    <string name="profile_banner">Profilová hlavička</string>
+    <string name="contact_instance_admin">Kontaktovat administrátora instance</string>
     <string name="add_new">Přidat nový</string>
     <string name="mastohost_logo">MastoHost logo</string>
     <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
+    <string name="refresh">Načíst znovu</string>
     <string name="expand_conversation">Expand the conversation</string>
     <string name="remove_account">Remove an account</string>
     <string name="delete_domain">Delete the blocked domain</string>
     <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
+    <string name="play_video">Přehrát video</string>
+    <string name="new_toot">Nový toot</string>
     <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
+    <string name="hide_media">Skrýt média</string>
     <string name="favicon">Favicon</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
@@ -665,16 +665,16 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     </string>
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Více informací</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
     <string name="languages">Jazyky</string>
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
+    <string name="show_media_only">Pouze média</string>
+    <string name="show_media_nsfw">Zobrazit NSFW</string>
+    <string name="crowdin_translations">Překlady Crowdin</string>
+    <string name="crowdin_manager">Crowdin manažer</string>
+    <string name="translation_app">Překlad aplikace</string>
+    <string name="about_crowdin">O Crowdin</string>
     <string name="bot">Bot</string>
     <!-- end languages -->
 </resources>
