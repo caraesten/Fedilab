@@ -197,14 +197,10 @@
     <!-- Accounts -->
     <string name="no_accounts">Keinen Nutzer gefunden</string>
     <string name="no_follow_request">Keine Folgeanfragen</string>
-    <string name="status_cnt">Toots \n
-     %1$s</string>
-    <string name="following_cnt">Folgt \n
-     %1$s</string>
-    <string name="followers_cnt">Folgende \n
-     %1$s</string>
-    <string name="pins_cnt">Angeheftet\n
- %d</string>
+    <string name="status_cnt">Toots \n %1$s</string>
+    <string name="following_cnt">Folgt \n %1$s</string>
+    <string name="followers_cnt">Folgende \n %1$s</string>
+    <string name="pins_cnt">Angeheftet\n %d</string>
     <string name="authorize">Authorisieren</string>
     <string name="reject">Ablehnen</string>
     <!-- Scheduled toots -->
