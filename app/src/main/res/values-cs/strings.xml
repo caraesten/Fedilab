@@ -180,7 +180,7 @@
     <string name="select_accounts">Vyberte účty</string>
     <string name="remove_draft">Odstranit koncept?</string>
     <string name="show_reply">Klepněte na tlačítko pro zobrazení původního tootu</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="upload_form_description">Popsat pro zrakově postižené</string>
     <!-- Instance -->
     <string name="instance_no_description">Popis není dostupný!</string>
     <!-- About -->
@@ -189,15 +189,15 @@
     <string name="about_license">Licence: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Zdrojový kód: </string>
-    <string name="about_yandex">Translation of toots:</string>
-    <string name="about_thekinrar">Search instances:</string>
+    <string name="about_yandex">Přeložit toots:</string>
+    <string name="about_thekinrar">Prohledat instance:</string>
     <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Icon designer:</string>
+    <string name="thanks_text_logo">Návrh ikon:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
     <string name="conversation">Konverzace</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
+    <string name="no_accounts">Žádný účet k zobrazení</string>
     <string name="no_follow_request">No follow request</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Following \n %1$s</string>
@@ -206,13 +206,13 @@
     <string name="authorize">Povolit</string>
     <string name="reject">Odmítnout</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
+    <string name="no_scheduled_toots">Žádné naplánované toots k zobrazení!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Delete scheduled toot?</string>
-    <string name="media_count">Media: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
-    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-    <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+    <string name="remove_scheduled">Odstranit naplánovaný toot?</string>
+    <string name="media_count">Média: %d</string>
+    <string name="toot_scheduled">Toot byl naplánován!</string>
+    <string name="toot_scheduled_date">Plánované datum musí být vyšší než aktuální hodina!</string>
+    <string name="warning_battery">Spořič baterie je aktivován! Nemusí fungovat podle očekávání.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
     <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
