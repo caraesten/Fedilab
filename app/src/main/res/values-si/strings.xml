@@ -19,7 +19,7 @@
     <string name="download_over">බාගතවීම සම්පුර්ණයි</string>
     <string name="save_file">Save %1$s</string>
     <string name="save_over">මාධ්‍යය සුරකින ලදී</string>
-    <string name="download_from" formatted="false">File: %1$s</string>
+    <string name="download_from" formatted="false">ගොනුව: %1$s</string>
     <string name="password">මුරපදය</string>
     <string name="email">විද්‍යුත් තැපැල් ලිපිනය</string>
     <string name="accounts">ගිණුම්</string>
@@ -193,7 +193,7 @@
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
-    <string name="conversation">Conversation</string>
+    <string name="conversation">සාකච්ඡාව</string>
     <!-- Accounts -->
     <string name="no_accounts">පෙන්වීමට ගිණුමක් නැත</string>
     <string name="no_follow_request">No follow request</string>
@@ -236,7 +236,7 @@
     <string name="delete_notification_all">දැනුම්දීම් සියල්ල මකාදමන ලදී!</string>
     <!-- HEADER -->
     <string name="following">Following</string>
-    <string name="followers">Followers</string>
+    <string name="followers">අනුගාමිකයින්</string>
     <string name="pinned_toots">Pinned</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
@@ -286,7 +286,7 @@
     <string name="set_display_local">Display local timeline</string>
     <string name="set_display_global">Display federated timeline</string>
     <string name="set_disable_gif">Disable GIF avatars</string>
-    <string name="set_folder_title">Path: </string>
+    <string name="set_folder_title">මාර්ගය: </string>
     <string name="set_auto_store_toot">කටුසටහන් ස්වයංක්‍රීයව සුරකින්න</string>
     <string name="set_bubble_counter">ගණකයන් පෙන්වන්න</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
@@ -298,7 +298,7 @@
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">Advanced settings</string>
+    <string name="settings_title_more_options">උසස් සිටුවම්</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Silent Notifications</string>
@@ -333,7 +333,7 @@
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Tabs</item>
-        <item>Menu</item>
+        <item>මෙනු</item>
         <item>Tabs and menu</item>
     </string-array>
     <string-array name="settings_translation">
@@ -608,7 +608,7 @@
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
     <string name="set_change_locale">භාෂාව වෙනස් කරන්න</string>
-    <string name="default_language">Default language</string>
+    <string name="default_language">ප්රකෘති භාෂාව</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">තවත් පෙන්වන්න</string>
@@ -662,7 +662,7 @@
     <string name="more_information">තවත් තොරතුරු</string>
     <string name="showcase_2FA">ඔබ 2FA (ද්වි-සාධක සහතික කිරීම) භාවිත කරන්නෙ නම්, ඔබ මෙම සබැඳිය භාවිත කිරීමට අවශ්‍ය යි.\nමෙහි ඔබේ තොරතුරු ඇතුළත් කිරීමට උවමනා නැතිනම් ද ඔබට එය භාවිත කළ හැකි යි.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">භාෂා</string>
     <string name="show_media_only">මාධ්‍ය පමණයි</string>
     <string name="show_media_nsfw">Show NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>
