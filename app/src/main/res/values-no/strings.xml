@@ -107,7 +107,7 @@
     <string name="favourite_add">Legg til denne tooten til dine favoritter?</string>
     <string name="favourite_remove">Fjern denne tooten fra favorittene dine?</string>
     <string name="reblog_add">Boost denne tooten?</string>
-    <string name="reblog_remove">Unboost denne tooten?</string>
+    <string name="reblog_remove">Fjerne boosten på denne tooten?</string>
     <string name="pin_add">Pin denne tooten?</string>
     <string name="pin_remove">Unpin denne tooten?</string>
     <string name="more_action_1">Demp</string>
