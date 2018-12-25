@@ -106,7 +106,7 @@
     <string name="reblog_by">Boostet av %1$s</string>
     <string name="favourite_add">Legg til denne tooten til dine favoritter?</string>
     <string name="favourite_remove">Fjern denne tooten fra favorittene dine?</string>
-    <string name="reblog_add">Boost denne tooten?</string>
+    <string name="reblog_add">Booste denne tooten?</string>
     <string name="reblog_remove">Fjerne boosten på denne tooten?</string>
     <string name="pin_add">Pin denne tooten?</string>
     <string name="pin_remove">Unpin denne tooten?</string>
@@ -656,8 +656,8 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="show_media_nsfw">Vis NSFW</string>
     <string name="crowdin_translations">Crowdin-oversettelser</string>
     <string name="crowdin_manager">Crowdin-administrator</string>
-    <string name="translation_app">Oversettelse av applikasjonen</string>
-    <string name="about_crowdin">Om Crowdin</string>
+    <string name="translation_app">Hjelp til å oversette applikasjonen på Crowdin</string>
+    <string name="about_crowdin">Åpne Crowdin</string>
     <string name="bot">Robot</string>
     <!-- end languages -->
 </resources>
