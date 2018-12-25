@@ -404,7 +404,7 @@
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
-        <item>No</item>
+        <item>නොමැත</item>
         <item>Only</item>
         <item>Both</item>
     </string-array>
@@ -446,8 +446,8 @@
     <string name="thanks_text_dev">        Thank you to:
     </string>
     <string name="filter_regex">Filter out by regular expressions</string>
-    <string name="search">Search</string>
-    <string name="delete">Delete</string>
+    <string name="search">සෙවීම</string>
+    <string name="delete">මකන්න</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
     <!-- About lists -->
     <string name="action_lists">Lists</string>
