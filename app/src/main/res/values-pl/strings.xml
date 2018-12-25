@@ -488,7 +488,7 @@
     <string name="proxy_enable">Włączyć proxy?</string>
     <string name="poxy_host">Host</string>
     <string name="poxy_port">Port</string>
-    <string name="poxy_login">Zaloguj</string>
+    <string name="poxy_login">Login</string>
     <string name="poxy_password">Hasło</string>
     <string name="set_theme">Motyw:</string>
     <string name="set_compact_mode">Tryb kompaktowy</string>
