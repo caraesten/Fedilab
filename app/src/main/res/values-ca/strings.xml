@@ -343,9 +343,9 @@
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>Black</item>
+        <item>Fosc</item>
+        <item>Clar</item>
+        <item>Negre</item>
     </string-array>
     <string-array name="settings_resize_picture">
         <item>No</item>
@@ -485,9 +485,9 @@
     <string name="proxy_enable">Vols habilitar el servidor intermediari?</string>
     <string name="poxy_host">Servidor</string>
     <string name="poxy_port">Port</string>
-    <string name="poxy_login">Login</string>
+    <string name="poxy_login">Iniciar Sessió</string>
     <string name="poxy_password">Contrasenya</string>
-    <string name="set_theme">Theme:</string>
+    <string name="set_theme">Tema:</string>
     <string name="set_compact_mode">Compact mode</string>
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
@@ -503,8 +503,8 @@
     <string name="follow_instance">Follow instance</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
-    <string name="action_partnership">Partnerships</string>
-    <string name="neutral_menu_information">Information</string>
+    <string name="action_partnership">Associacions</string>
+    <string name="neutral_menu_information">Informació</string>
     <string name="hide_boost">Hide boosts from %s</string>
     <string name="endorse">Feature on profile</string>
     <string name="hide_everything">Hide everything from %s</string>
@@ -537,7 +537,7 @@
     <string name="action_filter_create">Create filter</string>
     <string name="how_to_follow">Whom to follow</string>
     <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
-    <string name="follow_account">Follow</string>
+    <string name="follow_account">Segueix</string>
     <string name="select_all">Select all</string>
     <string name="unselect_all">Unselect all</string>
     <string name="follow_trunk">%s is followed!</string>
@@ -580,7 +580,7 @@
     <string name="set_keep_background_process">Keep background process when app is closed</string>
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
     <string name="number_view_video">%s views</string>
-    <string name="duration_video">Duration: %s</string>
+    <string name="duration_video">Durada: %s</string>
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
@@ -588,7 +588,7 @@
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
-    <string name="channel">Channel</string>
+    <string name="channel">Canal</string>
     <string name="no_peertube_channels">No Peertube channels</string>
     <string name="no_peertube_instances">No Peertube instances</string>
     <string name="no_mastodon_instances">No Mastodon instances</string>
@@ -596,7 +596,7 @@
     <string name="videos">Videos</string>
     <string name="channels">Channels</string>
     <string name="set_display_emoji">Use Emoji One</string>
-    <string name="information">Information</string>
+    <string name="information">Informació</string>
     <string name="set_display_card">Display previews in all toots</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
@@ -607,8 +607,8 @@
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
+    <string name="set_change_locale">Canvi d\'idioma</string>
+    <string name="default_language">Idioma per defecte</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">Display more</string>
@@ -663,7 +663,7 @@
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">Idiomes</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>
