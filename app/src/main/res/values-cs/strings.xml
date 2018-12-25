@@ -120,7 +120,7 @@
     <string name="more_action_8">Časově omezené ztlumení</string>
     <string name="more_action_9">Smazat &amp; koncept</string>
     <string-array name="more_action_confirm">
-        <item>Ztišit tento účet?</item>
+        <item>Ztlumit tento účet?</item>
         <item>Blokovat tento účet?</item>
         <item>Nahlásit tento účet?</item>
         <item>Blokovat tuto doménu?</item>
@@ -214,9 +214,9 @@
     <string name="toot_scheduled_date">Plánované datum musí být vyšší než aktuální hodina!</string>
     <string name="warning_battery">Spořič baterie je aktivován! Nemusí fungovat podle očekávání.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">Časový interval pro ztišení musí být vyšší než jedna minuta.</string>
-    <string name="timed_mute_date">%1$s byl ztišen až do %2$s. \n Ztišení účtu můžete zrušit z jeho/její profilové stránky.</string>
-    <string name="timed_mute_profile">%1$s je ztišen do %2$s. \n Klikněte zde pro zrušení ztišení.</string>
+    <string name="timed_mute_date_error">Časový interval pro ztlumení musí být vyšší než jedna minuta.</string>
+    <string name="timed_mute_date">%1$s byl ztlumen až do %2$s. \n Ztišení účtu můžete zrušit z jeho/její profilové stránky.</string>
+    <string name="timed_mute_profile">%1$s je ztlumen do %2$s. \n Klikněte zde pro zrušení ztišení.</string>
     <!-- Notifications -->
     <string name="no_notifications">Žádné upozornění k zobrazení</string>
     <string name="notif_mention">vás zmínil</string>
@@ -249,8 +249,8 @@
     <string name="no_internet">Nejste připojeni k internetu!</string>
     <string name="toast_block">Tento účet je zablokován!</string>
     <string name="toast_unblock">Účet není nadále blokován!</string>
-    <string name="toast_mute">Účet byl ztišen!</string>
-    <string name="toast_unmute">Účet není nadále ztišen!</string>
+    <string name="toast_mute">Účet byl ztlumen!</string>
+    <string name="toast_unmute">Účet není nadále ztlumen!</string>
     <string name="toast_follow">Účet je sledován!</string>
     <string name="toast_unfollow">Účet není nadále sledován!</string>
     <string name="toast_reblog">Toot byl posílen!</string>
@@ -377,7 +377,7 @@
     <string name="action_unblock">Odblokovat</string>
     <string name="action_mute">Ztlumit</string>
     <string name="action_no_action">No action</string>
-    <string name="action_unmute">Unmute</string>
+    <string name="action_unmute">Zrušit ztlumení</string>
     <string name="request_sent">Žádost odeslána</string>
     <string name="followed_by">Sleduje vás</string>
     <string name="action_search">Hledat</string>
@@ -389,7 +389,7 @@
 Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     </string>
     <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-    <string name="settings_popup_notification">For unread notifications?</string>
+    <string name="settings_popup_notification">Pro nepřečtená upozornění?</string>
     <!-- CACHE -->
     <string name="cache_title">Vyprázdnit cache</string>
     <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
@@ -416,7 +416,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     </string-array>
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Recorded data</string>
+    <string name="privacy_data_title">Zaznamenaná data</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
         Deleting the application immediately removes these data.\n
@@ -430,7 +430,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
-    <string name="privacy_API_authorizations_title">API permissions:</string>
+    <string name="privacy_API_authorizations_title">API oprávnění:</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
@@ -458,13 +458,13 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="action_lists">Lists</string>
     <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-    <string name="action_lists_add_to">Add to list</string>
-    <string name="action_lists_remove_from">Remove from list</string>
+    <string name="action_lists_add_to">Přidat do seznamu</string>
+    <string name="action_lists_remove_from">Odebrat ze seznamu</string>
     <string name="action_lists_create">Přidat seznam</string>
     <string name="action_lists_delete">Odstranit seznam</string>
     <string name="action_lists_update">Upravit seznam</string>
     <string name="action_lists_title_placeholder">New list title</string>
-    <string name="action_lists_search_users">Search among people you follow</string>
+    <string name="action_lists_search_users">Hledat mezi sledovanými lidmi</string>
     <string name="action_lists_owner">Vaše seznamy</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
@@ -502,7 +502,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="delete_instance">Odstranit instanci?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
     <string name="which_language">Přeložit v</string>
-    <string name="crash_title">Mastalab has stopped :(</string>
+    <string name="crash_title">Mastalab přestal fungovat :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Follow instance</string>
@@ -529,8 +529,8 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="context_notification">Oznámení</string>
     <string name="context_conversation">Konverzace</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-    <string name="context_drop">Drop instead of hide</string>
-    <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
+    <string name="context_drop">Zahodit místo skrytí</string>
+    <string name="context_drop_explanations">Filtrované toots zmizí nezvratně i v případě, že filtr je později odstraněn</string>
     <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
     <string name="context_whole_word">Celé slovo</string>
     <string name="filter_context">Filter contexts</string>
