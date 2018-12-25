@@ -309,45 +309,45 @@
     <string name="set_notify">Oznámení?</string>
     <string name="set_notif_silent">Tichá oznámení</string>
     <string name="set_night_mode">Noční režim</string>
-    <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+    <string name="set_nsfw_timeout">NSFW prodleva (vteřiny, 0 znamená vypnuto)</string>
     <string name="settings_title_profile">Upravit profil</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Zamknout účet</string>
     <string name="set_save_changes">Uložit změny</string>
-    <string name="set_header_picture_overlay">Choose a header picture</string>
+    <string name="set_header_picture_overlay">Vyberte obrázek do hlavičky</string>
     <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
-    <string name="note_no_space">You have reached the 160 characters allowed!</string>
-    <string name="username_no_space">You have reached the 30 characters allowed!</string>
-    <string name="settings_title_hour">Time slot for notifications:</string>
+    <string name="set_automatically_split_toot">Automaticky rozdělit toots nad 500 znaků do odpovědí</string>
+    <string name="note_no_space">Bylo dosaženo 160ti znakového limitu!</string>
+    <string name="username_no_space">Bylo dosaženo 30ti znakového limitu!</string>
+    <string name="settings_title_hour">Časové okno pro oznámení:</string>
     <string name="settings_time_from">Mezi</string>
     <string name="settings_time_to">a</string>
-    <string name="settings_time_greater">The time must be greater than %1$s</string>
-    <string name="settings_time_lower">The time must be lower than %1$s</string>
-    <string name="settings_hour_init">Start time</string>
-    <string name="settings_hour_end">End time</string>
-    <string name="embedded_browser">Use the built-in browser</string>
-    <string name="custom_tabs">Custom tabs</string>
+    <string name="settings_time_greater">Čas musí být vyšší než %1$s</string>
+    <string name="settings_time_lower">Čas musí být nižší než %1$s</string>
+    <string name="settings_hour_init">Počáteční čas</string>
+    <string name="settings_hour_end">Koncový čas</string>
+    <string name="embedded_browser">Použít vestavěný prohlížeč</string>
+    <string name="custom_tabs">Uživatelské záložky</string>
     <string name="use_javascript">Povolit JavaScript</string>
-    <string name="expand_cw">Automatically expand cw</string>
+    <string name="expand_cw">Automaticky ukázat cw</string>
     <string name="use_cookies">Povolit soubory cookie třetích stran</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
     <string-array name="battery_profiles">
         <item>Normální využití baterie</item>
         <item>Střední využití baterie</item>
-        <item>Low battery drain</item>
+        <item>Nízké využití baterie</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Záložky</item>
         <item>Nabídka</item>
-        <item>Tabs and menu</item>
+        <item>Záložky a menu</item>
     </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
         <item>Ne</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">Váš API klíč, prázdné pro Yandex</string>
     <string-array name="settings_theme">
         <item>Tmavé</item>
         <item>Světlé</item>
@@ -359,7 +359,7 @@
         <item>1 Mb</item>
         <item>2 Mb</item>
     </string-array>
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">Barva LED:</string>
     <string-array name="led_colours">
         <item>Modrá</item>
         <item>Tyrkysová</item>
@@ -378,15 +378,15 @@
     <string name="action_mute">Ztlumit</string>
     <string name="action_no_action">No action</string>
     <string name="action_unmute">Unmute</string>
-    <string name="request_sent">Request sent</string>
-    <string name="followed_by">Follows you</string>
+    <string name="request_sent">Žádost odeslána</string>
+    <string name="followed_by">Sleduje vás</string>
     <string name="action_search">Hledat</string>
-    <string name="set_capitalize">First letter in capital for replies</string>
-    <string name="set_resize_picture">Resize pictures</string>
+    <string name="set_capitalize">První písmeno velké v odpovědích</string>
+    <string name="set_resize_picture">Změnit velikost obrázků</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push notifications</string>
-    <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+    <string name="settings_popup_title">Push oznámení</string>
+    <string name="settings_popup_message">Prosím potvrďte push oznámení, která chcete dostávat.
+Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     </string>
     <string name="settings_popup_timeline">For unread toots in home time-line?</string>
     <string name="settings_popup_notification">For unread notifications?</string>
@@ -398,21 +398,21 @@
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Synchronizovat</string>
     <string name="action_filter">Filtrovat</string>
-    <string name="owner_cached_toots">Your toots</string>
-    <string name="v_public">Public</string>
-    <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
-    <string name="v_direct">Direct</string>
-    <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
+    <string name="owner_cached_toots">Vaše toots</string>
+    <string name="v_public">Veřejné</string>
+    <string name="v_unlisted">Skryté</string>
+    <string name="v_private">Soukromé</string>
+    <string name="v_direct">Přímé</string>
+    <string name="v_keywords">Některá klíčová slova…</string>
+    <string name="show_media">Zobrazit média</string>
+    <string name="show_pinned">Zobrazit připnuté</string>
     <string name="filter_no_result">No matching result found!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
         <item>Ne</item>
         <item>Pouze</item>
-        <item>Both</item>
+        <item>Oba</item>
     </string-array>
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
@@ -422,7 +422,7 @@
         Deleting the application immediately removes these data.\n
         &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
     </string>
-    <string name="privacy_authorizations_title">Permissions:</string>
+    <string name="privacy_authorizations_title">Oprávnění:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
@@ -449,12 +449,11 @@
     </string>
     <string name="thanks_text">        Thank you to Stéphane for the logo.
     </string>
-    <string name="thanks_text_dev">        Thank you to:
-    </string>
-    <string name="filter_regex">Filter out by regular expressions</string>
-    <string name="search">Search</string>
+    <string name="thanks_text_dev">Poděkování:    </string>
+    <string name="filter_regex">Filtrování regulárními výrazy</string>
+    <string name="search">Hledat</string>
     <string name="delete">Odstranit</string>
-    <string name="fetch_more_toots">Fetch more toots…</string>
+    <string name="fetch_more_toots">Nahrát více toots…</string>
     <!-- About lists -->
     <string name="action_lists">Lists</string>
     <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
@@ -487,7 +486,7 @@
     <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
-    <string name="proxy_type">Type</string>
+    <string name="proxy_type">Typ</string>
     <string name="proxy_enable">Enable proxy?</string>
     <string name="poxy_host">Host</string>
     <string name="poxy_port">Port</string>
@@ -498,19 +497,19 @@
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
-    <string name="no_account_yet">No account yet?</string>
+    <string name="no_account_yet">Nemáte účet?</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-    <string name="delete_instance">Delete this instance?</string>
+    <string name="delete_instance">Odstranit instanci?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-    <string name="which_language">Translate in</string>
+    <string name="which_language">Přeložit v</string>
     <string name="crash_title">Mastalab has stopped :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Follow instance</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
-    <string name="action_partnership">Partnerships</string>
-    <string name="neutral_menu_information">Information</string>
+    <string name="action_partnership">Partnerství</string>
+    <string name="neutral_menu_information">Informace</string>
     <string name="hide_boost">Hide boosts from %s</string>
     <string name="endorse">Feature on profile</string>
     <string name="hide_everything">Hide everything from %s</string>
@@ -521,7 +520,7 @@
     <string name="toast_unendorse">The account is no longer featured on profile</string>
     <string name="toast_show_boost">Boosts are now shown!</string>
     <string name="toast_hide_boost">Boosts are now hidden!</string>
-    <string name="direct_message">Direct message</string>
+    <string name="direct_message">Přímá zpráva</string>
     <string name="filters">Filtry</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
     <string name="filter_keyword">Klíčové slovo nebo fráze</string>
