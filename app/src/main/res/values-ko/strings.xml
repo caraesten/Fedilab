@@ -11,10 +11,10 @@
     <string name="login">Login</string>
     <!-- common -->
     <string name="close">Close</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="cancel">Cancel</string>
-    <string name="download">Download</string>
+    <string name="yes">예</string>
+    <string name="no">아니</string>
+    <string name="cancel">취소</string>
+    <string name="download">다운로드</string>
     <string name="download_file">Download %1$s</string>
     <string name="download_over">Download complete</string>
     <string name="save_file">Save %1$s</string>
@@ -82,7 +82,7 @@
     <string name="notifications">Notifications</string>
     <string name="follow_request">Follow requests</string>
     <string name="optimization">Optimization</string>
-    <string name="settings">Settings</string>
+    <string name="settings">설정</string>
     <string name="profile">Profile</string>
     <string name="make_a_choice">What do you want to do?</string>
     <string name="delete_account_title">Delete an account</string>
@@ -295,7 +295,7 @@
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">Advanced settings</string>
+    <string name="settings_title_more_options">고급 설정</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Silent Notifications</string>
@@ -660,7 +660,7 @@
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">언어</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>
