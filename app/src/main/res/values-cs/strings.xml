@@ -453,7 +453,7 @@
     </string>
     <string name="filter_regex">Filter out by regular expressions</string>
     <string name="search">Search</string>
-    <string name="delete">Delete</string>
+    <string name="delete">Odstranit</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
     <!-- About lists -->
     <string name="action_lists">Lists</string>
@@ -527,7 +527,7 @@
     <string name="filter_keyword">Klíčové slovo nebo fráze</string>
     <string name="context_home">Home timeline</string>
     <string name="context_public">Public timelines</string>
-    <string name="context_notification">Notifications</string>
+    <string name="context_notification">Oznámení</string>
     <string name="context_conversation">Konverzace</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
     <string name="context_drop">Drop instead of hide</string>
@@ -543,7 +543,7 @@
     <string name="action_filter_create">Vytvořit filtr</string>
     <string name="how_to_follow">Whom to follow</string>
     <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
-    <string name="follow_account">Follow</string>
+    <string name="follow_account">Následovat</string>
     <string name="select_all">Vybrat vše</string>
     <string name="unselect_all">Zrušit výběr</string>
     <string name="follow_trunk">%s is followed!</string>
@@ -599,8 +599,8 @@
     <string name="no_peertube_instances">No Peertube instances</string>
     <string name="no_mastodon_instances">No Mastodon instances</string>
     <string name="no_lists">No lists</string>
-    <string name="videos">Videos</string>
-    <string name="channels">Channels</string>
+    <string name="videos">Videa</string>
+    <string name="channels">Kanály</string>
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
@@ -613,8 +613,8 @@
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
+    <string name="set_change_locale">Změna jazyka</string>
+    <string name="default_language">Základní jazyk</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">Display more</string>
@@ -630,12 +630,12 @@
     <string name="no_scheduled_boosts">No scheduled boost to display!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
-    <string name="app_logo">Logo of the application</string>
+    <string name="open_menu">Otevřete nabídku</string>
+    <string name="app_logo">Logo aplikace</string>
     <string name="profile_picture">Profile picture</string>
     <string name="profile_banner">Profile banner</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
+    <string name="add_new">Přidat nový</string>
     <string name="mastohost_logo">MastoHost logo</string>
     <string name="emoji_picker">Emoji picker</string>
     <string name="refresh">Refresh</string>
@@ -650,13 +650,13 @@
     <string name="favicon">Favicon</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
-        <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>Nikdy</item>
+        <item>30 minut</item>
+        <item>1 hodina</item>
+        <item>6 hodin</item>
+        <item>12 hodin</item>
+        <item>1 den</item>
+        <item>1 týden</item>
     </string-array>
     <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
