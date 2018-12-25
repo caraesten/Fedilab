@@ -338,14 +338,14 @@
         <item>Low battery drain</item>
     </string-array>
     <string-array name="settings_menu_tabs">
-        <item>Tabs</item>
-        <item>Menu</item>
+        <item>Záložky</item>
+        <item>Nabídka</item>
         <item>Tabs and menu</item>
     </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
-        <item>No</item>
+        <item>Ne</item>
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
@@ -369,13 +369,13 @@
         <item>Žlutá</item>
         <item>Bílá</item>
     </string-array>
-    <string name="set_title_news">News</string>
+    <string name="set_title_news">Novinky</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
-    <string name="action_follow">Follow</string>
+    <string name="action_follow">Následovat</string>
     <string name="action_unfollow">Unfollow</string>
     <string name="action_block">Blokovat</string>
     <string name="action_unblock">Odblokovat</string>
-    <string name="action_mute">Mute</string>
+    <string name="action_mute">Ztlumit</string>
     <string name="action_no_action">No action</string>
     <string name="action_unmute">Unmute</string>
     <string name="request_sent">Request sent</string>
@@ -669,7 +669,7 @@
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">Jazyky</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>
