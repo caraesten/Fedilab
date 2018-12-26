@@ -127,7 +127,7 @@
     </string-array>
     <string-array name="action_notification">
         <item>Benachrichtigen</item>
-        <item>Silent</item>
+        <item>Stumm</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Entferne diesen Toot?</item>
@@ -655,12 +655,12 @@
     <string name="showcase_2FA">Falls du 2FA (Zwei-Faktor-Authentisierung) verwendest, musst du diesen Link verwenden.\nDu kannst ihn ebenfalls verwenden, wenn du eine Zugangsdaten hier nicht eingeben möchtest.</string>
     <!-- languages not translated -->
     <string name="languages">Sprachen</string>
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
+    <string name="show_media_only">Nur Medien</string>
+    <string name="show_media_nsfw">Zeige NSFW</string>
+    <string name="crowdin_translations">Crowdin Übersetzungen</string>
+    <string name="crowdin_manager">Crowdin Manager</string>
+    <string name="translation_app">Übersetzung der App</string>
+    <string name="about_crowdin">Über Crowdin</string>
     <string name="bot">Bot</string>
     <!-- end languages -->
 </resources>
