@@ -659,8 +659,8 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="translation_app">Hjelp til å oversette applikasjonen på Crowdin</string>
     <string name="about_crowdin">Åpne Crowdin</string>
     <string name="bot">Robot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="pixelfed_instance">Pixelfed-instans</string>
+    <string name="mastodon_instance">Mastodon-instans</string>
+    <string name="no_pixelfed_instance">Ingen Pixelfed-instanser</string>
     <!-- end languages -->
 </resources>
