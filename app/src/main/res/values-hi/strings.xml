@@ -584,11 +584,11 @@
     <string name="duration_video">अवधि: %s</string>
     <string name="add_remote_instance">एक इंसटंस जोड़ें</string>
     <string name="comment_no_allowed_peertube">इस वीडियो पर टिप्पणियां निष्क्रिय हैं!</string>
-    <string name="pickup_resolution">Pick up a resolution</string>
+    <string name="pickup_resolution">एक रेज़लूशन चुनें</string>
     <string name="peertube_favorites">पीयरट्यूब पसंदीदा</string>
-    <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-    <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-    <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+    <string name="bookmark_add_peertube">इस वीडियो को बुकमार्क्स में जोड़ दिया गया है!</string>
+    <string name="bookmark_remove_peertube">इस वीडियो को बुकमार्क्स से हटा दिया गया है!</string>
+    <string name="bookmark_peertube_empty">आपके पसंदीदा सूची में कोई पीयरट्यूब वीडियो नहीं है!</string>
     <string name="channel">Channel</string>
     <string name="no_peertube_channels">No Peertube channels</string>
     <string name="no_peertube_instances">No Peertube instances</string>
