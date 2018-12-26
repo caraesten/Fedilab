@@ -464,8 +464,8 @@
     <string name="action_lists_owner">आपकी सूचियाँ</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s %2$s पे चले गये है</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
-    <string name="issue_login_title">Authentication does not work?</string>
+    <string name="show_boost_count">बूस्ट/पसंदीदा की गिनती दिखाएं</string>
+    <string name="issue_login_title">प्रमाणीकरण काम नहीं कर रहा?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
@@ -529,7 +529,7 @@
     <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
     <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
     <string name="context_whole_word">पूरा शब्द</string>
-    <string name="filter_context">Filter contexts</string>
+    <string name="filter_context">सन्दर्भ छाटें</string>
     <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
     <string name="filter_expire">Expire after</string>
     <string name="add_new_filter">नयी छन्नी जोड़े</string>
@@ -633,15 +633,15 @@
     <string name="add_new">नया जोड़ें</string>
     <string name="mastohost_logo">मैस्टोहोस्ट का चिह्न</string>
     <string name="emoji_picker">इमोजी चयनकर्ता</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
+    <string name="refresh">नवीकरण</string>
+    <string name="expand_conversation">वार्तालाप को खोलें</string>
+    <string name="remove_account">एक खाता हटाएं</string>
     <string name="delete_domain">प्रतिबंधित डोमेन को मिटा दें</string>
     <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
+    <string name="play_video">वीडियो चलाएं</string>
+    <string name="new_toot">नया लेख</string>
     <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
+    <string name="hide_media">मीडिया छुपाएं</string>
     <string name="favicon">Favicon</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
@@ -666,11 +666,11 @@
     <!-- languages not translated -->
     <string name="languages">Languages</string>
     <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
-    <string name="bot">Bot</string>
+    <string name="show_media_nsfw">NSFW दिखाएं</string>
+    <string name="crowdin_translations">क्राउडिन के अनुवाद</string>
+    <string name="crowdin_manager">क्राउडिन प्रबंधक</string>
+    <string name="translation_app">एेप का अनुवाद</string>
+    <string name="about_crowdin">क्राउडिन के बारे में</string>
+    <string name="bot">बॉट</string>
     <!-- end languages -->
 </resources>
