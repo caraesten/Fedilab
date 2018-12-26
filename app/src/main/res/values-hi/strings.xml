@@ -415,11 +415,10 @@
     <string name="owner_cached_toots_empty">डेटाबेस में कोई लेख नहीं मिला। उन्हें वापस पाने के लिये मेन्यू में मौजूद सिंक बटन का इस्तेमाल करें।</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">अभिलिखित डेटा</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
-    </string>
+    <string name="privacy_data">खातों की सिर्फ़ साधारण जानकारी उपकरण में रखी जाती है।
+यह डेटा बिलकुल गोपनीय है और इसका उपयोग सिर्फ़ यह एेप कर सकता है।
+एेप के मिटाते ही यह डेटा तुरंत नष्ट हो जाता है।\n
+&#9888; लाॅगइन और पासवर्ड कभी रखे नहीं जाते। उनका उपयोग केवल किसी इंस्टेंस के साथ सुरक्षित प्रमाणीकरण (SSL) के दौरान किया जाता है।    </string>
     <string name="privacy_authorizations_title">अनुमतियाँ:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
