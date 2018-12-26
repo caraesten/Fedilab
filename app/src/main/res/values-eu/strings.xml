@@ -661,13 +661,13 @@
     <string name="more_information">Informazio gehiago</string>
     <string name="showcase_2FA">2FA (bi faktoreetako autentifikazioa) erabiltzen baduzu, esteka hau erabili behar duzu.\nHemen zure kredentzialak sartu nahi ez badituzu erabili dezakezu baita ere.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">Hizkuntzak</string>
     <string name="show_media_only">Multimedia besterik ez</string>
     <string name="show_media_nsfw">Erakutsi NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
-    <string name="bot">Bot</string>
+    <string name="crowdin_translations">Crowdin itzulpenak</string>
+    <string name="crowdin_manager">Crowdin kudeatzailea</string>
+    <string name="translation_app">Aplikazioaren itzulpena</string>
+    <string name="about_crowdin">Crowdin-i buruz</string>
+    <string name="bot">Bota</string>
     <!-- end languages -->
 </resources>
