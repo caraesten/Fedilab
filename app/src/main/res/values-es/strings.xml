@@ -666,5 +666,8 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="translation_app">Traducir la Aplicación</string>
     <string name="about_crowdin">Acerca de Crowdin</string>
     <string name="bot">Bot</string>
+    <string name="pixelfed_instance">Pixelfed instance</string>
+    <string name="mastodon_instance">Mastodon instance</string>
+    <string name="no_pixelfed_instance">No Pixelfed instances</string>
     <!-- end languages -->
 </resources>
