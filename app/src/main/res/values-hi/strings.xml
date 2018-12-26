@@ -81,7 +81,7 @@
     <string name="remote_follow_menu">दूरवर्ती अनुसरण</string>
     <string name="notifications">सूचनाएँ</string>
     <string name="follow_request">अनुसरण करने की गुज़ारिशें</string>
-    <string name="optimization">बेहतरी</string>
+    <string name="optimization">इष्टतमीकरण</string>
     <string name="settings">सैटिंग्स</string>
     <string name="profile">वर्णन</string>
     <string name="make_a_choice">आप क्या करना चाहेंगे?</string>
@@ -564,7 +564,7 @@
     <string name="set_notif_sound">सूचना टोन को बदलें</string>
     <string name="select_sound">टोन चुनें</string>
     <string name="set_enable_time_slot">निर्धारित समय सक्रिय करें</string>
-    <string name="how_to_videos">How To Videos</string>
+    <string name="how_to_videos">शिक्षण वीडियो</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
     <string name="no_blocked_domain">कोई प्रतिबंधित डोमेन्स नहीं है!</string>
     <string name="unblock_domain_confirm">Unblock domain</string>
@@ -606,13 +606,13 @@
     <string name="action_bug_report">त्रुटि रिपोर्ट</string>
     <string name="no_mail_client">कोई ईमेल एेप स्थापित नहीं की गयी है।</string>
     <string name="bug_report_mail">ऋुटि रिपोर्ट भेजें</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
+    <string name="account_id_clipbloard">खाते के पहचानपत्र की प्रतिलिपि क्लिपबोर्ड में जोड़ दी गयी है!</string>
+    <string name="settings_title_battery">बैटरी का इष्टतमीकरण</string>
     <string name="set_change_locale">Change the language</string>
     <string name="default_language">Default language</string>
     <string name="truncate_long_toots">लंबे लेखो को छोटा करें</string>
     <string name="set_truncate_toot">\'x\' पंक्तियों से लंबे लेखो को छोटा करें। शून्य मतलब निष्क्रिय।</string>
-    <string name="display_toot_truncate">Display more</string>
+    <string name="display_toot_truncate">और दिखाएं</string>
     <string name="hide_toot_truncate">Display less</string>
     <string name="manage_tags">Manage tags</string>
     <string name="tags_already_stored">The tag already exists!</string>
