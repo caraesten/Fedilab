@@ -874,6 +874,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
         this.statuses.addAll(position, tmpStatuses);
         statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
+        if( textviewNoAction.getVisibility() == View.VISIBLE && tmpStatuses.size() > 0){
+            textviewNoAction.setVisibility(View.GONE);
+            lv_status.setVisibility(View.VISIBLE);
+        }
     }
 
     //Update last read toots value when pressing tab button
