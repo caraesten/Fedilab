@@ -309,7 +309,7 @@
     <string name="set_night_mode">रात्रि मोड</string>
     <string name="set_nsfw_timeout">एनएसएफडबल्यू दृश्य विराम (सेकेंड, ० मतलब बंद)</string>
     <string name="settings_title_profile">प्रोफ़ाइल संपादित करें</string>
-    <string name="set_profile_description">Bio…</string>
+    <string name="set_profile_description">बायो</string>
     <string name="set_lock_account">खाते पर ताला लगाएं</string>
     <string name="set_save_changes">बदलाव सहेजें</string>
     <string name="set_header_picture_overlay">एक हैडर चित्र चुनें</string>
