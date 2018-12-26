@@ -671,5 +671,8 @@
     <string name="translation_app">Suqel asnas γer tutlayt nniḍen</string>
     <string name="about_crowdin">Γef Crowdin</string>
     <string name="bot">Buṭ</string>
+    <string name="pixelfed_instance">Pixelfed instance</string>
+    <string name="mastodon_instance">Mastodon instance</string>
+    <string name="no_pixelfed_instance">No Pixelfed instances</string>
     <!-- end languages -->
 </resources>
