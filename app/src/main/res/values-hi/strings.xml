@@ -383,9 +383,9 @@
     <string name="set_resize_picture">चित्रो का नाप बदलें</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">पुश सूचनाएँ</string>
-    <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
-    </string>
+    <string name="settings_popup_message">कृप्या उन पुश सूचनाएं को पक्का करें जो आप पाना चाहते हैं।
+
+आप सूचनाओं को बाद में सेटिंग्स में जाकर सक्रिय या निश्क्रिय कर सकते हैं (सूचनाएं टैब)।    </string>
     <string name="settings_popup_timeline">मुख्यपृष्ट में अपठित लेखो के लिये?</string>
     <string name="settings_popup_notification">अपठित सूचनाओं के लिये?</string>
     <!-- CACHE -->
