@@ -575,11 +575,11 @@
     <string name="toast_block_domain">यह डोमेन प्रतिबंधित है</string>
     <string name="toast_unblock_domain">यह डोमेन अब प्रतिबंधित नहीं है!</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
-    <string name="comment">Comment</string>
-    <string name="peertube_instance">Peertube instance</string>
-    <string name="set_display_direct">Display private messages timeline</string>
-    <string name="set_keep_background_process">Keep background process when app is closed</string>
-    <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
+    <string name="comment">टिप्पणी</string>
+    <string name="peertube_instance">पीयरट्यूब इंस्टंस</string>
+    <string name="set_display_direct">निजी संदेश टाइम्लाइन दिखाएं</string>
+    <string name="set_keep_background_process">एेप बंद करने के बाद भी पृष्ठभूमि प्रक्रिया को चालू रखे</string>
+    <string name="no_comments">वीडियो पे सबसे पहले टिप्पणी करने वाले बने ऊपरी दाई ओर वाले बटन के साथ!</string>
     <string name="number_view_video">%s views</string>
     <string name="duration_video">Duration: %s</string>
     <string name="add_remote_instance">Add an instance</string>
