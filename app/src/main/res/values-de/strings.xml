@@ -662,5 +662,8 @@
     <string name="translation_app">Übersetzung der App</string>
     <string name="about_crowdin">Über Crowdin</string>
     <string name="bot">Bot</string>
+    <string name="pixelfed_instance">Pixelfed instance</string>
+    <string name="mastodon_instance">Mastodon instance</string>
+    <string name="no_pixelfed_instance">No Pixelfed instances</string>
     <!-- end languages -->
 </resources>
