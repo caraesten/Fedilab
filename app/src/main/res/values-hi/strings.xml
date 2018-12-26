@@ -603,9 +603,9 @@
     <string name="set_old_direct_timeline">मैस्टोडाॅन २.६ से पहले का सीधा टाइम्लाइन इस्तेमाल करें</string>
     <string name="set_display_video_preview">वीडियो के पूर्वदर्शन दिखाएं</string>
     <string name="thanks_text_support">गिटलैब समर्थन</string>
-    <string name="action_bug_report">बग रिपोर्ट</string>
+    <string name="action_bug_report">त्रुटि रिपोर्ट</string>
     <string name="no_mail_client">कोई ईमेल एेप स्थापित नहीं की गयी है।</string>
-    <string name="bug_report_mail">Send a bug report</string>
+    <string name="bug_report_mail">ऋुटि रिपोर्ट भेजें</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
     <string name="set_change_locale">Change the language</string>
