@@ -70,10 +70,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -407,6 +407,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 if(remoteInstances != null) {
                     SubMenu submMastodon = popup.getMenu().findItem(R.id.action_show_mastodon).getSubMenu();
                     SubMenu submPeertube = popup.getMenu().findItem(R.id.action_show_peertube).getSubMenu();
+                    SubMenu submPixelfed = popup.getMenu().findItem(R.id.action_show_pixelfed).getSubMenu();
                     SubMenu submChannel = popup.getMenu().findItem(R.id.action_show_channel).getSubMenu();
                     int i = 0, j = 0 , k = 0;
                     for (RemoteInstance remoteInstance : remoteInstances) {
@@ -473,6 +474,37 @@ public abstract class BaseMainActivity extends BaseActivity
                             });
                             k++;
                         }
+                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("PIXELFED")) {
+                            MenuItem itemPlaceHolder = submPixelfed.findItem(R.id.pixelfed_instance);
+                            if( itemPlaceHolder != null)
+                                itemPlaceHolder.setVisible(false);
+                            MenuItem item = submPixelfed.add(0, j, Menu.NONE, remoteInstance.getHost());
+                            item.setIcon(R.drawable.pixelfed);
+                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    DisplayStatusFragment statusFragment;
+                                    Bundle bundle = new Bundle();
+                                    statusFragment = new DisplayStatusFragment();
+                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PIXELFED);
+                                    bundle.putString("remote_instance", remoteInstance.getHost());
+                                    statusFragment.setArguments(bundle);
+                                    String fragmentTag = "REMOTE_INSTANCE";
+                                    instance_id = remoteInstance.getDbID();
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                                    main_app_container.setVisibility(View.VISIBLE);
+                                    viewPager.setVisibility(View.GONE);
+                                    tabLayout.setVisibility(View.GONE);
+                                    toolbarTitle.setVisibility(View.VISIBLE);
+                                    delete_instance.setVisibility(View.VISIBLE);
+                                    toolbarTitle.setText(remoteInstance.getHost());
+                                    return false;
+                                }
+                            });
+                            j++;
+                        }
                         if (remoteInstance.getType() == null || remoteInstance.getType().equals("PEERTUBE")) {
                             MenuItem itemPlaceHolder = submPeertube.findItem(R.id.peertube_instances);
                             if( itemPlaceHolder != null)
@@ -516,7 +548,9 @@ public abstract class BaseMainActivity extends BaseActivity
                                 dialogBuilder.setView(dialogView);
 
                                 AutoCompleteTextView instance_list = dialogView.findViewById(R.id.search_instance);
-                                CheckBox peertube_instance  = dialogView.findViewById(R.id.peertube_instance);
+                                //Manage download of attachments
+                                RadioGroup radioGroup = dialogView.findViewById(R.id.set_attachment_group);
+
                                 instance_list.setFilters(new InputFilter[]{new InputFilter.LengthFilter(60)});
                                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                                     @Override
@@ -527,18 +561,23 @@ public abstract class BaseMainActivity extends BaseActivity
                                             @Override
                                             public void run() {
                                                 try {
-                                                    if( !peertube_instance.isChecked())
+                                                    if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance)
                                                         new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/timelines/public?local=true", 10, null, null);
-                                                    else
+                                                    else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance)
                                                         new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/videos/", 10, null, null);
+                                                    else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
+                                                        new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/timelines/public", 10, null, null);
+                                                    }
                                                     runOnUiThread(new Runnable() {
                                                         public void run() {
                                                             JSONObject resobj;
                                                             dialog.dismiss();
-                                                            if( peertube_instance.isChecked())
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PEERTUBE");
-                                                            else
+                                                            if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance)
                                                                 new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MASTODON");
+                                                            else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance)
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PEERTUBE");
+                                                            else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance)
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PIXELFED");
                                                             DisplayStatusFragment statusFragment;
                                                             Bundle bundle = new Bundle();
                                                             statusFragment = new DisplayStatusFragment();

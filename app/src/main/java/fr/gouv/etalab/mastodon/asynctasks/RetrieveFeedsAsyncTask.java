@@ -75,7 +75,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         CACHE_STATUS,
         REMOTE_INSTANCE,
         ART,
-        NOTIFICATION
+        NOTIFICATION,
+        PIXELFED
     }
 
 
@@ -158,6 +159,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case CONVERSATION:
                 apiResponse = api.getConversationTimeline(max_id);
+                break;
+            case PIXELFED:
+                apiResponse = api.getPixelfedTimeline(instanceName, max_id);
                 break;
             case REMOTE_INSTANCE:
                 if( this.name != null && this.remoteInstance != null){ //For Peertube channels

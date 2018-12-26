@@ -803,6 +803,38 @@ public class API {
     }
 
 
+
+    /**
+     * Retrieves public pixelfed timeline for the account *synchronously*
+     * @param max_id   String id max
+     * @return APIResponse
+     */
+    public APIResponse getPixelfedTimeline(String remoteInstance, String max_id) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("page", max_id);
+        statuses = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUrlRemote(remoteInstance, "/timelines/public/"), 60, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseStatuses(context, new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
     /**
      * Retrieves Peertube videos from an instance *synchronously*
      * @return APIResponse
@@ -2957,9 +2989,6 @@ public class API {
             }catch (Exception e){status.setVisibility("public");}
             status.setLanguage(resobj.get("language").toString());
             status.setUrl(resobj.get("url").toString());
-            //TODO: replace by the value
-            status.setApplication(new Application());
-
             //Retrieves attachments
             JSONArray arrayAttachement = resobj.getJSONArray("media_attachments");
             ArrayList<Attachment> attachments = new ArrayList<>();
@@ -3042,7 +3071,6 @@ public class API {
                 application = new Application();
             }
             status.setApplication(application);
-
 
             status.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
             status.setContent(resobj.get("content").toString());
@@ -3593,7 +3621,9 @@ public class API {
     private String getAbsoluteUrl(String action) {
         return Helper.instanceWithProtocol(this.instance) + "/api/v1" + action;
     }
-
+    private String getAbsoluteUrlRemote(String remote, String action) {
+        return "https://" + remote + "/api/v1" + action;
+    }
 
     private String getAbsoluteUrlRemoteInstance(String instanceName) {
         return "https://" + instanceName + "/api/v1/timelines/public?local=true";

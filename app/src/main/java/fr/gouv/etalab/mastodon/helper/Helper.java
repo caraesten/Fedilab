@@ -541,7 +541,15 @@ public class Helper {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(STRING_DATE_FORMAT, userLocale);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
         simpleDateFormat.setLenient(true);
-        return simpleDateFormat.parse(date);
+        try {
+            return simpleDateFormat.parse(date);
+        }catch (Exception e){
+            String newdate = date.split("\\+")[0];
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", userLocale);
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
+            simpleDateFormat.setLenient(true);
+            return simpleDateFormat.parse(newdate);
+        }
     }
 
 
@@ -2564,7 +2572,7 @@ public class Helper {
                 return;
             }
         }
-        if( url == null || url.contains("missing.png")) {
+        if( url == null || url.contains("missing.png") || url.contains(".svg")) {
             try {
                 Glide.with(imageView.getContext())
                         .load(R.drawable.missing)

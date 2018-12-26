@@ -368,7 +368,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             attachment.setType(type);
         }
         final String finalUrl = url;
-        switch (type){
+        switch (type.toLowerCase()){
             case "image":
                 pbar_inf.setScaleY(1f);
                 imageView.setVisibility(View.VISIBLE);

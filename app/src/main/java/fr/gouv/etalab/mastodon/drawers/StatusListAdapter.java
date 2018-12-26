@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -63,12 +64,16 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.stom79.mytransl.MyTransL;
 import com.github.stom79.mytransl.client.HttpsConnectionException;
@@ -106,6 +111,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
+import fr.gouv.etalab.mastodon.client.Glide.GlideApp;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.CustomTextView;
@@ -230,7 +236,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        if( type != RetrieveFeedsAsyncTask.Type.ART && (tagTimeline == null || !tagTimeline.isART()) && (holder.getItemViewType() == DISPLAYED_STATUS || holder.getItemViewType() == COMPACT_STATUS)) {
+        if( type != RetrieveFeedsAsyncTask.Type.ART && type != RetrieveFeedsAsyncTask.Type.PIXELFED && (tagTimeline == null || !tagTimeline.isART()) && (holder.getItemViewType() == DISPLAYED_STATUS || holder.getItemViewType() == COMPACT_STATUS)) {
             final ViewHolder viewHolder = (ViewHolder) holder;
             // Bug workaround for losing text selection ability, see:
             // https://code.google.com/p/android/issues/detail?id=208169
@@ -247,6 +253,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView art_media, art_pp;
         TextView art_username, art_acct;
         LinearLayout art_author;
+        RelativeLayout status_show_more;
+        ImageView show_more_button_art;
         ViewHolderArt(View itemView) {
             super(itemView);
             art_media = itemView.findViewById(R.id.art_media);
@@ -254,6 +262,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             art_username = itemView.findViewById(R.id.art_username);
             art_acct = itemView.findViewById(R.id.art_acct);
             art_author = itemView.findViewById(R.id.art_author);
+            status_show_more = itemView.findViewById(R.id.status_show_more);
+            show_more_button_art = itemView.findViewById(R.id.show_more_button_art);
         }
     }
 
@@ -436,7 +446,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if( type == RetrieveFeedsAsyncTask.Type.ART || (tagTimeline != null && tagTimeline.isART()))
+        if(type == RetrieveFeedsAsyncTask.Type.PIXELFED ||  type == RetrieveFeedsAsyncTask.Type.ART || (tagTimeline != null && tagTimeline.isART()))
             return new ViewHolderArt(layoutInflater.inflate(R.layout.drawer_art, parent, false));
         else if( viewType == DISPLAYED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
@@ -455,58 +465,125 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        if( (type == RetrieveFeedsAsyncTask.Type.ART || (tagTimeline != null && tagTimeline.isART())) && viewHolder.getItemViewType() != HIDDEN_STATUS ) {
+        if( (type == RetrieveFeedsAsyncTask.Type.PIXELFED || type == RetrieveFeedsAsyncTask.Type.ART || (tagTimeline != null && tagTimeline.isART())) && viewHolder.getItemViewType() != HIDDEN_STATUS ) {
             final ViewHolderArt holder = (ViewHolderArt) viewHolder;
             final Status status = statuses.get(viewHolder.getAdapterPosition());
-
             if( !status.isClickable())
                 Status.transform(context, status);
             if( !status.isEmojiFound())
                 Status.makeEmojis(context, this, status);
-            if( status.getArt_attachment() != null)
-                Glide.with(context)
-                    .load(status.getArt_attachment().getPreview_url())
-                    .into(holder.art_media);
+
             if( status.getAccount() != null && status.getAccount().getAvatar() != null)
                 Glide.with(context)
                         .load(status.getAccount().getAvatar())
                         .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(10)))
                         .into(holder.art_pp);
-            holder.art_pp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ShowAccountActivity.class);
-                    Bundle b = new Bundle();
-                    b.putParcelable("account", status.getAccount());
-                    intent.putExtras(b);
-                    context.startActivity(intent);
+
+            if( type == RetrieveFeedsAsyncTask.Type.PIXELFED){
+                boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
+                if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0)
+                    GlideApp.with(context)
+                            .asBitmap()
+                            .load(status.getMedia_attachments().get(0).getPreview_url())
+                            .listener(new RequestListener<Bitmap>(){
+                                @Override
+                                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                    if(status.isSensitive())
+                                        notifyStatusChanged(status);
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                    return false;
+                                }
+                            })
+                            .into(holder.art_media);
+                RelativeLayout.LayoutParams rel_btn = new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, holder.art_media.getHeight());
+                holder.status_show_more.setLayoutParams(rel_btn);
+                if (expand_media || !status.isSensitive()) {
+                    status.setAttachmentShown(true);
+                    holder.status_show_more.setVisibility(View.GONE);
+                } else {
+                    if (!status.isAttachmentShown()) {
+                        holder.status_show_more.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.status_show_more.setVisibility(View.GONE);
+                    }
                 }
-            });
+
+                holder.show_more_button_art.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        status.setAttachmentShown(true);
+                        notifyStatusChanged(status);
+                    }
+                });
+            }else{
+                if( status.getArt_attachment() != null)
+                    Glide.with(context)
+                            .load(status.getArt_attachment().getPreview_url())
+                            .into(holder.art_media);
+            }
+            if( type == RetrieveFeedsAsyncTask.Type.PIXELFED){
+                holder.art_pp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CrossActions.doCrossProfile(context, status.getAccount());
+                    }
+                });
+            }else {
+                holder.art_pp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                        Bundle b = new Bundle();
+                        b.putParcelable("account", status.getAccount());
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                });
+            }
+
             holder.art_media.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, MediaActivity.class);
                     Bundle b = new Bundle();
                     ArrayList<Attachment> attachments = new ArrayList<>();
-                    attachments.add(status.getArt_attachment());
+                    if( status.getArt_attachment() != null)
+                        attachments.add(status.getArt_attachment());
+                    else if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0)
+                        attachments.add(status.getMedia_attachments().get(0));
                     intent.putParcelableArrayListExtra("mediaArray", attachments);
                     b.putInt("position", 0);
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }
             });
-            holder.art_author.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ShowConversationActivity.class);
-                    Bundle b = new Bundle();
-                    b.putParcelable("status", status);
-                    intent.putExtras(b);
-                    if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                        ((Activity) context).finish();
-                    context.startActivity(intent);
-                }
-            });
+            if( type == RetrieveFeedsAsyncTask.Type.PIXELFED){
+                holder.art_author.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CrossActions.doCrossConversation(context,status);
+                    }
+                });
+            }else {
+                holder.art_author.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ShowConversationActivity.class);
+                        Bundle b = new Bundle();
+                        b.putParcelable("status", status);
+                        intent.putExtras(b);
+                        if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                            ((Activity) context).finish();
+                        context.startActivity(intent);
+                    }
+                });
+            }
+
             if( status.getDisplayNameSpan() != null && status.getDisplayNameSpan().toString().trim().length() > 0)
                 holder.art_username.setText( status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
             else
@@ -2237,7 +2314,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 ImageView imageView;
                 if( i == 0) {
                     imageView = fullAttachement?holder.status_prev1_h:holder.status_prev1;
-                    if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
+                    if( attachment.getType().toLowerCase().equals("image") || attachment.getType().equals("unknown"))
                         if( fullAttachement)
                             holder.status_prev1_play_h.setVisibility(View.GONE);
                         else
@@ -2249,7 +2326,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_prev1_play.setVisibility(View.VISIBLE);
                 }else if( i == 1) {
                     imageView = fullAttachement?holder.status_prev2_h:holder.status_prev2;
-                    if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
+                    if( attachment.getType().toLowerCase().equals("image") || attachment.getType().equals("unknown"))
                         if( fullAttachement)
                             holder.status_prev2_play_h.setVisibility(View.GONE);
                         else
@@ -2261,7 +2338,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_prev2_play.setVisibility(View.VISIBLE);
                 }else if(i == 2) {
                     imageView = fullAttachement?holder.status_prev3_h:holder.status_prev3;
-                    if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
+                    if( attachment.getType().toLowerCase().equals("image") || attachment.getType().equals("unknown"))
                         if( fullAttachement)
                             holder.status_prev3_play_h.setVisibility(View.GONE);
                         else
@@ -2273,7 +2350,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_prev3_play.setVisibility(View.VISIBLE);
                 }else {
                     imageView = fullAttachement?holder.status_prev4_h:holder.status_prev4;
-                    if( attachment.getType().equals("image") || attachment.getType().equals("unknown"))
+                    if( attachment.getType().toLowerCase().equals("image") || attachment.getType().equals("unknown"))
                         if( fullAttachement)
                             holder.status_prev4_play_h.setVisibility(View.GONE);
                         else

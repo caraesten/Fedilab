@@ -179,8 +179,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 statusListAdapter = new StatusListAdapter(context, tagTimeline, targetedId, isOnWifi, this.statuses);
                 lv_status.setAdapter(statusListAdapter);
             }
-        }else if( search_peertube == null && (instanceType == null || instanceType.equals("MASTODON"))) {
+        }else if( search_peertube == null && (instanceType == null || instanceType.equals("MASTODON") || instanceType.equals("PIXELFED"))) {
             BaseMainActivity.displayPeertube = null;
+            if( instanceType != null && instanceType.equals("PIXELFED"))
+                type = RetrieveFeedsAsyncTask.Type.PIXELFED;
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, this.statuses);
             lv_status.setAdapter(statusListAdapter);
         }else {
@@ -217,7 +219,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             else if( type == RetrieveFeedsAsyncTask.Type.TAG)
                                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) {
+                            else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.PIXELFED) {
                                 if( search_peertube == null) {
                                     if( remote_channel_name == null)
                                         asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -249,7 +251,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         });
 
 
-        if( instanceType == null || instanceType.equals("MASTODON"))
+        if( instanceType == null || instanceType.equals("MASTODON") || instanceType.equals("PIXELFED"))
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
@@ -305,12 +307,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else if (type == RetrieveFeedsAsyncTask.Type.TAG)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) {
+            else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.PIXELFED) {
                 if( search_peertube == null) {
-                    if( remote_channel_name == null)
+                    if( remote_channel_name == null) {
                         asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
                     else
-                        asyncTask = new RetrieveFeedsAsyncTask(context, remoteInstance, remote_channel_name, null,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        asyncTask = new RetrieveFeedsAsyncTask(context, remoteInstance, remote_channel_name, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
                 else
                     asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -332,7 +335,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         else if (type == RetrieveFeedsAsyncTask.Type.TAG)
                             asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) {
+                        else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.PIXELFED ) {
                             if( search_peertube == null) {
                                 if( remote_channel_name == null)
                                     asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -413,7 +416,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
         //For remote Peertube remote instances
-        if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && peertubeAdapater != null){
+        if(( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) && peertubeAdapater != null){
             int previousPosition = this.peertubes.size();
             if( max_id == null)
                 max_id = "0";
@@ -455,7 +458,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             int previousPosition = this.statuses.size();
             List<Status> statuses = apiResponse.getStatuses();
             //At this point all statuses are in "List<Status> statuses"
-            max_id = apiResponse.getMax_id();
+
+            //Pagination for Pixelfed
+            if(type == RetrieveFeedsAsyncTask.Type.PIXELFED) {
+                if( max_id == null)
+                    max_id = "1";
+                //max_id needs to work like an offset
+                max_id = String.valueOf(Integer.valueOf(max_id) + 1);
+            }else{
+                max_id = apiResponse.getMax_id();
+            }
             //while max_id is different from null, there are some more toots to load when scrolling
             flag_loading = (max_id == null );
             //If it's the first load and the reply doesn't contain any toots, a message is displayed.
@@ -520,7 +532,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     //Update the id of the last toot retrieved
                     MainActivity.lastHomeId = status.getId();
                     statuses.add(0, status);
-                    if (!status.getAccount().getId().equals(userId)) {
+                    if (status.getAccount() != null && !status.getAccount().getId().equals(userId)) {
                         MainActivity.countNewStatus++;
                     }
                     try {
@@ -625,7 +637,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
         if( type == RetrieveFeedsAsyncTask.Type.HOME)
             asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
+        if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.PIXELFED)
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, remoteInstance, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else if(type == RetrieveFeedsAsyncTask.Type.TAG)
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, tag, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
