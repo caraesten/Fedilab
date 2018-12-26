@@ -42,7 +42,7 @@
     <string name="microphone">ध्वनिग्राही</string>
     <string name="camera">कैमरा</string>
     <string name="speech_prompt">कृपया कुछ कहिये</string>
-    <string name="speech_not_supported">क्षमा करें! आपका यंत्र वाणी इंपुट का समर्थन नहीं करता है</string>
+    <string name="speech_not_supported">क्षमा करें! आपका उपकरण वाणी इंपुट का समर्थन नहीं करता है!</string>
     <string name="delete_all">सब हटाएँ</string>
     <string name="translate_toot">इस संदेश का अनुवाद करें</string>
     <string name="schedule">नियत करें</string>
@@ -78,10 +78,10 @@
     <string name="communication_menu_title">संचार</string>
     <string name="muted_menu">मौन किये गये उप्योगकर्ता</string>
     <string name="blocked_menu">प्रतिबंधित उप्योगकर्ता</string>
-    <string name="remote_follow_menu">दूरवर्ती फ़ौलो</string>
+    <string name="remote_follow_menu">दूरवर्ती अनुसरण</string>
     <string name="notifications">सूचनाएँ</string>
-    <string name="follow_request">फ़ौलो करने की गुज़ारिशें</string>
-    <string name="optimization">बेहतरी</string>
+    <string name="follow_request">अनुसरण करने की गुज़ारिशें</string>
+    <string name="optimization">इष्टतमीकरण</string>
     <string name="settings">सैटिंग्स</string>
     <string name="profile">वर्णन</string>
     <string name="make_a_choice">आप क्या करना चाहेंगे?</string>
@@ -114,11 +114,11 @@
     <string name="more_action_2">अवरुद्ध करें</string>
     <string name="more_action_3">रिपोर्ट</string>
     <string name="more_action_4">हटाएं</string>
-    <string name="more_action_5">प्रतिलिपि बनाएँ</string>
+    <string name="more_action_5">प्रतिलिपि</string>
     <string name="more_action_6">सांझा करें</string>
     <string name="more_action_7">उल्लेख</string>
     <string name="more_action_8">समयबद्ध मौन करें</string>
-    <string name="more_action_9">हटाएं और दोबारा लिखे</string>
+    <string name="more_action_9">हटाएं &amp; दोबारा लिखे</string>
     <string-array name="more_action_confirm">
         <item>इस खाते को मौन करें?</item>
         <item>इस खाते को अवरुद्ध करें?</item>
@@ -196,11 +196,11 @@
     <string name="conversation">बातचीत</string>
     <!-- Accounts -->
     <string name="no_accounts">दिखाने के लिये कोई खाता नहीं है</string>
-    <string name="no_follow_request">फ़ौलो करने की कोई गुज़ारिशें नहीं है</string>
+    <string name="no_follow_request">अनुसरण करने की कोई गुज़ारिशें नहीं है</string>
     <string name="status_cnt">लेख \n %1$s</string>
     <string name="following_cnt">अनुसरण \n %1$s</string>
     <string name="followers_cnt">अनुयायी \n %1$s</string>
-    <string name="pins_cnt">Pinned \n %d</string>
+    <string name="pins_cnt">जड़ा \n %d</string>
     <string name="authorize">अधिकृत करें</string>
     <string name="reject">अस्वीकार</string>
     <!-- Scheduled toots -->
@@ -227,8 +227,12 @@
         <item quantity="other">और %d अन्य सूचनाएं</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="one">एक और लेख खोजने के लिये
+
+%d और लेख खोजने के लिये</item>
+        <item quantity="other">एक और लेख खोजने के लिये
+
+%d और लेख खोजने के लिये</item>
     </plurals>
     <string name="delete_notification_ask">सूचना मिटाएं?</string>
     <string name="delete_notification_ask_all">सभी सूचनाओ को मिटाएं?</string>
@@ -254,7 +258,7 @@
     <string name="toast_report">संदेश को रिपोर्ट कर दिया गया है!</string>
     <string name="toast_unstatus">संदेश को मिटा दिया गया है!</string>
     <string name="toast_pin">लेख को जड़ दिया गया है!</string>
-    <string name="toast_unpin">The toot was unpinned!</string>
+    <string name="toast_unpin">लेख अब जड़ा हुआ नहीं है!</string>
     <string name="toast_error">क्षमा करें ! कोई गड़बड़ी उत्पन्न हुई है!</string>
     <string name="toast_code_error">एक गड़बड़ी हो गयी! इंस्टेंस ने प्राधिकरण कोड वापस नहीं दिया!</string>
     <string name="toast_error_instance">यह इंस्टेंस डोमेन वैध नहीं लग रहा!</string>
@@ -270,7 +274,7 @@
     <string name="toast_visibility_changed">%1$s खाते के लेखो की दृश्यता को बदल दिया गया है</string>
     <string name="toast_empty_search">इंस्टेंस का नाम और आपका नाम खाली नहीं हो सकता!</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">Optimisation of loading</string>
+    <string name="settings_title_optimisation">लोडिंग का इष्टतमीकरण</string>
     <string name="set_toots_page">लेखो की संख्या प्रति लोड</string>
     <string name="set_accounts_page">खातो की संख्या प्रति लोड</string>
     <string name="set_notifications_page">सूचनाओं की संख्या प्रति लोड</string>
@@ -305,7 +309,7 @@
     <string name="set_night_mode">रात्रि मोड</string>
     <string name="set_nsfw_timeout">एनएसएफडबल्यू दृश्य विराम (सेकेंड, ० मतलब बंद)</string>
     <string name="settings_title_profile">प्रोफ़ाइल संपादित करें</string>
-    <string name="set_profile_description">Bio…</string>
+    <string name="set_profile_description">बायो</string>
     <string name="set_lock_account">खाते पर ताला लगाएं</string>
     <string name="set_save_changes">बदलाव सहेजें</string>
     <string name="set_header_picture_overlay">एक हैडर चित्र चुनें</string>
@@ -313,19 +317,19 @@
     <string name="set_automatically_split_toot">जवाबो में ५०० अक्षरो से ज़्यादा वाले लेखो को स्वतः अलग करें</string>
     <string name="note_no_space">आप अनुमत १६० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
     <string name="username_no_space">आप अनुमत ३० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
-    <string name="settings_title_hour">Time slot for notifications:</string>
+    <string name="settings_title_hour">सूचनाओं के लिये निर्धारित समय</string>
     <string name="settings_time_from">के बीच</string>
     <string name="settings_time_to">और</string>
     <string name="settings_time_greater">समय %1$s से अधिक होना चाहिये</string>
     <string name="settings_time_lower">समय %1$s से कम होना चाहिये</string>
     <string name="settings_hour_init">आरंभ समय</string>
     <string name="settings_hour_end">अंतिम समय</string>
-    <string name="embedded_browser">Use the built-in browser</string>
+    <string name="embedded_browser">आंतरिक ब्राउज़र का इस्तेमाल करें</string>
     <string name="custom_tabs">कस्टम टैब्स</string>
     <string name="use_javascript">जावास्क्रिप्ट सक्रिय करें</string>
     <string name="expand_cw">स्वतः cw खोलें</string>
     <string name="use_cookies">तीसरी पार्टी कुकीज़ को अनुमति दें</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="settings_ui_layout">टाइम्लाइनो का अभिन्यास: </string>
     <string-array name="battery_profiles">
         <item>सामान्य बैटरी बहाव</item>
         <item>मध्यम बैटरी बहाव</item>
@@ -341,7 +345,7 @@
         <item>डीपएल</item>
         <item>नहीं</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">आपका एपीआई कोड, आप इसे यैंडेक्स के लिये खाली छोड़ सकते है</string>
     <string-array name="settings_theme">
         <item>साँवला</item>
         <item>हल्का</item>
@@ -365,23 +369,23 @@
     </string-array>
     <string name="set_title_news">समाचार</string>
     <string name="set_notification_news">मुख्यपृष्ट पे नये लेखो के लिये सूचित करें</string>
-    <string name="action_follow">Follow</string>
-    <string name="action_unfollow">Unfollow</string>
+    <string name="action_follow">अनुसरण करें</string>
+    <string name="action_unfollow">अनुसरण ना करें</string>
     <string name="action_block">प्रतिबंध</string>
     <string name="action_unblock">प्रतिबंध हटाएं</string>
     <string name="action_mute">खामोश</string>
     <string name="action_no_action">कोई कार्यवाही नहीं</string>
     <string name="action_unmute">मौन तोड़ें</string>
     <string name="request_sent">अनुरोध भेज दिया</string>
-    <string name="followed_by">Follows you</string>
+    <string name="followed_by">आपका अनुसरण कर रहे हैं</string>
     <string name="action_search">खोजें</string>
     <string name="set_capitalize">जवाबों में पहले अक्षर को बड़ा रखें</string>
     <string name="set_resize_picture">चित्रो का नाप बदलें</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">पुश सूचनाएँ</string>
-    <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
-    </string>
+    <string name="settings_popup_message">कृप्या उन पुश सूचनाएं को पक्का करें जो आप पाना चाहते हैं।
+
+आप सूचनाओं को बाद में सेटिंग्स में जाकर सक्रिय या निश्क्रिय कर सकते हैं (सूचनाएं टैब)।    </string>
     <string name="settings_popup_timeline">मुख्यपृष्ट में अपठित लेखो के लिये?</string>
     <string name="settings_popup_notification">अपठित सूचनाओं के लिये?</string>
     <!-- CACHE -->
@@ -396,8 +400,8 @@
     <string name="v_public">सार्वजनिक</string>
     <string name="v_unlisted">Unlisted</string>
     <string name="v_private">निजी</string>
-    <string name="v_direct">Direct</string>
-    <string name="v_keywords">Some keywords…</string>
+    <string name="v_direct">सीधा</string>
+    <string name="v_keywords">कुछ कुंजी शब्द...</string>
     <string name="show_media">मीडिया दिखाएँ</string>
     <string name="show_pinned">जड़े हुए दिखाएँ</string>
     <string name="filter_no_result">कोई मिलता-जुलता परिणाम नहीं मिला!</string>
@@ -410,12 +414,11 @@
     </string-array>
     <string name="owner_cached_toots_empty">डेटाबेस में कोई लेख नहीं मिला। उन्हें वापस पाने के लिये मेन्यू में मौजूद सिंक बटन का इस्तेमाल करें।</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Recorded data</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
-    </string>
+    <string name="privacy_data_title">अभिलिखित डेटा</string>
+    <string name="privacy_data">खातों की सिर्फ़ साधारण जानकारी उपकरण में रखी जाती है।
+यह डेटा बिलकुल गोपनीय है और इसका उपयोग सिर्फ़ यह एेप कर सकता है।
+एेप के मिटाते ही यह डेटा तुरंत नष्ट हो जाता है।\n
+&#9888; लाॅगइन और पासवर्ड कभी रखे नहीं जाते। उनका उपयोग केवल किसी इंस्टेंस के साथ सुरक्षित प्रमाणीकरण (SSL) के दौरान किया जाता है।    </string>
     <string name="privacy_authorizations_title">अनुमतियाँ:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
@@ -457,12 +460,12 @@
     <string name="action_lists_delete">सूची मिटाएँ</string>
     <string name="action_lists_update">सूची संपादित करें</string>
     <string name="action_lists_title_placeholder">नये सूची का शीर्षक</string>
-    <string name="action_lists_search_users">Search among people you follow</string>
+    <string name="action_lists_search_users">उनमें खोजें जिनका आप अनुसरण करते हैं</string>
     <string name="action_lists_owner">आपकी सूचियाँ</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s %2$s पे चले गये है</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
-    <string name="issue_login_title">Authentication does not work?</string>
+    <string name="show_boost_count">बूस्ट/पसंदीदा की गिनती दिखाएं</string>
+    <string name="issue_login_title">प्रमाणीकरण काम नहीं कर रहा?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
@@ -493,75 +496,75 @@
     <string name="no_account_yet">कोई खाता नहीं है?</string>
     <string name="toast_instance_unavailable">इस इंस्टेंस पे कोई टाइम्लाइन नहीं मिली!</string>
     <string name="delete_instance">इस इंस्टेंस को मिटाएँ?</string>
-    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
+    <string name="warning_delete_instance">आप %s को अपने अनुसरण करते इंस्टेंसो से मिटाने वाले है।</string>
     <string name="which_language">अनुवाद करें</string>
     <string name="crash_title">मैस्टालैब रुक गया है :(</string>
     <string name="crash_message">आप मुझे ईमेल के द्वारा क्रैश रिपोर्ट भेज सकते है। यह उसे ठीक करने में मदद देगी :)\n\nआप अतिरिक्त विषय वस्तु जोड़ सकते है। धन्यवाद!</string>
     <string name="send_crash_report">ईमेल के द्वारा क्रैश रिपोर्ट भेजने के लिये पूछे?</string>
-    <string name="follow_instance">Follow instance</string>
-    <string name="toast_instance_already_added">You already follow this instance!</string>
-    <string name="toast_instance_followed">The instance is followed!</string>
-    <string name="action_partnership">Partnerships</string>
-    <string name="neutral_menu_information">Information</string>
-    <string name="hide_boost">Hide boosts from %s</string>
-    <string name="endorse">Feature on profile</string>
-    <string name="hide_everything">Hide everything from %s</string>
-    <string name="show_boost">Show boosts from %s</string>
-    <string name="unendorse">Don\'t feature on profile</string>
-    <string name="show_everything">Show everything from %s</string>
-    <string name="toast_endorse">The account is now featured on profile</string>
-    <string name="toast_unendorse">The account is no longer featured on profile</string>
-    <string name="toast_show_boost">Boosts are now shown!</string>
-    <string name="toast_hide_boost">Boosts are now hidden!</string>
-    <string name="direct_message">Direct message</string>
-    <string name="filters">Filters</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-    <string name="filter_keyword">Keyword or phrase</string>
-    <string name="context_home">Home timeline</string>
-    <string name="context_public">Public timelines</string>
-    <string name="context_notification">Notifications</string>
-    <string name="context_conversation">Conversations</string>
+    <string name="follow_instance">इंस्टेंस का अनुसरण करें</string>
+    <string name="toast_instance_already_added">आप इस इंस्टेंस का पहले से अनुसरण कर रहे हैं!</string>
+    <string name="toast_instance_followed">इस इंस्टेंस का अनुसरण किया!</string>
+    <string name="action_partnership">साझेदारियां</string>
+    <string name="neutral_menu_information">जानकारी</string>
+    <string name="hide_boost">%s के बूस्ट छुपाएं</string>
+    <string name="endorse">प्रोफ़ाइल पे पेश करें</string>
+    <string name="hide_everything">%s के सारी चीज़े छुपाएं</string>
+    <string name="show_boost">%s के बूस्ट दिखाएं</string>
+    <string name="unendorse">प्रोफ़ाइल पे पेश ना करें</string>
+    <string name="show_everything">%s के सारी चीज़ें दिखाएं</string>
+    <string name="toast_endorse">खाते अब प्रोफ़ाइल पे पेश है</string>
+    <string name="toast_unendorse">खाता अब प्रोफ़ाइल पे पेश नहीं है</string>
+    <string name="toast_show_boost">बूस्ट अब प्रस्तुत होंगे!</string>
+    <string name="toast_hide_boost">बूस्ट अब प्रस्तुत नहीं होंगे!</string>
+    <string name="direct_message">सीधा संदेश</string>
+    <string name="filters">छन्नियां</string>
+    <string name="action_filters_empty_content">कोई छन्नी मौजूद नहीं है। आप \"+\" बटन को क्लिक करके एक छन्नी बना सकते है।</string>
+    <string name="filter_keyword">कुंजी शब्द या वाक्यांश</string>
+    <string name="context_home">मुख्यपृष्ट</string>
+    <string name="context_public">सार्वजनिक टाइम्लाइन</string>
+    <string name="context_notification">सूचनाएँ</string>
+    <string name="context_conversation">वार्तालाप</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-    <string name="context_drop">Drop instead of hide</string>
+    <string name="context_drop">छिपाने के बजाय हटा दें</string>
     <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
     <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-    <string name="context_whole_word">Whole word</string>
-    <string name="filter_context">Filter contexts</string>
-    <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-    <string name="filter_expire">Expire after</string>
-    <string name="add_new_filter">Add New Filter</string>
-    <string name="action_filter_delete">Delete filter?</string>
-    <string name="action_update_filter">Update filter</string>
-    <string name="action_filter_create">Create filter</string>
-    <string name="how_to_follow">Whom to follow</string>
-    <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
-    <string name="follow_account">Follow</string>
-    <string name="select_all">Select all</string>
-    <string name="unselect_all">Unselect all</string>
-    <string name="follow_trunk">%s is followed!</string>
-    <string name="create_list_trunk">Creating the list %s</string>
-    <string name="add_account_list_trunk">Adding accounts to the list</string>
-    <string name="account_added_list_trunk">Accounts were added to the list</string>
-    <string name="adding_account_list_trunk">Adding accounts to the list</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
-    <string name="about_trunk">Who to follow</string>
-    <string name="about_trunk_action">Trunk API</string>
-    <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
-    <string name="retrieve_remote_account">Fetching remote account</string>
-    <string name="expand_image">Automatically expand hidden media</string>
-    <string name="set_display_follow_instance">Display follow instances button</string>
-    <string name="channel_notif_follow">New follow</string>
-    <string name="channel_notif_boost">New Boost</string>
-    <string name="channel_notif_fav">New Favourite</string>
-    <string name="channel_notif_mention">New Mention</string>
-    <string name="channel_notif_toot">New Toot</string>
+    <string name="context_whole_word">पूरा शब्द</string>
+    <string name="filter_context">सन्दर्भ छाटें</string>
+    <string name="filter_context_explanations">एक या अनेक संदर्भ जहाँ छन्नी लागू हो</string>
+    <string name="filter_expire">के बाद खत्म हो</string>
+    <string name="add_new_filter">नयी छन्नी जोड़े</string>
+    <string name="action_filter_delete">छन्नी मिटाएं?</string>
+    <string name="action_update_filter">छन्नी का नवीनीकरण करें</string>
+    <string name="action_filter_create">छन्नी बनाएं</string>
+    <string name="how_to_follow">किनका अनुसरण करें</string>
+    <string name="action_who_to_follow_empty_content">इस समय कोई खाता सूचीबद्ध नहीं है!</string>
+    <string name="follow_account">अनुसरण करें</string>
+    <string name="select_all">सभी चुनें</string>
+    <string name="unselect_all">सभी अचयनित करें</string>
+    <string name="follow_trunk">%s का अनुसरण किया!</string>
+    <string name="create_list_trunk">%s सूची बना रहे हैं</string>
+    <string name="add_account_list_trunk">खोतों को सूची में जोड़ जा रहा है</string>
+    <string name="account_added_list_trunk">खातों को सूची में जोड़ दिया</string>
+    <string name="adding_account_list_trunk">खोतों को सूची में जोड़ जा रहा है</string>
+    <string name="action_list_add">आपने कोई सूची नहीं बनाई है। एक नयी सूची बनाने के लिये \"+\" बटन पे क्लिक करें।</string>
+    <string name="action_remote_instance_add">आप किसी भी दूर्वती इंस्टेंस का अनुसरण नहीं कर रहे हैं। वह करने के लिये \"+\" बटन पे क्लिक करें।</string>
+    <string name="about_trunk">किसका अनुसरण करें</string>
+    <string name="about_trunk_action">ट्रंक एपीआई</string>
+    <string name="toast_impossible_to_follow">खाते का अनुसरण नहीं हो पाया</string>
+    <string name="retrieve_remote_account">दूरर्वती खाते को लाया जा रहा है</string>
+    <string name="expand_image">स्वतः छुपे हुए मिडिया को दिखाएं</string>
+    <string name="set_display_follow_instance">इंस्टेंस का अनुसरण बटन दिखाएं</string>
+    <string name="channel_notif_follow">नया अनुसरण</string>
+    <string name="channel_notif_boost">नया बूस्ट</string>
+    <string name="channel_notif_fav">नया पसंदीदा</string>
+    <string name="channel_notif_mention">नया उल्लेख</string>
+    <string name="channel_notif_toot">नया लेख</string>
     <string name="channel_notif_backup">लेखो का बैकअप</string>
-    <string name="channel_notif_media">Media Download</string>
-    <string name="set_notif_sound">Change notification sound</string>
-    <string name="select_sound">Select Tone</string>
-    <string name="set_enable_time_slot">Enable time slot</string>
-    <string name="how_to_videos">How To Videos</string>
+    <string name="channel_notif_media">मीडिया डाउंलोड</string>
+    <string name="set_notif_sound">सूचना टोन को बदलें</string>
+    <string name="select_sound">टोन चुनें</string>
+    <string name="set_enable_time_slot">निर्धारित समय सक्रिय करें</string>
+    <string name="how_to_videos">शिक्षण वीडियो</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
     <string name="no_blocked_domain">कोई प्रतिबंधित डोमेन्स नहीं है!</string>
     <string name="unblock_domain_confirm">Unblock domain</string>
@@ -572,73 +575,73 @@
     <string name="toast_block_domain">यह डोमेन प्रतिबंधित है</string>
     <string name="toast_unblock_domain">यह डोमेन अब प्रतिबंधित नहीं है!</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
-    <string name="comment">Comment</string>
-    <string name="peertube_instance">Peertube instance</string>
-    <string name="set_display_direct">Display private messages timeline</string>
-    <string name="set_keep_background_process">Keep background process when app is closed</string>
-    <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-    <string name="number_view_video">%s views</string>
-    <string name="duration_video">Duration: %s</string>
-    <string name="add_remote_instance">Add an instance</string>
-    <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
-    <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube favourites</string>
-    <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-    <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-    <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
-    <string name="channel">Channel</string>
-    <string name="no_peertube_channels">No Peertube channels</string>
-    <string name="no_peertube_instances">No Peertube instances</string>
-    <string name="no_mastodon_instances">No Mastodon instances</string>
-    <string name="no_lists">No lists</string>
-    <string name="videos">Videos</string>
-    <string name="channels">Channels</string>
-    <string name="set_display_emoji">Use Emoji One</string>
-    <string name="information">Information</string>
+    <string name="comment">टिप्पणी</string>
+    <string name="peertube_instance">पीयरट्यूब इंस्टंस</string>
+    <string name="set_display_direct">निजी संदेश टाइम्लाइन दिखाएं</string>
+    <string name="set_keep_background_process">एेप बंद करने के बाद भी पृष्ठभूमि प्रक्रिया को चालू रखे</string>
+    <string name="no_comments">वीडियो पे सबसे पहले टिप्पणी करने वाले बने ऊपरी दाई ओर वाले बटन के साथ!</string>
+    <string name="number_view_video">%s बार देखा</string>
+    <string name="duration_video">अवधि: %s</string>
+    <string name="add_remote_instance">एक इंसटंस जोड़ें</string>
+    <string name="comment_no_allowed_peertube">इस वीडियो पर टिप्पणियां निष्क्रिय हैं!</string>
+    <string name="pickup_resolution">एक रेज़लूशन चुनें</string>
+    <string name="peertube_favorites">पीयरट्यूब पसंदीदा</string>
+    <string name="bookmark_add_peertube">इस वीडियो को बुकमार्क्स में जोड़ दिया गया है!</string>
+    <string name="bookmark_remove_peertube">इस वीडियो को बुकमार्क्स से हटा दिया गया है!</string>
+    <string name="bookmark_peertube_empty">आपके पसंदीदा सूची में कोई पीयरट्यूब वीडियो नहीं है!</string>
+    <string name="channel">चैनल</string>
+    <string name="no_peertube_channels">कोई पीयरट्यूब चैनल नहीं है</string>
+    <string name="no_peertube_instances">कोई पीयरट्यूब इंस्टंस नहीं है</string>
+    <string name="no_mastodon_instances">कोई मैस्टोडाॅन इंस्टंस नहीं है</string>
+    <string name="no_lists">कोई सूची नहीं है</string>
+    <string name="videos">वीडियो</string>
+    <string name="channels">चैनल</string>
+    <string name="set_display_emoji">इमोजी वन इस्तेमाल करें</string>
+    <string name="information">जानकारी</string>
     <string name="set_display_card">सभी लेखो में पूर्वदर्शन लागू करें</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
+    <string name="thanks_text_ux">नया UX/UI डिज़ाइनर</string>
+    <string name="set_old_direct_timeline">मैस्टोडाॅन २.६ से पहले का सीधा टाइम्लाइन इस्तेमाल करें</string>
+    <string name="set_display_video_preview">वीडियो के पूर्वदर्शन दिखाएं</string>
+    <string name="thanks_text_support">गिटलैब समर्थन</string>
+    <string name="action_bug_report">त्रुटि रिपोर्ट</string>
+    <string name="no_mail_client">कोई ईमेल एेप स्थापित नहीं की गयी है।</string>
+    <string name="bug_report_mail">ऋुटि रिपोर्ट भेजें</string>
+    <string name="account_id_clipbloard">खाते के पहचानपत्र की प्रतिलिपि क्लिपबोर्ड में जोड़ दी गयी है!</string>
+    <string name="settings_title_battery">बैटरी का इष्टतमीकरण</string>
+    <string name="set_change_locale">भाषा बदलें</string>
+    <string name="default_language">पूर्वनिर्धारित भाषा</string>
     <string name="truncate_long_toots">लंबे लेखो को छोटा करें</string>
     <string name="set_truncate_toot">\'x\' पंक्तियों से लंबे लेखो को छोटा करें। शून्य मतलब निष्क्रिय।</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
+    <string name="display_toot_truncate">और दिखाएं</string>
+    <string name="hide_toot_truncate">कम दिखाएं</string>
     <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
+    <string name="tags_already_stored">टैग पहले से मौजूद है!</string>
     <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="tags_renamed">टैग को बदल दिया गया है!</string>
+    <string name="tags_deleted">टैग को मिटा दिया गया है!</string>
+    <string name="set_display_art">कला टाइम्लाइन दिखाएं</string>
     <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
+    <string name="boost_scheduled">बूस्ट को परिगणित कर दिया है!</string>
+    <string name="no_scheduled_boosts">कोई परिगणित बूस्ट मौजूद नहीं है!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
-    <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
+    <string name="art_menu">कला टाइम्लाइन</string>
+    <string name="open_menu">मेन्यू खोलें</string>
+    <string name="app_logo">एेप का चिह्न</string>
+    <string name="profile_picture">प्रोफ़ाइल चित्र</string>
+    <string name="profile_banner">प्रोफ़ाइल बैनर</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
+    <string name="add_new">नया जोड़ें</string>
+    <string name="mastohost_logo">मैस्टोहोस्ट का चिह्न</string>
+    <string name="emoji_picker">इमोजी चयनकर्ता</string>
+    <string name="refresh">नवीकरण</string>
+    <string name="expand_conversation">वार्तालाप को खोलें</string>
+    <string name="remove_account">एक खाता हटाएं</string>
     <string name="delete_domain">प्रतिबंधित डोमेन को मिटा दें</string>
     <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
+    <string name="play_video">वीडियो चलाएं</string>
+    <string name="new_toot">नया लेख</string>
     <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
+    <string name="hide_media">मीडिया छुपाएं</string>
     <string name="favicon">Favicon</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
@@ -663,11 +666,14 @@
     <!-- languages not translated -->
     <string name="languages">Languages</string>
     <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
-    <string name="bot">Bot</string>
+    <string name="show_media_nsfw">NSFW दिखाएं</string>
+    <string name="crowdin_translations">क्राउडिन के अनुवाद</string>
+    <string name="crowdin_manager">क्राउडिन प्रबंधक</string>
+    <string name="translation_app">एेप का अनुवाद</string>
+    <string name="about_crowdin">क्राउडिन के बारे में</string>
+    <string name="bot">बॉट</string>
+    <string name="pixelfed_instance">Pixelfed instance</string>
+    <string name="mastodon_instance">Mastodon instance</string>
+    <string name="no_pixelfed_instance">No Pixelfed instances</string>
     <!-- end languages -->
 </resources>

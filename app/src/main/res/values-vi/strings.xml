@@ -338,7 +338,7 @@ và %d toots khác để khám phá</item>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>Không</item>
-        <item>No</item>
+        <item>Không</item>
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
@@ -347,7 +347,7 @@ và %d toots khác để khám phá</item>
         <item>Black</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
+        <item>Không</item>
         <item>512 Kb</item>
         <item>1 Mb</item>
         <item>2 Mb</item>
@@ -481,13 +481,13 @@ và %d toots khác để khám phá</item>
     <string name="poxy_host">Host</string>
     <string name="poxy_port">Port</string>
     <string name="poxy_login">Login</string>
-    <string name="poxy_password">Password</string>
+    <string name="poxy_password">Mật khẩu</string>
     <string name="set_theme">Theme:</string>
     <string name="set_compact_mode">Compact mode</string>
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
-    <string name="no_account_yet">No account yet?</string>
+    <string name="no_account_yet">Chưa có tài khoản?</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
@@ -499,7 +499,7 @@ và %d toots khác để khám phá</item>
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
     <string name="action_partnership">Partnerships</string>
-    <string name="neutral_menu_information">Information</string>
+    <string name="neutral_menu_information">Thông tin</string>
     <string name="hide_boost">Hide boosts from %s</string>
     <string name="endorse">Feature on profile</string>
     <string name="hide_everything">Hide everything from %s</string>
@@ -575,7 +575,7 @@ và %d toots khác để khám phá</item>
     <string name="set_keep_background_process">Keep background process when app is closed</string>
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
     <string name="number_view_video">%s views</string>
-    <string name="duration_video">Duration: %s</string>
+    <string name="duration_video">Thời gian: %s</string>
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
@@ -583,13 +583,13 @@ và %d toots khác để khám phá</item>
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
-    <string name="channel">Channel</string>
+    <string name="channel">Kênh</string>
     <string name="no_peertube_channels">No Peertube channels</string>
     <string name="no_peertube_instances">No Peertube instances</string>
     <string name="no_mastodon_instances">No Mastodon instances</string>
     <string name="no_lists">No lists</string>
-    <string name="videos">Videos</string>
-    <string name="channels">Channels</string>
+    <string name="videos">Video</string>
+    <string name="channels">Kênh</string>
     <string name="set_display_emoji">Use Emoji One</string>
     <string name="information">Information</string>
     <string name="set_display_card">Display previews in all toots</string>
@@ -602,8 +602,8 @@ và %d toots khác để khám phá</item>
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
+    <string name="set_change_locale">Thay đổi ngôn ngữ</string>
+    <string name="default_language">Ngôn ngữ mặc định</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">Display more</string>
@@ -632,20 +632,20 @@ và %d toots khác để khám phá</item>
     <string name="remove_account">Remove an account</string>
     <string name="delete_domain">Delete the blocked domain</string>
     <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
+    <string name="play_video">Phát video</string>
     <string name="new_toot">New toot</string>
     <string name="card_view_image">Image of the card</string>
     <string name="hide_media">Hide media</string>
     <string name="favicon">Favicon</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
-        <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>Không bao giờ</item>
+        <item>30 phút</item>
+        <item>1 giờ</item>
+        <item>6 giờ</item>
+        <item>12 giờ</item>
+        <item>1 ngày</item>
+        <item>1 tuần</item>
     </string-array>
     <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
@@ -658,7 +658,7 @@ và %d toots khác để khám phá</item>
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">Ngôn ngữ</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>
@@ -666,5 +666,8 @@ và %d toots khác để khám phá</item>
     <string name="translation_app">Translation of the application</string>
     <string name="about_crowdin">About Crowdin</string>
     <string name="bot">Bot</string>
+    <string name="pixelfed_instance">Pixelfed instance</string>
+    <string name="mastodon_instance">Mastodon instance</string>
+    <string name="no_pixelfed_instance">No Pixelfed instances</string>
     <!-- end languages -->
 </resources>

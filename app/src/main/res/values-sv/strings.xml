@@ -110,7 +110,7 @@
     <string name="reblog_remove">Avboosta denna toot?</string>
     <string name="pin_add">Fäst denna toot?</string>
     <string name="pin_remove">Lossa denna toot?</string>
-    <string name="more_action_1">Mute</string>
+    <string name="more_action_1">Tyst</string>
     <string name="more_action_2">Blockera</string>
     <string name="more_action_3">Rapportera</string>
     <string name="more_action_4">Ta bort</string>
@@ -183,10 +183,10 @@
     <string name="instance_no_description">No description available!</string>
     <!-- About -->
     <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
+    <string name="about_developer">Utvecklare:</string>
+    <string name="about_license">Licens: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Source code: </string>
+    <string name="about_code">Källkod: </string>
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_thekinrar">Search instances:</string>
     <string name="about_thekinrar_action">instances.social</string>
@@ -235,9 +235,9 @@
     <string name="delete_notification">The notification has been deleted!</string>
     <string name="delete_notification_all">All notifications have been deleted!</string>
     <!-- HEADER -->
-    <string name="following">Following</string>
-    <string name="followers">Followers</string>
-    <string name="pinned_toots">Pinned</string>
+    <string name="following">Följer</string>
+    <string name="followers">Följare</string>
+    <string name="pinned_toots">Fäst</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
     <string name="no_internet">No Internet connection!</string>
@@ -274,13 +274,13 @@
     <string name="set_toots_page">Number of toots per load</string>
     <string name="set_accounts_page">Number of accounts per load</string>
     <string name="set_notifications_page">Number of notifications per load</string>
-    <string name="set_attachment_always">Always</string>
+    <string name="set_attachment_always">Alltid</string>
     <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Ask</string>
     <string name="set_attachment_action">Load the media</string>
     <string name="load_attachment">Load the pictures</string>
-    <string name="load_attachment_spoiler">Show more…</string>
-    <string name="load_attachment_spoiler_less">Show less…</string>
+    <string name="load_attachment_spoiler">Visa mer…</string>
+    <string name="load_attachment_spoiler_less">Visa mindre…</string>
     <string name="load_sensitive_attachment">Sensitive content</string>
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_display_local">Display local timeline</string>
@@ -298,7 +298,7 @@
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">Advanced settings</string>
+    <string name="settings_title_more_options">Avancerade inställningar</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Silent Notifications</string>
@@ -608,7 +608,7 @@
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
     <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
+    <string name="default_language">Standardspråk</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">Display more</string>
@@ -663,7 +663,7 @@
     <string name="more_information">More information</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">Språk</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>
@@ -671,5 +671,8 @@
     <string name="translation_app">Translation of the application</string>
     <string name="about_crowdin">About Crowdin</string>
     <string name="bot">Bot</string>
+    <string name="pixelfed_instance">Pixelfed instance</string>
+    <string name="mastodon_instance">Mastodon instance</string>
+    <string name="no_pixelfed_instance">No Pixelfed instances</string>
     <!-- end languages -->
 </resources>
