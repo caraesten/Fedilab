@@ -621,11 +621,11 @@
     <string name="tags_deleted">टैग को मिटा दिया गया है!</string>
     <string name="set_display_art">कला टाइम्लाइन दिखाएं</string>
     <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
+    <string name="boost_scheduled">बूस्ट को परिगणित कर दिया है!</string>
+    <string name="no_scheduled_boosts">कोई परिगणित बूस्ट मौजूद नहीं है!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
+    <string name="art_menu">कला टाइम्लाइन</string>
+    <string name="open_menu">मेन्यू खोलें</string>
     <string name="app_logo">Logo of the application</string>
     <string name="profile_picture">Profile picture</string>
     <string name="profile_banner">Profile banner</string>
