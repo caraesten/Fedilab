@@ -614,9 +614,9 @@
     <string name="set_truncate_toot">\'x\' पंक्तियों से लंबे लेखो को छोटा करें। शून्य मतलब निष्क्रिय।</string>
     <string name="display_toot_truncate">और दिखाएं</string>
     <string name="hide_toot_truncate">कम दिखाएं</string>
-    <string name="manage_tags">Manage tags</string>
+    <string name="manage_tags">टैग्स संभाले</string>
     <string name="tags_already_stored">टैग पहले से मौजूद है!</string>
-    <string name="tags_stored">The tag has been stored!</string>
+    <string name="tags_stored">टैग को रख लिया गया है!</string>
     <string name="tags_renamed">टैग को बदल दिया गया है!</string>
     <string name="tags_deleted">टैग को मिटा दिया गया है!</string>
     <string name="set_display_art">कला टाइम्लाइन दिखाएं</string>
@@ -642,16 +642,16 @@
     <string name="new_toot">नया लेख</string>
     <string name="card_view_image">Image of the card</string>
     <string name="hide_media">मीडिया छुपाएं</string>
-    <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="favicon">फ़ेवीकाॅन</string>
+    <string name="media_description">दृष्टिहीन लोगों के लिये मीडिया का विवरण जोड़ें</string>
     <string-array name="filter_expire">
-        <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>कभी नहीं</item>
+        <item>३० मिनट</item>
+        <item>१ घंटा</item>
+        <item>६ घंटे</item>
+        <item>१२ घंटे</item>
+        <item>१ दिन</item>
+        <item>१ सप्ताह</item>
     </string-array>
     <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
@@ -661,19 +661,19 @@
     </string>
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
-    <string name="more_information">More information</string>
+    <string name="more_information">अधिक जानकारी</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
-    <string name="show_media_only">Media only</string>
+    <string name="languages">भाषाएँ</string>
+    <string name="show_media_only">सिर्फ़ मीडिया</string>
     <string name="show_media_nsfw">NSFW दिखाएं</string>
     <string name="crowdin_translations">क्राउडिन के अनुवाद</string>
     <string name="crowdin_manager">क्राउडिन प्रबंधक</string>
     <string name="translation_app">एेप का अनुवाद</string>
     <string name="about_crowdin">क्राउडिन के बारे में</string>
     <string name="bot">बॉट</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="pixelfed_instance">पिक्सलफ़ैड इंसटंस</string>
+    <string name="mastodon_instance">मैस्टोडाॅन इंसटंस</string>
+    <string name="no_pixelfed_instance">कोई पिक्सलफ़ैड इंसटंस नहीं है</string>
     <!-- end languages -->
 </resources>
