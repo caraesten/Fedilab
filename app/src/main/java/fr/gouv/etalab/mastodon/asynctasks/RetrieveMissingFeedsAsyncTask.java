@@ -89,14 +89,14 @@ public class RetrieveMissingFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 TagTimeline tagTimeline = tagTimelines.get(0);
                 boolean isArt = tagTimeline.isART();
                 if( isArt)
-                    apiResponse = api.getCustomArtTimelineSinceId(false, remoteInstance, since_id);
+                    apiResponse = api.getCustomArtTimelineSinceId(false, remoteInstance, since_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
                 else
-                    apiResponse = api.getPublicTimelineTagSinceId(remoteInstance, false, since_id);
+                    apiResponse = api.getPublicTimelineTagSinceId(remoteInstance, false, since_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
             }else{
-                apiResponse = api.getPublicTimelineTag(remoteInstance, false, since_id);
+                apiResponse = api.getPublicTimelineTag(remoteInstance, false, since_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
             }
         }else if (type == RetrieveFeedsAsyncTask.Type.ART)
-            apiResponse = api.getArtTimelineSinceId( false, since_id);
+            apiResponse = api.getArtTimelineSinceId( false, since_id, null, null, null);
         if (apiResponse != null) {
             if( type != RetrieveFeedsAsyncTask.Type.CONVERSATION)
                 tempStatus = apiResponse.getStatuses();

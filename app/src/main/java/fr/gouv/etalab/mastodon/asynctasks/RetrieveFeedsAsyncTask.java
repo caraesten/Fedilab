@@ -201,16 +201,16 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     TagTimeline tagTimeline = tagTimelines.get(0);
                     boolean isArt = tagTimeline.isART();
                     if( isArt)
-                        apiResponse = api.getCustomArtTimeline(false, tag, max_id);
+                        apiResponse = api.getCustomArtTimeline(false, tag, max_id,tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
                     else
-                        apiResponse = api.getPublicTimelineTag(tag, false, max_id);
+                        apiResponse = api.getPublicTimelineTag(tag, false, max_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
                 }else{
-                    apiResponse = api.getPublicTimelineTag(tag, false, max_id);
+                    apiResponse = api.getPublicTimelineTag(tag, false, max_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
                 }
 
                 break;
             case ART:
-                apiResponse = api.getArtTimeline(false, max_id);
+                apiResponse = api.getArtTimeline(false, max_id, null, null, null);
                 break;
             case CACHE_BOOKMARKS:
                 apiResponse = new APIResponse();

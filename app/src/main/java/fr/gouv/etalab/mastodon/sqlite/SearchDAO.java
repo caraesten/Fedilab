@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,16 +55,10 @@ public class SearchDAO {
      * Insert a keyword in database
      * @param keyword String
      */
-    public void insertSearch(String keyword, List<String> any, List<String> all, List<String> none) {
+    public void insertSearch(String keyword) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_KEYWORDS, keyword);
         values.put(Sqlite.COL_USER_ID, userId);
-        if( any != null && any.size() > 0)
-            values.put(Sqlite.COL_ANY, Helper.arrayToStringStorage(any));
-        if( all != null && all.size() > 0)
-            values.put(Sqlite.COL_ALL, Helper.arrayToStringStorage(all));
-        if( none != null && none.size() > 0)
-            values.put(Sqlite.COL_NONE, Helper.arrayToStringStorage(none));
         values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
         //Inserts search
         try{
@@ -89,6 +84,12 @@ public class SearchDAO {
         if( none != null && none.size() > 0)
             values.put(Sqlite.COL_NONE, Helper.arrayToStringStorage(none));
         //Inserts search
+        if( any != null)
+            Log.v(Helper.TAG, "any: " + Helper.arrayToStringStorage(any));
+        if( all != null)
+            Log.v(Helper.TAG, "all: " + Helper.arrayToStringStorage(all));
+        if( none != null)
+            Log.v(Helper.TAG, "none: " + Helper.arrayToStringStorage(none));
         try{
             db.update(Sqlite.TABLE_SEARCH,  values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_KEYWORDS + " = ?", new String[]{userId, tagTimeline.getName()});
         }catch (Exception ignored) {}
