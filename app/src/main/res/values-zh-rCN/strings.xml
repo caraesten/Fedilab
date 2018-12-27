@@ -671,5 +671,11 @@
     <string name="pixelfed_instance">像素化实例</string>
     <string name="mastodon_instance">长毛象实例</string>
     <string name="no_pixelfed_instance">未像素化实例</string>
+    <string name="any_tags">Any of these</string>
+    <string name="all_tags">All of these</string>
+    <string name="none_tags">None of these</string>
+    <string name="some_words_any">Any of these words (space-separated)</string>
+    <string name="some_words_all">All these words (space-separated)</string>
+    <string name="some_words_none">None of these words (space-separated)</string>
     <!-- end languages -->
 </resources>
