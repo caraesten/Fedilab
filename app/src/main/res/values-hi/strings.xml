@@ -527,7 +527,7 @@
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
     <string name="context_drop">छिपाने के बजाय हटा दें</string>
     <string name="context_drop_explanations">छनें हुए लेख हमेशा के लिये गायब हो जाएंगे छन्नी को बाद में हटाने के बावजूद</string>
-    <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
+    <string name="context_whole_word_explanations">जब कुंजी शब्द या वाक्यांश सिर्फ़ अक्षरांकीय है तब पूरे शब्द के साथ बराबर मिलने पर ही लागू होगा</string>
     <string name="context_whole_word">पूरा शब्द</string>
     <string name="filter_context">सन्दर्भ छाटें</string>
     <string name="filter_context_explanations">एक या अनेक संदर्भ जहाँ छन्नी लागू हो</string>
@@ -565,9 +565,9 @@
     <string name="select_sound">टोन चुनें</string>
     <string name="set_enable_time_slot">निर्धारित समय सक्रिय करें</string>
     <string name="how_to_videos">शिक्षण वीडियो</string>
-    <string name="retrieve_remote_conversation">Fetching remote thread!</string>
+    <string name="retrieve_remote_conversation">दूरवर्ती धारे को लाया जा रहा हा!</string>
     <string name="no_blocked_domain">कोई प्रतिबंधित डोमेन्स नहीं है!</string>
-    <string name="unblock_domain_confirm">Unblock domain</string>
+    <string name="unblock_domain_confirm">डोमेन मुक्त करें</string>
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
     <string name="block_domain_confirm_message">Are you sure to block %s?</string>
     <string name="blocked_domains">प्रतिबंधित डोमेन्स</string>
