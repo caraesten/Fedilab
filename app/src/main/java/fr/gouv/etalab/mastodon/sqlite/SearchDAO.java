@@ -19,7 +19,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,13 +82,6 @@ public class SearchDAO {
             values.put(Sqlite.COL_ALL, Helper.arrayToStringStorage(all));
         if( none != null && none.size() > 0)
             values.put(Sqlite.COL_NONE, Helper.arrayToStringStorage(none));
-        //Inserts search
-        if( any != null)
-            Log.v(Helper.TAG, "any: " + Helper.arrayToStringStorage(any));
-        if( all != null)
-            Log.v(Helper.TAG, "all: " + Helper.arrayToStringStorage(all));
-        if( none != null)
-            Log.v(Helper.TAG, "none: " + Helper.arrayToStringStorage(none));
         try{
             db.update(Sqlite.TABLE_SEARCH,  values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_KEYWORDS + " = ?", new String[]{userId, tagTimeline.getName()});
         }catch (Exception ignored) {}
