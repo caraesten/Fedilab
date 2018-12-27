@@ -432,7 +432,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     videoView.setVideoURI(uri);
                     videoView.start();
                     MediaController mc = new MediaController(MediaActivity.this);
-                    mc.setPadding(0, 0, 0, (int)Helper.convertDpToPixel(25, MediaActivity.this));
+                    mc.setPadding(0, 0, 0, (int)Helper.convertDpToPixel(40, MediaActivity.this));
                     videoView.setMediaController(mc);
                     videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
@@ -450,6 +450,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     videoView.setVideoURI(uri);
                     videoView.start();
                     MediaController mc = new MediaController(MediaActivity.this);
+                    mc.setPadding(0, 0, 0, (int)Helper.convertDpToPixel(40, MediaActivity.this));
                     mc.setAnchorView(videoView);
                     videoView.setMediaController(mc);
                     videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
