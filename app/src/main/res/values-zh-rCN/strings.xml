@@ -560,7 +560,7 @@
     <string name="set_notif_sound">更改通知提示音</string>
     <string name="select_sound">选择铃声</string>
     <string name="set_enable_time_slot">启用时间段</string>
-    <string name="how_to_videos">如何录像</string>
+    <string name="how_to_videos">操作方法视频</string>
     <string name="retrieve_remote_conversation">正在获取远程线程！</string>
     <string name="no_blocked_domain">没有屏蔽的域名！</string>
     <string name="unblock_domain_confirm">取消屏蔽域名</string>
