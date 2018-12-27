@@ -667,5 +667,11 @@
     <string name="pixelfed_instance">पिक्सलफ़ैड इंसटंस</string>
     <string name="mastodon_instance">मैस्टोडाॅन इंसटंस</string>
     <string name="no_pixelfed_instance">कोई पिक्सलफ़ैड इंसटंस नहीं है</string>
+    <string name="any_tags">Any of these</string>
+    <string name="all_tags">All of these</string>
+    <string name="none_tags">None of these</string>
+    <string name="some_words_any">Any of these words (space-separated)</string>
+    <string name="some_words_all">All these words (space-separated)</string>
+    <string name="some_words_none">None of these words (space-separated)</string>
     <!-- end languages -->
 </resources>
