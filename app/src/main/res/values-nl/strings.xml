@@ -639,10 +639,10 @@
     <string name="custom_emoji_picker">Aangepaste emoji-kiezer</string>
     <string name="play_video">Video bekijken</string>
     <string name="new_toot">Nieuwe toot</string>
-    <string name="card_view_image">Image of the card</string>
+    <string name="card_view_image">Afbeelding van de kaart</string>
     <string name="hide_media">Media verbergen</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Media voor het toevoegen van een beschrijving</string>
     <string-array name="filter_expire">
         <item>Nooit</item>
         <item>30 minuten</item>
@@ -663,19 +663,19 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="languages">Talen</string>
     <string name="show_media_only">Alleen media</string>
     <string name="show_media_nsfw">Toon NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
+    <string name="crowdin_translations">Crowdin vertalingen</string>
     <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
+    <string name="translation_app">Vertaling van de applicatie</string>
+    <string name="about_crowdin">Over Crowdin</string>
     <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="pixelfed_instance">Pixelfed instantie</string>
+    <string name="mastodon_instance">Mastodon instantie</string>
+    <string name="no_pixelfed_instance">Geen Pixelfed instanties</string>
+    <string name="any_tags">Eén van deze</string>
+    <string name="all_tags">Al deze</string>
+    <string name="none_tags">Geen van deze</string>
+    <string name="some_words_any">Eén van deze woorden (door spaties gescheiden)</string>
+    <string name="some_words_all">Al deze woorden (door spaties gescheiden)</string>
+    <string name="some_words_none">Geen van deze woorden (door spaties gescheiden)</string>
     <!-- end languages -->
 </resources>
