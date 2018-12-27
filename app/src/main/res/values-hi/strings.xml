@@ -28,7 +28,7 @@
     <string name="token">टोकन</string>
     <string name="save">सहेजें</string>
     <string name="restore">पहले जैसा करें</string>
-    <string name="two_factor_authentification">दो-चरणीय प्रमाणीकरण</string>
+    <string name="two_factor_authentification">दो-चरणीय प्रमाणीकरण?</string>
     <string name="other_instance">mastodon.etalab.gouv.fr के अलावा कोई अन्य इंस्टेंस?</string>
     <string name="no_result">कोई परिणाम नहीं!</string>
     <string name="instance">इंस्टेंस</string>
