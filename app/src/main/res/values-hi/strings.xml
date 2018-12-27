@@ -433,7 +433,7 @@
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
     </string>
-    <string name="privacy_API_title">Tracking and Libraries</string>
+    <string name="privacy_API_title">ट्रैकिंग एवं संग्रहालय</string>
     <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
         - <b>Glide</b>: To manage media\n
