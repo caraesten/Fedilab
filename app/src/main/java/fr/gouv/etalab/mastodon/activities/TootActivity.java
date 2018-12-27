@@ -2256,7 +2256,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             View v = toot_picture_container.getChildAt(i);
             if (v instanceof ImageView) {
                 for(Attachment attachment: attachments){
-                    if(attachment.getType().equals("image"))
+                    if(attachment.getType().toLowerCase().equals("image"))
                     if( v.getTag().toString().trim().equals(attachment.getId().trim())){
                         int borderSize = (int)convertDpToPixel(1, TootActivity.this);
                         int borderSizeTop = (int)convertDpToPixel(6, TootActivity.this);

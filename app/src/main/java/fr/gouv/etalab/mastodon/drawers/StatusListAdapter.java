@@ -1508,7 +1508,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         .into(holder.status_cardview_image);
                         }else
                             holder.status_cardview_image.setVisibility(View.GONE);
-                        if( !card.getType().equals("video")  && ( display_card || viewHolder.getAdapterPosition() == conversationPosition)) {
+                        if( !card.getType().toLowerCase().equals("video")  && ( display_card || viewHolder.getAdapterPosition() == conversationPosition)) {
                             holder.status_cardview.setVisibility(View.VISIBLE);
                             holder.status_cardview_video.setVisibility(View.GONE);
                             holder.status_cardview.setOnClickListener(new View.OnClickListener() {
@@ -1517,7 +1517,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     Helper.openBrowser(context, card.getUrl());
                                 }
                             });
-                        }else if(card.getType().equals("video") && ( display_video_preview || viewHolder.getAdapterPosition() == conversationPosition)){
+                        }else if(card.getType().toLowerCase().equals("video") && ( display_video_preview || viewHolder.getAdapterPosition() == conversationPosition)){
                             Glide.with(holder.status_cardview_image.getContext())
                                     .load(card.getImage())
                                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
@@ -2314,7 +2314,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 ImageView imageView;
                 if( i == 0) {
                     imageView = fullAttachement?holder.status_prev1_h:holder.status_prev1;
-                    if( attachment.getType().toLowerCase().equals("image") || attachment.getType().equals("unknown"))
+                    if( attachment.getType().toLowerCase().equals("image") || attachment.getType().toLowerCase().equals("unknown"))
                         if( fullAttachement)
                             holder.status_prev1_play_h.setVisibility(View.GONE);
                         else
@@ -2326,7 +2326,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_prev1_play.setVisibility(View.VISIBLE);
                 }else if( i == 1) {
                     imageView = fullAttachement?holder.status_prev2_h:holder.status_prev2;
-                    if( attachment.getType().toLowerCase().equals("image") || attachment.getType().equals("unknown"))
+                    if( attachment.getType().toLowerCase().equals("image") || attachment.getType().toLowerCase().equals("unknown"))
                         if( fullAttachement)
                             holder.status_prev2_play_h.setVisibility(View.GONE);
                         else
@@ -2338,7 +2338,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_prev2_play.setVisibility(View.VISIBLE);
                 }else if(i == 2) {
                     imageView = fullAttachement?holder.status_prev3_h:holder.status_prev3;
-                    if( attachment.getType().toLowerCase().equals("image") || attachment.getType().equals("unknown"))
+                    if( attachment.getType().toLowerCase().equals("image") || attachment.getType().toLowerCase().equals("unknown"))
                         if( fullAttachement)
                             holder.status_prev3_play_h.setVisibility(View.GONE);
                         else
@@ -2350,7 +2350,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             holder.status_prev3_play.setVisibility(View.VISIBLE);
                 }else {
                     imageView = fullAttachement?holder.status_prev4_h:holder.status_prev4;
-                    if( attachment.getType().toLowerCase().equals("image") || attachment.getType().equals("unknown"))
+                    if( attachment.getType().toLowerCase().equals("image") || attachment.getType().toLowerCase().equals("unknown"))
                         if( fullAttachement)
                             holder.status_prev4_play_h.setVisibility(View.GONE);
                         else
@@ -2365,7 +2365,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
                 if( url == null || url.trim().equals("") )
                     url = attachment.getUrl();
-                else if( attachment.getType().equals("unknown"))
+                else if( attachment.getType().toLowerCase().equals("unknown"))
                     url = attachment.getRemote_url();
 
                 if( fullAttachement){

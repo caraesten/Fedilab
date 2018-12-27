@@ -157,7 +157,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         media_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(attachment.getType().equals("video") || attachment.getType().equals("gifv")) {
+                if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("gifv")) {
                     if( attachment != null ) {
                         progress.setText("0 %");
                         progress.setVisibility(View.VISIBLE);

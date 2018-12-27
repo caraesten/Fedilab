@@ -923,7 +923,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         List<Notification> notificationsToRemove = new ArrayList<>();
         if( statusAction == API.StatusAction.MUTE || statusAction == API.StatusAction.BLOCK){
             for(Notification notification: notifications){
-                if( notification.getType().equals("mention") && notification.getAccount().getId().equals(targetedId))
+                if( notification.getType().toLowerCase().equals("mention") && notification.getAccount().getId().equals(targetedId))
                     notificationsToRemove.add(notification);
             }
             notifications.removeAll(notificationsToRemove);
@@ -1035,25 +1035,25 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 ImageView imageView;
                 if( i == 0) {
                     imageView = holder.status_prev1;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().toLowerCase().equals("image"))
                         holder.status_prev1_play.setVisibility(View.GONE);
                     else
                         holder.status_prev1_play.setVisibility(View.VISIBLE);
                 }else if( i == 1) {
                     imageView = holder.status_prev2;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().toLowerCase().equals("image"))
                         holder.status_prev2_play.setVisibility(View.GONE);
                     else
                         holder.status_prev2_play.setVisibility(View.VISIBLE);
                 }else if(i == 2) {
                     imageView = holder.status_prev3;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().toLowerCase().equals("image"))
                         holder.status_prev3_play.setVisibility(View.GONE);
                     else
                         holder.status_prev3_play.setVisibility(View.VISIBLE);
                 }else {
                     imageView = holder.status_prev4;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().toLowerCase().equals("image"))
                         holder.status_prev4_play.setVisibility(View.GONE);
                     else
                         holder.status_prev4_play.setVisibility(View.VISIBLE);
