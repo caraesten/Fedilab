@@ -652,7 +652,7 @@
     <string name="card_view_image">صورة البطاقة</string>
     <string name="hide_media">إخفاء الوسائط</string>
     <string name="favicon">أيقونة المفضلة</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">وصف للمعاقين بصريا</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>
@@ -684,9 +684,9 @@
     <string name="pixelfed_instance">مثيل خادم بيكسل فد</string>
     <string name="mastodon_instance">مثيل خادم ماستدون</string>
     <string name="no_pixelfed_instance">لا توجد مثيلات خوادم لبيكسل فد</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
+    <string name="any_tags">إحدى هذه الكلمات</string>
+    <string name="all_tags">كل هذه الكلمات</string>
+    <string name="none_tags">لا شيء من هذه</string>
     <string name="some_words_any">Any of these words (space-separated)</string>
     <string name="some_words_all">All these words (space-separated)</string>
     <string name="some_words_none">None of these words (space-separated)</string>
