@@ -618,7 +618,7 @@
     <string name="schedule_boost">बूस्ट समय सारणी करें</string>
     <string name="boost_scheduled">बूस्ट को परिगणित कर दिया है!</string>
     <string name="no_scheduled_boosts">कोई परिगणित बूस्ट मौजूद नहीं है!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[एक लेख का मेन्यू खोलें और चुनें <b>बूस्ट समय सारणी करें</b>।]]></string>
     <string name="art_menu">कला टाइम्लाइन</string>
     <string name="open_menu">मेन्यू खोलें</string>
     <string name="app_logo">एेप का चिह्न</string>
