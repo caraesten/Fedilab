@@ -662,5 +662,11 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="pixelfed_instance">Pixelfed-instans</string>
     <string name="mastodon_instance">Mastodon-instans</string>
     <string name="no_pixelfed_instance">Ingen Pixelfed-instanser</string>
+    <string name="any_tags">Any of these</string>
+    <string name="all_tags">All of these</string>
+    <string name="none_tags">None of these</string>
+    <string name="some_words_any">Any of these words (space-separated)</string>
+    <string name="some_words_all">All these words (space-separated)</string>
+    <string name="some_words_none">None of these words (space-separated)</string>
     <!-- end languages -->
 </resources>
