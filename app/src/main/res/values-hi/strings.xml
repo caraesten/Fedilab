@@ -524,7 +524,7 @@
     <string name="context_public">सार्वजनिक टाइम्लाइन</string>
     <string name="context_notification">सूचनाएँ</string>
     <string name="context_conversation">वार्तालाप</string>
-    <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
+    <string name="filter_keyword_explanations">अक्षरो के आकार या लेख के विषय वस्तु चेतावनी के बावजूद जोड़ा जाएगा</string>
     <string name="context_drop">छिपाने के बजाय हटा दें</string>
     <string name="context_drop_explanations">छनें हुए लेख हमेशा के लिये गायब हो जाएंगे छन्नी को बाद में हटाने के बावजूद</string>
     <string name="context_whole_word_explanations">जब कुंजी शब्द या वाक्यांश सिर्फ़ अक्षरांकीय है तब पूरे शब्द के साथ बराबर मिलने पर ही लागू होगा</string>
@@ -629,7 +629,7 @@
     <string name="app_logo">एेप का चिह्न</string>
     <string name="profile_picture">प्रोफ़ाइल चित्र</string>
     <string name="profile_banner">प्रोफ़ाइल बैनर</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
+    <string name="contact_instance_admin">इंसटंस के प्रबंधक से संपर्क करें</string>
     <string name="add_new">नया जोड़ें</string>
     <string name="mastohost_logo">मैस्टोहोस्ट का चिह्न</string>
     <string name="emoji_picker">इमोजी चयनकर्ता</string>
@@ -637,7 +637,7 @@
     <string name="expand_conversation">वार्तालाप को खोलें</string>
     <string name="remove_account">एक खाता हटाएं</string>
     <string name="delete_domain">प्रतिबंधित डोमेन को मिटा दें</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
+    <string name="custom_emoji_picker">कस्टम इमोजी चयनकर्ता</string>
     <string name="play_video">वीडियो चलाएं</string>
     <string name="new_toot">नया लेख</string>
     <string name="card_view_image">पत्ते की छवी</string>
@@ -657,10 +657,8 @@
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
-    </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
-    </string>
+    <string name="showcase_uid">यहाँ अपने मैस्टोडाॅन खाते से जुड़े ईमेल को लिखे।    </string>
+    <string name="showcase_pwd">आखरी चरण में अपना पासवर्ड डाले और फिर लाॅगइन पे क्लिक करें।    </string>
     <string name="more_information">अधिक जानकारी</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
