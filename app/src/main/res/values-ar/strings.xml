@@ -387,7 +387,7 @@
     <string name="request_sent">تم إرسال الطلب</string>
     <string name="followed_by">يتابعك</string>
     <string name="action_search">البحث</string>
-    <string name="set_capitalize">حروف كبيرة عند الرد في أول الجملة</string>
+    <string name="set_capitalize">حروف كبيرة في أول الجملة عند الرد</string>
     <string name="set_resize_picture">تعديل حجم الصور</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">الإخطارات المدفوعة</string>
