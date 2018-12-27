@@ -685,5 +685,11 @@
     <string name="pixelfed_instance">Pixelfed instance</string>
     <string name="mastodon_instance">Mastodon instance</string>
     <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="any_tags">Any of these</string>
+    <string name="all_tags">All of these</string>
+    <string name="none_tags">None of these</string>
+    <string name="some_words_any">Any of these words (space-separated)</string>
+    <string name="some_words_all">All these words (space-separated)</string>
+    <string name="some_words_none">None of these words (space-separated)</string>
     <!-- end languages -->
 </resources>
