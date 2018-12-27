@@ -398,7 +398,7 @@
     <string name="action_filter">छांटे</string>
     <string name="owner_cached_toots">आपके लेख</string>
     <string name="v_public">सार्वजनिक</string>
-    <string name="v_unlisted">Unlisted</string>
+    <string name="v_unlisted">सूचीबद्ध</string>
     <string name="v_private">निजी</string>
     <string name="v_direct">सीधा</string>
     <string name="v_keywords">कुछ कुंजी शब्द...</string>
