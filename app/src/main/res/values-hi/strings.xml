@@ -453,7 +453,7 @@
     <!-- About lists -->
     <string name="action_lists">सूचियाँ</string>
     <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-    <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+    <string name="action_lists_empty_content">यह सूची फिलहाल खाली है। जब इस सूची के सदस्य नये लेख प्रकाशित करेंगे तब वे इधर दिखेंगे।</string>
     <string name="action_lists_add_to">सूची में जोड़ें</string>
     <string name="action_lists_remove_from">सूची से निकालें</string>
     <string name="action_lists_create">सूची जोड़ें</string>
@@ -568,8 +568,8 @@
     <string name="retrieve_remote_conversation">दूरवर्ती धारे को लाया जा रहा हा!</string>
     <string name="no_blocked_domain">कोई प्रतिबंधित डोमेन्स नहीं है!</string>
     <string name="unblock_domain_confirm">डोमेन मुक्त करें</string>
-    <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+    <string name="unblock_domain_confirm_message">क्या आपको वाकई %s को मुक्त करना है?</string>
+    <string name="block_domain_confirm_message">क्या आपको वाकई %s को अवरुद्ध करना है?</string>
     <string name="blocked_domains">प्रतिबंधित डोमेन्स</string>
     <string name="block_domain">डोमेन अवरुद्ध करें</string>
     <string name="toast_block_domain">यह डोमेन प्रतिबंधित है</string>
@@ -640,7 +640,7 @@
     <string name="custom_emoji_picker">Custom emoji picker</string>
     <string name="play_video">वीडियो चलाएं</string>
     <string name="new_toot">नया लेख</string>
-    <string name="card_view_image">Image of the card</string>
+    <string name="card_view_image">पत्ते की छवी</string>
     <string name="hide_media">मीडिया छुपाएं</string>
     <string name="favicon">फ़ेवीकाॅन</string>
     <string name="media_description">दृष्टिहीन लोगों के लिये मीडिया का विवरण जोड़ें</string>
