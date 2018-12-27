@@ -3,7 +3,7 @@
 <resources>
     <string name="navigation_drawer_open">Apri il menu</string>
     <string name="navigation_drawer_close">Chiudi il menù</string>
-    <string name="action_about">Info su</string>
+    <string name="action_about">Info</string>
     <string name="action_about_instance">Info sull\'istanza</string>
     <string name="action_privacy">Privacy</string>
     <string name="action_cache">Cache</string>
