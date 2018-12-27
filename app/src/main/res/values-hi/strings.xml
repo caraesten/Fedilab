@@ -526,7 +526,7 @@
     <string name="context_conversation">वार्तालाप</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
     <string name="context_drop">छिपाने के बजाय हटा दें</string>
-    <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
+    <string name="context_drop_explanations">छनें हुए लेख हमेशा के लिये गायब हो जाएंगे छन्नी को बाद में हटाने के बावजूद</string>
     <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
     <string name="context_whole_word">पूरा शब्द</string>
     <string name="filter_context">सन्दर्भ छाटें</string>
