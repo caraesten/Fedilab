@@ -446,7 +446,7 @@
     </string>
     <string name="thanks_text">लोगो के लिये स्टेफ़ैन को धन्यवाद।    </string>
     <string name="thanks_text_dev">इनको धन्यवाद:    </string>
-    <string name="filter_regex">Filter out by regular expressions</string>
+    <string name="filter_regex">आम अभिव्यंजनाओ के अनुसार छाटें</string>
     <string name="search">खोजें</string>
     <string name="delete">मिटाएँ</string>
     <string name="fetch_more_toots">और लेख खोजिये...</string>
@@ -492,7 +492,7 @@
     <string name="set_compact_mode">काॅम्पैक्ट मोड</string>
     <string name="set_share_details">लेख को सांझा करते समय उसकी जानकारी जोड़ें</string>
     <string name="support_the_app_on_liberapay">Liberapay पे एप का समर्थन करें</string>
-    <string name="alert_regex">रेग्यूलर अभिव्यंजना में एक गड़बड़ी है!</string>
+    <string name="alert_regex">आम अभिव्यंजना में एक गड़बड़ी है!</string>
     <string name="no_account_yet">कोई खाता नहीं है?</string>
     <string name="toast_instance_unavailable">इस इंस्टेंस पे कोई टाइम्लाइन नहीं मिली!</string>
     <string name="delete_instance">इस इंस्टेंस को मिटाएँ?</string>
@@ -571,10 +571,10 @@
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
     <string name="block_domain_confirm_message">Are you sure to block %s?</string>
     <string name="blocked_domains">प्रतिबंधित डोमेन्स</string>
-    <string name="block_domain">Block domain</string>
+    <string name="block_domain">डोमेन अवरुद्ध करें</string>
     <string name="toast_block_domain">यह डोमेन प्रतिबंधित है</string>
     <string name="toast_unblock_domain">यह डोमेन अब प्रतिबंधित नहीं है!</string>
-    <string name="retrieve_remote_status">Fetching remote status</string>
+    <string name="retrieve_remote_status">दूरर्वती लेखो को लाया जा रहा है</string>
     <string name="comment">टिप्पणी</string>
     <string name="peertube_instance">पीयरट्यूब इंस्टंस</string>
     <string name="set_display_direct">निजी संदेश टाइम्लाइन दिखाएं</string>
