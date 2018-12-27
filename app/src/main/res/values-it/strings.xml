@@ -200,7 +200,7 @@
     <string name="status_cnt">Toot \n %1$s</string>
     <string name="following_cnt">Seguendo \n %1$s</string>
     <string name="followers_cnt">Follower \n %1$s</string>
-    <string name="pins_cnt">Evidenziato \n %d</string>
+    <string name="pins_cnt">In evidenza \n %d</string>
     <string name="authorize">Autorizza</string>
     <string name="reject">Rifiuta</string>
     <!-- Scheduled toots -->
@@ -237,7 +237,7 @@
     <!-- HEADER -->
     <string name="following">Seguendo</string>
     <string name="followers">Follower</string>
-    <string name="pinned_toots">Evidenziato</string>
+    <string name="pinned_toots">In evidenza</string>
     <!-- TOAST -->
     <string name="client_error">Impossibile ottenere il client id!</string>
     <string name="no_internet">Nessuna connessione ad internet!</string>
@@ -253,8 +253,8 @@
     <string name="toast_unfavourite">Il toot è stato rimosso dai tuoi preferiti!</string>
     <string name="toast_report">Il toot è stato segnalato!</string>
     <string name="toast_unstatus">Il toot è stato eliminato!</string>
-    <string name="toast_pin">Il toot è stato evidenziato!</string>
-    <string name="toast_unpin">Il toot non è più evidenziato!</string>
+    <string name="toast_pin">Il toot è stato messo in evidenza!</string>
+    <string name="toast_unpin">Il toot non è più in evidenza!</string>
     <string name="toast_error">Oops! Si è verificato un errore!</string>
     <string name="toast_code_error">Si è verificato un errore! L\'istanza non ha restituito un codice di autorizzazione!</string>
     <string name="toast_error_instance">Il dominio dell\'istanza non sembra essere valido!</string>
@@ -282,13 +282,13 @@
     <string name="load_attachment_spoiler">Mostra di più…</string>
     <string name="load_attachment_spoiler_less">Mostra meno…</string>
     <string name="load_sensitive_attachment">Contenuto sensibile</string>
-    <string name="set_display_reply">Visualizza messaggi precedenti in risposta</string>
-    <string name="set_display_local">Visualizza timeline locale</string>
-    <string name="set_display_global">Visualizza timeline federata</string>
+    <string name="set_display_reply">Mostra messaggio precedente nelle risposte</string>
+    <string name="set_display_local">Mostra timeline locale</string>
+    <string name="set_display_global">Mostra timeline federata</string>
     <string name="set_disable_gif">Disabilita avatar GIF</string>
     <string name="set_folder_title">Percorso: </string>
     <string name="set_auto_store_toot">Salva bozze automaticamente</string>
-    <string name="set_bubble_counter">Visualizza contatori</string>
+    <string name="set_bubble_counter">Mostra contatori</string>
     <string name="set_auto_add_media_url">Aggiungi URL dei media nei toot</string>
     <string name="settings_title_notifications">Gestisci notifiche</string>
     <string name="set_notif_follow">Notifica quando qualcuno ti segue</string>
@@ -398,8 +398,8 @@
     <string name="v_private">Privato</string>
     <string name="v_direct">Diretto</string>
     <string name="v_keywords">Alcune parole chiave…</string>
-    <string name="show_media">Visualizza media</string>
-    <string name="show_pinned">Visualizza evidenziati</string>
+    <string name="show_media">Mostra media</string>
+    <string name="show_pinned">Mostra in evidenza</string>
     <string name="filter_no_result">Nessuna corrispondenza trovata!</string>
     <string name="data_backup_toots">Backup dei toot per %1$s</string>
     <string name="data_backup_success">%1$s nuovi toot sono stati importati</string>
@@ -600,7 +600,7 @@
     <string name="set_display_card">Mostra anteprime in tutti i toot</string>
     <string name="thanks_text_ux">Nuovo designer UX/UI</string>
     <string name="set_old_direct_timeline">Mostra le timeline dirette (non raggruppate) come Mastodon prima della versione 2.6</string>
-    <string name="set_display_video_preview">Visualizza le anteprime dei video</string>
+    <string name="set_display_video_preview">Mostra le anteprime dei video</string>
     <string name="thanks_text_support">Supporto Gitlab</string>
     <string name="action_bug_report">Segnala errori</string>
     <string name="no_mail_client">Non ci sono client email installati.</string>
