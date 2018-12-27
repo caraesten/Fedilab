@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 20;
+    public static final int DB_VERSION = 21;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -123,9 +123,13 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_KEYWORDS = "KEYWORDS";
     static final String COL_IS_ART= "IS_ART";
     static final String COL_IS_NSFW= "IS_NSFW";
+    static final String COL_ANY= "ANY_TAG";
+    static final String COL_ALL= "ALL_TAG";
+    static final String COL_NONE = "NONE_TAG";
     private final String CREATE_TABLE_SEARCH = "CREATE TABLE " + TABLE_SEARCH + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_KEYWORDS + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, "
+            + COL_ANY + " TEXT, " + COL_ALL + " TEXT, " + COL_NONE + " TEXT, "
             + COL_IS_ART + " INTEGER  DEFAULT 0, " + COL_IS_NSFW + " INTEGER  DEFAULT 0, "
             + COL_DATE_CREATION + " TEXT NOT NULL)";
 
@@ -290,6 +294,12 @@ public class Sqlite extends SQLiteOpenHelper {
                 if( oldVersion > 6) {
                     db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_IS_ART + " INTEGER  DEFAULT 0");
                     db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_IS_NSFW + " INTEGER  DEFAULT 0");
+                }
+            case 20:
+                if( oldVersion > 6) {
+                    db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_ANY + " TEXT");
+                    db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_ALL + " TEXT");
+                    db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_NONE + " TEXT");
                 }
             default:
                 break;

@@ -793,21 +793,18 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             for (int i = statuses.size() - 1; i >= 0; i--) {
                 if( this.statuses != null) {
-                    if (this.statuses.size() == 0){
-                        if( type != RetrieveFeedsAsyncTask.Type.HOME){
-                            if( Long.parseLong(statuses.get(i).getId()) > Long.parseLong(this.statuses.get(0).getId())) {
-                                inserted++;
-                                this.statuses.add(0, statuses.get(i));
-                            }
-                        }else {
-                            if( lastReadToot != null && Long.parseLong(statuses.get(i).getId()) > Long.parseLong(lastReadToot)) {
-                                statuses.get(i).setNew(true);
-                                MainActivity.countNewStatus++;
-                                inserted++;
-                                this.statuses.add(0, statuses.get(i));
-                            }
+                    if( type != RetrieveFeedsAsyncTask.Type.HOME){
+                        if( Long.parseLong(statuses.get(i).getId()) > Long.parseLong(this.statuses.get(0).getId())) {
+                            inserted++;
+                            this.statuses.add(0, statuses.get(i));
                         }
-
+                    }else {
+                        if( lastReadToot != null && Long.parseLong(statuses.get(i).getId()) > Long.parseLong(lastReadToot)) {
+                            statuses.get(i).setNew(true);
+                            MainActivity.countNewStatus++;
+                            inserted++;
+                            this.statuses.add(0, statuses.get(i));
+                        }
                     }
                 }
             }

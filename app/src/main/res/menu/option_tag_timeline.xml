@@ -16,6 +16,18 @@
         app:actionViewClass="android.widget.CheckBox"
         app:showAsAction="always" />
     <item
+        android:id="@+id/action_any"
+        app:showAsAction="always"
+        android:title="@string/any_tags" />
+    <item
+        android:id="@+id/action_all"
+        app:showAsAction="always"
+        android:title="@string/all_tags" />
+    <item
+        android:id="@+id/action_none"
+        app:showAsAction="always"
+        android:title="@string/none_tags" />
+    <item
         android:id="@+id/action_delete"
         app:showAsAction="always"
         android:title="@string/delete" />

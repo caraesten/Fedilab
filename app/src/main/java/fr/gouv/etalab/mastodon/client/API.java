@@ -1128,20 +1128,20 @@ public class API {
 
 
 
-    public APIResponse getCustomArtTimeline(boolean local, String tag, String max_id){
-        return getArtTimeline(local, tag, max_id, null);
+    public APIResponse getCustomArtTimeline(boolean local, String tag, String max_id, List<String> any, List<String> all, List<String> none){
+        return getArtTimeline(local, tag, max_id, null, any, all, none);
     }
 
-    public APIResponse getArtTimeline(boolean local, String max_id){
-        return getArtTimeline(local, null, max_id, null);
+    public APIResponse getArtTimeline(boolean local, String max_id, List<String> any, List<String> all, List<String> none){
+        return getArtTimeline(local, null, max_id, null, any, all, none);
     }
 
-    public APIResponse getCustomArtTimelineSinceId(boolean local, String tag, String since_id){
-        return getArtTimeline(local, tag, null, since_id);
+    public APIResponse getCustomArtTimelineSinceId(boolean local, String tag, String since_id, List<String> any, List<String> all, List<String> none){
+        return getArtTimeline(local, tag, null, since_id, any, all, none);
     }
 
-    public APIResponse getArtTimelineSinceId(boolean local, String since_id){
-        return getArtTimeline(local, null, null, since_id);
+    public APIResponse getArtTimelineSinceId(boolean local, String since_id, List<String> any, List<String> all, List<String> none){
+        return getArtTimeline(local, null, null, since_id, any, all, none);
     }
     /**
      * Retrieves art timeline
@@ -1149,10 +1149,10 @@ public class API {
      * @param max_id String id max
      * @return APIResponse
      */
-    private APIResponse getArtTimeline(boolean local, String tag, String max_id, String since_id){
+    private APIResponse getArtTimeline(boolean local, String tag, String max_id, String since_id, List<String> any, List<String> all, List<String> none){
         if( tag == null)
             tag = "mastoart";
-        APIResponse apiResponse = getPublicTimelineTag(tag, local, true, max_id, since_id, tootPerPage);
+        APIResponse apiResponse = getPublicTimelineTag(tag, local, true, max_id, since_id, tootPerPage, any, all, none);
         APIResponse apiResponseReply = new APIResponse();
         if( apiResponse != null){
             apiResponseReply.setMax_id(apiResponse.getMax_id());
@@ -1184,8 +1184,8 @@ public class API {
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    public APIResponse getPublicTimelineTag(String tag, boolean local, String max_id){
-        return getPublicTimelineTag(tag, local, false, max_id, null, tootPerPage);
+    public APIResponse getPublicTimelineTag(String tag, boolean local, String max_id, List<String> any, List<String> all, List<String> none){
+        return getPublicTimelineTag(tag, local, false, max_id, null, tootPerPage, any, all, none);
     }
 
     /**
@@ -1196,8 +1196,8 @@ public class API {
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    public APIResponse getPublicTimelineTagSinceId(String tag, boolean local, String since_id){
-        return getPublicTimelineTag(tag, local, false, null, since_id, tootPerPage);
+    public APIResponse getPublicTimelineTagSinceId(String tag, boolean local, String since_id, List<String> any, List<String> all, List<String> none){
+        return getPublicTimelineTag(tag, local, false, null, since_id, tootPerPage, any, all, none);
     }
     /**
      * Retrieves public tag timeline *synchronously*
@@ -1209,7 +1209,7 @@ public class API {
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getPublicTimelineTag(String tag, boolean local, boolean onlymedia, String max_id, String since_id, int limit){
+    private APIResponse getPublicTimelineTag(String tag, boolean local, boolean onlymedia, String max_id, String since_id, int limit, List<String> any, List<String> all, List<String> none){
 
         HashMap<String, String> params = new HashMap<>();
         if( local)
@@ -1220,6 +1220,30 @@ public class API {
             params.put("since_id", since_id);
         if( 0 > limit || limit > 40)
             limit = 40;
+        if( onlymedia)
+            params.put("only_media", Boolean.toString(true));
+
+        if( any != null && any.size() > 0) {
+            StringBuilder parameters = new StringBuilder();
+            for (String a : any)
+                parameters.append("any[]=").append(a).append("&");
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(6));
+            params.put("any[]", parameters.toString());
+        }
+        if( all != null && all.size() > 0) {
+            StringBuilder parameters = new StringBuilder();
+            for (String a : all)
+                parameters.append("all[]=").append(a).append("&");
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(6));
+            params.put("all[]", parameters.toString());
+        }
+        if( none != null && none.size() > 0) {
+            StringBuilder parameters = new StringBuilder();
+            for (String a : none)
+                parameters.append("none[]=").append(a).append("&");
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(7));
+            params.put("none[]", parameters.toString());
+        }
         params.put("limit",String.valueOf(limit));
         statuses = new ArrayList<>();
         if( tag == null)

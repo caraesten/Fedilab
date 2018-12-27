@@ -2474,6 +2474,9 @@ public abstract class BaseMainActivity extends BaseActivity
                 Menu menu = popup.getMenu();
                 final MenuItem itemMediaOnly = menu.findItem(R.id.action_show_media_only);
                 final MenuItem itemShowNSFW = menu.findItem(R.id.action_show_nsfw);
+                final MenuItem itemAny = menu.findItem(R.id.action_any);
+                final MenuItem itemAll = menu.findItem(R.id.action_all);
+                final MenuItem itemNone = menu.findItem(R.id.action_none);
                 List<TagTimeline> tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTimelineInfo(tag);
                 boolean mediaOnly = false;
                 boolean showNSFW = false;
@@ -2526,8 +2529,55 @@ public abstract class BaseMainActivity extends BaseActivity
                                 itemShowNSFW.setChecked(!finalShowNSFW);
                                 new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline);
                                 break;
-                            case R.id.action_delete:
+                            case R.id.action_any:
                                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
+                                LayoutInflater inflater = getLayoutInflater();
+                                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_regex, null);
+                                dialogBuilder.setView(dialogView);
+                                final EditText editText = dialogView.findViewById(R.id.filter_regex);
+                                Toast alertRegex = Toasty.warning(BaseMainActivity.this, getString(R.string.alert_regex), Toast.LENGTH_LONG);
+                                editText.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                    }
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    }
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+                                        try {
+                                            //noinspection ResultOfMethodCallIgnored
+                                            Pattern.compile("(" + s.toString() + ")", Pattern.CASE_INSENSITIVE);
+                                        }catch (Exception e){
+                                            if( !alertRegex.getView().isShown()){
+                                                alertRegex.show();
+                                            }
+                                        }
+
+                                    }
+                                });
+                                if( show_filtered != null) {
+                                    editText.setText(show_filtered);
+                                    editText.setSelection(editText.getText().toString().length());
+                                }
+                                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        itemFilter.setTitle(editText.getText().toString().trim());
+                                        if(homeFragment != null && homeFragment.getUserVisibleHint())
+                                            editor.putString(Helper.SET_FILTER_REGEX_HOME, editText.getText().toString().trim());
+                                        if(localFragment != null && localFragment.getUserVisibleHint())
+                                            editor.putString(Helper.SET_FILTER_REGEX_LOCAL, editText.getText().toString().trim());
+                                        if(federatedFragment != null && federatedFragment.getUserVisibleHint())
+                                            editor.putString(Helper.SET_FILTER_REGEX_PUBLIC, editText.getText().toString().trim());
+                                        editor.apply();
+                                    }
+                                });
+                                AlertDialog alertDialog = dialogBuilder.create();
+                                alertDialog.show();
+                                break;
+                            case R.id.action_delete:
+                                dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
                                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
@@ -2559,7 +2609,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                     }
                                 });
                                 dialogBuilder.setMessage(getString(R.string.delete) + ": " + tag);
-                                AlertDialog alertDialog = dialogBuilder.create();
+                                alertDialog = dialogBuilder.create();
                                 alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                                     @Override
                                     public void onDismiss(DialogInterface dialogInterface) {

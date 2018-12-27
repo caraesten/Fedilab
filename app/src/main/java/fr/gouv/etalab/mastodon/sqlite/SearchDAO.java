@@ -54,10 +54,16 @@ public class SearchDAO {
      * Insert a keyword in database
      * @param keyword String
      */
-    public void insertSearch(String keyword) {
+    public void insertSearch(String keyword, List<String> any, List<String> all, List<String> none) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_KEYWORDS, keyword);
         values.put(Sqlite.COL_USER_ID, userId);
+        if( any != null && any.size() > 0)
+            values.put(Sqlite.COL_ANY, Helper.arrayToStringStorage(any));
+        if( all != null && all.size() > 0)
+            values.put(Sqlite.COL_ALL, Helper.arrayToStringStorage(all));
+        if( none != null && none.size() > 0)
+            values.put(Sqlite.COL_NONE, Helper.arrayToStringStorage(none));
         values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
         //Inserts search
         try{
@@ -72,10 +78,16 @@ public class SearchDAO {
      * update tag timeline info in database
      * @param tagTimeline TagTimeline
      */
-    public void updateSearch(TagTimeline tagTimeline) {
+    public void updateSearch(TagTimeline tagTimeline, List<String> any, List<String> all, List<String> none) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_IS_ART, tagTimeline.isART()?1:0);
         values.put(Sqlite.COL_IS_NSFW, tagTimeline.isNSFW()?1:0);
+        if( any != null && any.size() > 0)
+            values.put(Sqlite.COL_ANY, Helper.arrayToStringStorage(any));
+        if( all != null && all.size() > 0)
+            values.put(Sqlite.COL_ALL, Helper.arrayToStringStorage(all));
+        if( none != null && none.size() > 0)
+            values.put(Sqlite.COL_NONE, Helper.arrayToStringStorage(none));
         //Inserts search
         try{
             db.update(Sqlite.TABLE_SEARCH,  values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_KEYWORDS + " = ?", new String[]{userId, tagTimeline.getName()});
@@ -182,6 +194,15 @@ public class SearchDAO {
         List<TagTimeline> searches = new ArrayList<>();
         while (c.moveToNext() ) {
             TagTimeline tagTimeline = new TagTimeline();
+            try {
+                tagTimeline.setAny(Helper.restoreArrayFromString(c.getString(c.getColumnIndex(Sqlite.COL_ANY))));
+            }catch (Exception ignored){}
+            try {
+                tagTimeline.setAll(Helper.restoreArrayFromString(c.getString(c.getColumnIndex(Sqlite.COL_ALL))));
+            }catch (Exception ignored){}
+            try {
+                tagTimeline.setNone(Helper.restoreArrayFromString(c.getString(c.getColumnIndex(Sqlite.COL_NONE))));
+            }catch (Exception ignored){}
             tagTimeline.setName(c.getString(c.getColumnIndex(Sqlite.COL_KEYWORDS)));
             tagTimeline.setART(c.getInt(c.getColumnIndex(Sqlite.COL_IS_ART))==1);
             tagTimeline.setNSFW(c.getInt(c.getColumnIndex(Sqlite.COL_IS_NSFW))==1);
