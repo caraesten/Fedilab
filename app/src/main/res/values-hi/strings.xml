@@ -270,7 +270,7 @@
     <string name="toast_saved">मीडिया को सहेज लिया!</string>
     <string name="toast_error_translate">अनुवाद करते समय गड़बड़ी हुई!</string>
     <string name="toast_toot_saved">मसौदा एकत्र हुआ!</string>
-    <string name="toast_error_char_limit">क्या आपको यकीन है की यह इंस्टेंस इतने सारे अक्षर स्वीकार करता है? आम तौर पर यह मूल्य ५०० अक्षरों के करीब होता है।</string>
+    <string name="toast_error_char_limit">क्या आप सुनिश्चित है कि यह इंस्टंस इतने सारे अक्षर स्वीकार करता है? आम तौर पर यह मूल्य ५०० अक्षरों के करीब होता है।</string>
     <string name="toast_visibility_changed">%1$s खाते के लेखो की दृश्यता को बदल दिया गया है</string>
     <string name="toast_empty_search">इंस्टेंस का नाम और आपका नाम खाली नहीं हो सकता!</string>
     <!-- Settings -->
@@ -452,7 +452,7 @@
     <string name="fetch_more_toots">और लेख खोजिये...</string>
     <!-- About lists -->
     <string name="action_lists">सूचियाँ</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+    <string name="action_lists_confirm_delete">क्या आप सुनिश्चित हैं कि आप इस सूची को हमेशा के लिये मिटाना चाहते हैं?</string>
     <string name="action_lists_empty_content">यह सूची फिलहाल खाली है। जब इस सूची के सदस्य नये लेख प्रकाशित करेंगे तब वे इधर दिखेंगे।</string>
     <string name="action_lists_add_to">सूची में जोड़ें</string>
     <string name="action_lists_remove_from">सूची से निकालें</string>
@@ -660,7 +660,7 @@
     <string name="showcase_uid">यहाँ अपने मैस्टोडाॅन खाते से जुड़े ईमेल को लिखे।    </string>
     <string name="showcase_pwd">आखरी चरण में अपना पासवर्ड डाले और फिर लाॅगइन पे क्लिक करें।    </string>
     <string name="more_information">अधिक जानकारी</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="showcase_2FA">अगर आप 2FA (दो-चरणीय प्रमाणीकरण) चालू करना चाहते है तो फिर इस लिंक का उपयोग करें।\nअगर आपको अपना ईमेल और पासवर्ड यहाँ नहीं डालना है तब इसे इस्तेमाल करें।</string>
     <!-- languages not translated -->
     <string name="languages">भाषाएँ</string>
     <string name="show_media_only">सिर्फ़ मीडिया</string>
