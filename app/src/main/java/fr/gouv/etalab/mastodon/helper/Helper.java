@@ -1665,7 +1665,7 @@ public class Helper {
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
-            account.makeEmojisAccount(activity, ((BaseMainActivity)activity), account);
+            account.makeAccountNameEmoji(activity, ((BaseMainActivity)activity), account);
             username.setText(String.format("@%s",account.getUsername() + "@" + account.getInstance()));
             displayedName.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
             String url = account.getAvatar();
@@ -1723,7 +1723,7 @@ public class Helper {
                 if (account != null) {
                     Intent intent = new Intent(activity, ShowAccountActivity.class);
                     Bundle b = new Bundle();
-                    b.putParcelable("account", account);
+                    b.putString("accountId", account.getId());
                     intent.putExtras(b);
                     activity.startActivity(intent);
                 }
