@@ -64,7 +64,7 @@
     <string name="follow">Nuovi follower</string>
     <string name="mention">Menzioni</string>
     <string name="reblog">Ricondivisi</string>
-    <string name="show_boosts">Visualizza ricondivisi</string>
+    <string name="show_boosts">Mostra boosts</string>
     <string name="show_replies">Mostra risposte</string>
     <string name="action_open_in_web">Apri nel browser</string>
     <string name="translate">Traduci</string>
@@ -137,7 +137,7 @@
         <item quantity="one">%d risposta</item>
         <item quantity="other">%d risposte</item>
     </plurals>
-    <string name="set_display_bookmark_button">Visualizza il pulsante segnalibri</string>
+    <string name="set_display_bookmark_button">Mostra il pulsante segnalibri</string>
     <string name="bookmarks">Segnalibri</string>
     <string name="bookmark_add">Aggiungi ai segnalibri</string>
     <string name="bookmark_remove">Rimuovi segnalibro</string>
@@ -666,13 +666,13 @@
     <string name="languages">Lingue</string>
     <string name="show_media_only">Solo media</string>
     <string name="show_media_nsfw">Mostra NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
+    <string name="crowdin_translations">Traduzioni da Crowdin</string>
+    <string name="crowdin_manager">Gestore di Crowdin</string>
+    <string name="translation_app">Traduzione dell\'applicazione</string>
+    <string name="about_crowdin">Info su Crowdin</string>
     <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="pixelfed_instance">Istanza Pixelfed</string>
+    <string name="mastodon_instance">Istanza Mastodon</string>
+    <string name="no_pixelfed_instance">Nessuna istanza Pixelfed</string>
     <!-- end languages -->
 </resources>
