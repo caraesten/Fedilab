@@ -462,13 +462,12 @@
     <string name="account_moved_to">%1$s %2$s पे चले गये है</string>
     <string name="show_boost_count">बूस्ट/पसंदीदा की गिनती दिखाएं</string>
     <string name="issue_login_title">प्रमाणीकरण काम नहीं कर रहा?</string>
-    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
-    </string>
+    <string name="issue_login_message"><b>यह कुछ चैक्स हैं जो मदद करें:</b>\n\n
+- जांचे कि इंसटंस के नाम में कोई गलती तो नहीं ह\n\n
+- जांचे की आपका इंसटंस कहीं बंद तो नहीं है\n\n
+- अगर आप दो-चरणीय प्रमाणीकरण (2FA) का उपयोग करते है तो कृप्या नीचे दिये लिंक का इस्तेमाल करें (इंसटंस का नाम डालने के बाद)\n\n
+- आप इस लिंक का उपयोग दो-चरणीय प्रमाणीकरण के बिना भी कर सकते हैं\n\n
+- अगर यह फिर भी काम नहीं कर रहा तो कृप्या Gitlab पे रिपोर्ट करें https://gitlab.com/tom79/mastalab/issues    </string>
     <string name="media_ready">मीडिया को लोड कर दिया है। देखने के लिये यहाँ क्लिक करें।</string>
     <string name="data_export_start">यह क्रिया काफी लंबी हो सकती है। पूरा होने पे आपको सूचित कर दिया जाएगा।</string>
     <string name="data_export_running">सक्रिय है, कृप्या प्रतीक्षा करे...</string>
@@ -616,7 +615,7 @@
     <string name="tags_renamed">टैग को बदल दिया गया है!</string>
     <string name="tags_deleted">टैग को मिटा दिया गया है!</string>
     <string name="set_display_art">कला टाइम्लाइन दिखाएं</string>
-    <string name="schedule_boost">Schedule boost</string>
+    <string name="schedule_boost">बूस्ट समय सारणी करें</string>
     <string name="boost_scheduled">बूस्ट को परिगणित कर दिया है!</string>
     <string name="no_scheduled_boosts">कोई परिगणित बूस्ट मौजूद नहीं है!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
@@ -649,10 +648,9 @@
         <item>१ दिन</item>
         <item>१ सप्ताह</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
-    </string>
+    <string name="showcase_instance">यहाँ अपने इंस्टंस के मेज़बान का नाम डालें।\nउदाहरण, अगर आपने https://mastodon.social\n पे खाता बनाया है तो बस लिखें <b>mastodon.social</b> (https:// के बिना)\n
+आप जब पहले अक्षर लिखना शुरू करेंगे तब नामों का सुझाव दिया जाएगा।\n\n
+⚠ लाॅगइन बटन सिर्फ़ तब काम करेगा जब इंसटंस का नाम वैध है और इंसटंस काम कर रहा है!    </string>
     <string name="showcase_uid">यहाँ अपने मैस्टोडाॅन खाते से जुड़े ईमेल को लिखे।    </string>
     <string name="showcase_pwd">आखरी चरण में अपना पासवर्ड डाले और फिर लाॅगइन पे क्लिक करें।    </string>
     <string name="more_information">अधिक जानकारी</string>
