@@ -432,12 +432,11 @@
 - <b>अनुसरण</b>: अनुसरण, अंफ़ौलो, अवरुद्ध, मुक्त।\n\n
 - <b>&#9888; केवल उपयोगकर्ता की गुज़ारिश पर यह क्रियाएं की जाती हैं।</b>    </string>
     <string name="privacy_API_title">ट्रैकिंग एवं संग्रहालय</string>
-    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
-    </string>
+    <string name="privacy_API">यह एेप <b>ट्रैकिंग साधन का उपयोग नहीं करता</b> (श्रोता मापन, त्रुटि रिपोर्ट आदी) और इसमें कोई विज्ञापन नहीं है।\n\n
+संग्रहालयो के इस्तेमाल कम किया है: \n
+- <b>ग्लाइड</b>: मीडिया को संभालने के लिये\n
+- <b>एंड्राॅयड-जाॅब</b>: सेवाएं संभालने के लिये\n
+- <b>फ़ोटोव्यू</b>: चित्रो को संभालने के लिये\n    </string>
     <string name="privacy_API_yandex_title">लेखो का अनुवाद</string>
     <string name="privacy_API_yandex_authorizations">यह एेप लेखों का अनुवाद करने की काबिलियत प्रदान करता है उपकरण का स्थान और यैंडैक्स एपीआई की मदद से।\n
 यैंडैक्स की अपनी गोपनीयता नीति है जो यहाँ मौजूद है: https://yandex.ru/legal/confidential/?lang=en    </string>
