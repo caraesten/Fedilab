@@ -466,10 +466,10 @@
 - अगर यह फिर भी काम नहीं कर रहा तो कृप्या Gitlab पे रिपोर्ट करें https://gitlab.com/tom79/mastalab/issues    </string>
     <string name="media_ready">मीडिया को लोड कर दिया है। देखने के लिये यहाँ क्लिक करें।</string>
     <string name="data_export_start">यह क्रिया काफी लंबी हो सकती है। पूरा होने पे आपको सूचित कर दिया जाएगा।</string>
-    <string name="data_export_running">सक्रिय है, कृप्या प्रतीक्षा करे...</string>
-    <string name="data_export">लेखों का निर्यात करें</string>
+    <string name="data_export_running">चालू है, कृप्या प्रतीक्षा करे...</string>
+    <string name="data_export">लेखों को निर्यात करें</string>
     <string name="data_export_toots">%1$s के लिये लेखों को निर्यात करें</string>
-    <string name="data_export_success">%2$s लेखो में से %1$s लेख आयात कर लिये गये है।</string>
+    <string name="data_export_success">%2$s लेखो में से %1$s लेखों का आयात कर लिया।</string>
     <string name="data_export_error">%1$s के लिये डेटा निर्यात करते समय गड़बड़ी हो गयी</string>
     <!-- Proxy -->
     <string name="proxy_set">प्रॉक्सी</string>
@@ -477,24 +477,24 @@
     <string name="proxy_enable">प्राॅक्सी चालू करें?</string>
     <string name="poxy_host">मेज़बान</string>
     <string name="poxy_port">पोर्ट</string>
-    <string name="poxy_login">लॉग इन</string>
+    <string name="poxy_login">लॉगइन</string>
     <string name="poxy_password">पासवर्ड</string>
     <string name="set_theme">रूपरंग:</string>
     <string name="set_compact_mode">काॅम्पैक्ट मोड</string>
     <string name="set_share_details">लेख को सांझा करते समय उसकी जानकारी जोड़ें</string>
-    <string name="support_the_app_on_liberapay">Liberapay पे एप का समर्थन करें</string>
+    <string name="support_the_app_on_liberapay">लीबरापे पे एेप का समर्थन करें</string>
     <string name="alert_regex">आम अभिव्यंजना में एक गड़बड़ी है!</string>
     <string name="no_account_yet">कोई खाता नहीं है?</string>
-    <string name="toast_instance_unavailable">इस इंस्टेंस पे कोई टाइम्लाइन नहीं मिली!</string>
-    <string name="delete_instance">इस इंस्टेंस को मिटाएँ?</string>
-    <string name="warning_delete_instance">आप %s को अपने अनुसरण करते इंस्टेंसो से मिटाने वाले है।</string>
-    <string name="which_language">अनुवाद करें</string>
+    <string name="toast_instance_unavailable">इस इंस्टंस पे कोई टाइम्लाइन नहीं मिली!</string>
+    <string name="delete_instance">इस इंस्टंस को मिटाएं?</string>
+    <string name="warning_delete_instance">आप %s को अपने अनुसरण करते इंस्टंसो से मिटाने वाले है।</string>
+    <string name="which_language">में अनुवाद करें</string>
     <string name="crash_title">मैस्टालैब रुक गया है :(</string>
     <string name="crash_message">आप मुझे ईमेल के द्वारा क्रैश रिपोर्ट भेज सकते है। यह उसे ठीक करने में मदद देगी :)\n\nआप अतिरिक्त विषय वस्तु जोड़ सकते है। धन्यवाद!</string>
     <string name="send_crash_report">ईमेल के द्वारा क्रैश रिपोर्ट भेजने के लिये पूछे?</string>
-    <string name="follow_instance">इंस्टेंस का अनुसरण करें</string>
-    <string name="toast_instance_already_added">आप इस इंस्टेंस का पहले से अनुसरण कर रहे हैं!</string>
-    <string name="toast_instance_followed">इस इंस्टेंस का अनुसरण किया!</string>
+    <string name="follow_instance">इंस्टंस का अनुसरण करें</string>
+    <string name="toast_instance_already_added">आप इस इंस्टंस का पहले से अनुसरण कर रहे हैं!</string>
+    <string name="toast_instance_followed">इंस्टंस का अनुसरण किया!</string>
     <string name="action_partnership">साझेदारियां</string>
     <string name="neutral_menu_information">जानकारी</string>
     <string name="hide_boost">%s के बूस्ट छुपाएं</string>
@@ -503,7 +503,7 @@
     <string name="show_boost">%s के बूस्ट दिखाएं</string>
     <string name="unendorse">प्रोफ़ाइल पे पेश ना करें</string>
     <string name="show_everything">%s के सारी चीज़ें दिखाएं</string>
-    <string name="toast_endorse">खाते अब प्रोफ़ाइल पे पेश है</string>
+    <string name="toast_endorse">खाता अब प्रोफ़ाइल पे पेश है</string>
     <string name="toast_unendorse">खाता अब प्रोफ़ाइल पे पेश नहीं है</string>
     <string name="toast_show_boost">बूस्ट अब प्रस्तुत होंगे!</string>
     <string name="toast_hide_boost">बूस्ट अब प्रस्तुत नहीं होंगे!</string>
