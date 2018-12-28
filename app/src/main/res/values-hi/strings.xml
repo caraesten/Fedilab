@@ -609,7 +609,7 @@
     <string name="tags_already_stored">टैग पहले से मौजूद है!</string>
     <string name="tags_stored">टैग को सहेज लिया!</string>
     <string name="tags_renamed">टैग को बदल दिया!</string>
-    <string name="tags_deleted">टैग को मिटा दिया गया है!</string>
+    <string name="tags_deleted">टैग को मिटा दिया!</string>
     <string name="set_display_art">कला टाइम्लाइन दिखाएं</string>
     <string name="schedule_boost">बूस्ट समय सारणी करें</string>
     <string name="boost_scheduled">बूस्ट को परिगणित कर दिया है!</string>
@@ -627,14 +627,14 @@
     <string name="refresh">नवीकरण</string>
     <string name="expand_conversation">वार्तालाप को खोलें</string>
     <string name="remove_account">एक खाता हटाएं</string>
-    <string name="delete_domain">प्रतिबंधित डोमेन को मिटा दें</string>
+    <string name="delete_domain">अवरुद्ध किये डोमेन को मिटाएं</string>
     <string name="custom_emoji_picker">कस्टम इमोजी चयनकर्ता</string>
     <string name="play_video">वीडियो चलाएं</string>
     <string name="new_toot">नया लेख</string>
     <string name="card_view_image">पत्ते की छवी</string>
     <string name="hide_media">मीडिया छुपाएं</string>
     <string name="favicon">फ़ेवीकाॅन</string>
-    <string name="media_description">दृष्टिहीन लोगों के लिये मीडिया का विवरण जोड़ें</string>
+    <string name="media_description">दृष्टिहीन लोगों के लिये मीडिया का विवरण दें</string>
     <string-array name="filter_expire">
         <item>कभी नहीं</item>
         <item>३० मिनट</item>
@@ -647,7 +647,7 @@
     <string name="showcase_instance">यहाँ अपने इंस्टंस के मेज़बान का नाम डालें।\nउदाहरण, अगर आपने https://mastodon.social\n पे खाता बनाया है तो बस लिखें <b>mastodon.social</b> (https:// के बिना)\n
 आप जब पहले अक्षर लिखना शुरू करेंगे तब नामों का सुझाव दिया जाएगा।\n\n
 ⚠ लाॅगइन बटन सिर्फ़ तब काम करेगा जब इंसटंस का नाम वैध है और इंसटंस काम कर रहा है!    </string>
-    <string name="showcase_uid">यहाँ अपने मैस्टोडाॅन खाते से जुड़े ईमेल को लिखे।    </string>
+    <string name="showcase_uid">यहाँ अपने मैस्टोडाॅन खाते से जुड़े ईमेल को लिखें।    </string>
     <string name="showcase_pwd">आखरी चरण में अपना पासवर्ड डाले और फिर लाॅगइन पे क्लिक करें।    </string>
     <string name="more_information">अधिक जानकारी</string>
     <string name="showcase_2FA">अगर आप 2FA (दो-चरणीय प्रमाणीकरण) चालू करना चाहते है तो फिर इस लिंक का उपयोग करें।\nअगर आपको अपना ईमेल और पासवर्ड यहाँ नहीं डालना है तब इसे इस्तेमाल करें।</string>
