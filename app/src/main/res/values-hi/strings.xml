@@ -369,8 +369,8 @@
     <string name="action_unfollow">अनुसरण ना करें</string>
     <string name="action_block">अवरुद्ध</string>
     <string name="action_unblock">मुक्त करें</string>
-    <string name="action_mute">खामोश</string>
-    <string name="action_no_action">कोई कार्यवाही नहीं</string>
+    <string name="action_mute">मौन करें</string>
+    <string name="action_no_action">कोई क्रिया नहीं</string>
     <string name="action_unmute">मौन तोड़ें</string>
     <string name="request_sent">अनुरोध भेज दिया</string>
     <string name="followed_by">आपका अनुसरण कर रहे हैं</string>
