@@ -680,6 +680,6 @@
     <string name="some_words_any">Qualsiasi tra queste parole (separate da spazi)</string>
     <string name="some_words_all">Tutte queste parole (separate da spazi)</string>
     <string name="some_words_none">Nessuna di queste parole (separate da spazi)</string>
-    <string name="change_tag_column">Change column name</string>
+    <string name="change_tag_column">Rinomina colonna</string>
     <!-- end languages -->
 </resources>
