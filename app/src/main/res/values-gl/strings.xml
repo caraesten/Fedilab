@@ -681,5 +681,6 @@
     <string name="some_words_any">Calquera de estas palabras (separadas por espazos)</string>
     <string name="some_words_all">Todas estas palabras (separadas por espazos)</string>
     <string name="some_words_none">Ningunha de estas palabras (separadas por espazos)</string>
+    <string name="change_tag_column">Change column name</string>
     <!-- end languages -->
 </resources>
