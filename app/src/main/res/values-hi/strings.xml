@@ -290,10 +290,10 @@
     <string name="set_auto_store_toot">मसौदे स्वतः सहेजें</string>
     <string name="set_bubble_counter">काउंटर दिखाएं</string>
     <string name="set_auto_add_media_url">मीडिया के यूआरएल को लेखों में जोड़े</string>
-    <string name="settings_title_notifications">सूचनाओ का नियंत्रण</string>
-    <string name="set_notif_follow">मेरा अनुसरण करने पर मुझे सूचित करें</string>
-    <string name="set_notif_follow_ask">अनुसरण करने की गुज़ारिश मिलने पर मुझे सूचित करें</string>
-    <string name="set_notif_follow_share">मेरे लेख बूस्ट होने पर मुझे सूचित करें</string>
+    <string name="settings_title_notifications">सूचनाएं संभाले</string>
+    <string name="set_notif_follow">अनुसरण होने पर सूचित करें</string>
+    <string name="set_notif_follow_ask">अनुसरण करने की गुज़ारिश मिलने पर सूचित करें</string>
+    <string name="set_notif_follow_share">आपके लेख बूस्ट होने पर सूचित करें</string>
     <string name="set_notif_follow_add">मेरे लेख पसंद होने पर मुझे सूचित करें</string>
     <string name="set_notif_follow_mention">जब मेरा कोई उल्लेख करे तो मुझे सूचित करें</string>
     <string name="set_share_validation">बूस्ट करने से पहले पूछे</string>
