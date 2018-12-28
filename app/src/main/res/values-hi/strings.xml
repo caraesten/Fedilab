@@ -118,7 +118,7 @@
     <string name="more_action_6">सांझा करें</string>
     <string name="more_action_7">उल्लेख</string>
     <string name="more_action_8">समयबद्ध मौन करें</string>
-    <string name="more_action_9">हटाएं &amp; दोबारा लिखे</string>
+    <string name="more_action_9">हटाएं &amp; दोबारा लिखें</string>
     <string-array name="more_action_confirm">
         <item>इस खाते को मौन करें?</item>
         <item>इस खाते को अवरुद्ध करें?</item>
@@ -252,14 +252,14 @@
     <string name="toast_favourite">लेख को आपके पसंदीदा लेखों में जोड़ दिया!</string>
     <string name="toast_unfavourite">लेख को आपके पसंदीदा लेखों में से हटा दिया!</string>
     <string name="toast_report">लेख को रिपोर्ट कर दिया!</string>
-    <string name="toast_unstatus">संदेश को मिटा दिया गया है!</string>
-    <string name="toast_pin">लेख को जड़ दिया गया है!</string>
+    <string name="toast_unstatus">लेख को मिटा दिया!</string>
+    <string name="toast_pin">लेख को जड़ दिया!</string>
     <string name="toast_unpin">लेख अब जड़ा हुआ नहीं है!</string>
-    <string name="toast_error">क्षमा करें ! कोई गड़बड़ी उत्पन्न हुई है!</string>
-    <string name="toast_code_error">एक गड़बड़ी हो गयी! इंस्टेंस ने प्राधिकरण कोड वापस नहीं दिया!</string>
-    <string name="toast_error_instance">यह इंस्टेंस डोमेन वैध नहीं लग रहा!</string>
+    <string name="toast_error">अरे ! कुछ गड़बड़ी हो गयी!</string>
+    <string name="toast_code_error">एक गड़बड़ी हो गयी! इंस्टंस ने प्राधिकरण कोड वापस नहीं दिया!</string>
+    <string name="toast_error_instance">यह इंस्टंस डोमेन वैध नहीं लग रहा!</string>
     <string name="toast_error_loading_account">खाता बदलते समय कुछ गड़बड़ी हो गयी!</string>
-    <string name="toast_error_search">खोजने के दौरान गड़बड़ी हुई!</string>
+    <string name="toast_error_search">खोजते समय कुछ गड़बड़ी हुई!</string>
     <string name="toast_error_login">लाॅगइन नहीं हो सका!</string>
     <string name="toast_update_credential_ok">प्रोफ़ाइल डेटा को सहेज लिया!</string>
     <string name="nothing_to_do">कोई कार्यवाही नहीं हो पाई</string>
