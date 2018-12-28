@@ -2483,9 +2483,11 @@ public abstract class BaseMainActivity extends BaseActivity
 
                 List<TagTimeline> tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTabInfo(tabName);
                 String tag;
-                if( tagTimelines == null || tagTimelines.size() == 0)
+                if( tagTimelines == null || tagTimelines.size() == 0) {
                     tag = tabName;
-                else
+                    if(tagTimelines == null)
+                        tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTimelineInfo(tag);
+                }else
                     tag = tagTimelines.get(0).getName();
                 PopupMenu popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(position));
                 popup.getMenuInflater()

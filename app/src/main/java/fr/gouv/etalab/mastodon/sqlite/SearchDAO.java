@@ -56,13 +56,16 @@ public class SearchDAO {
      */
     public void insertSearch(String keyword) {
         ContentValues values = new ContentValues();
-        values.put(Sqlite.COL_KEYWORDS, keyword);
-        values.put(Sqlite.COL_USER_ID, userId);
-        values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
-        //Inserts search
-        try{
-            db.insert(Sqlite.TABLE_SEARCH, null, values);
-        }catch (Exception ignored) {}
+        if( keyword != null && keyword.trim().length() > 0) {
+            values.put(Sqlite.COL_KEYWORDS, keyword.trim());
+            values.put(Sqlite.COL_USER_ID, userId);
+            values.put(Sqlite.COL_DATE_CREATION, Helper.dateToString(new Date()));
+            //Inserts search
+            try {
+                db.insert(Sqlite.TABLE_SEARCH, null, values);
+            } catch (Exception ignored) {
+            }
+        }
     }
 
 
@@ -83,7 +86,7 @@ public class SearchDAO {
         if( none != null && none.size() > 0)
             values.put(Sqlite.COL_NONE, Helper.arrayToStringStorage(none));
         if( name != null && name.trim().length() > 0)
-            values.put(Sqlite.COL_NAME, name);
+            values.put(Sqlite.COL_NAME, name.trim());
         try{
             db.update(Sqlite.TABLE_SEARCH,  values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_KEYWORDS + " = ?", new String[]{userId, tagTimeline.getName()});
         }catch (Exception ignored) {}
@@ -184,9 +187,9 @@ public class SearchDAO {
      * Returns TagTimeline information by its keyword in db
      * @return info List<TagTimeline>
      */
-    public List<TagTimeline> getTabInfo(String keyword){
+    public List<TagTimeline> getTabInfo(String name){
         try {
-            Cursor c = db.query(Sqlite.TABLE_SEARCH, null, Sqlite.COL_NAME + " = \"" + keyword + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, null, null);
+            Cursor c = db.query(Sqlite.TABLE_SEARCH, null, Sqlite.COL_NAME + " = \"" + name + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, null, null);
             return cursorToTagTimelineSearch(c);
         } catch (Exception e) {
             return null;
