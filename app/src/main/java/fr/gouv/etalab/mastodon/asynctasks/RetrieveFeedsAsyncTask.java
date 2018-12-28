@@ -205,7 +205,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     else
                         apiResponse = api.getPublicTimelineTag(tag, false, max_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
                 }else{
-                    apiResponse = api.getPublicTimelineTag(tag, false, max_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
+                    apiResponse = api.getPublicTimelineTag(tag, false, max_id, null, null, null);
                 }
 
                 break;

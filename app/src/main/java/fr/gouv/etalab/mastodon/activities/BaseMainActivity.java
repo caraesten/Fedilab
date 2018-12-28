@@ -2424,8 +2424,18 @@ public abstract class BaseMainActivity extends BaseActivity
                 bundle.putSerializable("type", typePosition.get(position));
                 if( typePosition.get(position) == RetrieveFeedsAsyncTask.Type.TAG){
                     if( tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null) {
-                        bundle.putString("tag", tabLayout.getTabAt(position).getText().toString());
-                        tagFragment.put(tabLayout.getTabAt(position).getText().toString(), statusFragment);
+
+                        SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+
+                        List<TagTimeline> tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTabInfo(tabLayout.getTabAt(position).getText().toString());
+                        String tag;
+                        if( tagTimelines == null || tagTimelines.size() == 0)
+                            tag = tabLayout.getTabAt(position).getText().toString();
+                        else
+                            tag = tagTimelines.get(0).getName();
+
+                        bundle.putString("tag", tag);
+                        tagFragment.put(tag, statusFragment);
                     }
                 }
                 statusFragment.setArguments(bundle);
@@ -2467,40 +2477,45 @@ public abstract class BaseMainActivity extends BaseActivity
         tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                String tag = tabLayout.getTabAt(position).getText().toString().trim();
+                String tabName = tabLayout.getTabAt(position).getText().toString().trim();
+
                 SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+
+                List<TagTimeline> tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTabInfo(tabName);
+                String tag;
+                if( tagTimelines == null || tagTimelines.size() == 0)
+                    tag = tabName;
+                else
+                    tag = tagTimelines.get(0).getName();
                 PopupMenu popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(position));
                 popup.getMenuInflater()
                         .inflate(R.menu.option_tag_timeline, popup.getMenu());
                 Menu menu = popup.getMenu();
 
 
-
                 final MenuItem itemMediaOnly = menu.findItem(R.id.action_show_media_only);
                 final MenuItem itemShowNSFW = menu.findItem(R.id.action_show_nsfw);
-                final MenuItem itemAny = menu.findItem(R.id.action_any);
-                final MenuItem itemAll = menu.findItem(R.id.action_all);
-                final MenuItem itemNone = menu.findItem(R.id.action_none);
-                List<TagTimeline> tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTimelineInfo(tag);
-                boolean mediaOnly = false;
-                boolean showNSFW = false;
+                final boolean[] changes = {false};
+                final boolean[] mediaOnly = {false};
+                final boolean[] showNSFW = {false};
                 if( tagTimelines != null && tagTimelines.size() > 0 ) {
-                    mediaOnly = tagTimelines.get(0).isART();
-                    showNSFW = tagTimelines.get(0).isNSFW();
+                    mediaOnly[0] = tagTimelines.get(0).isART();
+                    showNSFW[0] = tagTimelines.get(0).isNSFW();
                 }
-                itemMediaOnly.setChecked(mediaOnly);
-                itemShowNSFW.setChecked(showNSFW);
+                itemMediaOnly.setChecked(mediaOnly[0]);
+                itemShowNSFW.setChecked(showNSFW[0]);
                 popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                     @Override
                     public void onDismiss(PopupMenu menu) {
-                        FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
-                        fragTransaction.detach(tagFragment.get(tag));
-                        fragTransaction.attach(tagFragment.get(tag));
-                        fragTransaction.commit();
+                        if(changes[0]) {
+                            FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+                            fragTransaction.detach(tagFragment.get(tag));
+                            fragTransaction.attach(tagFragment.get(tag));
+                            fragTransaction.commit();
+                        }
                     }
                 });
-                boolean finalMediaOnly = mediaOnly;
-                boolean finalShowNSFW = showNSFW;
+
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
@@ -2516,22 +2531,25 @@ public abstract class BaseMainActivity extends BaseActivity
                                 return false;
                             }
                         });
+                        changes[0] = true;
                         switch (item.getItemId()) {
                             case R.id.action_show_media_only:
                                 TagTimeline tagTimeline = new TagTimeline();
+                                mediaOnly[0] =!mediaOnly[0];
                                 tagTimeline.setName(tag.trim());
-                                tagTimeline.setART(!finalMediaOnly);
-                                tagTimeline.setNSFW(finalShowNSFW);
-                                itemMediaOnly.setChecked(!finalMediaOnly);
-                                new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, null, null, null);
+                                tagTimeline.setART(mediaOnly[0]);
+                                tagTimeline.setNSFW(showNSFW[0]);
+                                itemMediaOnly.setChecked(mediaOnly[0]);
+                                new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, null,null, null, null);
                                 break;
                             case R.id.action_show_nsfw:
+                                showNSFW[0] = !showNSFW[0];
                                 tagTimeline = new TagTimeline();
                                 tagTimeline.setName(tag.trim());
-                                tagTimeline.setART(finalMediaOnly);
-                                tagTimeline.setNSFW(!finalShowNSFW);
-                                itemShowNSFW.setChecked(!finalShowNSFW);
-                                new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, null, null, null);
+                                tagTimeline.setART(mediaOnly[0]);
+                                tagTimeline.setNSFW(showNSFW[0]);
+                                itemShowNSFW.setChecked(showNSFW[0]);
+                                new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, null,null, null, null);
                                 break;
                             case R.id.action_any:
                                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
@@ -2550,8 +2568,8 @@ public abstract class BaseMainActivity extends BaseActivity
 
                                 tagTimeline = new TagTimeline();
                                 tagTimeline.setName(tag.trim());
-                                tagTimeline.setART(finalMediaOnly);
-                                tagTimeline.setNSFW(finalShowNSFW);
+                                tagTimeline.setART(mediaOnly[0]);
+                                tagTimeline.setNSFW(showNSFW[0]);
 
                                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                                     @Override
@@ -2559,7 +2577,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                         String[] values = editText.getText().toString().trim().split("\\s+");
                                         List<String> any =
                                                 new ArrayList<>(Arrays.asList(values));
-                                        new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, any, null, null);
+                                        new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline,null, any, null, null);
                                     }
                                 });
                                 AlertDialog alertDialog = dialogBuilder.create();
@@ -2581,8 +2599,8 @@ public abstract class BaseMainActivity extends BaseActivity
                                 }
                                 tagTimeline = new TagTimeline();
                                 tagTimeline.setName(tag.trim());
-                                tagTimeline.setART(finalMediaOnly);
-                                tagTimeline.setNSFW(finalShowNSFW);
+                                tagTimeline.setART(mediaOnly[0]);
+                                tagTimeline.setNSFW(showNSFW[0]);
 
                                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                                     @Override
@@ -2590,7 +2608,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                         String[] values = editTextAll.getText().toString().trim().split("\\s+");
                                         List<String> all =
                                                 new ArrayList<>(Arrays.asList(values));
-                                        new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, null, all, null);
+                                        new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, null,null, all, null);
                                     }
                                 });
                                 alertDialog = dialogBuilder.create();
@@ -2612,8 +2630,8 @@ public abstract class BaseMainActivity extends BaseActivity
                                 }
                                 tagTimeline = new TagTimeline();
                                 tagTimeline.setName(tag.trim());
-                                tagTimeline.setART(finalMediaOnly);
-                                tagTimeline.setNSFW(finalShowNSFW);
+                                tagTimeline.setART(mediaOnly[0]);
+                                tagTimeline.setNSFW(showNSFW[0]);
 
                                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                                     @Override
@@ -2621,7 +2639,36 @@ public abstract class BaseMainActivity extends BaseActivity
                                         String[] values = editTextNone.getText().toString().trim().split("\\s+");
                                         List<String> none =
                                                 new ArrayList<>(Arrays.asList(values));
-                                        new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, null, null, none);
+                                        new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, null,null, null, none);
+                                    }
+                                });
+                                alertDialog = dialogBuilder.create();
+                                alertDialog.show();
+                                break;
+                            case R.id.action_displayname:
+                                dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
+                                inflater = getLayoutInflater();
+                                dialogView = inflater.inflate(R.layout.tags_name, null);
+                                dialogBuilder.setView(dialogView);
+                                final EditText editTextName = dialogView.findViewById(R.id.column_name);
+                                tagInfo = new SearchDAO(BaseMainActivity.this, db).getTimelineInfo(tag);
+                                if( tagInfo != null && tagInfo.size() > 0 && tagInfo.get(0).getDisplayname() != null) {
+                                    editTextName.setText(tagInfo.get(0).getDisplayname());
+                                    editTextName.setSelection(editTextName.getText().toString().length());
+                                }
+                                tagTimeline = new TagTimeline();
+                                tagTimeline.setName(tag.trim());
+                                tagTimeline.setART(mediaOnly[0]);
+                                tagTimeline.setNSFW(showNSFW[0]);
+                                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        String values = editTextName.getText().toString();
+                                        if( values.trim().length() == 0)
+                                            values = tag;
+                                        if( tabLayout.getTabAt(position) != null)
+                                            tabLayout.getTabAt(position).setText(values);
+                                        new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, values,null, null, null);
                                     }
                                 });
                                 alertDialog = dialogBuilder.create();

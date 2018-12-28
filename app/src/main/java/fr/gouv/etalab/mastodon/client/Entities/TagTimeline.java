@@ -24,6 +24,7 @@ import java.util.List;
 public class TagTimeline {
 
     private String name;
+    private String displayname;
     private boolean isART;
     private boolean isNSFW;
     private List<String> any;
@@ -76,5 +77,13 @@ public class TagTimeline {
 
     public void setNone(List<String> none) {
         this.none = none;
+    }
+
+    public String getDisplayname() {
+        return displayname;
+    }
+
+    public void setDisplayname(String displayname) {
+        this.displayname = displayname;
     }
 }

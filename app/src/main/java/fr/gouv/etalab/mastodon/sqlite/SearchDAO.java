@@ -72,7 +72,7 @@ public class SearchDAO {
      * update tag timeline info in database
      * @param tagTimeline TagTimeline
      */
-    public void updateSearch(TagTimeline tagTimeline, List<String> any, List<String> all, List<String> none) {
+    public void updateSearch(TagTimeline tagTimeline, String name, List<String> any, List<String> all, List<String> none) {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_IS_ART, tagTimeline.isART()?1:0);
         values.put(Sqlite.COL_IS_NSFW, tagTimeline.isNSFW()?1:0);
@@ -82,6 +82,8 @@ public class SearchDAO {
             values.put(Sqlite.COL_ALL, Helper.arrayToStringStorage(all));
         if( none != null && none.size() > 0)
             values.put(Sqlite.COL_NONE, Helper.arrayToStringStorage(none));
+        if( name != null && name.trim().length() > 0)
+            values.put(Sqlite.COL_NAME, name);
         try{
             db.update(Sqlite.TABLE_SEARCH,  values, Sqlite.COL_USER_ID + " =  ? AND " + Sqlite.COL_KEYWORDS + " = ?", new String[]{userId, tagTimeline.getName()});
         }catch (Exception ignored) {}
@@ -153,7 +155,10 @@ public class SearchDAO {
             return null;
         List<String> searches = new ArrayList<>();
         while (c.moveToNext() ) {
-            searches.add(c.getString(c.getColumnIndex(Sqlite.COL_KEYWORDS)));
+            if( c.getString(c.getColumnIndex(Sqlite.COL_NAME)) != null)
+                searches.add(c.getString(c.getColumnIndex(Sqlite.COL_NAME)));
+            else
+                searches.add(c.getString(c.getColumnIndex(Sqlite.COL_KEYWORDS)));
         }
         //Close the cursor
         c.close();
@@ -169,6 +174,19 @@ public class SearchDAO {
     public List<TagTimeline> getTimelineInfo(String keyword){
         try {
             Cursor c = db.query(Sqlite.TABLE_SEARCH, null, Sqlite.COL_KEYWORDS + " = \"" + keyword + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, null, null);
+            return cursorToTagTimelineSearch(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns TagTimeline information by its keyword in db
+     * @return info List<TagTimeline>
+     */
+    public List<TagTimeline> getTabInfo(String keyword){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_SEARCH, null, Sqlite.COL_NAME + " = \"" + keyword + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, null, null);
             return cursorToTagTimelineSearch(c);
         } catch (Exception e) {
             return null;
@@ -197,6 +215,7 @@ public class SearchDAO {
                 tagTimeline.setNone(Helper.restoreArrayFromString(c.getString(c.getColumnIndex(Sqlite.COL_NONE))));
             }catch (Exception ignored){}
             tagTimeline.setName(c.getString(c.getColumnIndex(Sqlite.COL_KEYWORDS)));
+            tagTimeline.setDisplayname(c.getString(c.getColumnIndex(Sqlite.COL_NAME)));
             tagTimeline.setART(c.getInt(c.getColumnIndex(Sqlite.COL_IS_ART))==1);
             tagTimeline.setNSFW(c.getInt(c.getColumnIndex(Sqlite.COL_IS_NSFW))==1);
             searches.add(tagTimeline);
