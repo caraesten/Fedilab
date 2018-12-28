@@ -810,10 +810,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         }
                     }else {
                         if( lastReadToot != null && Long.parseLong(statuses.get(i).getId()) > Long.parseLong(lastReadToot)) {
-                            statuses.get(i).setNew(true);
-                            MainActivity.countNewStatus++;
-                            inserted++;
-                            this.statuses.add(0, statuses.get(i));
+                            if( !this.statuses.contains(statuses.get(i)) ) {
+                                statuses.get(i).setNew(true);
+                                MainActivity.countNewStatus++;
+                                inserted++;
+                                this.statuses.add(0, statuses.get(i));
+                            }
                         }
                     }
                 }

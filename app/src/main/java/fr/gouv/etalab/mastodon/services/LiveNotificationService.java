@@ -61,6 +61,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -239,7 +241,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     if (ex != null) {
                         if( !canStartStream.containsKey(account.getAcct()+"@"+account.getInstance()) || canStartStream.get(account.getAcct()+"@"+account.getInstance())) {
                             canStartStream.put(account.getAcct()+"@"+account.getInstance(),false);
-                            new Handler().postDelayed(new Runnable() {
+                            new Timer().schedule(new TimerTask() {
                                 @Override
                                 public void run() {
                                     startStream(account);

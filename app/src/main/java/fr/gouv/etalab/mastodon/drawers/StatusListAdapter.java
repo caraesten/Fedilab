@@ -926,7 +926,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
             }
             holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
-
             if( truncate_toots_size > 0) {
                 holder.status_content.setMaxLines(truncate_toots_size);
                 if (status.getNumberLines() == -1) {
@@ -954,8 +953,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 } else {
                     holder.status_show_more_content.setVisibility(View.GONE);
                 }
-            }else{
-                holder.status_show_more_content.setVisibility(View.GONE);
             }
             holder.status_show_more_content.setOnClickListener(new View.OnClickListener() {
                 @Override
