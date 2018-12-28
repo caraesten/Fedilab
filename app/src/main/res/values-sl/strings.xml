@@ -209,7 +209,7 @@
     <string name="no_scheduled_toots">Nimate časovno načrtovanih objav Toot.</string>
     <string name="no_scheduled_toots_indications">Sestavite objavo Toot in nato izberite <b>Nastavi čas objave</b> iz menija.</string>
     <string name="remove_scheduled">Želite izbrisati načrtovano objavo?</string>
-    <string name="media_count">Media: %d</string>
+    <string name="media_count">Vsebine: %d</string>
     <string name="toot_scheduled">Čas objave Toot-a je na urniku. </string>
     <string name="toot_scheduled_date">Planiran čas objave morate določiti kasneje od tega trenutka.</string>
     <string name="warning_battery">Omogočen je ohranjevalnik baterije. Delovanje lahko odstopa od pričakovanega.</string>
@@ -269,7 +269,7 @@
     <string name="toast_error_login">Prijava ni mogoča.</string>
     <string name="toast_update_credential_ok">Podatki o profilu so shranjeni.</string>
     <string name="nothing_to_do">No action can be taken</string>
-    <string name="toast_saved">The media has been saved!</string>
+    <string name="toast_saved">Vsebina je shranjena.</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
     <string name="toast_toot_saved">Osnutek je shranjen.</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
@@ -478,7 +478,7 @@
         - To povezavo lahko uporabite tudi brez dvostopenjskega prijavljanja.\n\n
         - Če našteto ne pomaga, prosimo, prijavite napako na GitLab naslovu: https://gitlab.com/tom79/mastalab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
+    <string name="media_ready">Vsebina je naložena. Pritisnite tu, da jo prikažete.</string>
     <string name="data_export_start">Ta akcija lahko traja precej dolgo. Obvestili vas bomo, ko bo zaključeno.</string>
     <string name="data_export_running">Se še izvaja. Prosimo, počakajte …</string>
     <string name="data_export">Izvoz statusov</string>
@@ -557,7 +557,7 @@
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Tega računa ne morete spremljati</string>
     <string name="retrieve_remote_account">Fetching remote account</string>
-    <string name="expand_image">Automatically expand hidden media</string>
+    <string name="expand_image">Samodejno razširi skirte vsebine</string>
     <string name="set_display_follow_instance">Prikaži gumb za spremljanje instance</string>
     <string name="channel_notif_follow">Novi spremljevalci</string>
     <string name="channel_notif_boost">Novo ojačanje</string>
@@ -565,7 +565,7 @@
     <string name="channel_notif_mention">New Mention</string>
     <string name="channel_notif_toot">Nova objava Toot</string>
     <string name="channel_notif_backup">Arhivirani Tooti</string>
-    <string name="channel_notif_media">Media Download</string>
+    <string name="channel_notif_media">Prenos vsebine</string>
     <string name="set_notif_sound">Spremeni zvok ob obvestilih</string>
     <string name="select_sound">Izberite zvok</string>
     <string name="set_enable_time_slot">Enable time slot</string>
@@ -595,8 +595,8 @@
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
     <string name="channel">Kanal</string>
-    <string name="no_peertube_channels">No Peertube channels</string>
-    <string name="no_peertube_instances">No Peertube instances</string>
+    <string name="no_peertube_channels">Ni kanalov Peertube</string>
+    <string name="no_peertube_instances">Ni instanc Peertube</string>
     <string name="no_mastodon_instances">No Mastodon instances</string>
     <string name="no_lists">Ni seznamov</string>
     <string name="videos">Videi</string>
@@ -606,7 +606,7 @@
     <string name="set_display_card">Display previews in all toots</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_old_direct_timeline">Uporabi neposredno časovnico pred različico Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
+    <string name="set_display_video_preview">Prikaži predogled videov</string>
     <string name="thanks_text_support">Podpora na Gitlab-u</string>
     <string name="action_bug_report">Poročilo o napaki</string>
     <string name="no_mail_client">There are no email clients installed.</string>
@@ -622,8 +622,8 @@
     <string name="manage_tags">Upravljanje oznak</string>
     <string name="tags_already_stored">Oznaka že obstaja.</string>
     <string name="tags_stored">Oznaka je shranjena.</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
+    <string name="tags_renamed">Oznaka je spremenjena.</string>
+    <string name="tags_deleted">Oznaka je izbrisana.</string>
     <string name="set_display_art">Prikaži umetniško časovnico</string>
     <string name="schedule_boost">Doliči čas ojačanja</string>
     <string name="boost_scheduled">Določili ste čas ojačanja.</string>
@@ -648,7 +648,7 @@
     <string name="card_view_image">Slika kartice</string>
     <string name="hide_media">Skrij vsebino</string>
     <string name="favicon">Mala ikona</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Vsebina za dodajanje opisa</string>
     <string-array name="filter_expire">
         <item>Nikoli</item>
         <item>30 minut</item>
@@ -671,21 +671,21 @@
     <!-- languages not translated -->
     <string name="languages">Jeziki</string>
     <string name="show_media_only">Samo vsebine</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_nsfw">Prikaži NSFW</string>
     <string name="crowdin_translations">Prevodi na Crowdin-u</string>
     <string name="crowdin_manager">Skrbnik na Crowdin-u</string>
     <string name="translation_app">Prevod aplikacije</string>
     <string name="about_crowdin">Več o platformi Crowdin</string>
-    <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
+    <string name="bot">Robot</string>
+    <string name="pixelfed_instance">Instanca Pixelfed</string>
     <string name="mastodon_instance">Instanca Mastodon</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="no_pixelfed_instance">Ni instanc Pixelfed</string>
     <string name="any_tags">Karkilo od naštetega</string>
     <string name="all_tags">Vse našteto</string>
     <string name="none_tags">Nič od naštetega</string>
     <string name="some_words_any">Katerakoli od teh besed (ločene s presledkom)</string>
     <string name="some_words_all">Vse te besede (ločene s presledkom)</string>
     <string name="some_words_none">Nobena od teh besed (ločene s presledkom)</string>
-    <string name="change_tag_column">Change column name</string>
+    <string name="change_tag_column">Preimenuj stolpec</string>
     <!-- end languages -->
 </resources>
