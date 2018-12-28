@@ -674,9 +674,9 @@
     <string name="pixelfed_instance">Istanza Pixelfed</string>
     <string name="mastodon_instance">Istanza Mastodon</string>
     <string name="no_pixelfed_instance">Nessuna istanza Pixelfed</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
+    <string name="any_tags">Qualsiasi di queste</string>
+    <string name="all_tags">Tutte queste</string>
+    <string name="none_tags">Nessuna di queste</string>
     <string name="some_words_any">Any of these words (space-separated)</string>
     <string name="some_words_all">All these words (space-separated)</string>
     <string name="some_words_none">None of these words (space-separated)</string>
