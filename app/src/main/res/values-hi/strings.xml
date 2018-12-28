@@ -29,10 +29,10 @@
     <string name="save">सहेजें</string>
     <string name="restore">पहले जैसा करें</string>
     <string name="two_factor_authentification">दो-चरणीय प्रमाणीकरण?</string>
-    <string name="other_instance">mastodon.etalab.gouv.fr के अलावा कोई अन्य इंस्टेंस?</string>
+    <string name="other_instance">mastodon.etalab.gouv.fr के अलावा कोई अन्य इंस्टंस?</string>
     <string name="no_result">कोई परिणाम नहीं!</string>
-    <string name="instance">इंस्टेंस</string>
-    <string name="instance_example">इंस्टेंस: mastodon.social</string>
+    <string name="instance">इंस्टंस</string>
+    <string name="instance_example">इंस्टंस: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">अब इस खाते के साथ काम करता है %1$s</string>
     <string name="add_account">खाता जोड़ें</string>
     <string name="clipboard">इस संदेश के विषय वस्तु की प्रतिलिपि को क्लिपबोर्ड में छाप दिया गया है</string>
@@ -487,7 +487,7 @@
     <string name="no_account_yet">कोई खाता नहीं है?</string>
     <string name="toast_instance_unavailable">इस इंस्टंस पे कोई टाइम्लाइन नहीं मिली!</string>
     <string name="delete_instance">इस इंस्टंस को मिटाएं?</string>
-    <string name="warning_delete_instance">आप %s को अपने अनुसरण करते इंस्टंसो से मिटाने वाले है।</string>
+    <string name="warning_delete_instance">आप %s को अपने अनुसरण करते इंस्टंस से मिटाने वाले है।</string>
     <string name="which_language">में अनुवाद करें</string>
     <string name="crash_title">मैस्टालैब रुक गया है :(</string>
     <string name="crash_message">आप मुझे ईमेल के द्वारा क्रैश रिपोर्ट भेज सकते है। यह उसे ठीक करने में मदद देगी :)\n\nआप अतिरिक्त विषय वस्तु जोड़ सकते है। धन्यवाद!</string>
@@ -552,9 +552,9 @@
     <string name="channel_notif_toot">नया लेख</string>
     <string name="channel_notif_backup">लेखों का बैकअप</string>
     <string name="channel_notif_media">मीडिया डाउंलोड</string>
-    <string name="set_notif_sound">सूचना टोन को बदलें</string>
+    <string name="set_notif_sound">सूचना संगीत को बदलें</string>
     <string name="select_sound">टोन चुनें</string>
-    <string name="set_enable_time_slot">निर्धारित समय सक्रिय करें</string>
+    <string name="set_enable_time_slot">निर्धारित समय चालू करें</string>
     <string name="how_to_videos">शिक्षण वीडियो</string>
     <string name="retrieve_remote_conversation">दूरवर्ती धागे को लाया जा रहा हा!</string>
     <string name="no_blocked_domain">कोई अवरुद्ध डोमेन नहीं है!</string>
@@ -573,7 +573,7 @@
     <string name="no_comments">वीडियो पे सबसे पहले टिप्पणी करने वाले बने ऊपरी दाई ओर वाले बटन के साथ!</string>
     <string name="number_view_video">%s बार देखा</string>
     <string name="duration_video">अवधि: %s</string>
-    <string name="add_remote_instance">एक इंसटंस जोड़ें</string>
+    <string name="add_remote_instance">एक इंस्टंस जोड़ें</string>
     <string name="comment_no_allowed_peertube">इस वीडियो पर टिप्पणियां निष्क्रिय हैं!</string>
     <string name="pickup_resolution">एक रेज़लूशन चुनें</string>
     <string name="peertube_favorites">पीयरट्यूब पसंदीदा</string>
@@ -620,7 +620,7 @@
     <string name="app_logo">एेप का चिह्न</string>
     <string name="profile_picture">प्रोफ़ाइल चित्र</string>
     <string name="profile_banner">प्रोफ़ाइल बैनर</string>
-    <string name="contact_instance_admin">इंसटंस के प्रबंधक से संपर्क करें</string>
+    <string name="contact_instance_admin">इंस्टंस के प्रबंधक से संपर्क करें</string>
     <string name="add_new">नया जोड़ें</string>
     <string name="mastohost_logo">मैस्टोहोस्ट का चिह्न</string>
     <string name="emoji_picker">इमोजी चयनकर्ता</string>
@@ -646,7 +646,7 @@
     </string-array>
     <string name="showcase_instance">यहाँ अपने इंस्टंस के मेज़बान का नाम डालें।\nउदाहरण, अगर आपने https://mastodon.social\n पे खाता बनाया है तो बस लिखें <b>mastodon.social</b> (https:// के बिना)\n
 आप जब पहले अक्षर लिखना शुरू करेंगे तब नामों का सुझाव दिया जाएगा।\n\n
-⚠ लाॅगइन बटन सिर्फ़ तब काम करेगा जब इंसटंस का नाम वैध है और इंसटंस काम कर रहा है!    </string>
+⚠ लाॅगइन बटन सिर्फ़ तब काम करेगा जब इंसटंस का नाम वैध है और इंस्टंस काम कर रहा है!    </string>
     <string name="showcase_uid">यहाँ अपने मैस्टोडाॅन खाते से जुड़े ईमेल को लिखें।    </string>
     <string name="showcase_pwd">आखरी चरण में अपना पासवर्ड डाले और फिर लाॅगइन पे क्लिक करें।    </string>
     <string name="more_information">अधिक जानकारी</string>
