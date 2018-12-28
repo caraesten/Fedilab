@@ -676,10 +676,10 @@
     <string name="mastodon_instance">Instancia Mastodon</string>
     <string name="no_pixelfed_instance">Sen instancias Pixelfed</string>
     <string name="any_tags">Calquera de estos</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="all_tags">Todos estos</string>
+    <string name="none_tags">Ningún de estos</string>
+    <string name="some_words_any">Calquera de estas palabras (separadas por espazos)</string>
+    <string name="some_words_all">Todas estas palabras (separadas por espazos)</string>
+    <string name="some_words_none">Ningunha de estas palabras (separadas por espazos)</string>
     <!-- end languages -->
 </resources>
