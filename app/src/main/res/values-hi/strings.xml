@@ -188,7 +188,7 @@
     <string name="about_license_action">जीएनयू जीपीएल वी३</string>
     <string name="about_code">सोर्से कोड: </string>
     <string name="about_yandex">लेखों का अनुवाद:</string>
-    <string name="about_thekinrar">इंस्टंसो को खोजें:</string>
+    <string name="about_thekinrar">इंस्टंस को खोजें:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">आइकाॅन डिज़ाइनर:</string>
     <string name="thanks_text_banner">बैनर डिज़ाइनर:</string>
@@ -417,7 +417,7 @@
 &#9888; लाॅगइन और पासवर्ड कभी रखे नहीं जाते। उनका उपयोग केवल किसी इंस्टंस के साथ सुरक्षित प्रमाणीकरण (SSL) के दौरान किया जाता है।    </string>
     <string name="privacy_authorizations_title">अनुमतियां:</string>
     <string name="privacy_authorizations">- <b>एेकस्स_नैटवर्क_स्टेट</b>: यह पता लगाने के लिये कि उपकरण वाईफाई से जुड़ा है या नहीं।\n
-- <b>इंटर्नेट</b>: इंसटंस से परिप्रश्न करने के लिये।\n
+- <b>इंटर्नेट</b>: इंस्टंस से परिप्रश्न करने के लिये।\n
 - <b>राइट_एेक्सटर्नल_स्टोरेज</b>: मीडिया संचित या एेप को एेसडी कार्ड में डालने के लिये।\n
 - <b>पढ़े_एेक्सटर्नल_स्टोरेज</b>: लेखों में मीडिया जोड़ने के लिये।\n
 - <b>बूट_समाप्त</b>: सूचना सेवा शुरू करने के लिये।\n
@@ -459,11 +459,11 @@
     <string name="show_boost_count">बूस्ट/पसंदीदा की गिनती दिखाएं</string>
     <string name="issue_login_title">प्रमाणीकरण काम नहीं कर रहा?</string>
     <string name="issue_login_message"><b>यह कुछ चैक्स हैं जो मदद करें:</b>\n\n
-- जांचे कि इंसटंस के नाम में कोई गलती तो नहीं ह\n\n
-- जांचे की आपका इंसटंस कहीं बंद तो नहीं है\n\n
-- अगर आप दो-चरणीय प्रमाणीकरण (2FA) का उपयोग करते है तो कृप्या नीचे दिये लिंक का इस्तेमाल करें (इंसटंस का नाम डालने के बाद)\n\n
+- जांचे कि इंस्टंस के नाम में कोई गलती तो नहीं ह\n\n
+- जांचे की आपका इंस्टंस कहीं बंद तो नहीं है\n\n
+- अगर आप दो-चरणीय प्रमाणीकरण (2FA) का उपयोग करते है तो कृप्या नीचे दिये लिंक का इस्तेमाल करें (इंस्टंस का नाम डालने के बाद)\n\n
 - आप इस लिंक का उपयोग दो-चरणीय प्रमाणीकरण के बिना भी कर सकते हैं\n\n
-- अगर यह फिर भी काम नहीं कर रहा तो कृप्या Gitlab पे रिपोर्ट करें https://gitlab.com/tom79/mastalab/issues    </string>
+- अगर यह फिर भी काम नहीं कर रहा तो कृप्या गिटलैब पे रिपोर्ट करें https://gitlab.com/tom79/mastalab/issues    </string>
     <string name="media_ready">मीडिया को लोड कर दिया है। देखने के लिये यहाँ क्लिक करें।</string>
     <string name="data_export_start">यह क्रिया काफी लंबी हो सकती है। पूरा होने पे आपको सूचित कर दिया जाएगा।</string>
     <string name="data_export_running">चालू है, कृप्या प्रतीक्षा करे...</string>
@@ -662,7 +662,7 @@
     <string name="bot">बॉट</string>
     <string name="pixelfed_instance">पिक्सलफ़ैड इंस्टंस</string>
     <string name="mastodon_instance">मैस्टोडाॅन इंस्टंस</string>
-    <string name="no_pixelfed_instance">कोई पिक्सलफ़ैड इंसटंस नहीं है</string>
+    <string name="no_pixelfed_instance">कोई पिक्सलफ़ैड इंस्टंस नहीं है</string>
     <string name="any_tags">इनमें से कोई भी</string>
     <string name="all_tags">यह सभी</string>
     <string name="none_tags">कोई भी नहीं</string>
