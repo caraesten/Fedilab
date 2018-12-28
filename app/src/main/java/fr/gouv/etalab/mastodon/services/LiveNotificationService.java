@@ -93,6 +93,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     protected Account account;
     boolean backgroundProcess;
     private static HashMap<String, Thread>  threads = new HashMap<>();
+    private static HashMap<String, Boolean>  canStartStream = new HashMap<>();
     private NetworkStateReceiver networkStateReceiver;
     private static HashMap<String, WebSocket> webSocketFutures = new HashMap<>();
 
@@ -236,8 +237,16 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 public void onCompleted(Exception ex, WebSocket webSocket) {
                     webSocketFutures.put(account.getAcct()+"@"+account.getInstance(), webSocket);
                     if (ex != null) {
-                        if( Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT )
-                            startStream(account);
+                        if( !canStartStream.containsKey(account.getAcct()+"@"+account.getInstance()) || canStartStream.get(account.getAcct()+"@"+account.getInstance())) {
+                            canStartStream.put(account.getAcct()+"@"+account.getInstance(),false);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startStream(account);
+                                    canStartStream.put(account.getAcct()+"@"+account.getInstance(),true);
+                                }
+                            }, 15000);
+                        }
                         return;
                     }
                     webSocket.setStringCallback(new WebSocket.StringCallback() {
@@ -284,12 +293,11 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     private void onRetrieveStreaming(Account account, JSONObject response) {
         if(  response == null )
             return;
-        fr.gouv.etalab.mastodon.client.Entities.Status status ;
         final Notification notification;
         String dataId;
         Bundle b = new Bundle();
         boolean canSendBroadCast = true;
-        Helper.EventStreaming event = null;
+        Helper.EventStreaming event;
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         try {
