@@ -3,8 +3,8 @@
 <resources>
     <string name="navigation_drawer_open">मेन्यू खोलें</string>
     <string name="navigation_drawer_close">मेन्यू बंद करें</string>
-    <string name="action_about">इसके बारे में</string>
-    <string name="action_about_instance">इंस्टेंस के बारे में</string>
+    <string name="action_about">के बारे में</string>
+    <string name="action_about_instance">इंस्टंस के बारे में</string>
     <string name="action_privacy">निजता</string>
     <string name="action_cache">कैश</string>
     <string name="action_logout">लॉग आउट</string>
@@ -45,7 +45,7 @@
     <string name="speech_not_supported">क्षमा करें! आपका उपकरण वाणी इंपुट का समर्थन नहीं करता है!</string>
     <string name="delete_all">सब हटाएँ</string>
     <string name="translate_toot">इस संदेश का अनुवाद करें</string>
-    <string name="schedule">नियत करें</string>
+    <string name="schedule">शैड्यूल</string>
     <string name="text_size">अक्षर और आइकाॅन का आकार</string>
     <string name="text_size_change">अक्षरों के वतर्मान आकार को बदलें:</string>
     <string name="icon_size_change">अाइकाॅन के वर्तमान आकार को बदलें:</string>
@@ -205,7 +205,7 @@
     <string name="reject">अस्वीकार</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">कोई परिगणित लेख मौजूद नहीं है!</string>
-    <string name="no_scheduled_toots_indications">लेख लिखने के बाद ऊपरी मेन्यू में से <b>परिगणित</b> को चुनें।</string>
+    <string name="no_scheduled_toots_indications">लेख लिखने के बाद ऊपरी मेन्यू में से <b>शैड्यूल</b> को चुनें।</string>
     <string name="remove_scheduled">परिगणित लेख मिटाएं?</string>
     <string name="media_count">मीडिया: %d</string>
     <string name="toot_scheduled">लेख को परिगणित कर दिया!</string>
@@ -612,9 +612,9 @@
     <string name="tags_deleted">टैग को मिटा दिया!</string>
     <string name="set_display_art">कला टाइम्लाइन दिखाएं</string>
     <string name="schedule_boost">बूस्ट शैड्यूल करें</string>
-    <string name="boost_scheduled">बूस्ट को परिगणित कर दिया!</string>
+    <string name="boost_scheduled">बूस्ट परिगणित हो गया!</string>
     <string name="no_scheduled_boosts">कोई परिगणित बूस्ट मौजूद नहीं है!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[एक लेख का मेन्यू खोलें और चुनें <b>बूस्ट समय सारणी करें</b>।]]></string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[एक लेख का मेन्यू खोलें और चुनें <b>बूस्ट शैड्यूल करें</b>।]]></string>
     <string name="art_menu">कला टाइम्लाइन</string>
     <string name="open_menu">मेन्यू खोलें</string>
     <string name="app_logo">एेप का चिह्न</string>
@@ -660,8 +660,8 @@
     <string name="translation_app">एेप का अनुवाद</string>
     <string name="about_crowdin">क्राउडिन के बारे में</string>
     <string name="bot">बॉट</string>
-    <string name="pixelfed_instance">पिक्सलफ़ैड इंसटंस</string>
-    <string name="mastodon_instance">मैस्टोडाॅन इंसटंस</string>
+    <string name="pixelfed_instance">पिक्सलफ़ैड इंस्टंस</string>
+    <string name="mastodon_instance">मैस्टोडाॅन इंस्टंस</string>
     <string name="no_pixelfed_instance">कोई पिक्सलफ़ैड इंसटंस नहीं है</string>
     <string name="any_tags">इनमें से कोई भी</string>
     <string name="all_tags">यह सभी</string>
