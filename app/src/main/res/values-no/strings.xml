@@ -668,5 +668,6 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="some_words_any">Hvilke som helst av disse ordene (separert med mellomrom)</string>
     <string name="some_words_all">Alle disse ordene (separert med mellomrom)</string>
     <string name="some_words_none">Ingen av disse ordene (separert med mellomrom)</string>
+    <string name="change_tag_column">Change column name</string>
     <!-- end languages -->
 </resources>
