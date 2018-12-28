@@ -390,7 +390,7 @@
     <string name="cache_units">एमबी</string>
     <string name="toast_cache_clear">कैश को साफ़ कर दिया! %1$s मुक्त</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">संकालन करें</string>
+    <string name="action_sync">समक्रमण करें</string>
     <string name="action_filter">छांटे</string>
     <string name="owner_cached_toots">आपके लेख</string>
     <string name="v_public">सार्वजनिक</string>
@@ -398,10 +398,10 @@
     <string name="v_private">निजी</string>
     <string name="v_direct">सीधा</string>
     <string name="v_keywords">कुछ कुंजी शब्द...</string>
-    <string name="show_media">मीडिया दिखाएँ</string>
-    <string name="show_pinned">जड़े हुए दिखाएँ</string>
+    <string name="show_media">मीडिया दिखाएं</string>
+    <string name="show_pinned">जड़े हुए दिखाएं</string>
     <string name="filter_no_result">कोई मिलता-जुलता परिणाम नहीं मिला!</string>
-    <string name="data_backup_toots">%1$s के लेखो को बैकअप करें</string>
+    <string name="data_backup_toots">%1$s के लेखों को बैकअप करें</string>
     <string name="data_backup_success">%1$s नये लेख आयात कर लिये गये है</string>
     <string-array name="filter_select">
         <item>नहीं</item>
@@ -414,36 +414,36 @@
     <string name="privacy_data">खातों की सिर्फ़ साधारण जानकारी उपकरण में रखी जाती है।
 यह डेटा बिलकुल गोपनीय है और इसका उपयोग सिर्फ़ यह एेप कर सकता है।
 एेप के मिटाते ही यह डेटा तुरंत नष्ट हो जाता है।\n
-&#9888; लाॅगइन और पासवर्ड कभी रखे नहीं जाते। उनका उपयोग केवल किसी इंस्टेंस के साथ सुरक्षित प्रमाणीकरण (SSL) के दौरान किया जाता है।    </string>
-    <string name="privacy_authorizations_title">अनुमतियाँ:</string>
+&#9888; लाॅगइन और पासवर्ड कभी रखे नहीं जाते। उनका उपयोग केवल किसी इंस्टंस के साथ सुरक्षित प्रमाणीकरण (SSL) के दौरान किया जाता है।    </string>
+    <string name="privacy_authorizations_title">अनुमतियां:</string>
     <string name="privacy_authorizations">- <b>एेकस्स_नैटवर्क_स्टेट</b>: यह पता लगाने के लिये कि उपकरण वाईफाई से जुड़ा है या नहीं।\n
 - <b>इंटर्नेट</b>: इंसटंस से परिप्रश्न करने के लिये।\n
 - <b>राइट_एेक्सटर्नल_स्टोरेज</b>: मीडिया संचित या एेप को एेसडी कार्ड में डालने के लिये।\n
 - <b>पढ़े_एेक्सटर्नल_स्टोरेज</b>: लेखों में मीडिया जोड़ने के लिये।\n
 - <b>बूट_समाप्त</b>: सूचना सेवा शुरू करने के लिये।\n
 - <b>वेक_लौक</b>: सूचना सेवा के दौरान उपयोग करने के लिये।    </string>
-    <string name="privacy_API_authorizations_title">API अनुमतियाँ:</string>
+    <string name="privacy_API_authorizations_title">एपीआई अनुमतियां:</string>
     <string name="privacy_API_authorizations">- <b>पढ़ें</b>: डेटा पढ़ें।\n
 - <b>लिखें</b>: लेख प्रकाशित करें और मीडिया अपलोड करें।\n
 - <b>अनुसरण</b>: अनुसरण, अंफ़ौलो, अवरुद्ध, मुक्त।\n\n
 - <b>&#9888; केवल उपयोगकर्ता की गुज़ारिश पर यह क्रियाएं की जाती हैं।</b>    </string>
     <string name="privacy_API_title">ट्रैकिंग एवं संग्रहालय</string>
     <string name="privacy_API">यह एेप <b>ट्रैकिंग साधन का उपयोग नहीं करता</b> (श्रोता मापन, त्रुटि रिपोर्ट आदी) और इसमें कोई विज्ञापन नहीं है।\n\n
-संग्रहालयो के इस्तेमाल कम किया है: \n
+संग्रहालयो के उपयोग कम किया है: \n
 - <b>ग्लाइड</b>: मीडिया को संभालने के लिये\n
 - <b>एंड्राॅयड-जाॅब</b>: सेवाएं संभालने के लिये\n
 - <b>फ़ोटोव्यू</b>: चित्रो को संभालने के लिये\n    </string>
-    <string name="privacy_API_yandex_title">लेखो का अनुवाद</string>
+    <string name="privacy_API_yandex_title">लेखों का अनुवाद</string>
     <string name="privacy_API_yandex_authorizations">यह एेप लेखों का अनुवाद करने की काबिलियत प्रदान करता है उपकरण का स्थान और यैंडैक्स एपीआई की मदद से।\n
 यैंडैक्स की अपनी गोपनीयता नीति है जो यहाँ मौजूद है: https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="thanks_text">लोगो के लिये स्टेफ़ैन को धन्यवाद।    </string>
     <string name="thanks_text_dev">इनको धन्यवाद:    </string>
     <string name="filter_regex">आम अभिव्यंजनाओ के अनुसार छाटें</string>
     <string name="search">खोजें</string>
-    <string name="delete">मिटाएँ</string>
+    <string name="delete">मिटाएं</string>
     <string name="fetch_more_toots">और लेख खोजिये...</string>
     <!-- About lists -->
-    <string name="action_lists">सूचियाँ</string>
+    <string name="action_lists">सूचियां</string>
     <string name="action_lists_confirm_delete">क्या आप सुनिश्चित हैं कि आप इस सूची को हमेशा के लिये मिटाना चाहते हैं?</string>
     <string name="action_lists_empty_content">यह सूची फिलहाल खाली है। जब इस सूची के सदस्य नये लेख प्रकाशित करेंगे तब वे इधर दिखेंगे।</string>
     <string name="action_lists_add_to">सूची में जोड़ें</string>
