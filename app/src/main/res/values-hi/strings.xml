@@ -199,7 +199,7 @@
     <string name="no_follow_request">अनुसरण करने की गुज़ारिश नहीं है</string>
     <string name="status_cnt">लेख \n %1$s</string>
     <string name="following_cnt">अनुसरण \n %1$s</string>
-    <string name="followers_cnt">अनुयायी \n %1$s</string>
+    <string name="followers_cnt">अनुसरणकर्ता \n %1$s</string>
     <string name="pins_cnt">जड़ा \n %d</string>
     <string name="authorize">अधिकृत करें</string>
     <string name="reject">अस्वीकार</string>
@@ -210,7 +210,7 @@
     <string name="media_count">मीडिया: %d</string>
     <string name="toot_scheduled">लेख को परिगणित कर दिया गया है!</string>
     <string name="toot_scheduled_date">परिगणित तारीक वर्तमान घंटे से आगे होना चाहिये।</string>
-    <string name="warning_battery">बैटरी बचत सक्रिय है! उम्मीदों के मुताबिक शायद काम ना करें।</string>
+    <string name="warning_battery">बैटरी बचत चालू है! उम्मीदों के मुताबिक शायद काम ना करें।</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">मौन करने का समय एक मिनट से अधिक होना चाहिये।</string>
     <string name="timed_mute_date">%1$s को खामोश कर दिया गया है %2$s तक।\n आप इस खाते का उसके प्रोफ़ाइल पेज से फिर से चालू कर सकते हैं।</string>
