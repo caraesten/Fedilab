@@ -671,11 +671,11 @@
     <string name="pixelfed_instance">Pixelfed 實體</string>
     <string name="mastodon_instance">Mastodon 實體</string>
     <string name="no_pixelfed_instance">沒有 Pixelfed 實體</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="any_tags">這些裡面的任何一個</string>
+    <string name="all_tags">這些全部</string>
+    <string name="none_tags">這些都不要</string>
+    <string name="some_words_any">這些字詞的其中一個（以空格分開）</string>
+    <string name="some_words_all">這些字詞全部（以空格分開）</string>
+    <string name="some_words_none">這些字詞都不要（以空格分開）</string>
     <!-- end languages -->
 </resources>
