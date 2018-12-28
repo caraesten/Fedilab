@@ -449,7 +449,7 @@
     </string>
     <string name="thanks_text">        Zahvala Stéphane za logotip.
     </string>
-    <string name="thanks_text_dev">        Thank you to:
+    <string name="thanks_text_dev">        Zahvala:
     </string>
     <string name="filter_regex">Filtriraj s pomočjo regularnih izrazov</string>
     <string name="search">Išči</string>
@@ -496,11 +496,11 @@
     <string name="set_theme">Predloga:</string>
     <string name="set_compact_mode">Strnjen način</string>
     <string name="set_share_details">Add toot details when sharing</string>
-    <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-    <string name="alert_regex">There is an error in the regular expression!</string>
+    <string name="support_the_app_on_liberapay">Podprite to aplikacijo na Liberapay</string>
+    <string name="alert_regex">Napaka v regularnem izrazu.</string>
     <string name="no_account_yet">Še nimate računa?</string>
     <string name="toast_instance_unavailable">Na tej instanci ne najdem časovnic.</string>
-    <string name="delete_instance">Delete this instance?</string>
+    <string name="delete_instance">Izbrišem to instanco?</string>
     <string name="warning_delete_instance">Iz vašega seznama spremljanih instanc boste zbrisali %s.</string>
     <string name="which_language">Prevedi v</string>
     <string name="crash_title">Mastalab se je ustavil :(</string>
@@ -556,21 +556,21 @@
     <string name="about_trunk">Koga naj spremlajm</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Tega računa ne morete spremljati</string>
-    <string name="retrieve_remote_account">Fetching remote account</string>
+    <string name="retrieve_remote_account">Pridobivanje oddaljenega računa</string>
     <string name="expand_image">Samodejno razširi skirte vsebine</string>
     <string name="set_display_follow_instance">Prikaži gumb za spremljanje instance</string>
     <string name="channel_notif_follow">Novi spremljevalci</string>
     <string name="channel_notif_boost">Novo ojačanje</string>
-    <string name="channel_notif_fav">New Favourite</string>
-    <string name="channel_notif_mention">New Mention</string>
+    <string name="channel_notif_fav">Nov všeček</string>
+    <string name="channel_notif_mention">Nova omemba</string>
     <string name="channel_notif_toot">Nova objava Toot</string>
     <string name="channel_notif_backup">Arhivirani Tooti</string>
     <string name="channel_notif_media">Prenos vsebine</string>
     <string name="set_notif_sound">Spremeni zvok ob obvestilih</string>
     <string name="select_sound">Izberite zvok</string>
     <string name="set_enable_time_slot">Enable time slot</string>
-    <string name="how_to_videos">How To Videos</string>
-    <string name="retrieve_remote_conversation">Fetching remote thread!</string>
+    <string name="how_to_videos">Videonavodila</string>
+    <string name="retrieve_remote_conversation">Pridobivanje oddaljenih pogovorov.</string>
     <string name="no_blocked_domain">Ni blokiranih domen.</string>
     <string name="unblock_domain_confirm">Odstranitev blokade domene</string>
     <string name="unblock_domain_confirm_message">Res želite odstraniti blokado %s?</string>
@@ -579,12 +579,12 @@
     <string name="block_domain">Blokada domene</string>
     <string name="toast_block_domain">Domena je blokirana</string>
     <string name="toast_unblock_domain">Domena ni več blokirana.</string>
-    <string name="retrieve_remote_status">Fetching remote status</string>
+    <string name="retrieve_remote_status">Pridobivanje oddaljenih statusov</string>
     <string name="comment">Komentiraj</string>
     <string name="peertube_instance">Instanca Peertube</string>
     <string name="set_display_direct">Prikaži časovnico zasebnih sporočil</string>
     <string name="set_keep_background_process">Ohrani proces v ozadju, ko je aplikacija zaprta</string>
-    <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
+    <string name="no_comments">S pritiskom na gumb zgoraj desno lahko kot prvi objavite komentar za ta video.</string>
     <string name="number_view_video">%s ogledov</string>
     <string name="duration_video">Trajanje: %s</string>
     <string name="add_remote_instance">Dodaj instanco</string>
