@@ -675,5 +675,6 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="some_words_any">Any of these words (space-separated)</string>
     <string name="some_words_all">All these words (space-separated)</string>
     <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="change_tag_column">Change column name</string>
     <!-- end languages -->
 </resources>
