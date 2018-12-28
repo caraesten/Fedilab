@@ -204,11 +204,11 @@
     <string name="authorize">अधिकृत करें</string>
     <string name="reject">अस्वीकार</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">कोई परिगणित लेख दिखाने के लिये नहीं है!</string>
+    <string name="no_scheduled_toots">कोई परिगणित लेख मौजूद नहीं है!</string>
     <string name="no_scheduled_toots_indications">लेख लिखने के बाद ऊपरी मेन्यू में से <b>परिगणित</b> को चुनें।</string>
-    <string name="remove_scheduled">परिगणित लेख को मिटाएं?</string>
+    <string name="remove_scheduled">परिगणित लेख मिटाएं?</string>
     <string name="media_count">मीडिया: %d</string>
-    <string name="toot_scheduled">लेख को परिगणित कर दिया गया है!</string>
+    <string name="toot_scheduled">लेख को परिगणित कर दिया!</string>
     <string name="toot_scheduled_date">परिगणित तारीक वर्तमान घंटे से आगे होना चाहिये।</string>
     <string name="warning_battery">बैटरी बचत चालू है! उम्मीदों के मुताबिक शायद काम ना करें।</string>
     <!-- timed mute -->
@@ -669,6 +669,6 @@
     <string name="some_words_any">कोई भी शब्द (स्पेस से अलग किये हूए)</string>
     <string name="some_words_all">सभी शब्द (स्पेस से अलग किये हूए)</string>
     <string name="some_words_none">कोई भी शब्द नहीं (स्पेस से अलग किये हूए)</string>
-    <string name="change_tag_column">Change column name</string>
+    <string name="change_tag_column">काॅलम क नाम बदलें</string>
     <!-- end languages -->
 </resources>
