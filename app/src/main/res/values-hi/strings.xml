@@ -444,12 +444,12 @@
     <string name="fetch_more_toots">और लेख खोजिये...</string>
     <!-- About lists -->
     <string name="action_lists">सूचियां</string>
-    <string name="action_lists_confirm_delete">क्या आप सुनिश्चित हैं कि आप इस सूची को हमेशा के लिये मिटाना चाहते हैं?</string>
+    <string name="action_lists_confirm_delete">क्या आप वाकई इस सूची को हमेशा के लिये मिटाना चाहते हैं?</string>
     <string name="action_lists_empty_content">यह सूची फिलहाल खाली है। जब इस सूची के सदस्य नये लेख प्रकाशित करेंगे तब वे इधर दिखेंगे।</string>
     <string name="action_lists_add_to">सूची में जोड़ें</string>
     <string name="action_lists_remove_from">सूची से निकालें</string>
     <string name="action_lists_create">सूची जोड़ें</string>
-    <string name="action_lists_delete">सूची मिटाएँ</string>
+    <string name="action_lists_delete">सूची मिटाएं</string>
     <string name="action_lists_update">सूची संपादित करें</string>
     <string name="action_lists_title_placeholder">नये सूची का शीर्षक</string>
     <string name="action_lists_search_users">उनमें खोजें जिनका आप अनुसरण करते हैं</string>
@@ -556,8 +556,8 @@
     <string name="select_sound">टोन चुनें</string>
     <string name="set_enable_time_slot">निर्धारित समय सक्रिय करें</string>
     <string name="how_to_videos">शिक्षण वीडियो</string>
-    <string name="retrieve_remote_conversation">दूरवर्ती धारे को लाया जा रहा हा!</string>
-    <string name="no_blocked_domain">कोई प्रतिबंधित डोमेन्स नहीं है!</string>
+    <string name="retrieve_remote_conversation">दूरवर्ती धागे को लाया जा रहा हा!</string>
+    <string name="no_blocked_domain">कोई अवरुद्ध डोमेन नहीं है!</string>
     <string name="unblock_domain_confirm">डोमेन मुक्त करें</string>
     <string name="unblock_domain_confirm_message">क्या आपको वाकई %s को मुक्त करना है?</string>
     <string name="block_domain_confirm_message">क्या आपको वाकई %s को अवरुद्ध करना है?</string>
@@ -611,8 +611,8 @@
     <string name="tags_renamed">टैग को बदल दिया!</string>
     <string name="tags_deleted">टैग को मिटा दिया!</string>
     <string name="set_display_art">कला टाइम्लाइन दिखाएं</string>
-    <string name="schedule_boost">बूस्ट समय सारणी करें</string>
-    <string name="boost_scheduled">बूस्ट को परिगणित कर दिया है!</string>
+    <string name="schedule_boost">बूस्ट शैड्यूल करें</string>
+    <string name="boost_scheduled">बूस्ट को परिगणित कर दिया!</string>
     <string name="no_scheduled_boosts">कोई परिगणित बूस्ट मौजूद नहीं है!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[एक लेख का मेन्यू खोलें और चुनें <b>बूस्ट समय सारणी करें</b>।]]></string>
     <string name="art_menu">कला टाइम्लाइन</string>
