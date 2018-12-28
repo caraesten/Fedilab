@@ -677,6 +677,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="some_words_any">Any of these words (space-separated)</string>
     <string name="some_words_all">All these words (space-separated)</string>
     <string name="some_words_none">None of these words (space-separated)</string>
-    <string name="change_tag_column">Change column name</string>
+    <string name="change_tag_column">Renommer la colonne</string>
     <!-- end languages -->
 </resources>
