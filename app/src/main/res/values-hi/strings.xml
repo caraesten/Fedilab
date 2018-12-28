@@ -320,11 +320,11 @@
     <string name="settings_time_lower">समय %1$s से कम होना चाहिये</string>
     <string name="settings_hour_init">आरंभ समय</string>
     <string name="settings_hour_end">अंतिम समय</string>
-    <string name="embedded_browser">आंतरिक ब्राउज़र का इस्तेमाल करें</string>
+    <string name="embedded_browser">आंतरिक ब्राउज़र का उपयोग करें</string>
     <string name="custom_tabs">कस्टम टैब्स</string>
-    <string name="use_javascript">जावास्क्रिप्ट सक्रिय करें</string>
+    <string name="use_javascript">जावास्क्रिप्ट चालू करें</string>
     <string name="expand_cw">स्वतः cw खोलें</string>
-    <string name="use_cookies">तीसरी पार्टी कुकीज़ को अनुमति दें</string>
+    <string name="use_cookies">तीसरी पार्टी कुकीज़ को स्वीकारें</string>
     <string name="settings_ui_layout">टाइम्लाइनो का अभिन्यास: </string>
     <string-array name="battery_profiles">
         <item>सामान्य बैटरी बहाव</item>
@@ -341,7 +341,7 @@
         <item>डीपएल</item>
         <item>नहीं</item>
     </string-array>
-    <string name="your_api_key">आपका एपीआई कोड, आप इसे यैंडेक्स के लिये खाली छोड़ सकते है</string>
+    <string name="your_api_key">आपकी एपीआई कुंजी, आप इसे यैंडेक्स के लिये खाली छोड़ सकते हैं</string>
     <string-array name="settings_theme">
         <item>साँवला</item>
         <item>हल्का</item>
@@ -364,11 +364,11 @@
         <item>सफेद</item>
     </string-array>
     <string name="set_title_news">समाचार</string>
-    <string name="set_notification_news">मुख्यपृष्ट पे नये लेखो के लिये सूचित करें</string>
+    <string name="set_notification_news">मुख्यपृष्ट पे नये लेखों के लिये सूचित करें</string>
     <string name="action_follow">अनुसरण करें</string>
     <string name="action_unfollow">अनुसरण ना करें</string>
-    <string name="action_block">प्रतिबंध</string>
-    <string name="action_unblock">प्रतिबंध हटाएं</string>
+    <string name="action_block">अवरुद्ध</string>
+    <string name="action_unblock">मुक्त करें</string>
     <string name="action_mute">खामोश</string>
     <string name="action_no_action">कोई कार्यवाही नहीं</string>
     <string name="action_unmute">मौन तोड़ें</string>
