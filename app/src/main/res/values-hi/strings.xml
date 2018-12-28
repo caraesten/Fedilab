@@ -313,7 +313,7 @@
     <string name="set_automatically_split_toot">जवाबो में ५०० अक्षरो से ज़्यादा वाले लेखो को स्वतः अलग करें</string>
     <string name="note_no_space">आप अनुमत १६० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
     <string name="username_no_space">आप अनुमत ३० अक्षरो की सीमा तक पहुंच चुके हैं!</string>
-    <string name="settings_title_hour">सूचनाओं के लिये निर्धारित समय</string>
+    <string name="settings_title_hour">सूचनाओं के लिये निर्धारित समय:</string>
     <string name="settings_time_from">के बीच</string>
     <string name="settings_time_to">और</string>
     <string name="settings_time_greater">समय %1$s से अधिक होना चाहिये</string>
