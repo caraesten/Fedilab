@@ -677,6 +677,6 @@
     <string name="some_words_any">這些字詞的其中一個（以空格分開）</string>
     <string name="some_words_all">這些字詞全部（以空格分開）</string>
     <string name="some_words_none">這些字詞都不要（以空格分開）</string>
-    <string name="change_tag_column">Change column name</string>
+    <string name="change_tag_column">變更欄位名稱</string>
     <!-- end languages -->
 </resources>
