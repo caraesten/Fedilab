@@ -187,16 +187,16 @@
     <string name="about_license">लाइसेंस: </string>
     <string name="about_license_action">जीएनयू जीपीएल वी३</string>
     <string name="about_code">सोर्से कोड: </string>
-    <string name="about_yandex">लेखो का अनुवाद:</string>
-    <string name="about_thekinrar">इंस्टेंसेस खोजे:</string>
+    <string name="about_yandex">लेखों का अनुवाद:</string>
+    <string name="about_thekinrar">इंस्टंसो को खोजें:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">आइकाॅन डिज़ाइनर:</string>
     <string name="thanks_text_banner">बैनर डिज़ाइनर:</string>
     <!-- Conversation -->
     <string name="conversation">बातचीत</string>
     <!-- Accounts -->
-    <string name="no_accounts">दिखाने के लिये कोई खाता नहीं है</string>
-    <string name="no_follow_request">अनुसरण करने की कोई गुज़ारिशें नहीं है</string>
+    <string name="no_accounts">कोई खाता मौजूद नहीं है</string>
+    <string name="no_follow_request">अनुसरण करने की गुज़ारिश नहीं है</string>
     <string name="status_cnt">लेख \n %1$s</string>
     <string name="following_cnt">अनुसरण \n %1$s</string>
     <string name="followers_cnt">अनुयायी \n %1$s</string>
@@ -671,7 +671,7 @@
     <string name="all_tags">यह सभी</string>
     <string name="none_tags">कोई भी नहीं</string>
     <string name="some_words_any">कोई भी शब्द (स्पेस से अलग किये हूए)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="some_words_all">सभी शब्द (स्पेस से अलग किये हूए)</string>
+    <string name="some_words_none">कोई भी शब्द नहीं (स्पेस से अलग किये हूए)</string>
     <!-- end languages -->
 </resources>
