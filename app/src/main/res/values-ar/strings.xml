@@ -387,7 +387,7 @@
     <string name="request_sent">تم إرسال الطلب</string>
     <string name="followed_by">يتابعك</string>
     <string name="action_search">البحث</string>
-    <string name="set_capitalize">حروف كبيرة عند الرد في أول الجملة</string>
+    <string name="set_capitalize">حروف كبيرة في أول الجملة عند الرد</string>
     <string name="set_resize_picture">تعديل حجم الصور</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">الإخطارات المدفوعة</string>
@@ -652,7 +652,7 @@
     <string name="card_view_image">صورة البطاقة</string>
     <string name="hide_media">إخفاء الوسائط</string>
     <string name="favicon">أيقونة المفضلة</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">وصف للمعاقين بصريا</string>
     <string-array name="filter_expire">
         <item>أبدًا</item>
         <item>30 دقيقة</item>
@@ -681,8 +681,15 @@
     <string name="translation_app">ترجمة التطبيق</string>
     <string name="about_crowdin">عن كراودين</string>
     <string name="bot">بوت</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="pixelfed_instance">مثيل خادم بيكسل فد</string>
+    <string name="mastodon_instance">مثيل خادم ماستدون</string>
+    <string name="no_pixelfed_instance">لا توجد مثيلات خوادم لبيكسل فد</string>
+    <string name="any_tags">إحدى هذه الكلمات</string>
+    <string name="all_tags">كل هذه الكلمات</string>
+    <string name="none_tags">لا شيء من هذه</string>
+    <string name="some_words_any">Any of these words (space-separated)</string>
+    <string name="some_words_all">All these words (space-separated)</string>
+    <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="change_tag_column">Change column name</string>
     <!-- end languages -->
 </resources>

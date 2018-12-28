@@ -668,8 +668,15 @@
     <string name="translation_app">應用程式翻譯</string>
     <string name="about_crowdin">關於 Crowdin</string>
     <string name="bot">機器人</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="pixelfed_instance">Pixelfed 實體</string>
+    <string name="mastodon_instance">Mastodon 實體</string>
+    <string name="no_pixelfed_instance">沒有 Pixelfed 實體</string>
+    <string name="any_tags">這些裡面的任何一個</string>
+    <string name="all_tags">這些全部</string>
+    <string name="none_tags">這些都不要</string>
+    <string name="some_words_any">這些字詞的其中一個（以空格分開）</string>
+    <string name="some_words_all">這些字詞全部（以空格分開）</string>
+    <string name="some_words_none">這些字詞都不要（以空格分開）</string>
+    <string name="change_tag_column">Change column name</string>
     <!-- end languages -->
 </resources>

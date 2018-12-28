@@ -3,8 +3,8 @@
 <resources>
     <string name="navigation_drawer_open">Menu openen</string>
     <string name="navigation_drawer_close">Menu sluiten</string>
-    <string name="action_about">Informatie</string>
-    <string name="action_about_instance">Informatie over deze Mastodonserver</string>
+    <string name="action_about">Over</string>
+    <string name="action_about_instance">Over deze instantie</string>
     <string name="action_privacy">Privacy</string>
     <string name="action_cache">Buffer</string>
     <string name="action_logout">Uitloggen</string>
@@ -29,10 +29,10 @@
     <string name="save">Opslaan</string>
     <string name="restore">Herstellen</string>
     <string name="two_factor_authentification">Tweestapsverificatie?</string>
-    <string name="other_instance">Andere Mastodonserver dan mastodon.etalab.gouv.fr?</string>
+    <string name="other_instance">Andere instantie dan mastodon.etalab.gouv.fr?</string>
     <string name="no_result">Geen resultaten!</string>
     <string name="instance">Mastodonserver</string>
-    <string name="instance_example">Server: mastodon.social</string>
+    <string name="instance_example">Instantie: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Werkt nu met account %1$s</string>
     <string name="add_account">Account toevoegen</string>
     <string name="clipboard">De inhoud van deze toot is naar het klembord gekopieerd</string>
@@ -66,17 +66,17 @@
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Boosts tonen</string>
     <string name="show_replies">Reacties tonen</string>
-    <string name="action_open_in_web">Open in webbrowser</string>
+    <string name="action_open_in_web">Open in browser</string>
     <string name="translate">Vertalen</string>
-    <string name="please_wait">Wacht hier een paar seconden mee.</string>
+    <string name="please_wait">Wacht hier alstublieft een paar seconden mee.</string>
     <!--- Menu -->
-    <string name="home_menu">Start</string>
+    <string name="home_menu">Home</string>
     <string name="local_menu">Lokale tijdlijn</string>
     <string name="global_menu">Globale tijdlijn</string>
     <string name="neutral_menu_title">Opties</string>
     <string name="favorites_menu">Favorieten</string>
     <string name="communication_menu_title">Communicatie</string>
-    <string name="muted_menu">Genegeerde gebruikers</string>
+    <string name="muted_menu">Gedempte gebruikers</string>
     <string name="blocked_menu">Geblokkeerde gebruikers</string>
     <string name="remote_follow_menu">Extern volgen</string>
     <string name="notifications">Meldingen</string>
@@ -639,10 +639,10 @@
     <string name="custom_emoji_picker">Aangepaste emoji-kiezer</string>
     <string name="play_video">Video bekijken</string>
     <string name="new_toot">Nieuwe toot</string>
-    <string name="card_view_image">Image of the card</string>
+    <string name="card_view_image">Afbeelding van de kaart</string>
     <string name="hide_media">Media verbergen</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Media voor het toevoegen van een beschrijving</string>
     <string-array name="filter_expire">
         <item>Nooit</item>
         <item>30 minuten</item>
@@ -663,13 +663,20 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="languages">Talen</string>
     <string name="show_media_only">Alleen media</string>
     <string name="show_media_nsfw">Toon NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
+    <string name="crowdin_translations">Crowdin vertalingen</string>
     <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
+    <string name="translation_app">Vertaling van de applicatie</string>
+    <string name="about_crowdin">Over Crowdin</string>
     <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="pixelfed_instance">Pixelfed instantie</string>
+    <string name="mastodon_instance">Mastodon instantie</string>
+    <string name="no_pixelfed_instance">Geen Pixelfed instanties</string>
+    <string name="any_tags">Eén van deze</string>
+    <string name="all_tags">Al deze</string>
+    <string name="none_tags">Geen van deze</string>
+    <string name="some_words_any">Eén van deze woorden (door spaties gescheiden)</string>
+    <string name="some_words_all">Al deze woorden (door spaties gescheiden)</string>
+    <string name="some_words_none">Geen van deze woorden (door spaties gescheiden)</string>
+    <string name="change_tag_column">Change column name</string>
     <!-- end languages -->
 </resources>

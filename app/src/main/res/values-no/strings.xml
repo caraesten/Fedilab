@@ -659,8 +659,15 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="translation_app">Hjelp til å oversette applikasjonen på Crowdin</string>
     <string name="about_crowdin">Åpne Crowdin</string>
     <string name="bot">Robot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="pixelfed_instance">Pixelfed-instans</string>
+    <string name="mastodon_instance">Mastodon-instans</string>
+    <string name="no_pixelfed_instance">Ingen Pixelfed-instanser</string>
+    <string name="any_tags">Hvilke som helst av disse</string>
+    <string name="all_tags">Alle disse</string>
+    <string name="none_tags">Ingen av disse</string>
+    <string name="some_words_any">Hvilke som helst av disse ordene (separert med mellomrom)</string>
+    <string name="some_words_all">Alle disse ordene (separert med mellomrom)</string>
+    <string name="some_words_none">Ingen av disse ordene (separert med mellomrom)</string>
+    <string name="change_tag_column">Change column name</string>
     <!-- end languages -->
 </resources>

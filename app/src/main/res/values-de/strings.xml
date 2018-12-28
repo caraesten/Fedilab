@@ -384,9 +384,7 @@
     <string name="settings_popup_notification">Für ungelesene Benachrichtigungen?</string>
     <!-- CACHE -->
     <string name="cache_title">Speicher leeren</string>
-    <string name="cache_message">Es sind %1$s Daten im Speicher.\n
-    \n
-    Möchtest du diese löschen?</string>
+    <string name="cache_message">Es befinden sich %1$s von Daten im Speicher.\n\nMöchten Sie sie löschen?</string>
     <string name="cache_units">MB</string>
     <string name="toast_cache_clear">Speicher wurde geleert! %1$s wurden freigeben</string>
     <!-- ACTIVITY CACHE -->
@@ -411,8 +409,10 @@
     <string name="owner_cached_toots_empty">Keine Toots in der Datenbank gefunden. Drücke oben auf den Synchronisierungsknopf um sie abzurufen.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Aufgezeichnete Daten</string>
-    <string name="privacy_data">Nur Grundinformationen der Konten werden auf dem Gerät gespeichert.         Die Daten sind streng vertraulich und können nur von der Anwendung genutzt werden.         Beim Löschen der Anwendung werden diese umgehend entfernt.\n
-             ⚠ Logindaten und Passwörter werden nie gespeichert. Sie werden nur während einer sicheren (SSL) Authentifizierung mit einer Instanz verwendet.</string>
+    <string name="privacy_data">Auf dem Gerät werden nur allgemeine Informationen aus den Konten gespeichert.
+Diese Daten sind streng vertraulich und können nur von der Anwendung verwendet werden.
+Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
+&#9888; Anmeldedaten und Passwörter werden nie gespeichert. Sie werden nur bei einer sicheren Authentifizierung (SSL) mit einer Instanz verwendet.</string>
     <string name="privacy_authorizations_title">Berechtigungen:</string>
     <string name="privacy_authorizations">- <b>ACCESS_NETWORK_STATE</b>: Erkennen von bestehenden Verbindungen zu WIFI Netzwerken.\n
              - <b>INTERNET</b>: Genutzt für Anfragen an eine Instanz.\n
@@ -434,8 +434,7 @@
         -<b>PhotoView</b>: Bilder verwalten\n
     </string>
     <string name="privacy_API_yandex_title">Übersetzen von Toots</string>
-    <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, toots mithilfe der lokalen sowie Yandex API zu übersetzen.\n
-             Yandex hat seine eigene Datenschutzerklärung. Diese kann hier eingehesen werden: https://yandex.ru/legal/confidential/?lang=en</string>
+    <string name="privacy_API_yandex_authorizations">Die Anwendung bietet die Möglichkeit, Toots mit Hilfe des Gebietsschemas des Geräts und der Yandex-API zu übersetzen.\nYandex verfügt über eine eigene Datenschutzrichtlinie, die Sie hier finden können: https://yandex.ru/legal/confidential/?lang=en</string>
     <string name="thanks_text">Danke an Stéphane für das Logo.</string>
     <string name="thanks_text_dev">Danke an:</string>
     <string name="filter_regex">Mit regulären Ausdrücken filtern</string>
@@ -559,7 +558,7 @@
     <string name="retrieve_remote_conversation">Rufe entferntes Thema ab!</string>
     <string name="no_blocked_domain">Keine blockierten Domänen!</string>
     <string name="unblock_domain_confirm">Domäne nicht mehr blockieren</string>
-    <string name="unblock_domain_confirm_message">Sicher, dass %s nicht mehr blockiert werden soll?</string>
+    <string name="unblock_domain_confirm_message">Möchten Sie %s wirklich entsperren?</string>
     <string name="block_domain_confirm_message">Sicher, dass du %s blockieren möchtest?</string>
     <string name="blocked_domains">Blockierte Domänen</string>
     <string name="block_domain">Blockiere Domäne</string>
@@ -656,7 +655,7 @@
     <!-- languages not translated -->
     <string name="languages">Sprachen</string>
     <string name="show_media_only">Nur Medien</string>
-    <string name="show_media_nsfw">Zeige NSFW</string>
+    <string name="show_media_nsfw">NSFW anzeigen</string>
     <string name="crowdin_translations">Crowdin Übersetzungen</string>
     <string name="crowdin_manager">Crowdin Manager</string>
     <string name="translation_app">Übersetzung der App</string>
@@ -665,5 +664,12 @@
     <string name="pixelfed_instance">Pixelfed instance</string>
     <string name="mastodon_instance">Mastodon instance</string>
     <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="any_tags">Any of these</string>
+    <string name="all_tags">All of these</string>
+    <string name="none_tags">None of these</string>
+    <string name="some_words_any">Any of these words (space-separated)</string>
+    <string name="some_words_all">All these words (space-separated)</string>
+    <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="change_tag_column">Spaltenname ändern</string>
     <!-- end languages -->
 </resources>
