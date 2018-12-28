@@ -262,15 +262,15 @@
     <string name="toast_pin">Objava je pripeta.</string>
     <string name="toast_unpin">Objava ni več pripeta.</string>
     <string name="toast_error">Ups, prišlo je do napake.</string>
-    <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
+    <string name="toast_code_error">Prišlo je do napake. Instanca ni vrnila avtorizacijske kode.</string>
     <string name="toast_error_instance">Domena strežniške instance ni videti veljavna.</string>
-    <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-    <string name="toast_error_search">An error occurred while searching!</string>
+    <string name="toast_error_loading_account">Med preklopom med računi je prišlo do napake.</string>
+    <string name="toast_error_search">Med iskanjem je prišlo do napake.</string>
     <string name="toast_error_login">Prijava ni mogoča.</string>
     <string name="toast_update_credential_ok">Podatki o profilu so shranjeni.</string>
-    <string name="nothing_to_do">No action can be taken</string>
+    <string name="nothing_to_do">Nobena akcija ni na voljo</string>
     <string name="toast_saved">Vsebina je shranjena.</string>
-    <string name="toast_error_translate">An error occurred while translating!</string>
+    <string name="toast_error_translate">Med prevajanjem je prišlo do napake.</string>
     <string name="toast_toot_saved">Osnutek je shranjen.</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
@@ -347,7 +347,7 @@
         <item>DeepL</item>
         <item>Ne</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">Tvoj ključ API. Za Yandex je lahko prazen.</string>
     <string-array name="settings_theme">
         <item>Temna</item>
         <item>Svetla</item>
@@ -392,7 +392,7 @@
     <string name="settings_popup_notification">Za neprebrana obvestila?</string>
     <!-- CACHE -->
     <string name="cache_title">Počisti predpomnilnik</string>
-    <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+    <string name="cache_message">V predpomnilniku je %1$s podatkov.\n\nAli jih želite izbrisati?</string>
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Predpomnilnik je izpraznjen. Sproščenih je: %1$s</string>
     <!-- ACTIVITY CACHE -->
