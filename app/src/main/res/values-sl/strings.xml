@@ -59,7 +59,7 @@
     <string name="replies">Odgovori</string>
     <string name="username">Uporabniško ime</string>
     <string name="drafts">Osnutki</string>
-    <string name="new_data">New data are available! Do you want to display them?</string>
+    <string name="new_data">Novi podatki so na voljo. Jih želite prikazati?</string>
     <string name="favourite">Priljubljeni</string>
     <string name="follow">Novi spremljevalci</string>
     <string name="mention">Omembe</string>
@@ -245,7 +245,7 @@
     <string name="followers">Spremljevalci</string>
     <string name="pinned_toots">Pripeto</string>
     <!-- TOAST -->
-    <string name="client_error">Unable to get client id!</string>
+    <string name="client_error">Ni mogoče pridobiti ID odjemalca.</string>
     <string name="no_internet">Ni internetne povezave.</string>
     <string name="toast_block">Račun je blokiran.</string>
     <string name="toast_unblock">Račun ni več blokiran.</string>
@@ -309,7 +309,7 @@
     <string name="set_notify">Obveščanje?</string>
     <string name="set_notif_silent">Tiha obvestila</string>
     <string name="set_night_mode">Nočni način</string>
-    <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+    <string name="set_nsfw_timeout">Časovna omejitev prikaza NSFW (v sekundah, 0 za izklop)</string>
     <string name="settings_title_profile">Urejanje profila</string>
     <string name="set_profile_description">Življenjepis …</string>
     <string name="set_lock_account">Zakleni račun</string>
@@ -568,7 +568,7 @@
     <string name="channel_notif_media">Prenos vsebine</string>
     <string name="set_notif_sound">Spremeni zvok ob obvestilih</string>
     <string name="select_sound">Izberite zvok</string>
-    <string name="set_enable_time_slot">Enable time slot</string>
+    <string name="set_enable_time_slot">Omogoči časovni okvir</string>
     <string name="how_to_videos">Videonavodila</string>
     <string name="retrieve_remote_conversation">Pridobivanje oddaljenih pogovorov.</string>
     <string name="no_blocked_domain">Ni blokiranih domen.</string>
