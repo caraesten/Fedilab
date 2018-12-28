@@ -214,41 +214,37 @@
     <!-- timed mute -->
     <string name="timed_mute_date_error">मौन करने का समय एक मिनट से अधिक होना चाहिये।</string>
     <string name="timed_mute_date">%1$s को खामोश कर दिया गया है %2$s तक।\n आप इस खाते का उसके प्रोफ़ाइल पेज से फिर से चालू कर सकते हैं।</string>
-    <string name="timed_mute_profile">%1$s को %2$s तक खामोश कर दिया है।\n फिर से चालू करने के लिये यहाँ क्लिक करें।</string>
+    <string name="timed_mute_profile">%1$s को %2$s तक खामोश कर दिया है।\n चालू करने के लिये यहाँ क्लिक करें।</string>
     <!-- Notifications -->
-    <string name="no_notifications">कोई सूचना दिखाने के लिये नहीं है</string>
+    <string name="no_notifications">कोई सूचना मौजूद नहीं है</string>
     <string name="notif_mention">आपका उल्लेख किया</string>
-    <string name="notif_reblog">आपका संदेश बूस्ट किया</string>
-    <string name="notif_favourite">आपका संदेश पसंद किया</string>
-    <string name="notif_follow">आपका अनुयायी बन गये</string>
-    <string name="notif_pouet">%1$s से नया संदेश</string>
+    <string name="notif_reblog">आपका लेख बूस्ट किया</string>
+    <string name="notif_favourite">आपका लेख पसंद किया</string>
+    <string name="notif_follow">आपका अनुसरण किया</string>
+    <string name="notif_pouet">%1$s से नया लेख</string>
     <plurals name="other_notifications">
-        <item quantity="one">और अन्य सूचनाएं</item>
-        <item quantity="other">और %d अन्य सूचनाएं</item>
+        <item quantity="one">एक और सूचना</item>
+        <item quantity="other">%d अन्य सूचनाएं</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">एक और लेख खोजने के लिये
-
-%d और लेख खोजने के लिये</item>
-        <item quantity="other">एक और लेख खोजने के लिये
-
-%d और लेख खोजने के लिये</item>
+        <item quantity="one">एक और लेख खोजने के लिये</item>
+        <item quantity="other">%d अन्य लेख खोजने के लिये</item>
     </plurals>
     <string name="delete_notification_ask">सूचना मिटाएं?</string>
     <string name="delete_notification_ask_all">सभी सूचनाओ को मिटाएं?</string>
-    <string name="delete_notification">इस सूचना को मिटा दिया गया है!</string>
-    <string name="delete_notification_all">सभी सूचनाओ को मिटा दिया गया है!</string>
+    <string name="delete_notification">सूचना को मिटा दिया गया है!</string>
+    <string name="delete_notification_all">सभी सूचनाएं मिटा दिए गये है!</string>
     <!-- HEADER -->
     <string name="following">अनुसरण</string>
-    <string name="followers">अनुयायी</string>
-    <string name="pinned_toots">जड़े हुए संदेश</string>
+    <string name="followers">अनुसरणकर्ता</string>
+    <string name="pinned_toots">जड़े हुए</string>
     <!-- TOAST -->
-    <string name="client_error">क्लाइंट आईडी हासिल करने में असफल!</string>
+    <string name="client_error">क्लाइंट आईडी नहीं मिल सका!</string>
     <string name="no_internet">इंटरनेट कनेक्शन नहीं है!</string>
-    <string name="toast_block">इस खाते को अवरुद्ध कर दिया गया है!</string>
-    <string name="toast_unblock">यह खाता अब अवरुद्ध नहीं है!</string>
-    <string name="toast_mute">खाते को चुप कर दिया गया है!</string>
-    <string name="toast_unmute">खाता अब अवरुद्ध नहीं है!</string>
+    <string name="toast_block">इस खाते को अवरुद्ध कर दिया!</string>
+    <string name="toast_unblock">खाता अब अवरुद्ध नहीं है!</string>
+    <string name="toast_mute">खाते को खामोश कर दिया!</string>
+    <string name="toast_unmute">खाता अब खामोश नहीं है!</string>
     <string name="toast_follow">इस खाते का अनुसरण कर लिया!</string>
     <string name="toast_unfollow">इस खाते का अब अनुसरण नहीं कर रहे!</string>
     <string name="toast_reblog">संदेश को बूस्ट कर दिया गया है!</string>
