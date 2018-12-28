@@ -607,7 +607,7 @@
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_old_direct_timeline">Uporabi neposredno časovnico pred različico Mastodon 2.6</string>
     <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
+    <string name="thanks_text_support">Podpora na Gitlab-u</string>
     <string name="action_bug_report">Poročilo o napaki</string>
     <string name="no_mail_client">There are no email clients installed.</string>
     <string name="bug_report_mail">Pošlji poročilo o napaki</string>
@@ -669,16 +669,16 @@
     <string name="more_information">Več informacij</string>
     <string name="showcase_2FA">Uporabite to povezavo, če uporabljate dvostopenjsko prijavljanje (2FA).\nLahko jo uporabite tudi, če tu ne želite vnašati svojih prijavnih podatkov.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
+    <string name="languages">Jeziki</string>
     <string name="show_media_only">Samo vsebine</string>
     <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
+    <string name="crowdin_translations">Prevodi na Crowdin-u</string>
+    <string name="crowdin_manager">Skrbnik na Crowdin-u</string>
+    <string name="translation_app">Prevod aplikacije</string>
+    <string name="about_crowdin">Več o platformi Crowdin</string>
     <string name="bot">Bot</string>
     <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
+    <string name="mastodon_instance">Instanca Mastodon</string>
     <string name="no_pixelfed_instance">No Pixelfed instances</string>
     <string name="any_tags">Karkilo od naštetega</string>
     <string name="all_tags">Vse našteto</string>
