@@ -17,7 +17,6 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1048,17 +1047,28 @@ public class API {
      */
     public APIResponse getMisskey(String instance, String max_id) {
 
+        JSONObject params = new JSONObject();
+        try {
+            params.put("file", false);
+            if( max_id != null)
+                params.put("untilId",max_id);
+            params.put("local",true);
+            params.put("poll",false);
+            params.put("renote",false);
+            params.put("reply",false);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        HashMap<String, String> params = new HashMap<>();
-        if( max_id != null)
-            params.put("untilId",max_id);
         try {
             statuses = new ArrayList<>();
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.post(String.format("https://"+instance+"/api/notes/local-timeline", max_id), 60, params, null);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
+            String response = httpsConnection.postMisskey("https://"+instance+"/api/notes", 60, params, null);
             statuses = parseNotes(context, instance, new JSONArray(response));
+            if( statuses != null && statuses.size() > 0){
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() -1).getId());
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -3285,7 +3295,7 @@ public class API {
                 if( emojisTag != null){
                     for(int j = 0 ; j < emojisTag.length() ; j++){
                         JSONObject emojisObj = emojisTag.getJSONObject(j);
-                        Emojis emojis = parseEmojis(emojisObj);
+                        Emojis emojis = parseMisskeyEmojis(emojisObj);
                         emojiList.add(emojis);
                     }
                 }
@@ -3371,6 +3381,43 @@ public class API {
         return emojis;
     }
 
+
+    /**
+     * Parse emojis
+     * @param jsonArray JSONArray
+     * @return List<Emojis> of emojis
+     */
+    private List<Emojis> parseMisskeyEmojis(JSONArray jsonArray){
+        List<Emojis> emojis = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Emojis emojis1 = parseMisskeyEmojis(resobj);
+                emojis.add(emojis1);
+                i++;
+            }
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return emojis;
+    }
+
+
+    /**
+     * Parse json response for emoji
+     * @param resobj JSONObject
+     * @return Emojis
+     */
+    private static Emojis parseMisskeyEmojis(JSONObject resobj){
+        Emojis emojis = new Emojis();
+        try {
+            emojis.setShortcode(resobj.get("name").toString());
+            emojis.setStatic_url(resobj.get("url").toString());
+            emojis.setUrl(resobj.get("url").toString());
+        }catch (Exception ignored){}
+        return emojis;
+    }
 
 
     /**
@@ -3608,7 +3655,6 @@ public class API {
     @SuppressWarnings("InfiniteRecursion")
     private static Account parseMisskeyAccountResponse(Context context, String instance, JSONObject resobj){
 
-        Log.v(Helper.TAG,"resobj= " + resobj);
         Account account = new Account();
         try {
             account.setId(resobj.get("id").toString());
