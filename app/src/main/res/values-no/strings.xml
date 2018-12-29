@@ -669,5 +669,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="some_words_all">Alle disse ordene (separert med mellomrom)</string>
     <string name="some_words_none">Ingen av disse ordene (separert med mellomrom)</string>
     <string name="change_tag_column">Endre kolonnenavn</string>
+    <string name="no_misskey_instance">No Misskey instances</string>
+    <string name="misskey_instance">Misskey instance</string>
     <!-- end languages -->
 </resources>
