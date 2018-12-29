@@ -614,29 +614,29 @@
     <string name="display_toot_truncate">Meer weergeven</string>
     <string name="hide_toot_truncate">Minder weergeven</string>
     <string name="manage_tags">Tags beheren</string>
-    <string name="tags_already_stored">Dit tag bestaat al!</string>
+    <string name="tags_already_stored">Deze tag bestaat al!</string>
     <string name="tags_stored">De tag is opgeslagen!</string>
-    <string name="tags_renamed">De dag is veranderd!</string>
+    <string name="tags_renamed">De tag is veranderd!</string>
     <string name="tags_deleted">De tag is verwijderd!</string>
-    <string name="set_display_art">Toon Art tijdlijn</string>
+    <string name="set_display_art">Kunsttijdlijn tonen</string>
     <string name="schedule_boost">Boost inplannen</string>
-    <string name="boost_scheduled">De boost is gepland!</string>
+    <string name="boost_scheduled">De boost is ingepland!</string>
     <string name="no_scheduled_boosts">Geen ingeplande boost om weer te geven!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open het menu van een toot en kies <b>Boost inplannen</b>.]]></string>
-    <string name="art_menu">Art tijdlijn</string>
+    <string name="art_menu">Kunsttijdlijn</string>
     <string name="open_menu">Menu openen</string>
     <string name="app_logo">Logo van de applicatie</string>
-    <string name="profile_picture">Profielfoto</string>
-    <string name="profile_banner">Profiel-banner</string>
-    <string name="contact_instance_admin">Contact opnemen met de administrator van de instantie</string>
-    <string name="add_new">Nieuw toevoegen</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji-kiezer</string>
+    <string name="profile_picture">Avatar</string>
+    <string name="profile_banner">Omslagfoto op profiel</string>
+    <string name="contact_instance_admin">Contact opnemen met de serverbeheerder</string>
+    <string name="add_new">Nieuwe toevoegen</string>
+    <string name="mastohost_logo">Logo MastoHost</string>
+    <string name="emoji_picker">Emojikiezer</string>
     <string name="refresh">Verversen</string>
     <string name="expand_conversation">Gesprek uitbreiden</string>
     <string name="remove_account">Account verwijderen</string>
     <string name="delete_domain">Het geblokkeerde domein verwijderen</string>
-    <string name="custom_emoji_picker">Aangepaste emoji-kiezer</string>
+    <string name="custom_emoji_picker">Aangepaste emojikiezer</string>
     <string name="play_video">Video bekijken</string>
     <string name="new_toot">Nieuwe toot</string>
     <string name="card_view_image">Afbeelding van de kaart</string>
@@ -652,9 +652,9 @@
         <item>1 dag</item>
         <item>1 week</item>
     </string-array>
-    <string name="showcase_instance">In dit veld moet je de hostnaam van je instantie invullen.\n Voorbeeld: als je je account hebt aangemaakt op https://mastodon.social\n vul je <b>mastodon.social</b> in (dus zonder https://)\n
+    <string name="showcase_instance">In dit veld moet je de hostnaam van jouw server invullen.\nVoorbeeld: als je jouw account hebt aangemaakt op https://mastodon.social\n vul je <b>mastodon.social</b> in (dus zonder https://)\n
 Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
-⚠ De login-knop werkt alleen als de naam van de instantie juist is, en de server van de instantie online is!    </string>
+⚠ De inlogknop werkt alleen als de naam van de server geldig is, en de server online is!    </string>
     <string name="showcase_uid">In dit veld vul je het e-mailadres in dat is gekoppeld aan jouw Mastodonaccount.    </string>
     <string name="showcase_pwd">De laatste stap is het invoeren van je wachtwoord en op inloggen te klikken.    </string>
     <string name="more_information">Meer informatie</string>
