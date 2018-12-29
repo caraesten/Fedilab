@@ -689,7 +689,9 @@
     <string name="none_tags">لا شيء من هذه</string>
     <string name="some_words_any">أي من هذه الكلمات (مفصولة بمسافة)</string>
     <string name="some_words_all">كافة هذه الكلمات (مفصولة بمسافة)</string>
-    <string name="some_words_none">من دون هذه الكلمات (مفصولة بمسافة)</string>
+    <string name="some_words_none">لاشيء من هذه الكلمات (مفصولة بمسافة)</string>
     <string name="change_tag_column">تغيير اسم العمود</string>
+    <string name="no_misskey_instance">No Misskey instances</string>
+    <string name="misskey_instance">Misskey instance</string>
     <!-- end languages -->
 </resources>
