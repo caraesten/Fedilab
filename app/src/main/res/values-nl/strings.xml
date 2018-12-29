@@ -656,9 +656,9 @@
 Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
 ⚠ De inlogknop werkt alleen als de naam van de server geldig is, en de server online is!    </string>
     <string name="showcase_uid">In dit veld vul je het e-mailadres in dat is gekoppeld aan jouw Mastodonaccount.    </string>
-    <string name="showcase_pwd">De laatste stap is het invoeren van je wachtwoord en op inloggen te klikken.    </string>
+    <string name="showcase_pwd">De laatste stap is het invoeren van je wachtwoord en het klikken op inloggen.    </string>
     <string name="more_information">Meer informatie</string>
-    <string name="showcase_2FA">Als je 2FA (tweestapsverificatie) gebruikt, moet je deze link gebruiken.\nJe kunt het ook gebruiken als je je gegevens hier niet wilt invullen.</string>
+    <string name="showcase_2FA">Als je 2FA (tweestapsverificatie) gebruikt, moet je deze link gebruiken.\nJe kunt het ook gebruiken als je jouw gegevens hier niet wilt invullen.</string>
     <!-- languages not translated -->
     <string name="languages">Talen</string>
     <string name="show_media_only">Alleen media</string>
