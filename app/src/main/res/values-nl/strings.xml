@@ -664,13 +664,13 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="show_media_only">Alleen media</string>
     <string name="show_media_nsfw">Toon NSFW</string>
     <string name="crowdin_translations">Crowdin vertalingen</string>
-    <string name="crowdin_manager">Crowdin manager</string>
+    <string name="crowdin_manager">Crowdinbeheerder</string>
     <string name="translation_app">Vertaling van de applicatie</string>
     <string name="about_crowdin">Over Crowdin</string>
     <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instantie</string>
-    <string name="mastodon_instance">Mastodon instantie</string>
-    <string name="no_pixelfed_instance">Geen Pixelfed instanties</string>
+    <string name="pixelfed_instance">Pixelfedserver</string>
+    <string name="mastodon_instance">Mastodonserver</string>
+    <string name="no_pixelfed_instance">Geen Pixelfedservers</string>
     <string name="any_tags">Eén van deze</string>
     <string name="all_tags">Al deze</string>
     <string name="none_tags">Geen van deze</string>
