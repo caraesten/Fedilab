@@ -678,5 +678,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="some_words_all">Al deze woorden (door spaties gescheiden)</string>
     <string name="some_words_none">Geen van deze woorden (door spaties gescheiden)</string>
     <string name="change_tag_column">Kolomnaam wijzigen</string>
+    <string name="no_misskey_instance">No Misskey instances</string>
+    <string name="misskey_instance">Misskey instance</string>
     <!-- end languages -->
 </resources>
