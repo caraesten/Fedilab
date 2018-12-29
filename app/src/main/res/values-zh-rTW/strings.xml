@@ -678,5 +678,7 @@
     <string name="some_words_all">這些字詞全部（以空格分開）</string>
     <string name="some_words_none">這些字詞都不要（以空格分開）</string>
     <string name="change_tag_column">變更欄位名稱</string>
+    <string name="no_misskey_instance">No Misskey instances</string>
+    <string name="misskey_instance">Misskey instance</string>
     <!-- end languages -->
 </resources>

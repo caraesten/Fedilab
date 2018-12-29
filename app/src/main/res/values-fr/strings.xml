@@ -678,5 +678,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="some_words_all">All these words (space-separated)</string>
     <string name="some_words_none">None of these words (space-separated)</string>
     <string name="change_tag_column">Renommer la colonne</string>
+    <string name="no_misskey_instance">No Misskey instances</string>
+    <string name="misskey_instance">Misskey instance</string>
     <!-- end languages -->
 </resources>

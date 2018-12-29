@@ -103,7 +103,7 @@
     <string name="fav_removed">Toot-a gogokoetatik kendu da!</string>
     <string name="reblog_added">Toot-ari bultzada eman zaio!</string>
     <string name="reblog_removed">Toot-ari bultzada kendu zaio!</string>
-    <string name="reblog_by">%1$s(e)n bultzada</string>
+    <string name="reblog_by">%1$s(e)k bultzatua</string>
     <string name="favourite_add">Gehitu toot hau zure gogokoetara?</string>
     <string name="favourite_remove">Kendu toot hau zure gogokoetatik?</string>
     <string name="reblog_add">Bultzada eman toot honi?</string>
@@ -669,15 +669,17 @@
     <string name="translation_app">Aplikazioaren itzulpena</string>
     <string name="about_crowdin">Crowdin-i buruz</string>
     <string name="bot">Bota</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
-    <string name="change_tag_column">Change column name</string>
+    <string name="pixelfed_instance">Pixelfed instantzia</string>
+    <string name="mastodon_instance">Mastodon instantzia</string>
+    <string name="no_pixelfed_instance">Pixelfed instantziarik ez</string>
+    <string name="any_tags">Hauetako edozein</string>
+    <string name="all_tags">Hauek guztiak</string>
+    <string name="none_tags">Hauetako bat ere ez</string>
+    <string name="some_words_any">Hitz hauetako edozein (zuriunez banatuta)</string>
+    <string name="some_words_all">Hitz hauek guztiak (zuriunez banatuta)</string>
+    <string name="some_words_none">Hitz hauetako bat ere ez (zuriunez banatuta)</string>
+    <string name="change_tag_column">Aldatu zutabearen izena</string>
+    <string name="no_misskey_instance">No Misskey instances</string>
+    <string name="misskey_instance">Misskey instance</string>
     <!-- end languages -->
 </resources>

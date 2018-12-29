@@ -107,7 +107,7 @@
     <string name="favourite_add">Aggiungere questo toot ai tuoi preferiti?</string>
     <string name="favourite_remove">Rimuovere questo toot dai tuoi preferiti?</string>
     <string name="reblog_add">Ricondividere questo toot?</string>
-    <string name="reblog_remove">Non ricondividere questo toot?</string>
+    <string name="reblog_remove">Smettere di ricondividere questo toot?</string>
     <string name="pin_add">Mettere in evidenza questo toot?</string>
     <string name="pin_remove">Rimuovere da evidenziati questo toot?</string>
     <string name="more_action_1">Silenzia</string>
@@ -680,6 +680,8 @@
     <string name="some_words_any">Qualsiasi tra queste parole (separate da spazi)</string>
     <string name="some_words_all">Tutte queste parole (separate da spazi)</string>
     <string name="some_words_none">Nessuna di queste parole (separate da spazi)</string>
-    <string name="change_tag_column">Change column name</string>
+    <string name="change_tag_column">Rinomina colonna</string>
+    <string name="no_misskey_instance">No Misskey instances</string>
+    <string name="misskey_instance">Misskey instance</string>
     <!-- end languages -->
 </resources>
