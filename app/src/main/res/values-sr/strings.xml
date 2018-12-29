@@ -127,7 +127,7 @@
     </string-array>
     <string-array name="action_notification">
         <item>Notify</item>
-        <item>Silent</item>
+        <item>Нечујно</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Уклони овај тут?</item>
