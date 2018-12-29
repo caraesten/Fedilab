@@ -437,7 +437,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
         if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
             return FOCUSED_STATUS;
-        else if( !Helper.filterToots(context, statuses.get(position), timedMute, type))
+        else if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !Helper.filterToots(context, statuses.get(position), timedMute, type))
             return HIDDEN_STATUS;
         else
             return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
@@ -1091,8 +1091,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             }
 
-
-            holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context,status.getMentions()), TextView.BufferType.SPANNABLE);
+            if( status.getMentions() != null)
+                holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context,status.getMentions()), TextView.BufferType.SPANNABLE);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
             if( getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS ) {

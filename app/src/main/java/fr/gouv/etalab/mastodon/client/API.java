@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1037,6 +1038,39 @@ public class API {
             e.printStackTrace();
         }
         apiResponse.setHowToVideos(howToVideos);
+        return apiResponse;
+    }
+
+
+    /**
+     * Retrieves Peertube videos from an instance *synchronously*
+     * @return APIResponse
+     */
+    public APIResponse getMisskey(String instance, String max_id) {
+
+
+        HashMap<String, String> params = new HashMap<>();
+        if( max_id != null)
+            params.put("untilId",max_id);
+        try {
+            statuses = new ArrayList<>();
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.post(String.format("https://"+instance+"/api/notes/local-timeline", max_id), 60, params, null);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseNotes(context, instance, new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
         return apiResponse;
     }
     /**
@@ -3134,6 +3168,150 @@ public class API {
         return status;
     }
 
+
+    /**
+     * Parse json response for several notes (Misskey)
+     * @param jsonArray JSONArray
+     * @return List<Status>
+     */
+    public static List<Status> parseNotes(Context context, String instance, JSONArray jsonArray){
+
+        List<Status> statuses = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ){
+
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Status status = parseNotes(context, instance, resobj);
+                i++;
+                statuses.add(status);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return statuses;
+    }
+
+    /**
+     * Parse json response for unique note (misskey)
+     * @param resobj JSONObject
+     * @return Status
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    public static Status parseNotes(Context context, String instance, JSONObject resobj){
+        Status status = new Status();
+        try {
+            status.setId(resobj.get("id").toString());
+            status.setUri("https://" + instance + "/notes/" + resobj.get("id").toString());
+            status.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
+            status.setIn_reply_to_id(resobj.get("replyId").toString());
+            status.setSensitive(false);
+            if(resobj.get("cw") != null && !resobj.get("cw").toString().equals("null"))
+                status.setSpoiler_text(resobj.get("cw").toString());
+            try {
+                status.setVisibility(resobj.get("visibility").toString());
+            }catch (Exception e){status.setVisibility("public"); e.printStackTrace();}
+            status.setUrl("https://" + instance + "/notes/" + resobj.get("id").toString());
+            //Retrieves attachments
+            JSONArray arrayAttachement = resobj.getJSONArray("media");
+            ArrayList<Attachment> attachments = new ArrayList<>();
+            if( arrayAttachement != null){
+                for(int j = 0 ; j < arrayAttachement.length() ; j++){
+                    JSONObject attObj = arrayAttachement.getJSONObject(j);
+                    Attachment attachment = new Attachment();
+                    attachment.setId(attObj.get("id").toString());
+                    attachment.setPreview_url(attObj.get("thumbnailUrl").toString());
+                    attachment.setRemote_url(attObj.get("url").toString());
+                    if( attObj.get("type").toString().contains("/")){
+                        attachment.setType(attObj.get("type").toString().split("/")[0]);
+                    }else
+                        attachment.setType(attObj.get("type").toString());
+                    attachment.setText_url(attObj.get("url").toString());
+                    attachment.setUrl(attObj.get("url").toString());
+                    if(attObj.get("isSensitive").toString().equals("true")){
+                        status.setSensitive(true);
+                    }
+                    try {
+                        attachment.setDescription(attObj.get("comment").toString());
+                    }catch (JSONException ignore){ignore.printStackTrace();}
+                    attachments.add(attachment);
+                }
+            }
+            try {
+                status.setCard(parseCardResponse(resobj.getJSONObject("card")));
+            }catch (Exception e){status.setCard(null);}
+
+            status.setMedia_attachments(attachments);
+            //Retrieves mentions
+            List<Mention> mentions = new ArrayList<>();
+
+            status.setAccount(parseMisskeyAccountResponse(context, instance, resobj.getJSONObject("user")));
+            status.setContent(resobj.get("text").toString());
+            try{
+                status.setReplies_count(Integer.valueOf(resobj.get("repliesCount").toString()));
+            }catch (Exception e){
+                status.setReplies_count(-1);
+            }
+            try {
+                status.setFavourited(Boolean.valueOf(resobj.get("isFavorited").toString()));
+            }catch (Exception e){
+                status.setFavourited(false);
+            }
+            try{
+                if(resobj.getJSONObject("renoteId")  != null &&  !resobj.getJSONObject("renoteId").toString().equals("null"))
+                    status.setReblog(parseStatuses(context, resobj.getJSONObject("renote")));
+            }catch (Exception ignored){}
+
+            status.setMentions(mentions);
+            //Retrieves tags
+            List<Tag> tags = new ArrayList<>();
+            JSONArray arrayTag = resobj.getJSONArray("tags");
+            if( arrayTag != null){
+                for(int j = 0 ; j < arrayTag.length() ; j++){
+                    JSONObject tagObj = arrayTag.getJSONObject(j);
+                    Tag tag = new Tag();
+                    tag.setName(tagObj.get("name").toString());
+                    tag.setUrl(tagObj.get("url").toString());
+                    tags.add(tag);
+                }
+            }
+            status.setTags(tags);
+
+            //Retrieves emjis
+            List<Emojis> emojiList = new ArrayList<>();
+            try {
+                JSONArray emojisTag = resobj.getJSONArray("emojis");
+                if( emojisTag != null){
+                    for(int j = 0 ; j < emojisTag.length() ; j++){
+                        JSONObject emojisObj = emojisTag.getJSONObject(j);
+                        Emojis emojis = parseEmojis(emojisObj);
+                        emojiList.add(emojis);
+                    }
+                }
+                status.setEmojis(emojiList);
+            }catch (Exception e){
+                status.setEmojis(new ArrayList<>());
+            }
+
+            //Retrieve Application
+            Application application = new Application();
+            try {
+                if(resobj.getJSONObject("application") != null){
+                    application.setName(resobj.getJSONObject("application").getString("name"));
+                    application.setWebsite(resobj.getJSONObject("application").getString("website"));
+                }
+            }catch (Exception e){
+                application = new Application();
+            }
+            status.setApplication(application);
+
+
+        } catch (JSONException ignored) {} catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
     /**
      * Parse json response an unique instance
      * @param resobj JSONObject
@@ -3421,6 +3599,56 @@ public class API {
         return account;
     }
 
+
+    /**
+     * Parse json response an unique account
+     * @param resobj JSONObject
+     * @return Account
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    private static Account parseMisskeyAccountResponse(Context context, String instance, JSONObject resobj){
+
+        Log.v(Helper.TAG,"resobj= " + resobj);
+        Account account = new Account();
+        try {
+            account.setId(resobj.get("id").toString());
+            account.setUsername(resobj.get("username").toString());
+            String host = resobj.get("host").toString();
+            String acct;
+            if( host == null || host.equals("null"))
+                acct = resobj.get("username").toString();
+            else
+                acct = resobj.get("username").toString() + "@" + host;
+            account.setAcct(acct);
+            account.setDisplay_name(resobj.get("name").toString());
+            account.setCreated_at(new Date());
+
+            account.setUrl("https://" + instance + "/@"+account.getUsername());
+            account.setAvatar(resobj.get("avatarUrl").toString());
+            account.setAvatar_static(resobj.get("avatarUrl").toString());
+            try {
+                account.setBot(Boolean.parseBoolean(resobj.get("isBot").toString()));
+            }catch (Exception e){
+                account.setBot(false);
+            }
+            //Retrieves emjis
+            List<Emojis> emojiList = new ArrayList<>();
+            try {
+                JSONArray emojisTag = resobj.getJSONArray("emojis");
+                if( emojisTag != null){
+                    for(int j = 0 ; j < emojisTag.length() ; j++){
+                        JSONObject emojisObj = emojisTag.getJSONObject(j);
+                        Emojis emojis = parseEmojis(emojisObj);
+                        emojiList.add(emojis);
+                    }
+                }
+                account.setEmojis(emojiList);
+            }catch (Exception e){
+                account.setEmojis(new ArrayList<>());
+            }
+        } catch (JSONException ignored) {}
+        return account;
+    }
     /**
      * Parse json response for list of accounts
      * @param jsonArray JSONArray

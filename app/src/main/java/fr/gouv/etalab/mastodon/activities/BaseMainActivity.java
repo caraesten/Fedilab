@@ -409,8 +409,9 @@ public abstract class BaseMainActivity extends BaseActivity
                     SubMenu submMastodon = popup.getMenu().findItem(R.id.action_show_mastodon).getSubMenu();
                     SubMenu submPeertube = popup.getMenu().findItem(R.id.action_show_peertube).getSubMenu();
                     SubMenu submPixelfed = popup.getMenu().findItem(R.id.action_show_pixelfed).getSubMenu();
+                    SubMenu submMisskey = popup.getMenu().findItem(R.id.action_show_misskey).getSubMenu();
                     SubMenu submChannel = popup.getMenu().findItem(R.id.action_show_channel).getSubMenu();
-                    int i = 0, j = 0 , k = 0;
+                    int i = 0, j = 0 , k = 0, l = 0 , m = 0;
                     for (RemoteInstance remoteInstance : remoteInstances) {
                         if (remoteInstance.getType() == null || remoteInstance.getType().equals("MASTODON")) {
                             MenuItem itemPlaceHolder = submMastodon.findItem(R.id.mastodon_instances);
@@ -506,11 +507,42 @@ public abstract class BaseMainActivity extends BaseActivity
                             });
                             j++;
                         }
+                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("MISSKEY")) {
+                            MenuItem itemPlaceHolder = submPixelfed.findItem(R.id.misskey_instance);
+                            if( itemPlaceHolder != null)
+                                itemPlaceHolder.setVisible(false);
+                            MenuItem item = submMisskey.add(0, l, Menu.NONE, remoteInstance.getHost());
+                            item.setIcon(R.drawable.misskey);
+                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    DisplayStatusFragment statusFragment;
+                                    Bundle bundle = new Bundle();
+                                    statusFragment = new DisplayStatusFragment();
+                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                                    bundle.putString("remote_instance", remoteInstance.getHost());
+                                    statusFragment.setArguments(bundle);
+                                    String fragmentTag = "REMOTE_INSTANCE";
+                                    instance_id = remoteInstance.getDbID();
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                                    main_app_container.setVisibility(View.VISIBLE);
+                                    viewPager.setVisibility(View.GONE);
+                                    tabLayout.setVisibility(View.GONE);
+                                    toolbarTitle.setVisibility(View.VISIBLE);
+                                    delete_instance.setVisibility(View.VISIBLE);
+                                    toolbarTitle.setText(remoteInstance.getHost());
+                                    return false;
+                                }
+                            });
+                            l++;
+                        }
                         if (remoteInstance.getType() == null || remoteInstance.getType().equals("PEERTUBE")) {
                             MenuItem itemPlaceHolder = submPeertube.findItem(R.id.peertube_instances);
                             if( itemPlaceHolder != null)
                                 itemPlaceHolder.setVisible(false);
-                            MenuItem item = submPeertube.add(0, j, Menu.NONE, remoteInstance.getHost());
+                            MenuItem item = submPeertube.add(0, m, Menu.NONE, remoteInstance.getHost());
                             item.setIcon(R.drawable.peertube_icon);
                             item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                                 @Override
@@ -535,7 +567,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                     return false;
                                 }
                             });
-                            j++;
+                            m++;
                         }
                     }
                 }
@@ -568,6 +600,8 @@ public abstract class BaseMainActivity extends BaseActivity
                                                         new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/videos/", 10, null, null);
                                                     else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
                                                         new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/timelines/public", 10, null, null);
+                                                    }else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
+                                                        new HttpsConnection(BaseMainActivity.this).post("https://" + instanceName + "/api/notes/local-timeline", 10, null, null);
                                                     }
                                                     runOnUiThread(new Runnable() {
                                                         public void run() {
@@ -579,6 +613,8 @@ public abstract class BaseMainActivity extends BaseActivity
                                                                 new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PEERTUBE");
                                                             else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance)
                                                                 new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PIXELFED");
+                                                            else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance)
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MISSKEY");
                                                             DisplayStatusFragment statusFragment;
                                                             Bundle bundle = new Bundle();
                                                             statusFragment = new DisplayStatusFragment();

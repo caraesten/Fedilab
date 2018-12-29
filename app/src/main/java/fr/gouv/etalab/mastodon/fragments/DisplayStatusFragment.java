@@ -179,7 +179,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 statusListAdapter = new StatusListAdapter(context, tagTimeline, targetedId, isOnWifi, this.statuses);
                 lv_status.setAdapter(statusListAdapter);
             }
-        }else if( search_peertube == null && (instanceType == null || instanceType.equals("MASTODON") || instanceType.equals("PIXELFED"))) {
+        }else if( search_peertube == null && (instanceType == null || instanceType.equals("MASTODON") || instanceType.equals("PIXELFED") || instanceType.equals("MISSKEY"))) {
             BaseMainActivity.displayPeertube = null;
             if( instanceType != null && instanceType.equals("PIXELFED"))
                 type = RetrieveFeedsAsyncTask.Type.PIXELFED;

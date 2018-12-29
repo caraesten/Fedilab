@@ -176,7 +176,15 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                                 status.setType(action);
                             }
                         }
-                    }else {
+                    }else if(remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("MISSKEY")){
+                        apiResponse = api.getMisskey(this.instanceName, max_id);
+                        List<fr.gouv.etalab.mastodon.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
+                        if( statusesTemp != null){
+                            for(fr.gouv.etalab.mastodon.client.Entities.Status status: statusesTemp){
+                                status.setType(action);
+                            }
+                        }
+                    } else {
                         apiResponse = api.getPeertube(this.instanceName, max_id);
                     }
                 }
