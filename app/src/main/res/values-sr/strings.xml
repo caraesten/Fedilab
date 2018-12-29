@@ -621,12 +621,12 @@
     <string name="tags_stored">Ознака ускладиштена!</string>
     <string name="tags_renamed">Ознака промењена!</string>
     <string name="tags_deleted">Ознака избрисана!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="set_display_art">Прикажи уметничку лајну</string>
     <string name="schedule_boost">Закажи подршке</string>
     <string name="boost_scheduled">Подршка је заказана!</string>
     <string name="no_scheduled_boosts">Нема заказаних подршки за приказ!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Отворите мени тута и одаберите <b>Закажи подршку</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
+    <string name="art_menu">Уметничка лајна</string>
     <string name="open_menu">Отвори мени</string>
     <string name="app_logo">Логотип апликације</string>
     <string name="profile_picture">Профилна слика</string>
