@@ -687,7 +687,7 @@
     <string name="some_words_all">Vse te besede (ločene s presledkom)</string>
     <string name="some_words_none">Nobena od teh besed (ločene s presledkom)</string>
     <string name="change_tag_column">Preimenuj stolpec</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
-    <string name="misskey_instance">Misskey instance</string>
+    <string name="no_misskey_instance">Ni instanc Misskey</string>
+    <string name="misskey_instance">Instanca Misskey</string>
     <!-- end languages -->
 </resources>
