@@ -666,10 +666,10 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="no_pixelfed_instance">Keine Pixelfed Instanzen</string>
     <string name="any_tags">Any of these</string>
     <string name="all_tags">Alle von denen</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="none_tags">Keine von denen</string>
+    <string name="some_words_any">Eines dieser Wörter (Leerzeichen getrennt)</string>
+    <string name="some_words_all">Alle diese Wörter (Leerzeichen getrennt)</string>
+    <string name="some_words_none">Keines dieser Wörter (Leerzeichen getrennt)</string>
     <string name="change_tag_column">Spaltenname ändern</string>
     <string name="no_misskey_instance">Keine Misskey Instanzen</string>
     <string name="misskey_instance">Misskey Instanz</string>
