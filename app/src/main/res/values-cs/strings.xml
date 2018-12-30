@@ -315,7 +315,7 @@
     <string name="set_lock_account">Zamknout účet</string>
     <string name="set_save_changes">Uložit změny</string>
     <string name="set_header_picture_overlay">Vyberte obrázek do hlavičky</string>
-    <string name="set_fit_preview">Fit preview images</string>
+    <string name="set_fit_preview">Přizpůsobit náhled obrázků</string>
     <string name="set_automatically_split_toot">Automaticky rozdělit toots nad 500 znaků do odpovědí</string>
     <string name="note_no_space">Bylo dosaženo 160ti znakového limitu!</string>
     <string name="username_no_space">Bylo dosaženo 30ti znakového limitu!</string>
@@ -331,7 +331,7 @@
     <string name="use_javascript">Povolit JavaScript</string>
     <string name="expand_cw">Automaticky ukázat cw</string>
     <string name="use_cookies">Povolit soubory cookie třetích stran</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="settings_ui_layout">Rozložení pro časové osy: </string>
     <string-array name="battery_profiles">
         <item>Normální využití baterie</item>
         <item>Střední využití baterie</item>
@@ -370,7 +370,7 @@
         <item>Bílá</item>
     </string-array>
     <string name="set_title_news">Novinky</string>
-    <string name="set_notification_news">Notify for new toots on the home timeline</string>
+    <string name="set_notification_news">Upozorňovat na nové toots na domácí časové ose</string>
     <string name="action_follow">Následovat</string>
     <string name="action_unfollow">Přestat sledovat</string>
     <string name="action_block">Blokovat</string>
@@ -436,18 +436,18 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
     </string>
-    <string name="privacy_API_title">Tracking and Libraries</string>
+    <string name="privacy_API_title">Sledování a Knihovny</string>
     <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
         - <b>Glide</b>: To manage media\n
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
     </string>
-    <string name="privacy_API_yandex_title">Translation of toots</string>
+    <string name="privacy_API_yandex_title">Překlad toots</string>
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text">        Thank you to Stéphane for the logo.
+    <string name="thanks_text">        Poděkování Stéphane za logo.
     </string>
     <string name="thanks_text_dev">Poděkování:    </string>
     <string name="filter_regex">Filtrování regulárními výrazy</string>
@@ -457,7 +457,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <!-- About lists -->
     <string name="action_lists">Seznamy</string>
     <string name="action_lists_confirm_delete">Jsi si jist/a, že chceš trvale odstranit tento seznam?</string>
-    <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+    <string name="action_lists_empty_content">Tento seznam je zatím prázdný. Jakmile členové seznamu zvěřejní nové statusy, objeví se zde.</string>
     <string name="action_lists_add_to">Přidat do seznamu</string>
     <string name="action_lists_remove_from">Odebrat ze seznamu</string>
     <string name="action_lists_create">Přidat seznam</string>
@@ -467,9 +467,9 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="action_lists_search_users">Hledat mezi sledovanými lidmi</string>
     <string name="action_lists_owner">Vaše seznamy</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s has moved to %2$s</string>
+    <string name="account_moved_to">%1$s se přesunul do %2$s</string>
     <string name="show_boost_count">Show boosts/favourites count</string>
-    <string name="issue_login_title">Authentication does not work?</string>
+    <string name="issue_login_title">Přihlášení nefunguje?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
@@ -480,8 +480,8 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Zpracovávám, prosím čekejte…</string>
-    <string name="data_export">Export statuses</string>
-    <string name="data_export_toots">Export statuses for %1$s</string>
+    <string name="data_export">Export statusů</string>
+    <string name="data_export_toots">Export statusů %1$s</string>
     <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
     <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
     <!-- Proxy -->
@@ -507,10 +507,10 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Sledovat instanci</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
-    <string name="toast_instance_followed">The instance is followed!</string>
+    <string name="toast_instance_followed">Instance je sledována!</string>
     <string name="action_partnership">Partnerství</string>
     <string name="neutral_menu_information">Informace</string>
-    <string name="hide_boost">Hide boosts from %s</string>
+    <string name="hide_boost">Skrýt posílení od %s</string>
     <string name="endorse">Zmínit v profilu</string>
     <string name="hide_everything">Skrýt vše od %s</string>
     <string name="show_boost">Ukázat posílení od %s</string>
@@ -569,15 +569,15 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="select_sound">Select Tone</string>
     <string name="set_enable_time_slot">Enable time slot</string>
     <string name="how_to_videos">How To Videos</string>
-    <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-    <string name="no_blocked_domain">No blocked domains!</string>
+    <string name="retrieve_remote_conversation">Načítám vzdálenou konverzaci!</string>
+    <string name="no_blocked_domain">Žádné blokované domény!</string>
     <string name="unblock_domain_confirm">Odblokovat doménu</string>
-    <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+    <string name="unblock_domain_confirm_message">Určitě chcete odblokovat %s?</string>
+    <string name="block_domain_confirm_message">Určitě chcete zablokovat %s?</string>
     <string name="blocked_domains">Blokované domény</string>
     <string name="block_domain">Zablokovat doménu</string>
     <string name="toast_block_domain">Doména je blokována</string>
-    <string name="toast_unblock_domain">The domain is no longer blocked!</string>
+    <string name="toast_unblock_domain">Doména není nadále blokována!</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
     <string name="comment">Comment</string>
     <string name="peertube_instance">Peertube instance</string>
@@ -586,17 +586,17 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
     <string name="number_view_video">%s views</string>
     <string name="duration_video">Duration: %s</string>
-    <string name="add_remote_instance">Add an instance</string>
+    <string name="add_remote_instance">Přidat instanci</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
-    <string name="pickup_resolution">Pick up a resolution</string>
+    <string name="pickup_resolution">Vyberte rozlišení</string>
     <string name="peertube_favorites">Peertube oblíbené</string>
-    <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-    <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
+    <string name="bookmark_add_peertube">Video bylo přidáno do záložek!</string>
+    <string name="bookmark_remove_peertube">Video bylo odstraněno ze záložek!</string>
     <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
     <string name="channel">Kanál</string>
-    <string name="no_peertube_channels">No Peertube channels</string>
-    <string name="no_peertube_instances">No Peertube instances</string>
-    <string name="no_mastodon_instances">No Mastodon instances</string>
+    <string name="no_peertube_channels">Žádný Peertube kanál</string>
+    <string name="no_peertube_instances">Žádná Peertube instance</string>
+    <string name="no_mastodon_instances">Žádné Mastodon instance</string>
     <string name="no_lists">Žádné seznamy</string>
     <string name="videos">Videa</string>
     <string name="channels">Kanály</string>
@@ -606,12 +606,12 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="thanks_text_ux">New UX/UI designer</string>
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
     <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
+    <string name="thanks_text_support">Gitlab podpora</string>
+    <string name="action_bug_report">Nahlásit chybu</string>
+    <string name="no_mail_client">Není instalován žádný e-mailový klient.</string>
+    <string name="bug_report_mail">Poslat zprávu o chybě</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
+    <string name="settings_title_battery">Optimalizace spotřeby energie</string>
     <string name="set_change_locale">Změna jazyka</string>
     <string name="default_language">Základní jazyk</string>
     <string name="truncate_long_toots">Truncate long toots</string>
@@ -624,7 +624,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="tags_renamed">Štítek byl změněn!</string>
     <string name="tags_deleted">Štítek byl smazán!</string>
     <string name="set_display_art">Display Art timeline</string>
-    <string name="schedule_boost">Schedule boost</string>
+    <string name="schedule_boost">Naplánované posílení</string>
     <string name="boost_scheduled">The boost is scheduled!</string>
     <string name="no_scheduled_boosts">No scheduled boost to display!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
@@ -685,8 +685,8 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="some_words_any">Any of these words (space-separated)</string>
     <string name="some_words_all">All these words (space-separated)</string>
     <string name="some_words_none">None of these words (space-separated)</string>
-    <string name="change_tag_column">Change column name</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
+    <string name="change_tag_column">Změnit název sloupce</string>
+    <string name="no_misskey_instance">Žádná Misskey instance</string>
     <string name="misskey_instance">Misskey instance</string>
     <!-- end languages -->
 </resources>
