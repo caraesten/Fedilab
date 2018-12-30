@@ -664,7 +664,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="pixelfed_instance">Pixelfed Instanz</string>
     <string name="mastodon_instance">Mastodon Instanz</string>
     <string name="no_pixelfed_instance">Keine Pixelfed Instanzen</string>
-    <string name="any_tags">Any of these</string>
+    <string name="any_tags">Irgendwelche davon</string>
     <string name="all_tags">Alle von denen</string>
     <string name="none_tags">Keine von denen</string>
     <string name="some_words_any">Eines dieser Wörter (Leerzeichen getrennt)</string>
