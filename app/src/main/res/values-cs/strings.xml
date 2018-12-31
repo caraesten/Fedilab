@@ -688,5 +688,6 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="change_tag_column">Změnit název sloupce</string>
     <string name="no_misskey_instance">Žádná Misskey instance</string>
     <string name="misskey_instance">Misskey instance</string>
+    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
     <!-- end languages -->
 </resources>
