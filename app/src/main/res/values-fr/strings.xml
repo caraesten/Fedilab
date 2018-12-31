@@ -680,5 +680,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="change_tag_column">Renommer la colonne</string>
     <string name="no_misskey_instance">Aucune instance Misskey</string>
     <string name="misskey_instance">Instance Misskey</string>
+    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
     <!-- end languages -->
 </resources>
