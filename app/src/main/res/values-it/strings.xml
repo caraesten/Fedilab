@@ -683,6 +683,6 @@
     <string name="change_tag_column">Rinomina colonna</string>
     <string name="no_misskey_instance">Nessuna istanza Misskey</string>
     <string name="misskey_instance">Istanza Misskey</string>
-    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
+    <string name="toast_no_apps">Nessun app con supporto a questo link è installata sul tuo dispositivo.</string>
     <!-- end languages -->
 </resources>
