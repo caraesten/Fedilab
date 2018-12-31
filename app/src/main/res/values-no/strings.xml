@@ -662,14 +662,14 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="pixelfed_instance">Pixelfed-instans</string>
     <string name="mastodon_instance">Mastodon-instans</string>
     <string name="no_pixelfed_instance">Ingen Pixelfed-instanser</string>
-    <string name="any_tags">Hvilke som helst av disse</string>
-    <string name="all_tags">Alle disse</string>
-    <string name="none_tags">Ingen av disse</string>
-    <string name="some_words_any">Hvilke som helst av disse ordene (separert med mellomrom)</string>
+    <string name="any_tags">Hvilke som helst av disse stikkordene</string>
+    <string name="all_tags">Alle disse stikkordene</string>
+    <string name="none_tags">Ingen av disse stikkordene</string>
+    <string name="some_words_any">Hvilke som helst av disse stikkordene (separert med mellomrom)</string>
     <string name="some_words_all">Alle disse ordene (separert med mellomrom)</string>
-    <string name="some_words_none">Ingen av disse ordene (separert med mellomrom)</string>
+    <string name="some_words_none">Ingen av disse stikkordene (separert med mellomrom)</string>
     <string name="change_tag_column">Endre kolonnenavn</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
-    <string name="misskey_instance">Misskey instance</string>
+    <string name="no_misskey_instance">Ingen Misskey-instanser</string>
+    <string name="misskey_instance">Misskey-instans</string>
     <!-- end languages -->
 </resources>

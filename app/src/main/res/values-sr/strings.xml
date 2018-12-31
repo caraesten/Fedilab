@@ -127,7 +127,7 @@
     </string-array>
     <string-array name="action_notification">
         <item>Notify</item>
-        <item>Silent</item>
+        <item>Нечујно</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Уклони овај тут?</item>
@@ -621,30 +621,30 @@
     <string name="tags_stored">Ознака ускладиштена!</string>
     <string name="tags_renamed">Ознака промењена!</string>
     <string name="tags_deleted">Ознака избрисана!</string>
-    <string name="set_display_art">Display Art timeline</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
-    <string name="open_menu">Open menu</string>
-    <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
-    <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
-    <string name="favicon">Favicon</string>
+    <string name="set_display_art">Прикажи уметничку лајну</string>
+    <string name="schedule_boost">Закажи подршке</string>
+    <string name="boost_scheduled">Подршка је заказана!</string>
+    <string name="no_scheduled_boosts">Нема заказаних подршки за приказ!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Отворите мени тута и одаберите <b>Закажи подршку</b>.]]></string>
+    <string name="art_menu">Уметничка лајна</string>
+    <string name="open_menu">Отвори мени</string>
+    <string name="app_logo">Логотип апликације</string>
+    <string name="profile_picture">Профилна слика</string>
+    <string name="profile_banner">Профилни банер</string>
+    <string name="contact_instance_admin">Контактирајте администратора ове инстанце</string>
+    <string name="add_new">Додај нови</string>
+    <string name="mastohost_logo">MastoHost лого</string>
+    <string name="emoji_picker">Емоџи бирач</string>
+    <string name="refresh">Оcвежи</string>
+    <string name="expand_conversation">Прошири разговор</string>
+    <string name="remove_account">Уклони налог</string>
+    <string name="delete_domain">Избриши блокирани домен</string>
+    <string name="custom_emoji_picker">Произвољни емоџи бирач</string>
+    <string name="play_video">Пусти видео</string>
+    <string name="new_toot">Нови тут</string>
+    <string name="card_view_image">Слика картице</string>
+    <string name="hide_media">Сакриј мултимедију</string>
+    <string name="favicon">Фавикон</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
         <item>Никадa</item>
@@ -661,30 +661,30 @@
     </string>
     <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        Последњи корак је да унесете Вашу лозинку и да кликнете на пријаву.
     </string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Више информација</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
-    <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
-    <string name="change_tag_column">Change column name</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
-    <string name="misskey_instance">Misskey instance</string>
+    <string name="languages">Језици</string>
+    <string name="show_media_only">Само мултимедија</string>
+    <string name="show_media_nsfw">Прикажи NSFW</string>
+    <string name="crowdin_translations">Crowdin преводи</string>
+    <string name="crowdin_manager">Crowdin менаџер</string>
+    <string name="translation_app">Превод апликације</string>
+    <string name="about_crowdin">О Crowdin-у</string>
+    <string name="bot">Бот</string>
+    <string name="pixelfed_instance">Pixelfed инстанца</string>
+    <string name="mastodon_instance">Мастодонт инстанца</string>
+    <string name="no_pixelfed_instance">Нема Pixelfed инстанци</string>
+    <string name="any_tags">Било шта од овога</string>
+    <string name="all_tags">Све од овога</string>
+    <string name="none_tags">Ништа од овога</string>
+    <string name="some_words_any">Било која од ових речи (одвојених белинама)</string>
+    <string name="some_words_all">Све ове речи (одвојене белинама)</string>
+    <string name="some_words_none">Ниједна од ових речи (одвојених белинама)</string>
+    <string name="change_tag_column">Измени име колоне</string>
+    <string name="no_misskey_instance">Нема Misskey инстанци</string>
+    <string name="misskey_instance">Misskey инстанца</string>
     <!-- end languages -->
 </resources>

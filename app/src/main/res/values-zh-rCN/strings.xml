@@ -52,7 +52,7 @@
     <string name="next">下一个</string>
     <string name="previous">上一个</string>
     <string name="open_with">打开方式</string>
-    <string name="validate">验证</string>
+    <string name="validate">确认</string>
     <string name="media">媒体</string>
     <string name="share_with">分享给</string>
     <string name="shared_via">通过 Mastalab 分享</string>
@@ -671,14 +671,14 @@
     <string name="pixelfed_instance">像素化实例</string>
     <string name="mastodon_instance">长毛象实例</string>
     <string name="no_pixelfed_instance">未像素化实例</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
-    <string name="change_tag_column">Change column name</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
-    <string name="misskey_instance">Misskey instance</string>
+    <string name="any_tags">任一</string>
+    <string name="all_tags">全部</string>
+    <string name="none_tags">除开</string>
+    <string name="some_words_any">任一关键词（以空格隔开）</string>
+    <string name="some_words_all">全部关键词（以空格隔开）</string>
+    <string name="some_words_none">除开关键词（以空格隔开）</string>
+    <string name="change_tag_column">更改列名称</string>
+    <string name="no_misskey_instance">没有 Misskey 实例</string>
+    <string name="misskey_instance">Misskey 实例</string>
     <!-- end languages -->
 </resources>
