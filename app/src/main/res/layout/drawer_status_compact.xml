@@ -415,9 +415,9 @@
                             android:id="@+id/status_prev1_play_h"
                             android:visibility="gone"
                             android:layout_centerInParent="true"
-                            android:layout_width="20dp"
+                            android:layout_width="30dp"
                             android:src="@drawable/ic_play_arrow"
-                            android:layout_height="20dp"
+                            android:layout_height="30dp"
                             android:contentDescription="@string/play_video" />
                     </RelativeLayout>
                     <RelativeLayout
@@ -439,9 +439,9 @@
                             android:id="@+id/status_prev2_play_h"
                             android:visibility="gone"
                             android:layout_centerInParent="true"
-                            android:layout_width="20dp"
+                            android:layout_width="30dp"
                             android:src="@drawable/ic_play_arrow"
-                            android:layout_height="20dp"
+                            android:layout_height="30dp"
                             android:contentDescription="@string/play_video" />
                     </RelativeLayout>
                 </LinearLayout>
@@ -471,9 +471,9 @@
                             android:id="@+id/status_prev3_play_h"
                             android:visibility="gone"
                             android:layout_centerInParent="true"
-                            android:layout_width="20dp"
+                            android:layout_width="30dp"
                             android:src="@drawable/ic_play_arrow"
-                            android:layout_height="20dp"
+                            android:layout_height="30dp"
                             android:contentDescription="@string/play_video" />
                     </RelativeLayout>
                     <RelativeLayout
@@ -494,9 +494,9 @@
                             android:id="@+id/status_prev4_play_h"
                             android:visibility="gone"
                             android:layout_centerInParent="true"
-                            android:layout_width="20dp"
+                            android:layout_width="30dp"
                             android:src="@drawable/ic_play_arrow"
-                            android:layout_height="20dp"
+                            android:layout_height="30dp"
                             android:contentDescription="@string/play_video" />
                     </RelativeLayout>
                 </LinearLayout>
@@ -534,9 +534,9 @@
                     android:id="@+id/status_prev1_play"
                     android:visibility="gone"
                     android:layout_centerInParent="true"
-                    android:layout_width="20dp"
+                    android:layout_width="30dp"
                     android:src="@drawable/ic_play_arrow"
-                    android:layout_height="20dp"
+                    android:layout_height="30dp"
                     android:contentDescription="@string/play_video" />
                 <ImageView
                     android:id="@+id/hide_preview"
@@ -571,9 +571,9 @@
                         android:visibility="gone"
                         android:id="@+id/status_prev2_play"
                         android:layout_centerInParent="true"
-                        android:layout_width="20dp"
+                        android:layout_width="30dp"
                         android:src="@drawable/ic_play_arrow"
-                        android:layout_height="20dp"
+                        android:layout_height="30dp"
                         android:contentDescription="@string/play_video"/>
                 </RelativeLayout>
 
@@ -598,10 +598,10 @@
                         <ImageView
                             android:id="@+id/status_prev3_play"
                             android:layout_centerInParent="true"
-                            android:layout_width="20dp"
+                            android:layout_width="30dp"
                             android:src="@drawable/ic_play_arrow"
                             android:visibility="gone"
-                            android:layout_height="20dp"
+                            android:layout_height="30dp"
                             android:contentDescription="@string/play_video"/>
                     </RelativeLayout>
                     <RelativeLayout
@@ -621,9 +621,9 @@
                             android:id="@+id/status_prev4_play"
                             android:layout_centerInParent="true"
                             android:visibility="gone"
-                            android:layout_width="20dp"
+                            android:layout_width="30dp"
                             android:src="@drawable/ic_play_arrow"
-                            android:layout_height="20dp"
+                            android:layout_height="30dp"
                             android:contentDescription="@string/play_video"/>
                     </RelativeLayout>
 
