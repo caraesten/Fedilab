@@ -681,5 +681,6 @@
     <string name="change_tag_column">Aldatu zutabearen izena</string>
     <string name="no_misskey_instance">Misskey instantziarik ez</string>
     <string name="misskey_instance">Misskey instantzia</string>
+    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
     <!-- end languages -->
 </resources>
