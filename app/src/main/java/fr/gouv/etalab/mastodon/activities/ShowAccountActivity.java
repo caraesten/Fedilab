@@ -572,21 +572,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                             valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
                     }
                     field.setVisibility(View.VISIBLE);
-                    SpannableString spannableValueString;
-                    if( verified ){
-                        value =  "✓ " + value;
+                    if( verified) {
                         verifiedView.setBackgroundResource(R.drawable.verified);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            valueView.setBackground(null);
-                        }
-                        spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value);
-                        spannableValueString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.verified_text)), 0, spannableValueString.toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    }else {
-                        spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value);
                     }
-                    valueView.setText(spannableValueString, TextView.BufferType.SPANNABLE);
-                    valueView.setMovementMethod(LinkMovementMethod.getInstance());
-                    labelView.setText(label);
+
                 }
                 i++;
             }
@@ -911,7 +900,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     @Override
     public void onRetrieveEmojiAccount(Account account) {
         account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
-        account_dn.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);;
+        account_dn.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+        LinkedHashMap<String, Boolean> fieldsVerified = account.getFieldsVerified();
         if ( account.getFieldsSpan() != null && account.getFieldsSpan().size() > 0){
             HashMap<SpannableString, SpannableString> fieldsSpan = account.getFieldsSpan();
             Iterator it = fieldsSpan.entrySet().iterator();
@@ -958,6 +948,19 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     valueView.setText(value, TextView.BufferType.SPANNABLE);
                     valueView.setMovementMethod(LinkMovementMethod.getInstance());
                     labelView.setText(label);
+                }
+                if( field != null && labelView != null && valueView != null) {
+                    boolean verified = fieldsVerified.get((String)pair.getKey().toString());
+                    if( verified) {
+                        valueView.setBackgroundResource(R.drawable.verified);
+                        value.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.verified_text)), 0, value.toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    }
+                    field.setVisibility(View.VISIBLE);
+                    valueView.setText(value, TextView.BufferType.SPANNABLE);
+                    valueView.setMovementMethod(LinkMovementMethod.getInstance());
+                    labelView.setText(label);
+
                 }
                 i++;
             }

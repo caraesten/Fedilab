@@ -35,6 +35,7 @@ import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
@@ -101,7 +102,6 @@ public class Account implements Parcelable {
     private LinkedHashMap<String, Boolean> fieldsVerified;
     private LinkedHashMap<SpannableString, SpannableString> fieldsSpan;
     private List<Emojis> emojis;
-    private Account account;
     private String host;
     private boolean isBot;
 
@@ -283,9 +283,7 @@ public class Account implements Parcelable {
 
 
 
-    public Account(){
-        this.account = this;
-    }
+    public Account(){ }
 
     public static final Creator<Account> CREATOR = new Creator<Account>() {
         @Override
@@ -596,7 +594,91 @@ public class Account implements Parcelable {
                 }
 
             }
+            matcher = android.util.Patterns.EMAIL_ADDRESS.matcher(fieldSpan);
+            while (matcher.find()){
+                URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
+                for(URLSpan span : urls)
+                    fieldSpan.removeSpan(span);
+                int matchStart = matcher.start(0);
+                int matchEnd = matcher.end();
+                final String email = fieldSpan.toString().substring(matchStart, matchEnd);
+                if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
+                    fieldSpan.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View textView) {
+                            try {
+                                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                                emailIntent.setType("plain/text");
+                                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{email});
+                                context.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.send_email)));
+                            }catch (Exception e){
+                                Toasty.error(context, context.getString(R.string.toast_no_apps), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setUnderlineText(false);
+                            if (theme == THEME_DARK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                            else if (theme == THEME_BLACK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                            else if (theme == THEME_LIGHT)
+                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        }
+                    }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    fieldsSpan.put(keySpan, fieldSpan);
+                }
+
+            }
         }
+
+        it = fieldsSpan.entrySet().iterator();
+        fieldsVerified = account.getFieldsVerified();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            SpannableString fieldSpan = (SpannableString) pair.getValue();
+            SpannableString keySpan = (SpannableString) pair.getKey();
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            Matcher matcher;
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                matcher = Patterns.WEB_URL.matcher(fieldSpan);
+            else
+                matcher = Helper.urlPattern.matcher(fieldSpan);
+            while (matcher.find()){
+                URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
+                for(URLSpan span : urls)
+                    fieldSpan.removeSpan(span);
+                int matchStart = matcher.start(0);
+                int matchEnd = matcher.end();
+                final String url = fieldSpan.toString().substring(matchStart, matchEnd);
+                if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
+                    int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                    fieldSpan.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View textView) {
+                            Helper.openBrowser(context, url);
+                        }
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setUnderlineText(false);
+
+                            if (theme == THEME_DARK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                            else if (theme == THEME_BLACK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                            else if (theme == THEME_LIGHT)
+                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+
+                        }
+                    }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    fieldsSpan.put(keySpan, fieldSpan);
+                }
+
+            }
+        }
+
 
 
         final List<Emojis> emojis = account.getEmojis();
