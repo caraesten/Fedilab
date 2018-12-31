@@ -680,5 +680,6 @@
     <string name="change_tag_column">更改列名称</string>
     <string name="no_misskey_instance">没有 Misskey 实例</string>
     <string name="misskey_instance">Misskey 实例</string>
+    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
     <!-- end languages -->
 </resources>
