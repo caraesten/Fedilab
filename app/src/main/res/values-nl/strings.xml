@@ -680,5 +680,6 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="change_tag_column">Kolomnaam wijzigen</string>
     <string name="no_misskey_instance">Geen Misskeyservers</string>
     <string name="misskey_instance">Misskeyserver</string>
+    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
     <!-- end languages -->
 </resources>

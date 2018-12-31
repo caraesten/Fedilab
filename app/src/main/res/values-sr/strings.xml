@@ -686,5 +686,6 @@
     <string name="change_tag_column">Измени име колоне</string>
     <string name="no_misskey_instance">Нема Misskey инстанци</string>
     <string name="misskey_instance">Misskey инстанца</string>
+    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
     <!-- end languages -->
 </resources>
