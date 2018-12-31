@@ -671,5 +671,6 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="change_tag_column">Endre kolonnenavn</string>
     <string name="no_misskey_instance">Ingen Misskey-instanser</string>
     <string name="misskey_instance">Misskey-instans</string>
+    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
     <!-- end languages -->
 </resources>
