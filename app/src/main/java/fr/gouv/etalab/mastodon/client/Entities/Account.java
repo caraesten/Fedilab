@@ -36,6 +36,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -48,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -571,8 +573,12 @@ public class Account implements Parcelable {
                     fieldSpan.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(View textView) {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                            context.startActivity(intent);
+                            try {
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                context.startActivity(intent);
+                            }catch (Exception e){
+                                Toasty.error(context, context.getString(R.string.toast_no_apps), Toast.LENGTH_LONG).show();
+                            }
                         }
                         @Override
                         public void updateDrawState(TextPaint ds) {
