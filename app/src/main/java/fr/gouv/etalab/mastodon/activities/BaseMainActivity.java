@@ -1624,14 +1624,21 @@ public abstract class BaseMainActivity extends BaseActivity
                 itemMedia.setVisible(false);
                 itemDelete.setVisible(false);
                 itemShowNSFW.setChecked(show_nsfw);
+                final boolean[] changes = {false};
                 popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                     @Override
                     public void onDismiss(PopupMenu menu) {
-                        refreshFilters();
+                        if(changes[0]) {
+                            FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+                            fragTransaction.detach(artFragment);
+                            fragTransaction.attach(artFragment);
+                            fragTransaction.commit();
+                        }
                     }
                 });
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
+                        changes[0] = true;
                         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
                         item.setActionView(new View(getApplicationContext()));
                         item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {

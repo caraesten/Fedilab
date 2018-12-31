@@ -489,7 +489,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             //Let's deal with statuses
             if( statuses != null && statuses.size() > 0) {
                 if ( statusListAdapter != null){
-                    if( tagTimeline == null || !tagTimeline.isART() || (tagTimeline.isART() && tagTimeline.isNSFW())) {
+                    boolean show_nsfw = sharedpreferences.getBoolean(Helper.SET_ART_WITH_NSFW, false);
+                    if( type == RetrieveFeedsAsyncTask.Type.ART && !show_nsfw) {
+                        ArrayList<Status> safeStatuses = new ArrayList<>();
+                        for(Status status: statuses){
+                            if( !status.isSensitive())
+                                safeStatuses.add(status);
+                        }
+                        this.statuses.addAll(safeStatuses);
+                        statusListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
+                    }else if( tagTimeline == null || !tagTimeline.isART() || (tagTimeline.isART() && tagTimeline.isNSFW())) {
                         this.statuses.addAll(statuses);
                         statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                     }else { //If it's an Art timeline not allowing NSFW
