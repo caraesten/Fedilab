@@ -17,12 +17,15 @@ package fr.gouv.etalab.mastodon.client.Entities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -31,6 +34,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
+import android.text.style.URLSpan;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +46,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -49,6 +54,9 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 
 import static android.support.v4.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
 
 /**
@@ -544,6 +552,47 @@ public class Account implements Parcelable {
             }
             account.setFieldsSpan(fieldsSpan);
         }
+        Iterator it = fieldsSpan.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            SpannableString fieldSpan = (SpannableString) pair.getValue();
+            SpannableString keySpan = (SpannableString) pair.getKey();
+            Matcher matcher = Helper.xmppPattern.matcher(fieldSpan);
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            while (matcher.find()){
+                URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
+                for(URLSpan span : urls)
+                    fieldSpan.removeSpan(span);
+                int matchStart = matcher.start(0);
+                int matchEnd = matcher.end();
+                final String url = fieldSpan.toString().substring(matchStart, matchEnd);
+                if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
+                    fieldSpan.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View textView) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            context.startActivity(intent);
+                        }
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setUnderlineText(false);
+                            if (theme == THEME_DARK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                            else if (theme == THEME_BLACK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                            else if (theme == THEME_LIGHT)
+                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        }
+                    }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    fieldsSpan.put(keySpan, fieldSpan);
+                }
+
+            }
+        }
+
+
         final List<Emojis> emojis = account.getEmojis();
         if( emojis != null && emojis.size() > 0 ) {
 
@@ -617,7 +666,11 @@ public class Account implements Parcelable {
                 }catch (Exception ignored){}
 
             }
+        }else {
+            if (listener != null)
+                listener.onRetrieveEmojiAccount(account);
         }
+
     }
 
 

@@ -401,7 +401,7 @@ public class Helper {
     public static final Pattern twitterPattern = Pattern.compile("((@[\\w]+)@twitter\\.com)");
     private static final Pattern mentionPattern = Pattern.compile("(@[\\w_]+(\\s|$))");
     private static final Pattern mentionLongPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+[.][a-z]{2,10})");
-
+    public static final Pattern xmppPattern = Pattern.compile("xmpp\\:[-a-zA-Z0-9+$&@#\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\/%=~_|]");
     //Event Type
     public enum EventStreaming{
         UPDATE,
@@ -2621,7 +2621,9 @@ public class Helper {
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                 CustomTabsIntent customTabsIntent = builder.build();
                 builder.setToolbarColor(ContextCompat.getColor(context, R.color.mastodonC1));
-                customTabsIntent.launchUrl(context, Uri.parse(url));
+                try {
+                    customTabsIntent.launchUrl(context, Uri.parse(url));
+                }catch (Exception ignored){Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();}
             }else{
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
