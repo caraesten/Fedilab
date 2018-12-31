@@ -1612,6 +1612,15 @@ public abstract class BaseMainActivity extends BaseActivity
                 final MenuItem itemShowNSFW = menu.findItem(R.id.action_show_nsfw);
                 final MenuItem itemMedia = menu.findItem(R.id.action_show_media_only);
                 final MenuItem itemDelete = menu.findItem(R.id.action_delete);
+
+                final MenuItem itemAny = menu.findItem(R.id.action_any);
+                final MenuItem itemAll = menu.findItem(R.id.action_all);
+                final MenuItem itemNone = menu.findItem(R.id.action_none);
+                final MenuItem action_displayname = menu.findItem(R.id.action_displayname);
+                itemAny.setVisible(false);
+                itemAll.setVisible(false);
+                itemNone.setVisible(false);
+                action_displayname.setVisible(false);
                 itemMedia.setVisible(false);
                 itemDelete.setVisible(false);
                 itemShowNSFW.setChecked(show_nsfw);
@@ -2533,6 +2542,8 @@ public abstract class BaseMainActivity extends BaseActivity
 
                 final MenuItem itemMediaOnly = menu.findItem(R.id.action_show_media_only);
                 final MenuItem itemShowNSFW = menu.findItem(R.id.action_show_nsfw);
+
+
                 final boolean[] changes = {false};
                 final boolean[] mediaOnly = {false};
                 final boolean[] showNSFW = {false};
@@ -2717,6 +2728,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
+                                        dialog.dismiss();
                                         new SearchDAO(BaseMainActivity.this, db).remove(tag);
                                         String tag;
                                         if( position > 0 && tabLayout.getTabAt(position - 1).getText() != null) {
