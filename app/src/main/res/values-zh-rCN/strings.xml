@@ -52,7 +52,7 @@
     <string name="next">下一个</string>
     <string name="previous">上一个</string>
     <string name="open_with">打开方式</string>
-    <string name="validate">验证</string>
+    <string name="validate">确认</string>
     <string name="media">媒体</string>
     <string name="share_with">分享给</string>
     <string name="shared_via">通过 Mastalab 分享</string>
@@ -676,7 +676,7 @@
     <string name="none_tags">除开</string>
     <string name="some_words_any">任一关键词（以空格隔开）</string>
     <string name="some_words_all">全部关键词（以空格隔开）</string>
-    <string name="some_words_none">屏蔽关键词（以空格隔开）</string>
+    <string name="some_words_none">除开关键词（以空格隔开）</string>
     <string name="change_tag_column">更改列名称</string>
     <string name="no_misskey_instance">没有 Misskey 实例</string>
     <string name="misskey_instance">Misskey 实例</string>
