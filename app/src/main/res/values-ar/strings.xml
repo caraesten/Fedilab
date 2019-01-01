@@ -693,6 +693,6 @@
     <string name="change_tag_column">تغيير اسم العمود</string>
     <string name="no_misskey_instance">لا توجد أية مثيلات خوادم ميسكي</string>
     <string name="misskey_instance">مثيل خادم ميسكي</string>
-    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
+    <string name="toast_no_apps">ليس هناك أي تطبيق مثبّت على جهازك يدعم هذا الرابط.</string>
     <!-- end languages -->
 </resources>
