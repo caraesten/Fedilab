@@ -533,7 +533,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="context_drop_explanations">Filtrované toots zmizí nezvratně i v případě, že filtr je později odstraněn</string>
     <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
     <string name="context_whole_word">Celé slovo</string>
-    <string name="filter_context">Filter contexts</string>
+    <string name="filter_context">Kontext filtru</string>
     <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
     <string name="filter_expire">Vyprší po</string>
     <string name="add_new_filter">Přidat nový filtr</string>
@@ -568,7 +568,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="set_notif_sound">Change notification sound</string>
     <string name="select_sound">Select Tone</string>
     <string name="set_enable_time_slot">Enable time slot</string>
-    <string name="how_to_videos">How To Videos</string>
+    <string name="how_to_videos">Videonávody</string>
     <string name="retrieve_remote_conversation">Načítám vzdálenou konverzaci!</string>
     <string name="no_blocked_domain">Žádné blokované domény!</string>
     <string name="unblock_domain_confirm">Odblokovat doménu</string>
@@ -678,7 +678,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="bot">Bot</string>
     <string name="pixelfed_instance">Pixelfed instance</string>
     <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="no_pixelfed_instance">Žádné Pixelfed instance</string>
     <string name="any_tags">Any of these</string>
     <string name="all_tags">All of these</string>
     <string name="none_tags">None of these</string>
@@ -688,6 +688,6 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="change_tag_column">Změnit název sloupce</string>
     <string name="no_misskey_instance">Žádná Misskey instance</string>
     <string name="misskey_instance">Misskey instance</string>
-    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
+    <string name="toast_no_apps">Na vašem zařízení není nainstalována žádná aplikace podporující tento odkaz.</string>
     <!-- end languages -->
 </resources>
