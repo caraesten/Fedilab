@@ -109,6 +109,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.client.Glide.GlideApp;
@@ -2607,6 +2608,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             notifyStatusChanged(status);
         }
+    }
+
+    @Override
+    public void onRetrieveEmoji(Notification notification) {
+
     }
 
     @Override

@@ -114,6 +114,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
@@ -1758,6 +1759,11 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
 
     @Override
     public void onRetrieveEmoji(Status status, boolean fromTranslation) {
+
+    }
+
+    @Override
+    public void onRetrieveEmoji(Notification notification) {
 
     }
 

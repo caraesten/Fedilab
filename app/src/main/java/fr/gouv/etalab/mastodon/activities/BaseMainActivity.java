@@ -790,6 +790,10 @@ public abstract class BaseMainActivity extends BaseActivity
         if( display_direct) {
             tabLayout.addTab(tabDirect);
             tabPosition.put("direct",i);
+
+            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+
             String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
             if (instanceVersion != null) {
                 Version currentVersion = new Version(instanceVersion);

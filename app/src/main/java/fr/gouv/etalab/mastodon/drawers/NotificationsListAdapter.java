@@ -34,6 +34,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -341,7 +342,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             if( !status.isClickable())
                 Status.transform(context, status);
             if( !status.isEmojiFound())
-                Status.makeEmojis(context, NotificationsListAdapter.this, status);
+                Notification.makeEmojis(context, NotificationsListAdapter.this, notification);
             holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
@@ -1089,18 +1090,16 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     @Override
     public void onRetrieveEmoji(Status status, boolean fromTranslation) {
-        if( !status.isEmojiFound()) {
-            for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
-                if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getStatus() != null &&  notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
-                    if( notificationsListAdapter.getItemAt(i).getStatus() != null) {
-                        notificationsListAdapter.getItemAt(i).getStatus().setEmojiFound(true);
-                        try {
-                            notificationsListAdapter.notifyItemChanged(i);
-                        }catch (Exception ignored){}
-                    }
-                }
-            }
 
+    }
+
+    @Override
+    public void onRetrieveEmoji(Notification notification) {
+        Log.v(Helper.TAG,"notification: " + notification);
+        if( notification != null && notification.getStatus() != null) {
+            Log.v(Helper.TAG,"getContent: " + notification.getStatus().getContent());
+            notification.getStatus().setEmojiFound(true);
+            notifyNotificationChanged(notification);
         }
     }
 

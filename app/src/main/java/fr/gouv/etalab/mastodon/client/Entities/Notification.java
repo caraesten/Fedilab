@@ -15,10 +15,30 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.util.Date;
+import java.util.List;
+
+import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -110,4 +130,101 @@ public class Notification implements Parcelable {
     public boolean equals(Object otherNotifications) {
         return otherNotifications != null && (otherNotifications == this || otherNotifications instanceof Notification && this.getId().equals(((Notification) otherNotifications).getId()));
     }
+
+
+    public static void makeEmojis(final Context context, final OnRetrieveEmojiInterface listener, Notification notification){
+
+        if( ((Activity)context).isFinishing() )
+            return;
+        Status status = notification.getStatus();
+        if (status == null)
+            return;
+        if( status.getReblog() == null &&  status.getEmojis() == null)
+            return;
+        final java.util.List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
+        final List<Emojis> emojisAccounts = status.getReblog() != null ?status.getReblog().getAccount().getEmojis():status.getAccount().getEmojis();
+
+        status.getAccount().makeAccountNameEmoji(context, null, status.getAccount());
+
+       // SpannableString displayNameSpan = status.getDisplayNameSpan();
+        SpannableString contentSpan = status.getContentSpan();
+        SpannableString contentSpanCW = status.getContentSpanCW();
+        if( emojisAccounts != null)
+            emojis.addAll(emojisAccounts);
+        if( emojis != null && emojis.size() > 0 ) {
+            final int[] i = {0};
+            for (final Emojis emoji : emojis) {
+                Glide.with(context)
+                        .asBitmap()
+                        .load(emoji.getUrl())
+                        .listener(new RequestListener<Bitmap>()  {
+                            @Override
+                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                i[0]++;
+                                if( i[0] ==  (emojis.size())) {
+                                    listener.onRetrieveEmoji(status,false);
+                                }
+                                return false;
+                            }
+                        })
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                final String targetedEmoji = ":" + emoji.getShortcode() + ":";
+                                if (contentSpan != null && contentSpan.toString().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = contentSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        if( endPosition <= contentSpan.toString().length() && endPosition >= startPosition)
+                                            contentSpan.setSpan(
+                                                    new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                    }
+                                }
+                                /*if (displayNameSpan != null && displayNameSpan.toString().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = displayNameSpan.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        if(endPosition <= displayNameSpan.toString().length() && endPosition >= startPosition)
+                                            displayNameSpan.setSpan(
+                                                    new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                    }
+                                }
+                                status.setDisplayNameSpan(displayNameSpan);*/
+                                if (contentSpanCW != null && contentSpanCW.toString().contains(targetedEmoji)) {
+                                    //emojis can be used several times so we have to loop
+                                    for (int startPosition = -1; (startPosition = contentSpanCW.toString().indexOf(targetedEmoji, startPosition + 1)) != -1; startPosition++) {
+                                        final int endPosition = startPosition + targetedEmoji.length();
+                                        if( endPosition <= contentSpan.toString().length() && endPosition >= startPosition)
+                                            contentSpanCW.setSpan(
+                                                    new ImageSpan(context,
+                                                            Bitmap.createScaledBitmap(resource, (int) Helper.convertDpToPixel(20, context),
+                                                                    (int) Helper.convertDpToPixel(20, context), false)), startPosition,
+                                                    endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                                    }
+                                }
+                                i[0]++;
+                                if( i[0] ==  (emojis.size())) {
+                                    status.setContentSpan(contentSpan);
+                                    status.setContentSpanCW(contentSpanCW);
+                                    status.setEmojiFound(true);
+                                    listener.onRetrieveEmoji(notification);
+                                }
+                            }
+                        });
+
+            }
+        }
+    }
+
 }
