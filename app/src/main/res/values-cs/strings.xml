@@ -469,12 +469,12 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="account_moved_to">%1$s se přesunul do %2$s</string>
     <string name="show_boost_count">Zobrazit počet posílení/oblíbených</string>
     <string name="issue_login_title">Přihlášení nefunguje?</string>
-    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
+    <string name="issue_login_message">        <b>Zde jsou kontroly, které by vám mohly pomoct:</b>\n\n
+        - Zkontrolujte, že ve jmménu instance není překlep\n\n
+        - Ověřte, že vaše instance běží\n\n
+        - V případě, že používáte dvoufaktorovou autentizaci (2FA), použijte prosím odkaz dole (jakmile je vyplněno jméno instance)\n\n
+        - Můžete také použít tento link bez použití 2FA\n\n
+        - Pokud problém přetrvává, vytvořte tiket na  https://gitlab.com/tom79/mastalab/issues
     </string>
     <string name="media_ready">Média byla nahrána. Klikněte pro zobrazení.</string>
     <string name="data_export_start">Tato akce může trvat dlouho. Po dokončení obdržíte oznámení.</string>
@@ -601,9 +601,9 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="channels">Kanály</string>
     <string name="set_display_emoji">Použít Emoji One</string>
     <string name="information">Informace</string>
-    <string name="set_display_card">Display previews in all toots</string>
+    <string name="set_display_card">Zobrazit náhled ve všech toots</string>
     <string name="thanks_text_ux">Nový UX/UI návrhář</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
+    <string name="set_old_direct_timeline">Použít přímou časovou osu před verzí Mastodon 2.6</string>
     <string name="set_display_video_preview">Zobrazit náhled videa</string>
     <string name="thanks_text_support">Gitlab podpora</string>
     <string name="action_bug_report">Nahlásit chybu</string>
@@ -623,10 +623,10 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="tags_renamed">Štítek byl změněn!</string>
     <string name="tags_deleted">Štítek byl smazán!</string>
     <string name="set_display_art">Zobrazit Art časovou osu</string>
-    <string name="schedule_boost">Naplánované posílení</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
+    <string name="schedule_boost">Naplánovat posílení</string>
+    <string name="boost_scheduled">Posílení je naplánováno!</string>
+    <string name="no_scheduled_boosts">Žádná plánovaná posílení!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Otevřete menu tootu a vyberte <b>Naplánovat posílení</b>.]]></string>
     <string name="art_menu">Art časová osa</string>
     <string name="open_menu">Otevřete nabídku</string>
     <string name="app_logo">Logo aplikace</string>
@@ -635,18 +635,18 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="contact_instance_admin">Kontaktovat administrátora instance</string>
     <string name="add_new">Přidat nový</string>
     <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
+    <string name="emoji_picker">Výběr emotikonů</string>
     <string name="refresh">Načíst znovu</string>
-    <string name="expand_conversation">Expand the conversation</string>
+    <string name="expand_conversation">Ukázat celou konverzaci</string>
     <string name="remove_account">Odebrat účet</string>
     <string name="delete_domain">Smazat blokovanou doménu</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
+    <string name="custom_emoji_picker">Uživatelský výběr emoji</string>
     <string name="play_video">Přehrát video</string>
     <string name="new_toot">Nový toot</string>
-    <string name="card_view_image">Image of the card</string>
+    <string name="card_view_image">Obrázek karty</string>
     <string name="hide_media">Skrýt média</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Médium pro přidání popisu</string>
     <string-array name="filter_expire">
         <item>Nikdy</item>
         <item>30 minut</item>
