@@ -417,24 +417,23 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="owner_cached_toots_empty">V databázi nebyly nalezeny žádné toots. Prosím použijte synchronizační tlačítko v menu pro obnovení.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Zaznamenaná data</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
-    </string>
+    <string name="privacy_data">V zařízení jsou uloženy pouze základní informace o účtech.
+Tyto informace jsou přísně tajné a mohou být použity pouze aplikací.
+Smazaní aplikace okamžitě odstraní tyto údaje.\n
+Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během bezpečného přihlášení (SSL) k instanci.    </string>
     <string name="privacy_authorizations_title">Oprávnění:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Použito k detekci WiFi připojení.\n
+        - <b>INTERNET</b>: Použito ke komunikaci s instancí.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Použito k ukládání médií nebo k přesunu aplikace na SD kartu.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Použito pro přidání medií k toot.\n
+        - <b>BOOT_COMPLETED</b>: Použito k aktivaci notifikační služby.\n
+        - <b>WAKE_LOCK</b>: Použito během notifikační služby.
     </string>
     <string name="privacy_API_authorizations_title">API oprávnění:</string>
-    <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+    <string name="privacy_API_authorizations">        - <b>Čtení</b>: Čtení dat.\n
+        - <b>Zápis</b>: Zveřejňování statusů a nahrávání médií ke statusům.\n
+        - <b>Sledování</b>: Sledování, zrušení sledování, blokování, odblokování.\n\n
+        <b>&#9888; Tyto akce jsou vykonány pouze na vyžádání uživatele.</b>
     </string>
     <string name="privacy_API_title">Sledování a Knihovny</string>
     <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
@@ -468,7 +467,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="action_lists_owner">Vaše seznamy</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s se přesunul do %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
+    <string name="show_boost_count">Zobrazit počet posílení/oblíbených</string>
     <string name="issue_login_title">Přihlášení nefunguje?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
@@ -494,7 +493,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="poxy_password">Heslo</string>
     <string name="set_theme">Motiv:</string>
     <string name="set_compact_mode">Kompaktní mód</string>
-    <string name="set_share_details">Add toot details when sharing</string>
+    <string name="set_share_details">Přidat podrobnosti tootu při sdílení</string>
     <string name="support_the_app_on_liberapay">Podpořit aplikaci na Liberapay</string>
     <string name="alert_regex">Chyba v regulárním výrazu!</string>
     <string name="no_account_yet">Nemáte účet?</string>
@@ -506,7 +505,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Sledovat instanci</string>
-    <string name="toast_instance_already_added">You already follow this instance!</string>
+    <string name="toast_instance_already_added">Tuto instanci již sledujete!</string>
     <string name="toast_instance_followed">Instance je sledována!</string>
     <string name="action_partnership">Partnerství</string>
     <string name="neutral_menu_information">Informace</string>
@@ -558,16 +557,16 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="retrieve_remote_account">Načítám vzdálený účet</string>
     <string name="expand_image">Automaticky zobrazovat skrytá média</string>
     <string name="set_display_follow_instance">Display follow instances button</string>
-    <string name="channel_notif_follow">New follow</string>
-    <string name="channel_notif_boost">New Boost</string>
-    <string name="channel_notif_fav">New Favourite</string>
-    <string name="channel_notif_mention">New Mention</string>
-    <string name="channel_notif_toot">New Toot</string>
-    <string name="channel_notif_backup">Toots Backup</string>
-    <string name="channel_notif_media">Media Download</string>
-    <string name="set_notif_sound">Change notification sound</string>
-    <string name="select_sound">Select Tone</string>
-    <string name="set_enable_time_slot">Enable time slot</string>
+    <string name="channel_notif_follow">Nový sledující</string>
+    <string name="channel_notif_boost">Nové posílení</string>
+    <string name="channel_notif_fav">Nový oblíbený</string>
+    <string name="channel_notif_mention">Nová zmínka</string>
+    <string name="channel_notif_toot">Nový toot</string>
+    <string name="channel_notif_backup">Záloha toots</string>
+    <string name="channel_notif_media">Stahování médií</string>
+    <string name="set_notif_sound">Výchozí zvuk oznámení</string>
+    <string name="select_sound">Vybrat tón</string>
+    <string name="set_enable_time_slot">Zapnout rozvrh oznámení</string>
     <string name="how_to_videos">Videonávody</string>
     <string name="retrieve_remote_conversation">Načítám vzdálenou konverzaci!</string>
     <string name="no_blocked_domain">Žádné blokované domény!</string>
@@ -578,7 +577,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="block_domain">Zablokovat doménu</string>
     <string name="toast_block_domain">Doména je blokována</string>
     <string name="toast_unblock_domain">Doména není nadále blokována!</string>
-    <string name="retrieve_remote_status">Fetching remote status</string>
+    <string name="retrieve_remote_status">Načítám vzdálený status</string>
     <string name="comment">Komentovat</string>
     <string name="peertube_instance">Peertube instance</string>
     <string name="set_display_direct">Display private messages timeline</string>
