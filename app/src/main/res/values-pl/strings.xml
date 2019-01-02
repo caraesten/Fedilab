@@ -126,8 +126,8 @@
         <item>Zablokować tę domenę?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Powiadomienie</item>
+        <item>Cichy</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Usunąć ten wpis?</item>
@@ -520,7 +520,7 @@
     <string name="toast_hide_boost">Podbicia są teraz ukrywane!</string>
     <string name="direct_message">Bezpośrednia wiadomość</string>
     <string name="filters">Filtry</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
+    <string name="action_filters_empty_content">Brak filtrów. Możesz dodać filtr używając przycisku \"+\".</string>
     <string name="filter_keyword">Słowo kluczowe lub fraza</string>
     <string name="context_home">Lokalna oś czasu</string>
     <string name="context_public">Publiczne osi czasu</string>
