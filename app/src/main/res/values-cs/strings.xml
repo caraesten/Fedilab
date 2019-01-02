@@ -436,16 +436,16 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
         <b>&#9888; Tyto akce jsou vykonány pouze na vyžádání uživatele.</b>
     </string>
     <string name="privacy_API_title">Sledování a Knihovny</string>
-    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+    <string name="privacy_API">        Aplikace <b>nepoužívá sledovací nástroje</b> (měření návštěvnosti, hlášení chyb, atd.) a neobsahuje reklamy.\n\n
+        Použití knihoven je minimální: \n
+        - <b>Glide</b>: Správa médií\n
+        - <b>Android-Job</b>: Správa služeb\n
+        - <b>PhotoView</b>: Správa obrázků\n
     </string>
     <string name="privacy_API_yandex_title">Překlad toots</string>
-    <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    </string>
+    <string name="privacy_API_yandex_authorizations">Aplikace umožňuje překlad toots do jazyka zařízení s použitím služby Yandex API.\n
+Yandex má svá vlastní pravidla pro soukromí uživatelských dat zde:
+https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="thanks_text">        Poděkování Stéphane za logo.
     </string>
     <string name="thanks_text_dev">Poděkování:    </string>
@@ -476,13 +476,13 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
-    <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
+    <string name="media_ready">Média byla nahrána. Klikněte pro zobrazení.</string>
+    <string name="data_export_start">Tato akce může trvat dlouho. Po dokončení obdržíte oznámení.</string>
     <string name="data_export_running">Zpracovávám, prosím čekejte…</string>
     <string name="data_export">Export statusů</string>
     <string name="data_export_toots">Export statusů %1$s</string>
-    <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+    <string name="data_export_success">%1$s toots z %2$s bylo exportováno.</string>
+    <string name="data_export_error">Něco se pokazilo během exportu dat pro %1$s</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Typ</string>
@@ -497,13 +497,13 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="support_the_app_on_liberapay">Podpořit aplikaci na Liberapay</string>
     <string name="alert_regex">Chyba v regulárním výrazu!</string>
     <string name="no_account_yet">Nemáte účet?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+    <string name="toast_instance_unavailable">Časová osa nenalezena na této instanci!</string>
     <string name="delete_instance">Odstranit instanci?</string>
-    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
+    <string name="warning_delete_instance">Chystáte se smazat %s z vašich sledovaných instancí.</string>
     <string name="which_language">Přeložit v</string>
     <string name="crash_title">Mastalab přestal fungovat :(</string>
-    <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
+    <string name="crash_message">Pošlete mi mailem údaje o chybě. Pomůžete tak při opravě :)\n\nMůžete přidat dodatečný obsah. Děkuji!</string>
+    <string name="send_crash_report">Požádat o zaslání chybového hlášení emailem?</string>
     <string name="follow_instance">Sledovat instanci</string>
     <string name="toast_instance_already_added">Tuto instanci již sledujete!</string>
     <string name="toast_instance_followed">Instance je sledována!</string>
@@ -521,26 +521,26 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="toast_hide_boost">Posílení jsou skryta!</string>
     <string name="direct_message">Přímá zpráva</string>
     <string name="filters">Filtry</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
+    <string name="action_filters_empty_content">Žádné filtry k zobrazení. Můžete vytvořit nový filtr klepnutím na tlačítko \"+\".</string>
     <string name="filter_keyword">Klíčové slovo nebo fráze</string>
     <string name="context_home">Lokální časová osa</string>
     <string name="context_public">Veřejná časová osa</string>
     <string name="context_notification">Oznámení</string>
     <string name="context_conversation">Konverzace</string>
-    <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
+    <string name="filter_keyword_explanations">Velikost písmen ani varování ohledně obsahu nebudou brána v potaz</string>
     <string name="context_drop">Zahodit místo skrytí</string>
     <string name="context_drop_explanations">Filtrované toots zmizí nezvratně i v případě, že filtr je později odstraněn</string>
-    <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
+    <string name="context_whole_word_explanations">V případě, že klíčové slovo nebo fráze je pouze alfanumerické, filtr se uplatní pouze pokud odpovídá celému slovu</string>
     <string name="context_whole_word">Celé slovo</string>
     <string name="filter_context">Kontext filtru</string>
-    <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
+    <string name="filter_context_explanations">Jeden nebo několik kontextů pro aplikaci filtru</string>
     <string name="filter_expire">Vyprší po</string>
     <string name="add_new_filter">Přidat nový filtr</string>
     <string name="action_filter_delete">Vymazat filtr?</string>
     <string name="action_update_filter">Aktualizovat filtr</string>
     <string name="action_filter_create">Vytvořit filtr</string>
     <string name="how_to_follow">Návrhy sledování</string>
-    <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
+    <string name="action_who_to_follow_empty_content">Momentálně není k dispozici žádný účet!</string>
     <string name="follow_account">Následovat</string>
     <string name="select_all">Vybrat vše</string>
     <string name="unselect_all">Zrušit výběr</string>
@@ -549,14 +549,14 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="add_account_list_trunk">Přidávám účty do seznamu</string>
     <string name="account_added_list_trunk">Účty byly přidány do seznamu</string>
     <string name="adding_account_list_trunk">Přidávám účty do seznamu</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
+    <string name="action_list_add">Žádný seznam dosud nebyl vytvořen. Můžete vytvořit nový seznam klepnutím na tlačítko \"+\".</string>
+    <string name="action_remote_instance_add">Žádné vzdálené instance nejsou zatím sledovány. Klepněte na tlačítko \"+\" pro přidání.</string>
     <string name="about_trunk">Návrhy sledování</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Účet/účty nemohou být sledovány</string>
     <string name="retrieve_remote_account">Načítám vzdálený účet</string>
     <string name="expand_image">Automaticky zobrazovat skrytá média</string>
-    <string name="set_display_follow_instance">Display follow instances button</string>
+    <string name="set_display_follow_instance">Zobrazit tlačítko pro sledování instancí</string>
     <string name="channel_notif_follow">Nový sledující</string>
     <string name="channel_notif_boost">Nové posílení</string>
     <string name="channel_notif_fav">Nový oblíbený</string>
@@ -580,18 +580,18 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="retrieve_remote_status">Načítám vzdálený status</string>
     <string name="comment">Komentovat</string>
     <string name="peertube_instance">Peertube instance</string>
-    <string name="set_display_direct">Display private messages timeline</string>
-    <string name="set_keep_background_process">Keep background process when app is closed</string>
-    <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
+    <string name="set_display_direct">Zobrazit časovou osu se soukromými zprávami</string>
+    <string name="set_keep_background_process">Udržovat aplikační proces na pozadí i pokud je aplikace zavřena</string>
+    <string name="no_comments">Zanechte první komentáře pro toto video. Klepněte na tlačítko vpravo nahoře!</string>
     <string name="number_view_video">%s zhlédnutí</string>
-    <string name="duration_video">Duration: %s</string>
+    <string name="duration_video">Doba trvání: %s</string>
     <string name="add_remote_instance">Přidat instanci</string>
-    <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
+    <string name="comment_no_allowed_peertube">Pro toto vide nejsou povoleny komentáře!</string>
     <string name="pickup_resolution">Vyberte rozlišení</string>
     <string name="peertube_favorites">Peertube oblíbené</string>
     <string name="bookmark_add_peertube">Video bylo přidáno do záložek!</string>
     <string name="bookmark_remove_peertube">Video bylo odstraněno ze záložek!</string>
-    <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+    <string name="bookmark_peertube_empty">V oblíbených nemíte žádná Peertube videa!</string>
     <string name="channel">Kanál</string>
     <string name="no_peertube_channels">Žádný Peertube kanál</string>
     <string name="no_peertube_instances">Žádná Peertube instance</string>
@@ -602,19 +602,19 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="set_display_emoji">Použít Emoji One</string>
     <string name="information">Informace</string>
     <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
+    <string name="thanks_text_ux">Nový UX/UI návrhář</string>
     <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
+    <string name="set_display_video_preview">Zobrazit náhled videa</string>
     <string name="thanks_text_support">Gitlab podpora</string>
     <string name="action_bug_report">Nahlásit chybu</string>
     <string name="no_mail_client">Není instalován žádný e-mailový klient.</string>
     <string name="bug_report_mail">Poslat zprávu o chybě</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
+    <string name="account_id_clipbloard">Identifikátor účtu byl zkopírován do schránky!</string>
     <string name="settings_title_battery">Optimalizace spotřeby energie</string>
     <string name="set_change_locale">Změna jazyka</string>
     <string name="default_language">Základní jazyk</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
+    <string name="truncate_long_toots">Ořezat dlouhé toots</string>
+    <string name="set_truncate_toot">Ořezat toots delší než \'x\' řádků. 0 znamená vypnuto.</string>
     <string name="display_toot_truncate">Zobrazit více</string>
     <string name="hide_toot_truncate">Zobrazit méně</string>
     <string name="manage_tags">Spravovat štítky</string>
@@ -622,12 +622,12 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="tags_stored">Štítek byl uložen!</string>
     <string name="tags_renamed">Štítek byl změněn!</string>
     <string name="tags_deleted">Štítek byl smazán!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="set_display_art">Zobrazit Art časovou osu</string>
     <string name="schedule_boost">Naplánované posílení</string>
     <string name="boost_scheduled">The boost is scheduled!</string>
     <string name="no_scheduled_boosts">No scheduled boost to display!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
+    <string name="art_menu">Art časová osa</string>
     <string name="open_menu">Otevřete nabídku</string>
     <string name="app_logo">Logo aplikace</string>
     <string name="profile_picture">Profilový obrázek</string>
@@ -639,7 +639,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="refresh">Načíst znovu</string>
     <string name="expand_conversation">Expand the conversation</string>
     <string name="remove_account">Odebrat účet</string>
-    <string name="delete_domain">Delete the blocked domain</string>
+    <string name="delete_domain">Smazat blokovanou doménu</string>
     <string name="custom_emoji_picker">Custom emoji picker</string>
     <string name="play_video">Přehrát video</string>
     <string name="new_toot">Nový toot</string>
@@ -678,12 +678,12 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="pixelfed_instance">Pixelfed instance</string>
     <string name="mastodon_instance">Mastodon instance</string>
     <string name="no_pixelfed_instance">Žádné Pixelfed instance</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="any_tags">Kterýkoliv</string>
+    <string name="all_tags">Všechny</string>
+    <string name="none_tags">Žádný</string>
+    <string name="some_words_any">Kterékoliv slovo (odělené mezerami)</string>
+    <string name="some_words_all">Všechna slova (oddělená mezerami)</string>
+    <string name="some_words_none">Žádné z těchto slov (oddělené mezerami)</string>
     <string name="change_tag_column">Změnit název sloupce</string>
     <string name="no_misskey_instance">Žádná Misskey instance</string>
     <string name="misskey_instance">Misskey instance</string>
