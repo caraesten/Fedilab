@@ -626,12 +626,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
 
 
-            final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            Status statusBookmarked = new StatusCacheDAO(context, db).getStatus(StatusCacheDAO.BOOKMARK_CACHE, status.getId());
-            if( statusBookmarked != null)
-                status.setBookmarked(true);
-            else
-                status.setBookmarked(false);
 
             if( status.isNew())
                 holder.new_element.setVisibility(View.VISIBLE);
@@ -979,6 +973,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if( type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
                         status.setBookmarked(!status.isBookmarked());
                         try {
+                            final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                             if (status.isBookmarked()) {
                                 new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
                                 Toasty.success(context, context.getString(R.string.status_bookmarked), Toast.LENGTH_LONG).show();
@@ -997,6 +992,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             if (statustmp.getId().equals(status.getId())) {
                                 statuses.remove(status);
                                 statusListAdapter.notifyItemRemoved(position);
+                                final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                 new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
                                 Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                                 break;
@@ -1017,6 +1013,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //-------- END -> Manages translations
 
             if( status.getAccount() == null) {
+                final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 Account account = new AccountDAO(context, db).getAccountByID(userId);
                 status.setAccount(account);
             }
@@ -1857,6 +1854,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 case R.id.action_bookmark:
                                     if( type != RetrieveFeedsAsyncTask.Type.CACHE_BOOKMARKS) {
                                         status.setBookmarked(!status.isBookmarked());
+                                        final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                         try {
                                             if (status.isBookmarked()) {
                                                 new StatusCacheDAO(context, db).insertStatus(StatusCacheDAO.BOOKMARK_CACHE, status);
@@ -1876,6 +1874,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                             if (statustmp.getId().equals(status.getId())) {
                                                 statuses.remove(status);
                                                 statusListAdapter.notifyItemRemoved(position);
+                                                final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                                 new StatusCacheDAO(context, db).remove(StatusCacheDAO.BOOKMARK_CACHE, statustmp);
                                                 Toasty.success(context, context.getString(R.string.status_unbookmarked), Toast.LENGTH_LONG).show();
                                                 break;
@@ -2115,6 +2114,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                     toot.setSpoiler_text(status.getSpoiler_text().trim());
                                                 toot.setVisibility(status.getVisibility());
                                                 toot.setContent(status.getContent());
+                                                final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                                 long id = new StatusStoredDAO(context, db).insertStatus(toot, null);
                                                 Intent intentToot = new Intent(context, TootActivity.class);
                                                 Bundle b = new Bundle();

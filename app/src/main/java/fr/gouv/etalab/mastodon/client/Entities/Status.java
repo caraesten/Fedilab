@@ -139,7 +139,11 @@ public class Status implements Parcelable{
         reblog = in.readParcelable(Status.class.getClassLoader());
         mentions = in.readArrayList(Mention.class.getClassLoader());
         account = in.readParcelable(Account.class.getClassLoader());
-        application = in.readParcelable(Application.class.getClassLoader());
+        try {
+            application = in.readParcelable(Application.class.getClassLoader());
+        }catch (Exception e){
+            application = new Application();
+        }
         tags = in.readArrayList(Tag.class.getClassLoader());
         contentTranslated = in.readString();
         reblogs_count = in.readInt();

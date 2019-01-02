@@ -228,6 +228,24 @@ public class StatusCacheDAO {
      * Returns all cached Statuses in db depending of their cache type
      * @return stored status List<StoredStatus>
      */
+    public List<String> getAllStatusId(int cacheType){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        try {
+            Cursor c = db.query(Sqlite.TABLE_STATUSES_CACHE, new String[]{Sqlite.COL_STATUS_ID}, Sqlite.COL_CACHED_ACTION + " = '" + cacheType+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "' AND " + Sqlite.COL_USER_ID + " = '" + userId+ "'", null, null, null, Sqlite.COL_CREATED_AT + " DESC", null);
+            return cursorToListStatusesId(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    /**
+     * Returns all cached Statuses in db depending of their cache type
+     * @return stored status List<StoredStatus>
+     */
     public List<Status> getStatusFromID(int cacheType, FilterToots filterToots, String max_id){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -511,5 +529,27 @@ public class StatusCacheDAO {
         c.close();
         //Statuses list is returned
         return statuses;
+    }
+
+
+    /***
+     * Method to get cached statuses ID from database
+     * @param c Cursor
+     * @return List<Status>
+     */
+    private List<String> cursorToListStatusesId(Cursor c){
+        //No element found
+        if (c.getCount() == 0)
+            return null;
+        List<String> statusesId = new ArrayList<>();
+        while (c.moveToNext() ) {
+            //Restore cached status
+
+            statusesId.add(c.getString(c.getColumnIndex(Sqlite.COL_STATUS_ID)));
+        }
+        //Close the cursor
+        c.close();
+        //Statuses list is returned
+        return statusesId;
     }
 }

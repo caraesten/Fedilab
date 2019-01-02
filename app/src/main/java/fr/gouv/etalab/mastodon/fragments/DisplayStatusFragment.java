@@ -804,7 +804,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( this.statuses != null) {
                     if( type != RetrieveFeedsAsyncTask.Type.HOME){
                         if( tagTimeline == null || !tagTimeline.isART() || (tagTimeline.isART() && tagTimeline.isNSFW())) {
-                            if (Long.parseLong(statuses.get(i).getId()) > Long.parseLong(this.statuses.get(0).getId())) {
+                            if (this.statuses.size() == 0 || Long.parseLong(statuses.get(i).getId()) > Long.parseLong(this.statuses.get(0).getId())) {
                                 inserted++;
                                 this.statuses.add(0, statuses.get(i));
                             }

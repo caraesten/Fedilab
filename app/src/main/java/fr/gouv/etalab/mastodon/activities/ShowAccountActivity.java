@@ -514,68 +514,69 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
                 String label = (String)pair.getKey();
-                String value = (String)pair.getValue();
-                boolean verified = fieldsVerified.get(label);
+                if( label != null && fieldsVerified.containsKey(label)) {
+                    boolean verified = fieldsVerified.get(label);
 
-                LinearLayout field;
-                TextView labelView;
-                TextView valueView;
-                LinearLayout verifiedView;
-                switch(i){
-                    case 1:
-                        field = findViewById(R.id.field1);
-                        labelView = findViewById(R.id.label1);
-                        valueView = findViewById(R.id.value1);
-                        verifiedView = findViewById(R.id.value1BG);
-                        break;
-                    case 2:
-                        field = findViewById(R.id.field2);
-                        labelView = findViewById(R.id.label2);
-                        valueView = findViewById(R.id.value2);
-                        verifiedView = findViewById(R.id.value2BG);
-                        break;
-                    case 3:
-                        field = findViewById(R.id.field3);
-                        labelView = findViewById(R.id.label3);
-                        valueView = findViewById(R.id.value3);
-                        verifiedView = findViewById(R.id.value3BG);
-                        break;
-                    case 4:
-                        field = findViewById(R.id.field4);
-                        labelView = findViewById(R.id.label4);
-                        valueView = findViewById(R.id.value4);
-                        verifiedView = findViewById(R.id.value4BG);
-                        break;
-                    default:
-                        field = findViewById(R.id.field1);
-                        labelView = findViewById(R.id.label1);
-                        valueView = findViewById(R.id.value1);
-                        verifiedView = findViewById(R.id.value1BG);
-                        break;
-                }
-                if( field != null && labelView != null && valueView != null) {
-                    switch (theme){
-                        case Helper.THEME_LIGHT:
-                            labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_2));
-                            valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_4));
+                    LinearLayout field;
+                    TextView labelView;
+                    TextView valueView;
+                    LinearLayout verifiedView;
+                    switch (i) {
+                        case 1:
+                            field = findViewById(R.id.field1);
+                            labelView = findViewById(R.id.label1);
+                            valueView = findViewById(R.id.value1);
+                            verifiedView = findViewById(R.id.value1BG);
                             break;
-                        case Helper.THEME_DARK:
-                            labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
-                            valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
+                        case 2:
+                            field = findViewById(R.id.field2);
+                            labelView = findViewById(R.id.label2);
+                            valueView = findViewById(R.id.value2);
+                            verifiedView = findViewById(R.id.value2BG);
                             break;
-                        case Helper.THEME_BLACK:
-                            labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_2));
-                            valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_4));
+                        case 3:
+                            field = findViewById(R.id.field3);
+                            labelView = findViewById(R.id.label3);
+                            valueView = findViewById(R.id.value3);
+                            verifiedView = findViewById(R.id.value3BG);
+                            break;
+                        case 4:
+                            field = findViewById(R.id.field4);
+                            labelView = findViewById(R.id.label4);
+                            valueView = findViewById(R.id.value4);
+                            verifiedView = findViewById(R.id.value4BG);
                             break;
                         default:
-                            labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
-                            valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
+                            field = findViewById(R.id.field1);
+                            labelView = findViewById(R.id.label1);
+                            valueView = findViewById(R.id.value1);
+                            verifiedView = findViewById(R.id.value1BG);
+                            break;
                     }
-                    field.setVisibility(View.VISIBLE);
-                    if( verified) {
-                        verifiedView.setBackgroundResource(R.drawable.verified);
-                    }
+                    if (field != null && labelView != null && valueView != null) {
+                        switch (theme) {
+                            case Helper.THEME_LIGHT:
+                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_2));
+                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_4));
+                                break;
+                            case Helper.THEME_DARK:
+                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
+                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
+                                break;
+                            case Helper.THEME_BLACK:
+                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_2));
+                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_4));
+                                break;
+                            default:
+                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
+                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
+                        }
+                        field.setVisibility(View.VISIBLE);
+                        if (verified) {
+                            verifiedView.setBackgroundResource(R.drawable.verified);
+                        }
 
+                    }
                 }
                 i++;
             }
