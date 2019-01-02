@@ -46,6 +46,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -805,6 +806,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private void manageButtonVisibility(){
         if( relationship == null)
             return;
+        Log.v(Helper.TAG,"relationship.isRequested()= " + relationship.isRequested());
         account_follow.setEnabled(true);
         if( account.getId() != null && account.getId().equals(userId)){
             account_follow.hide();
@@ -816,8 +818,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             account_follow.show();
         }else if( relationship.isRequested()){
             account_follow_request.setVisibility(View.VISIBLE);
-            account_follow.hide();
-            doAction = action.NOTHING;
+            account_follow.setImageResource(R.drawable.ic_hourglass_full);
+            account_follow.show();
+            doAction = action.UNFOLLOW;
         }else if( relationship.isFollowing()){
             account_follow.setImageResource(R.drawable.ic_user_times);
             doAction = action.UNFOLLOW;
