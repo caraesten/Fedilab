@@ -137,9 +137,9 @@ public class Status implements Parcelable{
         visibility = in.readString();
         media_attachments = in.readArrayList(Attachment.class.getClassLoader());
         reblog = in.readParcelable(Status.class.getClassLoader());
+        mentions = in.readArrayList(Mention.class.getClassLoader());
         account = in.readParcelable(Account.class.getClassLoader());
         application = in.readParcelable(Application.class.getClassLoader());
-        mentions = in.readArrayList(Mention.class.getClassLoader());
         tags = in.readArrayList(Tag.class.getClassLoader());
         contentTranslated = in.readString();
         reblogs_count = in.readInt();
@@ -175,9 +175,9 @@ public class Status implements Parcelable{
         dest.writeString(visibility);
         dest.writeList(media_attachments);
         dest.writeParcelable(reblog, flags);
+        dest.writeList(mentions);
         dest.writeParcelable(account, flags);
         dest.writeParcelable(application, flags);
-        dest.writeList(mentions);
         dest.writeList(tags);
         dest.writeString(contentTranslated);
         dest.writeInt(reblogs_count);
