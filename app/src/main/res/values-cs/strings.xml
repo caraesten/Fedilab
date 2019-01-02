@@ -656,16 +656,14 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
         <item>1 den</item>
         <item>1 týden</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">V tomto políčku vyplňte jméno vaší instance.\nPokud jste například vytvořili váš účet na https://mastodon.social\nvyplňte pouze <b>mastodon.social</b>  (bez https://)\n
+Začněte psát první znaky pro návrh.\n\n
+⚠ Login tlačítko bude fungovat pouze v případě, že jméno instance je platné a instance běží!    </string>
+    <string name="showcase_uid">        V tomto poli vyplňte email, který je svázaný s vaším Mastodon účtem.
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
-    </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
-    </string>
+    <string name="showcase_pwd">Jako poslední krok vložte své heslo a klepňete na Login.    </string>
     <string name="more_information">Více informací</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="showcase_2FA">V případě, že používáte 2FA (dvoufaktorovou autentizaci), použijte tento odkaz.\nMůžete jej také použít, pokud nechcete vložit své přihlašovací údaje tady.</string>
     <!-- languages not translated -->
     <string name="languages">Jazyky</string>
     <string name="show_media_only">Pouze média</string>
