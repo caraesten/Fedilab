@@ -407,7 +407,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="show_media">Zobrazit média</string>
     <string name="show_pinned">Zobrazit připnuté</string>
     <string name="filter_no_result">Nebyly nalezeny odpovídající výsledky!</string>
-    <string name="data_backup_toots">Zálohovat toots %1$s</string>
+    <string name="data_backup_toots">Načíst toots pro %1$s</string>
     <string name="data_backup_success">%1$s nové toots byly importovány</string>
     <string-array name="filter_select">
         <item>Ne</item>
