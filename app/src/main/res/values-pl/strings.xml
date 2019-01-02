@@ -126,8 +126,8 @@
         <item>Zablokować tę domenę?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Powiadomienie</item>
+        <item>Cichy</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Usunąć ten wpis?</item>
@@ -520,42 +520,42 @@
     <string name="toast_hide_boost">Podbicia są teraz ukrywane!</string>
     <string name="direct_message">Bezpośrednia wiadomość</string>
     <string name="filters">Filtry</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
+    <string name="action_filters_empty_content">Brak filtrów. Możesz dodać filtr używając przycisku \"+\".</string>
     <string name="filter_keyword">Słowo kluczowe lub fraza</string>
     <string name="context_home">Lokalna oś czasu</string>
     <string name="context_public">Publiczne osi czasu</string>
     <string name="context_notification">Powiadomienia</string>
     <string name="context_conversation">Rozmowy</string>
-    <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-    <string name="context_drop">Drop instead of hide</string>
-    <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
-    <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
+    <string name="filter_keyword_explanations">Zostanie dopasowany, niezależnie od wielkości liter w tekście lub ostrzeżenia o treści toot-a</string>
+    <string name="context_drop">Pomiń zamiast ukrycia</string>
+    <string name="context_drop_explanations">Odfiltrowane toot-y znikną bezpowrotnie, nawet jeśli filtr zostanie zdjęty</string>
+    <string name="context_whole_word_explanations">Jeśli słowo kluczowe zawiera tylko tylko litery i cyfry, będzie stosowany tylko jeśli dopasuje cały wyraz</string>
     <string name="context_whole_word">Cały wyraz</string>
     <string name="filter_context">Filtruj konteksty</string>
-    <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
+    <string name="filter_context_explanations">Jeden lub wiele kontekstów, gdzie stosuje się filtr</string>
     <string name="filter_expire">Wygasaj po</string>
     <string name="add_new_filter">Dodaj nowy filtr</string>
     <string name="action_filter_delete">Usunąć filtr?</string>
     <string name="action_update_filter">Aktualizuj filtr</string>
     <string name="action_filter_create">Utwórz Filtr</string>
     <string name="how_to_follow">Kogo obserwować</string>
-    <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
+    <string name="action_who_to_follow_empty_content">Brak kont na liście w tej chwili!</string>
     <string name="follow_account">Obserwuj</string>
     <string name="select_all">Zaznacz wszystko</string>
     <string name="unselect_all">Odznacz wszystko</string>
-    <string name="follow_trunk">%s is followed!</string>
+    <string name="follow_trunk">Konto %s jest już obrserwowane!</string>
     <string name="create_list_trunk">Tworzenie listy %s</string>
     <string name="add_account_list_trunk">Dodawanie kont do listy</string>
     <string name="account_added_list_trunk">Konta zostały dodane do listy</string>
     <string name="adding_account_list_trunk">Dodawanie kont do listy</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
+    <string name="action_list_add">Nie ma jeszcze utworzonej żadnej listy. Kliknij \"+\" aby dodać nową.</string>
+    <string name="action_remote_instance_add">Nie obserwujesz żadnych zdalnych instancji. Kliknij \"+\" aby dodać nową.</string>
     <string name="about_trunk">Kogo obserwować</string>
     <string name="about_trunk_action">Trunk API</string>
-    <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
-    <string name="retrieve_remote_account">Fetching remote account</string>
-    <string name="expand_image">Automatically expand hidden media</string>
-    <string name="set_display_follow_instance">Display follow instances button</string>
+    <string name="toast_impossible_to_follow">Nie ma możliwości obserwowania kont(a)</string>
+    <string name="retrieve_remote_account">Pobieram zdalne konto</string>
+    <string name="expand_image">Automatycznie pokaż ukryte treści multimedialne</string>
+    <string name="set_display_follow_instance">Pokazuj przycisk obserwacji instancji</string>
     <string name="channel_notif_follow">Nowy śledzący</string>
     <string name="channel_notif_boost">Nowe Podbicie</string>
     <string name="channel_notif_fav">Nowe ulubione</string>
@@ -567,7 +567,7 @@
     <string name="select_sound">Wybierz Dźwięk</string>
     <string name="set_enable_time_slot">Włącz przedział czasowy</string>
     <string name="how_to_videos">Filmy instruktażowe</string>
-    <string name="retrieve_remote_conversation">Fetching remote thread!</string>
+    <string name="retrieve_remote_conversation">Pobieram zdalny wątek!</string>
     <string name="no_blocked_domain">Brak zablokowanych domen!</string>
     <string name="unblock_domain_confirm">Odblokuj domenę</string>
     <string name="unblock_domain_confirm_message">Czy na pewno chcesz odblokować %s?</string>
@@ -576,21 +576,21 @@
     <string name="block_domain">Zablokuj domenę</string>
     <string name="toast_block_domain">Domena jest zablokowana</string>
     <string name="toast_unblock_domain">Domena nie jest już zablokowana!</string>
-    <string name="retrieve_remote_status">Fetching remote status</string>
+    <string name="retrieve_remote_status">Pobieram zdalny status</string>
     <string name="comment">Skomentuj</string>
     <string name="peertube_instance">Instancja Peertube</string>
-    <string name="set_display_direct">Display private messages timeline</string>
-    <string name="set_keep_background_process">Keep background process when app is closed</string>
-    <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
+    <string name="set_display_direct">Pokaż oś czasu prywatnych wiadomości</string>
+    <string name="set_keep_background_process">Utrzymuj proces w tle gdy aplikacja jest zamknięta</string>
+    <string name="no_comments">Bądź pierwszą osobą, która doda komentarz przyciskiem po prawej na górze!</string>
     <string name="number_view_video">%s wyświetleń</string>
     <string name="duration_video">Długość: %s</string>
     <string name="add_remote_instance">Dodaj instancję</string>
     <string name="comment_no_allowed_peertube">Komentarze nie są włączone na tym filmie!</string>
     <string name="pickup_resolution">Wybierz rozdzielczość</string>
-    <string name="peertube_favorites">Peertube favourites</string>
+    <string name="peertube_favorites">Ulubione peertube</string>
     <string name="bookmark_add_peertube">Dodano film do zakładek!</string>
-    <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-    <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+    <string name="bookmark_remove_peertube">Film został usunięty z zakładek!</string>
+    <string name="bookmark_peertube_empty">Nie ma filmów peertube w twoich ulubionych!</string>
     <string name="channel">Kanał</string>
     <string name="no_peertube_channels">Brak kanałów Peertube</string>
     <string name="no_peertube_instances">Brak instancji Peertube</string>
@@ -602,18 +602,18 @@
     <string name="information">Informacja</string>
     <string name="set_display_card">Wyświetlaj podgląd we wszystkich wpisach</string>
     <string name="thanks_text_ux">Nowy projektant UX/UI</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
+    <string name="set_old_direct_timeline">Używaj bezpośredniej osi czasu sprzed Mastodona 2.6</string>
     <string name="set_display_video_preview">Wyświetl podglądy filmów</string>
-    <string name="thanks_text_support">Gitlab Support</string>
+    <string name="thanks_text_support">Wsparcie Gitlab</string>
     <string name="action_bug_report">Zgłoszenie błędu</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
+    <string name="no_mail_client">Brak zainstalowanych aplikacji pocztowych.</string>
     <string name="bug_report_mail">Wyslij raport o błędzie</string>
     <string name="account_id_clipbloard">Id konta został skopiowany do schowka!</string>
     <string name="settings_title_battery">Optymalizacja baterii</string>
     <string name="set_change_locale">Zmień język</string>
     <string name="default_language">Domyślny język</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
+    <string name="truncate_long_toots">Przycinaj długie tooty</string>
+    <string name="set_truncate_toot">Przycinaj tooty powyżej \'x\' linii. Zero oznacza wyłączenie.</string>
     <string name="display_toot_truncate">Wyświetl więcej</string>
     <string name="hide_toot_truncate">Wyświetl mniej</string>
     <string name="manage_tags">Zarządzaj tagami</string>
@@ -621,31 +621,31 @@
     <string name="tags_stored">Tag został zapisany!</string>
     <string name="tags_renamed">Tag został zmieniony!</string>
     <string name="tags_deleted">Tag został usunięty!</string>
-    <string name="set_display_art">Display Art timeline</string>
+    <string name="set_display_art">Pokazuj oś czasu sztuki</string>
     <string name="schedule_boost">Zaplanuj podbicie</string>
     <string name="boost_scheduled">Podbicie jest zaplanowane!</string>
     <string name="no_scheduled_boosts">Brak zaplanowanych podbić!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Otwórz menu toota i wybierz <b>Zaplanuj podbicie</b>.]]></string>
+    <string name="art_menu">Oś sztuki</string>
     <string name="open_menu">Otwórz menu</string>
     <string name="app_logo">Logo aplikacji</string>
     <string name="profile_picture">Zdjęcie profilowe</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
+    <string name="profile_banner">Baner profilowy</string>
+    <string name="contact_instance_admin">Kontakt z administratorem instancji</string>
     <string name="add_new">Dodaj nowy</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
+    <string name="mastohost_logo">Logo MastoHost</string>
+    <string name="emoji_picker">Wybieracz emoji</string>
     <string name="refresh">Odśwież</string>
     <string name="expand_conversation">Rozszerz rozmowę</string>
     <string name="remove_account">Usuń konto</string>
     <string name="delete_domain">Usuń zablokowaną domenę</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
+    <string name="custom_emoji_picker">Własny wybieracz emoji</string>
     <string name="play_video">Odtwórz film</string>
     <string name="new_toot">Nowy wpis</string>
     <string name="card_view_image">Obraz karty</string>
     <string name="hide_media">Ukryj media</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Obraz przy dodawaniu opisu</string>
     <string-array name="filter_expire">
         <item>Nigdy</item>
         <item>30 minut</item>
@@ -655,32 +655,29 @@
         <item>1 dzień</item>
         <item>1 tydzień</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
-    </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
-    </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
-    </string>
+    <string name="showcase_instance">        W tym polu, musisz wpisać nazwę hosta instancji.\nNa przykład, jeżeli konto było zakładane na https://mastodon.social\npo prostu wpisz <b>mastodon.social</b> (bez https://)\n
+        Po wpisaniu kilku liter pojawią sie sugestie.\n\n
+        ⚠ Przycisk logowania zadziała tylko jeśli wpisana nazwa jest poprawna i a sama instancja działa!</string>
+    <string name="showcase_uid">Wpisz adres email przypisany do twojego konta Mastodon.    </string>
+    <string name="showcase_pwd">W ostatnim kroku wpisz hasło i kliknij zaloguj.    </string>
     <string name="more_information">Więcej informacji</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="showcase_2FA">Jeśli używasz uwierzytelniania dwu-etapowego, musisz skorzystać z tego linka.\nMożesz też go użyć jeśli nie chcesz wpisywać twoich danych tutaj.</string>
     <!-- languages not translated -->
     <string name="languages">Języki</string>
     <string name="show_media_only">Tylko media</string>
     <string name="show_media_nsfw">Pokaż NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
+    <string name="crowdin_translations">Tłumaczenia Crowdin</string>
+    <string name="crowdin_manager">Menedżer Crowdin</string>
+    <string name="translation_app">Tłumaczenie aplikacji</string>
     <string name="about_crowdin">O serwisie Crowdin</string>
     <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
+    <string name="pixelfed_instance">Instancja pixelfed</string>
+    <string name="mastodon_instance">Instancja Mastodon</string>
+    <string name="no_pixelfed_instance">Brak instancji Pixelfed</string>
+    <string name="any_tags">Którekolwiek z wymienionych</string>
+    <string name="all_tags">Wszystkie z wymienionych</string>
+    <string name="none_tags">Zadne z wymienionych</string>
+    <string name="some_words_any">Dowolne z tych słów (oddzielone spacją)</string>
     <string name="some_words_all">All these words (space-separated)</string>
     <string name="some_words_none">None of these words (space-separated)</string>
     <string name="change_tag_column">Change column name</string>
