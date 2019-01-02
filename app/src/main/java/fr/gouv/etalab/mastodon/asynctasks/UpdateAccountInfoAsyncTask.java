@@ -28,9 +28,10 @@ import java.net.URLDecoder;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -42,16 +43,30 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     private String token;
     private String instance;
     private WeakReference<Context> contextReference;
+    private SOCIAL social;
 
-    public UpdateAccountInfoAsyncTask(Context context, String token, String instance){
+    public enum SOCIAL{
+        MASTODON,
+        PEERTUBE
+    }
+    public UpdateAccountInfoAsyncTask(Context context, String token, String instance, SOCIAL social){
         this.contextReference = new WeakReference<>(context);
         this.token = token;
         this.instance = instance;
+        this.social = social;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        Account account = new API(this.contextReference.get(), instance, null).verifyCredentials();
+        Account account = null;
+
+        if( social == SOCIAL.MASTODON)
+            account = new API(this.contextReference.get(), instance, null).verifyCredentials();
+        else if( social == SOCIAL.PEERTUBE)
+            account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
+
+        if( account == null)
+            return null;
         try {
             //At the state the instance can be encoded
             instance = URLDecoder.decode(instance, "utf-8");

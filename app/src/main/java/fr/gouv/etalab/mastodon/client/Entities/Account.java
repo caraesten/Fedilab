@@ -104,6 +104,7 @@ public class Account implements Parcelable {
     private List<Emojis> emojis;
     private String host;
     private boolean isBot;
+    private String social;
 
     protected Account(Parcel in) {
         id = in.readString();
@@ -268,6 +269,14 @@ public class Account implements Parcelable {
 
     public void setStored_displayname(String stored_displayname) {
         this.stored_displayname = stored_displayname;
+    }
+
+    public String getSocial() {
+        return social;
+    }
+
+    public void setSocial(String social) {
+        this.social = social;
     }
 
 

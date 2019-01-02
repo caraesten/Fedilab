@@ -69,6 +69,7 @@ public class AccountDAO {
         values.put(Sqlite.COL_CREATED_AT, Helper.dateToString(account.getCreated_at()));
         values.put(Sqlite.COL_INSTANCE, account.getInstance());
         values.put(Sqlite.COL_EMOJIS, Helper.emojisToStringStorage(account.getEmojis()));
+        values.put(Sqlite.COL_SOCIAL, account.getSocial());
         if( account.getToken() != null)
             values.put(Sqlite.COL_OAUTHTOKEN, account.getToken());
 
@@ -243,7 +244,7 @@ public class AccountDAO {
         account.setInstance(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
         account.setEmojis(Helper.restoreEmojisFromString(c.getString(c.getColumnIndex(Sqlite.COL_EMOJIS))));
         account.setToken(c.getString(c.getColumnIndex(Sqlite.COL_OAUTHTOKEN)));
-
+        account.setSocial(c.getString(c.getColumnIndex(Sqlite.COL_SOCIAL))!=null?c.getString(c.getColumnIndex(Sqlite.COL_SOCIAL)):"MASTODON");
         //Close the cursor
         c.close();
 
@@ -282,6 +283,7 @@ public class AccountDAO {
             account.setCreated_at(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_CREATED_AT))));
             account.setInstance(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
             account.setToken(c.getString(c.getColumnIndex(Sqlite.COL_OAUTHTOKEN)));
+            account.setSocial(c.getString(c.getColumnIndex(Sqlite.COL_SOCIAL))!=null?c.getString(c.getColumnIndex(Sqlite.COL_SOCIAL)):"MASTODON");
             accounts.add(account);
         }
         //Close the cursor

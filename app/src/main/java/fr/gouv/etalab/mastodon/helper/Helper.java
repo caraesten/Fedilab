@@ -193,7 +193,10 @@ public class Helper {
     public static  final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Mastalab";
     public static final String OAUTH_SCOPES = "read write follow";
+    public static final String OAUTH_SCOPES_PEERTUBE = "user";
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
+
+
     public static final String PREF_KEY_ID = "userID";
     public static final String PREF_INSTANCE = "instance";
     public static final String REDIRECT_CONTENT = "urn:ietf:wg:oauth:2.0:oob";

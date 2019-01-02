@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 22;
+    public static final int DB_VERSION = 23;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -82,7 +82,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_INSTANCE = "INSTANCE";
     static final String COL_OAUTHTOKEN = "OAUTH_TOKEN";
     static final String COL_EMOJIS = "EMOJIS";
-
+    static final String COL_SOCIAL = "SOCIAL";
 
     private static final String CREATE_TABLE_USER_ACCOUNT = "CREATE TABLE " + TABLE_USER_ACCOUNT + " ("
             + COL_USER_ID + " TEXT PRIMARY KEY, " + COL_USERNAME + " TEXT NOT NULL, " + COL_ACCT + " TEXT NOT NULL, "
@@ -92,6 +92,7 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_AVATAR + " TEXT NOT NULL, "+ COL_AVATAR_STATIC + " TEXT NOT NULL, "
             + COL_HEADER + " TEXT NOT NULL, "+ COL_HEADER_STATIC + " TEXT NOT NULL, "
             + COL_EMOJIS + " TEXT, "
+            + COL_SOCIAL + " TEXT, "
             + COL_INSTANCE + " TEXT NOT NULL, " + COL_OAUTHTOKEN + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL)";
 
 
@@ -306,6 +307,8 @@ public class Sqlite extends SQLiteOpenHelper {
                 if( oldVersion > 6) {
                     db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_NAME + " TEXT");
                 }
+            case 22:
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_SOCIAL + " TEXT");
             default:
                 break;
         }

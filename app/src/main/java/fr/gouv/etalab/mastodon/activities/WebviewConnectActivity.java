@@ -63,6 +63,7 @@ public class WebviewConnectActivity extends BaseActivity {
     private AlertDialog alert;
     private String clientId, clientSecret;
     private String instance;
+    private UpdateAccountInfoAsyncTask.SOCIAL social;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,8 +85,10 @@ public class WebviewConnectActivity extends BaseActivity {
 
         setContentView(R.layout.activity_webview_connect);
         Bundle b = getIntent().getExtras();
-        if(b != null)
+        if(b != null) {
             instance = b.getString("instance");
+            social = (UpdateAccountInfoAsyncTask.SOCIAL) b.getSerializable("social");
+        }
         if( instance == null)
             finish();
         clientId = sharedpreferences.getString(Helper.CLIENT_ID, null);
@@ -167,7 +170,7 @@ public class WebviewConnectActivity extends BaseActivity {
                                     editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
                                     editor.apply();
                                     //Update the account with the token;
-                                    new UpdateAccountInfoAsyncTask(WebviewConnectActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    new UpdateAccountInfoAsyncTask(WebviewConnectActivity.this, token, instance, social).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 } catch (JSONException ignored) {}
                             } catch (Exception ignored) {}
                         }}).start();

@@ -77,6 +77,11 @@
                         android:src="@drawable/ic_info_login"
                         android:layout_width="30dp"
                         android:layout_height="30dp" />
+                    <CheckBox
+                        android:id="@+id/peertube_instance"
+                        android:layout_width="wrap_content"
+                        android:text="@string/peertube_instance"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </android.support.design.widget.TextInputLayout>
             <LinearLayout
