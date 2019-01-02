@@ -133,8 +133,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 flag_loading = true;
                 swiped = true;
                 MainActivity.countNewNotifications = 0;
+                String sinceId = null;
+                if( notifications != null && notifications.size() > 0 )
+                    sinceId = notifications.get(0).getId();
                 if( context != null)
-                    asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveMissingNotificationsAsyncTask(context, sinceId, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -317,7 +320,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
     @Override
     public void onRetrieveMissingNotifications(List<Notification> notifications) {
-
+        flag_loading = false;
+        swipeRefreshLayout.setRefreshing(false);
         if( notifications != null && notifications.size() > 0) {
             for (int i = notifications.size()-1 ; i >= 0 ; i--) {
                 if (this.notifications.size() == 0 ||
