@@ -250,10 +250,11 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
         }
         List<String> bookmarks = new StatusCacheDAO(contextReference.get(), db).getAllStatusId(StatusCacheDAO.BOOKMARK_CACHE);
-        if( apiResponse != null && apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0){
+        if( apiResponse != null && apiResponse.getStatuses() != null && bookmarks != null && apiResponse.getStatuses().size() > 0){
             List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = apiResponse.getStatuses();
-            for(fr.gouv.etalab.mastodon.client.Entities.Status status: statuses)
+            for(fr.gouv.etalab.mastodon.client.Entities.Status status: statuses) {
                 status.setBookmarked(bookmarks.contains(status.getId()));
+            }
         }
         return null;
     }
