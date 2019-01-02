@@ -508,7 +508,7 @@ public abstract class BaseMainActivity extends BaseActivity
                             j++;
                         }
                         if (remoteInstance.getType() == null || remoteInstance.getType().equals("MISSKEY")) {
-                            MenuItem itemPlaceHolder = submPixelfed.findItem(R.id.misskey_instance);
+                            MenuItem itemPlaceHolder = submMisskey.findItem(R.id.misskey_instance);
                             if( itemPlaceHolder != null)
                                 itemPlaceHolder.setVisible(false);
                             MenuItem item = submMisskey.add(0, l, Menu.NONE, remoteInstance.getHost());
