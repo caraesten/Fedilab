@@ -630,22 +630,22 @@
     <string name="open_menu">Otwórz menu</string>
     <string name="app_logo">Logo aplikacji</string>
     <string name="profile_picture">Zdjęcie profilowe</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
+    <string name="profile_banner">Baner profilowy</string>
+    <string name="contact_instance_admin">Kontakt z administratorem instancji</string>
     <string name="add_new">Dodaj nowy</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
+    <string name="mastohost_logo">Logo MastoHost</string>
+    <string name="emoji_picker">Wybieracz emoji</string>
     <string name="refresh">Odśwież</string>
     <string name="expand_conversation">Rozszerz rozmowę</string>
     <string name="remove_account">Usuń konto</string>
     <string name="delete_domain">Usuń zablokowaną domenę</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
+    <string name="custom_emoji_picker">Własny wybieracz emoji</string>
     <string name="play_video">Odtwórz film</string>
     <string name="new_toot">Nowy wpis</string>
     <string name="card_view_image">Obraz karty</string>
     <string name="hide_media">Ukryj media</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Obraz przy dodawaniu opisu</string>
     <string-array name="filter_expire">
         <item>Nigdy</item>
         <item>30 minut</item>
