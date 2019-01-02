@@ -231,10 +231,10 @@
         <item quantity="other">and %d dalších upozornění</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
-        <item quantity="few">and %d other toots to discover</item>
-        <item quantity="many">and %d other toots to discover</item>
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="one">a další toot k zobrazení</item>
+        <item quantity="few">a %d další toots k zobrazení</item>
+        <item quantity="many">a %d dalších toots k zobrazení</item>
+        <item quantity="other">a %d dalších toots k zobrazení</item>
     </plurals>
     <string name="delete_notification_ask">Smazat oznámení?</string>
     <string name="delete_notification_ask_all">Smazat všechna oznámení?</string>
@@ -388,13 +388,13 @@
     <string name="settings_popup_message">Prosím potvrďte push oznámení, která chcete dostávat.
 Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     </string>
-    <string name="settings_popup_timeline">For unread toots in home time-line?</string>
+    <string name="settings_popup_timeline">Pro nepřečtené toots na domací časové ose?</string>
     <string name="settings_popup_notification">Pro nepřečtená upozornění?</string>
     <!-- CACHE -->
     <string name="cache_title">Vyprázdnit cache</string>
-    <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+    <string name="cache_message">V cache je %1$s dat.\n\nChcete je odstranit?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="toast_cache_clear">Cache byla vyprázdněna! %1$s bylo uvolněno</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Synchronizovat</string>
     <string name="action_filter">Filtrovat</string>
@@ -408,7 +408,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="show_pinned">Zobrazit připnuté</string>
     <string name="filter_no_result">Nebyly nalezeny odpovídající výsledky!</string>
     <string name="data_backup_toots">Zálohovat toots %1$s</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="data_backup_success">%1$s nové toots byly importovány</string>
     <string-array name="filter_select">
         <item>Ne</item>
         <item>Pouze</item>
