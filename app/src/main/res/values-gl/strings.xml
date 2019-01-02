@@ -684,6 +684,6 @@
     <string name="change_tag_column">Cambiar o nome da columna</string>
     <string name="no_misskey_instance">Sen instancias Misskey</string>
     <string name="misskey_instance">Instancia Misskey</string>
-    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
+    <string name="toast_no_apps">Non ten ningunha app no dispositivo para este tipo de ligazón.</string>
     <!-- end languages -->
 </resources>
