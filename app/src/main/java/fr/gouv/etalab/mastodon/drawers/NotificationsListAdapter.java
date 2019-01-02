@@ -34,7 +34,6 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -1095,9 +1094,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     @Override
     public void onRetrieveEmoji(Notification notification) {
-        Log.v(Helper.TAG,"notification: " + notification);
         if( notification != null && notification.getStatus() != null) {
-            Log.v(Helper.TAG,"getContent: " + notification.getStatus().getContent());
             notification.getStatus().setEmojiFound(true);
             notifyNotificationChanged(notification);
         }

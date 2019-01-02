@@ -211,8 +211,6 @@
                         android:gravity="center"
                         android:textColor="?attr/color_in_account_header"
                         android:layout_width="match_parent"
-                        android:maxLines="4"
-                        android:autoLink="web"
                         android:layout_height="wrap_content" />
 
                     <!-- Fields container -->

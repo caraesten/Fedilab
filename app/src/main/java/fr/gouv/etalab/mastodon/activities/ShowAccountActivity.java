@@ -46,7 +46,6 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -806,7 +805,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private void manageButtonVisibility(){
         if( relationship == null)
             return;
-        Log.v(Helper.TAG,"relationship.isRequested()= " + relationship.isRequested());
         account_follow.setEnabled(true);
         if( account.getId() != null && account.getId().equals(userId)){
             account_follow.hide();

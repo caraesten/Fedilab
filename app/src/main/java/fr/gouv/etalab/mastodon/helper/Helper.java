@@ -1819,24 +1819,26 @@ public class Helper {
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
             final String url = spannableString.toString().substring(matchStart, matchEnd);
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
-                spannableString.setSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(View textView) {
-                        Helper.openBrowser(context, url);
-                    }
-                    @Override
-                    public void updateDrawState(TextPaint ds) {
-                        super.updateDrawState(ds);
-                        ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                    }
-                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            if( url.startsWith("http"))
+                if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+                    spannableString.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View textView) {
+                            Helper.openBrowser(context, url);
+                        }
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setUnderlineText(false);
+                            if (theme == THEME_DARK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                            else if (theme == THEME_BLACK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                            else if (theme == THEME_LIGHT)
+                                ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                        }
+                    }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         matcher = hashtagPattern.matcher(spannableString);
         while (matcher.find()){
@@ -1897,7 +1899,76 @@ public class Helper {
                 }
             }
         }
+        matcher = android.util.Patterns.EMAIL_ADDRESS.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(0);
+            int matchEnd = matcher.end();
+            final String email = spannableString.toString().substring(matchStart, matchEnd);
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart) {
+                urls = spannableString.getSpans(matchStart, matchEnd, URLSpan.class);
+                for(URLSpan span : urls)
+                    spannableString.removeSpan(span);
+                spannableString.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        try {
+                            final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                            emailIntent.setType("plain/text");
+                            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{email});
+                            context.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.send_email)));
+                        }catch (Exception e){
+                            Toasty.error(context, context.getString(R.string.toast_no_apps), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
+                        if (theme == THEME_DARK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                        else if (theme == THEME_BLACK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                        else if (theme == THEME_LIGHT)
+                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                    }
+                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
 
+        }
+        matcher = Helper.xmppPattern.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(0);
+            int matchEnd = matcher.end();
+            final String url = spannableString.toString().substring(matchStart, matchEnd);
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart) {
+                urls = spannableString.getSpans(matchStart, matchEnd, URLSpan.class);
+                for(URLSpan span : urls)
+                    spannableString.removeSpan(span);
+                spannableString.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            context.startActivity(intent);
+                        }catch (Exception e){
+                            Toasty.error(context, context.getString(R.string.toast_no_apps), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
+                        if (theme == THEME_DARK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                        else if (theme == THEME_BLACK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                        else if (theme == THEME_LIGHT)
+                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                    }
+                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+
+        }
         return spannableString;
     }
 
