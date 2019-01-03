@@ -51,6 +51,19 @@
             </menu>
         </item>
         <item
+            android:title="@string/communication_menu_title"
+            android:id="@+id/nav_peertube_comm"
+            >
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_upload"
+                        android:icon="@drawable/ic_cloud_upload"
+                        android:title="@string/upload_video" />
+                </group>
+            </menu>
+        </item>
+        <item
             android:title="@string/neutral_menu_title"
             android:id="@+id/nav_main_opt">
             <menu>

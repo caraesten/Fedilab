@@ -295,74 +295,617 @@ public abstract class BaseMainActivity extends BaseActivity
         tabLayout = findViewById(R.id.tabLayout);
 
         viewPager = findViewById(R.id.viewpager);
-        TabLayout.Tab tabHome = tabLayout.newTab();
-        TabLayout.Tab tabNotif = tabLayout.newTab();
-        TabLayout.Tab tabDirect = tabLayout.newTab();
-        TabLayout.Tab tabLocal = tabLayout.newTab();
-        TabLayout.Tab tabPublic = tabLayout.newTab();
-        TabLayout.Tab tabArt = tabLayout.newTab();
-
-        tabHome.setCustomView(R.layout.tab_badge);
-        tabNotif.setCustomView(R.layout.tab_badge);
-        tabDirect.setCustomView(R.layout.tab_badge);
-        tabLocal.setCustomView(R.layout.tab_badge);
-        tabPublic.setCustomView(R.layout.tab_badge);
-        tabArt.setCustomView(R.layout.tab_badge);
-
-        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconHome = tabHome.getCustomView().findViewById(R.id.tab_icon);
-
-        iconHome.setImageResource(R.drawable.ic_home);
-
-        if( theme == THEME_BLACK)
-            iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-        else
-            iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
 
 
-        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconNotif = tabNotif.getCustomView().findViewById(R.id.tab_icon);
-        iconNotif.setImageResource(R.drawable.ic_notifications);
+        final NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        Helper.hideMenuItem(navigationView.getMenu());
 
 
-        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconDirect = tabDirect.getCustomView().findViewById(R.id.tab_icon);
-        iconDirect.setImageResource(R.drawable.ic_direct_messages);
+        toot = findViewById(R.id.toot);
+        delete_all = findViewById(R.id.delete_all);
+        add_new = findViewById(R.id.add_new);
 
-        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconLocal = tabLocal.getCustomView().findViewById(R.id.tab_icon);
-        iconLocal.setImageResource(R.drawable.ic_people);
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            TabLayout.Tab tabHome = tabLayout.newTab();
+            TabLayout.Tab tabNotif = tabLayout.newTab();
+            TabLayout.Tab tabDirect = tabLayout.newTab();
+            TabLayout.Tab tabLocal = tabLayout.newTab();
+            TabLayout.Tab tabPublic = tabLayout.newTab();
+            TabLayout.Tab tabArt = tabLayout.newTab();
 
-        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconGlobal = tabPublic.getCustomView().findViewById(R.id.tab_icon);
-        iconGlobal.setImageResource(R.drawable.ic_public);
+            tabHome.setCustomView(R.layout.tab_badge);
+            tabNotif.setCustomView(R.layout.tab_badge);
+            tabDirect.setCustomView(R.layout.tab_badge);
+            tabLocal.setCustomView(R.layout.tab_badge);
+            tabPublic.setCustomView(R.layout.tab_badge);
+            tabArt.setCustomView(R.layout.tab_badge);
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconHome = tabHome.getCustomView().findViewById(R.id.tab_icon);
+
+            iconHome.setImageResource(R.drawable.ic_home);
+
+            if (theme == THEME_BLACK)
+                iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+            else
+                iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
 
 
-        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconArt = tabArt.getCustomView().findViewById(R.id.tab_icon);
-        iconArt.setImageResource(R.drawable.ic_color_lens);
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconNotif = tabNotif.getCustomView().findViewById(R.id.tab_icon);
+            iconNotif.setImageResource(R.drawable.ic_notifications);
 
-        iconHome.setContentDescription(getString(R.string.home_menu));
-        iconNotif.setContentDescription(getString(R.string.notifications));
-        iconDirect.setContentDescription(getString(R.string.direct_message));
-        iconLocal.setContentDescription(getString(R.string.local_menu));
-        iconGlobal.setContentDescription(getString(R.string.global_menu));
-        iconArt.setContentDescription(getString(R.string.art_menu));
 
-        if( theme == THEME_LIGHT){
-            iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-            iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-            iconDirect.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-            iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-            iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-            iconArt.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-        }else {
-            iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-            iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-            iconDirect.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-            iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-            iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-            iconArt.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconDirect = tabDirect.getCustomView().findViewById(R.id.tab_icon);
+            iconDirect.setImageResource(R.drawable.ic_direct_messages);
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconLocal = tabLocal.getCustomView().findViewById(R.id.tab_icon);
+            iconLocal.setImageResource(R.drawable.ic_people);
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconGlobal = tabPublic.getCustomView().findViewById(R.id.tab_icon);
+            iconGlobal.setImageResource(R.drawable.ic_public);
+
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconArt = tabArt.getCustomView().findViewById(R.id.tab_icon);
+            iconArt.setImageResource(R.drawable.ic_color_lens);
+
+            iconHome.setContentDescription(getString(R.string.home_menu));
+            iconNotif.setContentDescription(getString(R.string.notifications));
+            iconDirect.setContentDescription(getString(R.string.direct_message));
+            iconLocal.setContentDescription(getString(R.string.local_menu));
+            iconGlobal.setContentDescription(getString(R.string.global_menu));
+            iconArt.setContentDescription(getString(R.string.art_menu));
+
+            if (theme == THEME_LIGHT) {
+                iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconDirect.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconArt.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+            } else {
+                iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconDirect.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconArt.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+            }
+
+
+
+            tabLayout.addTab(tabHome);
+            tabLayout.addTab(tabNotif);
+            tabPosition.put("home",0);
+            typePosition.put(0, RetrieveFeedsAsyncTask.Type.HOME);
+            tabPosition.put("notifications",1);
+            typePosition.put(1, RetrieveFeedsAsyncTask.Type.NOTIFICATION);
+            int i = 2;
+            if( display_direct) {
+                tabLayout.addTab(tabDirect);
+                tabPosition.put("direct",i);
+
+                userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+
+                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+                if (instanceVersion != null) {
+                    Version currentVersion = new Version(instanceVersion);
+                    Version minVersion = new Version("2.6");
+                    if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                        typePosition.put(i, RetrieveFeedsAsyncTask.Type.CONVERSATION);
+                    } else {
+                        typePosition.put(i, RetrieveFeedsAsyncTask.Type.DIRECT);
+                    }
+                }else{
+                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.DIRECT);
+                }
+                i++;
+            }
+            if( display_local) {
+                tabLayout.addTab(tabLocal);
+                tabPosition.put("local", i);
+                typePosition.put(i, RetrieveFeedsAsyncTask.Type.LOCAL);
+                i++;
+            }
+            if( display_global) {
+                tabLayout.addTab(tabPublic);
+                tabPosition.put("global", i);
+                typePosition.put(i, RetrieveFeedsAsyncTask.Type.PUBLIC);
+                i++;
+            }
+            if( display_art) {
+                tabLayout.addTab(tabArt);
+                tabPosition.put("art", i);
+                typePosition.put(i, RetrieveFeedsAsyncTask.Type.ART);
+            }
+
+            if( (getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE)
+                tabLayout.setTabMode(TabLayout.MODE_FIXED);
+            else if( i > 3 && !Helper.isTablet(getApplicationContext())){
+                tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+            }else{
+                tabLayout.setTabMode(TabLayout.MODE_FIXED);
+            }
+            //Display filter for notification when long pressing the tab
+            final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+            tabStrip.getChildAt(1).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    //Only shown if the tab has focus
+                    if( notificationsFragment != null && notificationsFragment.getUserVisibleHint()){
+                        PopupMenu popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(1));
+                        popup.getMenuInflater()
+                                .inflate(R.menu.option_filter_notifications, popup.getMenu());
+                        Menu menu = popup.getMenu();
+                        final MenuItem itemFavourite = menu.findItem(R.id.action_favorite);
+                        final MenuItem itemFollow = menu.findItem(R.id.action_follow);
+                        final MenuItem itemMention = menu.findItem(R.id.action_mention);
+                        final MenuItem itemBoost = menu.findItem(R.id.action_boost);
+                        notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
+                        notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
+                        notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
+                        notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
+                        itemFavourite.setChecked(notif_add);
+                        itemFollow.setChecked(notif_follow);
+                        itemMention.setChecked(notif_mention);
+                        itemBoost.setChecked(notif_share);
+                        popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                            @Override
+                            public void onDismiss(PopupMenu menu) {
+                                if( notificationsFragment != null)
+                                    notificationsFragment.refreshAll();
+                            }
+                        });
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            public boolean onMenuItemClick(MenuItem item) {
+                                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                                item.setActionView(new View(getApplicationContext()));
+                                item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                                    @Override
+                                    public boolean onMenuItemActionExpand(MenuItem item) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                                        return false;
+                                    }
+                                });
+                                switch (item.getItemId()) {
+                                    case R.id.action_favorite:
+                                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                                        notif_add = !notif_add;
+                                        editor.putBoolean(Helper.SET_NOTIF_ADD_FILTER, notif_add);
+                                        itemFavourite.setChecked(notif_add);
+                                        editor.apply();
+                                        break;
+                                    case R.id.action_follow:
+                                        editor = sharedpreferences.edit();
+                                        notif_follow = !notif_follow;
+                                        editor.putBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, notif_follow);
+                                        itemFollow.setChecked(notif_follow);
+                                        editor.apply();
+                                        break;
+                                    case R.id.action_mention:
+                                        editor = sharedpreferences.edit();
+                                        notif_mention = !notif_mention;
+                                        editor.putBoolean(Helper.SET_NOTIF_MENTION_FILTER, notif_mention);
+                                        itemMention.setChecked(notif_mention);
+                                        editor.apply();
+                                        break;
+                                    case R.id.action_boost:
+                                        editor = sharedpreferences.edit();
+                                        notif_share = !notif_share;
+                                        editor.putBoolean(Helper.SET_NOTIF_SHARE_FILTER, notif_share);
+                                        itemBoost.setChecked(notif_share);
+                                        editor.apply();
+                                        break;
+                                }
+                                return false;
+                            }
+                        });
+                        popup.show();
+                    }
+                    return true;
+                }
+            });
+
+
+            tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return manageFilters(tabStrip, sharedpreferences);
+                }
+            });
+
+            countPage = 2;
+            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true))
+                countPage++;
+            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true))
+                countPage++;
+            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true))
+                countPage++;
+            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true))
+                countPage++;
+
+            if( tabPosition.containsKey("global"))
+                tabStrip.getChildAt(tabPosition.get("global")).setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        return manageFilters(tabStrip, sharedpreferences);
+                    }
+                });
+            if( tabPosition.containsKey("local"))
+                tabStrip.getChildAt(tabPosition.get("local")).setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        return manageFilters(tabStrip, sharedpreferences);
+                    }
+                });
+            if( tabPosition.containsKey("art"))
+                tabStrip.getChildAt(tabPosition.get("art")).setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        return manageFilters(tabStrip, sharedpreferences);
+                    }
+                });
+
+            viewPager.setOffscreenPageLimit(countPage);
+            main_app_container = findViewById(R.id.main_app_container);
+            adapter = new PagerAdapter
+                    (getSupportFragmentManager(), tabLayout.getTabCount());
+            viewPager.setAdapter(adapter);
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                    if (stackBack.empty())
+                        stackBack.push(0);
+                    if (stackBack.contains(tab.getPosition())) {
+                        stackBack.remove(stackBack.indexOf(tab.getPosition()));
+                        stackBack.push(tab.getPosition());
+                    } else {
+                        stackBack.push(tab.getPosition());
+                    }
+                    main_app_container.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.VISIBLE);
+                    delete_instance.setVisibility(View.GONE);
+                    Helper.switchLayout(BaseMainActivity.this);
+                    if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))) {
+                        toot.hide();
+                        federatedTimelines.hide();
+                    }else {
+                        toot.show();
+                        if( !displayFollowInstance)
+                            federatedTimelines.hide();
+                        else
+                            federatedTimelines.show();
+                    }
+                    DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    if( tab.getCustomView() != null) {
+                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                        if( icon != null)
+                            if( theme == THEME_BLACK)
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                            else
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+
+                    }
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                    if( tab.getCustomView() != null) {
+                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                        if( icon != null)
+                            if( theme == THEME_LIGHT)
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                            else
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+                    if( viewPager.getVisibility() == View.GONE){
+                        viewPager.setVisibility(View.VISIBLE);
+                        delete_instance.setVisibility(View.GONE);
+                        Helper.switchLayout(BaseMainActivity.this);
+                        main_app_container.setVisibility(View.GONE);
+                        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                        drawer.closeDrawer(GravityCompat.START);
+                    }
+                    if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))) {
+                        toot.hide();
+                        federatedTimelines.hide();
+                    }else {
+                        toot.show();
+                        if( !displayFollowInstance)
+                            federatedTimelines.hide();
+                        else
+                            federatedTimelines.show();
+                    }
+
+                    if( viewPager.getAdapter() != null) {
+                        Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
+
+                        DisplayStatusFragment displayStatusFragment;
+                        if (tab.getPosition() == 0) {
+                            displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            countNewStatus = 0;
+                            updateHomeCounter();
+                            displayStatusFragment.scrollToTop();
+                            displayStatusFragment.updateLastReadToot();
+                        } else if( tab.getPosition() == 1) {
+                            DisplayNotificationsFragment notificationsFragment = ((DisplayNotificationsFragment) fragment);
+                            countNewNotifications = 0;
+                            updateNotifCounter();
+                            notificationsFragment.scrollToTop();
+
+                        }else if (tab.getPosition() > 1) {
+                            if (typePosition.containsKey(tab.getPosition()))
+                                updateTimeLine(typePosition.get(tab.getPosition()), 0);
+                            displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            displayStatusFragment.scrollToTop();
+                        }
+                    }
+                    if( tab.getCustomView() != null) {
+                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                        if( icon != null)
+                            if( theme == THEME_BLACK)
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                            else
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+            });
+
+            //Scroll to top when top bar is clicked for favourites/blocked/muted
+            toolbarTitle.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    if( navigationView.getMenu().findItem(R.id.nav_favorites) != null && navigationView.getMenu().findItem(R.id.nav_favorites).isChecked()){
+                        DisplayStatusFragment faveFrag = (DisplayStatusFragment) fragmentManager.findFragmentByTag("FAVOURITES");
+                        if (faveFrag != null && faveFrag.isVisible()) {
+                            faveFrag.scrollToTop();
+                        }
+                    } else if (navigationView.getMenu().findItem(R.id.nav_blocked) != null && navigationView.getMenu().findItem(R.id.nav_blocked).isChecked()) {
+                        DisplayAccountsFragment blockFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("BLOCKS");
+
+                        if (blockFrag != null && blockFrag.isVisible()) {
+                            blockFrag.scrollToTop();
+                        }
+                    } else if (navigationView.getMenu().findItem(R.id.nav_muted) != null && navigationView.getMenu().findItem(R.id.nav_muted).isChecked()) {
+                        DisplayAccountsFragment muteFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("MUTED");
+
+                        if (muteFrag != null && muteFrag.isVisible()) {
+                            muteFrag.scrollToTop();
+                        }
+                        //Scroll to top when top bar is clicked (THEME_MENU only)
+                    } else {
+                        int pos = tabLayout.getSelectedTabPosition();
+                        if( viewPager.getAdapter() != null) {
+                            Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
+                            switch (pos) {
+                                case 0:
+                                case 2:
+                                case 3:
+                                case 4:
+                                    DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                                    displayStatusFragment.scrollToTop();
+                                    break;
+                                case 1:
+                                    DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                                    displayNotificationsFragment.scrollToTop();
+                                    break;
+                            }
+                        }
+                    }
+                }
+            });
+        }else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            TabLayout.Tab pTabsub = tabLayout.newTab();
+            TabLayout.Tab pTabOver = tabLayout.newTab();
+            TabLayout.Tab pTabTrend = tabLayout.newTab();
+            TabLayout.Tab pTabAdded = tabLayout.newTab();
+            TabLayout.Tab pTabLocal = tabLayout.newTab();
+
+            pTabsub.setCustomView(R.layout.tab_badge);
+            pTabOver.setCustomView(R.layout.tab_badge);
+            pTabTrend.setCustomView(R.layout.tab_badge);
+            pTabAdded.setCustomView(R.layout.tab_badge);
+            pTabLocal.setCustomView(R.layout.tab_badge);
+
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconSub = pTabsub.getCustomView().findViewById(R.id.tab_icon);
+
+            iconSub.setImageResource(R.drawable.ic_subscriptions);
+
+            if (theme == THEME_BLACK)
+                iconSub.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+            else
+                iconSub.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconOver = pTabOver.getCustomView().findViewById(R.id.tab_icon);
+            iconOver.setImageResource(R.drawable.ic_overview);
+
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconTrend = pTabTrend.getCustomView().findViewById(R.id.tab_icon);
+            iconTrend.setImageResource(R.drawable.ic_trending_up);
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconAdded = pTabAdded.getCustomView().findViewById(R.id.tab_icon);
+            iconAdded.setImageResource(R.drawable.ic_recently_added);
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconLocal = pTabLocal.getCustomView().findViewById(R.id.tab_icon);
+            iconLocal.setImageResource(R.drawable.ic_home);
+
+
+
+            iconSub.setContentDescription(getString(R.string.subscriptions));
+            iconOver.setContentDescription(getString(R.string.overview));
+            iconTrend.setContentDescription(getString(R.string.trending));
+            iconAdded.setContentDescription(getString(R.string.recently_added));
+            iconLocal.setContentDescription(getString(R.string.local));
+
+
+            if (theme == THEME_LIGHT) {
+                iconSub.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconOver.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconTrend.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconAdded.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+            } else {
+                iconSub.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconOver.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconTrend.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconAdded.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+            }
+
+            toot.setImageResource(R.drawable.ic_cloud_upload);
+
+            tabLayout.addTab(pTabsub);
+            tabLayout.addTab(pTabOver);
+            tabLayout.addTab(pTabTrend);
+            tabLayout.addTab(pTabAdded);
+            tabLayout.addTab(pTabLocal);
+
+
+
+            main_app_container = findViewById(R.id.main_app_container);
+            adapter = new PagerAdapter
+                    (getSupportFragmentManager(), tabLayout.getTabCount());
+            viewPager.setAdapter(adapter);
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                    if (stackBack.empty())
+                        stackBack.push(0);
+                    if (stackBack.contains(tab.getPosition())) {
+                        stackBack.remove(stackBack.indexOf(tab.getPosition()));
+                        stackBack.push(tab.getPosition());
+                    } else {
+                        stackBack.push(tab.getPosition());
+                    }
+                    main_app_container.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.VISIBLE);
+                    delete_instance.setVisibility(View.GONE);
+                    Helper.switchLayout(BaseMainActivity.this);
+                    if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))) {
+                        toot.hide();
+                        federatedTimelines.hide();
+                    }else {
+                        toot.show();
+                        if( !displayFollowInstance)
+                            federatedTimelines.hide();
+                        else
+                            federatedTimelines.show();
+                    }
+                    DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    if( tab.getCustomView() != null) {
+                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                        if( icon != null)
+                            if( theme == THEME_BLACK)
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                            else
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+
+                    }
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                    if( tab.getCustomView() != null) {
+                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                        if( icon != null)
+                            if( theme == THEME_LIGHT)
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                            else
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+                    if( viewPager.getVisibility() == View.GONE){
+                        viewPager.setVisibility(View.VISIBLE);
+                        delete_instance.setVisibility(View.GONE);
+                        Helper.switchLayout(BaseMainActivity.this);
+                        main_app_container.setVisibility(View.GONE);
+                        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                        drawer.closeDrawer(GravityCompat.START);
+                    }
+                    if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))) {
+                        toot.hide();
+                        federatedTimelines.hide();
+                    }else {
+                        toot.show();
+                        if( !displayFollowInstance)
+                            federatedTimelines.hide();
+                        else
+                            federatedTimelines.show();
+                    }
+
+                    if( viewPager.getAdapter() != null) {
+                        Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
+
+                        DisplayStatusFragment displayStatusFragment;
+                        if (tab.getPosition() == 0) {
+                            displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            countNewStatus = 0;
+                            updateHomeCounter();
+                            displayStatusFragment.scrollToTop();
+                            displayStatusFragment.updateLastReadToot();
+                        } else if( tab.getPosition() == 1) {
+                            DisplayNotificationsFragment notificationsFragment = ((DisplayNotificationsFragment) fragment);
+                            countNewNotifications = 0;
+                            updateNotifCounter();
+                            notificationsFragment.scrollToTop();
+
+                        }else if (tab.getPosition() > 1) {
+                            if (typePosition.containsKey(tab.getPosition()))
+                                updateTimeLine(typePosition.get(tab.getPosition()), 0);
+                            displayStatusFragment = ((DisplayStatusFragment) fragment);
+                            displayStatusFragment.scrollToTop();
+                        }
+                    }
+                    if( tab.getCustomView() != null) {
+                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                        if( icon != null)
+                            if( theme == THEME_BLACK)
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                            else
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+            });
+
+            //Scroll to top when top bar is clicked for favourites/blocked/muted
+            toolbarTitle.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tabLayout.getSelectedTabPosition());
+                    DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                    displayStatusFragment.scrollToTop();
+                }
+            });
         }
 
         if (theme == Helper.THEME_DARK) {
@@ -382,6 +925,12 @@ public abstract class BaseMainActivity extends BaseActivity
             changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_icon);
             changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_icon);
             changeDrawableColor(getApplicationContext(), R.drawable.ic_color_lens,R.color.dark_icon);
+
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_subscriptions,R.color.dark_icon);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_overview,R.color.dark_icon);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_trending_up,R.color.dark_icon);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_recently_added,R.color.dark_icon);
+
         }else {
             changeDrawableColor(getApplicationContext(), R.drawable.ic_home,R.color.dark_text);
             changeDrawableColor(getApplicationContext(), R.drawable.ic_notifications,R.color.dark_text);
@@ -389,353 +938,23 @@ public abstract class BaseMainActivity extends BaseActivity
             changeDrawableColor(getApplicationContext(), R.drawable.ic_people,R.color.dark_text);
             changeDrawableColor(getApplicationContext(), R.drawable.ic_public,R.color.dark_text);
             changeDrawableColor(getApplicationContext(), R.drawable.ic_color_lens,R.color.dark_text);
+
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_subscriptions,R.color.dark_text);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_overview,R.color.dark_text);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_trending_up,R.color.dark_text);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_recently_added,R.color.dark_text);
         }
 
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
             startSreaming();
 
 
-        tabLayout.addTab(tabHome);
-        tabLayout.addTab(tabNotif);
-        tabPosition.put("home",0);
-        typePosition.put(0, RetrieveFeedsAsyncTask.Type.HOME);
-        tabPosition.put("notifications",1);
-        typePosition.put(1, RetrieveFeedsAsyncTask.Type.NOTIFICATION);
-        int i = 2;
-        if( display_direct) {
-            tabLayout.addTab(tabDirect);
-            tabPosition.put("direct",i);
-
-            userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
-
-            String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
-            if (instanceVersion != null) {
-                Version currentVersion = new Version(instanceVersion);
-                Version minVersion = new Version("2.6");
-                if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
-                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.CONVERSATION);
-                } else {
-                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.DIRECT);
-                }
-            }else{
-                typePosition.put(i, RetrieveFeedsAsyncTask.Type.DIRECT);
-            }
-            i++;
-        }
-        if( display_local) {
-            tabLayout.addTab(tabLocal);
-            tabPosition.put("local", i);
-            typePosition.put(i, RetrieveFeedsAsyncTask.Type.LOCAL);
-            i++;
-        }
-        if( display_global) {
-            tabLayout.addTab(tabPublic);
-            tabPosition.put("global", i);
-            typePosition.put(i, RetrieveFeedsAsyncTask.Type.PUBLIC);
-            i++;
-        }
-        if( display_art) {
-            tabLayout.addTab(tabArt);
-            tabPosition.put("art", i);
-            typePosition.put(i, RetrieveFeedsAsyncTask.Type.ART);
-        }
-
-        if( (getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE)
-            tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        else if( i > 3 && !Helper.isTablet(getApplicationContext())){
-            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        }else{
-            tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        }
-        //Display filter for notification when long pressing the tab
-        final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
-        tabStrip.getChildAt(1).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                //Only shown if the tab has focus
-                if( notificationsFragment != null && notificationsFragment.getUserVisibleHint()){
-                    PopupMenu popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(1));
-                    popup.getMenuInflater()
-                            .inflate(R.menu.option_filter_notifications, popup.getMenu());
-                    Menu menu = popup.getMenu();
-                    final MenuItem itemFavourite = menu.findItem(R.id.action_favorite);
-                    final MenuItem itemFollow = menu.findItem(R.id.action_follow);
-                    final MenuItem itemMention = menu.findItem(R.id.action_mention);
-                    final MenuItem itemBoost = menu.findItem(R.id.action_boost);
-                    notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
-                    notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
-                    notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
-                    notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
-                    itemFavourite.setChecked(notif_add);
-                    itemFollow.setChecked(notif_follow);
-                    itemMention.setChecked(notif_mention);
-                    itemBoost.setChecked(notif_share);
-                    popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
-                        @Override
-                        public void onDismiss(PopupMenu menu) {
-                            if( notificationsFragment != null)
-                                notificationsFragment.refreshAll();
-                        }
-                    });
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        public boolean onMenuItemClick(MenuItem item) {
-                            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-                            item.setActionView(new View(getApplicationContext()));
-                            item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-                                @Override
-                                public boolean onMenuItemActionExpand(MenuItem item) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean onMenuItemActionCollapse(MenuItem item) {
-                                    return false;
-                                }
-                            });
-                            switch (item.getItemId()) {
-                                case R.id.action_favorite:
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    notif_add = !notif_add;
-                                    editor.putBoolean(Helper.SET_NOTIF_ADD_FILTER, notif_add);
-                                    itemFavourite.setChecked(notif_add);
-                                    editor.apply();
-                                    break;
-                                case R.id.action_follow:
-                                    editor = sharedpreferences.edit();
-                                    notif_follow = !notif_follow;
-                                    editor.putBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, notif_follow);
-                                    itemFollow.setChecked(notif_follow);
-                                    editor.apply();
-                                    break;
-                                case R.id.action_mention:
-                                    editor = sharedpreferences.edit();
-                                    notif_mention = !notif_mention;
-                                    editor.putBoolean(Helper.SET_NOTIF_MENTION_FILTER, notif_mention);
-                                    itemMention.setChecked(notif_mention);
-                                    editor.apply();
-                                    break;
-                                case R.id.action_boost:
-                                    editor = sharedpreferences.edit();
-                                    notif_share = !notif_share;
-                                    editor.putBoolean(Helper.SET_NOTIF_SHARE_FILTER, notif_share);
-                                    itemBoost.setChecked(notif_share);
-                                    editor.apply();
-                                    break;
-                            }
-                            return false;
-                        }
-                    });
-                    popup.show();
-                }
-                return true;
-            }
-        });
-
-
-        tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return manageFilters(tabStrip, sharedpreferences);
-            }
-        });
-
-        countPage = 2;
-        if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true))
-            countPage++;
-        if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true))
-            countPage++;
-        if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true))
-            countPage++;
-        if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true))
-            countPage++;
-
-        if( tabPosition.containsKey("global"))
-            tabStrip.getChildAt(tabPosition.get("global")).setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return manageFilters(tabStrip, sharedpreferences);
-                }
-            });
-        if( tabPosition.containsKey("local"))
-            tabStrip.getChildAt(tabPosition.get("local")).setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return manageFilters(tabStrip, sharedpreferences);
-                }
-            });
-        if( tabPosition.containsKey("art"))
-            tabStrip.getChildAt(tabPosition.get("art")).setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return manageFilters(tabStrip, sharedpreferences);
-                }
-            });
-
-        viewPager.setOffscreenPageLimit(countPage);
-        main_app_container = findViewById(R.id.main_app_container);
-        adapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-                if (stackBack.empty())
-                    stackBack.push(0);
-                if (stackBack.contains(tab.getPosition())) {
-                    stackBack.remove(stackBack.indexOf(tab.getPosition()));
-                    stackBack.push(tab.getPosition());
-                } else {
-                    stackBack.push(tab.getPosition());
-                }
-                main_app_container.setVisibility(View.GONE);
-                viewPager.setVisibility(View.VISIBLE);
-                delete_instance.setVisibility(View.GONE);
-                Helper.switchLayout(BaseMainActivity.this);
-                if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))) {
-                    toot.hide();
-                    federatedTimelines.hide();
-                }else {
-                    toot.show();
-                    if( !displayFollowInstance)
-                        federatedTimelines.hide();
-                    else
-                        federatedTimelines.show();
-                }
-                DrawerLayout drawer = findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                if( tab.getCustomView() != null) {
-                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                    if( icon != null)
-                        if( theme == THEME_BLACK)
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                        else
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
-
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                if( tab.getCustomView() != null) {
-                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                    if( icon != null)
-                        if( theme == THEME_LIGHT)
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                        else
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-                }
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                if( viewPager.getVisibility() == View.GONE){
-                    viewPager.setVisibility(View.VISIBLE);
-                    delete_instance.setVisibility(View.GONE);
-                    Helper.switchLayout(BaseMainActivity.this);
-                    main_app_container.setVisibility(View.GONE);
-                    DrawerLayout drawer = findViewById(R.id.drawer_layout);
-                    drawer.closeDrawer(GravityCompat.START);
-                }
-                if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))) {
-                    toot.hide();
-                    federatedTimelines.hide();
-                }else {
-                    toot.show();
-                    if( !displayFollowInstance)
-                        federatedTimelines.hide();
-                    else
-                        federatedTimelines.show();
-                }
-
-                if( viewPager.getAdapter() != null) {
-                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
-
-                    DisplayStatusFragment displayStatusFragment;
-                    if (tab.getPosition() == 0) {
-                        displayStatusFragment = ((DisplayStatusFragment) fragment);
-                        countNewStatus = 0;
-                        updateHomeCounter();
-                        displayStatusFragment.scrollToTop();
-                        displayStatusFragment.updateLastReadToot();
-                    } else if( tab.getPosition() == 1) {
-                        DisplayNotificationsFragment notificationsFragment = ((DisplayNotificationsFragment) fragment);
-                        countNewNotifications = 0;
-                        updateNotifCounter();
-                        notificationsFragment.scrollToTop();
-
-                    }else if (tab.getPosition() > 1) {
-                        if (typePosition.containsKey(tab.getPosition()))
-                            updateTimeLine(typePosition.get(tab.getPosition()), 0);
-                        displayStatusFragment = ((DisplayStatusFragment) fragment);
-                        displayStatusFragment.scrollToTop();
-                    }
-                }
-                if( tab.getCustomView() != null) {
-                    ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
-                    if( icon != null)
-                        if( theme == THEME_BLACK)
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
-                        else
-                            icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
-                }
-            }
-        });
-        Helper.refreshSearchTag(BaseMainActivity.this, tabLayout, adapter);
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+            Helper.refreshSearchTag(BaseMainActivity.this, tabLayout, adapter);
         int tabCount = tabLayout.getTabCount();
         for( int j = countPage ; j < tabCount ; j++){
             attacheDelete(j);
         }
-        final NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        Helper.hideMenuItem(navigationView.getMenu());
-
-
-        //Scroll to top when top bar is clicked for favourites/blocked/muted
-        toolbarTitle.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                if( navigationView.getMenu().findItem(R.id.nav_favorites) != null && navigationView.getMenu().findItem(R.id.nav_favorites).isChecked()){
-                    DisplayStatusFragment faveFrag = (DisplayStatusFragment) fragmentManager.findFragmentByTag("FAVOURITES");
-                    if (faveFrag != null && faveFrag.isVisible()) {
-                        faveFrag.scrollToTop();
-                    }
-                } else if (navigationView.getMenu().findItem(R.id.nav_blocked) != null && navigationView.getMenu().findItem(R.id.nav_blocked).isChecked()) {
-                    DisplayAccountsFragment blockFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("BLOCKS");
-
-                    if (blockFrag != null && blockFrag.isVisible()) {
-                        blockFrag.scrollToTop();
-                    }
-                } else if (navigationView.getMenu().findItem(R.id.nav_muted) != null && navigationView.getMenu().findItem(R.id.nav_muted).isChecked()) {
-                    DisplayAccountsFragment muteFrag = (DisplayAccountsFragment) fragmentManager.findFragmentByTag("MUTED");
-
-                    if (muteFrag != null && muteFrag.isVisible()) {
-                        muteFrag.scrollToTop();
-                    }
-                    //Scroll to top when top bar is clicked (THEME_MENU only)
-                } else {
-                    int pos = tabLayout.getSelectedTabPosition();
-                    if( viewPager.getAdapter() != null) {
-                        Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, pos);
-                        switch (pos) {
-                            case 0:
-                            case 2:
-                            case 3:
-                            case 4:
-                                DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                                displayStatusFragment.scrollToTop();
-                                break;
-                            case 1:
-                                DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
-                                displayNotificationsFragment.scrollToTop();
-                                break;
-                        }
-                    }
-                }
-            }
-        });
 
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -860,9 +1079,7 @@ public abstract class BaseMainActivity extends BaseActivity
         //Defines the current locale of the device in a static variable
         currentLocale = Helper.currentLocale(getApplicationContext());
 
-        toot = findViewById(R.id.toot);
-        delete_all = findViewById(R.id.delete_all);
-        add_new = findViewById(R.id.add_new);
+
         tabLayout.getTabAt(0).select();
         toot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1114,7 +1331,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         // Asked once for notification opt-in
         boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
-        if(!popupShown){
+        if(!popupShown && social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
             LayoutInflater inflater = getLayoutInflater();
             @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
@@ -1168,12 +1385,14 @@ public abstract class BaseMainActivity extends BaseActivity
             }
         };
         mamageNewIntent(getIntent());
-        LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
 
-        // Retrieves instance
-        new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        // Retrieves filters
-        new ManageFiltersAsyncTask(getApplicationContext(), GET_ALL_FILTER, null,BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+            // Retrieves instance
+            new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            // Retrieves filters
+            new ManageFiltersAsyncTask(getApplicationContext(), GET_ALL_FILTER, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
     }
 
 
@@ -2035,9 +2254,12 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
 
+
+
     public static HashMap<String, DisplayStatusFragment> tagFragment = new HashMap<>();
+
     /**
-     * Page Adapter for settings
+     * Page Adapter for Mastodon & Peertube
      */
     public class PagerAdapter extends FragmentStatePagerAdapter  {
         int mNumOfTabs;
@@ -2048,80 +2270,115 @@ public abstract class BaseMainActivity extends BaseActivity
         }
 
         public void removeTabPage() {
-            this.mNumOfTabs--;
-            notifyDataSetChanged();
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                this.mNumOfTabs--;
+                notifyDataSetChanged();
+            }
         }
 
         public void addTabPage(String title) {
-            TabLayout.Tab tab = tabLayout.newTab();
-            tab.setText(title);
-            this.mNumOfTabs++;
-            notifyDataSetChanged();
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                TabLayout.Tab tab = tabLayout.newTab();
+                tab.setText(title);
+                this.mNumOfTabs++;
+                notifyDataSetChanged();
+            }
         }
 
         @Override
         public Fragment getItem(int position) {
-            //Remove the search bar
-            if( !toolbar_search.isIconified() ) {
-                toolbarTitle.setVisibility(View.VISIBLE);
-                tabLayout.setVisibility(View.VISIBLE);
-                toolbar_search.setIconified(true);
-            }
-            //Selection comes from another menu, no action to do
-            DisplayStatusFragment statusFragment;
-            Bundle bundle = new Bundle();
-            if (position == 0) {
-                homeFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
-                homeFragment.setArguments(bundle);
-                return homeFragment;
-            }else if( position == 1) {
-                notificationsFragment = new DisplayNotificationsFragment();
-                return notificationsFragment;
-            }else {
-                statusFragment = new DisplayStatusFragment();
-                bundle.putSerializable("type", typePosition.get(position));
-                if( typePosition.get(position) == RetrieveFeedsAsyncTask.Type.TAG){
-                    if( tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null) {
-
-                        SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-
-                        List<TagTimeline> tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTabInfo(tabLayout.getTabAt(position).getText().toString());
-                        String tag;
-                        if( tagTimelines == null || tagTimelines.size() == 0)
-                            tag = tabLayout.getTabAt(position).getText().toString();
-                        else
-                            tag = tagTimelines.get(0).getName();
-
-                        bundle.putString("tag", tag);
-                        tagFragment.put(tag, statusFragment);
-                    }
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                //Remove the search bar
+                if (!toolbar_search.isIconified()) {
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
+                    toolbar_search.setIconified(true);
                 }
-                statusFragment.setArguments(bundle);
-                return statusFragment;
+                //Selection comes from another menu, no action to do
+                DisplayStatusFragment statusFragment;
+                Bundle bundle = new Bundle();
+                if (position == 0) {
+                    homeFragment = new DisplayStatusFragment();
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
+                    homeFragment.setArguments(bundle);
+                    return homeFragment;
+                } else if (position == 1) {
+                    notificationsFragment = new DisplayNotificationsFragment();
+                    return notificationsFragment;
+                } else {
+                    statusFragment = new DisplayStatusFragment();
+                    bundle.putSerializable("type", typePosition.get(position));
+                    if (typePosition.get(position) == RetrieveFeedsAsyncTask.Type.TAG) {
+                        if (tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null) {
+
+                            SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+
+                            List<TagTimeline> tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTabInfo(tabLayout.getTabAt(position).getText().toString());
+                            String tag;
+                            if (tagTimelines == null || tagTimelines.size() == 0)
+                                tag = tabLayout.getTabAt(position).getText().toString();
+                            else
+                                tag = tagTimelines.get(0).getName();
+
+                            bundle.putString("tag", tag);
+                            tagFragment.put(tag, statusFragment);
+                        }
+                    }
+                    statusFragment.setArguments(bundle);
+                    return statusFragment;
+                }
+            }else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                //Remove the search bar
+                if( !toolbar_search.isIconified() ) {
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
+                    toolbar_search.setIconified(true);
+                }
+                //Selection comes from another menu, no action to do
+                Bundle bundle = new Bundle();
+                DisplayStatusFragment fragment = new DisplayStatusFragment();
+                if (position == 0) {
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PSUBSCRIPTIONS);
+                }else if( position == 1) {
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.POVERVIEW);
+                }else if( position == 2) {
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PTRENDING);
+                }else if( position == 3) {
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PRECENTLYADDED);
+                }else if( position == 4) {
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PLOCAL);
+                }
+
+                fragment.setArguments(bundle);
+                return fragment;
             }
+            return null;
         }
 
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
-            // save the appropriate reference depending on position
-            if( position == 0){
-                homeFragment = (DisplayStatusFragment) createdFragment;
-            }else if( position == 1){
-                notificationsFragment = (DisplayNotificationsFragment) createdFragment;
-            }else{
-                if( display_local && position == tabPosition.get("local"))
-                    localFragment = (DisplayStatusFragment) createdFragment;
-                else if( display_global && position == tabPosition.get("global"))
-                    federatedFragment = (DisplayStatusFragment) createdFragment;
-                else if( display_art && position == tabPosition.get("art"))
-                    artFragment = (DisplayStatusFragment) createdFragment;
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
+                // save the appropriate reference depending on position
+                if (position == 0) {
+                    homeFragment = (DisplayStatusFragment) createdFragment;
+                } else if (position == 1) {
+                    notificationsFragment = (DisplayNotificationsFragment) createdFragment;
+                } else {
+                    if (display_local && position == tabPosition.get("local"))
+                        localFragment = (DisplayStatusFragment) createdFragment;
+                    else if (display_global && position == tabPosition.get("global"))
+                        federatedFragment = (DisplayStatusFragment) createdFragment;
+                    else if (display_art && position == tabPosition.get("art"))
+                        artFragment = (DisplayStatusFragment) createdFragment;
 
+                }
+                return createdFragment;
+            }else if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                return super.instantiateItem(container, position);
             }
-
-            return createdFragment;
+            return null;
         }
 
         @Override

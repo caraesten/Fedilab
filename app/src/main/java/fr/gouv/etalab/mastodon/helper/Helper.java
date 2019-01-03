@@ -1249,7 +1249,9 @@ public class Helper {
                 itemOpt.setVisible(false);
 
         }else if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
-
+            MenuItem itemCom = menu.findItem(R.id.nav_peertube_comm);
+            if( itemCom != null)
+                itemCom.setVisible(false);
         }
     }
 

@@ -76,7 +76,12 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         REMOTE_INSTANCE,
         ART,
         NOTIFICATION,
-        PIXELFED
+        PIXELFED,
+        PSUBSCRIPTIONS,
+        POVERVIEW,
+        PTRENDING,
+        PRECENTLYADDED,
+        PLOCAL
     }
 
 
