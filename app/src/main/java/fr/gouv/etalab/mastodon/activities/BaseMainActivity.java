@@ -2348,7 +2348,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 }else if( position == 4) {
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PLOCAL);
                 }
-
+                bundle.putString("instanceType","PEERTUBE");
                 fragment.setArguments(bundle);
                 return fragment;
             }
@@ -2908,7 +2908,8 @@ public abstract class BaseMainActivity extends BaseActivity
         federatedTimelines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ManageListsAsyncTask(BaseMainActivity.this, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                    new ManageListsAsyncTask(BaseMainActivity.this, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new InstancesDAO(BaseMainActivity.this, db).cleanDoublon();
                 List<RemoteInstance> remoteInstances = new InstancesDAO(BaseMainActivity.this, db).getAllInstances();

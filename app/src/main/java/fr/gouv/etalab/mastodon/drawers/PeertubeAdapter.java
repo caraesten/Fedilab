@@ -78,6 +78,8 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
 
         final PeertubeAdapter.ViewHolder holder = (PeertubeAdapter.ViewHolder) viewHolder;
         final Peertube peertube = peertubes.get(position);
+        if( peertube.getInstance() == null)
+            peertube.setInstance(Helper.getLiveInstance(context));
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -105,6 +107,8 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         Glide.with(holder.peertube_video_image.getContext())
                 .load("https://" + peertube.getInstance() + peertube.getThumbnailPath())
                 .into(holder.peertube_video_image);
+        if( account.getAvatar() != null && !account.getAvatar().startsWith("http"))
+            account.setAvatar("https://" + peertube.getInstance() + account.getAvatar());
         Helper.loadGiF(context, account.getAvatar(), holder.peertube_profile);
         holder.main_container.setOnClickListener(new View.OnClickListener() {
             @Override

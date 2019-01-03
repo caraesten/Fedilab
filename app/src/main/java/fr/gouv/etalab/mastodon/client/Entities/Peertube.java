@@ -42,6 +42,8 @@ public class Peertube {
     private Account account;
     private List<String> resolution;
     private boolean commentsEnabled;
+    private boolean sensitive;
+
     private JSONObject cache;
 
     public Peertube() {
@@ -216,5 +218,13 @@ public class Peertube {
 
     public void setCache(JSONObject cache) {
         this.cache = cache;
+    }
+
+    public boolean isSensitive() {
+        return sensitive;
+    }
+
+    public void setSensitive(boolean sensitive) {
+        this.sensitive = sensitive;
     }
 }

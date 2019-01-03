@@ -137,10 +137,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             remoteInstance = bundle.getString("remote_instance", "");
             search_peertube = bundle.getString("search_peertube", null);
             remote_channel_name = bundle.getString("remote_channel_name", null);
-
+            instanceType  = bundle.getString("instanceType", null);
         }
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        if( !remoteInstance.equals("")){
+        //instanceType should not be null only for Peertube accounts
+        if( !remoteInstance.equals("") && instanceType == null){
             List<RemoteInstance> remoteInstanceObj = new InstancesDAO(context, db).getInstanceByName(remoteInstance);
             if( remoteInstanceObj != null && remoteInstanceObj.size() > 0)
                 instanceType = remoteInstanceObj.get(0).getType();
@@ -186,6 +187,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, this.statuses);
             lv_status.setAdapter(statusListAdapter);
         }else {
+            if( remoteInstance != null) //if it's a Peertube account connected
+                remoteInstance = account.getInstance();
             BaseMainActivity.displayPeertube = remoteInstance;
             peertubeAdapater = new PeertubeAdapter(context, remoteInstance, this.peertubes);
             lv_status.setAdapter(peertubeAdapater);
@@ -416,7 +419,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
         //For remote Peertube remote instances
-        if(( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) && peertubeAdapater != null){
+        if(( instanceType != null && instanceType.equals("PEERTUBE") || (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) && peertubeAdapater != null)){
             int previousPosition = this.peertubes.size();
             if( max_id == null)
                 max_id = "0";

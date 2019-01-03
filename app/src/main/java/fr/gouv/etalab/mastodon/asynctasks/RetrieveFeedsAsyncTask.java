@@ -26,6 +26,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
+import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.FilterToots;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
@@ -250,6 +251,27 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     apiResponse.setMax_id(null);
                     apiResponse.setSince_id(null);
                 }
+                break;
+
+            case PSUBSCRIPTIONS:
+                PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getSubscriptionsTL(max_id);
+                break;
+            case POVERVIEW:
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getOverviewTL(max_id);
+                break;
+            case PTRENDING:
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getTrendingTL(max_id);
+                break;
+            case PRECENTLYADDED:
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getRecentlyAddedTL(max_id);
+                break;
+            case PLOCAL:
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getLocalTL(max_id);
                 break;
             case HASHTAG:
                 break;
