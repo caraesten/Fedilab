@@ -1502,6 +1502,8 @@ public class Helper {
             SharedPreferences mSharedPreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String currrentUserId = mSharedPreferences.getString(Helper.PREF_KEY_ID, null);
             for(final Account accountChoice: accounts) {
+                if( !accountChoice.getAvatar().startsWith("http"))
+                    accountChoice.setAvatar("https://" + accountChoice.getInstance() + accountChoice.getAvatar());
                 if (currrentUserId != null && !currrentUserId.equals(accountChoice.getId())) {
                     icon = new ImageView(activity);
                     ImageView finalIcon = icon;
@@ -1552,7 +1554,9 @@ public class Helper {
             for(final Account accountChoice: accounts) {
                 if (currrentUserId != null && !currrentUserId.equals(accountChoice.getId())) {
                     SubActionButton.Builder itemBuilderAcc = new SubActionButton.Builder(activity);
-
+                    if( !accountChoice.getAvatar().startsWith("http"))
+                        accountChoice.setAvatar("https://" + accountChoice.getInstance() + accountChoice.getAvatar());
+                    Log.v(Helper.TAG,"avatar: " + accountChoice.getAvatar());
                     ImageView itemIconAcc = new ImageView(activity);
                     Glide.with(activity.getApplicationContext())
                             .asBitmap()
