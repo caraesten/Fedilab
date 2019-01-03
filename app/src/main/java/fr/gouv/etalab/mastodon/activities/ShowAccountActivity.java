@@ -143,6 +143,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private boolean peertubeAccount;
     private ImageView pp_actionBar;
     private String accountId;
+    private boolean ischannel;
 
     public enum action{
         FOLLOW,
@@ -192,6 +193,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             }else {
                 accountId = account.getId();
             }
+            ischannel = b.getBoolean("ischannel", false);
             peertubeAccount = b.getBoolean("peertubeaccount", false);
             if (account == null) {
                 new RetrieveAccountAsyncTask(getApplicationContext(), accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -507,7 +509,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         });
 
 
-        if ( account.getFields() != null && account.getFields().size() > 0){
+        if ( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && account.getFields() != null && account.getFields().size() > 0){
             LinkedHashMap<String, String> fields = account.getFields();
             LinkedHashMap<String, Boolean> fieldsVerified = account.getFieldsVerified();
             Iterator it = fields.entrySet().iterator();
@@ -860,8 +862,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
                         bundle = new Bundle();
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
-                        bundle.putString("targetedId", account.getAcct());
+                        bundle.putString("targetedid", account.getAcct());
                         bundle.putBoolean("showReply",false);
+                        bundle.putBoolean("ischannel",ischannel);
                         displayStatusFragment.setArguments(bundle);
                         return displayStatusFragment;
                     }
@@ -869,7 +872,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     if( peertubeAccount){
                         DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                         bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.CHANNELS);
-                        bundle.putString("targetedId", account.getId());
+                        bundle.putString("targetedid", account.getId());
                         bundle.putString("instance",account.getAcct().split("@")[1]);
                         bundle.putString("name",account.getAcct().split("@")[0]);
                         displayAccountsFragment.setArguments(bundle);
@@ -877,7 +880,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     }else{
                         DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                         bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
-                        bundle.putString("targetedId", account.getId());
+                        bundle.putString("targetedid", account.getId());
                         displayAccountsFragment.setArguments(bundle);
                         return displayAccountsFragment;
                     }
@@ -885,7 +888,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 case 2:
                     DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
-                    bundle.putString("targetedId", account.getId());
+                    bundle.putString("targetedid", account.getId());
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
 

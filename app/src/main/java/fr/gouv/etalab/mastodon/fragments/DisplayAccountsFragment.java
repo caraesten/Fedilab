@@ -36,8 +36,10 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveManyRelationshipsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
@@ -78,7 +80,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         accounts = new ArrayList<>();
         if (bundle != null) {
             type = (RetrieveAccountsAsyncTask.Type) bundle.get("type");
-            targetedId = bundle.getString("targetedId", null);
+            targetedId = bundle.getString("targetedid", null);
             instance = bundle.getString("instance", null);
             name = bundle.getString("name", null);
         }
@@ -228,7 +230,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-        if( type != RetrieveAccountsAsyncTask.Type.BLOCKED )
+        if( type != RetrieveAccountsAsyncTask.Type.BLOCKED && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
             new RetrieveManyRelationshipsAsyncTask(context, accounts,DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 

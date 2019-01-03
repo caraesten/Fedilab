@@ -83,7 +83,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         POVERVIEW,
         PTRENDING,
         PRECENTLYADDED,
-        PLOCAL
+        PLOCAL,
+        CHANNEL
     }
 
 
@@ -212,6 +213,10 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     apiResponse = peertubeAPI.getVideos(targetedID, max_id);
                 }
                 break;
+            case CHANNEL:
+                PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getVideosChannel(targetedID, max_id);
+                break;
             case ONESTATUS:
                 apiResponse = api.getStatusbyId(targetedID);
                 break;
@@ -260,7 +265,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
 
             case PSUBSCRIPTIONS:
-                PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
                 apiResponse = peertubeAPI.getSubscriptionsTL(max_id);
                 break;
             case POVERVIEW:

@@ -110,6 +110,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     private String updatedBookMark;
     private String lastReadToot;
+    private boolean ischannel;
 
     public DisplayStatusFragment(){
     }
@@ -130,7 +131,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         tagTimeline = null;
         if (bundle != null) {
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
-            targetedId = bundle.getString("targetedId", null);
+            targetedId = bundle.getString("targetedid", null);
             tag = bundle.getString("tag", null);
             showMediaOnly = bundle.getBoolean("showMediaOnly",false);
             showPinned = bundle.getBoolean("showPinned",false);
@@ -139,7 +140,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             search_peertube = bundle.getString("search_peertube", null);
             remote_channel_name = bundle.getString("remote_channel_name", null);
             instanceType  = bundle.getString("instanceType", null);
+            ischannel = bundle.getBoolean("ischannel",false);
         }
+        if( ischannel)
+            type = RetrieveFeedsAsyncTask.Type.CHANNEL;
+
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //instanceType should not be null only for Peertube accounts
         if( !remoteInstance.equals("") && instanceType == null){

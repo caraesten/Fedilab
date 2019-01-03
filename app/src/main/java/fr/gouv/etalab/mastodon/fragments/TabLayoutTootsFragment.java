@@ -52,7 +52,7 @@ public class TabLayoutTootsFragment extends Fragment {
         final ViewPager viewPager = inflatedView.findViewById(R.id.viewpager);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            this.targetedId = bundle.getString("targetedId", null);
+            this.targetedId = bundle.getString("targetedid", null);
         }
         viewPager.setAdapter(new PagerAdapter
                 (getChildFragmentManager(), tabLayout.getTabCount()));
@@ -97,7 +97,7 @@ public class TabLayoutTootsFragment extends Fragment {
                     DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
-                    bundle.putString("targetedId", targetedId);
+                    bundle.putString("targetedid", targetedId);
                     bundle.putBoolean("showReply",false);
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
@@ -105,21 +105,21 @@ public class TabLayoutTootsFragment extends Fragment {
                     displayStatusFragment = new DisplayStatusFragment();
                     bundle = new Bundle();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
-                    bundle.putString("targetedId", targetedId);
+                    bundle.putString("targetedid", targetedId);
                     bundle.putBoolean("showReply",true);
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
                 case 2:
                     DisplayMediaFragment displayMediaFragment = new DisplayMediaFragment();
                     bundle = new Bundle();
-                    bundle.putString("targetedId", targetedId);
+                    bundle.putString("targetedid", targetedId);
                     displayMediaFragment.setArguments(bundle);
                     return displayMediaFragment;
                 case 3:
                     displayStatusFragment = new DisplayStatusFragment();
                     bundle = new Bundle();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
-                    bundle.putString("targetedId", targetedId);
+                    bundle.putString("targetedid", targetedId);
                     bundle.putBoolean("showPinned",true);
                     displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;

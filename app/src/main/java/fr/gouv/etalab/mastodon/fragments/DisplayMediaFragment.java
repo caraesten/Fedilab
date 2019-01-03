@@ -90,7 +90,7 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         if (bundle != null) {
-            targetedId = bundle.getString("targetedId", null);
+            targetedId = bundle.getString("targetedid", null);
         }
 
         attachments = new ArrayList<>();

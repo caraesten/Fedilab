@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -350,6 +351,7 @@ public class PeertubeAPI {
         try {
 
             HttpsConnection httpsConnection = new HttpsConnection(context);
+            Log.v(Helper.TAG,"url: " + getAbsoluteUrl(String.format("/accounts/%s/videos", acct)));
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/videos", acct)), 60, params, prefKeyOauthTokenT);
 
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
@@ -371,6 +373,63 @@ public class PeertubeAPI {
         return apiResponse;
     }
 
+
+    /**
+     * Retrieves videos channel for the account *synchronously*
+     *
+     * @param acct String Id of the account
+     * @param max_id    String id max
+     * @return APIResponse
+     */
+    public APIResponse getVideosChannel(String acct, String max_id) {
+        return getVideosChannel(acct, max_id, null, tootPerPage);
+    }
+
+    /**
+     * Retrieves status for the account *synchronously*
+     *
+     * @param acct       String Id of the account
+     * @param max_id          String id max
+     * @param since_id        String since the id
+     * @param limit           int limit  - max value 40
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    private APIResponse getVideosChannel(String acct, String max_id, String since_id, int limit) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("start", max_id);
+        if (since_id != null)
+            params.put("since_id", since_id);
+        if (0 < limit || limit > 40)
+            limit = 40;
+        params.put("count", String.valueOf(limit));
+        List<Peertube> peertubes = new ArrayList<>();
+        try {
+
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            Log.v(Helper.TAG,"url: " + getAbsoluteUrl(String.format("/video-channels/%s/videos", acct)));
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/video-channels/%s/videos", acct)), 60, params, prefKeyOauthTokenT);
+
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            peertubes = parsePeertube(jsonArray);
+
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPeertubes(peertubes);
+        return apiResponse;
+    }
 
 
     /**
@@ -935,212 +994,11 @@ public class PeertubeAPI {
         return apiResponse;
     }
 
-    /**
-     * Retrieves home timeline for the account *synchronously*
-     * @return APIResponse
-     */
-    public APIResponse getHowTo() {
-
-        List<HowToVideo> howToVideos = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get("https://peertube.social/api/v1/video-channels/mastalab_channel/videos", 60, null, null);
-            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
-            howToVideos = parseHowTos(jsonArray);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setHowToVideos(howToVideos);
-        return apiResponse;
-    }
-
-
-    /**
-     * Retrieves Peertube videos from an instance *synchronously*
-     * @return APIResponse
-     */
-    public APIResponse getMisskey(String instance, String max_id) {
-
-        JSONObject params = new JSONObject();
-        try {
-            params.put("file", false);
-            if( max_id != null)
-                params.put("untilId",max_id);
-            params.put("local",true);
-            params.put("poll",false);
-            params.put("renote",false);
-            params.put("reply",false);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            statuses = new ArrayList<>();
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.postMisskey("https://"+instance+"/api/notes", 60, params, null);
-            statuses = parseNotes(context, instance, new JSONArray(response));
-            if( statuses != null && statuses.size() > 0){
-                apiResponse.setSince_id(statuses.get(0).getId());
-                apiResponse.setMax_id(statuses.get(statuses.size() -1).getId());
-            }
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setStatuses(statuses);
-        return apiResponse;
-    }
-    /**
-     * Retrieves public timeline for the account *synchronously*
-     * @param local boolean only local timeline
-     * @param max_id String id max
-     * @return APIResponse
-     */
-    public APIResponse getPublicTimeline(String instanceName, boolean local, String max_id){
-        return getPublicTimeline(local, instanceName, max_id, null, tootPerPage);
-    }
-
-    /**
-     * Retrieves public timeline for the account *synchronously*
-     * @param local boolean only local timeline
-     * @param max_id String id max
-     * @return APIResponse
-     */
-    public APIResponse getPublicTimeline(boolean local, String max_id){
-        return getPublicTimeline(local, null, max_id, null, tootPerPage);
-    }
-
-    /**
-     * Retrieves public timeline for the account since an Id value *synchronously*
-     * @param local boolean only local timeline
-     * @param since_id String id since
-     * @return APIResponse
-     */
-    public APIResponse getPublicTimelineSinceId(boolean local, String since_id) {
-        return getPublicTimeline(local, null, null, since_id, tootPerPage);
-    }
-
-    /**
-     * Retrieves instance timeline since an Id value *synchronously*
-     * @param instanceName String instance name
-     * @param since_id String id since
-     * @return APIResponse
-     */
-    public APIResponse getInstanceTimelineSinceId(String instanceName, String since_id) {
-        return getPublicTimeline(true, instanceName, null, since_id, tootPerPage);
-    }
-
-    /**
-     * Retrieves public timeline for the account *synchronously*
-     * @param local boolean only local timeline
-     * @param max_id String id max
-     * @param since_id String since the id
-     * @param limit int limit  - max value 40
-     * @return APIResponse
-     */
-    private APIResponse getPublicTimeline(boolean local, String instanceName, String max_id, String since_id, int limit){
-
-        HashMap<String, String> params = new HashMap<>();
-        if( local)
-            params.put("local", Boolean.toString(true));
-        if( max_id != null )
-            params.put("max_id", max_id);
-        if( since_id != null )
-            params.put("since_id", since_id);
-        if( 0 > limit || limit > 40)
-            limit = 40;
-        params.put("limit",String.valueOf(limit));
-        statuses = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String url;
-            if( instanceName == null)
-                url = getAbsoluteUrl("/timelines/public");
-            else
-                url = getAbsoluteUrlRemoteInstance(instanceName);
-            String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(context, new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setStatuses(statuses);
-        return apiResponse;
-    }
 
 
 
-    public APIResponse getCustomArtTimeline(boolean local, String tag, String max_id, List<String> any, List<String> all, List<String> none){
-        return getArtTimeline(local, tag, max_id, null, any, all, none);
-    }
 
-    public APIResponse getArtTimeline(boolean local, String max_id, List<String> any, List<String> all, List<String> none){
-        return getArtTimeline(local, null, max_id, null, any, all, none);
-    }
 
-    public APIResponse getCustomArtTimelineSinceId(boolean local, String tag, String since_id, List<String> any, List<String> all, List<String> none){
-        return getArtTimeline(local, tag, null, since_id, any, all, none);
-    }
-
-    public APIResponse getArtTimelineSinceId(boolean local, String since_id, List<String> any, List<String> all, List<String> none){
-        return getArtTimeline(local, null, null, since_id, any, all, none);
-    }
-    /**
-     * Retrieves art timeline
-     * @param local boolean only local timeline
-     * @param max_id String id max
-     * @return APIResponse
-     */
-    private APIResponse getArtTimeline(boolean local, String tag, String max_id, String since_id, List<String> any, List<String> all, List<String> none){
-        if( tag == null)
-            tag = "mastoart";
-        APIResponse apiResponse = getPublicTimelineTag(tag, local, true, max_id, since_id, tootPerPage, any, all, none);
-        APIResponse apiResponseReply = new APIResponse();
-        if( apiResponse != null){
-            apiResponseReply.setMax_id(apiResponse.getMax_id());
-            apiResponseReply.setSince_id(apiResponse.getSince_id());
-            apiResponseReply.setStatuses(new ArrayList<>());
-            if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0){
-                for( Status status: apiResponse.getStatuses()){
-                    if( status.getMedia_attachments() != null ) {
-                        String statusSerialized = Helper.statusToStringStorage(status);
-                        for (Attachment attachment : status.getMedia_attachments()) {
-                            Status newStatus = Helper.restoreStatusFromString(statusSerialized);
-                            if (newStatus == null)
-                                break;
-                            newStatus.setArt_attachment(attachment);
-                            apiResponseReply.getStatuses().add(newStatus);
-                        }
-                    }
-                }
-            }
-        }
-        return apiResponseReply;
-    }
 
     /**
      * Retrieves public tag timeline *synchronously*
