@@ -47,6 +47,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAfterBookmarkAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSearchAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Conversation;
@@ -419,7 +420,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
         //For remote Peertube remote instances
-        if(( instanceType != null && instanceType.equals("PEERTUBE") || (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) && peertubeAdapater != null)){
+        if(( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE || instanceType != null && instanceType.equals("PEERTUBE") || (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) && peertubeAdapater != null)){
             int previousPosition = this.peertubes.size();
             if( max_id == null)
                 max_id = "0";

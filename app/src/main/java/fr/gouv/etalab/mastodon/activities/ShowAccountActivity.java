@@ -74,6 +74,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -191,7 +192,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             }else {
                 accountId = account.getId();
             }
-            peertubeAccount = b.getBoolean("peertubeAccount", false);
+            peertubeAccount = b.getBoolean("peertubeaccount", false);
             if (account == null) {
                 new RetrieveAccountAsyncTask(getApplicationContext(), accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
@@ -303,8 +304,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             account_dn.setCompoundDrawables( null, null, null, null);
         }
 
-        //Peertube account
-        if( peertubeAccount) {
+        //Peertube account watched by a Mastodon account
+        if( peertubeAccount && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
             account_type.setVisibility(View.VISIBLE);
         }
         //Bot account
@@ -600,7 +601,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         });
         SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
         account.setNoteSpan(spannableString);
-        account.makeEmojisAccountProfile(ShowAccountActivity.this, ShowAccountActivity.this, account);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+            account.makeEmojisAccountProfile(ShowAccountActivity.this, ShowAccountActivity.this, account);
         account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
         account_note.setMovementMethod(LinkMovementMethod.getInstance());
         if (!peertubeAccount && tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
@@ -768,10 +770,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             return;
         }
-
         pins = apiResponse.getStatuses();
         if (pins != null && pins.size() > 0) {
-            if( pins.get(0).isPinned()) {
+            if (pins.get(0).isPinned()) {
                 this.statuses.addAll(pins);
                 //noinspection ConstantConditions
                 tabLayout.getTabAt(3).setText(getString(R.string.pins_cnt, pins.size()));
@@ -856,7 +857,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
                         bundle = new Bundle();
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
-                        bundle.putString("targetedId", account.getId());
+                        bundle.putString("targetedId", account.getAcct());
                         bundle.putBoolean("showReply",false);
                         displayStatusFragment.setArguments(bundle);
                         return displayStatusFragment;

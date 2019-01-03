@@ -287,7 +287,7 @@ public class CrossActions {
                     Bundle b = new Bundle();
                     //Flag it has a peertube account
                     if( remoteAccount.getHost() != null && remoteAccount.getAcct().split("@").length > 1)
-                        b.putBoolean("peertubeAccount", true);
+                        b.putBoolean("peertubeaccount", true);
                     b.putParcelable("account", remoteAccounts.get(0));
                     intent.putExtras(b);
                     context.startActivity(intent);

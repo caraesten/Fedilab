@@ -353,95 +353,49 @@ public class PeertubeAPI {
         return apiResponse;
     }
 
-    /**
-     * Retrieves status for the account *synchronously*
-     *
-     * @param accountId String Id of the account
-     * @return APIResponse
-     */
-    public APIResponse getStatus(String accountId) {
-        return getStatus(accountId, false, false, false, null, null, tootPerPage);
-    }
 
     /**
-     * Retrieves status for the account *synchronously*
+     * Retrieves videos for the account *synchronously*
      *
-     * @param accountId String Id of the account
+     * @param acct String Id of the account
      * @param max_id    String id max
      * @return APIResponse
      */
-    public APIResponse getStatus(String accountId, String max_id) {
-        return getStatus(accountId, false, false, false, max_id, null, tootPerPage);
+    public APIResponse getVideos(String acct, String max_id) {
+        return getVideos(acct, max_id, null, tootPerPage);
     }
 
-    /**
-     * Retrieves status with media for the account *synchronously*
-     *
-     * @param accountId String Id of the account
-     * @param max_id    String id max
-     * @return APIResponse
-     */
-    public APIResponse getStatusWithMedia(String accountId, String max_id) {
-        return getStatus(accountId, true, false, false, max_id, null, tootPerPage);
-    }
 
-    /**
-     * Retrieves pinned status(es) *synchronously*
-     *
-     * @param accountId String Id of the account
-     * @param max_id    String id max
-     * @return APIResponse
-     */
-    public APIResponse getPinnedStatuses(String accountId, String max_id) {
-        return getStatus(accountId, false, true, false, max_id, null, tootPerPage);
-    }
-
-    /**
-     * Retrieves replies status(es) *synchronously*
-     *
-     * @param accountId String Id of the account
-     * @param max_id    String id max
-     * @return APIResponse
-     */
-    public APIResponse getAccountTLStatuses(String accountId, String max_id, boolean exclude_replies) {
-        return getStatus(accountId, false, false, exclude_replies, max_id, null, tootPerPage);
-    }
 
     /**
      * Retrieves status for the account *synchronously*
      *
-     * @param accountId       String Id of the account
-     * @param onlyMedia       boolean only with media
-     * @param exclude_replies boolean excludes replies
+     * @param acct       String Id of the account
      * @param max_id          String id max
      * @param since_id        String since the id
      * @param limit           int limit  - max value 40
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getStatus(String accountId, boolean onlyMedia, boolean pinned,
-                                  boolean exclude_replies, String max_id, String since_id, int limit) {
+    private APIResponse getVideos(String acct, String max_id, String since_id, int limit) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
-            params.put("max_id", max_id);
+            params.put("start", max_id);
         if (since_id != null)
             params.put("since_id", since_id);
         if (0 < limit || limit > 40)
             limit = 40;
-        if( onlyMedia)
-            params.put("only_media", Boolean.toString(true));
-        if( pinned)
-            params.put("pinned", Boolean.toString(true));
-        params.put("exclude_replies", Boolean.toString(exclude_replies));
-        params.put("limit", String.valueOf(limit));
-        statuses = new ArrayList<>();
+        params.put("count", String.valueOf(limit));
+        List<Peertube> peertubes = new ArrayList<>();
         try {
+
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/statuses", accountId)), 60, params, prefKeyOauthTokenT);
-            statuses = parseStatuses(context, new JSONArray(response));
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/videos", acct)), 60, params, prefKeyOauthTokenT);
+
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            peertubes = parsePeertube(jsonArray);
+
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -454,7 +408,7 @@ public class PeertubeAPI {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        apiResponse.setStatuses(statuses);
+        apiResponse.setPeertubes(peertubes);
         return apiResponse;
     }
 
@@ -3576,7 +3530,7 @@ public class PeertubeAPI {
                 account.setNote("");
 
             account.setUrl(accountObject.get("url").toString());
-            if( accountObject.has("avatar") && !accountObject.getJSONObject("avatar").toString().equals("null")){
+            if( accountObject.has("avatar") && !accountObject.isNull("avatar")){
                 account.setAvatar(accountObject.getJSONObject("avatar").get("path").toString());
             }else
                 account.setAvatar(null);

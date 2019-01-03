@@ -35,8 +35,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
+import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
@@ -101,7 +104,18 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         holder.peertube_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CrossActions.doCrossProfile(context, account);
+                //For remote peertube instance
+                if( !peertube.getInstance().equals(Helper.getLiveInstance(context)))
+                    CrossActions.doCrossProfile(context, account);
+                else {
+                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putBoolean("peertubeaccount", true);
+                    b.putParcelable("account", peertube.getAccount());
+
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
             }
         });
         Glide.with(holder.peertube_video_image.getContext())
@@ -115,6 +129,8 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
             public void onClick(View v) {
                 Intent intent = new Intent(context, PeertubeActivity.class);
                 Bundle b = new Bundle();
+                if( (instance == null || instance.trim().length() == 0) && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                    instance = Helper.getLiveInstance(context);
                 String finalUrl = "https://"  + instance + peertube.getEmbedPath();
                 Pattern link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/embed\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
                 Matcher matcherLink = link.matcher(finalUrl);

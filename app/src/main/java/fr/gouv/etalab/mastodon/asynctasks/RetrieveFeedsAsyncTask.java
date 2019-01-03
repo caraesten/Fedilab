@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
@@ -199,12 +200,17 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getFavourites(max_id);
                 break;
             case USER:
-                if( showMediaOnly)
-                    apiResponse = api.getStatusWithMedia(targetedID, max_id);
-                else if (showPinned)
-                    apiResponse = api.getPinnedStatuses(targetedID, max_id);
-                else
-                    apiResponse = api.getAccountTLStatuses(targetedID, max_id, !showReply);
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                    if (showMediaOnly)
+                        apiResponse = api.getStatusWithMedia(targetedID, max_id);
+                    else if (showPinned)
+                        apiResponse = api.getPinnedStatuses(targetedID, max_id);
+                    else
+                        apiResponse = api.getAccountTLStatuses(targetedID, max_id, !showReply);
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                    PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                    apiResponse = peertubeAPI.getVideos(targetedID, max_id);
+                }
                 break;
             case ONESTATUS:
                 apiResponse = api.getStatusbyId(targetedID);
@@ -276,11 +282,13 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             case HASHTAG:
                 break;
         }
-        List<String> bookmarks = new StatusCacheDAO(contextReference.get(), db).getAllStatusId(StatusCacheDAO.BOOKMARK_CACHE);
-        if( apiResponse != null && apiResponse.getStatuses() != null && bookmarks != null && apiResponse.getStatuses().size() > 0){
-            List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = apiResponse.getStatuses();
-            for(fr.gouv.etalab.mastodon.client.Entities.Status status: statuses) {
-                status.setBookmarked(bookmarks.contains(status.getId()));
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            List<String> bookmarks = new StatusCacheDAO(contextReference.get(), db).getAllStatusId(StatusCacheDAO.BOOKMARK_CACHE);
+            if (apiResponse != null && apiResponse.getStatuses() != null && bookmarks != null && apiResponse.getStatuses().size() > 0) {
+                List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = apiResponse.getStatuses();
+                for (fr.gouv.etalab.mastodon.client.Entities.Status status : statuses) {
+                    status.setBookmarked(bookmarks.contains(status.getId()));
+                }
             }
         }
         return null;
