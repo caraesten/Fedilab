@@ -43,6 +43,9 @@ public class Peertube {
     private List<String> resolution;
     private boolean commentsEnabled;
     private boolean sensitive;
+    private String category;
+    private String license;
+    private String language;
 
     private JSONObject cache;
 
@@ -226,5 +229,29 @@ public class Peertube {
 
     public void setSensitive(boolean sensitive) {
         this.sensitive = sensitive;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getLicense() {
+        return license;
+    }
+
+    public void setLicense(String license) {
+        this.license = license;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

@@ -797,8 +797,35 @@ public class PeertubeAPI {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
-            JSONArray values = new JSONObject(response).getJSONArray("data");
-            peertubes = parsePeertube(values);
+            if( !action.equals("/overviews/videos")) {
+                JSONArray values = new JSONObject(response).getJSONArray("data");
+                peertubes = parsePeertube(values);
+            }else {
+                JSONArray videoA = new JSONObject(response).getJSONArray("categories");
+                JSONArray values = videoA.getJSONObject(0).getJSONArray("videos");
+                List<Peertube> peertubes1 = parsePeertube(values);
+                peertubes.addAll(peertubes1);
+                values = videoA.getJSONObject(1).getJSONArray("videos");
+                List<Peertube> peertubes2 = parsePeertube(values);
+                peertubes.addAll(peertubes2);
+
+                videoA = new JSONObject(response).getJSONArray("channels");
+                values = videoA.getJSONObject(0).getJSONArray("videos");
+                List<Peertube> peertubes3 = parsePeertube(values);
+                peertubes.addAll(peertubes3);
+                values = videoA.getJSONObject(1).getJSONArray("videos");
+                List<Peertube> peertubes4 = parsePeertube(values);
+                peertubes.addAll(peertubes4);
+
+                videoA = new JSONObject(response).getJSONArray("tags");
+                values = videoA.getJSONObject(0).getJSONArray("videos");
+                List<Peertube> peertubes5 = parsePeertube(values);
+                peertubes.addAll(peertubes5);
+                values = videoA.getJSONObject(1).getJSONArray("videos");
+                List<Peertube> peertubes6 = parsePeertube(values);
+                peertubes.addAll(peertubes6);
+
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -2840,6 +2867,9 @@ public class PeertubeAPI {
             peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
             peertube.setDuration(Integer.parseInt(resobj.get("duration").toString()));
             peertube.setSensitive(Boolean.parseBoolean(resobj.get("nsfw").toString()));
+            peertube.setCategory(resobj.getJSONObject("category").get("label").toString());
+            peertube.setLicense(resobj.getJSONObject("licence").get("label").toString());
+            peertube.setLanguage(resobj.getJSONObject("language").get("label").toString());
             try {
                 peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
             } catch (ParseException e) {
