@@ -160,6 +160,7 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Application;
@@ -1230,11 +1231,26 @@ public class Helper {
         }else{
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer);
+            hideMenuItem(navigationView.getMenu());
             arrow.setImageResource(R.drawable.ic_arrow_drop_down);
             switchLayout(activity);
         }
         menuAccountsOpened = !menuAccountsOpened;
 
+    }
+
+    public static void hideMenuItem(Menu menu){
+        if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            MenuItem itemCom = menu.findItem(R.id.nav_main_com);
+            if( itemCom != null)
+                itemCom.setVisible(false);
+            MenuItem itemOpt = menu.findItem(R.id.nav_main_opt);
+            if( itemOpt != null)
+                itemOpt.setVisible(false);
+
+        }else if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+
+        }
     }
 
     /**
@@ -1250,6 +1266,8 @@ public class Helper {
         MainActivity.lastNotificationId = null;
         MainActivity.lastHomeId = null;
         navigationView.inflateMenu(R.menu.activity_main_drawer);
+        hideMenuItem(navigationView.getMenu());
+
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
         //Can happen when an account has been deleted and there is a click on an old notification
@@ -1556,7 +1574,6 @@ public class Helper {
                     SubActionButton.Builder itemBuilderAcc = new SubActionButton.Builder(activity);
                     if( !accountChoice.getAvatar().startsWith("http"))
                         accountChoice.setAvatar("https://" + accountChoice.getInstance() + accountChoice.getAvatar());
-                    Log.v(Helper.TAG,"avatar: " + accountChoice.getAvatar());
                     ImageView itemIconAcc = new ImageView(activity);
                     Glide.with(activity.getApplicationContext())
                             .asBitmap()

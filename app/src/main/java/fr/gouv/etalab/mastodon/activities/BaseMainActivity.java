@@ -211,13 +211,30 @@ public abstract class BaseMainActivity extends BaseActivity
     private HashMap<String, Integer> tabPosition = new HashMap<>();
     public static HashMap<Integer, RetrieveFeedsAsyncTask.Type> typePosition = new HashMap<>();
     private FloatingActionButton federatedTimelines;
-    private UpdateAccountInfoAsyncTask.SOCIAL social;
+    public static UpdateAccountInfoAsyncTask.SOCIAL social;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+
+
+        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(token);
+        if( account == null){
+            Helper.logout(getApplicationContext());
+            Intent myIntent = new Intent(BaseMainActivity.this, LoginActivity.class);
+            startActivity(myIntent);
+            finish();
+            return;
+        }
+        social = (account.getSocial() == null || account.getSocial().equals("MASTODON")? UpdateAccountInfoAsyncTask.SOCIAL.MASTODON: UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE);
+
 
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -251,7 +268,7 @@ public abstract class BaseMainActivity extends BaseActivity
         activity = this;
         rateThisApp();
 
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+
         Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
@@ -355,412 +372,8 @@ public abstract class BaseMainActivity extends BaseActivity
         }else {
             style = R.style.Dialog;
         }
-       federatedTimelines = findViewById(R.id.federated_timeline);
 
-        delete_instance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    String title = toolbarTitle.getText().toString();
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
-                    dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            new InstancesDAO(BaseMainActivity.this, db).remove(instance_id);
-                            BaseMainActivity.this.onBackPressed();
-                        }
-                    });
-                    dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-                    dialogBuilder.setTitle(R.string.delete_instance);
-                    dialogBuilder.setMessage(getString(R.string.warning_delete_instance, title));
-                    AlertDialog alertDialog = dialogBuilder.create();
-                    alertDialog.show();
-
-                }catch (Exception e){
-                    Toasty.error(BaseMainActivity.this, getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
-        if( !displayFollowInstance)
-            federatedTimelines.hide();
-        federatedTimelines.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new ManageListsAsyncTask(BaseMainActivity.this, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                new InstancesDAO(BaseMainActivity.this, db).cleanDoublon();
-                List<RemoteInstance> remoteInstances = new InstancesDAO(BaseMainActivity.this, db).getAllInstances();
-                popup = new PopupMenu(BaseMainActivity.this, federatedTimelines);
-                popup.getMenuInflater()
-                        .inflate(R.menu.remote_instances, popup.getMenu());
-                try {
-                    @SuppressLint("PrivateApi") Method method = popup.getMenu().getClass().getDeclaredMethod("setOptionalIconsVisible", boolean.class);
-                    method.setAccessible(true);
-                    method.invoke(popup.getMenu(), true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if(remoteInstances != null) {
-                    SubMenu submMastodon = popup.getMenu().findItem(R.id.action_show_mastodon).getSubMenu();
-                    SubMenu submPeertube = popup.getMenu().findItem(R.id.action_show_peertube).getSubMenu();
-                    SubMenu submPixelfed = popup.getMenu().findItem(R.id.action_show_pixelfed).getSubMenu();
-                    SubMenu submMisskey = popup.getMenu().findItem(R.id.action_show_misskey).getSubMenu();
-                    SubMenu submChannel = popup.getMenu().findItem(R.id.action_show_channel).getSubMenu();
-                    int i = 0, j = 0 , k = 0, l = 0 , m = 0;
-                    for (RemoteInstance remoteInstance : remoteInstances) {
-                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("MASTODON")) {
-                            MenuItem itemPlaceHolder = submMastodon.findItem(R.id.mastodon_instances);
-                            if( itemPlaceHolder != null)
-                                itemPlaceHolder.setVisible(false);
-                            MenuItem item = submMastodon.add(0, i, Menu.NONE, remoteInstance.getHost());
-                            item.setIcon(R.drawable.mastodon_icon_item);
-                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    DisplayStatusFragment statusFragment;
-                                    Bundle bundle = new Bundle();
-                                    statusFragment = new DisplayStatusFragment();
-                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                                    bundle.putString("remote_instance", remoteInstance.getHost());
-                                    statusFragment.setArguments(bundle);
-                                    String fragmentTag = "REMOTE_INSTANCE";
-                                    instance_id = remoteInstance.getDbID();
-                                    FragmentManager fragmentManager = getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                                    main_app_container.setVisibility(View.VISIBLE);
-                                    viewPager.setVisibility(View.GONE);
-                                    tabLayout.setVisibility(View.GONE);
-                                    toolbarTitle.setVisibility(View.VISIBLE);
-                                    delete_instance.setVisibility(View.VISIBLE);
-                                    toolbarTitle.setText(remoteInstance.getHost());
-                                    return false;
-                                }
-                            });
-                            i++;
-                        }
-                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("PEERTUBE_CHANNEL")) {
-                            MenuItem itemPlaceHolder = submChannel.findItem(R.id.channel_instances);
-                            if( itemPlaceHolder != null)
-                                itemPlaceHolder.setVisible(false);
-                            MenuItem item = submChannel.add(0, k, Menu.NONE, remoteInstance.getId() + " - " +remoteInstance.getHost());
-                            item.setIcon(R.drawable.ic_list_instance);
-                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    DisplayStatusFragment statusFragment;
-                                    Bundle bundle = new Bundle();
-                                    statusFragment = new DisplayStatusFragment();
-                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                                    bundle.putString("remote_instance", remoteInstance.getHost());
-                                    bundle.putString("remote_channel_name", remoteInstance.getId());
-                                    statusFragment.setArguments(bundle);
-                                    instance_id = remoteInstance.getDbID();
-                                    String fragmentTag = "REMOTE_INSTANCE";
-                                    FragmentManager fragmentManager = getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                                    main_app_container.setVisibility(View.VISIBLE);
-                                    viewPager.setVisibility(View.GONE);
-                                    tabLayout.setVisibility(View.GONE);
-                                    toolbarTitle.setVisibility(View.VISIBLE);
-                                    delete_instance.setVisibility(View.VISIBLE);
-                                    toolbarTitle.setText(remoteInstance.getHost());
-                                    return false;
-                                }
-                            });
-                            k++;
-                        }
-                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("PIXELFED")) {
-                            MenuItem itemPlaceHolder = submPixelfed.findItem(R.id.pixelfed_instance);
-                            if( itemPlaceHolder != null)
-                                itemPlaceHolder.setVisible(false);
-                            MenuItem item = submPixelfed.add(0, j, Menu.NONE, remoteInstance.getHost());
-                            item.setIcon(R.drawable.pixelfed);
-                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    DisplayStatusFragment statusFragment;
-                                    Bundle bundle = new Bundle();
-                                    statusFragment = new DisplayStatusFragment();
-                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PIXELFED);
-                                    bundle.putString("remote_instance", remoteInstance.getHost());
-                                    statusFragment.setArguments(bundle);
-                                    String fragmentTag = "REMOTE_INSTANCE";
-                                    instance_id = remoteInstance.getDbID();
-                                    FragmentManager fragmentManager = getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                                    main_app_container.setVisibility(View.VISIBLE);
-                                    viewPager.setVisibility(View.GONE);
-                                    tabLayout.setVisibility(View.GONE);
-                                    toolbarTitle.setVisibility(View.VISIBLE);
-                                    delete_instance.setVisibility(View.VISIBLE);
-                                    toolbarTitle.setText(remoteInstance.getHost());
-                                    return false;
-                                }
-                            });
-                            j++;
-                        }
-                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("MISSKEY")) {
-                            MenuItem itemPlaceHolder = submMisskey.findItem(R.id.misskey_instance);
-                            if( itemPlaceHolder != null)
-                                itemPlaceHolder.setVisible(false);
-                            MenuItem item = submMisskey.add(0, l, Menu.NONE, remoteInstance.getHost());
-                            item.setIcon(R.drawable.misskey);
-                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    DisplayStatusFragment statusFragment;
-                                    Bundle bundle = new Bundle();
-                                    statusFragment = new DisplayStatusFragment();
-                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                                    bundle.putString("remote_instance", remoteInstance.getHost());
-                                    statusFragment.setArguments(bundle);
-                                    String fragmentTag = "REMOTE_INSTANCE";
-                                    instance_id = remoteInstance.getDbID();
-                                    FragmentManager fragmentManager = getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                                    main_app_container.setVisibility(View.VISIBLE);
-                                    viewPager.setVisibility(View.GONE);
-                                    tabLayout.setVisibility(View.GONE);
-                                    toolbarTitle.setVisibility(View.VISIBLE);
-                                    delete_instance.setVisibility(View.VISIBLE);
-                                    toolbarTitle.setText(remoteInstance.getHost());
-                                    return false;
-                                }
-                            });
-                            l++;
-                        }
-                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("PEERTUBE")) {
-                            MenuItem itemPlaceHolder = submPeertube.findItem(R.id.peertube_instances);
-                            if( itemPlaceHolder != null)
-                                itemPlaceHolder.setVisible(false);
-                            MenuItem item = submPeertube.add(0, m, Menu.NONE, remoteInstance.getHost());
-                            item.setIcon(R.drawable.peertube_icon);
-                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
-                                    DisplayStatusFragment statusFragment;
-                                    Bundle bundle = new Bundle();
-                                    statusFragment = new DisplayStatusFragment();
-                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                                    bundle.putString("remote_instance", remoteInstance.getHost());
-                                    statusFragment.setArguments(bundle);
-                                    String fragmentTag = "REMOTE_INSTANCE";
-                                    instance_id = remoteInstance.getDbID();
-                                    FragmentManager fragmentManager = getSupportFragmentManager();
-                                    fragmentManager.beginTransaction()
-                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                                    main_app_container.setVisibility(View.VISIBLE);
-                                    viewPager.setVisibility(View.GONE);
-                                    tabLayout.setVisibility(View.GONE);
-                                    toolbarTitle.setVisibility(View.VISIBLE);
-                                    delete_instance.setVisibility(View.VISIBLE);
-                                    toolbarTitle.setText(remoteInstance.getHost());
-                                    return false;
-                                }
-                            });
-                            m++;
-                        }
-                    }
-                }
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_add_instance:
-                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
-                                LayoutInflater inflater = getLayoutInflater();
-                                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.search_instance, null);
-                                dialogBuilder.setView(dialogView);
-
-                                AutoCompleteTextView instance_list = dialogView.findViewById(R.id.search_instance);
-                                //Manage download of attachments
-                                RadioGroup radioGroup = dialogView.findViewById(R.id.set_attachment_group);
-
-                                instance_list.setFilters(new InputFilter[]{new InputFilter.LengthFilter(60)});
-                                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                                        String instanceName = instance_list.getText().toString().trim();
-                                        new Thread(new Runnable(){
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance)
-                                                        new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/timelines/public?local=true", 10, null, null);
-                                                    else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance)
-                                                        new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/videos/", 10, null, null);
-                                                    else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
-                                                        new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/timelines/public", 10, null, null);
-                                                    }else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
-                                                        new HttpsConnection(BaseMainActivity.this).post("https://" + instanceName + "/api/notes/local-timeline", 10, null, null);
-                                                    }
-                                                    runOnUiThread(new Runnable() {
-                                                        public void run() {
-                                                            JSONObject resobj;
-                                                            dialog.dismiss();
-                                                            if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance)
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MASTODON");
-                                                            else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance)
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PEERTUBE");
-                                                            else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance)
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PIXELFED");
-                                                            else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance)
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MISSKEY");
-                                                            DisplayStatusFragment statusFragment;
-                                                            Bundle bundle = new Bundle();
-                                                            statusFragment = new DisplayStatusFragment();
-                                                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                                                            bundle.putString("remote_instance", instanceName);
-                                                            statusFragment.setArguments(bundle);
-                                                            String fragmentTag = "REMOTE_INSTANCE";
-                                                            FragmentManager fragmentManager = getSupportFragmentManager();
-                                                            fragmentManager.beginTransaction()
-                                                                    .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
-                                                            main_app_container.setVisibility(View.VISIBLE);
-                                                            viewPager.setVisibility(View.GONE);
-                                                            delete_instance.setVisibility(View.VISIBLE);
-                                                            tabLayout.setVisibility(View.GONE);
-                                                            toolbarTitle.setVisibility(View.VISIBLE);
-                                                            toolbarTitle.setText(instanceName);
-                                                        }
-                                                    });
-                                                } catch (final Exception e) {
-                                                    e.printStackTrace();
-                                                    runOnUiThread(new Runnable() {
-                                                        public void run() {
-                                                            Toasty.warning(getApplicationContext(), getString(R.string.toast_instance_unavailable),Toast.LENGTH_LONG).show();
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        }).start();
-                                    }
-                                });
-                                AlertDialog alertDialog = dialogBuilder.create();
-                                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                    @Override
-                                    public void onDismiss(DialogInterface dialogInterface) {
-                                        //Hide keyboard
-                                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                        assert imm != null;
-                                        imm.hideSoftInputFromWindow(instance_list.getWindowToken(), 0);
-                                    }
-                                });
-                                if( alertDialog.getWindow() != null )
-                                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                                alertDialog.show();
-
-                                instance_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
-                                        oldSearch = parent.getItemAtPosition(position).toString().trim();
-                                    }
-                                });
-                                instance_list.addTextChangedListener(new TextWatcher() {
-                                    @Override
-                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                                    }
-
-                                    @Override
-                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                                    }
-
-                                    @Override
-                                    public void afterTextChanged(Editable s) {
-                                        Pattern host = Pattern.compile("([\\da-z\\.-]+\\.[a-z\\.]{2,12})");
-                                        Matcher matcher = host.matcher(s.toString().trim());
-                                        if( s.toString().trim().length() == 0 || !matcher.find()) {
-                                            alertDialog.getButton(
-                                                    AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-                                        } else {
-                                            // Something into edit text. Enable the button.
-                                            alertDialog.getButton(
-                                                    AlertDialog.BUTTON_POSITIVE).setEnabled(true);
-                                        }
-                                        if (s.length() > 2 && !isLoadingInstance) {
-                                            final String action = "/instances/search";
-                                            final HashMap<String, String> parameters = new HashMap<>();
-                                            parameters.put("q", s.toString().trim());
-                                            parameters.put("count", String.valueOf(1000));
-                                            parameters.put("name", String.valueOf(true));
-                                            isLoadingInstance = true;
-
-                                            if( oldSearch == null || !oldSearch.equals(s.toString().trim()))
-                                                new Thread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        try {
-                                                            final String response = new HttpsConnection(BaseMainActivity.this).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
-                                                            runOnUiThread(new Runnable() {
-                                                                public void run() {
-                                                                    isLoadingInstance = false;
-                                                                    String[] instances;
-                                                                    try {
-                                                                        JSONObject jsonObject = new JSONObject(response);
-                                                                        JSONArray jsonArray = jsonObject.getJSONArray("instances");
-                                                                        if (jsonArray != null) {
-                                                                            int length = 0;
-                                                                            for (int i = 0; i < jsonArray.length(); i++) {
-                                                                                if( !jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true"))
-                                                                                    length++;
-                                                                            }
-                                                                            instances = new String[length];
-                                                                            int j = 0;
-                                                                            for (int i = 0; i < jsonArray.length(); i++) {
-                                                                                if( !jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true")) {
-                                                                                    instances[j] = jsonArray.getJSONObject(i).get("name").toString();
-                                                                                    j++;
-                                                                                }
-                                                                            }
-                                                                        } else {
-                                                                            instances = new String[]{};
-                                                                        }
-                                                                        instance_list.setAdapter(null);
-                                                                        ArrayAdapter<String> adapter =
-                                                                                new ArrayAdapter<>(BaseMainActivity.this, android.R.layout.simple_list_item_1, instances);
-                                                                        instance_list.setAdapter(adapter);
-                                                                        if (instance_list.hasFocus() && !BaseMainActivity.this.isFinishing())
-                                                                            instance_list.showDropDown();
-                                                                        oldSearch = s.toString().trim();
-
-                                                                    } catch (JSONException ignored) {
-                                                                        isLoadingInstance = false;
-                                                                    }
-                                                                }
-                                                            });
-
-                                                        } catch (HttpsConnection.HttpsConnectionException e) {
-                                                            isLoadingInstance = false;
-                                                        } catch (Exception e) {
-                                                            isLoadingInstance = false;
-                                                        }
-                                                    }
-                                                }).start();
-                                            else
-                                                isLoadingInstance = false;
-                                        }
-                                    }
-                                });
-                                break;
-                        }
-                        return true;
-                    }
-                });
-                popup.show();
-            }
-        });
+        displayFollowInstances();
 
         if( theme == THEME_LIGHT){
             changeDrawableColor(getApplicationContext(), R.drawable.ic_home,R.color.dark_icon);
@@ -778,8 +391,8 @@ public abstract class BaseMainActivity extends BaseActivity
             changeDrawableColor(getApplicationContext(), R.drawable.ic_color_lens,R.color.dark_text);
         }
 
-
-        startSreaming();
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+            startSreaming();
 
 
         tabLayout.addTab(tabHome);
@@ -1077,7 +690,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
         final NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        Helper.hideMenuItem(navigationView.getMenu());
 
 
         //Scroll to top when top bar is clicked for favourites/blocked/muted
@@ -1265,20 +878,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 return false;
             }
         });
-
-        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
-
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(token);
-        if( account == null){
-            Helper.logout(getApplicationContext());
-            Intent myIntent = new Intent(BaseMainActivity.this, LoginActivity.class);
-            startActivity(myIntent);
-            finish();
-            return;
-        }
-        social = (account.getSocial() == null || account.getSocial().equals("MASTODON")? UpdateAccountInfoAsyncTask.SOCIAL.MASTODON: UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE);
         //Image loader configuration
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -2118,6 +1717,7 @@ public abstract class BaseMainActivity extends BaseActivity
         super.onPause();
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", false).apply();
     }
+
 
     @Override
     public void onDestroy(){
@@ -3005,5 +2605,420 @@ public abstract class BaseMainActivity extends BaseActivity
     }
     public DisplayStatusFragment getHomeFragment(){
         return homeFragment;
+    }
+
+
+
+    private void displayFollowInstances(){
+
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        federatedTimelines = findViewById(R.id.federated_timeline);
+
+        delete_instance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    String title = toolbarTitle.getText().toString();
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
+                    dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            new InstancesDAO(BaseMainActivity.this, db).remove(instance_id);
+                            BaseMainActivity.this.onBackPressed();
+                        }
+                    });
+                    dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialogBuilder.setTitle(R.string.delete_instance);
+                    dialogBuilder.setMessage(getString(R.string.warning_delete_instance, title));
+                    AlertDialog alertDialog = dialogBuilder.create();
+                    alertDialog.show();
+
+                }catch (Exception e){
+                    Toasty.error(BaseMainActivity.this, getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
+        if( !displayFollowInstance)
+            federatedTimelines.hide();
+        federatedTimelines.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ManageListsAsyncTask(BaseMainActivity.this, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                new InstancesDAO(BaseMainActivity.this, db).cleanDoublon();
+                List<RemoteInstance> remoteInstances = new InstancesDAO(BaseMainActivity.this, db).getAllInstances();
+                popup = new PopupMenu(BaseMainActivity.this, federatedTimelines);
+                popup.getMenuInflater()
+                        .inflate(R.menu.remote_instances, popup.getMenu());
+                try {
+                    @SuppressLint("PrivateApi") Method method = popup.getMenu().getClass().getDeclaredMethod("setOptionalIconsVisible", boolean.class);
+                    method.setAccessible(true);
+                    method.invoke(popup.getMenu(), true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(remoteInstances != null) {
+                    SubMenu submMastodon = popup.getMenu().findItem(R.id.action_show_mastodon).getSubMenu();
+                    SubMenu submPeertube = popup.getMenu().findItem(R.id.action_show_peertube).getSubMenu();
+                    SubMenu submPixelfed = popup.getMenu().findItem(R.id.action_show_pixelfed).getSubMenu();
+                    SubMenu submMisskey = popup.getMenu().findItem(R.id.action_show_misskey).getSubMenu();
+                    SubMenu submChannel = popup.getMenu().findItem(R.id.action_show_channel).getSubMenu();
+                    int i = 0, j = 0 , k = 0, l = 0 , m = 0;
+                    for (RemoteInstance remoteInstance : remoteInstances) {
+                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("MASTODON")) {
+                            MenuItem itemPlaceHolder = submMastodon.findItem(R.id.mastodon_instances);
+                            if( itemPlaceHolder != null)
+                                itemPlaceHolder.setVisible(false);
+                            MenuItem item = submMastodon.add(0, i, Menu.NONE, remoteInstance.getHost());
+                            item.setIcon(R.drawable.mastodon_icon_item);
+                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    DisplayStatusFragment statusFragment;
+                                    Bundle bundle = new Bundle();
+                                    statusFragment = new DisplayStatusFragment();
+                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                                    bundle.putString("remote_instance", remoteInstance.getHost());
+                                    statusFragment.setArguments(bundle);
+                                    String fragmentTag = "REMOTE_INSTANCE";
+                                    instance_id = remoteInstance.getDbID();
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                                    main_app_container.setVisibility(View.VISIBLE);
+                                    viewPager.setVisibility(View.GONE);
+                                    tabLayout.setVisibility(View.GONE);
+                                    toolbarTitle.setVisibility(View.VISIBLE);
+                                    delete_instance.setVisibility(View.VISIBLE);
+                                    toolbarTitle.setText(remoteInstance.getHost());
+                                    return false;
+                                }
+                            });
+                            i++;
+                        }
+                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("PEERTUBE_CHANNEL")) {
+                            MenuItem itemPlaceHolder = submChannel.findItem(R.id.channel_instances);
+                            if( itemPlaceHolder != null)
+                                itemPlaceHolder.setVisible(false);
+                            MenuItem item = submChannel.add(0, k, Menu.NONE, remoteInstance.getId() + " - " +remoteInstance.getHost());
+                            item.setIcon(R.drawable.ic_list_instance);
+                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    DisplayStatusFragment statusFragment;
+                                    Bundle bundle = new Bundle();
+                                    statusFragment = new DisplayStatusFragment();
+                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                                    bundle.putString("remote_instance", remoteInstance.getHost());
+                                    bundle.putString("remote_channel_name", remoteInstance.getId());
+                                    statusFragment.setArguments(bundle);
+                                    instance_id = remoteInstance.getDbID();
+                                    String fragmentTag = "REMOTE_INSTANCE";
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                                    main_app_container.setVisibility(View.VISIBLE);
+                                    viewPager.setVisibility(View.GONE);
+                                    tabLayout.setVisibility(View.GONE);
+                                    toolbarTitle.setVisibility(View.VISIBLE);
+                                    delete_instance.setVisibility(View.VISIBLE);
+                                    toolbarTitle.setText(remoteInstance.getHost());
+                                    return false;
+                                }
+                            });
+                            k++;
+                        }
+                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("PIXELFED")) {
+                            MenuItem itemPlaceHolder = submPixelfed.findItem(R.id.pixelfed_instance);
+                            if( itemPlaceHolder != null)
+                                itemPlaceHolder.setVisible(false);
+                            MenuItem item = submPixelfed.add(0, j, Menu.NONE, remoteInstance.getHost());
+                            item.setIcon(R.drawable.pixelfed);
+                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    DisplayStatusFragment statusFragment;
+                                    Bundle bundle = new Bundle();
+                                    statusFragment = new DisplayStatusFragment();
+                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PIXELFED);
+                                    bundle.putString("remote_instance", remoteInstance.getHost());
+                                    statusFragment.setArguments(bundle);
+                                    String fragmentTag = "REMOTE_INSTANCE";
+                                    instance_id = remoteInstance.getDbID();
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                                    main_app_container.setVisibility(View.VISIBLE);
+                                    viewPager.setVisibility(View.GONE);
+                                    tabLayout.setVisibility(View.GONE);
+                                    toolbarTitle.setVisibility(View.VISIBLE);
+                                    delete_instance.setVisibility(View.VISIBLE);
+                                    toolbarTitle.setText(remoteInstance.getHost());
+                                    return false;
+                                }
+                            });
+                            j++;
+                        }
+                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("MISSKEY")) {
+                            MenuItem itemPlaceHolder = submMisskey.findItem(R.id.misskey_instance);
+                            if( itemPlaceHolder != null)
+                                itemPlaceHolder.setVisible(false);
+                            MenuItem item = submMisskey.add(0, l, Menu.NONE, remoteInstance.getHost());
+                            item.setIcon(R.drawable.misskey);
+                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    DisplayStatusFragment statusFragment;
+                                    Bundle bundle = new Bundle();
+                                    statusFragment = new DisplayStatusFragment();
+                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                                    bundle.putString("remote_instance", remoteInstance.getHost());
+                                    statusFragment.setArguments(bundle);
+                                    String fragmentTag = "REMOTE_INSTANCE";
+                                    instance_id = remoteInstance.getDbID();
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                                    main_app_container.setVisibility(View.VISIBLE);
+                                    viewPager.setVisibility(View.GONE);
+                                    tabLayout.setVisibility(View.GONE);
+                                    toolbarTitle.setVisibility(View.VISIBLE);
+                                    delete_instance.setVisibility(View.VISIBLE);
+                                    toolbarTitle.setText(remoteInstance.getHost());
+                                    return false;
+                                }
+                            });
+                            l++;
+                        }
+                        if (remoteInstance.getType() == null || remoteInstance.getType().equals("PEERTUBE")) {
+                            MenuItem itemPlaceHolder = submPeertube.findItem(R.id.peertube_instances);
+                            if( itemPlaceHolder != null)
+                                itemPlaceHolder.setVisible(false);
+                            MenuItem item = submPeertube.add(0, m, Menu.NONE, remoteInstance.getHost());
+                            item.setIcon(R.drawable.peertube_icon);
+                            item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    DisplayStatusFragment statusFragment;
+                                    Bundle bundle = new Bundle();
+                                    statusFragment = new DisplayStatusFragment();
+                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                                    bundle.putString("remote_instance", remoteInstance.getHost());
+                                    statusFragment.setArguments(bundle);
+                                    String fragmentTag = "REMOTE_INSTANCE";
+                                    instance_id = remoteInstance.getDbID();
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                                    main_app_container.setVisibility(View.VISIBLE);
+                                    viewPager.setVisibility(View.GONE);
+                                    tabLayout.setVisibility(View.GONE);
+                                    toolbarTitle.setVisibility(View.VISIBLE);
+                                    delete_instance.setVisibility(View.VISIBLE);
+                                    toolbarTitle.setText(remoteInstance.getHost());
+                                    return false;
+                                }
+                            });
+                            m++;
+                        }
+                    }
+                }
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_add_instance:
+                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
+                                LayoutInflater inflater = getLayoutInflater();
+                                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.search_instance, null);
+                                dialogBuilder.setView(dialogView);
+
+                                AutoCompleteTextView instance_list = dialogView.findViewById(R.id.search_instance);
+                                //Manage download of attachments
+                                RadioGroup radioGroup = dialogView.findViewById(R.id.set_attachment_group);
+
+                                instance_list.setFilters(new InputFilter[]{new InputFilter.LengthFilter(60)});
+                                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                        String instanceName = instance_list.getText().toString().trim();
+                                        new Thread(new Runnable(){
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance)
+                                                        new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/timelines/public?local=true", 10, null, null);
+                                                    else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance)
+                                                        new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/videos/", 10, null, null);
+                                                    else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
+                                                        new HttpsConnection(BaseMainActivity.this).get("https://" + instanceName + "/api/v1/timelines/public", 10, null, null);
+                                                    }else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
+                                                        new HttpsConnection(BaseMainActivity.this).post("https://" + instanceName + "/api/notes/local-timeline", 10, null, null);
+                                                    }
+                                                    runOnUiThread(new Runnable() {
+                                                        public void run() {
+                                                            JSONObject resobj;
+                                                            dialog.dismiss();
+                                                            if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance)
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MASTODON");
+                                                            else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance)
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PEERTUBE");
+                                                            else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance)
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PIXELFED");
+                                                            else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance)
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MISSKEY");
+                                                            DisplayStatusFragment statusFragment;
+                                                            Bundle bundle = new Bundle();
+                                                            statusFragment = new DisplayStatusFragment();
+                                                            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                                                            bundle.putString("remote_instance", instanceName);
+                                                            statusFragment.setArguments(bundle);
+                                                            String fragmentTag = "REMOTE_INSTANCE";
+                                                            FragmentManager fragmentManager = getSupportFragmentManager();
+                                                            fragmentManager.beginTransaction()
+                                                                    .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+                                                            main_app_container.setVisibility(View.VISIBLE);
+                                                            viewPager.setVisibility(View.GONE);
+                                                            delete_instance.setVisibility(View.VISIBLE);
+                                                            tabLayout.setVisibility(View.GONE);
+                                                            toolbarTitle.setVisibility(View.VISIBLE);
+                                                            toolbarTitle.setText(instanceName);
+                                                        }
+                                                    });
+                                                } catch (final Exception e) {
+                                                    e.printStackTrace();
+                                                    runOnUiThread(new Runnable() {
+                                                        public void run() {
+                                                            Toasty.warning(getApplicationContext(), getString(R.string.toast_instance_unavailable),Toast.LENGTH_LONG).show();
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        }).start();
+                                    }
+                                });
+                                AlertDialog alertDialog = dialogBuilder.create();
+                                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialogInterface) {
+                                        //Hide keyboard
+                                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                        assert imm != null;
+                                        imm.hideSoftInputFromWindow(instance_list.getWindowToken(), 0);
+                                    }
+                                });
+                                if( alertDialog.getWindow() != null )
+                                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                                alertDialog.show();
+
+                                instance_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+                                        oldSearch = parent.getItemAtPosition(position).toString().trim();
+                                    }
+                                });
+                                instance_list.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+                                        Pattern host = Pattern.compile("([\\da-z\\.-]+\\.[a-z\\.]{2,12})");
+                                        Matcher matcher = host.matcher(s.toString().trim());
+                                        if( s.toString().trim().length() == 0 || !matcher.find()) {
+                                            alertDialog.getButton(
+                                                    AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                                        } else {
+                                            // Something into edit text. Enable the button.
+                                            alertDialog.getButton(
+                                                    AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                                        }
+                                        if (s.length() > 2 && !isLoadingInstance) {
+                                            final String action = "/instances/search";
+                                            final HashMap<String, String> parameters = new HashMap<>();
+                                            parameters.put("q", s.toString().trim());
+                                            parameters.put("count", String.valueOf(1000));
+                                            parameters.put("name", String.valueOf(true));
+                                            isLoadingInstance = true;
+
+                                            if( oldSearch == null || !oldSearch.equals(s.toString().trim()))
+                                                new Thread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        try {
+                                                            final String response = new HttpsConnection(BaseMainActivity.this).get("https://instances.social/api/1.0" + action, 30, parameters, Helper.THEKINRAR_SECRET_TOKEN);
+                                                            runOnUiThread(new Runnable() {
+                                                                public void run() {
+                                                                    isLoadingInstance = false;
+                                                                    String[] instances;
+                                                                    try {
+                                                                        JSONObject jsonObject = new JSONObject(response);
+                                                                        JSONArray jsonArray = jsonObject.getJSONArray("instances");
+                                                                        if (jsonArray != null) {
+                                                                            int length = 0;
+                                                                            for (int i = 0; i < jsonArray.length(); i++) {
+                                                                                if( !jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true"))
+                                                                                    length++;
+                                                                            }
+                                                                            instances = new String[length];
+                                                                            int j = 0;
+                                                                            for (int i = 0; i < jsonArray.length(); i++) {
+                                                                                if( !jsonArray.getJSONObject(i).get("name").toString().contains("@") && jsonArray.getJSONObject(i).get("up").toString().equals("true")) {
+                                                                                    instances[j] = jsonArray.getJSONObject(i).get("name").toString();
+                                                                                    j++;
+                                                                                }
+                                                                            }
+                                                                        } else {
+                                                                            instances = new String[]{};
+                                                                        }
+                                                                        instance_list.setAdapter(null);
+                                                                        ArrayAdapter<String> adapter =
+                                                                                new ArrayAdapter<>(BaseMainActivity.this, android.R.layout.simple_list_item_1, instances);
+                                                                        instance_list.setAdapter(adapter);
+                                                                        if (instance_list.hasFocus() && !BaseMainActivity.this.isFinishing())
+                                                                            instance_list.showDropDown();
+                                                                        oldSearch = s.toString().trim();
+
+                                                                    } catch (JSONException ignored) {
+                                                                        isLoadingInstance = false;
+                                                                    }
+                                                                }
+                                                            });
+
+                                                        } catch (HttpsConnection.HttpsConnectionException e) {
+                                                            isLoadingInstance = false;
+                                                        } catch (Exception e) {
+                                                            isLoadingInstance = false;
+                                                        }
+                                                    }
+                                                }).start();
+                                            else
+                                                isLoadingInstance = false;
+                                        }
+                                    }
+                                });
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popup.show();
+            }
+        });
+
     }
 }
