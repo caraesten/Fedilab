@@ -1081,20 +1081,22 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
         tabLayout.getTabAt(0).select();
-        toot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), TootActivity.class);
-                startActivity(intent);
-            }
-        });
-        toot.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                CrossActions.doCrossReply(BaseMainActivity.this, null, null, false);
-                return false;
-            }
-        });
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            toot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), TootActivity.class);
+                    startActivity(intent);
+                }
+            });
+            toot.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    CrossActions.doCrossReply(BaseMainActivity.this, null, null, false);
+                    return false;
+                }
+            });
+        }
         //Image loader configuration
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -1119,6 +1121,18 @@ public abstract class BaseMainActivity extends BaseActivity
                 PopupMenu popup = new PopupMenu(BaseMainActivity.this, menuMore);
                 popup.getMenuInflater()
                         .inflate(R.menu.main, popup.getMenu());
+
+                if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                    MenuItem action_about_instance = popup.getMenu().findItem(R.id.action_about_instance);
+                    if( action_about_instance != null)
+                        action_about_instance.setVisible(false);
+                    MenuItem action_size = popup.getMenu().findItem(R.id.action_size);
+                    if( action_size != null)
+                        action_size.setVisible(false);
+                    MenuItem action_export = popup.getMenu().findItem(R.id.action_export);
+                    if( action_export != null)
+                        action_export.setVisible(false);
+                }
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
@@ -1285,6 +1299,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 startActivity(intent);
             }
         });
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            optionInfo.setVisibility(View.GONE);
         MenuFloating.tags = new ArrayList<>();
         updateHeaderAccountInfo(activity, account, headerLayout);
         //Locked account can see follow request

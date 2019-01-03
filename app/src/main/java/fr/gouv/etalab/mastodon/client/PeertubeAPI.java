@@ -283,22 +283,21 @@ public class PeertubeAPI {
     }
 
 
+
     /**
      * Returns a relationship between the authenticated account and an account
-     * @param accountId String account fetched
+     * @param uri String accounts fetched
      * @return Relationship entity
      */
-    public Relationship getRelationship(String accountId) {
-
-        List<Relationship> relationships;
-        Relationship relationship = null;
+    public boolean isFollowing(String uri) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("id",accountId);
+
+        params.put("uris", uri);
+        List<Relationship> relationships = new ArrayList<>();
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl("/accounts/relationships"), 60, params, prefKeyOauthTokenT);
-            relationships = parseRelationshipResponse(new JSONArray(response));
-            if( relationships != null && relationships.size() > 0)
-                relationship = relationships.get(0);
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUrl("/users/me/subscriptions/exist"), 60, params, prefKeyOauthTokenT);
+            return new JSONObject(response).getBoolean(uri);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -310,47 +309,7 @@ public class PeertubeAPI {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return relationship;
-    }
-
-
-
-
-    /**
-     * Returns a relationship between the authenticated account and an account
-     * @param accounts ArrayList<Account> accounts fetched
-     * @return Relationship entity
-     */
-    public APIResponse getRelationship(List<Account> accounts) {
-        HashMap<String, String> params = new HashMap<>();
-        if( accounts != null && accounts.size() > 0 ) {
-            StringBuilder parameters = new StringBuilder();
-            for(Account account: accounts)
-                parameters.append("id[]=").append(account.getId()).append("&");
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(5));
-            params.put("id[]", parameters.toString());
-            List<Relationship> relationships = new ArrayList<>();
-            try {
-                HttpsConnection httpsConnection = new HttpsConnection(context);
-                String response = httpsConnection.get(getAbsoluteUrl("/accounts/relationships"), 60, params, prefKeyOauthTokenT);
-                relationships = parseRelationshipResponse(new JSONArray(response));
-                apiResponse.setSince_id(httpsConnection.getSince_id());
-                apiResponse.setMax_id(httpsConnection.getMax_id());
-            } catch (HttpsConnection.HttpsConnectionException e) {
-                setError(e.getStatusCode(), e);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            apiResponse.setRelationships(relationships);
-        }
-
-        return apiResponse;
+        return false;
     }
 
 
@@ -1601,7 +1560,7 @@ public class PeertubeAPI {
                 action = String.format("/statuses/%s/unreblog", targetedId);
                 break;
             case FOLLOW:
-                action = String.format("/accounts/%s/follow", targetedId);
+                action = String.format("/users/me/subscriptions/%s", targetedId);
                 break;
             case REMOTE_FOLLOW:
                 action = "/follows";
@@ -1609,7 +1568,7 @@ public class PeertubeAPI {
                 params.put("uri", targetedId);
                 break;
             case UNFOLLOW:
-                action = String.format("/accounts/%s/unfollow", targetedId);
+                action = String.format("/users/me/subscriptions/%s", targetedId);
                 break;
             case BLOCK:
                 action = String.format("/accounts/%s/block", targetedId);
@@ -3505,6 +3464,7 @@ public class PeertubeAPI {
         Account account = new Account();
         try {
             account.setId(accountObject.get("id").toString());
+            account.setUuid(accountObject.get("uuid").toString());
             account.setUsername(accountObject.get("name").toString());
             account.setAcct(accountObject.get("name").toString()+"@" + accountObject.get("host"));
             account.setDisplay_name(accountObject.get("name").toString());

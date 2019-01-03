@@ -70,6 +70,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 public class Account implements Parcelable {
 
     private String id;
+    private String uuid;
     private String username;
     private SpannableString displayNameSpan;
     private String acct;
@@ -277,6 +278,14 @@ public class Account implements Parcelable {
 
     public void setSocial(String social) {
         this.social = social;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
 

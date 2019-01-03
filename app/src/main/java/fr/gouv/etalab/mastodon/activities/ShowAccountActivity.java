@@ -259,7 +259,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }else {
             changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
         }
-        new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        String accountIdRelation = accountId;
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            accountIdRelation = account.getUuid()+"@" + account.getHost();
+        new RetrieveRelationshipAsyncTask(getApplicationContext(), accountIdRelation, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         String urlHeader = account.getHeader();
         if (urlHeader != null && urlHeader.startsWith("/")) {

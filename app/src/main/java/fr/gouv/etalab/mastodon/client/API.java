@@ -3584,6 +3584,7 @@ public class API {
         Account account = new Account();
         try {
             account.setId(resobj.get("id").toString());
+            account.setUuid(resobj.get("id").toString());
             account.setUsername(resobj.get("username").toString());
             account.setAcct(resobj.get("acct").toString());
             account.setDisplay_name(resobj.get("display_name").toString());
