@@ -76,7 +76,7 @@
     <string name="neutral_menu_title">Alternativ</string>
     <string name="favorites_menu">Favoriter</string>
     <string name="communication_menu_title">Kommunikation</string>
-    <string name="muted_menu">Muted users</string>
+    <string name="muted_menu">Dämpade användare</string>
     <string name="blocked_menu">Blockerade användare</string>
     <string name="remote_follow_menu">Fjärrfölj</string>
     <string name="notifications">Notifieringar</string>
@@ -117,17 +117,17 @@
     <string name="more_action_5">Kopiera</string>
     <string name="more_action_6">Dela</string>
     <string name="more_action_7">Nämn</string>
-    <string name="more_action_8">Timed mute</string>
+    <string name="more_action_8">Tidsinställda mute</string>
     <string name="more_action_9">Ta bort &amp; nytt utkast</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
+        <item>Stänga av detta konto?</item>
         <item>Blockera detta konto?</item>
         <item>Anmäl den här tooten?</item>
         <item>Blockera denna domän?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Meddela</item>
+        <item>Tyst</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Ta bort denna toot?</item>
@@ -167,61 +167,61 @@
     <string name="toot_reply_content_title">Du svarar på denna toot:</string>
     <string name="toot_sensitive">Känsligt innehåll?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
-        <item>Post to mentioned users only</item>
+        <item>Post till offentliga tidslinjer</item>
+        <item>Lägger inte till offentliga tidslinjer</item>
+        <item>Bokför till anhängare bara</item>
+        <item>Post till nämns endast användare</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
-    <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="no_draft">Inga utkast!</string>
+    <string name="choose_toot">Välj ett toot</string>
+    <string name="choose_accounts">Välj ett konto</string>
+    <string name="select_accounts">Välj några konton</string>
+    <string name="remove_draft">Ta bort utkast?</string>
+    <string name="show_reply">Klicka på knappen för att visa den ursprungliga toot</string>
+    <string name="upload_form_description">Beskriva för synskadade</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">Ingen beskrivning tillgänglig!</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
+    <string name="about_vesrion">Släppa %1$s</string>
     <string name="about_developer">Utvecklare:</string>
     <string name="about_license">Licens: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Källkod: </string>
-    <string name="about_yandex">Translation of toots:</string>
-    <string name="about_thekinrar">Search instances:</string>
+    <string name="about_yandex">Översättning av toots:</string>
+    <string name="about_thekinrar">Sök instanser:</string>
     <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Icon designer:</string>
+    <string name="thanks_text_logo">Ikonen designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
-    <string name="conversation">Conversation</string>
+    <string name="conversation">Konversation</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
-    <string name="no_follow_request">No follow request</string>
+    <string name="no_accounts">Inget konto att Visa</string>
+    <string name="no_follow_request">Ny förfrågan från följare</string>
     <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
-    <string name="followers_cnt">Followers \n %1$s</string>
-    <string name="pins_cnt">Pinned \n %d</string>
-    <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="following_cnt">Följande \n %1$s</string>
+    <string name="followers_cnt">Anhängare \n %1$s</string>
+    <string name="pins_cnt">Fästa \n %d</string>
+    <string name="authorize">Auktorisera</string>
+    <string name="reject">Avvisa</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
-    <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Delete scheduled toot?</string>
+    <string name="no_scheduled_toots">Inga schemalagda toots att Visa!</string>
+    <string name="no_scheduled_toots_indications">Skriva en toot och välj sedan <b>schema</b> från den översta menyn.</string>
+    <string name="remove_scheduled">Ta bort schemalagda toot?</string>
     <string name="media_count">Media: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
-    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-    <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+    <string name="toot_scheduled">Toot har schemalagts!</string>
+    <string name="toot_scheduled_date">Planerat datum måste vara större än aktuell timme!</string>
+    <string name="warning_battery">Batterisparfunktionen är aktiverad! Det kanske inte fungerar som förväntat.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_date_error">Tiden för muting bör vara större än en minut.</string>
+    <string name="timed_mute_date">%1$s har stängts av tills %2$s. \n du kan slå på detta konto från dennes profilsida.</string>
+    <string name="timed_mute_profile">%1$s är avstängd tills %2$s. \n Klicka här för att slå på kontot.</string>
     <!-- Notifications -->
-    <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned you</string>
-    <string name="notif_reblog">boosted your status</string>
-    <string name="notif_favourite">favourited your status</string>
-    <string name="notif_follow">followed you</string>
-    <string name="notif_pouet">New toot from %1$s</string>
+    <string name="no_notifications">Ingen anmälan att Visa</string>
+    <string name="notif_mention">nämnde dig</string>
+    <string name="notif_reblog">ökat din status</string>
+    <string name="notif_favourite">favourited din status</string>
+    <string name="notif_follow">följt dig</string>
+    <string name="notif_pouet">Nya toot från %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
         <item quantity="other">and %d other notifications</item>
@@ -287,8 +287,8 @@
     <string name="set_display_global">Display federated timeline</string>
     <string name="set_disable_gif">Disable GIF avatars</string>
     <string name="set_folder_title">Path: </string>
-    <string name="set_auto_store_toot">Save drafts automatically</string>
-    <string name="set_bubble_counter">Display counters</string>
+    <string name="set_auto_store_toot">Spara utkast automatiskt</string>
+    <string name="set_bubble_counter">Visa räknare</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
     <string name="settings_title_notifications">Manage notifications</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
