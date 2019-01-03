@@ -3532,7 +3532,7 @@ public class PeertubeAPI {
 
     /**
      * Parse json response an unique peertube account
-     * @param resobj JSONObject
+     * @param accountObject JSONObject
      * @return Account
      */
     private static Account parseAccountResponsePeertube(Context context, JSONObject accountObject){
