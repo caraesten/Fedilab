@@ -240,7 +240,8 @@ public class PeertubeAPI {
         account = new Account();
         try {
             String response = new HttpsConnection(context).get(getAbsoluteUrl("/users/me"), 60, null, prefKeyOauthTokenT);
-            account = parseAccountResponsePeertube(context, new JSONObject(response));
+            JSONObject accountObject = new JSONObject(response).getJSONObject("account");
+            account = parseAccountResponsePeertube(context, accountObject);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -3534,39 +3535,43 @@ public class PeertubeAPI {
      * @param resobj JSONObject
      * @return Account
      */
-    private static Account parseAccountResponsePeertube(Context context, JSONObject resobj){
+    private static Account parseAccountResponsePeertube(Context context, JSONObject accountObject){
         Account account = new Account();
         try {
-            account.setId(resobj.get("id").toString());
-            account.setUsername(resobj.get("name").toString());
-            account.setAcct(resobj.get("name").toString() + "@"+ resobj.get("host").toString());
-            account.setDisplay_name(resobj.get("displayName").toString());
-            account.setHost(resobj.get("host").toString());
-            if( resobj.has("createdAt") )
-                account.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
+            account.setId(accountObject.get("id").toString());
+            account.setUsername(accountObject.get("name").toString());
+            account.setAcct(accountObject.get("name").toString()+"@" + accountObject.get("host"));
+            account.setDisplay_name(accountObject.get("name").toString());
+            account.setHost(accountObject.get("host").toString());
+
+
+            if( accountObject.has("createdAt") )
+                account.setCreated_at(Helper.mstStringToDate(context, accountObject.get("createdAt").toString()));
             else
                 account.setCreated_at(new Date());
-
-            if( resobj.has("followersCount") )
-                account.setFollowers_count(Integer.valueOf(resobj.get("followersCount").toString()));
+            if( accountObject.has("followersCount") )
+                account.setFollowers_count(Integer.valueOf(accountObject.get("followersCount").toString()));
             else
                 account.setFollowers_count(0);
-            if( resobj.has("followingCount"))
-                account.setFollowing_count(Integer.valueOf(resobj.get("followingCount").toString()));
+            if( accountObject.has("followingCount"))
+                account.setFollowing_count(Integer.valueOf(accountObject.get("followingCount").toString()));
             else
                 account.setFollowing_count(0);
             account.setStatuses_count(0);
-            if( resobj.has("description") )
-                account.setNote(resobj.get("description").toString());
+            if( accountObject.has("description") )
+                account.setNote(accountObject.get("description").toString());
             else
                 account.setNote("");
-            account.setUrl(resobj.get("url").toString());
-            if( resobj.has("avatar") && !resobj.get("avatar").toString().equals("null")){
-                account.setAvatar(resobj.getJSONObject("avatar").get("path").toString());
+
+            account.setUrl(accountObject.get("url").toString());
+            if( accountObject.has("avatar") && !accountObject.getJSONObject("avatar").toString().equals("null")){
+                account.setAvatar(accountObject.getJSONObject("avatar").get("path").toString());
             }else
                 account.setAvatar(null);
-            account.setAvatar_static(resobj.get("avatar").toString());
-        } catch (JSONException ignored) {} catch (ParseException e) {
+            account.setHeader("null");
+            account.setHeader_static("null");
+            account.setAvatar_static(accountObject.get("avatar").toString());
+        } catch (JSONException ignored) {ignored.printStackTrace();} catch (ParseException e) {
             e.printStackTrace();
         }
         return account;

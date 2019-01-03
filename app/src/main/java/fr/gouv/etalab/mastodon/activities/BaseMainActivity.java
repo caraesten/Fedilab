@@ -103,6 +103,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -210,6 +211,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private HashMap<String, Integer> tabPosition = new HashMap<>();
     public static HashMap<Integer, RetrieveFeedsAsyncTask.Type> typePosition = new HashMap<>();
     private FloatingActionButton federatedTimelines;
+    private UpdateAccountInfoAsyncTask.SOCIAL social;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1265,10 +1267,10 @@ public abstract class BaseMainActivity extends BaseActivity
         });
 
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
 
-
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(token);
         if( account == null){
             Helper.logout(getApplicationContext());
             Intent myIntent = new Intent(BaseMainActivity.this, LoginActivity.class);
@@ -1276,6 +1278,7 @@ public abstract class BaseMainActivity extends BaseActivity
             finish();
             return;
         }
+        social = (account.getSocial() == null || account.getSocial().equals("MASTODON")? UpdateAccountInfoAsyncTask.SOCIAL.MASTODON: UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE);
         //Image loader configuration
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -2030,7 +2033,7 @@ public abstract class BaseMainActivity extends BaseActivity
         updateHomeCounter();
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext())) {
-            new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), social, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         if( lastHomeId != null && homeFragment != null){
             homeFragment.retrieveMissingToots(lastHomeId);

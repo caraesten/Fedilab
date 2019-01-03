@@ -60,10 +60,13 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         Account account = null;
 
-        if( social == SOCIAL.MASTODON)
+        if( social == SOCIAL.MASTODON) {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
-        else if( social == SOCIAL.PEERTUBE)
+            account.setSocial("MASTODON");
+        }else if( social == SOCIAL.PEERTUBE) {
             account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
+            account.setSocial("PEERTUBE");
+        }
 
         if( account == null)
             return null;
@@ -75,7 +78,6 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         if( token == null) {
             token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         }
-
         account.setToken(token);
         account.setInstance(instance);
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();

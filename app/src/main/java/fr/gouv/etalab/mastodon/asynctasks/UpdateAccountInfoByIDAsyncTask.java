@@ -25,6 +25,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
+import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -41,10 +42,12 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
 
     private OnUpdateAccountInfoInterface listener;
     private WeakReference<Context> contextReference;
+    private UpdateAccountInfoAsyncTask.SOCIAL social;
 
-    public UpdateAccountInfoByIDAsyncTask(Context context, OnUpdateAccountInfoInterface onUpdateAccountInfoInterface){
+    public UpdateAccountInfoByIDAsyncTask(Context context, UpdateAccountInfoAsyncTask.SOCIAL social, OnUpdateAccountInfoInterface onUpdateAccountInfoInterface){
         this.contextReference = new WeakReference<>(context);
         this.listener = onUpdateAccountInfoInterface;
+        this.social = social;
     }
 
     @Override
@@ -52,7 +55,13 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
 
         SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        Account account = new API(this.contextReference.get()).getAccount(userId);
+        Account account = null;
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+            account = new API(this.contextReference.get()).getAccount(userId);
+        else if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            account = new PeertubeAPI(this.contextReference.get()).verifyCredentials();
+        if( account == null)
+            return null;
         account.setInstance(Helper.getLiveInstance(contextReference.get()));
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         boolean userExists = new AccountDAO(this.contextReference.get(), db).userExist(account);
@@ -64,15 +73,18 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
                 new AccountDAO(this.contextReference.get(), db).updateAccount(account);
             }
         }
-        try {
-            APIResponse response = new API(contextReference.get()).getCustomEmoji();
-            if( response != null && response.getEmojis() != null && response.getEmojis().size() > 0){
-                new CustomEmojiDAO(contextReference.get(), db).removeAll();
-                for(Emojis emojis: response.getEmojis()){
-                    new CustomEmojiDAO(contextReference.get(), db).insertEmoji(emojis);
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            try {
+                APIResponse response = new API(contextReference.get()).getCustomEmoji();
+                if (response != null && response.getEmojis() != null && response.getEmojis().size() > 0) {
+                    new CustomEmojiDAO(contextReference.get(), db).removeAll();
+                    for (Emojis emojis : response.getEmojis()) {
+                        new CustomEmojiDAO(contextReference.get(), db).insertEmoji(emojis);
+                    }
                 }
+            } catch (Exception ignored) {
             }
-        }catch (Exception ignored){}
+        }
         return null;
     }
 
