@@ -680,6 +680,6 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="upload_video">Last opp</string>
     <string name="reply">Svar</string>
     <string name="delete_comment">Slett en kommentar</string>
-    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
+    <string name="delete_comment_confirm">Er du sikker på at du vil slette denne kommentaren?</string>
     <!-- end languages -->
 </resources>
