@@ -681,14 +681,14 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="no_misskey_instance">Geen Misskeyservers</string>
     <string name="misskey_instance">Misskeyserver</string>
     <string name="toast_no_apps">Er is geen app op je apparaat geïnstalleerd om dit linktype te openen.</string>
-    <string name="subscriptions">Subscriptions</string>
-    <string name="overview">Overview</string>
+    <string name="subscriptions">Abonnementen</string>
+    <string name="overview">Overzicht</string>
     <string name="trending">Trending</string>
-    <string name="recently_added">Recently added</string>
-    <string name="local">Local</string>
-    <string name="upload_video">Upload</string>
-    <string name="reply">Reply</string>
-    <string name="delete_comment">Delete a comment</string>
-    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
+    <string name="recently_added">Onlangs toegevoegd</string>
+    <string name="local">Lokaal</string>
+    <string name="upload_video">Uploaden</string>
+    <string name="reply">Beantwoorden</string>
+    <string name="delete_comment">Een opmerking verwijderen</string>
+    <string name="delete_comment_confirm">Weet u zeker dat deze opmerking verwijderen?</string>
     <!-- end languages -->
 </resources>
