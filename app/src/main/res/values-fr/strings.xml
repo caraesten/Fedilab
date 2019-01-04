@@ -681,5 +681,14 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="no_misskey_instance">Aucune instance Misskey</string>
     <string name="misskey_instance">Instance Misskey</string>
     <string name="toast_no_apps">Aucune application prenant en charge ce lien n’est installée sur votre appareil.</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="overview">Overview</string>
+    <string name="trending">Trending</string>
+    <string name="recently_added">Recently added</string>
+    <string name="local">Local</string>
+    <string name="upload_video">Upload</string>
+    <string name="reply">Reply</string>
+    <string name="delete_comment">Delete a comment</string>
+    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
     <!-- end languages -->
 </resources>
