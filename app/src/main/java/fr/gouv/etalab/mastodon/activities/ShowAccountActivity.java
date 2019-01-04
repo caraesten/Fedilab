@@ -206,7 +206,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         accountUrl = null;
         show_boosts = true;
         show_replies = true;
-
         statuses = new ArrayList<>();
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
         statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, this.statuses);
@@ -262,8 +261,12 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
         }
         String accountIdRelation = accountId;
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
-            accountIdRelation = account.getUuid()+"@" + account.getHost();
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+            if( !ischannel)
+                accountIdRelation = account.getUuid() + "@" + account.getHost();
+            else
+                accountIdRelation = account.getUuid() + "@" + account.getHost();
+        }
         new RetrieveRelationshipAsyncTask(getApplicationContext(), accountIdRelation, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         String urlHeader = account.getHeader();
@@ -446,10 +449,13 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
             mPager.setOffscreenPageLimit(3);
-        }else {
+        }else if( ! ischannel){
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.videos)));
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.channels)));
             mPager.setOffscreenPageLimit(2);
+        }else{
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.videos)));
+            mPager.setOffscreenPageLimit(1);
         }
 
 
@@ -855,7 +861,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 case 0:
                     if( ! peertubeAccount){
                         TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
-                        bundle.putString("targetedId", account.getId());
+                        bundle.putString("targetedid", account.getId());
                         tabLayoutTootsFragment.setArguments(bundle);
                         return tabLayoutTootsFragment;
                     }else{
@@ -899,7 +905,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         @Override
         public int getCount() {
-            if( peertubeAccount)
+            if( ischannel)
+                return 1;
+            else if( peertubeAccount)
                 return 2;
             else
                 return 3;

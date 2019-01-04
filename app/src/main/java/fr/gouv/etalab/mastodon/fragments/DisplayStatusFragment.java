@@ -312,7 +312,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 break;
         }
         if( context != null) {
-            if (type == RetrieveFeedsAsyncTask.Type.USER)
+            if (type == RetrieveFeedsAsyncTask.Type.USER || type == RetrieveFeedsAsyncTask.Type.CHANNEL)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             else if (type == RetrieveFeedsAsyncTask.Type.TAG)
                 asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

@@ -17,7 +17,6 @@ package fr.gouv.etalab.mastodon.client;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -351,7 +350,6 @@ public class PeertubeAPI {
         try {
 
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            Log.v(Helper.TAG,"url: " + getAbsoluteUrl(String.format("/accounts/%s/videos", acct)));
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/videos", acct)), 60, params, prefKeyOauthTokenT);
 
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
@@ -409,7 +407,6 @@ public class PeertubeAPI {
         try {
 
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            Log.v(Helper.TAG,"url: " + getAbsoluteUrl(String.format("/video-channels/%s/videos", acct)));
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/video-channels/%s/videos", acct)), 60, params, prefKeyOauthTokenT);
 
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
