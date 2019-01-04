@@ -1193,7 +1193,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     }
     @Override
     public void onPostAction(int statusCode,API.StatusAction statusAction, String targetedId, Error error) {
-        Log.v(Helper.TAG,statusAction + " * " + statusCode + " - error4: " + error);
 
         if( error != null){
             Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();

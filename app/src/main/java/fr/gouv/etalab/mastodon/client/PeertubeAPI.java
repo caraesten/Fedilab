@@ -963,123 +963,6 @@ public class PeertubeAPI {
 
 
 
-
-
-
-
-    /**
-     * Retrieves public tag timeline *synchronously*
-     * @param tag String
-     * @param local boolean only local timeline
-     * @param max_id String id max
-     * @return APIResponse
-     */
-    @SuppressWarnings("SameParameterValue")
-    public APIResponse getPublicTimelineTag(String tag, boolean local, String max_id, List<String> any, List<String> all, List<String> none){
-        return getPublicTimelineTag(tag, local, false, max_id, null, tootPerPage, any, all, none);
-    }
-
-    /**
-     * Retrieves public tag timeline *synchronously*
-     * @param tag String
-     * @param local boolean only local timeline
-     * @param since_id String since id
-     * @return APIResponse
-     */
-    @SuppressWarnings("SameParameterValue")
-    public APIResponse getPublicTimelineTagSinceId(String tag, boolean local, String since_id, List<String> any, List<String> all, List<String> none){
-        return getPublicTimelineTag(tag, local, false, null, since_id, tootPerPage, any, all, none);
-    }
-    /**
-     * Retrieves public tag timeline *synchronously*
-     * @param tag String
-     * @param local boolean only local timeline
-     * @param max_id String id max
-     * @param since_id String since the id
-     * @param limit int limit  - max value 40
-     * @return APIResponse
-     */
-    @SuppressWarnings("SameParameterValue")
-    private APIResponse getPublicTimelineTag(String tag, boolean local, boolean onlymedia, String max_id, String since_id, int limit, List<String> any, List<String> all, List<String> none){
-
-        HashMap<String, String> params = new HashMap<>();
-        if( local)
-            params.put("local", Boolean.toString(true));
-        if( max_id != null )
-            params.put("max_id", max_id);
-        if( since_id != null )
-            params.put("since_id", since_id);
-        if( 0 > limit || limit > 40)
-            limit = 40;
-        if( onlymedia)
-            params.put("only_media", Boolean.toString(true));
-
-        if( any != null && any.size() > 0) {
-            StringBuilder parameters = new StringBuilder();
-            for (String a : any)
-                parameters.append("any[]=").append(a).append("&");
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(6));
-            params.put("any[]", parameters.toString());
-        }
-        if( all != null && all.size() > 0) {
-            StringBuilder parameters = new StringBuilder();
-            for (String a : all)
-                parameters.append("all[]=").append(a).append("&");
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(6));
-            params.put("all[]", parameters.toString());
-        }
-        if( none != null && none.size() > 0) {
-            StringBuilder parameters = new StringBuilder();
-            for (String a : none)
-                parameters.append("none[]=").append(a).append("&");
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(7));
-            params.put("none[]", parameters.toString());
-        }
-        params.put("limit",String.valueOf(limit));
-        statuses = new ArrayList<>();
-        if( tag == null)
-            return null;
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/tag/%s",tag.trim())), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(context, new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setStatuses(statuses);
-        return apiResponse;
-    }
-
-
-    /**
-     * Retrieves muted users by the authenticated account *synchronously*
-     * @param max_id String id max
-     * @return APIResponse
-     */
-    public APIResponse getMuted(String max_id){
-        return getAccounts("/mutes", max_id, null, accountPerPage);
-    }
-
-    /**
-     * Retrieves blocked users by the authenticated account *synchronously*
-     * @param max_id String id max
-     * @return APIResponse
-     */
-    public APIResponse getBlocks(String max_id){
-        return getAccounts("/blocks", max_id, null, accountPerPage);
-    }
-
-
     /**
      * Retrieves following for the account specified by targetedId  *synchronously*
      * @param targetedId String targetedId
@@ -1149,24 +1032,16 @@ public class PeertubeAPI {
 
 
     /**
-     * Retrieves blocked domains for the authenticated account *synchronously*
-     * @param max_id String id max
+     * Retrieves rating of user on a video  *synchronously*
+     * @param id String id
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    public APIResponse getBlockedDomain(String max_id){
-
-        HashMap<String, String> params = new HashMap<>();
-        if( max_id != null )
-            params.put("max_id", max_id);
-        params.put("limit","80");
-        domains = new ArrayList<>();
+    public String getRating(String id){
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/domain_blocks"), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            domains = parseDomains(new JSONArray(response));
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/users/me/videos/%s/rating",id)), 60, null, prefKeyOauthTokenT);
+            return new JSONObject(response).get("rating").toString();
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1178,133 +1053,7 @@ public class PeertubeAPI {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        apiResponse.setDomains(domains);
-        return apiResponse;
-    }
-
-
-    /**
-     * Delete a blocked domains for the authenticated account *synchronously*
-     * @param domain String domain name
-     */
-    @SuppressWarnings("SameParameterValue")
-    public int deleteBlockedDomain(String domain){
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("domain",domain);
-        domains = new ArrayList<>();
-        HttpsConnection httpsConnection;
-        try {
-            httpsConnection = new HttpsConnection(context);
-            httpsConnection.delete(getAbsoluteUrl("/domain_blocks"), 60, params, prefKeyOauthTokenT);
-            actionCode = httpsConnection.getActionCode();
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-        return actionCode;
-    }
-
-    /**
-     * Retrieves follow requests for the authenticated account *synchronously*
-     * @param max_id String id max
-     * @return APIResponse
-     */
-    public APIResponse getFollowRequest(String max_id){
-        return getFollowRequest(max_id, null, accountPerPage);
-    }
-    /**
-     * Retrieves follow requests for the authenticated account *synchronously*
-     * @param max_id String id max
-     * @param since_id String since the id
-     * @param limit int limit  - max value 40
-     * @return APIResponse
-     */
-    @SuppressWarnings("SameParameterValue")
-    private APIResponse getFollowRequest(String max_id, String since_id, int limit){
-
-        HashMap<String, String> params = new HashMap<>();
-        if( max_id != null )
-            params.put("max_id", max_id);
-        if( since_id != null )
-            params.put("since_id", since_id);
-        if( 0 > limit || limit > 40)
-            limit = 40;
-        params.put("limit",String.valueOf(limit));
-        accounts = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/follow_requests"), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            accounts = parseAccountResponse(new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setAccounts(accounts);
-        return apiResponse;
-    }
-
-
-    /**
-     * Retrieves favourited status for the authenticated account *synchronously*
-     * @param max_id String id max
-     * @return APIResponse
-     */
-    public APIResponse getFavourites(String max_id){
-        return getFavourites(max_id, null, tootPerPage);
-    }
-    /**
-     * Retrieves favourited status for the authenticated account *synchronously*
-     * @param max_id String id max
-     * @param since_id String since the id
-     * @param limit int limit  - max value 40
-     * @return APIResponse
-     */
-    @SuppressWarnings("SameParameterValue")
-    private APIResponse getFavourites(String max_id, String since_id, int limit){
-
-        HashMap<String, String> params = new HashMap<>();
-        if( max_id != null )
-            params.put("max_id", max_id);
-        if( since_id != null )
-            params.put("since_id", since_id);
-        if( 0 > limit || limit > 40)
-            limit = 40;
-        params.put("limit",String.valueOf(limit));
-        statuses = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/favourites"), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(context, new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setStatuses(statuses);
-        return apiResponse;
+        return null;
     }
 
 
@@ -1318,80 +1067,38 @@ public class PeertubeAPI {
         return postAction(statusAction, targetedId, null, null);
     }
 
-    /**
-     * Makes the post action for a status
-     * @param targetedId String id of the targeted Id *can be this of a status or an account*
-     * @param muteNotifications - boolean - notifications should be also muted
-     * @return in status code - Should be equal to 200 when action is done
-     */
-    public int muteNotifications(String targetedId, boolean muteNotifications){
 
-        HashMap<String, String> params = new HashMap<>();
-        params.put("notifications", Boolean.toString(muteNotifications));
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            httpsConnection.post(getAbsoluteUrl(String.format("/accounts/%s/mute", targetedId)), 60, params, prefKeyOauthTokenT);
-            actionCode = httpsConnection.getActionCode();
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-        return actionCode;
+    public int postRating(String targetedId, String actionMore){
+        return postAction(API.StatusAction.RATEVIDEO, targetedId, actionMore, null);
     }
 
-    /**
-     * Makes the post action
-     * @param status Status object related to the status
-     * @param comment String comment for the report
-     * @return in status code - Should be equal to 200 when action is done
-     */
-    public int reportAction(Status status, String comment){
-        return postAction(API.StatusAction.REPORT, null, status, comment);
+    public int postComment(String targetedId, String actionMore){
+        return postAction(API.StatusAction.PEERTUBECOMMENT, targetedId, actionMore, null);
     }
 
-    public int statusAction(Status status){
-        return postAction(API.StatusAction.CREATESTATUS, null, status, null);
+    public int postReply(String targetedId, String actionMore, String targetedComment){
+        return postAction(API.StatusAction.PEERTUBEREPLY, targetedId, actionMore, targetedComment);
     }
 
+    public int deleteComment(String targetedId, String targetedComment){
+        return postAction(API.StatusAction.PEERTUBEDELETECOMMENT, targetedId, null, targetedComment);
+    }
     /**
      * Makes the post action
      * @param statusAction Enum
      * @param targetedId String id of the targeted Id *can be this of a status or an account*
-     * @param status Status object related to the status
-     * @param comment String comment for the report
+     * @param actionMore String another action
+     * @param targetedComment String another action
      * @return in status code - Should be equal to 200 when action is done
      */
-    private int postAction(API.StatusAction statusAction, String targetedId, Status status, String comment ){
+    private int postAction(API.StatusAction statusAction, String targetedId, String actionMore, String targetedComment){
 
         String action;
         String actionCall = "POST";
         HashMap<String, String> params = null;
         switch (statusAction){
-            case FAVOURITE:
-                action = String.format("/statuses/%s/favourite", targetedId);
-                break;
-            case UNFAVOURITE:
-                action = String.format("/statuses/%s/unfavourite", targetedId);
-                break;
-            case REBLOG:
-                action = String.format("/statuses/%s/reblog", targetedId);
-                break;
-            case UNREBLOG:
-                action = String.format("/statuses/%s/unreblog", targetedId);
-                break;
             case FOLLOW:
                 action = "/users/me/subscriptions";
-                params = new HashMap<>();
-                params.put("uri", targetedId);
-                break;
-            case REMOTE_FOLLOW:
-                action = "/follows";
                 params = new HashMap<>();
                 params.put("uri", targetedId);
                 break;
@@ -1399,242 +1106,50 @@ public class PeertubeAPI {
                 action = String.format("/users/me/subscriptions/%s", targetedId);
                 actionCall = "DELETE";
                 break;
-            case BLOCK:
-                action = String.format("/accounts/%s/block", targetedId);
-                break;
-            case BLOCK_DOMAIN:
-                action = "/domain_blocks";
+            case RATEVIDEO:
+                action = String.format("/videos/%s/rate", targetedId);
                 params = new HashMap<>();
-                params.put("domain", targetedId);
+                params.put("rating", actionMore);
+                actionCall = "PUT";
                 break;
-            case UNBLOCK:
-                action = String.format("/accounts/%s/unblock", targetedId);
-                break;
-            case MUTE:
-                action = String.format("/accounts/%s/mute", targetedId);
-                break;
-            case UNMUTE:
-                action = String.format("/accounts/%s/unmute", targetedId);
-                break;
-            case PIN:
-                action = String.format("/statuses/%s/pin", targetedId);
-                break;
-            case UNPIN:
-                action = String.format("/statuses/%s/unpin", targetedId);
-                break;
-            case ENDORSE:
-                action = String.format("/accounts/%s/pin", targetedId);
-                break;
-            case UNENDORSE:
-                action = String.format("/accounts/%s/unpin", targetedId);
-                break;
-            case SHOW_BOOST:
+            case PEERTUBECOMMENT:
+                action = String.format("/videos/%s/comment-threads", targetedId);
                 params = new HashMap<>();
-                params.put("reblogs","true");
-                action = String.format("/accounts/%s/follow", targetedId);
+                params.put("text", actionMore);
                 break;
-            case HIDE_BOOST:
+            case PEERTUBEDELETECOMMENT:
+                action = String.format("/videos/%s/comments/%s", targetedId, targetedComment);
+                actionCall = "DELETE";
+                break;
+            case PEERTUBEREPLY:
+                action = String.format("/videos/%s/comment/%s", targetedId, targetedComment);
                 params = new HashMap<>();
-                params.put("reblogs","false");
-                action = String.format("/accounts/%s/follow", targetedId);
-                break;
-            case UNSTATUS:
-                action = String.format("/statuses/%s", targetedId);
-                break;
-            case AUTHORIZE:
-                action = String.format("/follow_requests/%s/authorize", targetedId);
-                break;
-            case REJECT:
-                action = String.format("/follow_requests/%s/reject", targetedId);
-                break;
-            case REPORT:
-                action = "/reports";
-                params = new HashMap<>();
-                params.put("account_id", status.getAccount().getId());
-                params.put("comment", comment);
-                params.put("status_ids[]", status.getId());
-                break;
-            case CREATESTATUS:
-                params = new HashMap<>();
-                action = "/statuses";
-                try {
-                    params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    params.put("status", status.getContent());
-                }
-                if( status.getIn_reply_to_id() != null)
-                    params.put("in_reply_to_id", status.getIn_reply_to_id());
-                if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
-                    StringBuilder parameters = new StringBuilder();
-                    for(Attachment attachment: status.getMedia_attachments())
-                        parameters.append("media_ids[]=").append(attachment.getId()).append("&");
-                    parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(12));
-                    params.put("media_ids[]", parameters.toString());
-                }
-                if( status.isSensitive())
-                    params.put("sensitive", Boolean.toString(status.isSensitive()));
-                if( status.getSpoiler_text() != null)
-                    try {
-                        params.put("spoiler_text", URLEncoder.encode(status.getSpoiler_text(), "UTF-8"));
-                    } catch (UnsupportedEncodingException e) {
-                        params.put("spoiler_text", status.getSpoiler_text());
-                    }
-                params.put("visibility", status.getVisibility());
+                params.put("text", actionMore);
                 break;
             default:
                 return -1;
         }
-        if(statusAction != API.StatusAction.UNSTATUS ) {
-
-            try {
-                HttpsConnection httpsConnection = new HttpsConnection(context);
-                if( actionCall.equals("POST"))
-                    httpsConnection.post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
-                else if( actionCall.equals("DELETE"))
-                    httpsConnection.delete(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
-                actionCode = httpsConnection.getActionCode();
-            } catch (HttpsConnection.HttpsConnectionException e) {
-                setError(e.getStatusCode(), e);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            }
-        }else{
-            try {
-                HttpsConnection httpsConnection = new HttpsConnection(context);
-                httpsConnection.delete(getAbsoluteUrl(action), 60, null, prefKeyOauthTokenT);
-                actionCode = httpsConnection.getActionCode();
-            } catch (HttpsConnection.HttpsConnectionException e) {
-                setError(e.getStatusCode(), e);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            }
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            if( actionCall.equals("POST"))
+                httpsConnection.post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
+            else if( actionCall.equals("DELETE"))
+                httpsConnection.delete(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
+            else if( actionCall.equals("PUT"))
+                httpsConnection.put(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
         }
         return actionCode;
     }
 
-
-    /**
-     * Posts a status
-     * @param status Status object related to the status
-     * @return APIResponse
-     */
-    public APIResponse postStatusAction(Status status){
-
-        HashMap<String, String> params = new HashMap<>();
-        try {
-            params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            params.put("status", status.getContent());
-        }
-        if( status.getIn_reply_to_id() != null)
-            params.put("in_reply_to_id", status.getIn_reply_to_id());
-        if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
-            StringBuilder parameters = new StringBuilder();
-            for(Attachment attachment: status.getMedia_attachments())
-                parameters.append("media_ids[]=").append(attachment.getId()).append("&");
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(12));
-            params.put("media_ids[]", parameters.toString());
-        }
-        if( status.isSensitive())
-            params.put("sensitive", Boolean.toString(status.isSensitive()));
-        if( status.getSpoiler_text() != null)
-            try {
-                params.put("spoiler_text", URLEncoder.encode(status.getSpoiler_text(), "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                params.put("spoiler_text", status.getSpoiler_text());
-            }
-        params.put("visibility", status.getVisibility());
-        statuses = new ArrayList<>();
-
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.post(getAbsoluteUrl("/statuses"), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            Status statusreturned = parseStatuses(context, new JSONObject(response));
-            statuses.add(statusreturned);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setStatuses(statuses);
-        return apiResponse;
-    }
-
-
-    /**
-     * Posts a status
-     * @param notificationId String, the current notification id, if null all notifications are deleted
-     * @return APIResponse
-     */
-    public APIResponse postNoticationAction(String notificationId){
-
-        String action;
-        HashMap<String, String> params = new HashMap<>();
-        if( notificationId == null)
-            action = "/notifications/clear";
-        else {
-            params.put("id",notificationId);
-            action = "/notifications/dismiss";
-        }
-        try {
-            new HttpsConnection(context).post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-        return apiResponse;
-    }
-
-
-    /**
-     * Retrieves notifications for the authenticated account since an id*synchronously*
-     * @param since_id String since max
-     * @return APIResponse
-     */
-    public APIResponse getNotificationsSince(String since_id, boolean display){
-        return getNotifications(null, since_id, notificationPerPage, display);
-    }
-
-    /**
-     * Retrieves notifications for the authenticated account since an id*synchronously*
-     * @param since_id String since max
-     * @return APIResponse
-     */
-    @SuppressWarnings("SameParameterValue")
-    public APIResponse getNotificationsSince(String since_id, int notificationPerPage, boolean display){
-        return getNotifications(null, since_id, notificationPerPage, display);
-    }
-
-    /**
-     * Retrieves notifications for the authenticated account *synchronously*
-     * @param max_id String id max
-     * @return APIResponse
-     */
-    public APIResponse getNotifications(String max_id, boolean display){
-        return getNotifications(max_id, null, notificationPerPage, display);
-    }
 
 
     /**
@@ -2176,214 +1691,6 @@ public class PeertubeAPI {
     }
 
 
-    /**
-     * Add an account in a list
-     * @param id String, id of the list
-     * @param account_ids String, account to add
-     * @return APIResponse
-     */
-    //TODO: it is unclear what is returned here
-    //TODO: improves doc https://github.com/tootsuite/documentation/blob/4bb149c73f40fa58fd7265a336703dd2d83efb1c/Using-the-API/API.md#addingremoving-accounts-tofrom-a-list
-    public APIResponse addAccountToList(String id, String[] account_ids){
-
-        HashMap<String, String> params = new HashMap<>();
-        StringBuilder parameters = new StringBuilder();
-        for(String val: account_ids)
-            parameters.append("account_ids[]=").append(val).append("&");
-        if( parameters.length() > 0) {
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(14));
-            params.put("account_ids[]", parameters.toString());
-        }
-        try {
-            new HttpsConnection(context).post(getAbsoluteUrl(String.format("/lists/%s/accounts", id)), 60, params, prefKeyOauthTokenT);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-        return apiResponse;
-    }
-
-
-    /**
-     * Delete an account from a list
-     * @param id String, the id of the list
-     * @return APIResponse
-     */
-    public int deleteAccountFromList(String id, String[] account_ids){
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            StringBuilder parameters = new StringBuilder();
-            HashMap<String, String> params = new HashMap<>();
-            for(String val: account_ids)
-                parameters.append("account_ids[]=").append(val).append("&");
-            if( parameters.length() > 0) {
-                parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(14));
-                params.put("account_ids[]", parameters.toString());
-            }
-            httpsConnection.delete(getAbsoluteUrl(String.format("/lists/%s/accounts", id)), 60, params, prefKeyOauthTokenT);
-            actionCode = httpsConnection.getActionCode();
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-        return actionCode;
-    }
-
-    /**
-     * Posts a list
-     * @param title String, the title of the list
-     * @return APIResponse
-     */
-    public APIResponse createList(String title){
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("title",title);
-        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
-        fr.gouv.etalab.mastodon.client.Entities.List list;
-        try {
-            String response = new HttpsConnection(context).post(getAbsoluteUrl("/lists"), 60, params, prefKeyOauthTokenT);
-            list = parseList(new JSONObject(response));
-            lists.add(list);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setLists(lists);
-        return apiResponse;
-    }
-
-
-
-    /**
-     * Update a list by its id
-     * @param id String, the id of the list
-     * @param title String, the title of the list
-     * @return APIResponse
-     */
-    public APIResponse updateList(String id, String title){
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("title",title);
-        List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
-        fr.gouv.etalab.mastodon.client.Entities.List list;
-        try {
-            String response = new HttpsConnection(context).put(getAbsoluteUrl(String.format("/lists/%s", id)), 60, params, prefKeyOauthTokenT);
-            list = parseList(new JSONObject(response));
-            lists.add(list);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setLists(lists);
-        return apiResponse;
-    }
-
-
-    /**
-     * Delete a list by its id
-     * @param id String, the id of the list
-     * @return APIResponse
-     */
-    public int deleteList(String id){
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            httpsConnection.delete(getAbsoluteUrl(String.format("/lists/%s", id)), 60, null, prefKeyOauthTokenT);
-            actionCode = httpsConnection.getActionCode();
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        }catch (Exception e) {
-            setDefaultError(e);
-        }
-        return actionCode;
-    }
-
-
-
-    /**
-     * Retrieves list from Communitywiki *synchronously*
-     * @return APIResponse
-     */
-    public ArrayList<String> getCommunitywikiList() {
-        ArrayList<String> list = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrlCommunitywiki("/list"), 60, null, prefKeyOauthTokenT);
-
-            JSONArray jsonArray = new JSONArray(response);
-            int len = jsonArray.length();
-            for (int i=0;i<len;i++){
-                list.add(jsonArray.get(i).toString());
-            }
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setStatuses(statuses);
-        return list;
-    }
-
-    /**
-     * Retrieves list from Communitywiki *synchronously*
-     * @return APIResponse
-     */
-    public ArrayList<String> getCommunitywikiList(String name) {
-        ArrayList<String> list = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrlCommunitywiki(String.format("/list/%s", name)), 60, null, prefKeyOauthTokenT);
-
-            JSONArray jsonArray = new JSONArray(response);
-            for(int i = 0; i < jsonArray.length(); i++){
-                try {
-                    list.add(jsonArray.getJSONObject(i).getString("acct"));
-                } catch (JSONException ignored) {}
-            }
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setStatuses(statuses);
-        return list;
-    }
 
 
     /**

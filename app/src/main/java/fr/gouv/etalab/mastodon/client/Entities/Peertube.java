@@ -46,6 +46,7 @@ public class Peertube {
     private String category;
     private String license;
     private String language;
+    private String myRating = "none";
 
     private JSONObject cache;
 
@@ -253,5 +254,13 @@ public class Peertube {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public String getMyRating() {
+        return myRating;
+    }
+
+    public void setMyRating(String myRating) {
+        this.myRating = myRating;
     }
 }

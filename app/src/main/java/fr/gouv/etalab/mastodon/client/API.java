@@ -110,7 +110,11 @@ public class API {
         UNENDORSE,
         SHOW_BOOST,
         HIDE_BOOST,
-        BLOCK_DOMAIN
+        BLOCK_DOMAIN,
+        RATEVIDEO,
+        PEERTUBECOMMENT,
+        PEERTUBEREPLY,
+        PEERTUBEDELETECOMMENT
 
     }
     public enum accountPrivacy {

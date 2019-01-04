@@ -95,12 +95,14 @@ import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
+import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.activities.TootInfoActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -129,6 +131,7 @@ import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
 
+import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.social;
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
@@ -339,6 +342,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         Button status_show_more_content;
         SparkButton spark_button_fav, spark_button_reblog;
         RelativeLayout horizontal_second_image;
+
+        LinearLayout status_peertube_container;
+        TextView status_peertube_reply, status_peertube_delete;
+
         public View getView(){
             return itemView;
         }
@@ -422,6 +429,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             spark_button_fav =  itemView.findViewById(R.id.spark_button_fav);
             spark_button_reblog =  itemView.findViewById(R.id.spark_button_reblog);
             horizontal_second_image = itemView.findViewById(R.id.horizontal_second_image);
+
+            status_peertube_container = itemView.findViewById(R.id.status_peertube_container);
+            status_peertube_reply = itemView.findViewById(R.id.status_peertube_reply);
+            status_peertube_delete = itemView.findViewById(R.id.status_peertube_delete);
+
         }
     }
 
@@ -436,6 +448,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            isCompactMode = false;
         if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
             return FOCUSED_STATUS;
         else if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !Helper.filterToots(context, statuses.get(position), timedMute, type))
@@ -627,7 +641,86 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
 
 
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                holder.status_action_container.setVisibility(View.GONE);
+                holder.status_peertube_container.setVisibility(View.VISIBLE);
+                holder.status_peertube_reply.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builderInner;
+                        int style;
+                        if (theme == Helper.THEME_DARK) {
+                            style = R.style.DialogDark;
+                        } else if (theme == Helper.THEME_BLACK){
+                            style = R.style.DialogBlack;
+                        }else {
+                            style = R.style.Dialog;
+                        }
+                        builderInner = new AlertDialog.Builder(context, style);
+                        builderInner.setTitle(R.string.comment);
+                        EditText input = new EditText(context);
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT);
+                        input.setLayoutParams(lp);
+                        builderInner.setView(input);
+                        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                String comment = input.getText().toString();
+                                if( comment.trim().length() > 0 ) {
 
+                                    new PostActionAsyncTask(context, PeertubeActivity.video_id, comment, status.getId(),StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    dialog.dismiss();
+                                }
+                            }
+                        });
+                        builderInner.show();
+                    }
+                });
+                if( status.getAccount().getId().equals(userId))
+                    holder.status_peertube_delete.setVisibility(View.VISIBLE);
+                else
+                    holder.status_peertube_delete.setVisibility(View.GONE);
+                holder.status_peertube_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builderInner;
+                        int style;
+                        if (theme == Helper.THEME_DARK) {
+                            style = R.style.DialogDark;
+                        } else if (theme == Helper.THEME_BLACK){
+                            style = R.style.DialogBlack;
+                        }else {
+                            style = R.style.Dialog;
+                        }
+                        builderInner = new AlertDialog.Builder(context, style);
+                        builderInner.setTitle(R.string.delete_comment);
+                        builderInner.setMessage(R.string.delete_comment_confirm);
+                        builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,int which) {
+                                new PostActionAsyncTask(context, API.StatusAction.PEERTUBEDELETECOMMENT, PeertubeActivity.video_id, null, status.getId(),StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                dialog.dismiss();
+                            }
+                        });
+                        builderInner.show();
+                        }
+                });
+
+            }
             if( status.isNew())
                 holder.new_element.setVisibility(View.VISIBLE);
             else
@@ -1174,7 +1267,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     Helper.loadGiF(context, status.getConversationProfilePicture().get(3), holder.conversation_pp_4);
                 }
             }
-            holder.status_action_container.setVisibility(View.VISIBLE);
             boolean differentLanguage = false;
             if( status.getReblog() == null)
                 differentLanguage = status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale);
@@ -2578,6 +2670,17 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     if( status.getFavourites_count() - 1 >= 0)
                         status.setFavourites_count(status.getFavourites_count() - 1);
                     statusListAdapter.notifyItemChanged(position);
+                    break;
+                }
+                position++;
+            }
+        }
+        if( statusAction == API.StatusAction.PEERTUBEDELETECOMMENT){
+            int position = 0;
+            for(Status status: statuses){
+                if( status.getId().equals(targetedId)) {
+                    statuses.remove(status);
+                    statusListAdapter.notifyItemRemoved(position);
                     break;
                 }
                 position++;

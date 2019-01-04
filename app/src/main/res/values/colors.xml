@@ -104,4 +104,10 @@
     <!-- TOASTY -->
     <color name="toasty_text">#2e2e2e</color>
     <color name="toasty_background">#c8c8c8</color>
+
+
+
+    <color name="neutral_thumbs">#606984</color>
+    <color name="positive_thumbs">#2b90d9</color>
+    <color name="negative_thumbs">#F44336</color>
 </resources>

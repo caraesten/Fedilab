@@ -40,7 +40,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnPostActionInterface listener;
     private int statusCode;
     private API.StatusAction apiAction;
-    private String targetedId;
+    private String targetedId, targetedComment;
     private String comment;
     private fr.gouv.etalab.mastodon.client.Entities.Status status;
     private Account account, remoteAccount;
@@ -48,7 +48,6 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private boolean muteNotifications;
     private Error error;
-
 
     public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface){
         this.contextReference = new WeakReference<>(context);
@@ -95,6 +94,16 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
         this.apiAction = apiAction;
         this.targetedId = targetedId;
         this.muteNotifications = muteNotifications;
+    }
+
+
+    public PostActionAsyncTask(Context context, String targetedId, String comment, String targetedComment, OnPostActionInterface onPostActionInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.listener = onPostActionInterface;
+        this.apiAction = API.StatusAction.PEERTUBEREPLY;
+        this.targetedId = targetedId;
+        this.comment = comment;
+        this.targetedComment = targetedComment;
     }
 
     @Override
@@ -162,6 +171,16 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
 
             if( apiAction == API.StatusAction.FOLLOW || apiAction == API.StatusAction.UNFOLLOW)
                 statusCode = peertubeAPI.postAction(apiAction, targetedId);
+            else if( apiAction == API.StatusAction.RATEVIDEO )
+                statusCode = peertubeAPI.postRating(targetedId, comment);
+            else if(  apiAction == API.StatusAction.PEERTUBECOMMENT)
+                statusCode = peertubeAPI.postComment(targetedId, comment);
+            else if(  apiAction == API.StatusAction.PEERTUBEREPLY)
+                statusCode = peertubeAPI.postReply(targetedId, comment, targetedComment);
+            else if( apiAction == API.StatusAction.PEERTUBEDELETECOMMENT) {
+                statusCode = peertubeAPI.deleteComment(targetedId, comment);
+                targetedId = comment;
+            }
             error = peertubeAPI.getError();
         }
         return null;
