@@ -672,5 +672,14 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="no_misskey_instance">Ingen Misskey-instanser</string>
     <string name="misskey_instance">Misskey-instans</string>
     <string name="toast_no_apps">Ingen app som støtter denne koblingen er installert på enheten.</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="overview">Overview</string>
+    <string name="trending">Trending</string>
+    <string name="recently_added">Recently added</string>
+    <string name="local">Local</string>
+    <string name="upload_video">Upload</string>
+    <string name="reply">Reply</string>
+    <string name="delete_comment">Delete a comment</string>
+    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
     <!-- end languages -->
 </resources>
