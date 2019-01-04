@@ -690,14 +690,14 @@
     <string name="no_misskey_instance">Нет серверов Misskey</string>
     <string name="misskey_instance">Сервер Misskey</string>
     <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
-    <string name="subscriptions">Subscriptions</string>
-    <string name="overview">Overview</string>
-    <string name="trending">Trending</string>
-    <string name="recently_added">Recently added</string>
+    <string name="subscriptions">Подписки</string>
+    <string name="overview">Обзор</string>
+    <string name="trending">В тренде</string>
+    <string name="recently_added">Новые</string>
     <string name="local">Local</string>
     <string name="upload_video">Upload</string>
-    <string name="reply">Reply</string>
+    <string name="reply">Ответ</string>
     <string name="delete_comment">Удалить комментарий</string>
-    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
+    <string name="delete_comment_confirm">Вы уверены, что хотите удалить этот комментарий?</string>
     <!-- end languages -->
 </resources>
