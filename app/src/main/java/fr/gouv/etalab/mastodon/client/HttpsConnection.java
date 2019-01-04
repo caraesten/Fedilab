@@ -1560,7 +1560,6 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
 
             httpsURLConnection.getOutputStream().write(postDataBytes);
-
             if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
                 getSinceMaxId();
                 httpsURLConnection.getInputStream().close();

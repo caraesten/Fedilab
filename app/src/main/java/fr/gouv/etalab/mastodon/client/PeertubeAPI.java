@@ -85,37 +85,7 @@ public class PeertubeAPI {
     private Error APIError;
     private List<String> domains;
 
-    public enum StatusAction{
-        FAVOURITE,
-        UNFAVOURITE,
-        REBLOG,
-        UNREBLOG,
-        MUTE,
-        MUTE_NOTIFICATIONS,
-        UNMUTE,
-        BLOCK,
-        UNBLOCK,
-        FOLLOW,
-        UNFOLLOW,
-        CREATESTATUS,
-        UNSTATUS,
-        AUTHORIZE,
-        REJECT,
-        REPORT,
-        REMOTE_FOLLOW,
-        PIN,
-        UNPIN,
-        ENDORSE,
-        UNENDORSE,
-        SHOW_BOOST,
-        HIDE_BOOST,
-        BLOCK_DOMAIN
 
-    }
-    public enum accountPrivacy {
-        PUBLIC,
-        LOCKED
-    }
     public PeertubeAPI(Context context) {
         this.context = context;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -189,7 +159,7 @@ public class PeertubeAPI {
      * Update credential of the authenticated user *synchronously*
      * @return APIResponse
      */
-    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, accountPrivacy privacy, HashMap<String, String> customFields) {
+    public APIResponse updateCredential(String display_name, String note, ByteArrayInputStream avatar, String avatarName, ByteArrayInputStream header, String headerName, API.accountPrivacy privacy, HashMap<String, String> customFields) {
 
         HashMap<String, String> requestParams = new HashMap<>();
         if( display_name != null)
@@ -205,7 +175,7 @@ public class PeertubeAPI {
                 requestParams.put("note",note);
             }
         if( privacy != null)
-            requestParams.put("locked",privacy== accountPrivacy.LOCKED?"true":"false");
+            requestParams.put("locked",privacy== API.accountPrivacy.LOCKED?"true":"false");
         int i = 0;
         if( customFields != null && customFields.size() > 0){
             Iterator it = customFields.entrySet().iterator();
@@ -293,7 +263,7 @@ public class PeertubeAPI {
         HashMap<String, String> params = new HashMap<>();
 
         params.put("uris", uri);
-        List<Relationship> relationships = new ArrayList<>();
+
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/users/me/subscriptions/exist"), 60, params, prefKeyOauthTokenT);
@@ -1344,7 +1314,7 @@ public class PeertubeAPI {
      * @param targetedId String id of the targeted Id *can be this of a status or an account*
      * @return in status code - Should be equal to 200 when action is done
      */
-    public int postAction(StatusAction statusAction, String targetedId){
+    public int postAction(API.StatusAction statusAction, String targetedId){
         return postAction(statusAction, targetedId, null, null);
     }
 
@@ -1382,11 +1352,11 @@ public class PeertubeAPI {
      * @return in status code - Should be equal to 200 when action is done
      */
     public int reportAction(Status status, String comment){
-        return postAction(PeertubeAPI.StatusAction.REPORT, null, status, comment);
+        return postAction(API.StatusAction.REPORT, null, status, comment);
     }
 
     public int statusAction(Status status){
-        return postAction(StatusAction.CREATESTATUS, null, status, null);
+        return postAction(API.StatusAction.CREATESTATUS, null, status, null);
     }
 
     /**
@@ -1397,9 +1367,10 @@ public class PeertubeAPI {
      * @param comment String comment for the report
      * @return in status code - Should be equal to 200 when action is done
      */
-    private int postAction(StatusAction statusAction, String targetedId, Status status, String comment ){
+    private int postAction(API.StatusAction statusAction, String targetedId, Status status, String comment ){
 
         String action;
+        String actionCall = "POST";
         HashMap<String, String> params = null;
         switch (statusAction){
             case FAVOURITE:
@@ -1415,7 +1386,9 @@ public class PeertubeAPI {
                 action = String.format("/statuses/%s/unreblog", targetedId);
                 break;
             case FOLLOW:
-                action = String.format("/users/me/subscriptions/%s", targetedId);
+                action = "/users/me/subscriptions";
+                params = new HashMap<>();
+                params.put("uri", targetedId);
                 break;
             case REMOTE_FOLLOW:
                 action = "/follows";
@@ -1424,6 +1397,7 @@ public class PeertubeAPI {
                 break;
             case UNFOLLOW:
                 action = String.format("/users/me/subscriptions/%s", targetedId);
+                actionCall = "DELETE";
                 break;
             case BLOCK:
                 action = String.format("/accounts/%s/block", targetedId);
@@ -1510,11 +1484,14 @@ public class PeertubeAPI {
             default:
                 return -1;
         }
-        if(statusAction != StatusAction.UNSTATUS ) {
+        if(statusAction != API.StatusAction.UNSTATUS ) {
 
             try {
                 HttpsConnection httpsConnection = new HttpsConnection(context);
-                httpsConnection.post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
+                if( actionCall.equals("POST"))
+                    httpsConnection.post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
+                else if( actionCall.equals("DELETE"))
+                    httpsConnection.delete(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
                 actionCode = httpsConnection.getActionCode();
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);

@@ -20,9 +20,12 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
+import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 
@@ -40,12 +43,11 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private String targetedId;
     private String comment;
     private fr.gouv.etalab.mastodon.client.Entities.Status status;
-    private API api;
     private Account account, remoteAccount;
     private fr.gouv.etalab.mastodon.client.Entities.Status remoteStatus;
     private WeakReference<Context> contextReference;
     private boolean muteNotifications;
-
+    private Error error;
 
 
     public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface){
@@ -98,60 +100,76 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        //Remote action
-        if (account != null)
-            api = new API(contextReference.get(), account.getInstance(), account.getToken());
-        else
-            api = new API(contextReference.get());
-        if (remoteStatus != null) {
-            String uri;
-            if (remoteStatus.getReblog() != null) {
-                if (remoteStatus.getReblog().getUri().startsWith("http"))
-                    uri = remoteStatus.getReblog().getUri();
-                else
-                    uri = remoteStatus.getReblog().getUrl();
-            } else {
-                if (remoteStatus.getUri().startsWith("http"))
-                    uri = remoteStatus.getUri();
-                else
-                    uri = remoteStatus.getUrl();
-            }
-            Results search = api.search(uri);
-            if (search != null) {
-                List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses = search.getStatuses();
-                if (remoteStatuses != null && remoteStatuses.size() > 0) {
-                    fr.gouv.etalab.mastodon.client.Entities.Status statusTmp = remoteStatuses.get(0);
-                    this.targetedId = statusTmp.getId();
-                    statusCode = api.postAction(apiAction, targetedId);
-                }
-            }
-        }else if(remoteAccount != null){
-            String searchString = remoteAccount.getAcct().contains("@")?"@" + remoteAccount.getAcct():"@" + remoteAccount.getAcct() + "@" + Helper.getLiveInstance(contextReference.get());
-            Results search = api.search(searchString);
-            if (search != null) {
-                List<Account> accounts = search.getAccounts();
-                if (accounts != null && accounts.size() > 0) {
-                    Account accountTmp = accounts.get(0);
-                    this.targetedId = accountTmp.getId();
-                    statusCode = api.postAction(apiAction, targetedId);
-                }
-            }
-        }else {
-            if (apiAction == API.StatusAction.REPORT)
-                statusCode = api.reportAction(status, comment);
-            else if (apiAction == API.StatusAction.CREATESTATUS)
-                statusCode = api.statusAction(status);
-            else if( apiAction == API.StatusAction.MUTE_NOTIFICATIONS)
-                statusCode = api.muteNotifications(targetedId, muteNotifications);
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            //Remote action
+            API api;
+            if (account != null)
+                api = new API(contextReference.get(), account.getInstance(), account.getToken());
             else
-                statusCode = api.postAction(apiAction, targetedId);
+                api = new API(contextReference.get());
+
+            if (remoteStatus != null) {
+                String uri;
+                if (remoteStatus.getReblog() != null) {
+                    if (remoteStatus.getReblog().getUri().startsWith("http"))
+                        uri = remoteStatus.getReblog().getUri();
+                    else
+                        uri = remoteStatus.getReblog().getUrl();
+                } else {
+                    if (remoteStatus.getUri().startsWith("http"))
+                        uri = remoteStatus.getUri();
+                    else
+                        uri = remoteStatus.getUrl();
+                }
+                Results search = api.search(uri);
+                if (search != null) {
+                    List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses = search.getStatuses();
+                    if (remoteStatuses != null && remoteStatuses.size() > 0) {
+                        fr.gouv.etalab.mastodon.client.Entities.Status statusTmp = remoteStatuses.get(0);
+                        this.targetedId = statusTmp.getId();
+                        statusCode = api.postAction(apiAction, targetedId);
+                    }
+                }
+            } else if (remoteAccount != null) {
+                String searchString = remoteAccount.getAcct().contains("@") ? "@" + remoteAccount.getAcct() : "@" + remoteAccount.getAcct() + "@" + Helper.getLiveInstance(contextReference.get());
+                Results search = api.search(searchString);
+                if (search != null) {
+                    List<Account> accounts = search.getAccounts();
+                    if (accounts != null && accounts.size() > 0) {
+                        Account accountTmp = accounts.get(0);
+                        this.targetedId = accountTmp.getId();
+                        statusCode = api.postAction(apiAction, targetedId);
+                    }
+                }
+            } else {
+                if (apiAction == API.StatusAction.REPORT)
+                    statusCode = api.reportAction(status, comment);
+                else if (apiAction == API.StatusAction.CREATESTATUS)
+                    statusCode = api.statusAction(status);
+                else if (apiAction == API.StatusAction.MUTE_NOTIFICATIONS)
+                    statusCode = api.muteNotifications(targetedId, muteNotifications);
+                else
+                    statusCode = api.postAction(apiAction, targetedId);
+            }
+            error = api.getError();
+        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            //Remote action
+            PeertubeAPI peertubeAPI;
+            if (account != null)
+                peertubeAPI = new PeertubeAPI(contextReference.get(), account.getInstance(), account.getToken());
+            else
+                peertubeAPI = new PeertubeAPI(contextReference.get());
+
+            if( apiAction == API.StatusAction.FOLLOW || apiAction == API.StatusAction.UNFOLLOW)
+                statusCode = peertubeAPI.postAction(apiAction, targetedId);
+            error = peertubeAPI.getError();
         }
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onPostAction(statusCode, apiAction, targetedId, api.getError());
+        listener.onPostAction(statusCode, apiAction, targetedId, error);
     }
 
 }

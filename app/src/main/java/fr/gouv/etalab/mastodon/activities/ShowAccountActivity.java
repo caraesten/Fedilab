@@ -262,10 +262,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
         String accountIdRelation = accountId;
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
-            if( !ischannel)
-                accountIdRelation = account.getUuid() + "@" + account.getHost();
-            else
-                accountIdRelation = account.getUuid() + "@" + account.getHost();
+            accountIdRelation = account.getAcct();
         }
         new RetrieveRelationshipAsyncTask(getApplicationContext(), accountIdRelation, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -280,7 +277,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     .load(urlHeader)
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                             ImageView banner_pp = findViewById(R.id.banner_pp);
                             banner_pp.setImageBitmap(resource);
                             if( theme == THEME_LIGHT){
@@ -738,6 +735,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             }
         });
         //Follow button
+        String target = account.getId();
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            target = account.getAcct();
+        String finalTarget = target;
         account_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -745,13 +746,13 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                     Toasty.info(getApplicationContext(), getString(R.string.nothing_to_do), Toast.LENGTH_LONG).show();
                 }else if( doAction == action.FOLLOW){
                     account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, finalTarget, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else if( doAction == action.UNFOLLOW){
                     account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNFOLLOW, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNFOLLOW, finalTarget, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }else if( doAction == action.UNBLOCK){
                     account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNBLOCK, account.getId(), ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNBLOCK, finalTarget, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         });
@@ -1192,17 +1193,23 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     }
     @Override
     public void onPostAction(int statusCode,API.StatusAction statusAction, String targetedId, Error error) {
+        Log.v(Helper.TAG,statusAction + " * " + statusCode + " - error4: " + error);
+
         if( error != null){
             Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(getApplicationContext(), statusCode, statusAction);
-        new RetrieveRelationshipAsyncTask(getApplicationContext(), account.getId(),ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        String target = account.getId();
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            target = account.getAcct();
+        new RetrieveRelationshipAsyncTask(getApplicationContext(), target,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
     @Override
     public void onRetrieveAccount(final Account account, Error error) {
+
         if( error != null || account.getAcct() == null){
             if( error == null)
                 Toasty.error(ShowAccountActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();

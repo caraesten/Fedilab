@@ -739,7 +739,7 @@ public class Helper {
      */
     public static void manageMessageStatusCode(Context context, int statusCode,API.StatusAction statusAction){
         String message = "";
-        if( statusCode == 200){
+        if( statusCode >= 200 && statusCode < 400){
             if( statusAction == API.StatusAction.BLOCK){
                 message = context.getString(R.string.toast_block);
             }else if(statusAction == API.StatusAction.UNBLOCK){
