@@ -231,10 +231,10 @@
         <item quantity="other">and %d dalších upozornění</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
-        <item quantity="few">and %d other toots to discover</item>
-        <item quantity="many">and %d other toots to discover</item>
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="one">a další toot k zobrazení</item>
+        <item quantity="few">a %d další toots k zobrazení</item>
+        <item quantity="many">a %d dalších toots k zobrazení</item>
+        <item quantity="other">a %d dalších toots k zobrazení</item>
     </plurals>
     <string name="delete_notification_ask">Smazat oznámení?</string>
     <string name="delete_notification_ask_all">Smazat všechna oznámení?</string>
@@ -388,13 +388,13 @@
     <string name="settings_popup_message">Prosím potvrďte push oznámení, která chcete dostávat.
 Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     </string>
-    <string name="settings_popup_timeline">For unread toots in home time-line?</string>
+    <string name="settings_popup_timeline">Pro nepřečtené toots na domací časové ose?</string>
     <string name="settings_popup_notification">Pro nepřečtená upozornění?</string>
     <!-- CACHE -->
     <string name="cache_title">Vyprázdnit cache</string>
-    <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+    <string name="cache_message">V cache je %1$s dat.\n\nChcete je odstranit?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="toast_cache_clear">Cache byla vyprázdněna! %1$s bylo uvolněno</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Synchronizovat</string>
     <string name="action_filter">Filtrovat</string>
@@ -407,8 +407,8 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="show_media">Zobrazit média</string>
     <string name="show_pinned">Zobrazit připnuté</string>
     <string name="filter_no_result">Nebyly nalezeny odpovídající výsledky!</string>
-    <string name="data_backup_toots">Zálohovat toots %1$s</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="data_backup_toots">Načíst toots pro %1$s</string>
+    <string name="data_backup_success">%1$s nové toots byly importovány</string>
     <string-array name="filter_select">
         <item>Ne</item>
         <item>Pouze</item>
@@ -417,36 +417,35 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="owner_cached_toots_empty">V databázi nebyly nalezeny žádné toots. Prosím použijte synchronizační tlačítko v menu pro obnovení.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Zaznamenaná data</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
-    </string>
+    <string name="privacy_data">V zařízení jsou uloženy pouze základní informace o účtech.
+Tyto informace jsou přísně tajné a mohou být použity pouze aplikací.
+Smazaní aplikace okamžitě odstraní tyto údaje.\n
+Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během bezpečného přihlášení (SSL) k instanci.    </string>
     <string name="privacy_authorizations_title">Oprávnění:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Použito k detekci WiFi připojení.\n
+        - <b>INTERNET</b>: Použito ke komunikaci s instancí.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Použito k ukládání médií nebo k přesunu aplikace na SD kartu.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Použito pro přidání medií k toot.\n
+        - <b>BOOT_COMPLETED</b>: Použito k aktivaci notifikační služby.\n
+        - <b>WAKE_LOCK</b>: Použito během notifikační služby.
     </string>
     <string name="privacy_API_authorizations_title">API oprávnění:</string>
-    <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+    <string name="privacy_API_authorizations">        - <b>Čtení</b>: Čtení dat.\n
+        - <b>Zápis</b>: Zveřejňování statusů a nahrávání médií ke statusům.\n
+        - <b>Sledování</b>: Sledování, zrušení sledování, blokování, odblokování.\n\n
+        <b>&#9888; Tyto akce jsou vykonány pouze na vyžádání uživatele.</b>
     </string>
     <string name="privacy_API_title">Sledování a Knihovny</string>
-    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+    <string name="privacy_API">        Aplikace <b>nepoužívá sledovací nástroje</b> (měření návštěvnosti, hlášení chyb, atd.) a neobsahuje reklamy.\n\n
+        Použití knihoven je minimální: \n
+        - <b>Glide</b>: Správa médií\n
+        - <b>Android-Job</b>: Správa služeb\n
+        - <b>PhotoView</b>: Správa obrázků\n
     </string>
     <string name="privacy_API_yandex_title">Překlad toots</string>
-    <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    </string>
+    <string name="privacy_API_yandex_authorizations">Aplikace umožňuje překlad toots do jazyka zařízení s použitím služby Yandex API.\n
+Yandex má svá vlastní pravidla pro soukromí uživatelských dat zde:
+https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="thanks_text">        Poděkování Stéphane za logo.
     </string>
     <string name="thanks_text_dev">Poděkování:    </string>
@@ -468,22 +467,22 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="action_lists_owner">Vaše seznamy</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s se přesunul do %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
+    <string name="show_boost_count">Zobrazit počet posílení/oblíbených</string>
     <string name="issue_login_title">Přihlášení nefunguje?</string>
-    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
+    <string name="issue_login_message">        <b>Zde jsou kontroly, které by vám mohly pomoct:</b>\n\n
+        - Zkontrolujte, že ve jmménu instance není překlep\n\n
+        - Ověřte, že vaše instance běží\n\n
+        - V případě, že používáte dvoufaktorovou autentizaci (2FA), použijte prosím odkaz dole (jakmile je vyplněno jméno instance)\n\n
+        - Můžete také použít tento link bez použití 2FA\n\n
+        - Pokud problém přetrvává, vytvořte tiket na  https://gitlab.com/tom79/mastalab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
-    <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
+    <string name="media_ready">Média byla nahrána. Klikněte pro zobrazení.</string>
+    <string name="data_export_start">Tato akce může trvat dlouho. Po dokončení obdržíte oznámení.</string>
     <string name="data_export_running">Zpracovávám, prosím čekejte…</string>
     <string name="data_export">Export statusů</string>
     <string name="data_export_toots">Export statusů %1$s</string>
-    <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
+    <string name="data_export_success">%1$s toots z %2$s bylo exportováno.</string>
+    <string name="data_export_error">Něco se pokazilo během exportu dat pro %1$s</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Typ</string>
@@ -494,19 +493,19 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="poxy_password">Heslo</string>
     <string name="set_theme">Motiv:</string>
     <string name="set_compact_mode">Kompaktní mód</string>
-    <string name="set_share_details">Add toot details when sharing</string>
+    <string name="set_share_details">Přidat podrobnosti tootu při sdílení</string>
     <string name="support_the_app_on_liberapay">Podpořit aplikaci na Liberapay</string>
     <string name="alert_regex">Chyba v regulárním výrazu!</string>
     <string name="no_account_yet">Nemáte účet?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+    <string name="toast_instance_unavailable">Časová osa nenalezena na této instanci!</string>
     <string name="delete_instance">Odstranit instanci?</string>
-    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
+    <string name="warning_delete_instance">Chystáte se smazat %s z vašich sledovaných instancí.</string>
     <string name="which_language">Přeložit v</string>
     <string name="crash_title">Mastalab přestal fungovat :(</string>
-    <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
+    <string name="crash_message">Pošlete mi mailem údaje o chybě. Pomůžete tak při opravě :)\n\nMůžete přidat dodatečný obsah. Děkuji!</string>
+    <string name="send_crash_report">Požádat o zaslání chybového hlášení emailem?</string>
     <string name="follow_instance">Sledovat instanci</string>
-    <string name="toast_instance_already_added">You already follow this instance!</string>
+    <string name="toast_instance_already_added">Tuto instanci již sledujete!</string>
     <string name="toast_instance_followed">Instance je sledována!</string>
     <string name="action_partnership">Partnerství</string>
     <string name="neutral_menu_information">Informace</string>
@@ -522,26 +521,26 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="toast_hide_boost">Posílení jsou skryta!</string>
     <string name="direct_message">Přímá zpráva</string>
     <string name="filters">Filtry</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
+    <string name="action_filters_empty_content">Žádné filtry k zobrazení. Můžete vytvořit nový filtr klepnutím na tlačítko \"+\".</string>
     <string name="filter_keyword">Klíčové slovo nebo fráze</string>
     <string name="context_home">Lokální časová osa</string>
     <string name="context_public">Veřejná časová osa</string>
     <string name="context_notification">Oznámení</string>
     <string name="context_conversation">Konverzace</string>
-    <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
+    <string name="filter_keyword_explanations">Velikost písmen ani varování ohledně obsahu nebudou brána v potaz</string>
     <string name="context_drop">Zahodit místo skrytí</string>
     <string name="context_drop_explanations">Filtrované toots zmizí nezvratně i v případě, že filtr je později odstraněn</string>
-    <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
+    <string name="context_whole_word_explanations">V případě, že klíčové slovo nebo fráze je pouze alfanumerické, filtr se uplatní pouze pokud odpovídá celému slovu</string>
     <string name="context_whole_word">Celé slovo</string>
     <string name="filter_context">Kontext filtru</string>
-    <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
+    <string name="filter_context_explanations">Jeden nebo několik kontextů pro aplikaci filtru</string>
     <string name="filter_expire">Vyprší po</string>
     <string name="add_new_filter">Přidat nový filtr</string>
     <string name="action_filter_delete">Vymazat filtr?</string>
     <string name="action_update_filter">Aktualizovat filtr</string>
     <string name="action_filter_create">Vytvořit filtr</string>
     <string name="how_to_follow">Návrhy sledování</string>
-    <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
+    <string name="action_who_to_follow_empty_content">Momentálně není k dispozici žádný účet!</string>
     <string name="follow_account">Následovat</string>
     <string name="select_all">Vybrat vše</string>
     <string name="unselect_all">Zrušit výběr</string>
@@ -550,24 +549,24 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="add_account_list_trunk">Přidávám účty do seznamu</string>
     <string name="account_added_list_trunk">Účty byly přidány do seznamu</string>
     <string name="adding_account_list_trunk">Přidávám účty do seznamu</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
+    <string name="action_list_add">Žádný seznam dosud nebyl vytvořen. Můžete vytvořit nový seznam klepnutím na tlačítko \"+\".</string>
+    <string name="action_remote_instance_add">Žádné vzdálené instance nejsou zatím sledovány. Klepněte na tlačítko \"+\" pro přidání.</string>
     <string name="about_trunk">Návrhy sledování</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">Účet/účty nemohou být sledovány</string>
     <string name="retrieve_remote_account">Načítám vzdálený účet</string>
     <string name="expand_image">Automaticky zobrazovat skrytá média</string>
-    <string name="set_display_follow_instance">Display follow instances button</string>
-    <string name="channel_notif_follow">New follow</string>
-    <string name="channel_notif_boost">New Boost</string>
-    <string name="channel_notif_fav">New Favourite</string>
-    <string name="channel_notif_mention">New Mention</string>
-    <string name="channel_notif_toot">New Toot</string>
-    <string name="channel_notif_backup">Toots Backup</string>
-    <string name="channel_notif_media">Media Download</string>
-    <string name="set_notif_sound">Change notification sound</string>
-    <string name="select_sound">Select Tone</string>
-    <string name="set_enable_time_slot">Enable time slot</string>
+    <string name="set_display_follow_instance">Zobrazit tlačítko pro sledování instancí</string>
+    <string name="channel_notif_follow">Nový sledující</string>
+    <string name="channel_notif_boost">Nové posílení</string>
+    <string name="channel_notif_fav">Nový oblíbený</string>
+    <string name="channel_notif_mention">Nová zmínka</string>
+    <string name="channel_notif_toot">Nový toot</string>
+    <string name="channel_notif_backup">Záloha toots</string>
+    <string name="channel_notif_media">Stahování médií</string>
+    <string name="set_notif_sound">Výchozí zvuk oznámení</string>
+    <string name="select_sound">Vybrat tón</string>
+    <string name="set_enable_time_slot">Zapnout rozvrh oznámení</string>
     <string name="how_to_videos">Videonávody</string>
     <string name="retrieve_remote_conversation">Načítám vzdálenou konverzaci!</string>
     <string name="no_blocked_domain">Žádné blokované domény!</string>
@@ -578,21 +577,21 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="block_domain">Zablokovat doménu</string>
     <string name="toast_block_domain">Doména je blokována</string>
     <string name="toast_unblock_domain">Doména není nadále blokována!</string>
-    <string name="retrieve_remote_status">Fetching remote status</string>
+    <string name="retrieve_remote_status">Načítám vzdálený status</string>
     <string name="comment">Komentovat</string>
     <string name="peertube_instance">Peertube instance</string>
-    <string name="set_display_direct">Display private messages timeline</string>
-    <string name="set_keep_background_process">Keep background process when app is closed</string>
-    <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
+    <string name="set_display_direct">Zobrazit časovou osu se soukromými zprávami</string>
+    <string name="set_keep_background_process">Udržovat aplikační proces na pozadí i pokud je aplikace zavřena</string>
+    <string name="no_comments">Zanechte první komentáře pro toto video. Klepněte na tlačítko vpravo nahoře!</string>
     <string name="number_view_video">%s zhlédnutí</string>
-    <string name="duration_video">Duration: %s</string>
+    <string name="duration_video">Doba trvání: %s</string>
     <string name="add_remote_instance">Přidat instanci</string>
-    <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
+    <string name="comment_no_allowed_peertube">Pro toto vide nejsou povoleny komentáře!</string>
     <string name="pickup_resolution">Vyberte rozlišení</string>
     <string name="peertube_favorites">Peertube oblíbené</string>
     <string name="bookmark_add_peertube">Video bylo přidáno do záložek!</string>
     <string name="bookmark_remove_peertube">Video bylo odstraněno ze záložek!</string>
-    <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+    <string name="bookmark_peertube_empty">V oblíbených nemíte žádná Peertube videa!</string>
     <string name="channel">Kanál</string>
     <string name="no_peertube_channels">Žádný Peertube kanál</string>
     <string name="no_peertube_instances">Žádná Peertube instance</string>
@@ -602,20 +601,20 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="channels">Kanály</string>
     <string name="set_display_emoji">Použít Emoji One</string>
     <string name="information">Informace</string>
-    <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
+    <string name="set_display_card">Zobrazit náhled ve všech toots</string>
+    <string name="thanks_text_ux">Nový UX/UI návrhář</string>
+    <string name="set_old_direct_timeline">Použít přímou časovou osu před verzí Mastodon 2.6</string>
+    <string name="set_display_video_preview">Zobrazit náhled videa</string>
     <string name="thanks_text_support">Gitlab podpora</string>
     <string name="action_bug_report">Nahlásit chybu</string>
     <string name="no_mail_client">Není instalován žádný e-mailový klient.</string>
     <string name="bug_report_mail">Poslat zprávu o chybě</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
+    <string name="account_id_clipbloard">Identifikátor účtu byl zkopírován do schránky!</string>
     <string name="settings_title_battery">Optimalizace spotřeby energie</string>
     <string name="set_change_locale">Změna jazyka</string>
     <string name="default_language">Základní jazyk</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
+    <string name="truncate_long_toots">Ořezat dlouhé toots</string>
+    <string name="set_truncate_toot">Ořezat toots delší než \'x\' řádků. 0 znamená vypnuto.</string>
     <string name="display_toot_truncate">Zobrazit více</string>
     <string name="hide_toot_truncate">Zobrazit méně</string>
     <string name="manage_tags">Spravovat štítky</string>
@@ -623,12 +622,12 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="tags_stored">Štítek byl uložen!</string>
     <string name="tags_renamed">Štítek byl změněn!</string>
     <string name="tags_deleted">Štítek byl smazán!</string>
-    <string name="set_display_art">Display Art timeline</string>
-    <string name="schedule_boost">Naplánované posílení</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
+    <string name="set_display_art">Zobrazit Art časovou osu</string>
+    <string name="schedule_boost">Naplánovat posílení</string>
+    <string name="boost_scheduled">Posílení je naplánováno!</string>
+    <string name="no_scheduled_boosts">Žádná plánovaná posílení!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Otevřete menu tootu a vyberte <b>Naplánovat posílení</b>.]]></string>
+    <string name="art_menu">Art časová osa</string>
     <string name="open_menu">Otevřete nabídku</string>
     <string name="app_logo">Logo aplikace</string>
     <string name="profile_picture">Profilový obrázek</string>
@@ -636,18 +635,18 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="contact_instance_admin">Kontaktovat administrátora instance</string>
     <string name="add_new">Přidat nový</string>
     <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
+    <string name="emoji_picker">Výběr emotikonů</string>
     <string name="refresh">Načíst znovu</string>
-    <string name="expand_conversation">Expand the conversation</string>
+    <string name="expand_conversation">Ukázat celou konverzaci</string>
     <string name="remove_account">Odebrat účet</string>
-    <string name="delete_domain">Delete the blocked domain</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
+    <string name="delete_domain">Smazat blokovanou doménu</string>
+    <string name="custom_emoji_picker">Uživatelský výběr emoji</string>
     <string name="play_video">Přehrát video</string>
     <string name="new_toot">Nový toot</string>
-    <string name="card_view_image">Image of the card</string>
+    <string name="card_view_image">Obrázek karty</string>
     <string name="hide_media">Skrýt média</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Médium pro přidání popisu</string>
     <string-array name="filter_expire">
         <item>Nikdy</item>
         <item>30 minut</item>
@@ -657,16 +656,14 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
         <item>1 den</item>
         <item>1 týden</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">V tomto políčku vyplňte jméno vaší instance.\nPokud jste například vytvořili váš účet na https://mastodon.social\nvyplňte pouze <b>mastodon.social</b>  (bez https://)\n
+Začněte psát první znaky pro návrh.\n\n
+⚠ Login tlačítko bude fungovat pouze v případě, že jméno instance je platné a instance běží!    </string>
+    <string name="showcase_uid">        V tomto poli vyplňte email, který je svázaný s vaším Mastodon účtem.
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
-    </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
-    </string>
+    <string name="showcase_pwd">Jako poslední krok vložte své heslo a klepňete na Login.    </string>
     <string name="more_information">Více informací</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="showcase_2FA">V případě, že používáte 2FA (dvoufaktorovou autentizaci), použijte tento odkaz.\nMůžete jej také použít, pokud nechcete vložit své přihlašovací údaje tady.</string>
     <!-- languages not translated -->
     <string name="languages">Jazyky</string>
     <string name="show_media_only">Pouze média</string>
@@ -679,15 +676,24 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="pixelfed_instance">Pixelfed instance</string>
     <string name="mastodon_instance">Mastodon instance</string>
     <string name="no_pixelfed_instance">Žádné Pixelfed instance</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="any_tags">Kterýkoliv</string>
+    <string name="all_tags">Všechny</string>
+    <string name="none_tags">Žádný</string>
+    <string name="some_words_any">Kterékoliv slovo (odělené mezerami)</string>
+    <string name="some_words_all">Všechna slova (oddělená mezerami)</string>
+    <string name="some_words_none">Žádné z těchto slov (oddělené mezerami)</string>
     <string name="change_tag_column">Změnit název sloupce</string>
     <string name="no_misskey_instance">Žádná Misskey instance</string>
     <string name="misskey_instance">Misskey instance</string>
     <string name="toast_no_apps">Na vašem zařízení není nainstalována žádná aplikace podporující tento odkaz.</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="overview">Overview</string>
+    <string name="trending">Trending</string>
+    <string name="recently_added">Recently added</string>
+    <string name="local">Local</string>
+    <string name="upload_video">Upload</string>
+    <string name="reply">Reply</string>
+    <string name="delete_comment">Delete a comment</string>
+    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
     <!-- end languages -->
 </resources>

@@ -694,5 +694,14 @@
     <string name="no_misskey_instance">لا توجد أية مثيلات خوادم ميسكي</string>
     <string name="misskey_instance">مثيل خادم ميسكي</string>
     <string name="toast_no_apps">ليس هناك أي تطبيق مثبّت على جهازك يدعم هذا الرابط.</string>
+    <string name="subscriptions">الاشتراكات</string>
+    <string name="overview">نظرة عامة</string>
+    <string name="trending">الشائعة</string>
+    <string name="recently_added">تم إضافتها حديثًا</string>
+    <string name="local">المحلية</string>
+    <string name="upload_video">إرسال</string>
+    <string name="reply">رد</string>
+    <string name="delete_comment">حذف التعليق</string>
+    <string name="delete_comment_confirm">هل أنت متأكد من أنك تود حذف هذا التعليق؟</string>
     <!-- end languages -->
 </resources>

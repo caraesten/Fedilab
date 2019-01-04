@@ -677,9 +677,9 @@
     <string name="translation_app">Перевод приложения</string>
     <string name="about_crowdin">О Crowdin</string>
     <string name="bot">Бот</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="pixelfed_instance">Сервер Pixelfed</string>
+    <string name="mastodon_instance">Сервер Mastodon</string>
+    <string name="no_pixelfed_instance">Нет серверов Pixelfed</string>
     <string name="any_tags">Any of these</string>
     <string name="all_tags">All of these</string>
     <string name="none_tags">None of these</string>
@@ -687,8 +687,17 @@
     <string name="some_words_all">All these words (space-separated)</string>
     <string name="some_words_none">None of these words (space-separated)</string>
     <string name="change_tag_column">Change column name</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
-    <string name="misskey_instance">Misskey instance</string>
+    <string name="no_misskey_instance">Нет серверов Misskey</string>
+    <string name="misskey_instance">Сервер Misskey</string>
     <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
+    <string name="subscriptions">Подписки</string>
+    <string name="overview">Обзор</string>
+    <string name="trending">В тренде</string>
+    <string name="recently_added">Новые</string>
+    <string name="local">Local</string>
+    <string name="upload_video">Upload</string>
+    <string name="reply">Ответ</string>
+    <string name="delete_comment">Удалить комментарий</string>
+    <string name="delete_comment_confirm">Вы уверены, что хотите удалить этот комментарий?</string>
     <!-- end languages -->
 </resources>

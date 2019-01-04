@@ -674,5 +674,14 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="no_misskey_instance">Keine Misskey Instanzen</string>
     <string name="misskey_instance">Misskey Instanz</string>
     <string name="toast_no_apps">Auf Ihrem Gerät ist keine App installiert, die diesen Link unterstützt.</string>
+    <string name="subscriptions">Abonnements</string>
+    <string name="overview">Übersicht</string>
+    <string name="trending">Angesagt</string>
+    <string name="recently_added">Kürzlich hinzugefügt</string>
+    <string name="local">Lokal</string>
+    <string name="upload_video">Hochladen</string>
+    <string name="reply">Antworten</string>
+    <string name="delete_comment">Kommentar entfernen</string>
+    <string name="delete_comment_confirm">Möchten Sie diesen Kommentar wirklich löschen?</string>
     <!-- end languages -->
 </resources>

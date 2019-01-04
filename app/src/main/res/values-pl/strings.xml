@@ -678,11 +678,20 @@
     <string name="all_tags">Wszystkie z wymienionych</string>
     <string name="none_tags">Zadne z wymienionych</string>
     <string name="some_words_any">Dowolne z tych słów (oddzielone spacją)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
-    <string name="change_tag_column">Change column name</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
-    <string name="misskey_instance">Misskey instance</string>
-    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
+    <string name="some_words_all">Wszystkie z tych słów (rozdzielone spacją)</string>
+    <string name="some_words_none">Żadne z tych słów (rozedzielone spacją)</string>
+    <string name="change_tag_column">Zmień nazwę kolumny</string>
+    <string name="no_misskey_instance">Brak instancji Misskey</string>
+    <string name="misskey_instance">Instancja Misskey</string>
+    <string name="toast_no_apps">Brak zainstalowanej aplikacji do otwarcia tego odnośnika.</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="overview">Overview</string>
+    <string name="trending">Trending</string>
+    <string name="recently_added">Recently added</string>
+    <string name="local">Local</string>
+    <string name="upload_video">Upload</string>
+    <string name="reply">Reply</string>
+    <string name="delete_comment">Delete a comment</string>
+    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
     <!-- end languages -->
 </resources>

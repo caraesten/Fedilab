@@ -684,5 +684,14 @@
     <string name="no_misskey_instance">Nessuna istanza Misskey</string>
     <string name="misskey_instance">Istanza Misskey</string>
     <string name="toast_no_apps">Nessun app con supporto a questo link è installata sul tuo dispositivo.</string>
+    <string name="subscriptions">Iscrizioni</string>
+    <string name="overview">Panoramica</string>
+    <string name="trending">Di tendenza</string>
+    <string name="recently_added">Aggiunti di recente</string>
+    <string name="local">In locale</string>
+    <string name="upload_video">Carica</string>
+    <string name="reply">Rispondi</string>
+    <string name="delete_comment">Elimina il commento</string>
+    <string name="delete_comment_confirm">Sei sicuro di voler eliminare questo commento?</string>
     <!-- end languages -->
 </resources>
