@@ -819,7 +819,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if( relationship == null)
             return;
         account_follow.setEnabled(true);
-        if( account.getId() != null && account.getId().equals(userId)){
+        if( account.getId() != null && account.getId().equals(userId) && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
             account_follow.hide();
             header_edit_profile.show();
             header_edit_profile.bringToFront();

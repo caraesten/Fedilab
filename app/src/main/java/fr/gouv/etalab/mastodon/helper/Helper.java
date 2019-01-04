@@ -1749,7 +1749,11 @@ public class Helper {
                 if (account != null) {
                     Intent intent = new Intent(activity, ShowAccountActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("accountId", account.getId());
+                    if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                        b.putBoolean("peertubeaccount", true);
+                        b.putString("accountId", account.getAcct());
+                    }else
+                        b.putString("accountId", account.getId());
                     intent.putExtras(b);
                     activity.startActivity(intent);
                 }

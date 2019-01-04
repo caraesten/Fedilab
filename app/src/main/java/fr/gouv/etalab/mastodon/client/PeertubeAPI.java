@@ -237,7 +237,7 @@ public class PeertubeAPI {
         account = new Account();
         try {
             String response = new HttpsConnection(context).get(getAbsoluteUrl(String.format("/accounts/%s",accountId)), 60, null, prefKeyOauthTokenT);
-            account = parseAccountResponse(context, new JSONObject(response));
+            account = parseAccountResponsePeertube(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {

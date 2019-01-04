@@ -844,48 +844,6 @@ public abstract class BaseMainActivity extends BaseActivity
 
                 @Override
                 public void onTabReselected(TabLayout.Tab tab) {
-                    if( viewPager.getVisibility() == View.GONE){
-                        viewPager.setVisibility(View.VISIBLE);
-                        delete_instance.setVisibility(View.GONE);
-                        Helper.switchLayout(BaseMainActivity.this);
-                        main_app_container.setVisibility(View.GONE);
-                        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-                        drawer.closeDrawer(GravityCompat.START);
-                    }
-                    if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))) {
-                        toot.hide();
-                        federatedTimelines.hide();
-                    }else {
-                        toot.show();
-                        if( !displayFollowInstance)
-                            federatedTimelines.hide();
-                        else
-                            federatedTimelines.show();
-                    }
-
-                    if( viewPager.getAdapter() != null) {
-                        Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
-
-                        DisplayStatusFragment displayStatusFragment;
-                        if (tab.getPosition() == 0) {
-                            displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            countNewStatus = 0;
-                            updateHomeCounter();
-                            displayStatusFragment.scrollToTop();
-                            displayStatusFragment.updateLastReadToot();
-                        } else if( tab.getPosition() == 1) {
-                            DisplayNotificationsFragment notificationsFragment = ((DisplayNotificationsFragment) fragment);
-                            countNewNotifications = 0;
-                            updateNotifCounter();
-                            notificationsFragment.scrollToTop();
-
-                        }else if (tab.getPosition() > 1) {
-                            if (typePosition.containsKey(tab.getPosition()))
-                                updateTimeLine(typePosition.get(tab.getPosition()), 0);
-                            displayStatusFragment = ((DisplayStatusFragment) fragment);
-                            displayStatusFragment.scrollToTop();
-                        }
-                    }
                     if( tab.getCustomView() != null) {
                         ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
                         if( icon != null)
@@ -2092,6 +2050,12 @@ public abstract class BaseMainActivity extends BaseActivity
                     .replace(R.id.main_app_container, displayBookmarksFragment, fragmentTag).commit();
             toot.hide();
         }else if (id == R.id.nav_peertube) {
+            DisplayFavoritesPeertubeFragment displayFavoritesPeertubeFragment = new DisplayFavoritesPeertubeFragment();
+            fragmentTag = "BOOKMARKS_PEERTUBE";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayFavoritesPeertubeFragment, fragmentTag).commit();
+            toot.hide();
+        }else if (id == R.id.nav_peertube_fav) {
             DisplayFavoritesPeertubeFragment displayFavoritesPeertubeFragment = new DisplayFavoritesPeertubeFragment();
             fragmentTag = "BOOKMARKS_PEERTUBE";
             fragmentManager.beginTransaction()
