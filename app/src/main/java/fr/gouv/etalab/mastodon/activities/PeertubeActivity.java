@@ -479,17 +479,18 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
+        RelativeLayout no_action = findViewById(R.id.no_action);
+        RecyclerView lv_comments = findViewById(R.id.peertube_comments);
         if( statuses == null || statuses.size() == 0){
-            RelativeLayout no_action = findViewById(R.id.no_action);
             no_action.setVisibility(View.VISIBLE);
-            RecyclerView lv_comments = findViewById(R.id.peertube_comments);
             lv_comments.setVisibility(View.GONE);
         }else {
+            no_action.setVisibility(View.GONE);
+            lv_comments.setVisibility(View.VISIBLE);
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean isOnWifi = Helper.isOnWIFI(PeertubeActivity.this);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             StatusListAdapter statusListAdapter = new StatusListAdapter(PeertubeActivity.this, RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, userId, isOnWifi, statuses);
-            RecyclerView lv_comments = findViewById(R.id.peertube_comments);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(PeertubeActivity.this);
             lv_comments.setLayoutManager(mLayoutManager);
             lv_comments.setNestedScrollingEnabled(false);
