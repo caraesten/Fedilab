@@ -327,9 +327,9 @@
     <string name="use_cookies">Autoriser les cookies tiers</string>
     <string name="settings_ui_layout">Disposition des fils : </string>
     <string-array name="battery_profiles">
-        <item>Décharge normale de la batterie</item>
-        <item>Décharge modérée de la batterie</item>
-        <item>Décharge faible de la batterie</item>
+        <item>Usage normal</item>
+        <item>Usage modéré</item>
+        <item>Faible usage</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Onglets</item>
