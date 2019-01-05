@@ -687,7 +687,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getSubscriptionsTL( String max_id) {
-        return getTL("/users/me/subscriptions/videos",null,null, max_id, null, null, tootPerPage);
+        return getTL("/users/me/subscriptions/videos","-publishedAt",null, max_id, null, null, tootPerPage);
     }
 
     /**
@@ -705,7 +705,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getTrendingTL( String max_id) {
-        return getTL("/videos/","trending", null,max_id, null, null, tootPerPage);
+        return getTL("/videos/","-trending", null,max_id, null, null, tootPerPage);
     }
 
     /**
@@ -723,7 +723,7 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     public APIResponse getLocalTL( String max_id) {
-        return getTL("/videos/",null, "local",max_id, null, null, tootPerPage);
+        return getTL("/videos/","-publishedAt", "local",max_id, null, null, tootPerPage);
     }
 
     /**
