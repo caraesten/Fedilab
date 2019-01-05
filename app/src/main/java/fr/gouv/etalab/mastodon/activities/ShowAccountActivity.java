@@ -705,20 +705,24 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         }
         boolean disableGif = sharedpreferences.getBoolean(Helper.SET_DISABLE_GIF, false);
-        if( !disableGif)
-            Glide.with(getApplicationContext()).load(account.getAvatar()).apply(RequestOptions.circleCropTransform()).into(account_pp);
-        else
-            Glide.with(getApplicationContext())
-                    .asBitmap()
-                    .load(account.getAvatar())
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                            RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), Helper.addBorder(resource, account_pp.getContext()));
-                            circularBitmapDrawable.setCircular(true);
-                            account_pp.setImageDrawable(circularBitmapDrawable);
-                        }
-                    });
+        if( account.getAvatar() == null && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+            Glide.with(getApplicationContext()).load(R.drawable.missing_peertube).apply(RequestOptions.circleCropTransform()).into(account_pp);
+        }else{
+            if( !disableGif)
+                Glide.with(getApplicationContext()).load(account.getAvatar()).apply(RequestOptions.circleCropTransform()).into(account_pp);
+            else
+                Glide.with(getApplicationContext())
+                        .asBitmap()
+                        .load(account.getAvatar())
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), Helper.addBorder(resource, account_pp.getContext()));
+                                circularBitmapDrawable.setCircular(true);
+                                account_pp.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
+        }
         account_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

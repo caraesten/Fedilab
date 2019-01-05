@@ -189,8 +189,8 @@ public abstract class BaseMainActivity extends BaseActivity
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
     private static BroadcastReceiver receive_data, receive_home_data, receive_federated_data, receive_local_data;
     private boolean display_direct, display_local, display_global, display_art;
-    public static int countNewStatus = 0;
-    public static int countNewNotifications = 0;
+    public static int countNewStatus;
+    public static int countNewNotifications;
     private String userIdService;
     public static String lastHomeId = null, lastNotificationId = null;
     boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies , show_nsfw;
@@ -235,7 +235,8 @@ public abstract class BaseMainActivity extends BaseActivity
         }
         social = (account.getSocial() == null || account.getSocial().equals("MASTODON")? UpdateAccountInfoAsyncTask.SOCIAL.MASTODON: UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE);
 
-
+        countNewStatus = 0;
+        countNewNotifications = 0;
 
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
@@ -911,9 +912,10 @@ public abstract class BaseMainActivity extends BaseActivity
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
             Helper.refreshSearchTag(BaseMainActivity.this, tabLayout, adapter);
         int tabCount = tabLayout.getTabCount();
-        for( int j = countPage ; j < tabCount ; j++){
-            attacheDelete(j);
-        }
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+            for( int j = countPage ; j < tabCount ; j++){
+                attacheDelete(j);
+            }
 
 
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

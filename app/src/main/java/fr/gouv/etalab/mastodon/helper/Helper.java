@@ -1538,7 +1538,10 @@ public class Helper {
                                 }
                                 @Override
                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                    finalIcon.setImageResource(R.drawable.missing);
+                                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                                        finalIcon.setImageResource(R.drawable.missing);
+                                    else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                        finalIcon.setImageResource(R.drawable.missing_peertube);
                                     return false;
                                 }
                             })
@@ -1589,7 +1592,10 @@ public class Helper {
                                 }
                                 @Override
                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                    itemIconAcc.setImageResource(R.drawable.missing);
+                                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                                        itemIconAcc.setImageResource(R.drawable.missing);
+                                    else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                        itemIconAcc.setImageResource(R.drawable.missing_peertube);
                                     return false;
                                 }
                             })
@@ -2673,13 +2679,25 @@ public class Helper {
             }
         }
         if( url == null || url.contains("missing.png") || url.contains(".svg")) {
-            try {
-                Glide.with(imageView.getContext())
-                        .load(R.drawable.missing)
-                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                        .into(imageView);
-            }catch (Exception ignored){}
-            return;
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                try {
+                    Glide.with(imageView.getContext())
+                            .load(R.drawable.missing)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                } catch (Exception ignored) {
+                }
+                return;
+            }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                try {
+                    Glide.with(imageView.getContext())
+                            .load(R.drawable.missing_peertube)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                } catch (Exception ignored) {
+                }
+                return;
+            }
         }
         if( !disableGif)
             try {
