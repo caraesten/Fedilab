@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 23;
+    public static final int DB_VERSION = 24;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -166,6 +166,9 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_PINNED = "PINNED";
     static final String COL_DATE_BACKUP = "DATE_BACKUP";
     static final String COL_CARD = "CARD";
+    static final String COL_CLIENT_ID = "CLIENT_ID";
+    static final String COL_CLIENT_SECRET = "CLIENT_SECRET";
+    static final String COL_REFRESH_TOKEN = "REFRESH_TOKEN";
 
     private final String CREATE_TABLE_STATUSES_CACHE = "CREATE TABLE " + TABLE_STATUSES_CACHE + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -177,6 +180,7 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_REBLOGGED + " INTEGER, " + COL_FAVOURITED + " INTEGER, " + COL_MUTED + " INTEGER, " + COL_SENSITIVE + " INTEGER, "
             + COL_SPOILER_TEXT + " TEXT, " + COL_VISIBILITY + " TEXT NOT NULL, " + COL_MEDIA_ATTACHMENTS + " TEXT," + COL_CARD + " TEXT,"
             + COL_MENTIONS + " TEXT, " + COL_TAGS + " TEXT, " + COL_APPLICATION + " TEXT,"
+            + COL_CLIENT_ID + " TEXT, " + COL_CLIENT_SECRET + " TEXT, " + COL_REFRESH_TOKEN + " TEXT,"
             + COL_LANGUAGE + " TEXT," + COL_PINNED + " INTEGER)";
 
     private final String CREATE_UNIQUE_CACHE_INDEX = "CREATE UNIQUE INDEX instance_statusid on "
@@ -309,6 +313,10 @@ public class Sqlite extends SQLiteOpenHelper {
                 }
             case 22:
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_SOCIAL + " TEXT");
+            case 23:
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_CLIENT_ID + " TEXT");
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_CLIENT_SECRET + " TEXT");
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_REFRESH_TOKEN + " TEXT");
             default:
                 break;
         }

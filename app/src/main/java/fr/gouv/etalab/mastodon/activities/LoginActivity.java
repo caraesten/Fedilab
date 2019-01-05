@@ -120,12 +120,15 @@ public class LoginActivity extends BaseActivity {
                         try {
                             resobj = new JSONObject(response);
                             String token = resobj.get("access_token").toString();
+                            String refresh_token = null;
+                            if( resobj.has("refresh_token"))
+                                refresh_token = resobj.get("access_token").toString();
                             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedpreferences.edit();
                             editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
                             editor.apply();
                             //Update the account with the token;
-                            new UpdateAccountInfoAsyncTask(LoginActivity.this, token, instance, peertube_instance.isChecked()?UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE:UpdateAccountInfoAsyncTask.SOCIAL.MASTODON).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new UpdateAccountInfoAsyncTask(LoginActivity.this, token, client_id, client_secret, refresh_token, instance, peertube_instance.isChecked()?UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE:UpdateAccountInfoAsyncTask.SOCIAL.MASTODON).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } catch (JSONException ignored) {}
                     } catch (Exception ignored) {}
                 }}).start();
@@ -510,12 +513,15 @@ public class LoginActivity extends BaseActivity {
                                     try {
                                         resobj = new JSONObject(response);
                                         String token = resobj.get("access_token").toString();
+                                        String refresh_token = null;
+                                        if( resobj.has("refresh_token"))
+                                            refresh_token = resobj.get("access_token").toString();
                                         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                                         SharedPreferences.Editor editor = sharedpreferences.edit();
                                         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
                                         editor.apply();
                                         //Update the account with the token;
-                                        new UpdateAccountInfoAsyncTask(LoginActivity.this, token, instance, peertube_instance.isChecked()?UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE:UpdateAccountInfoAsyncTask.SOCIAL.MASTODON).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                        new UpdateAccountInfoAsyncTask(LoginActivity.this, token, client_id, client_secret, refresh_token, instance, peertube_instance.isChecked()?UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE:UpdateAccountInfoAsyncTask.SOCIAL.MASTODON).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     } catch (JSONException ignored) {ignored.printStackTrace();}
                                 }
                             });
