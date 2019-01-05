@@ -234,6 +234,11 @@
             android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
             android:excludeFromRecents="true"
             />
+        <activity android:name=".activities.NotificationReturnSlot"
+            android:launchMode="singleTask"
+            android:taskAffinity=""
+            android:excludeFromRecents="true"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="fr.gouv.etalab.mastodon.fileProvider"

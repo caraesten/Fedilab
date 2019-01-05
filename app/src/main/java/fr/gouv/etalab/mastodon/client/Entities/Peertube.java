@@ -176,6 +176,15 @@ public class Peertube {
     }
 
 
+    public String getTorrentUrl(String resolution) {
+        if( resolution == null)
+            resolution = this.getResolution().get(0);
+        if(resolution == null)
+            return null;
+        return "https://" + this.host + "/static/torrents/" + getUuid()+ "-" + resolution + ".torrent";
+
+    }
+
     public String getTorrentDownloadUrl(String resolution) {
         if( resolution == null)
             resolution = this.getResolution().get(0);

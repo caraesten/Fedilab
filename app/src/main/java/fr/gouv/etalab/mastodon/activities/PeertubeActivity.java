@@ -24,13 +24,14 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -38,6 +39,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,6 +55,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import com.github.se_bastiaan.torrentstream.StreamStatus;
+import com.github.se_bastiaan.torrentstream.Torrent;
+import com.github.se_bastiaan.torrentstream.TorrentOptions;
+import com.github.se_bastiaan.torrentstream.TorrentStream;
+import com.github.se_bastiaan.torrentstream.listeners.TorrentListener;
 
 import java.lang.ref.WeakReference;
 import java.security.KeyManagementException;
@@ -79,12 +87,12 @@ import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.FullScreenMediaController;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.helper.NotificationPanel;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
-import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
@@ -109,6 +117,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private Peertube peertube;
     private TextView toolbar_title;
     public static String video_id;
+    private NotificationPanel nPanel;
+    private TorrentStream torrentStream;
+    private TorrentListener torrentListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +153,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube_title = findViewById(R.id.peertube_title);
         peertube_information_container = findViewById(R.id.peertube_information_container);
 
+
+
+
         loader.setVisibility(View.VISIBLE);
         Bundle b = getIntent().getExtras();
         if(b != null) {
@@ -171,6 +185,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             }
         }
         videoView = findViewById(R.id.media_video);
+
         new RetrievePeertubeSingleAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -357,7 +372,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             });
         }
 
-        Uri uri = Uri.parse(apiResponse.getPeertubes().get(0).getFileUrl(null));
+        //Uri uri = Uri.parse(apiResponse.getPeertubes().get(0).getFileUrl(null));
+        Uri uri = Uri.parse(apiResponse.getPeertubes().get(0).getTorrentUrl(null));
         try {
             HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
         } catch (KeyManagementException e) {
@@ -365,29 +381,77 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        videoView.setVideoURI(uri);
-        videoView.getCurrentPosition();
-        fullScreenMediaController = new FullScreenMediaController(PeertubeActivity.this, peertube);
-        fullScreenMediaController.setPadding(0, 0, 0, (int)Helper.convertDpToPixel(25, PeertubeActivity.this));
-        fullScreenMediaController.setAnchorView(videoView);
-        videoView.setMediaController(fullScreenMediaController);
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                loader.setVisibility(View.GONE);
-                mediaPlayer = mp;
-                mp.start();
-            }
-        });
 
-        videoView.start();
+        
+        TorrentOptions torrentOptions = new TorrentOptions.Builder()
+                .saveLocation(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS))
+                .removeFilesAfterStop(true)
+                .build();
+        videoView.setZOrderMediaOverlay(true);
+        videoView.setZOrderOnTop(true);
+        videoView.setBackgroundColor(Color.TRANSPARENT);
+        torrentStream = TorrentStream.init(torrentOptions);
+        torrentStream.startStream(apiResponse.getPeertubes().get(0).getTorrentUrl(null));
+        torrentListener = new TorrentListener() {
+            @Override
+            public void onStreamPrepared(Torrent torrent) {
+                Log.v(Helper.TAG,"onStreamPrepared");
+            }
+
+            @Override
+            public void onStreamStarted(Torrent torrent) {
+                Log.v(Helper.TAG,"onStreamStarted");
+                if (mediaPlayer != null)
+                    mediaPlayer.start();
+                videoView.start();
+            }
+
+            @Override
+            public void onStreamError(Torrent torrent, Exception e) {
+                Log.v(Helper.TAG,"onStreamError");
+            }
+
+            @Override
+            public void onStreamReady(Torrent torrent) {
+                Log.v(Helper.TAG,"onStreamReady");
+                videoView.setVideoURI(Uri.fromFile(torrent.getVideoFile()));
+                videoView.getCurrentPosition();
+                fullScreenMediaController = new FullScreenMediaController(PeertubeActivity.this, peertube);
+                fullScreenMediaController.setPadding(0, 0, 0, (int) Helper.convertDpToPixel(25, PeertubeActivity.this));
+                fullScreenMediaController.setAnchorView(videoView);
+                videoView.setMediaController(fullScreenMediaController);
+                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        loader.setVisibility(View.GONE);
+                        mediaPlayer = mp;
+                        mp.start();
+                    }
+                });
+                videoView.start();
+            }
+
+            @Override
+            public void onStreamProgress(Torrent torrent, StreamStatus status) {
+            }
+
+            @Override
+            public void onStreamStopped() {
+                Log.v(Helper.TAG,"onStreamStopped");
+                loader.setVisibility(View.GONE);
+                if (mediaPlayer != null)
+                    mediaPlayer.pause();
+                videoView.pause();
+            }
+        };
+        torrentStream.addListener(torrentListener);
+
 
         peertube_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Build.VERSION.SDK_INT >= 23 ){
                     if (ContextCompat.checkSelfPermission(PeertubeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(PeertubeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(PeertubeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
                     } else {
                         manageDownloads(PeertubeActivity.this, peertube.getFileDownloadUrl(null));
                     }
@@ -506,7 +570,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             stopPosition = videoView.getCurrentPosition(); //stopPosition is an int
             videoView.pause();
         }
+        nPanel = new NotificationPanel(PeertubeActivity.this);
     }
+
 
     @Override
     public void onResume(){
@@ -516,6 +582,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             videoView.resume();
             videoView.start();
         }
+        if( nPanel != null)
+            nPanel.notificationCancel();
     }
 
     public void displayResolution(){
@@ -545,12 +613,41 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             public void onClick(DialogInterface dialog, int which) {
                 String res = arrayAdapter.getItem(which).substring(0, arrayAdapter.getItem(which).length() - 1);
                 if( mediaPlayer != null) {
+                    loader.setVisibility(View.VISIBLE);
                     int position = videoView.getCurrentPosition();
-                    mediaPlayer.stop();
-                    videoView.setVideoURI(Uri.parse(peertube.getFileUrl(res)));
-                    fullScreenMediaController.setResolutionVal(res);
-                    videoView.seekTo(position);
-                    videoView.start();
+                    torrentStream.stopStream();
+                    torrentStream.removeListener(torrentListener);
+                    torrentStream.startStream(peertube.getTorrentUrl(res));
+                    torrentListener = new TorrentListener() {
+                        @Override
+                        public void onStreamPrepared(Torrent torrent) {
+                            loader.setVisibility(View.VISIBLE);
+                        }
+                        @Override
+                        public void onStreamStarted(Torrent torrent) {
+                        }
+                        @Override
+                        public void onStreamError(Torrent torrent, Exception e) {
+                        }
+                        @Override
+                        public void onStreamReady(Torrent torrent) {
+                            videoView.setVisibility(View.GONE);
+                            videoView.setVisibility(View.VISIBLE);
+                            loader.setVisibility(View.GONE);
+                            videoView.setVideoURI( Uri.fromFile(torrent.getVideoFile()));
+                            fullScreenMediaController.setResolutionVal(res);
+                            videoView.seekTo(position);
+                            videoView.start();
+                        }
+                        @Override
+                        public void onStreamProgress(Torrent torrent, StreamStatus status) {
+                        }
+                        @Override
+                        public void onStreamStopped() {
+                            loader.setVisibility(View.GONE);
+                        }
+                    };
+                    torrentStream.addListener(torrentListener);
                 }
 
             }
