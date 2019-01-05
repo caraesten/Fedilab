@@ -592,21 +592,25 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
 
         account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
-        account_un.setText(String.format("@%s", account.getAcct()));
-        account_un.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                String account_id = account.getAcct();
-                if( account_id.split("@").length == 1)
-                    account_id += "@" + Helper.getLiveInstance(getApplicationContext());
-                ClipData clip = ClipData.newPlainText("mastodon_account_id", "@"+account_id);
-                Toasty.info(getApplicationContext(),getString(R.string.account_id_clipbloard), Toast.LENGTH_SHORT).show();
-                assert clipboard != null;
-                clipboard.setPrimaryClip(clip);
-                return false;
-            }
-        });
+        if( !ischannel || account.getAcct().split("-").length < 4) {
+            account_un.setText(String.format("@%s", account.getAcct()));
+            account_un.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    String account_id = account.getAcct();
+                    if (account_id.split("@").length == 1)
+                        account_id += "@" + Helper.getLiveInstance(getApplicationContext());
+                    ClipData clip = ClipData.newPlainText("mastodon_account_id", "@" + account_id);
+                    Toasty.info(getApplicationContext(), getString(R.string.account_id_clipbloard), Toast.LENGTH_SHORT).show();
+                    assert clipboard != null;
+                    clipboard.setPrimaryClip(clip);
+                    return false;
+                }
+            });
+        }else {
+            account_un.setVisibility(View.GONE);
+        }
         SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
         account.setNoteSpan(spannableString);
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
