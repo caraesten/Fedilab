@@ -685,14 +685,14 @@
     <string name="no_misskey_instance">Sen instancias Misskey</string>
     <string name="misskey_instance">Instancia Misskey</string>
     <string name="toast_no_apps">Non ten ningunha app no dispositivo para este tipo de ligazón.</string>
-    <string name="subscriptions">Subscriptions</string>
-    <string name="overview">Overview</string>
-    <string name="trending">Trending</string>
-    <string name="recently_added">Recently added</string>
+    <string name="subscriptions">Suscricións</string>
+    <string name="overview">Vista xeral</string>
+    <string name="trending">Tendencia</string>
+    <string name="recently_added">Recén engadido</string>
     <string name="local">Local</string>
-    <string name="upload_video">Upload</string>
-    <string name="reply">Reply</string>
-    <string name="delete_comment">Delete a comment</string>
-    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
+    <string name="upload_video">Subir</string>
+    <string name="reply">Resposta</string>
+    <string name="delete_comment">Eliminar comentario</string>
+    <string name="delete_comment_confirm">Seguro que quere eliminar o comentario?</string>
     <!-- end languages -->
 </resources>
