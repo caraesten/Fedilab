@@ -26,6 +26,7 @@ import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -414,7 +415,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             @Override
             public void onStreamReady(Torrent torrent) {
                 Log.v(Helper.TAG,"onStreamReady");
-                videoView.setVideoURI(Uri.fromFile(torrent.getVideoFile()));
+                videoView.setVideoPath(torrent.getVideoFile().getAbsolutePath());
                 videoView.getCurrentPosition();
                 fullScreenMediaController = new FullScreenMediaController(PeertubeActivity.this, peertube);
                 fullScreenMediaController.setPadding(0, 0, 0, (int) Helper.convertDpToPixel(25, PeertubeActivity.this));
@@ -425,6 +426,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     public void onPrepared(MediaPlayer mp) {
                         loader.setVisibility(View.GONE);
                         mediaPlayer = mp;
+
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                         mp.start();
                     }
                 });
@@ -433,6 +436,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
             @Override
             public void onStreamProgress(Torrent torrent, StreamStatus status) {
+                Log.v(Helper.TAG,"seeds: "  + status.seeds);
+                Log.v(Helper.TAG,"progress: "  + status.progress);
+                Log.v(Helper.TAG,"bufferProgress: "  + status.bufferProgress);
+                Log.v(Helper.TAG,"downloadSpeed: "  + status.downloadSpeed);
             }
 
             @Override
@@ -564,6 +571,13 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        if( torrentStream != null && torrentStream.isStreaming())
+            torrentStream.stopStream();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         if( videoView != null) {
@@ -634,7 +648,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                             videoView.setVisibility(View.GONE);
                             videoView.setVisibility(View.VISIBLE);
                             loader.setVisibility(View.GONE);
-                            videoView.setVideoURI( Uri.fromFile(torrent.getVideoFile()));
+                            videoView.setVideoPath(torrent.getVideoFile().getAbsolutePath());
                             fullScreenMediaController.setResolutionVal(res);
                             videoView.seekTo(position);
                             videoView.start();
