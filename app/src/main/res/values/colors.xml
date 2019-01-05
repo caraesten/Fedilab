@@ -110,4 +110,6 @@
     <color name="neutral_thumbs">#606984</color>
     <color name="positive_thumbs">#2b90d9</color>
     <color name="negative_thumbs">#F44336</color>
+
+    <color name="peertube_orange">#F1680D</color>
 </resources>

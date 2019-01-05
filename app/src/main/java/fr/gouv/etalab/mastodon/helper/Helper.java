@@ -1516,7 +1516,7 @@ public class Helper {
 
         if( accounts != null && accounts.size() > 1) {
 
-            FloatingActionButton.LayoutParams layoutparmansAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(35, activity), (int) Helper.convertDpToPixel(35, activity));
+            FloatingActionButton.LayoutParams layoutparmansAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(37, activity), (int) Helper.convertDpToPixel(37, activity));
             FloatingActionButton.LayoutParams layoutparmanImgAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(35, activity), (int) Helper.convertDpToPixel(35, activity));
             MenuFloating actionButtonAcc = null;
             SharedPreferences mSharedPreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -1601,15 +1601,11 @@ public class Helper {
                             });
 
                     if( accounts.size() > 2 ) {
-                        SubActionButton.Builder subActionButtonAccBuilder = itemBuilderAcc;
-                        if (theme == THEME_LIGHT) {
-                            subActionButtonAccBuilder.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular));
-                        } else if (theme == THEME_DARK) {
-                            subActionButtonAccBuilder.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_dark));
-                        } else if (theme == THEME_BLACK) {
-                            subActionButtonAccBuilder.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_black));
-                        }
-                        SubActionButton subActionButtonAcc = subActionButtonAccBuilder.setContentView(itemIconAcc, layoutparmanImgAcc)
+                        if(accountChoice.getSocial() != null && accountChoice.getSocial().equals("PEERTUBE"))
+                            itemBuilderAcc.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_peertube));
+                        else
+                            itemBuilderAcc.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_mastodon));
+                        SubActionButton subActionButtonAcc = itemBuilderAcc.setContentView(itemIconAcc, layoutparmanImgAcc)
                                 .setLayoutParams(layoutparmansAcc)
                                 .build();
 
@@ -1621,7 +1617,10 @@ public class Helper {
                                 editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
                                 editor.putString(Helper.PREF_INSTANCE, accountChoice.getInstance().trim());
                                 editor.commit();
-                                Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct() + "@" + accountChoice.getInstance()), Toast.LENGTH_LONG).show();
+                                if(accountChoice.getSocial() != null && accountChoice.getSocial().equals("PEERTUBE"))
+                                    Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct()), Toast.LENGTH_LONG).show();
+                                else
+                                    Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct() + "@" + accountChoice.getInstance()), Toast.LENGTH_LONG).show();
                                 Intent changeAccount = new Intent(activity, MainActivity.class);
                                 changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 activity.finish();
