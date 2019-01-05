@@ -133,6 +133,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 flag_loading = true;
                 swiped = true;
                 MainActivity.countNewNotifications = 0;
+                try {
+                    ((MainActivity) context).updateNotifCounter();
+                }catch (Exception ignored){}
                 String sinceId = null;
                 if( notifications != null && notifications.size() > 0 )
                     sinceId = notifications.get(0).getId();
