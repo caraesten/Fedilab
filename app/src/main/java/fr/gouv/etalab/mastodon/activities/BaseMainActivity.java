@@ -1824,6 +1824,10 @@ public abstract class BaseMainActivity extends BaseActivity
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", true).apply();
         updateNotifCounter();
         updateHomeCounter();
+
+        SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext())) {
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), social, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
