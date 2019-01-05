@@ -26,7 +26,6 @@ import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -112,7 +111,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private RelativeLayout loader;
     private TextView peertube_view_count, peertube_bookmark, peertube_like_count, peertube_dislike_count, peertube_share, peertube_download, peertube_description, peertube_title;
     private ScrollView peertube_information_container;
-    private MediaPlayer mediaPlayer;
     private FullScreenMediaController fullScreenMediaController;
     private int stopPosition;
     private Peertube peertube;
@@ -402,8 +400,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             @Override
             public void onStreamStarted(Torrent torrent) {
                 Log.v(Helper.TAG,"onStreamStarted");
-                if (mediaPlayer != null)
-                    mediaPlayer.start();
                 videoView.start();
             }
 
@@ -425,9 +421,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     @Override
                     public void onPrepared(MediaPlayer mp) {
                         loader.setVisibility(View.GONE);
-                        mediaPlayer = mp;
-
-                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                         mp.start();
                     }
                 });
@@ -446,8 +439,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             public void onStreamStopped() {
                 Log.v(Helper.TAG,"onStreamStopped");
                 loader.setVisibility(View.GONE);
-                if (mediaPlayer != null)
-                    mediaPlayer.pause();
                 videoView.pause();
             }
         };
@@ -626,7 +617,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String res = arrayAdapter.getItem(which).substring(0, arrayAdapter.getItem(which).length() - 1);
-                if( mediaPlayer != null) {
+                if( videoView != null) {
                     loader.setVisibility(View.VISIBLE);
                     int position = videoView.getCurrentPosition();
                     torrentStream.stopStream();
