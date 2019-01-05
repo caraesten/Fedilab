@@ -122,7 +122,7 @@ public class FullScreenMediaController extends MediaController {
             resolution.setText(String.format("%sp",resolutionVal));
     }
 
-    private void changeIcon(){
+    public void changeIcon(){
         //fullscreen indicator from intent
         if(((PeertubeActivity)getContext()).getFullscreen() == fullscreen.ON){
             Resources resources = getResources();

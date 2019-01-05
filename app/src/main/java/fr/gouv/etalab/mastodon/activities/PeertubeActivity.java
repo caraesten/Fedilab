@@ -22,6 +22,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -453,6 +454,19 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 startActivity(Intent.createChooser(sendIntent, getString(R.string.share_with)));
             }
         });
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setFullscreen(FullScreenMediaController.fullscreen.ON);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setFullscreen(FullScreenMediaController.fullscreen.OFF);
+        }
+        change();
+        fullScreenMediaController.changeIcon();
     }
 
     @Override
