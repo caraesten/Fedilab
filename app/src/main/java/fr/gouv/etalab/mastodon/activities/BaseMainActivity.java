@@ -303,6 +303,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
         toot = findViewById(R.id.toot);
+        tootShow();
         delete_all = findViewById(R.id.delete_all);
         add_new = findViewById(R.id.add_new);
 
@@ -582,11 +583,11 @@ public abstract class BaseMainActivity extends BaseActivity
                         toot.hide();
                         federatedTimelines.hide();
                     }else {
-                        toot.show();
+                        tootShow();
                         if( !displayFollowInstance)
                             federatedTimelines.hide();
                         else
-                            federatedTimelines.show();
+                            federatedTimelinesShow();
                     }
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
@@ -627,11 +628,11 @@ public abstract class BaseMainActivity extends BaseActivity
                         toot.hide();
                         federatedTimelines.hide();
                     }else {
-                        toot.show();
+                        tootShow();
                         if( !displayFollowInstance)
                             federatedTimelines.hide();
                         else
-                            federatedTimelines.show();
+                            federatedTimelinesShow();
                     }
 
                     if( viewPager.getAdapter() != null) {
@@ -811,11 +812,11 @@ public abstract class BaseMainActivity extends BaseActivity
                         toot.hide();
                         federatedTimelines.hide();
                     }else {
-                        toot.show();
+                        tootShow();
                         if( !displayFollowInstance)
                             federatedTimelines.hide();
                         else
-                            federatedTimelines.show();
+                            federatedTimelinesShow();
                     }
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
@@ -1805,7 +1806,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 add_new.hide();
                 final NavigationView navigationView = findViewById(R.id.nav_view);
                 unCheckAllMenuItems(navigationView);
-                toot.show();
+                tootShow();
                 switch (viewPager.getCurrentItem()){
                     case 1:
                         toot.hide();
@@ -2032,7 +2033,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, accountsFragment, fragmentTag).commit();
         }else if (id == R.id.nav_scheduled) {
-            toot.show();
+            tootShow();
             TabLayoutScheduleFragment tabLayoutScheduleFragment = new TabLayoutScheduleFragment();
             fragmentTag = "SCHEDULED";
             fragmentManager.beginTransaction()
@@ -2816,17 +2817,39 @@ public abstract class BaseMainActivity extends BaseActivity
     public void manageFloatingButton(boolean display){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
-        if(display){
-            toot.show();
-            if( !displayFollowInstance)
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if (display) {
+                tootShow();
+                if (!displayFollowInstance)
+                    federatedTimelines.hide();
+                else
+                    federatedTimelinesShow();
+            } else {
+                toot.hide();
                 federatedTimelines.hide();
-            else
-                federatedTimelines.show();
-        }else{
+            }
+        }else {
             toot.hide();
             federatedTimelines.hide();
         }
     }
+    public void tootShow(){
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            toot.show();
+        }else{
+            toot.hide();
+        }
+    }
+    public void federatedTimelinesShow(){
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            federatedTimelines.show();
+        }else{
+            federatedTimelines.hide();
+        }
+    }
+
+
+
     public boolean getFloatingVisibility(){
         return toot.getVisibility() == View.VISIBLE;
     }
@@ -2838,7 +2861,7 @@ public abstract class BaseMainActivity extends BaseActivity
         if( !displayFollowInstance)
             federatedTimelines.hide();
         else
-            federatedTimelines.show();
+            federatedTimelinesShow();
     }
     public DisplayStatusFragment getHomeFragment(){
         return homeFragment;
@@ -2852,6 +2875,7 @@ public abstract class BaseMainActivity extends BaseActivity
         SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         federatedTimelines = findViewById(R.id.federated_timeline);
 
+        federatedTimelinesShow();
         delete_instance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
