@@ -206,15 +206,12 @@ public class PeertubeAPI {
      * Verifiy credential of the authenticated user *synchronously*
      * @return Account
      */
-    public Account verifyCredentials() {
+    public Account verifyCredentials() throws HttpsConnection.HttpsConnectionException {
         account = new Account();
         try {
             String response = new HttpsConnection(context).get(getAbsoluteUrl("/users/me"), 60, null, prefKeyOauthTokenT);
             JSONObject accountObject = new JSONObject(response).getJSONObject("account");
             account = parseAccountResponsePeertube(context, accountObject);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -226,6 +223,46 @@ public class PeertubeAPI {
         }
         return account;
     }
+
+    /***
+     * Verifiy credential of the authenticated user *synchronously*
+     * @return Account
+     */
+    public HashMap<String, String> refreshToken(String client_id, String client_secret, String refresh_token)  {
+        account = new Account();
+        HashMap<String, String> params = new HashMap<>();
+        HashMap<String, String> newValues = new HashMap<>();
+        params.put("grant_type", "refresh_token");
+        params.put("client_id", client_id);
+        params.put("client_secret", client_secret);
+        params.put("refresh_token", refresh_token);
+        try {
+            String response = new HttpsConnection(context).post(getAbsoluteUrl("/users/token"), 60, params, null);
+            JSONObject resobj = new JSONObject(response);
+            String token = resobj.get("access_token").toString();
+            if( resobj.has("refresh_token"))
+                refresh_token = resobj.get("access_token").toString();
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
+            editor.apply();
+            newValues.put("access_token",token);
+            newValues.put("refresh_token",refresh_token);
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            e.printStackTrace();
+        }
+        return newValues;
+    }
+
 
     /**
      * Returns an account

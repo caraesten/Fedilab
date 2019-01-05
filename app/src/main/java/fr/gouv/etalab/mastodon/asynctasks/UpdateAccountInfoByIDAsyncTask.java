@@ -25,6 +25,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnUpdateAccountInfoInterface;
@@ -58,8 +59,13 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
         Account account = null;
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
             account = new API(this.contextReference.get()).getAccount(userId);
-        else if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
-            account = new PeertubeAPI(this.contextReference.get()).verifyCredentials();
+        else if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+            try {
+                account = new PeertubeAPI(this.contextReference.get()).verifyCredentials();
+            } catch (HttpsConnection.HttpsConnectionException e) {
+                e.printStackTrace();
+            }
+        }
         if( account == null)
             return null;
         account.setInstance(Helper.getLiveInstance(contextReference.get()));

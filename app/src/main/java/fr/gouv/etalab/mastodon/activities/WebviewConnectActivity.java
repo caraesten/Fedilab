@@ -165,12 +165,15 @@ public class WebviewConnectActivity extends BaseActivity {
                                 try {
                                     resobj = new JSONObject(response);
                                     String token = resobj.get("access_token").toString();
+                                    String refresh_token = null;
+                                    if( resobj.has("refresh_token"))
+                                        refresh_token = resobj.get("access_token").toString();
                                     SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
                                     editor.apply();
                                     //Update the account with the token;
-                                    new UpdateAccountInfoAsyncTask(WebviewConnectActivity.this, token, instance, social).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    new UpdateAccountInfoAsyncTask(WebviewConnectActivity.this, token, clientId, clientSecret, refresh_token, instance, social).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 } catch (JSONException ignored) {}
                             } catch (Exception ignored) {}
                         }}).start();

@@ -24,10 +24,12 @@ import android.os.AsyncTask;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
+import java.util.HashMap;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -67,8 +69,16 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
             account.setSocial("MASTODON");
         }else if( social == SOCIAL.PEERTUBE) {
-            account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
-            account.setSocial("PEERTUBE");
+            try {
+                account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
+                account.setSocial("PEERTUBE");
+            }catch (HttpsConnection.HttpsConnectionException exception){
+                if(exception.getStatusCode() == 401){
+                    HashMap<String, String> values = new PeertubeAPI(this.contextReference.get(), instance, null).refreshToken(client_id, client_secret, refresh_token);
+                    this.token = values.get("access_token");
+                    this.refresh_token = values.get("refresh_token");
+                }
+            }
         }
 
         if( account == null)
