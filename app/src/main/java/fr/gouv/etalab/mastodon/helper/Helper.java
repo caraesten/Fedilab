@@ -2678,7 +2678,7 @@ public class Helper {
                 return;
             }
         }
-        if( url == null || url.contains("missing.png") || url.contains(".svg")) {
+        if( url == null  || url.equals("null") || url.contains("missing.png") || url.contains(".svg")) {
             if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                 try {
                     Glide.with(imageView.getContext())

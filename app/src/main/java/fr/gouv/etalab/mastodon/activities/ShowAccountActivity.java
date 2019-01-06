@@ -705,7 +705,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
         }
         boolean disableGif = sharedpreferences.getBoolean(Helper.SET_DISABLE_GIF, false);
-        if( account.getAvatar() == null && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+        if( (account.getAvatar() == null || account.getAvatar().equals("null"))&& MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             Glide.with(getApplicationContext()).load(R.drawable.missing_peertube).apply(RequestOptions.circleCropTransform()).into(account_pp);
         }else{
             if( !disableGif)
