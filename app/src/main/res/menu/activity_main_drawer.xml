@@ -61,6 +61,10 @@
                         android:icon="@drawable/ic_favorite_peertube_full"
                         android:title="@string/peertube_favorites" />
                     <item
+                        android:id="@+id/nav_peertube_settings"
+                        android:icon="@drawable/ic_settings"
+                        android:title="@string/settings" />
+                    <item
                         android:id="@+id/nav_upload"
                         android:icon="@drawable/ic_cloud_upload"
                         android:title="@string/upload_video" />

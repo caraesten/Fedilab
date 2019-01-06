@@ -298,6 +298,10 @@ public class Helper {
     public static final int ATTACHMENT_ASK = 3;
 
 
+    public static final String SET_VIDEO_MODE = "set_video_mode";
+    public static final int VIDEO_MODE_TORRENT = 0;
+    public static final int VIDEO_MODE_WEBVIEW = 1;
+    public static final int VIDEO_MODE_DIRECT = 2;
 
     public static final int BATTERY_PROFILE_NORMAL = 1;
     public static final int BATTERY_PROFILE_MEDIUM = 2;

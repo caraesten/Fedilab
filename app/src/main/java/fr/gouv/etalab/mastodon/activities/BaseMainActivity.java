@@ -126,6 +126,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayMutedInstanceFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
+import fr.gouv.etalab.mastodon.fragments.SettingsPeertubeFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutScheduleFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.fragments.WhoToFollowFragment;
@@ -1666,6 +1667,11 @@ public abstract class BaseMainActivity extends BaseActivity
                 navigationView.setCheckedItem(R.id.nav_settings);
                 navigationView.getMenu().performIdentifierAction(R.id.nav_settings, 0);
                 toolbarTitle.setText(R.string.settings);
+            }else if( extras.getInt(INTENT_ACTION) == BACK_TO_SETTINGS){
+                unCheckAllMenuItems(navigationView);
+                navigationView.setCheckedItem(R.id.nav_peertube_settings);
+                navigationView.getMenu().performIdentifierAction(R.id.nav_peertube_settings, 0);
+                toolbarTitle.setText(R.string.settings);
             }else if (extras.getInt(INTENT_ACTION) == ADD_USER_INTENT){
                 this.recreate();
             }else if( extras.getInt(INTENT_ACTION) == BACKUP_INTENT){
@@ -2001,6 +2007,13 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "TABLAYOUT_SETTINGS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, tabLayoutSettingsFragment, fragmentTag).commit();
+
+        }else if (id == R.id.nav_peertube_settings) {
+            toot.hide();
+            SettingsPeertubeFragment settingsPeertubeFragment= new SettingsPeertubeFragment();
+            fragmentTag = "TABLAYOUT_PEERTUBE_SETTINGS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, settingsPeertubeFragment, fragmentTag).commit();
 
         }else if (id == R.id.nav_favorites) {
             toot.hide();

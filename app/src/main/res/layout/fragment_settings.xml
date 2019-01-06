@@ -21,8 +21,12 @@
     android:id="@+id/swipeContainer"
     android:paddingLeft="@dimen/drawer_padding"
     android:paddingRight="@dimen/drawer_padding"
+    android:layout_marginLeft="@dimen/fab_margin"
+    android:layout_marginRight="@dimen/fab_margin"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/fab_margin"
+    android:layout_marginEnd="@dimen/fab_margin">
 
 
     <LinearLayout
