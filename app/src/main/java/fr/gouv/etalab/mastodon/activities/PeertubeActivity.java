@@ -40,7 +40,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,7 +47,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -63,18 +61,15 @@ import com.github.se_bastiaan.torrentstream.Torrent;
 import com.github.se_bastiaan.torrentstream.TorrentOptions;
 import com.github.se_bastiaan.torrentstream.TorrentStream;
 import com.github.se_bastiaan.torrentstream.listeners.TorrentListener;
-import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlaybackControlView;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
-import com.google.android.exoplayer2.ui.TrackSelectionView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
@@ -120,14 +115,13 @@ import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
  * Peertube activity
  */
 
-public class PeertubeActivity extends BaseActivity implements View.OnClickListener, OnRetrievePeertubeInterface, OnPostActionInterface {
+public class PeertubeActivity extends BaseActivity implements OnRetrievePeertubeInterface, OnPostActionInterface {
 
     private String peertubeInstance, videoId;
     private FullScreenMediaController.fullscreen fullscreen;
     private RelativeLayout loader;
     private TextView peertube_view_count, peertube_bookmark, peertube_like_count, peertube_dislike_count, peertube_share, peertube_download, peertube_description, peertube_title;
     private ScrollView peertube_information_container;
-    private FullScreenMediaController fullScreenMediaController;
     private int stopPosition;
     private Peertube peertube;
     private TextView toolbar_title;
@@ -139,7 +133,7 @@ public class PeertubeActivity extends BaseActivity implements View.OnClickListen
     private boolean fullScreenMode;
     private Dialog fullScreenDialog;
     private AppCompatImageView fullScreenIcon;
-    private LinearLayout debugRootView;
+    private TextView resolution;
     private DefaultTrackSelector trackSelector;
 
     @Override
@@ -175,7 +169,6 @@ public class PeertubeActivity extends BaseActivity implements View.OnClickListen
         peertube_information_container = findViewById(R.id.peertube_information_container);
 
 
-        debugRootView = findViewById(R.id.controls_root);
 
         playerView = findViewById(R.id.media_video);
 
@@ -184,6 +177,7 @@ public class PeertubeActivity extends BaseActivity implements View.OnClickListen
 
         initFullscreenDialog();
         initFullscreenButton();
+
         loader.setVisibility(View.VISIBLE);
         Bundle b = getIntent().getExtras();
         if(b != null) {
@@ -377,7 +371,7 @@ public class PeertubeActivity extends BaseActivity implements View.OnClickListen
         video_id = peertube.getId();
 
         changeColor();
-
+        initResolution();
 
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
             peertube_like_count.setOnClickListener(new View.OnClickListener() {
@@ -651,7 +645,7 @@ public class PeertubeActivity extends BaseActivity implements View.OnClickListen
                     long position = player.getCurrentPosition();
                     torrentStream.stopStream();
                     torrentStream.removeListener(torrentListener);
-                    torrentStream.startStream(peertube.getTorrentUrl(res));
+                    torrentStream.startStream(peertube.getTorrentUrl(String.format("%s dp",res)));
                     torrentListener = new TorrentListener() {
                         @Override
                         public void onStreamPrepared(Torrent torrent) {
@@ -665,7 +659,7 @@ public class PeertubeActivity extends BaseActivity implements View.OnClickListen
                         @Override
                         public void onStreamReady(Torrent torrent) {
                             loader.setVisibility(View.GONE);
-                            fullScreenMediaController.setResolutionVal(res);
+                            resolution.setText(res);
                             DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
                                     Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
 
@@ -699,30 +693,6 @@ public class PeertubeActivity extends BaseActivity implements View.OnClickListen
 
     }
 
-
-    @Override
-    public void onClick(View view) {
-        Log.v(Helper.TAG,"view.getParent(): " + view.getParent());
-        Log.v(Helper.TAG,"debugRootView: " + debugRootView);
-        if (view.getParent() == debugRootView) {
-            MappingTrackSelector.MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
-            if (mappedTrackInfo != null) {
-                CharSequence title = ((Button) view).getText();
-                int rendererIndex = (int) view.getTag();
-                int rendererType = mappedTrackInfo.getRendererType(rendererIndex);
-                boolean allowAdaptiveSelections =
-                        rendererType == C.TRACK_TYPE_VIDEO
-                                || (rendererType == C.TRACK_TYPE_AUDIO
-                                && mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_VIDEO)
-                                == MappingTrackSelector.MappedTrackInfo.RENDERER_SUPPORT_NO_TRACKS);
-                Pair<AlertDialog, TrackSelectionView> dialogPair =
-                        TrackSelectionView.getDialog(this, title, trackSelector, rendererIndex);
-                dialogPair.second.setShowDisableOption(true);
-                dialogPair.second.setAllowAdaptiveSelections(allowAdaptiveSelections);
-                dialogPair.first.show();
-            }
-        }
-    }
 
     private void initFullscreenDialog() {
 
@@ -769,6 +739,20 @@ public class PeertubeActivity extends BaseActivity implements View.OnClickListen
             }
         });
     }
+
+    private void initResolution() {
+        PlaybackControlView controlView = playerView.findViewById(R.id.exo_controller);
+        resolution = controlView.findViewById(R.id.resolution);
+        resolution.setText(String.format("%s dp",peertube.getResolution().get(0)));
+        resolution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayResolution();
+            }
+        });
+    }
+
+
 
     private void changeColor(){
         if( peertube.getMyRating() != null && peertube.getMyRating().equals("like")){
