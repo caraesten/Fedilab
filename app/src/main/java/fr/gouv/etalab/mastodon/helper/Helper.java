@@ -1157,8 +1157,9 @@ public class Helper {
                     item.setIcon(R.drawable.ic_person);
                     String url = account.getAvatar();
                     if( url.startsWith("/") ){
-                        url = Helper.getLiveInstanceWithProtocol(activity) + account.getAvatar();
+                        url = "https://" + account.getInstance() + account.getAvatar();
                     }
+                    if(!url.equals("null"))
                     Glide.with(activity.getApplicationContext())
                             .asBitmap()
                             .load(url)
@@ -1169,6 +1170,17 @@ public class Helper {
                                     item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
                                 }
                             });
+                    else
+                        Glide.with(activity.getApplicationContext())
+                                .asBitmap()
+                                .load(R.drawable.missing_peertube)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                        item.setIcon(new BitmapDrawable(activity.getResources(), resource));
+                                        item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
+                                    }
+                                });
 
                     item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
