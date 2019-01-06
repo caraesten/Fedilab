@@ -683,5 +683,12 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="reply">Antworten</string>
     <string name="delete_comment">Kommentar entfernen</string>
     <string name="delete_comment_confirm">Möchten Sie diesen Kommentar wirklich löschen?</string>
+    <string name="fullscreen">Vollbildvideo</string>
+    <string name="set_video_mode">Mode for videos</string>
     <!-- end languages -->
+    <string-array name="settings_video_mode">
+        <item>Torrent</item>
+        <item>Webview</item>
+        <item>Direct stream</item>
+    </string-array>
 </resources>

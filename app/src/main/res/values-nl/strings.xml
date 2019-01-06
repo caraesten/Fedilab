@@ -690,5 +690,12 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="reply">Beantwoorden</string>
     <string name="delete_comment">Een opmerking verwijderen</string>
     <string name="delete_comment_confirm">Weet u zeker dat deze opmerking verwijderen?</string>
+    <string name="fullscreen">Full screen video</string>
+    <string name="set_video_mode">Mode for videos</string>
     <!-- end languages -->
+    <string-array name="settings_video_mode">
+        <item>Torrent</item>
+        <item>Webview</item>
+        <item>Direct stream</item>
+    </string-array>
 </resources>

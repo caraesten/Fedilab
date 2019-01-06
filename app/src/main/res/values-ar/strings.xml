@@ -703,5 +703,12 @@
     <string name="reply">رد</string>
     <string name="delete_comment">حذف التعليق</string>
     <string name="delete_comment_confirm">هل أنت متأكد من أنك تود حذف هذا التعليق؟</string>
+    <string name="fullscreen">Full screen video</string>
+    <string name="set_video_mode">Mode for videos</string>
     <!-- end languages -->
+    <string-array name="settings_video_mode">
+        <item>Torrent</item>
+        <item>Webview</item>
+        <item>Direct stream</item>
+    </string-array>
 </resources>

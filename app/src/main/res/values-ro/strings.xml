@@ -693,5 +693,12 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="reply">Reply</string>
     <string name="delete_comment">Delete a comment</string>
     <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
+    <string name="fullscreen">Full screen video</string>
+    <string name="set_video_mode">Mode for videos</string>
     <!-- end languages -->
+    <string-array name="settings_video_mode">
+        <item>Torrent</item>
+        <item>Webview</item>
+        <item>Direct stream</item>
+    </string-array>
 </resources>

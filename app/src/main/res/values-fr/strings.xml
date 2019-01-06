@@ -327,9 +327,9 @@
     <string name="use_cookies">Autoriser les cookies tiers</string>
     <string name="settings_ui_layout">Disposition des fils : </string>
     <string-array name="battery_profiles">
-        <item>Décharge normale de la batterie</item>
-        <item>Décharge modérée de la batterie</item>
-        <item>Décharge faible de la batterie</item>
+        <item>Usage normal</item>
+        <item>Usage modéré</item>
+        <item>Faible usage</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Onglets</item>
@@ -690,5 +690,12 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="reply">Répondre</string>
     <string name="delete_comment">Supprimer le commentaire</string>
     <string name="delete_comment_confirm">Etes-vous sûr de vouloir supprimer ce commentaire ?</string>
+    <string name="fullscreen">Full screen video</string>
+    <string name="set_video_mode">Mode for videos</string>
     <!-- end languages -->
+    <string-array name="settings_video_mode">
+        <item>Torrent</item>
+        <item>Webview</item>
+        <item>Direct stream</item>
+    </string-array>
 </resources>

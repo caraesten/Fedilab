@@ -693,5 +693,12 @@
     <string name="reply">Odpowiedz</string>
     <string name="delete_comment">Usuń komentarz</string>
     <string name="delete_comment_confirm">Czy na pewno chcesz usunąć ten komentarz?</string>
+    <string name="fullscreen">Full screen video</string>
+    <string name="set_video_mode">Mode for videos</string>
     <!-- end languages -->
+    <string-array name="settings_video_mode">
+        <item>Torrent</item>
+        <item>Webview</item>
+        <item>Direct stream</item>
+    </string-array>
 </resources>
