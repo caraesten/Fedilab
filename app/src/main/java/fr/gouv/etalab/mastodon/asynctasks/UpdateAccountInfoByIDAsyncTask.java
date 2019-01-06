@@ -74,14 +74,16 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
                     SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                     String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
                     account = new AccountDAO(this.contextReference.get(), db).getAccountByToken(token);
-                    HashMap<String, String> values = new PeertubeAPI(this.contextReference.get()).refreshToken(account.getClient_id(), account.getClient_secret(), account.getRefresh_token().trim());
-                    String newtoken = values.get("access_token");
-                    String refresh_token = values.get("refresh_token");
-                    if( newtoken != null)
-                        account.setToken(newtoken);
-                    if( refresh_token != null)
-                        account.setRefresh_token(refresh_token);
-                    new AccountDAO(this.contextReference.get(), db).updateAccount(account);
+                    HashMap<String, String> values = new PeertubeAPI(this.contextReference.get()).refreshToken(account.getClient_id(), account.getClient_secret(), account.getRefresh_token());
+                    if( values != null) {
+                        String newtoken = values.get("access_token");
+                        String refresh_token = values.get("refresh_token");
+                        if (newtoken != null)
+                            account.setToken(newtoken);
+                        if (refresh_token != null)
+                            account.setRefresh_token(refresh_token);
+                        new AccountDAO(this.contextReference.get(), db).updateAccount(account);
+                    }
                 }
             }
 
