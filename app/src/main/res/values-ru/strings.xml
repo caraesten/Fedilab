@@ -699,12 +699,12 @@
     <string name="reply">Ответ</string>
     <string name="delete_comment">Удалить комментарий</string>
     <string name="delete_comment_confirm">Вы уверены, что хотите удалить этот комментарий?</string>
-    <string name="fullscreen">Full screen video</string>
-    <string name="set_video_mode">Mode for videos</string>
+    <string name="fullscreen">Полноэкранное видео</string>
+    <string name="set_video_mode">Режим для видео</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
         <item>Webview</item>
-        <item>Direct stream</item>
+        <item>Прямой поток</item>
     </string-array>
 </resources>
