@@ -682,14 +682,14 @@
     <string name="no_misskey_instance">Misskey instantziarik ez</string>
     <string name="misskey_instance">Misskey instantzia</string>
     <string name="toast_no_apps">Ez dago esteka hau onartzen duen aplikaziorik zure gailuan instalatuta.</string>
-    <string name="subscriptions">Subscriptions</string>
-    <string name="overview">Overview</string>
-    <string name="trending">Trending</string>
-    <string name="recently_added">Recently added</string>
-    <string name="local">Local</string>
-    <string name="upload_video">Upload</string>
-    <string name="reply">Reply</string>
-    <string name="delete_comment">Delete a comment</string>
-    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
+    <string name="subscriptions">Harpidetzak</string>
+    <string name="overview">Bista orokorra</string>
+    <string name="trending">Joerak</string>
+    <string name="recently_added">Berriki gehituta</string>
+    <string name="local">Tokikoa</string>
+    <string name="upload_video">Igo</string>
+    <string name="reply">Erantzun</string>
+    <string name="delete_comment">Ezabatu iruzkin bat</string>
+    <string name="delete_comment_confirm">Ziur iruzkin hau ezabatu nahi duzula?</string>
     <!-- end languages -->
 </resources>
