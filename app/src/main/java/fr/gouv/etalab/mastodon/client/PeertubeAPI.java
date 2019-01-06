@@ -2669,7 +2669,7 @@ public class PeertubeAPI {
             if( accountObject.has("avatar") && !accountObject.isNull("avatar")){
                 account.setAvatar(accountObject.getJSONObject("avatar").get("path").toString());
             }else
-                account.setAvatar(null);
+                account.setAvatar("null");
             account.setHeader("null");
             account.setHeader_static("null");
             account.setAvatar_static(accountObject.get("avatar").toString());
