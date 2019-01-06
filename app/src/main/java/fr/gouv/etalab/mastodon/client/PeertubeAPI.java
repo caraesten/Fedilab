@@ -236,7 +236,6 @@ public class PeertubeAPI {
         params.put("client_id", client_id);
         params.put("client_secret", client_secret);
         params.put("refresh_token", refresh_token);
-
         try {
             String response = new HttpsConnection(context).post(getAbsoluteUrl("/users/token"), 60, params, null);
             JSONObject resobj = new JSONObject(response);
