@@ -64,7 +64,6 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         Account account = null;
-
         if( social == SOCIAL.MASTODON) {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
             account.setSocial("MASTODON");
@@ -75,8 +74,10 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
             }catch (HttpsConnection.HttpsConnectionException exception){
                 if(exception.getStatusCode() == 401){
                     HashMap<String, String> values = new PeertubeAPI(this.contextReference.get(), instance, null).refreshToken(client_id, client_secret, refresh_token);
-                    this.token = values.get("access_token");
-                    this.refresh_token = values.get("refresh_token");
+                    if( values.get("access_token") != null)
+                        this.token = values.get("access_token");
+                    if( values.get("refresh_token") != null)
+                        this.refresh_token = values.get("refresh_token");
                 }
             }
         }
