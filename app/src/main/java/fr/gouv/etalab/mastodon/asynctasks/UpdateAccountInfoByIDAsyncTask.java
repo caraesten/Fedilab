@@ -20,6 +20,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -65,6 +66,25 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
             } catch (HttpsConnection.HttpsConnectionException e) {
                 e.printStackTrace();
             }
+            try {
+                account = new PeertubeAPI(this.contextReference.get()).verifyCredentials();
+                account.setSocial("PEERTUBE");
+            }catch (HttpsConnection.HttpsConnectionException exception){
+                if(exception.getStatusCode() == 401){
+                    SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                    account = new AccountDAO(this.contextReference.get(), db).getAccountByToken(token);
+                    HashMap<String, String> values = new PeertubeAPI(this.contextReference.get()).refreshToken(account.getClient_id(), account.getClient_secret(), account.getRefresh_token().trim());
+                    String newtoken = values.get("access_token");
+                    String refresh_token = values.get("refresh_token");
+                    if( newtoken != null)
+                        account.setToken(newtoken);
+                    if( refresh_token != null)
+                        account.setRefresh_token(refresh_token);
+                    new AccountDAO(this.contextReference.get(), db).updateAccount(account);
+                }
+            }
+
         }
         if( account == null)
             return null;
