@@ -15,7 +15,6 @@ package fr.gouv.etalab.mastodon.fragments;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,11 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import fr.gouv.etalab.mastodon.R;
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
-
-import static fr.gouv.etalab.mastodon.helper.Helper.BACK_TO_SETTINGS;
-import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 
 
 
@@ -84,11 +79,6 @@ public class SettingsPeertubeFragment extends Fragment {
                             editor.apply();
                             break;
                     }
-                    if( getActivity() != null)
-                        getActivity().recreate();
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(INTENT_ACTION, BACK_TO_SETTINGS);
-                    startActivity(intent);
                 }
                 count1++;
             }

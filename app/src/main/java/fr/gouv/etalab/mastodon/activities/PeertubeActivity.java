@@ -39,7 +39,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -109,6 +108,7 @@ import fr.gouv.etalab.mastodon.webview.MastalabWebChromeClient;
 import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
+import static fr.gouv.etalab.mastodon.helper.Helper.VIDEO_MODE_WEBVIEW;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
 
@@ -176,24 +176,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         webview_video = findViewById(R.id.webview_video);
         playerView = findViewById(R.id.media_video);
 
-
-        mode = sharedpreferences.getInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_TORRENT);
-        if( mode == Helper.VIDEO_MODE_WEBVIEW){
-            webview_video.setVisibility(View.VISIBLE);
-            playerView.setVisibility(View.GONE);
-        }else {
-            webview_video.setVisibility(View.GONE);
-            playerView.setVisibility(View.VISIBLE);
-        }
-
-
-        if( mode != Helper.VIDEO_MODE_WEBVIEW){
-            playerView.setControllerShowTimeoutMs(1000);
-            playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
-            initFullscreenDialog();
-            initFullscreenButton();
-        }
-
         Bundle b = getIntent().getExtras();
         if(b != null) {
             peertubeInstance = b.getString("peertube_instance", null);
@@ -221,6 +203,57 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 Helper.colorizeToolbar(toolbar, R.color.black, PeertubeActivity.this);
             }
         }
+
+
+        mode = sharedpreferences.getInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_TORRENT);
+        if( mode == Helper.VIDEO_MODE_WEBVIEW){
+            webview_video.setVisibility(View.VISIBLE);
+            playerView.setVisibility(View.GONE);
+
+            webview_video = Helper.initializeWebview(PeertubeActivity.this, R.id.webview_video);
+            FrameLayout webview_container = findViewById(R.id.main_media_frame);
+            final ViewGroup videoLayout = findViewById(R.id.videoLayout);
+
+            MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(PeertubeActivity.this,  webview_video, webview_container, videoLayout);
+            mastalabWebChromeClient.setOnToggledFullscreen(new MastalabWebChromeClient.ToggledFullscreenCallback() {
+                @Override
+                public void toggledFullscreen(boolean fullscreen) {
+
+                    if (fullscreen) {
+                        videoLayout.setVisibility(View.VISIBLE);
+                        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+                        attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                        attrs.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+                        getWindow().setAttributes(attrs);
+                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+                        peertube_information_container.setVisibility(View.GONE);
+                    } else {
+                        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+                        attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                        attrs.flags &= ~WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+                        getWindow().setAttributes(attrs);
+                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                        videoLayout.setVisibility(View.GONE);
+                        peertube_information_container.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+            webview_video.setWebChromeClient(mastalabWebChromeClient);
+            webview_video.setWebViewClient(new MastalabWebViewClient(PeertubeActivity.this));
+            webview_video.loadUrl("https://" + peertubeInstance + "/videos/embed/" + videoId);
+        }else {
+            webview_video.setVisibility(View.GONE);
+            playerView.setVisibility(View.VISIBLE);
+        }
+
+
+        if( mode != Helper.VIDEO_MODE_WEBVIEW){
+            playerView.setControllerShowTimeoutMs(1000);
+            playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+            initFullscreenDialog();
+            initFullscreenButton();
+        }
+
 
 
         new RetrievePeertubeSingleAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -444,23 +477,19 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             torrentListener = new TorrentListener() {
                 @Override
                 public void onStreamPrepared(Torrent torrent) {
-                    Log.v(Helper.TAG,"onStreamPrepared");
                 }
 
                 @Override
                 public void onStreamStarted(Torrent torrent) {
-                    Log.v(Helper.TAG,"onStreamStarted");
                 }
 
                 @Override
                 public void onStreamError(Torrent torrent, Exception e) {
-                    Log.v(Helper.TAG,"onStreamError");
                     e.printStackTrace();
                 }
 
                 @Override
                 public void onStreamReady(Torrent torrent) {
-                    Log.v(Helper.TAG,"onStreamReady");
                     loader.setVisibility(View.GONE);
                     DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
                             Util.getUserAgent(getApplicationContext(), "Mastalab"), bandwidthMeter);
@@ -478,64 +507,25 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
                 @Override
                 public void onStreamStopped() {
-                    Log.v(Helper.TAG,"onStreamStopped");
                     loader.setVisibility(View.GONE);
                     player.release();
                 }
             };
             torrentStream.addListener(torrentListener);
         }else if( mode == Helper.VIDEO_MODE_DIRECT){
-            DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-            TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
-            trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
 
             DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
                     Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
 
             ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(apiResponse.getPeertubes().get(0).getTorrentUrl(null)));
+                    .createMediaSource(Uri.parse(apiResponse.getPeertubes().get(0).getFileUrl(null)));
 
             player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this);
             playerView.setPlayer(player);
             loader.setVisibility(View.GONE);
 
-            ExtractorMediaSource extractorMediaSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(apiResponse.getPeertubes().get(0).getTorrentUrl(null)));
-            player.prepare(extractorMediaSource);
+            player.prepare(videoSource);
             player.setPlayWhenReady(true);
-        }else {
-            webview_video = Helper.initializeWebview(PeertubeActivity.this, R.id.webview_video);
-            setTitle("");
-            FrameLayout webview_container = findViewById(R.id.main_media_frame);
-            final ViewGroup videoLayout = findViewById(R.id.videoLayout); // Your own view, read class comments
-
-            MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(PeertubeActivity.this,  webview_video, webview_container, videoLayout);
-            mastalabWebChromeClient.setOnToggledFullscreen(new MastalabWebChromeClient.ToggledFullscreenCallback() {
-                @Override
-                public void toggledFullscreen(boolean fullscreen) {
-
-                    if (fullscreen) {
-                        videoLayout.setVisibility(View.VISIBLE);
-                        WindowManager.LayoutParams attrs = getWindow().getAttributes();
-                        attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-                        attrs.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-                        getWindow().setAttributes(attrs);
-                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
-                        peertube_information_container.setVisibility(View.GONE);
-                    } else {
-                        WindowManager.LayoutParams attrs = getWindow().getAttributes();
-                        attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
-                        attrs.flags &= ~WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-                        getWindow().setAttributes(attrs);
-                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-                        videoLayout.setVisibility(View.GONE);
-                        peertube_information_container.setVisibility(View.VISIBLE);
-                    }
-                }
-            });
-            webview_video.setWebChromeClient(mastalabWebChromeClient);
-            webview_video.setWebViewClient(new MastalabWebViewClient(PeertubeActivity.this));
-            webview_video.loadUrl(peertube.getFileUrl(null));
         }
 
 
@@ -618,14 +608,27 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            openFullscreenDialog();
-            setFullscreen(FullScreenMediaController.fullscreen.ON);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            closeFullscreenDialog();
-            setFullscreen(FullScreenMediaController.fullscreen.OFF);
+        if( mode != VIDEO_MODE_WEBVIEW) {
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                openFullscreenDialog();
+                setFullscreen(FullScreenMediaController.fullscreen.ON);
+            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                closeFullscreenDialog();
+                setFullscreen(FullScreenMediaController.fullscreen.OFF);
+            }
+            change();
+        }else {
+           final ViewGroup videoLayout = findViewById(R.id.videoLayout);
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                setFullscreen(FullScreenMediaController.fullscreen.ON);
+            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                setFullscreen(FullScreenMediaController.fullscreen.OFF);
+            }
+            change();
+
+
         }
-        change();
+
     }
 
     @Override
@@ -708,7 +711,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String res = arrayAdapter.getItem(which).substring(0, arrayAdapter.getItem(which).length() - 1);
-                Log.v(Helper.TAG,"playerView1: " + playerView);
+
                 if( playerView != null) {
                     loader.setVisibility(View.VISIBLE);
                     long position = player.getCurrentPosition();
@@ -739,25 +742,20 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     torrentStream = TorrentStream.init(torrentOptions);
                     player.prepare(videoSource);
                     torrentStream.startStream(peertube.getTorrentUrl(res));
-                    Log.v(Helper.TAG,"torrentStream1: " + torrentStream);
                     torrentListener = new TorrentListener() {
                         @Override
                         public void onStreamPrepared(Torrent torrent) {
-                            Log.v(Helper.TAG,"onStreamPrepared1: " + torrent);
                             resolution.setText(res);
                         }
                         @Override
                         public void onStreamStarted(Torrent torrent) {
-                            Log.v(Helper.TAG,"onStreamStarted1: " + torrent);
                         }
                         @Override
                         public void onStreamError(Torrent torrent, Exception e) {
-                            Log.v(Helper.TAG,"onStreamError1: " + torrent);
                         }
                         @Override
                         public void onStreamReady(Torrent torrent) {
                             loader.setVisibility(View.GONE);
-                            Log.v(Helper.TAG,"onStreamReady1: " + torrent);
                             resolution.setText(res);
                             DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
                                     Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
