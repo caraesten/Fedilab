@@ -691,5 +691,12 @@
     <string name="reply">Erantzun</string>
     <string name="delete_comment">Ezabatu iruzkin bat</string>
     <string name="delete_comment_confirm">Ziur iruzkin hau ezabatu nahi duzula?</string>
+    <string name="fullscreen">Full screen video</string>
+    <string name="set_video_mode">Mode for videos</string>
     <!-- end languages -->
+    <string-array name="settings_video_mode">
+        <item>Torrent</item>
+        <item>Webview</item>
+        <item>Direct stream</item>
+    </string-array>
 </resources>
