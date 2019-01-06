@@ -48,6 +48,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center" />
+                <WebView
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:id="@+id/webview_video"
+                    android:layout_height="match_parent"/>
 
             </FrameLayout>
 
@@ -206,6 +211,12 @@
                 </RelativeLayout>
             </LinearLayout>
         </ScrollView>
-
+        <!-- View where the video will be shown when video goes fullscreen -->
+        <RelativeLayout
+            android:id="@+id/videoLayout"
+            android:visibility="gone"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

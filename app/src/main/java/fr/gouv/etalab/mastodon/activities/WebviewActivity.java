@@ -95,7 +95,7 @@ public class WebviewActivity extends BaseActivity {
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-       webView = Helper.initializeWebview(WebviewActivity.this, R.id.webview);
+        webView = Helper.initializeWebview(WebviewActivity.this, R.id.webview);
         setTitle("");
         FrameLayout webview_container = findViewById(R.id.webview_container);
         final ViewGroup videoLayout = findViewById(R.id.videoLayout); // Your own view, read class comments

@@ -46,6 +46,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -104,6 +105,8 @@ import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.webview.MastalabWebChromeClient;
+import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -135,6 +138,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private AppCompatImageView fullScreenIcon;
     private TextView resolution;
     private DefaultTrackSelector trackSelector;
+    private WebView webview_video;
+    private int mode;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,18 +173,27 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube_description = findViewById(R.id.peertube_description);
         peertube_title = findViewById(R.id.peertube_title);
         peertube_information_container = findViewById(R.id.peertube_information_container);
-
-
-
+        webview_video = findViewById(R.id.webview_video);
         playerView = findViewById(R.id.media_video);
 
-        playerView.setControllerShowTimeoutMs(1000);
-        playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
 
-        initFullscreenDialog();
-        initFullscreenButton();
+        mode = sharedpreferences.getInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_TORRENT);
+        if( mode == Helper.VIDEO_MODE_WEBVIEW){
+            webview_video.setVisibility(View.VISIBLE);
+            playerView.setVisibility(View.GONE);
+        }else {
+            webview_video.setVisibility(View.GONE);
+            playerView.setVisibility(View.VISIBLE);
+        }
 
-        loader.setVisibility(View.VISIBLE);
+
+        if( mode != Helper.VIDEO_MODE_WEBVIEW){
+            playerView.setControllerShowTimeoutMs(1000);
+            playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+            initFullscreenDialog();
+            initFullscreenButton();
+        }
+
         Bundle b = getIntent().getExtras();
         if(b != null) {
             peertubeInstance = b.getString("peertube_instance", null);
@@ -394,8 +409,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             });
         }
 
-        //Uri uri = Uri.parse(apiResponse.getPeertubes().get(0).getFileUrl(null));
-        Uri uri = Uri.parse(apiResponse.getPeertubes().get(0).getTorrentUrl(null));
         try {
             HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
         } catch (KeyManagementException e) {
@@ -404,73 +417,127 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             e.printStackTrace();
         }
 
-        
-        TorrentOptions torrentOptions = new TorrentOptions.Builder()
-                .saveLocation(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS))
-                .removeFilesAfterStop(true)
-                .build();
+        if( mode == Helper.VIDEO_MODE_TORRENT){
+            TorrentOptions torrentOptions = new TorrentOptions.Builder()
+                    .saveLocation(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS))
+                    .removeFilesAfterStop(true)
+                    .build();
 
 
 
-        DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-        TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
-        trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+            DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+            TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
+            trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
 
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
-                Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
+                    Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
 
-        ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(Uri.parse(apiResponse.getPeertubes().get(0).getTorrentUrl(null)));
+            ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(Uri.parse(apiResponse.getPeertubes().get(0).getTorrentUrl(null)));
 
 
-        player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this, trackSelector);
-        playerView.setPlayer(player);
-        torrentStream = TorrentStream.init(torrentOptions);
-        player.prepare(videoSource);
-        torrentStream.startStream(apiResponse.getPeertubes().get(0).getTorrentUrl(null));
-        torrentListener = new TorrentListener() {
-            @Override
-            public void onStreamPrepared(Torrent torrent) {
-                Log.v(Helper.TAG,"onStreamPrepared");
-            }
+            player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this, trackSelector);
+            playerView.setPlayer(player);
+            torrentStream = TorrentStream.init(torrentOptions);
+            player.prepare(videoSource);
+            torrentStream.startStream(apiResponse.getPeertubes().get(0).getTorrentUrl(null));
+            torrentListener = new TorrentListener() {
+                @Override
+                public void onStreamPrepared(Torrent torrent) {
+                    Log.v(Helper.TAG,"onStreamPrepared");
+                }
 
-            @Override
-            public void onStreamStarted(Torrent torrent) {
-                Log.v(Helper.TAG,"onStreamStarted");
-            }
+                @Override
+                public void onStreamStarted(Torrent torrent) {
+                    Log.v(Helper.TAG,"onStreamStarted");
+                }
 
-            @Override
-            public void onStreamError(Torrent torrent, Exception e) {
-                Log.v(Helper.TAG,"onStreamError");
-                e.printStackTrace();
-            }
+                @Override
+                public void onStreamError(Torrent torrent, Exception e) {
+                    Log.v(Helper.TAG,"onStreamError");
+                    e.printStackTrace();
+                }
 
-            @Override
-            public void onStreamReady(Torrent torrent) {
-                Log.v(Helper.TAG,"onStreamReady");
-                loader.setVisibility(View.GONE);
-                DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
-                        Util.getUserAgent(getApplicationContext(), "Mastalab"), bandwidthMeter);
+                @Override
+                public void onStreamReady(Torrent torrent) {
+                    Log.v(Helper.TAG,"onStreamReady");
+                    loader.setVisibility(View.GONE);
+                    DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
+                            Util.getUserAgent(getApplicationContext(), "Mastalab"), bandwidthMeter);
 
-                ExtractorMediaSource extractorMediaSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                        .createMediaSource(Uri.fromFile(torrent.getVideoFile()));
-                player.prepare(extractorMediaSource);
-                player.setPlayWhenReady(true);
+                    ExtractorMediaSource extractorMediaSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                            .createMediaSource(Uri.fromFile(torrent.getVideoFile()));
+                    player.prepare(extractorMediaSource);
+                    player.setPlayWhenReady(true);
 
-            }
+                }
 
-            @Override
-            public void onStreamProgress(Torrent torrent, StreamStatus status) {
-            }
+                @Override
+                public void onStreamProgress(Torrent torrent, StreamStatus status) {
+                }
 
-            @Override
-            public void onStreamStopped() {
-                Log.v(Helper.TAG,"onStreamStopped");
-                loader.setVisibility(View.GONE);
-                player.release();
-            }
-        };
-        torrentStream.addListener(torrentListener);
+                @Override
+                public void onStreamStopped() {
+                    Log.v(Helper.TAG,"onStreamStopped");
+                    loader.setVisibility(View.GONE);
+                    player.release();
+                }
+            };
+            torrentStream.addListener(torrentListener);
+        }else if( mode == Helper.VIDEO_MODE_DIRECT){
+            DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+            TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
+            trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
+                    Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
+
+            ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(Uri.parse(apiResponse.getPeertubes().get(0).getTorrentUrl(null)));
+
+            player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this);
+            playerView.setPlayer(player);
+            loader.setVisibility(View.GONE);
+
+            ExtractorMediaSource extractorMediaSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(Uri.parse(apiResponse.getPeertubes().get(0).getTorrentUrl(null)));
+            player.prepare(extractorMediaSource);
+            player.setPlayWhenReady(true);
+        }else {
+            webview_video = Helper.initializeWebview(PeertubeActivity.this, R.id.webview_video);
+            setTitle("");
+            FrameLayout webview_container = findViewById(R.id.main_media_frame);
+            final ViewGroup videoLayout = findViewById(R.id.videoLayout); // Your own view, read class comments
+
+            MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(PeertubeActivity.this,  webview_video, webview_container, videoLayout);
+            mastalabWebChromeClient.setOnToggledFullscreen(new MastalabWebChromeClient.ToggledFullscreenCallback() {
+                @Override
+                public void toggledFullscreen(boolean fullscreen) {
+
+                    if (fullscreen) {
+                        videoLayout.setVisibility(View.VISIBLE);
+                        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+                        attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                        attrs.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+                        getWindow().setAttributes(attrs);
+                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+                        peertube_information_container.setVisibility(View.GONE);
+                    } else {
+                        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+                        attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                        attrs.flags &= ~WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+                        getWindow().setAttributes(attrs);
+                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                        videoLayout.setVisibility(View.GONE);
+                        peertube_information_container.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+            webview_video.setWebChromeClient(mastalabWebChromeClient);
+            webview_video.setWebViewClient(new MastalabWebViewClient(PeertubeActivity.this));
+            webview_video.loadUrl(peertube.getFileUrl(null));
+        }
+
 
 
         peertube_download.setOnClickListener(new View.OnClickListener() {
