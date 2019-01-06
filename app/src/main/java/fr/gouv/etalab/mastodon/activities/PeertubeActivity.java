@@ -17,6 +17,8 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,12 +34,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +48,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -58,12 +63,20 @@ import com.github.se_bastiaan.torrentstream.Torrent;
 import com.github.se_bastiaan.torrentstream.TorrentOptions;
 import com.github.se_bastiaan.torrentstream.TorrentStream;
 import com.github.se_bastiaan.torrentstream.listeners.TorrentListener;
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
-import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.ui.PlaybackControlView;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.ui.TrackSelectionView;
 import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
@@ -92,7 +105,6 @@ import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.FullScreenMediaController;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.helper.NotificationPanel;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
@@ -108,7 +120,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
  * Peertube activity
  */
 
-public class PeertubeActivity extends BaseActivity implements OnRetrievePeertubeInterface, OnPostActionInterface {
+public class PeertubeActivity extends BaseActivity implements View.OnClickListener, OnRetrievePeertubeInterface, OnPostActionInterface {
 
     private String peertubeInstance, videoId;
     private FullScreenMediaController.fullscreen fullscreen;
@@ -120,12 +132,15 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private Peertube peertube;
     private TextView toolbar_title;
     public static String video_id;
-    private NotificationPanel nPanel;
     private TorrentStream torrentStream;
     private TorrentListener torrentListener;
-    private PlayerView playerView;
+    private SimpleExoPlayerView playerView;
     private SimpleExoPlayer player;
-
+    private boolean fullScreenMode;
+    private Dialog fullScreenDialog;
+    private AppCompatImageView fullScreenIcon;
+    private LinearLayout debugRootView;
+    private DefaultTrackSelector trackSelector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +161,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             default:
                 setTheme(R.style.AppThemeDark);
         }
-
+        fullScreenMode = false;
         setContentView(R.layout.activity_peertube);
         loader = findViewById(R.id.loader);
         peertube_view_count = findViewById(R.id.peertube_view_count);
@@ -160,14 +175,15 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube_information_container = findViewById(R.id.peertube_information_container);
 
 
+        debugRootView = findViewById(R.id.controls_root);
 
-        playerView = new PlayerView(this);
         playerView = findViewById(R.id.media_video);
 
         playerView.setControllerShowTimeoutMs(1000);
         playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
 
-
+        initFullscreenDialog();
+        initFullscreenButton();
         loader.setVisibility(View.VISIBLE);
         Bundle b = getIntent().getExtras();
         if(b != null) {
@@ -400,9 +416,23 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 .removeFilesAfterStop(true)
                 .build();
 
-        player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this);
+
+
+        DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
+        trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
+                Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
+
+        ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(Uri.parse(apiResponse.getPeertubes().get(0).getTorrentUrl(null)));
+
+
+        player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this, trackSelector);
         playerView.setPlayer(player);
         torrentStream = TorrentStream.init(torrentOptions);
+        player.prepare(videoSource);
         torrentStream.startStream(apiResponse.getPeertubes().get(0).getTorrentUrl(null));
         torrentListener = new TorrentListener() {
             @Override
@@ -425,7 +455,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 Log.v(Helper.TAG,"onStreamReady");
                 loader.setVisibility(View.GONE);
                 DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
-                        Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
+                        Util.getUserAgent(getApplicationContext(), "Mastalab"), bandwidthMeter);
 
                 ExtractorMediaSource extractorMediaSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                         .createMediaSource(Uri.fromFile(torrent.getVideoFile()));
@@ -521,17 +551,19 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         });
     }
 
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            openFullscreenDialog();
             setFullscreen(FullScreenMediaController.fullscreen.ON);
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            closeFullscreenDialog();
             setFullscreen(FullScreenMediaController.fullscreen.OFF);
         }
         change();
-        fullScreenMediaController.changeIcon();
     }
 
     @Override
@@ -565,8 +597,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         if( torrentStream != null && torrentStream.isStreaming())
             torrentStream.stopStream();
     }
@@ -574,16 +606,18 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     @Override
     protected void onPause() {
         super.onPause();
-        player.release();
-        nPanel = new NotificationPanel(PeertubeActivity.this);
+        if( player != null) {
+            player.setPlayWhenReady(false);
+        }
     }
 
 
     @Override
     public void onResume(){
         super.onResume();
-        if( nPanel != null)
-            nPanel.notificationCancel();
+        if( player != null) {
+            player.setPlayWhenReady(true);
+        }
     }
 
     public void displayResolution(){
@@ -665,6 +699,76 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
 
     }
 
+
+    @Override
+    public void onClick(View view) {
+        Log.v(Helper.TAG,"view.getParent(): " + view.getParent());
+        Log.v(Helper.TAG,"debugRootView: " + debugRootView);
+        if (view.getParent() == debugRootView) {
+            MappingTrackSelector.MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
+            if (mappedTrackInfo != null) {
+                CharSequence title = ((Button) view).getText();
+                int rendererIndex = (int) view.getTag();
+                int rendererType = mappedTrackInfo.getRendererType(rendererIndex);
+                boolean allowAdaptiveSelections =
+                        rendererType == C.TRACK_TYPE_VIDEO
+                                || (rendererType == C.TRACK_TYPE_AUDIO
+                                && mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_VIDEO)
+                                == MappingTrackSelector.MappedTrackInfo.RENDERER_SUPPORT_NO_TRACKS);
+                Pair<AlertDialog, TrackSelectionView> dialogPair =
+                        TrackSelectionView.getDialog(this, title, trackSelector, rendererIndex);
+                dialogPair.second.setShowDisableOption(true);
+                dialogPair.second.setAllowAdaptiveSelections(allowAdaptiveSelections);
+                dialogPair.first.show();
+            }
+        }
+    }
+
+    private void initFullscreenDialog() {
+
+        fullScreenDialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen) {
+            public void onBackPressed() {
+                if (fullScreenMode)
+                    closeFullscreenDialog();
+                super.onBackPressed();
+            }
+        };
+    }
+
+    private void openFullscreenDialog() {
+
+        ((ViewGroup) playerView.getParent()).removeView(playerView);
+        fullScreenDialog.addContentView(playerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        fullScreenIcon.setImageDrawable(ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_fullscreen_exit));
+        fullScreenMode = true;
+        fullScreenDialog.show();
+    }
+
+
+    private void closeFullscreenDialog() {
+
+        ((ViewGroup) playerView.getParent()).removeView(playerView);
+        ((FrameLayout) findViewById(R.id.main_media_frame)).addView(playerView);
+        fullScreenMode = false;
+        fullScreenDialog.dismiss();
+        fullScreenIcon.setImageDrawable(ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_fullscreen));
+    }
+
+    private void initFullscreenButton() {
+
+        PlaybackControlView controlView = playerView.findViewById(R.id.exo_controller);
+        fullScreenIcon = controlView.findViewById(R.id.exo_fullscreen_icon);
+        View fullScreenButton = controlView.findViewById(R.id.exo_fullscreen_button);
+        fullScreenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!fullScreenMode)
+                    openFullscreenDialog();
+                else
+                    closeFullscreenDialog();
+            }
+        });
+    }
 
     private void changeColor(){
         if( peertube.getMyRating() != null && peertube.getMyRating().equals("like")){

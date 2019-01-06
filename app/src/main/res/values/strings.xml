@@ -796,6 +796,7 @@
     <string name="reply">Reply</string>
     <string name="delete_comment">Delete a comment</string>
     <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
+    <string name="fullscreen">Full screen video</string>
     <!-- end languages -->
 
 </resources>
