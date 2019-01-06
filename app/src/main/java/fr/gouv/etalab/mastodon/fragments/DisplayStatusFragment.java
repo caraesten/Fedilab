@@ -193,7 +193,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, this.statuses);
             lv_status.setAdapter(statusListAdapter);
         }else {
-            if( remoteInstance != null) //if it's a Peertube account connected
+            if( remoteInstance != null && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) //if it's a Peertube account connected
                 remoteInstance = account.getInstance();
             BaseMainActivity.displayPeertube = remoteInstance;
             peertubeAdapater = new PeertubeAdapter(context, remoteInstance, this.peertubes);
@@ -319,6 +319,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE || type == RetrieveFeedsAsyncTask.Type.PIXELFED) {
                 if( search_peertube == null) {
                     if( remote_channel_name == null) {
+
                         asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                     else
