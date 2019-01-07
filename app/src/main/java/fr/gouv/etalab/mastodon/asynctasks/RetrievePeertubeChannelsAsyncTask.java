@@ -64,6 +64,6 @@ public class RetrievePeertubeChannelsAsyncTask extends AsyncTask<Void, Void, Voi
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrievePeertube(apiResponse);
+        listener.onRetrievePeertubeChannels(apiResponse);
     }
 }

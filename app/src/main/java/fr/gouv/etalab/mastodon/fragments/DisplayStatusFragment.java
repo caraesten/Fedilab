@@ -111,6 +111,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String updatedBookMark;
     private String lastReadToot;
     private boolean ischannel;
+    private boolean ownVideos;
 
     public DisplayStatusFragment(){
     }
@@ -132,6 +133,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if (bundle != null) {
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
             targetedId = bundle.getString("targetedid", null);
+            ownVideos = bundle.getBoolean("ownvideos", false); //Peetube account watching its videos
             tag = bundle.getString("tag", null);
             showMediaOnly = bundle.getBoolean("showMediaOnly",false);
             showPinned = bundle.getBoolean("showPinned",false);
@@ -196,7 +198,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             if( remoteInstance != null && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) //if it's a Peertube account connected
                 remoteInstance = account.getInstance();
             BaseMainActivity.displayPeertube = remoteInstance;
-            peertubeAdapater = new PeertubeAdapter(context, remoteInstance, this.peertubes);
+            peertubeAdapater = new PeertubeAdapter(context, remoteInstance, ownVideos, this.peertubes);
             lv_status.setAdapter(peertubeAdapater);
         }
         mLayoutManager = new LinearLayoutManager(context);
@@ -435,7 +437,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             this.peertubes.addAll(apiResponse.getPeertubes());
             //If no item were inserted previously the adapter is created
             if( previousPosition == 0) {
-                peertubeAdapater = new PeertubeAdapter(context, remoteInstance, this.peertubes);
+                peertubeAdapater = new PeertubeAdapter(context, remoteInstance, ownVideos, this.peertubes);
                 lv_status.setAdapter(peertubeAdapater);
             }else
                 peertubeAdapater.notifyItemRangeInserted(previousPosition, apiResponse.getPeertubes().size());

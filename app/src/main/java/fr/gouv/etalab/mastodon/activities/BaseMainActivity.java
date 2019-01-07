@@ -102,6 +102,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeInformationAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
@@ -270,6 +271,12 @@ public abstract class BaseMainActivity extends BaseActivity
         activity = this;
         rateThisApp();
 
+        //Intialize Peertube information
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            try{
+                new RetrievePeertubeInformationAsyncTask(getApplicationContext()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }catch (Exception ignored){}
+        }
 
         Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
@@ -2036,6 +2043,7 @@ public abstract class BaseMainActivity extends BaseActivity
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(token);
             bundle.putString("targetedid",account.getUsername());
+            bundle.putBoolean("ownvideos", true);
             fragment.setArguments(bundle);
             fragmentTag = "MY_VIDEOS";
             fragmentManager.beginTransaction()

@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import fr.gouv.etalab.mastodon.R;
@@ -52,6 +53,7 @@ import fr.gouv.etalab.mastodon.client.Entities.InstanceSocial;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
+import fr.gouv.etalab.mastodon.client.Entities.PeertubeInformation;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -200,6 +202,87 @@ public class PeertubeAPI {
             e.printStackTrace();
         }
         return apiResponse;
+    }
+
+
+
+    /***
+     * Verifiy credential of the authenticated user *synchronously*
+     * @return Account
+     */
+    public PeertubeInformation getPeertubeInformation() throws HttpsConnection.HttpsConnectionException {
+        PeertubeInformation peertubeInformation = new PeertubeInformation();
+        try {
+
+            String response = new HttpsConnection(context).get(getAbsoluteUrl("/videos/categories"), 60, null, null);
+            JSONObject categories = new JSONObject(response);
+            HashMap<Integer, String> _pcategories = new HashMap<>();
+            for( int i = 1 ; i <= categories.length() ; i++){
+                _pcategories.put(i, categories.getString(String.valueOf(i)));
+
+            }
+            peertubeInformation.setCategories(_pcategories);
+
+            response = new HttpsConnection(context).get(getAbsoluteUrl("/videos/languages"), 60, null, null);
+            JSONObject languages = new JSONObject(response);
+            HashMap<String, String> _languages = new HashMap<>();
+            Iterator<String> iter = languages.keys();
+            while (iter.hasNext()) {
+                String key = iter.next();
+                try {
+                    _languages.put(key, (String) languages.get(key));
+                } catch (JSONException ignored) {}
+            }
+            peertubeInformation.setLanguages(_languages);
+
+            response = new HttpsConnection(context).get(getAbsoluteUrl("/videos/privacies"), 60, null, null);
+            JSONObject privacies = new JSONObject(response);
+            HashMap<Integer, String> _pprivacies = new HashMap<>();
+            for( int i = 1 ; i <= privacies.length() ; i++){
+                _pprivacies.put(i, privacies.getString(String.valueOf(i)));
+
+            }
+            peertubeInformation.setPrivacies(_pprivacies);
+
+
+            response = new HttpsConnection(context).get(getAbsoluteUrl("/videos/licences"), 60, null, null);
+            JSONObject licences = new JSONObject(response);
+            HashMap<Integer, String> _plicences = new HashMap<>();
+            for( int i = 1 ; i <= licences.length() ; i++){
+                _plicences.put(i, licences.getString(String.valueOf(i)));
+
+            }
+            peertubeInformation.setLicences(_plicences);
+
+
+            String instance = Helper.getLiveInstance(context);
+            String lang;
+            if(PeertubeInformation.langueMapped.containsKey( Locale.getDefault().getLanguage()))
+                lang = PeertubeInformation.langueMapped.get(Locale.getDefault().getLanguage());
+            else
+                lang = "en-US";
+            response = new HttpsConnection(context).get(String.format( "https://"+instance+"/client/locales/%s/server.json", lang), 60, null, null);
+            JSONObject translations = new JSONObject(response);
+            HashMap<String, String> _translations = new HashMap<>();
+            Iterator<String> itertrans = translations.keys();
+            while (itertrans.hasNext()) {
+                String key = itertrans.next();
+                try {
+                    _translations.put(key, (String) translations.get(key));
+                } catch (JSONException ignored) {}
+            }
+            peertubeInformation.setTranslations(_translations);
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return peertubeInformation;
     }
 
     /***

@@ -239,6 +239,11 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             />
+        <activity android:name=".activities.PeertubeEditUploadActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="fr.gouv.etalab.mastodon.fileProvider"

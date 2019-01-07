@@ -15,21 +15,11 @@ package fr.gouv.etalab.mastodon.activities;
  * see <http://www.gnu.org/licenses>. */
 
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -42,35 +32,35 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeChannelsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSingleAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
-public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePeertubeInterface {
+public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrievePeertubeInterface {
 
 
-    private final int PICK_IVDEO = 52378;
     private Button set_upload_file, set_upload_submit;
     private Spinner set_upload_privacy, set_upload_channel;
     private TextView set_upload_file_name;
     private HashMap<String, String> channels;
-    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 724;
+    private String videoId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
             case Helper.THEME_LIGHT:
@@ -85,6 +75,12 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             default:
                 setTheme(R.style.AppThemeDark);
         }
+        Bundle b = getIntent().getExtras();
+
+        if(b != null) {
+            videoId = b.getString("video_id", null);
+        }
+
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
@@ -105,7 +101,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             toolbar_title.setText(R.string.action_about);
             if (theme == THEME_LIGHT){
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
-                Helper.colorizeToolbar(toolbar, R.color.black, PeertubeUploadActivity.this);
+                Helper.colorizeToolbar(toolbar, R.color.black, PeertubeEditUploadActivity.this);
             }
         }
         setContentView(R.layout.activity_peertube_upload);
@@ -116,51 +112,29 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         set_upload_privacy = findViewById(R.id.set_upload_privacy);
         set_upload_submit = findViewById(R.id.set_upload_submit);
 
-        new RetrievePeertubeChannelsAsyncTask(PeertubeUploadActivity.this, PeertubeUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        String peertubeInstance = Helper.getLiveInstance(getApplicationContext());
+        new RetrievePeertubeSingleAsyncTask(PeertubeEditUploadActivity.this, peertubeInstance, videoId, PeertubeEditUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
         channels = new HashMap<>();
     }
 
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IVDEO && resultCode == Activity.RESULT_OK) {
-            if (data == null || data.getData() == null) {
-                Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
-                return;
-            }
-            set_upload_submit.setEnabled(true);
-
-            Uri uri = data.getData();
-            String uriString = uri.toString();
-            File myFile = new File(uriString);
-            String filename = null;
-            if (uriString.startsWith("content://")) {
-                Cursor cursor = null;
-                try {
-                    cursor = getContentResolver().query(uri, null, null, null, null);
-                    if (cursor != null && cursor.moveToFirst()) {
-                        filename = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                    }
-                } finally {
-                    assert cursor != null;
-                    cursor.close();
-                }
-            } else if (uriString.startsWith("file://")) {
-                filename = myFile.getName();
-            }
-            if( filename != null) {
-                set_upload_file_name.setVisibility(View.VISIBLE);
-                set_upload_file_name.setText(filename);
-            }
-
-        }
-    }
 
     @Override
     public void onRetrievePeertube(APIResponse apiResponse) {
+        if( apiResponse.getError() != null || apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0){
+            if ( apiResponse.getError().getError() != null)
+                Toasty.error(PeertubeEditUploadActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            else
+                Toasty.error(PeertubeEditUploadActivity.this, getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            return;
+        }
 
+        //Peertube video
+        Peertube peertube = apiResponse.getPeertubes().get(0);
+        new RetrievePeertubeChannelsAsyncTask(PeertubeEditUploadActivity.this, PeertubeEditUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        //TODO: hydrate form
     }
 
     @Override
@@ -172,9 +146,9 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
     public void onRetrievePeertubeChannels(APIResponse apiResponse) {
         if( apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0){
             if ( apiResponse.getError().getError() != null)
-                Toasty.error(PeertubeUploadActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+                Toasty.error(PeertubeEditUploadActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             else
-                Toasty.error(PeertubeUploadActivity.this, getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                Toasty.error(PeertubeEditUploadActivity.this, getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -187,49 +161,10 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             channelName[i] = account.getUsername();
             i++;
         }
-        ArrayAdapter<String> adapterChannel = new ArrayAdapter<>(PeertubeUploadActivity.this,
+        ArrayAdapter<String> adapterChannel = new ArrayAdapter<>(PeertubeEditUploadActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, channelName);
         set_upload_channel.setAdapter(adapterChannel);
 
-        //Populate privacy
-        String[] privacyName = new String[3];
-        privacyName[0] = getString(R.string.v_public);
-        privacyName[1] = getString(R.string.v_unlisted);
-        privacyName[2] = getString(R.string.v_private);
-        ArrayAdapter<String> adapterPrivacy = new ArrayAdapter<>(PeertubeUploadActivity.this,
-                android.R.layout.simple_spinner_dropdown_item, privacyName);
-        set_upload_privacy.setAdapter(adapterPrivacy);
-
-        set_upload_file.setEnabled(true);
-
-        set_upload_file.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    if (ContextCompat.checkSelfPermission(PeertubeUploadActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                            PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(PeertubeUploadActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                        return;
-                    }
-                }
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                    intent.setType("*/*");
-                    String[] mimetypes = {"video/*"};
-                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-                    startActivityForResult(intent, PICK_IVDEO);
-                }else {
-                    intent.setType("video/*");
-                    Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_image));
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-                    startActivityForResult(chooserIntent, PICK_IVDEO);
-                }
-
-            }
-        });
+        //TODO: spinner must point in the right value
     }
 }

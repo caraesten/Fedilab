@@ -23,4 +23,5 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 public interface OnRetrievePeertubeInterface {
     void onRetrievePeertube(APIResponse apiResponse);
     void onRetrievePeertubeComments(APIResponse apiResponse);
+    void onRetrievePeertubeChannels(APIResponse apiResponse);
 }
