@@ -61,13 +61,18 @@
                         android:icon="@drawable/ic_favorite_peertube_full"
                         android:title="@string/peertube_favorites" />
                     <item
-                        android:id="@+id/nav_peertube_settings"
-                        android:icon="@drawable/ic_settings"
-                        android:title="@string/settings" />
+                        android:id="@+id/nav_my_video"
+                        android:icon="@drawable/ic_video_library"
+                        android:title="@string/my_videos" />
                     <item
                         android:id="@+id/nav_upload"
                         android:icon="@drawable/ic_cloud_upload"
                         android:title="@string/upload_video" />
+                    <item
+                        android:id="@+id/nav_peertube_settings"
+                        android:icon="@drawable/ic_settings"
+                        android:title="@string/settings" />
+
                 </group>
             </menu>
         </item>
