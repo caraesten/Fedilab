@@ -821,15 +821,16 @@ public class PeertubeAPI {
 
 
     /**
-     * Retrieves Peertube videos from an instance *synchronously*
+     * Retrieves Peertube channel from an account *synchronously*
+     * Peertube channels are dealt like accounts
      * @return APIResponse
      */
-    public APIResponse getPeertubeChannel(String instance, String name) {
+    public APIResponse getPeertubeChannel(String name) {
 
         List<Account> accounts = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/accounts/%s/video-channels", name), 60, null, null);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/video-channels", name)), 60, null, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             accounts = parseAccountResponsePeertube(context, instance, jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {

@@ -24,11 +24,14 @@ import android.support.v4.content.ContextCompat;
 import com.evernote.android.job.JobManager;
 import com.franmontiel.localechanger.LocaleChanger;
 
+import net.gotev.uploadservice.UploadService;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
+import fr.gouv.etalab.mastodon.BuildConfig;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.jobs.ApplicationJob;
@@ -68,7 +71,8 @@ public class MainApplication extends MultiDexApplication {
             }
             LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
         }catch (Exception ignored){ignored.printStackTrace();}
-
+        //Initialize upload service
+        UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
         Toasty.Config.getInstance()
                 .setErrorColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
                 .setInfoColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))

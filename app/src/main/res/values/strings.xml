@@ -798,6 +798,7 @@
     <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
     <string name="fullscreen">Full screen video</string>
     <string name="set_video_mode">Mode for videos</string>
+    <string name="file_to_upload">Select the file to upload</string>
     <!-- end languages -->
 
 

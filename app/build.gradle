@@ -57,6 +57,7 @@ ext.swipebackLibraryVersion = '1.0.2'
 ext.ratethisappLibraryVersion = '1.2.0'
 ext.uploadServiceVersion = "3.4.2"
 ext.torrentstreamVersion = "2.6.1"
+ext.uploadServiceVersion = "3.4.2"
 
 dependencies {
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
@@ -86,5 +87,6 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.exoplayer:exoplayer:2.9.3'
     implementation "com.github.TorrentStream:TorrentStream-Android:$torrentstreamVersion"
+    implementation "net.gotev:uploadservice:$uploadServiceVersion"
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
 }
