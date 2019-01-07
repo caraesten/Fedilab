@@ -234,7 +234,11 @@
             android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
             android:excludeFromRecents="true"
             />
-
+        <activity android:name=".activities.PeertubeUploadActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="fr.gouv.etalab.mastodon.fileProvider"
