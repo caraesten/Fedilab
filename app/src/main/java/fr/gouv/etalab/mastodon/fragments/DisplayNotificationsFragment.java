@@ -273,6 +273,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             return;
         //Store last notification id to avoid to notify for those that have been already seen
         if (visible && notifications != null && notifications.size() > 0) {
+            retrieveMissingNotifications(notifications.get(0).getId());
             updateNotificationLastId(notifications.get(0).getId());
         }
     }
