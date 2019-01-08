@@ -30,9 +30,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -52,12 +53,13 @@ import mabbas007.tagsedittext.TagsEditText;
 
 import static fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeInformationAsyncTask.peertubeInformation;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeMaterialSpinnerColor;
 
 public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrievePeertubeInterface {
 
 
     private Button set_upload_submit;
-    private Spinner set_upload_privacy, set_upload_categories, set_upload_licenses, set_upload_languages, set_upload_channel;
+    private MaterialSpinner set_upload_privacy, set_upload_categories, set_upload_licenses, set_upload_languages, set_upload_channel;
     private EditText p_video_title, p_video_description;
     private TagsEditText p_video_tags;
     private CheckBox set_upload_nsfw, set_upload_enable_comments;
@@ -127,6 +129,13 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         p_video_tags = findViewById(R.id.p_video_tags);
         set_upload_nsfw = findViewById(R.id.set_upload_nsfw);
         set_upload_enable_comments = findViewById(R.id.set_upload_enable_comments);
+
+        changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_channel);
+        changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_categories);
+        changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_licenses);
+        changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_languages);
+        changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_privacy);
+
 
 
         LinkedHashMap<Integer, String> categories = new LinkedHashMap<>(peertubeInformation.getCategories());
@@ -304,10 +313,10 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
             }
         }
 
-        set_upload_privacy.setSelection(privacyPosition);
-        set_upload_languages.setSelection(languagePosition);
-        set_upload_licenses.setSelection(licensePosition);
-        set_upload_categories.setSelection(categoryPosition);
+        set_upload_privacy.setSelectedIndex(privacyPosition);
+        set_upload_languages.setSelectedIndex(languagePosition);
+        set_upload_licenses.setSelectedIndex(licensePosition);
+        set_upload_categories.setSelectedIndex(categoryPosition);
 
         List<String> tags = peertube.getTags();
         if( tags != null && tags.size() > 0) {
@@ -356,7 +365,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 channelPosition++;
             }
         }
-        set_upload_channel.setSelection(channelPosition);
+        set_upload_channel.setSelectedIndex(channelPosition);
 
         set_upload_submit.setEnabled(true);
     }

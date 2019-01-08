@@ -38,9 +38,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.io.File;
 import java.util.HashMap;
@@ -55,13 +56,14 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeMaterialSpinnerColor;
 
 public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePeertubeInterface {
 
 
     private final int PICK_IVDEO = 52378;
     private Button set_upload_file, set_upload_submit;
-    private Spinner set_upload_privacy, set_upload_channel;
+    private MaterialSpinner set_upload_privacy, set_upload_channel;
     private TextView set_upload_file_name;
     private HashMap<String, String> channels;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 724;
@@ -115,6 +117,9 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         set_upload_channel = findViewById(R.id.set_upload_channel);
         set_upload_privacy = findViewById(R.id.set_upload_privacy);
         set_upload_submit = findViewById(R.id.set_upload_submit);
+
+        changeMaterialSpinnerColor(PeertubeUploadActivity.this, set_upload_privacy);
+        changeMaterialSpinnerColor(PeertubeUploadActivity.this, set_upload_channel);
 
         new RetrievePeertubeChannelsAsyncTask(PeertubeUploadActivity.this, PeertubeUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         channels = new HashMap<>();

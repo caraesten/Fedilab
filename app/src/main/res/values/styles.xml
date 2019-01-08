@@ -251,6 +251,7 @@
         <item name="android:windowBackground">@color/black_3</item>
         <item name="android:colorBackground">@color/black_3</item>
     </style>
+
     <style name="BlackSpinnerItemStyle" parent="Base.Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:padding">10dp</item>
     </style>
