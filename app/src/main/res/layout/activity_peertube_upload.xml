@@ -66,7 +66,7 @@
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:textSize="16sp"
                 android:id="@+id/set_upload_channel"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
@@ -88,7 +88,7 @@
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:textSize="16sp"
                 android:id="@+id/set_upload_privacy"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 

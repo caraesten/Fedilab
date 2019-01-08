@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -241,11 +242,20 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         Peertube peertube = apiResponse.getPeertubes().get(0);
         new RetrievePeertubeChannelsAsyncTask(PeertubeEditUploadActivity.this, PeertubeEditUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        String language = peertube.getLanguage();
-        String license = peertube.getLicense();
-        String description = peertube.getDescription();
-        String privacy = peertube.getPrivacy();
-        String category = peertube.getCategory();
+        HashMap<String, String> languageM = peertube.getLanguage();
+        HashMap<Integer, String> licenseM = peertube.getLicense();
+        HashMap<Integer, String> privacyM = peertube.getPrivacy();
+        HashMap<Integer, String> categoryM = peertube.getCategory();
+
+        Map.Entry<String,String> entryString = languageM.entrySet().iterator().next();
+        String language = entryString.getValue();
+        Map.Entry<Integer,String> entryInt = licenseM.entrySet().iterator().next();
+        String license = entryInt.getValue();
+        entryInt = privacyM.entrySet().iterator().next();
+        String privacy = entryInt.getValue();
+        entryInt = categoryM.entrySet().iterator().next();
+        String category = entryInt.getValue();
+
         channel = peertube.getChannel();
         String title = peertube.getName();
         boolean commentEnabled = peertube.isCommentsEnabled();
@@ -255,7 +265,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         set_upload_nsfw.setChecked(isNSFW);
 
         p_video_title.setText(title);
-        p_video_description.setText(description);
+        p_video_description.setText(peertube.getDescription());
 
 
         LinkedHashMap<Integer, String> categories = new LinkedHashMap<>(peertubeInformation.getCategories());

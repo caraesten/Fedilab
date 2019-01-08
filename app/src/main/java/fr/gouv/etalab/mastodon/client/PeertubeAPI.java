@@ -153,6 +153,44 @@ public class PeertubeAPI {
 
 
 
+    /**
+     * Update video meta data *synchronously*
+     *
+     * @param peertube       Peertube
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    private APIResponse updateVideo(Peertube peertube) {
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id",peertube.getId());
+
+        List<Peertube> peertubes = new ArrayList<>();
+        try {
+
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.put(getAbsoluteUrl(String.format("/videos/%s", peertube.getId())), 60, params, prefKeyOauthTokenT);
+
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            peertubes = parsePeertube(jsonArray);
+
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPeertubes(peertubes);
+        return apiResponse;
+    }
+
+
     /***
      * Update credential of the authenticated user *synchronously*
      * @return APIResponse
@@ -1712,10 +1750,6 @@ public class PeertubeAPI {
             peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
             peertube.setDuration(Integer.parseInt(resobj.get("duration").toString()));
             peertube.setSensitive(Boolean.parseBoolean(resobj.get("nsfw").toString()));
-            peertube.setCategory(resobj.getJSONObject("category").get("label").toString());
-            peertube.setLicense(resobj.getJSONObject("licence").get("label").toString());
-            peertube.setLanguage(resobj.getJSONObject("language").get("label").toString());
-            peertube.setPrivacy(resobj.getJSONObject("privacy").get("label").toString());
             try {
                 peertube.setCommentsEnabled(Boolean.parseBoolean(resobj.get("commentsEnabled").toString()));
             }catch (Exception ignored){}
@@ -1725,6 +1759,22 @@ public class PeertubeAPI {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
+            try {
+                LinkedHashMap<String, String> langue = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> category = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> license = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> privacy = new LinkedHashMap<>();
+                category.put(resobj.getJSONObject("category").getInt("id"), resobj.getJSONObject("category").get("label").toString());
+                license.put(resobj.getJSONObject("licence").getInt("id"), resobj.getJSONObject("licence").get("label").toString());
+                privacy.put(resobj.getJSONObject("privacy").getInt("id"), resobj.getJSONObject("privacy").get("label").toString());
+                langue.put(resobj.getJSONObject("language").get("id").toString(), resobj.getJSONObject("language").get("label").toString());
+
+                peertube.setCategory(category);
+                peertube.setLicense(license);
+                peertube.setLanguage(langue);
+                peertube.setPrivacy(privacy);
+            }catch (Exception ignored){}
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1769,11 +1819,6 @@ public class PeertubeAPI {
                 peertube.setChannel(parseAccountResponsePeertube(context, resobj.getJSONObject("channel")));
             }catch (Exception ignored){}
             peertube.setSensitive(Boolean.parseBoolean(resobj.get("nsfw").toString()));
-            peertube.setCategory(resobj.getJSONObject("category").get("label").toString());
-            peertube.setLicense(resobj.getJSONObject("licence").get("label").toString());
-            peertube.setLanguage(resobj.getJSONObject("language").get("label").toString());
-            peertube.setPrivacy(resobj.getJSONObject("privacy").get("label").toString());
-
             try {
                 peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
             } catch (ParseException e) {
@@ -1791,6 +1836,21 @@ public class PeertubeAPI {
                 JSONObject attObj = files.getJSONObject(j);
                 resolutions.add(attObj.getJSONObject("resolution").get("id").toString());
             }
+            try {
+                LinkedHashMap<String, String> langue = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> category = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> license = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> privacy = new LinkedHashMap<>();
+                category.put(resobj.getJSONObject("category").getInt("id"), resobj.getJSONObject("category").get("label").toString());
+                license.put(resobj.getJSONObject("licence").getInt("id"), resobj.getJSONObject("licence").get("label").toString());
+                privacy.put(resobj.getJSONObject("privacy").getInt("id"), resobj.getJSONObject("privacy").get("label").toString());
+                langue.put(resobj.getJSONObject("language").get("id").toString(), resobj.getJSONObject("language").get("label").toString());
+
+                peertube.setCategory(category);
+                peertube.setLicense(license);
+                peertube.setLanguage(langue);
+                peertube.setPrivacy(privacy);
+            }catch (Exception ignored){}
             peertube.setResolution(resolutions);
         } catch (JSONException e) {
             e.printStackTrace();
