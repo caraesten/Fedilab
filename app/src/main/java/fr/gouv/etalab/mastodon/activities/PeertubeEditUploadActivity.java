@@ -34,7 +34,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -62,10 +61,9 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
     private EditText p_video_title, p_video_description;
     private TagsEditText p_video_tags;
     private CheckBox set_upload_nsfw, set_upload_enable_comments;
-    private TextView set_upload_file_name;
-    private HashMap<String, String> channels;
+    private LinkedHashMap<String, String> channels;
     private String videoId;
-
+    private Account channel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,7 +213,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         String peertubeInstance = Helper.getLiveInstance(getApplicationContext());
         new RetrievePeertubeSingleAsyncTask(PeertubeEditUploadActivity.this, peertubeInstance, videoId, PeertubeEditUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        channels = new HashMap<>();
+        channels = new LinkedHashMap<>();
     }
 
 
@@ -234,14 +232,13 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         //Peertube video
         Peertube peertube = apiResponse.getPeertubes().get(0);
         new RetrievePeertubeChannelsAsyncTask(PeertubeEditUploadActivity.this, PeertubeEditUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        //TODO: hydrate form
 
         String language = peertube.getLanguage();
         String license = peertube.getLicense();
         String description = peertube.getDescription();
         String privacy = peertube.getPrivacy();
         String category = peertube.getCategory();
-        Account channel = peertube.getChannel();
+        channel = peertube.getChannel();
         String title = peertube.getName();
         boolean commentEnabled = peertube.isCommentsEnabled();
         boolean isNSFW = peertube.isSensitive();
@@ -317,6 +314,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
             String[] tagsA = tags.toArray(new String[tags.size()]);
             p_video_tags.setTags(tagsA);
         }
+
     }
 
     @Override
@@ -347,6 +345,19 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 android.R.layout.simple_spinner_dropdown_item, channelName);
         set_upload_channel.setAdapter(adapterChannel);
 
-        //TODO: spinner must point in the right value
+        int channelPosition = 0;
+        if( channels.containsKey(channel.getUsername())){
+            Iterator it = channels.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                if(pair.getKey().equals(channel.getUsername()))
+                    break;
+                it.remove();
+                channelPosition++;
+            }
+        }
+        set_upload_channel.setSelection(channelPosition);
+
+        set_upload_submit.setEnabled(true);
     }
 }
