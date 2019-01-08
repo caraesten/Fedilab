@@ -54,11 +54,16 @@ public class RetrievePeertubeSingleAsyncTask extends AsyncTask<Void, Void, Void>
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api = new API(this.contextReference.get());
-        apiResponse = api.getSinglePeertube(this.instanceName, videoId);
-        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE &&  apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0) {
-            String rate = new PeertubeAPI(this.contextReference.get()).getRating(videoId);
-            apiResponse.getPeertubes().get(0).setMyRating(rate);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            API api = new API(this.contextReference.get());
+            apiResponse = api.getSinglePeertube(this.instanceName, videoId);
+        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
+            apiResponse = peertubeAPI.getSinglePeertube(this.instanceName, videoId);
+            if (apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0) {
+                String rate = new PeertubeAPI(this.contextReference.get()).getRating(videoId);
+                apiResponse.getPeertubes().get(0).setMyRating(rate);
+            }
         }
         return null;
     }

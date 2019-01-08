@@ -81,16 +81,18 @@
             android:orientation="vertical">
             <TextView
                 android:labelFor="@+id/p_video_description"
-                android:text="@string/title"
+                android:text="@string/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
+                android:inputType="textMultiLine"
                 android:id="@+id/p_video_description"
                 android:layout_width="match_parent"
                 android:lines="5"
                 android:maxLines="5"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:scrollbars="vertical"
+                />
         </LinearLayout>
 
         <!-- Videos channels -->

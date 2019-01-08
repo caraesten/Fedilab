@@ -1,8 +1,6 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 /* Copyright 2019 Thomas Schneider
  *
@@ -23,15 +21,15 @@ import java.util.Map;
 public class PeertubeInformation {
 
 
-    private HashMap<Integer, String> categories;
-    private HashMap<String, String> languages;
-    private HashMap<Integer, String> licences;
-    private HashMap<Integer, String> privacies;
-    private HashMap<String, String> translations;
+    private LinkedHashMap<Integer, String> categories;
+    private LinkedHashMap<String, String> languages;
+    private LinkedHashMap<Integer, String> licences;
+    private LinkedHashMap<Integer, String> privacies;
+    private LinkedHashMap<String, String> translations;
 
-    public static final Map<String, String> langueMapped;
+    public static final LinkedHashMap<String, String> langueMapped;
     static {
-        HashMap<String, String> aMap = new HashMap<>();
+        LinkedHashMap<String, String> aMap = new LinkedHashMap<>();
         aMap.put("ca", "ca-ES");
         aMap.put("de", "de-DE");
         aMap.put("en", "en-US");
@@ -45,47 +43,47 @@ public class PeertubeInformation {
         aMap.put("cs", "cs-CZ");
         aMap.put("zh-CN", "zh-Hans-CN");
         aMap.put("zh-TW", "zh-Hans-TW");
-        langueMapped = Collections.unmodifiableMap(aMap);
+        langueMapped = aMap;
     }
 
 
-    public HashMap<String, String> getTranslations() {
+    public LinkedHashMap<String, String> getTranslations() {
         return translations;
     }
 
-    public void setTranslations(HashMap<String, String> translations) {
+    public void setTranslations(LinkedHashMap<String, String> translations) {
         this.translations = translations;
     }
 
-    public HashMap<Integer, String> getCategories() {
+    public LinkedHashMap<Integer, String> getCategories() {
         return categories;
     }
 
-    public void setCategories(HashMap<Integer, String> categories) {
+    public void setCategories(LinkedHashMap<Integer, String> categories) {
         this.categories = categories;
     }
 
-    public HashMap<String, String> getLanguages() {
+    public LinkedHashMap<String, String> getLanguages() {
         return languages;
     }
 
-    public void setLanguages(HashMap<String, String> languages) {
+    public void setLanguages(LinkedHashMap<String, String> languages) {
         this.languages = languages;
     }
 
-    public HashMap<Integer, String> getLicences() {
+    public LinkedHashMap<Integer, String> getLicences() {
         return licences;
     }
 
-    public void setLicences(HashMap<Integer, String> licences) {
+    public void setLicences(LinkedHashMap<Integer, String> licences) {
         this.licences = licences;
     }
 
-    public HashMap<Integer, String> getPrivacies() {
+    public LinkedHashMap<Integer, String> getPrivacies() {
         return privacies;
     }
 
-    public void setPrivacies(HashMap<Integer, String> privacies) {
+    public void setPrivacies(LinkedHashMap<Integer, String> privacies) {
         this.privacies = privacies;
     }
 }

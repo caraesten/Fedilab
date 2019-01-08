@@ -27,13 +27,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
@@ -44,17 +49,23 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
+import mabbas007.tagsedittext.TagsEditText;
 
+import static fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeInformationAsyncTask.peertubeInformation;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
 public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrievePeertubeInterface {
 
 
     private Button set_upload_submit;
-    private Spinner set_upload_privacy, set_upload_channel;
+    private Spinner set_upload_privacy, set_upload_categories, set_upload_licenses, set_upload_languages, set_upload_channel;
+    private EditText p_video_title, p_video_description;
+    private TagsEditText p_video_tags;
+    private CheckBox set_upload_nsfw, set_upload_enable_comments;
     private TextView set_upload_file_name;
     private HashMap<String, String> channels;
     private String videoId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +118,99 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         setContentView(R.layout.activity_peertube_edit);
 
 
-        set_upload_file_name = findViewById(R.id.set_upload_file_name);
-        set_upload_channel = findViewById(R.id.set_upload_channel);
-        set_upload_privacy = findViewById(R.id.set_upload_privacy);
         set_upload_submit = findViewById(R.id.set_upload_submit);
+        set_upload_privacy = findViewById(R.id.set_upload_privacy);
+        set_upload_channel = findViewById(R.id.set_upload_channel);
+        set_upload_categories = findViewById(R.id.set_upload_categories);
+        set_upload_licenses = findViewById(R.id.set_upload_licenses);
+        set_upload_languages = findViewById(R.id.set_upload_languages);
+        p_video_title = findViewById(R.id.p_video_title);
+        p_video_description = findViewById(R.id.p_video_description);
+        p_video_tags = findViewById(R.id.p_video_tags);
+        set_upload_nsfw = findViewById(R.id.set_upload_nsfw);
+        set_upload_enable_comments = findViewById(R.id.set_upload_enable_comments);
+
+
+        LinkedHashMap<Integer, String> categories = new LinkedHashMap<>(peertubeInformation.getCategories());
+        LinkedHashMap<Integer, String> licences = new LinkedHashMap<>(peertubeInformation.getLicences());
+        LinkedHashMap<Integer, String> privacies = new LinkedHashMap<>(peertubeInformation.getPrivacies());
+        LinkedHashMap<String, String> languages = new LinkedHashMap<>(peertubeInformation.getLanguages());
+        LinkedHashMap<String, String> translations = null;
+        if( peertubeInformation.getTranslations() != null)
+            translations = new LinkedHashMap<>(peertubeInformation.getTranslations());
+
+        //Populate catgories
+        String[] categoriesA = new String[categories.size()];
+        Iterator it = categories.entrySet().iterator();
+        int i = 0;
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            if( translations == null ||translations.size() == 0 || !translations.containsKey((String)pair.getValue()))
+                categoriesA[i] =  (String)pair.getValue();
+            else
+                categoriesA[i] =  translations.get((String)pair.getValue());
+            it.remove();
+            i++;
+        }
+        ArrayAdapter<String> adapterCatgories = new ArrayAdapter<>(PeertubeEditUploadActivity.this,
+                android.R.layout.simple_spinner_dropdown_item, categoriesA);
+        set_upload_categories.setAdapter(adapterCatgories);
+
+
+
+        //Populate licenses
+        String[] licensesA = new String[licences.size()];
+        it = licences.entrySet().iterator();
+        i = 0;
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            if( translations == null || translations.size() == 0 || !translations.containsKey((String)pair.getValue()))
+                licensesA[i] =  (String)pair.getValue();
+            else
+                licensesA[i] =  translations.get((String)pair.getValue());
+            it.remove();
+            i++;
+        }
+        ArrayAdapter<String> adapterLicenses = new ArrayAdapter<>(PeertubeEditUploadActivity.this,
+                android.R.layout.simple_spinner_dropdown_item, licensesA);
+        set_upload_licenses.setAdapter(adapterLicenses);
+
+
+        //Populate languages
+        String[] languagesA = new String[languages.size()];
+        it = languages.entrySet().iterator();
+        i = 0;
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            if( translations == null || translations.size() == 0 || !translations.containsKey((String)pair.getValue()))
+                languagesA[i] =  (String)pair.getValue();
+            else
+                languagesA[i] =  translations.get((String)pair.getValue());
+            it.remove();
+            i++;
+        }
+        ArrayAdapter<String> adapterLanguages = new ArrayAdapter<>(PeertubeEditUploadActivity.this,
+                android.R.layout.simple_spinner_dropdown_item, languagesA);
+        set_upload_languages.setAdapter(adapterLanguages);
+
+
+        //Populate languages
+        String[] privaciesA = new String[privacies.size()];
+        it = privacies.entrySet().iterator();
+        i = 0;
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            if( translations == null || translations.size() == 0 || !translations.containsKey((String)pair.getValue()))
+                privaciesA[i] =  (String)pair.getValue();
+            else
+                privaciesA[i] =  translations.get((String)pair.getValue());
+            it.remove();
+            i++;
+        }
+        ArrayAdapter<String> adapterPrivacies = new ArrayAdapter<>(PeertubeEditUploadActivity.this,
+                android.R.layout.simple_spinner_dropdown_item, privaciesA);
+        set_upload_privacy.setAdapter(adapterPrivacies);
+
 
         String peertubeInstance = Helper.getLiveInstance(getApplicationContext());
         new RetrievePeertubeSingleAsyncTask(PeertubeEditUploadActivity.this, peertubeInstance, videoId, PeertubeEditUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -135,6 +235,88 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         Peertube peertube = apiResponse.getPeertubes().get(0);
         new RetrievePeertubeChannelsAsyncTask(PeertubeEditUploadActivity.this, PeertubeEditUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         //TODO: hydrate form
+
+        String language = peertube.getLanguage();
+        String license = peertube.getLicense();
+        String description = peertube.getDescription();
+        String privacy = peertube.getPrivacy();
+        String category = peertube.getCategory();
+        Account channel = peertube.getChannel();
+        String title = peertube.getName();
+        boolean commentEnabled = peertube.isCommentsEnabled();
+        boolean isNSFW = peertube.isSensitive();
+
+        set_upload_enable_comments.setChecked(commentEnabled);
+        set_upload_nsfw.setChecked(isNSFW);
+
+        p_video_title.setText(title);
+        p_video_description.setText(description);
+
+
+        LinkedHashMap<Integer, String> categories = new LinkedHashMap<>(peertubeInformation.getCategories());
+        LinkedHashMap<Integer, String> licences = new LinkedHashMap<>(peertubeInformation.getLicences());
+        LinkedHashMap<Integer, String> privacies = new LinkedHashMap<>(peertubeInformation.getPrivacies());
+        LinkedHashMap<String, String> languages = new LinkedHashMap<>(peertubeInformation.getLanguages());
+        LinkedHashMap<String, String> translations = null;
+        if( peertubeInformation.getTranslations() != null)
+            translations = new LinkedHashMap<>(peertubeInformation.getTranslations());
+
+
+        int languagePosition = 0;
+        if( languages.containsValue(language)){
+            Iterator it = languages.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                if(pair.getValue().equals(language))
+                    break;
+                it.remove();
+                languagePosition++;
+            }
+        }
+        int privacyPosition = 0;
+        if( privacies.containsValue(privacy)){
+            Iterator it = privacies.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                if(pair.getValue().equals(privacy))
+                    break;
+                it.remove();
+                privacyPosition++;
+            }
+        }
+        int licensePosition = 0;
+        if( licences.containsValue(license)){
+            Iterator it = licences.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                if(pair.getValue().equals(license))
+                    break;
+                it.remove();
+                licensePosition++;
+            }
+        }
+        int categoryPosition = 0;
+        if( categories.containsValue(category)){
+            Iterator it = categories.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                if(pair.getValue().equals(category))
+                    break;
+                it.remove();
+                categoryPosition++;
+            }
+        }
+
+        set_upload_privacy.setSelection(privacyPosition);
+        set_upload_languages.setSelection(languagePosition);
+        set_upload_licenses.setSelection(licensePosition);
+        set_upload_categories.setSelection(categoryPosition);
+
+        List<String> tags = peertube.getTags();
+        if( tags != null && tags.size() > 0) {
+            String[] tagsA = tags.toArray(new String[tags.size()]);
+            p_video_tags.setTags(tagsA);
+        }
     }
 
     @Override

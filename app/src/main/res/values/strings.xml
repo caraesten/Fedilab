@@ -808,6 +808,7 @@
     <string name="peertube_nsfw">This video contains mature or explicit content</string>
     <string name="peertube_enable_comments">Enable video comments</string>
     <string name="update_video">Update video</string>
+    <string name="description">Description</string>
     <!-- end languages -->
 
 

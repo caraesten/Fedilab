@@ -40,12 +40,15 @@ public class Peertube {
     private int duration;
     private String instance;
     private Account account;
+    private Account channel;
     private List<String> resolution;
+    private List<String> tags;
     private boolean commentsEnabled;
     private boolean sensitive;
     private String category;
     private String license;
     private String language;
+    private String privacy;
     private String myRating = "none";
 
     private JSONObject cache;
@@ -271,5 +274,29 @@ public class Peertube {
 
     public void setMyRating(String myRating) {
         this.myRating = myRating;
+    }
+
+    public Account getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Account channel) {
+        this.channel = channel;
+    }
+
+    public String getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }
