@@ -137,7 +137,6 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_privacy);
 
 
-
         LinkedHashMap<Integer, String> categories = new LinkedHashMap<>(peertubeInformation.getCategories());
         LinkedHashMap<Integer, String> licences = new LinkedHashMap<>(peertubeInformation.getLicences());
         LinkedHashMap<Integer, String> privacies = new LinkedHashMap<>(peertubeInformation.getPrivacies());

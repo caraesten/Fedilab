@@ -64,13 +64,15 @@
             <mabbas007.tagsedittext.TagsEditText
                 android:id="@+id/p_video_tags"
                 android:layout_width="match_parent"
+                android:minLines="2"
+                android:lines="2"
                 android:layout_height="wrap_content"
-                TagsEditText:allowSpaceInTag="true"
+                TagsEditText:allowSpaceInTag="false"
                 TagsEditText:tagsCloseImageRight="@drawable/tag_close"
                 TagsEditText:tagsTextColor="?colorAccent"
                 TagsEditText:tagsTextSize="@dimen/defaultTagsTextSize"
                 TagsEditText:tagsCloseImagePadding="@dimen/defaultTagsCloseImagePadding"
-                android:inputType="text" />
+                android:inputType="textMultiLine" />
         </LinearLayout>
 
 
@@ -110,14 +112,14 @@
                 android:text="@string/channel"/>
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:id="@+id/set_upload_channel"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
 
         <!-- Videos categories -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
@@ -130,7 +132,7 @@
                 android:text="@string/category"/>
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:id="@+id/set_upload_categories"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
@@ -138,7 +140,7 @@
         <!-- Videos licences -->
         <LinearLayout
             android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
@@ -150,7 +152,7 @@
                 android:text="@string/license"/>
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:id="@+id/set_upload_licenses"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
@@ -159,7 +161,7 @@
         <!-- Videos languages -->
         <LinearLayout
             android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
@@ -171,14 +173,14 @@
                 android:text="@string/language"/>
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:id="@+id/set_upload_languages"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
         <!-- Videos Privacy -->
         <LinearLayout
             android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
@@ -190,7 +192,7 @@
                 android:text="@string/action_privacy"/>
             <com.jaredrummler.materialspinner.MaterialSpinner
                 android:id="@+id/set_upload_privacy"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
