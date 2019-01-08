@@ -88,5 +88,6 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.9.3'
     implementation "com.github.TorrentStream:TorrentStream-Android:$torrentstreamVersion"
     implementation "net.gotev:uploadservice:$uploadServiceVersion"
+    implementation 'com.github.mabbas007:TagsEditText:1.0.5'
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
 }

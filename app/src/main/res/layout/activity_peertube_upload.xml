@@ -36,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="false"
+            android:textSize="16sp"
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:text="@string/file_to_upload" />
 
@@ -58,10 +59,12 @@
             android:orientation="vertical">
             <TextView
                 android:gravity="center"
+                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/channel"/>
             <Spinner
+                android:textSize="16sp"
                 android:id="@+id/set_upload_channel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -78,10 +81,12 @@
             android:orientation="vertical">
             <TextView
                 android:gravity="center"
+                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_privacy"/>
             <Spinner
+                android:textSize="16sp"
                 android:id="@+id/set_upload_privacy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -91,6 +96,7 @@
         <Button
             android:layout_marginTop="40dp"
             android:gravity="center"
+            android:textSize="18sp"
             android:layout_gravity="center_horizontal"
             android:id="@+id/set_upload_submit"
             android:layout_width="wrap_content"

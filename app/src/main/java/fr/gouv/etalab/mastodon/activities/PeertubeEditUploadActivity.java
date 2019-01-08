@@ -50,7 +50,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrievePeertubeInterface {
 
 
-    private Button set_upload_file, set_upload_submit;
+    private Button set_upload_submit;
     private Spinner set_upload_privacy, set_upload_channel;
     private TextView set_upload_file_name;
     private HashMap<String, String> channels;
@@ -98,15 +98,15 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                     finish();
                 }
             });
-            toolbar_title.setText(R.string.action_about);
+            toolbar_title.setText(R.string.update_video);
             if (theme == THEME_LIGHT){
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, PeertubeEditUploadActivity.this);
             }
         }
-        setContentView(R.layout.activity_peertube_upload);
+        setContentView(R.layout.activity_peertube_edit);
 
-        set_upload_file = findViewById(R.id.set_upload_file);
+
         set_upload_file_name = findViewById(R.id.set_upload_file_name);
         set_upload_channel = findViewById(R.id.set_upload_channel);
         set_upload_privacy = findViewById(R.id.set_upload_privacy);

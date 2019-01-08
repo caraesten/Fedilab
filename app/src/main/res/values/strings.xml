@@ -800,6 +800,14 @@
     <string name="set_video_mode">Mode for videos</string>
     <string name="file_to_upload">Select the file to upload</string>
     <string name="my_videos">My videos</string>
+    <string name="title">Title</string>
+    <string name="categories">Categories</string>
+    <string name="license">License</string>
+    <string name="category">Category</string>
+    <string name="language">Language</string>
+    <string name="peertube_nsfw">This video contains mature or explicit content</string>
+    <string name="peertube_enable_comments">Enable video comments</string>
+    <string name="update_video">Update video</string>
     <!-- end languages -->
 
 

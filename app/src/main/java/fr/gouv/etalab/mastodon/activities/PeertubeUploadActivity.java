@@ -102,7 +102,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                     finish();
                 }
             });
-            toolbar_title.setText(R.string.action_about);
+            toolbar_title.setText(R.string.upload_video);
             if (theme == THEME_LIGHT){
                 Toolbar toolbar = actionBar.getCustomView().findViewById(R.id.toolbar);
                 Helper.colorizeToolbar(toolbar, R.color.black, PeertubeUploadActivity.this);
