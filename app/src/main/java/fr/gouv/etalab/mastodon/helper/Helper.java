@@ -112,6 +112,7 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
@@ -393,6 +394,7 @@ public class Helper {
 
     public static final String SET_YANDEX_API_KEY = "set_yandex_api_key";
     public static final String SET_DEEPL_API_KEY = "set_deepl_api_key";
+    public static final String VIDEO_ID = "video_id_update";
 
     private static boolean menuAccountsOpened = false;
 
@@ -3415,5 +3417,25 @@ public class Helper {
 
     public static boolean isTablet(Context context){
         return context.getResources().getBoolean(R.bool.isTablet);
+    }
+
+    public static void changeMaterialSpinnerColor(Context context, MaterialSpinner materialSpinner){
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == THEME_BLACK) {
+            materialSpinner.setBackgroundColor(ContextCompat.getColor(context, R.color.black_3));
+            materialSpinner.setArrowColor(ContextCompat.getColor(context, R.color.dark_text));
+            materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
+        }else if( theme == THEME_DARK){
+            materialSpinner.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1));
+            materialSpinner.setArrowColor(ContextCompat.getColor(context, R.color.dark_text));
+            materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
+        }else {
+            materialSpinner.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+            materialSpinner.setArrowColor(ContextCompat.getColor(context, R.color.black));
+            materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.black));
+        }
+
     }
 }

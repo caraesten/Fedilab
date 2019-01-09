@@ -1,4 +1,4 @@
-/* Copyright 2018 Thomas Schneider
+/* Copyright 2019 Thomas Schneider
  *
  * This file is a part of Mastalab
  *
@@ -15,62 +15,55 @@
 package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
 
-import fr.gouv.etalab.mastodon.activities.MainActivity;
-import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 
 /**
- * Created by Thomas on 15/10/2018.
- * Retrieves peertube single
+ * Created by Thomas on 07/01/2019.
+ * Retrieves peertube Channels
  */
 
-public class RetrievePeertubeSingleAsyncTask extends AsyncTask<Void, Void, Void> {
+public class RetrievePeertubeChannelsAsyncTask extends AsyncTask<Void, Void, Void> {
 
 
 
     private APIResponse apiResponse;
-    private String videoId;
     private OnRetrievePeertubeInterface listener;
     private WeakReference<Context> contextReference;
-    private String instanceName;
 
 
 
-    public RetrievePeertubeSingleAsyncTask(Context context, String instanceName, String videoId, OnRetrievePeertubeInterface onRetrievePeertubeInterface){
+
+    public RetrievePeertubeChannelsAsyncTask(Context context, OnRetrievePeertubeInterface onRetrievePeertubeInterface){
         this.contextReference = new WeakReference<>(context);
-        this.videoId = videoId;
         this.listener = onRetrievePeertubeInterface;
-        this.instanceName = instanceName;
     }
-
-
 
     @Override
     protected Void doInBackground(Void... params) {
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-            API api = new API(this.contextReference.get());
-            apiResponse = api.getSinglePeertube(this.instanceName, videoId);
-        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
-            PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
-            apiResponse = peertubeAPI.getSinglePeertube(this.instanceName, videoId);
-            if (apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0) {
-                String rate = new PeertubeAPI(this.contextReference.get()).getRating(videoId);
-                if( rate != null)
-                    apiResponse.getPeertubes().get(0).setMyRating(rate);
-            }
-        }
+        PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
+        SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        SharedPreferences sharedpreferences = contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+        Account account = new AccountDAO(contextReference.get(), db).getAccountByToken(token);
+        apiResponse = peertubeAPI.getPeertubeChannel(account.getUsername());
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrievePeertube(apiResponse);
+        listener.onRetrievePeertubeChannels(apiResponse);
     }
 }

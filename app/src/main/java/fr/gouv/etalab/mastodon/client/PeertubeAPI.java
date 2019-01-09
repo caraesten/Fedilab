@@ -35,11 +35,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Application;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Conversation;
@@ -49,13 +49,11 @@ import fr.gouv.etalab.mastodon.client.Entities.Filters;
 import fr.gouv.etalab.mastodon.client.Entities.HowToVideo;
 import fr.gouv.etalab.mastodon.client.Entities.Instance;
 import fr.gouv.etalab.mastodon.client.Entities.InstanceSocial;
-import fr.gouv.etalab.mastodon.client.Entities.Mention;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
+import fr.gouv.etalab.mastodon.client.Entities.PeertubeInformation;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.Entities.Tag;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -155,6 +153,82 @@ public class PeertubeAPI {
 
 
 
+    /**
+     * Update video meta data *synchronously*
+     *
+     * @param peertube       Peertube
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    public APIResponse updateVideo(Peertube peertube) {
+
+        LinkedHashMap<String, String> params = new LinkedHashMap<>();
+
+        //Category
+        Map.Entry<Integer,String> categoryM = peertube.getCategory().entrySet().iterator().next();
+        Integer idCategory = categoryM.getKey();
+        params.put("category", String.valueOf(idCategory));
+        //License
+        Map.Entry<Integer,String> licenseM = peertube.getLicense().entrySet().iterator().next();
+        Integer idLicense= licenseM.getKey();
+        params.put("licence", String.valueOf(idLicense));
+        //language
+        Map.Entry<String,String> languagesM = peertube.getLanguage().entrySet().iterator().next();
+        String iDlanguage = languagesM.getKey();
+        params.put("language", iDlanguage);
+        //Privacy
+        Map.Entry<Integer,String> privacyM = peertube.getPrivacy().entrySet().iterator().next();
+        Integer idPrivacy = privacyM.getKey();
+        params.put("privacy", String.valueOf(idPrivacy));
+        //Channel
+        Map.Entry<String,String> channelsM = peertube.getChannelForUpdate().entrySet().iterator().next();
+        String iDChannel = channelsM.getValue();
+        params.put("channelId", iDChannel);
+
+
+        params.put("name", peertube.getName());
+        params.put("description", peertube.getDescription());
+
+        params.put("nsfw", String.valueOf(peertube.isSensitive()));
+        params.put("commentsEnabled", String.valueOf(peertube.isCommentsEnabled()));
+        if( peertube.getTags() != null && peertube.getTags().size() > 0){
+            int i = 0;
+            for(String tag: peertube.getTags()){
+                params.put("tags["+(i++)+"]", tag);
+            }
+           /* StringBuilder parameters = new StringBuilder();
+            for(String tag: peertube.getTags())
+                parameters.append("tags[]=").append(tag).append("&");
+            if( parameters.length() > 0) {
+                parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(10));
+                params.put("tags[]", parameters.toString());
+            }*/
+        }else {
+            params.put("tags", "null");
+        }
+        params.put("waitTranscoding", "true");
+        params.put("support", "null");
+
+        List<Peertube> peertubes = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            httpsConnection.put(getAbsoluteUrl(String.format("/videos/%s", peertube.getId())), 60, params, prefKeyOauthTokenT);
+            peertubes.add(peertube);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPeertubes(peertubes);
+        return apiResponse;
+    }
+
+
     /***
      * Update credential of the authenticated user *synchronously*
      * @return APIResponse
@@ -200,6 +274,89 @@ public class PeertubeAPI {
             e.printStackTrace();
         }
         return apiResponse;
+    }
+
+
+
+    /***
+     * Verifiy credential of the authenticated user *synchronously*
+     * @return Account
+     */
+    public PeertubeInformation getPeertubeInformation() throws HttpsConnection.HttpsConnectionException {
+        PeertubeInformation peertubeInformation = new PeertubeInformation();
+        try {
+
+            String response = new HttpsConnection(context).get(getAbsoluteUrl("/videos/categories"), 60, null, null);
+            JSONObject categories = new JSONObject(response);
+            LinkedHashMap<Integer, String> _pcategories = new LinkedHashMap<>();
+            for( int i = 1 ; i <= categories.length() ; i++){
+                _pcategories.put(i, categories.getString(String.valueOf(i)));
+
+            }
+            peertubeInformation.setCategories(_pcategories);
+
+            response = new HttpsConnection(context).get(getAbsoluteUrl("/videos/languages"), 60, null, null);
+            JSONObject languages = new JSONObject(response);
+            LinkedHashMap<String, String> _languages = new LinkedHashMap<>();
+            Iterator<String> iter = languages.keys();
+            while (iter.hasNext()) {
+                String key = iter.next();
+                try {
+                    _languages.put(key, (String) languages.get(key));
+                } catch (JSONException ignored) {}
+            }
+            peertubeInformation.setLanguages(_languages);
+
+            response = new HttpsConnection(context).get(getAbsoluteUrl("/videos/privacies"), 60, null, null);
+            JSONObject privacies = new JSONObject(response);
+            LinkedHashMap<Integer, String> _pprivacies = new LinkedHashMap<>();
+            for( int i = 1 ; i <= privacies.length() ; i++){
+                _pprivacies.put(i, privacies.getString(String.valueOf(i)));
+
+            }
+            peertubeInformation.setPrivacies(_pprivacies);
+
+
+            response = new HttpsConnection(context).get(getAbsoluteUrl("/videos/licences"), 60, null, null);
+            JSONObject licences = new JSONObject(response);
+            LinkedHashMap<Integer, String> _plicences = new LinkedHashMap<>();
+            for( int i = 1 ; i <= licences.length() ; i++){
+                _plicences.put(i, licences.getString(String.valueOf(i)));
+
+            }
+            peertubeInformation.setLicences(_plicences);
+
+
+            String instance = Helper.getLiveInstance(context);
+            String lang = null;
+            if(PeertubeInformation.langueMapped.containsKey( Locale.getDefault().getLanguage()))
+                lang = PeertubeInformation.langueMapped.get(Locale.getDefault().getLanguage());
+
+            if( lang != null && !lang.startsWith("en")) {
+                response = new HttpsConnection(context).get(String.format("https://" + instance + "/client/locales/%s/server.json", lang), 60, null, null);
+                JSONObject translations = new JSONObject(response);
+                LinkedHashMap<String, String> _translations = new LinkedHashMap<>();
+                Iterator<String> itertrans = translations.keys();
+                while (itertrans.hasNext()) {
+                    String key = itertrans.next();
+                    try {
+                        _translations.put(key, (String) translations.get(key));
+                    } catch (JSONException ignored) {
+                    }
+                }
+                peertubeInformation.setTranslations(_translations);
+            }
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return peertubeInformation;
     }
 
     /***
@@ -512,173 +669,6 @@ public class PeertubeAPI {
     }
 
 
-    /**
-     * Retrieves one status *synchronously*
-     *
-     * @param statusId  String Id of the status
-     * @return APIResponse
-     */
-    public APIResponse getStatusbyId(String statusId) {
-        statuses = new ArrayList<>();
-
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/statuses/%s", statusId)), 60, null, prefKeyOauthTokenT);
-            Status status = parseStatuses(context, new JSONObject(response));
-            statuses.add(status);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setStatuses(statuses);
-        return apiResponse;
-    }
-
-    /**
-     * Retrieves the context of status with replies *synchronously*
-     *
-     * @param statusId  Id of the status
-     * @return List<Status>
-     */
-    public fr.gouv.etalab.mastodon.client.Entities.Context getStatusContext(String statusId) {
-        fr.gouv.etalab.mastodon.client.Entities.Context statusContext = new fr.gouv.etalab.mastodon.client.Entities.Context();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/statuses/%s/context", statusId)), 60, null, prefKeyOauthTokenT);
-            statusContext = parseContext(new JSONObject(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return statusContext;
-    }
-
-
-    /**
-     * Retrieves direct timeline for the account *synchronously*
-     * @param max_id   String id max
-     * @return APIResponse
-     */
-    public APIResponse getDirectTimeline( String max_id) {
-        return getDirectTimeline(max_id, null, tootPerPage);
-    }
-
-    /**
-     * Retrieves conversation timeline for the account *synchronously*
-     * @param max_id   String id max
-     * @return APIResponse
-     */
-    public APIResponse getConversationTimeline( String max_id) {
-        return getConversationTimeline(max_id, null, tootPerPage);
-    }
-
-    /**
-     * Retrieves direct timeline for the account since an Id value *synchronously*
-     * @return APIResponse
-     */
-    public APIResponse getConversationTimelineSinceId(String since_id) {
-        return getConversationTimeline(null, since_id, tootPerPage);
-    }
-
-    /**
-     * Retrieves conversation timeline for the account *synchronously*
-     * @param max_id   String id max
-     * @param since_id String since the id
-     * @param limit    int limit  - max value 40
-     * @return APIResponse
-     */
-    private APIResponse getConversationTimeline(String max_id, String since_id, int limit) {
-
-        HashMap<String, String> params = new HashMap<>();
-        if (max_id != null)
-            params.put("max_id", max_id);
-        if (since_id != null)
-            params.put("since_id", since_id);
-        if (0 > limit || limit > 80)
-            limit = 80;
-        params.put("limit",String.valueOf(limit));
-        conversations = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/conversations"), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            conversations = parseConversations(new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setConversations(conversations);
-        return apiResponse;
-    }
-
-    /**
-     * Retrieves direct timeline for the account since an Id value *synchronously*
-     * @return APIResponse
-     */
-    public APIResponse getDirectTimelineSinceId(String since_id) {
-        return getDirectTimeline(null, since_id, tootPerPage);
-    }
-
-    /**
-     * Retrieves direct timeline for the account *synchronously*
-     * @param max_id   String id max
-     * @param since_id String since the id
-     * @param limit    int limit  - max value 40
-     * @return APIResponse
-     */
-    private APIResponse getDirectTimeline(String max_id, String since_id, int limit) {
-
-        HashMap<String, String> params = new HashMap<>();
-        if (max_id != null)
-            params.put("max_id", max_id);
-        if (since_id != null)
-            params.put("since_id", since_id);
-        if (0 > limit || limit > 80)
-            limit = 80;
-        params.put("limit",String.valueOf(limit));
-        statuses = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/timelines/direct"), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(context, new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setStatuses(statuses);
-        return apiResponse;
-    }
 
 
     /**
@@ -821,15 +811,16 @@ public class PeertubeAPI {
 
 
     /**
-     * Retrieves Peertube videos from an instance *synchronously*
+     * Retrieves Peertube channel from an account *synchronously*
+     * Peertube channels are dealt like accounts
      * @return APIResponse
      */
-    public APIResponse getPeertubeChannel(String instance, String name) {
+    public APIResponse getPeertubeChannel(String name) {
 
         List<Account> accounts = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/accounts/%s/video-channels", name), 60, null, null);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/video-channels", name)), 60, null, null);
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             accounts = parseAccountResponsePeertube(context, instance, jsonArray);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1189,78 +1180,6 @@ public class PeertubeAPI {
 
 
 
-    /**
-     * Retrieves notifications for the authenticated account *synchronously*
-     * @param max_id String id max
-     * @param since_id String since the id
-     * @param limit int limit  - max value 40
-     * @return APIResponse
-     */
-    private APIResponse getNotifications(String max_id, String since_id, int limit, boolean display){
-
-        HashMap<String, String> params = new HashMap<>();
-        if( max_id != null )
-            params.put("max_id", max_id);
-        if( since_id != null )
-            params.put("since_id", since_id);
-        if( 0 > limit || limit > 30)
-            limit = 30;
-        params.put("limit",String.valueOf(limit));
-
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean notif_follow, notif_add, notif_mention, notif_share;
-        if( display) {
-            notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
-            notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
-            notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
-            notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
-        }else{
-            notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
-            notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-            notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
-            notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
-        }
-        StringBuilder parameters = new StringBuilder();
-
-        if( !notif_follow )
-            parameters.append("exclude_types[]=").append("follow").append("&");
-        if( !notif_add )
-            parameters.append("exclude_types[]=").append("favourite").append("&");
-        if( !notif_share )
-            parameters.append("exclude_types[]=").append("reblog").append("&");
-        if( !notif_mention )
-            parameters.append("exclude_types[]=").append("mention").append("&");
-        if( parameters.length() > 0) {
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
-            params.put("exclude_types[]", parameters.toString());
-        }
-
-
-        List<Notification> notifications = new ArrayList<>();
-
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/notifications"), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            notifications = parseNotificationResponse(new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setNotifications(notifications);
-        return apiResponse;
-    }
-
-
-
 
     /**
      * Changes media description
@@ -1292,39 +1211,6 @@ public class PeertubeAPI {
             e.printStackTrace();
         }
         return attachment;
-    }
-
-    /**
-     * Retrieves Accounts and feeds when searching *synchronously*
-     *
-     * @param query  String search
-     * @return List<Account>
-     */
-    public Results search(String query) {
-
-        HashMap<String, String> params = new HashMap<>();
-        try {
-            params.put("q", URLEncoder.encode(query, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            params.put("q", query);
-        }
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/search"), 60, params, prefKeyOauthTokenT);
-            results = parseResultsResponse(new JSONObject(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return results;
     }
 
 
@@ -1618,46 +1504,6 @@ public class PeertubeAPI {
         return apiResponse;
     }
 
-    /**
-     * Retrieves list timeline  *synchronously*
-     * @param list_id   String id of the list
-     * @param max_id   String id max
-     * @param since_id String since the id
-     * @param limit    int limit  - max value 40
-     * @return APIResponse
-     */
-    public APIResponse getListTimeline(String list_id, String max_id, String since_id, int limit) {
-
-        HashMap<String, String> params = new HashMap<>();
-        if (max_id != null)
-            params.put("max_id", max_id);
-        if (since_id != null)
-            params.put("since_id", since_id);
-        if (0 > limit || limit > 80)
-            limit = 80;
-        params.put("limit",String.valueOf(limit));
-        statuses = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/list/%s",list_id)), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(context, new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setStatuses(statuses);
-        return apiResponse;
-    }
 
 
     /**
@@ -1730,23 +1576,6 @@ public class PeertubeAPI {
 
 
 
-    /**
-     * Parse json response an unique account
-     * @param resobj JSONObject
-     * @return Account
-     */
-    private Results parseResultsResponse(JSONObject resobj){
-
-        Results results = new Results();
-        try {
-            results.setAccounts(parseAccountResponse(resobj.getJSONArray("accounts")));
-            results.setStatuses(parseStatuses(context, resobj.getJSONArray("statuses")));
-            results.setHashtags(parseTags(resobj.getJSONArray("hashtags")));
-        } catch (JSONException e) {
-            setDefaultError(e);
-        }
-        return results;
-    }
 
     /**
      * Parse json response an unique Car
@@ -1951,19 +1780,39 @@ public class PeertubeAPI {
             peertube.setPreviewPath(resobj.get("previewPath").toString());
             peertube.setThumbnailPath(resobj.get("thumbnailPath").toString());
             peertube.setAccount(parseAccountResponsePeertube(context, resobj.getJSONObject("account")));
+            try {
+                peertube.setChannel(parseAccountResponsePeertube(context, resobj.getJSONObject("channel")));
+            }catch (Exception ignored){}
             peertube.setView(Integer.parseInt(resobj.get("views").toString()));
             peertube.setLike(Integer.parseInt(resobj.get("likes").toString()));
             peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
             peertube.setDuration(Integer.parseInt(resobj.get("duration").toString()));
             peertube.setSensitive(Boolean.parseBoolean(resobj.get("nsfw").toString()));
-            peertube.setCategory(resobj.getJSONObject("category").get("label").toString());
-            peertube.setLicense(resobj.getJSONObject("licence").get("label").toString());
-            peertube.setLanguage(resobj.getJSONObject("language").get("label").toString());
+            try {
+                peertube.setCommentsEnabled(Boolean.parseBoolean(resobj.get("commentsEnabled").toString()));
+            }catch (Exception ignored){}
+
             try {
                 peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
+            try {
+                LinkedHashMap<String, String> langue = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> category = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> license = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> privacy = new LinkedHashMap<>();
+                category.put(resobj.getJSONObject("category").getInt("id"), resobj.getJSONObject("category").get("label").toString());
+                license.put(resobj.getJSONObject("licence").getInt("id"), resobj.getJSONObject("licence").get("label").toString());
+                privacy.put(resobj.getJSONObject("privacy").getInt("id"), resobj.getJSONObject("privacy").get("label").toString());
+                langue.put(resobj.getJSONObject("language").get("id").toString(), resobj.getJSONObject("language").get("label").toString());
+
+                peertube.setCategory(category);
+                peertube.setLicense(license);
+                peertube.setLanguage(langue);
+                peertube.setPrivacy(privacy);
+            }catch (Exception ignored){}
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1995,6 +1844,25 @@ public class PeertubeAPI {
             peertube.setDislike(Integer.parseInt(resobj.get("dislikes").toString()));
             peertube.setDuration(Integer.parseInt(resobj.get("duration").toString()));
             peertube.setAccount(parseAccountResponsePeertube(context, resobj.getJSONObject("account")));
+            List<String> tags = new ArrayList<>();
+            try {
+                JSONArray tagsA = resobj.getJSONArray("tags");
+                for(int i = 0 ; i < tagsA.length() ; i++){
+                    String value = tagsA.getString(i);
+                    tags.add(value);
+                }
+                peertube.setTags(tags);
+            }catch (Exception ignored){}
+            try {
+                peertube.setChannel(parseAccountResponsePeertube(context, resobj.getJSONObject("channel")));
+            }catch (Exception ignored){}
+            peertube.setSensitive(Boolean.parseBoolean(resobj.get("nsfw").toString()));
+            try {
+                peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             try {
                 peertube.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
             } catch (ParseException e) {
@@ -2006,6 +1874,21 @@ public class PeertubeAPI {
                 JSONObject attObj = files.getJSONObject(j);
                 resolutions.add(attObj.getJSONObject("resolution").get("id").toString());
             }
+            try {
+                LinkedHashMap<String, String> langue = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> category = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> license = new LinkedHashMap<>();
+                LinkedHashMap<Integer, String> privacy = new LinkedHashMap<>();
+                category.put(resobj.getJSONObject("category").getInt("id"), resobj.getJSONObject("category").get("label").toString());
+                license.put(resobj.getJSONObject("licence").getInt("id"), resobj.getJSONObject("licence").get("label").toString());
+                privacy.put(resobj.getJSONObject("privacy").getInt("id"), resobj.getJSONObject("privacy").get("label").toString());
+                langue.put(resobj.getJSONObject("language").get("id").toString(), resobj.getJSONObject("language").get("label").toString());
+
+                peertube.setCategory(category);
+                peertube.setLicense(license);
+                peertube.setLanguage(langue);
+                peertube.setPrivacy(privacy);
+            }catch (Exception ignored){}
             peertube.setResolution(resolutions);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -2073,356 +1956,9 @@ public class PeertubeAPI {
         return howToVideo;
     }
 
-    /**
-     * Parse json response for several conversations
-     * @param jsonArray JSONArray
-     * @return List<Conversation>
-     */
-    private List<Conversation> parseConversations(JSONArray jsonArray){
-
-        List<Conversation> conversations = new ArrayList<>();
-        try {
-            int i = 0;
-            while (i < jsonArray.length() ){
-
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                Conversation conversation = parseConversation(context, resobj);
-                i++;
-                conversations.add(conversation);
-            }
-
-        } catch (JSONException e) {
-            setDefaultError(e);
-        }
-        return conversations;
-    }
-
-    /**
-     * Parse json response for unique conversation
-     * @param resobj JSONObject
-     * @return Conversation
-     */
-    @SuppressWarnings("InfiniteRecursion")
-    private Conversation parseConversation(Context context, JSONObject resobj) {
-        Conversation conversation = new Conversation();
-        try {
-            conversation.setId(resobj.get("id").toString());
-            conversation.setUnread(Boolean.parseBoolean(resobj.get("unread").toString()));
-            conversation.setAccounts(parseAccountResponse(resobj.getJSONArray("accounts")));
-            conversation.setLast_status(parseStatuses(context, resobj.getJSONObject("last_status")));
-        }catch (JSONException ignored) {}
-        return conversation;
-    }
-    /**
-     * Parse json response for several status
-     * @param jsonArray JSONArray
-     * @return List<Status>
-     */
-    public static List<Status> parseStatuses(Context context, JSONArray jsonArray){
-
-        List<Status> statuses = new ArrayList<>();
-        try {
-            int i = 0;
-            while (i < jsonArray.length() ){
-
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                Status status = parseStatuses(context, resobj);
-                i++;
-                statuses.add(status);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return statuses;
-    }
-
-    /**
-     * Parse json response for unique status
-     * @param resobj JSONObject
-     * @return Status
-     */
-    @SuppressWarnings("InfiniteRecursion")
-    public static Status parseStatuses(Context context, JSONObject resobj){
-        Status status = new Status();
-        try {
-            status.setId(resobj.get("id").toString());
-            status.setUri(resobj.get("uri").toString());
-            status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-            status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
-            status.setIn_reply_to_account_id(resobj.get("in_reply_to_account_id").toString());
-            status.setSensitive(Boolean.parseBoolean(resobj.get("sensitive").toString()));
-            status.setSpoiler_text(resobj.get("spoiler_text").toString());
-            try {
-                status.setVisibility(resobj.get("visibility").toString());
-            }catch (Exception e){status.setVisibility("public");}
-            status.setLanguage(resobj.get("language").toString());
-            status.setUrl(resobj.get("url").toString());
-            //Retrieves attachments
-            JSONArray arrayAttachement = resobj.getJSONArray("media_attachments");
-            ArrayList<Attachment> attachments = new ArrayList<>();
-            if( arrayAttachement != null){
-                for(int j = 0 ; j < arrayAttachement.length() ; j++){
-                    JSONObject attObj = arrayAttachement.getJSONObject(j);
-                    Attachment attachment = new Attachment();
-                    attachment.setId(attObj.get("id").toString());
-                    attachment.setPreview_url(attObj.get("preview_url").toString());
-                    attachment.setRemote_url(attObj.get("remote_url").toString());
-                    attachment.setType(attObj.get("type").toString());
-                    attachment.setText_url(attObj.get("text_url").toString());
-                    attachment.setUrl(attObj.get("url").toString());
-                    try {
-                        attachment.setDescription(attObj.get("description").toString());
-                    }catch (JSONException ignore){}
-                    attachments.add(attachment);
-                }
-            }
-            try {
-
-                status.setCard(parseCardResponse(resobj.getJSONObject("card")));
-            }catch (Exception e){status.setCard(null);}
 
 
-            status.setMedia_attachments(attachments);
-            //Retrieves mentions
-            List<Mention> mentions = new ArrayList<>();
-            JSONArray arrayMention = resobj.getJSONArray("mentions");
-            if( arrayMention != null){
-                for(int j = 0 ; j < arrayMention.length() ; j++){
-                    JSONObject menObj = arrayMention.getJSONObject(j);
-                    Mention mention = new Mention();
-                    mention.setId(menObj.get("id").toString());
-                    mention.setUrl(menObj.get("url").toString());
-                    mention.setAcct(menObj.get("acct").toString());
-                    mention.setUsername(menObj.get("username").toString());
-                    mentions.add(mention);
-                }
-            }
-            status.setMentions(mentions);
-            //Retrieves tags
-            List<Tag> tags = new ArrayList<>();
-            JSONArray arrayTag = resobj.getJSONArray("tags");
-            if( arrayTag != null){
-                for(int j = 0 ; j < arrayTag.length() ; j++){
-                    JSONObject tagObj = arrayTag.getJSONObject(j);
-                    Tag tag = new Tag();
-                    tag.setName(tagObj.get("name").toString());
-                    tag.setUrl(tagObj.get("url").toString());
-                    tags.add(tag);
-                }
-            }
-            status.setTags(tags);
 
-            //Retrieves emjis
-            List<Emojis> emojiList = new ArrayList<>();
-            try {
-                JSONArray emojisTag = resobj.getJSONArray("emojis");
-                if( emojisTag != null){
-                    for(int j = 0 ; j < emojisTag.length() ; j++){
-                        JSONObject emojisObj = emojisTag.getJSONObject(j);
-                        Emojis emojis = parseEmojis(emojisObj);
-                        emojiList.add(emojis);
-                    }
-                }
-                status.setEmojis(emojiList);
-            }catch (Exception e){
-                status.setEmojis(new ArrayList<>());
-            }
-
-            //Retrieve Application
-            Application application = new Application();
-            try {
-                if(resobj.getJSONObject("application") != null){
-                    application.setName(resobj.getJSONObject("application").getString("name"));
-                    application.setWebsite(resobj.getJSONObject("application").getString("website"));
-                }
-            }catch (Exception e){
-                application = new Application();
-            }
-            status.setApplication(application);
-
-            status.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
-            status.setContent(resobj.get("content").toString());
-            status.setFavourites_count(Integer.valueOf(resobj.get("favourites_count").toString()));
-            status.setReblogs_count(Integer.valueOf(resobj.get("reblogs_count").toString()));
-            try{
-                status.setReplies_count(Integer.valueOf(resobj.get("replies_count").toString()));
-            }catch (Exception e){
-                status.setReplies_count(-1);
-            }
-            try {
-                status.setReblogged(Boolean.valueOf(resobj.get("reblogged").toString()));
-            }catch (Exception e){
-                status.setReblogged(false);
-            }
-            try {
-                status.setFavourited(Boolean.valueOf(resobj.get("favourited").toString()));
-            }catch (Exception e){
-                status.setFavourited(false);
-            }
-            try {
-                status.setMuted(Boolean.valueOf(resobj.get("muted").toString()));
-            }catch (Exception e){
-                status.setMuted(false);
-            }
-            try {
-                status.setPinned(Boolean.valueOf(resobj.get("pinned").toString()));
-            }catch (JSONException e){
-                status.setPinned(false);
-            }
-            try{
-                status.setReblog(parseStatuses(context, resobj.getJSONObject("reblog")));
-            }catch (Exception ignored){}
-        } catch (JSONException ignored) {} catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return status;
-    }
-
-
-    /**
-     * Parse json response for several notes (Misskey)
-     * @param jsonArray JSONArray
-     * @return List<Status>
-     */
-    public static List<Status> parseNotes(Context context, String instance, JSONArray jsonArray){
-
-        List<Status> statuses = new ArrayList<>();
-        try {
-            int i = 0;
-            while (i < jsonArray.length() ){
-
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                Status status = parseNotes(context, instance, resobj);
-                i++;
-                statuses.add(status);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return statuses;
-    }
-
-    /**
-     * Parse json response for unique note (misskey)
-     * @param resobj JSONObject
-     * @return Status
-     */
-    @SuppressWarnings("InfiniteRecursion")
-    public static Status parseNotes(Context context, String instance, JSONObject resobj){
-        Status status = new Status();
-        try {
-            status.setId(resobj.get("id").toString());
-            status.setUri("https://" + instance + "/notes/" + resobj.get("id").toString());
-            status.setCreated_at(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
-            status.setIn_reply_to_id(resobj.get("replyId").toString());
-            status.setSensitive(false);
-            if(resobj.get("cw") != null && !resobj.get("cw").toString().equals("null"))
-                status.setSpoiler_text(resobj.get("cw").toString());
-            try {
-                status.setVisibility(resobj.get("visibility").toString());
-            }catch (Exception e){status.setVisibility("public"); e.printStackTrace();}
-            status.setUrl("https://" + instance + "/notes/" + resobj.get("id").toString());
-            //Retrieves attachments
-            JSONArray arrayAttachement = resobj.getJSONArray("media");
-            ArrayList<Attachment> attachments = new ArrayList<>();
-            if( arrayAttachement != null){
-                for(int j = 0 ; j < arrayAttachement.length() ; j++){
-                    JSONObject attObj = arrayAttachement.getJSONObject(j);
-                    Attachment attachment = new Attachment();
-                    attachment.setId(attObj.get("id").toString());
-                    attachment.setPreview_url(attObj.get("thumbnailUrl").toString());
-                    attachment.setRemote_url(attObj.get("url").toString());
-                    if( attObj.get("type").toString().contains("/")){
-                        attachment.setType(attObj.get("type").toString().split("/")[0]);
-                    }else
-                        attachment.setType(attObj.get("type").toString());
-                    attachment.setText_url(attObj.get("url").toString());
-                    attachment.setUrl(attObj.get("url").toString());
-                    if(attObj.get("isSensitive").toString().equals("true")){
-                        status.setSensitive(true);
-                    }
-                    try {
-                        attachment.setDescription(attObj.get("comment").toString());
-                    }catch (JSONException ignore){ignore.printStackTrace();}
-                    attachments.add(attachment);
-                }
-            }
-            try {
-                status.setCard(parseCardResponse(resobj.getJSONObject("card")));
-            }catch (Exception e){status.setCard(null);}
-
-            status.setMedia_attachments(attachments);
-            //Retrieves mentions
-            List<Mention> mentions = new ArrayList<>();
-
-            status.setAccount(parseMisskeyAccountResponse(context, instance, resobj.getJSONObject("user")));
-            status.setContent(resobj.get("text").toString());
-            try{
-                status.setReplies_count(Integer.valueOf(resobj.get("repliesCount").toString()));
-            }catch (Exception e){
-                status.setReplies_count(-1);
-            }
-            try {
-                status.setFavourited(Boolean.valueOf(resobj.get("isFavorited").toString()));
-            }catch (Exception e){
-                status.setFavourited(false);
-            }
-            try{
-                if(resobj.getJSONObject("renoteId")  != null &&  !resobj.getJSONObject("renoteId").toString().equals("null"))
-                    status.setReblog(parseStatuses(context, resobj.getJSONObject("renote")));
-            }catch (Exception ignored){}
-
-            status.setMentions(mentions);
-            //Retrieves tags
-            List<Tag> tags = new ArrayList<>();
-            JSONArray arrayTag = resobj.getJSONArray("tags");
-            if( arrayTag != null){
-                for(int j = 0 ; j < arrayTag.length() ; j++){
-                    JSONObject tagObj = arrayTag.getJSONObject(j);
-                    Tag tag = new Tag();
-                    tag.setName(tagObj.get("name").toString());
-                    tag.setUrl(tagObj.get("url").toString());
-                    tags.add(tag);
-                }
-            }
-            status.setTags(tags);
-
-            //Retrieves emjis
-            List<Emojis> emojiList = new ArrayList<>();
-            try {
-                JSONArray emojisTag = resobj.getJSONArray("emojis");
-                if( emojisTag != null){
-                    for(int j = 0 ; j < emojisTag.length() ; j++){
-                        JSONObject emojisObj = emojisTag.getJSONObject(j);
-                        Emojis emojis = parseMisskeyEmojis(emojisObj);
-                        emojiList.add(emojis);
-                    }
-                }
-                status.setEmojis(emojiList);
-            }catch (Exception e){
-                status.setEmojis(new ArrayList<>());
-            }
-
-            //Retrieve Application
-            Application application = new Application();
-            try {
-                if(resobj.getJSONObject("application") != null){
-                    application.setName(resobj.getJSONObject("application").getString("name"));
-                    application.setWebsite(resobj.getJSONObject("application").getString("website"));
-                }
-            }catch (Exception e){
-                application = new Application();
-            }
-            status.setApplication(application);
-
-
-        } catch (JSONException ignored) {} catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return status;
-    }
     /**
      * Parse json response an unique instance
      * @param resobj JSONObject
@@ -2883,22 +2419,7 @@ public class PeertubeAPI {
         return relationships;
     }
 
-    /**
-     * Parse json response for the context
-     * @param jsonObject JSONObject
-     * @return fr.gouv.etalab.mastodon.client.Entities.Context
-     */
-    private fr.gouv.etalab.mastodon.client.Entities.Context parseContext(JSONObject jsonObject){
 
-        fr.gouv.etalab.mastodon.client.Entities.Context context = new fr.gouv.etalab.mastodon.client.Entities.Context();
-        try {
-            context.setAncestors(parseStatuses(this.context, jsonObject.getJSONArray("ancestors")));
-            context.setDescendants(parseStatuses(this.context, jsonObject.getJSONArray("descendants")));
-        } catch (JSONException e) {
-            setDefaultError(e);
-        }
-        return context;
-    }
 
     /**
      * Parse json response an unique attachment
@@ -2934,51 +2455,6 @@ public class PeertubeAPI {
 
 
 
-    /**
-     * Parse json response an unique notification
-     * @param resobj JSONObject
-     * @return Account
-     */
-    public static Notification parseNotificationResponse(Context context, JSONObject resobj){
-
-        Notification notification = new Notification();
-        try {
-            notification.setId(resobj.get("id").toString());
-            notification.setType(resobj.get("type").toString());
-            notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-            notification.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
-            try{
-                notification.setStatus(parseStatuses(context, resobj.getJSONObject("status")));
-            }catch (Exception ignored){}
-            notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-        } catch (JSONException ignored) {} catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return notification;
-    }
-
-    /**
-     * Parse json response for list of notifications
-     * @param jsonArray JSONArray
-     * @return List<Notification>
-     */
-    private List<Notification> parseNotificationResponse(JSONArray jsonArray){
-
-        List<Notification> notifications = new ArrayList<>();
-        try {
-            int i = 0;
-            while (i < jsonArray.length() ) {
-
-                JSONObject resobj = jsonArray.getJSONObject(i);
-                Notification notification = parseNotificationResponse(context, resobj);
-                notifications.add(notification);
-                i++;
-            }
-        } catch (JSONException e) {
-            setDefaultError(e);
-        }
-        return notifications;
-    }
 
 
 

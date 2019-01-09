@@ -1,4 +1,4 @@
-/* Copyright 2018 Thomas Schneider
+/* Copyright 2019 Thomas Schneider
  *
  * This file is a part of Mastalab
  *
@@ -19,53 +19,42 @@ import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
 
-import fr.gouv.etalab.mastodon.activities.MainActivity;
-import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 
 
 /**
- * Created by Thomas on 15/10/2018.
- * Retrieves peertube single
+ * Created by Thomas on 09/01/2019.
+ * Update a Peertube video
  */
 
-public class RetrievePeertubeSingleAsyncTask extends AsyncTask<Void, Void, Void> {
+public class PostPeertubeAsyncTask extends AsyncTask<Void, Void, Void> {
 
 
 
     private APIResponse apiResponse;
-    private String videoId;
     private OnRetrievePeertubeInterface listener;
     private WeakReference<Context> contextReference;
-    private String instanceName;
+    private Peertube peertube;
 
 
 
-    public RetrievePeertubeSingleAsyncTask(Context context, String instanceName, String videoId, OnRetrievePeertubeInterface onRetrievePeertubeInterface){
+    public PostPeertubeAsyncTask(Context context, Peertube peertube, OnRetrievePeertubeInterface onRetrievePeertubeInterface){
         this.contextReference = new WeakReference<>(context);
-        this.videoId = videoId;
         this.listener = onRetrievePeertubeInterface;
-        this.instanceName = instanceName;
+        this.peertube = peertube;
     }
 
 
 
     @Override
     protected Void doInBackground(Void... params) {
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-            API api = new API(this.contextReference.get());
-            apiResponse = api.getSinglePeertube(this.instanceName, videoId);
-        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
-            PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
-            apiResponse = peertubeAPI.getSinglePeertube(this.instanceName, videoId);
-            if (apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0) {
-                String rate = new PeertubeAPI(this.contextReference.get()).getRating(videoId);
-                if( rate != null)
-                    apiResponse.getPeertubes().get(0).setMyRating(rate);
-            }
-        }
+        PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
+        apiResponse = peertubeAPI.updateVideo(peertube);
+        if( apiResponse != null && apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0)
+            apiResponse.getPeertubes().get(0).setUpdate(true);
         return null;
     }
 

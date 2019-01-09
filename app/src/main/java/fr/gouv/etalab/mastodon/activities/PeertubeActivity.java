@@ -663,6 +663,11 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     }
 
     @Override
+    public void onRetrievePeertubeChannels(APIResponse apiResponse) {
+
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if( torrentStream != null && torrentStream.isStreaming())

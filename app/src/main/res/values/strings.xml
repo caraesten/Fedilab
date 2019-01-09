@@ -798,6 +798,22 @@
     <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
     <string name="fullscreen">Full screen video</string>
     <string name="set_video_mode">Mode for videos</string>
+    <string name="file_to_upload">Select the file to upload</string>
+    <string name="my_videos">My videos</string>
+    <string name="title">Title</string>
+    <string name="categories">Categories</string>
+    <string name="license">License</string>
+    <string name="category">Category</string>
+    <string name="language">Language</string>
+    <string name="peertube_nsfw">This video contains mature or explicit content</string>
+    <string name="peertube_enable_comments">Enable video comments</string>
+    <string name="update_video">Update video</string>
+    <string name="description">Description</string>
+    <string name="toast_peertube_video_updated">The video has been updated!</string>
+    <string name="toast_cancelled">Upload cancelled!</string>
+    <string name="upload_video_success">The video has been uploaded!</string>
+    <string name="uploading">Uploading, please wait…</string>
+    <string name="video_uploaded_action">Click here to edit the video data.</string>
     <!-- end languages -->
 
 

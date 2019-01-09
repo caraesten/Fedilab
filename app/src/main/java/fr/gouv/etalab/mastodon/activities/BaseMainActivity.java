@@ -102,6 +102,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveInstanceAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMetaDataAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeInformationAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
@@ -270,6 +271,12 @@ public abstract class BaseMainActivity extends BaseActivity
         activity = this;
         rateThisApp();
 
+        //Intialize Peertube information
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            try{
+                new RetrievePeertubeInformationAsyncTask(getApplicationContext()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }catch (Exception ignored){}
+        }
 
         Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
@@ -861,7 +868,6 @@ public abstract class BaseMainActivity extends BaseActivity
             //Scroll to top when top bar is clicked for favourites/blocked/muted
             toolbarTitle.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    FragmentManager fragmentManager = getSupportFragmentManager();
                     Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tabLayout.getSelectedTabPosition());
                     DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
                     displayStatusFragment.scrollToTop();
@@ -1951,6 +1957,10 @@ public abstract class BaseMainActivity extends BaseActivity
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
             return false;
+        } else if( id == R.id.nav_upload) {
+            Intent intent = new Intent(getApplicationContext(), PeertubeUploadActivity.class);
+            startActivity(intent);
+            return false;
         } else if( id == R.id.nav_language) {
             Intent intent = new Intent(getApplicationContext(), LanguageActivity.class);
             startActivity(intent);
@@ -2023,6 +2033,21 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "FAVOURITES";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+        } else if (id == R.id.nav_my_video) {
+            bundle = new Bundle();
+            DisplayStatusFragment fragment = new DisplayStatusFragment();
+            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
+            bundle.putString("instanceType","PEERTUBE");
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(token);
+            bundle.putString("targetedid",account.getUsername());
+            bundle.putBoolean("ownvideos", true);
+            fragment.setArguments(bundle);
+            fragmentTag = "MY_VIDEOS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, fragment, fragmentTag).commit();
         } else if (id == R.id.nav_blocked) {
             toot.hide();
             accountsFragment = new DisplayAccountsFragment();

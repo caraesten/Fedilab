@@ -1868,6 +1868,8 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
     private void restoreToot(long id){
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         StoredStatus draft = new StatusStoredDAO(TootActivity.this, db).getStatus(id);
+        if( draft == null)
+            return;
         Status status = draft.getStatus();
         //Retrieves attachments
         if( removed ){

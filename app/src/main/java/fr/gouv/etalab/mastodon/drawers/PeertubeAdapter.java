@@ -37,6 +37,7 @@ import java.util.regex.Pattern;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
+import fr.gouv.etalab.mastodon.activities.PeertubeEditUploadActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
@@ -59,13 +60,23 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
     private LayoutInflater layoutInflater;
     private Context context;
     private String instance;
+    private boolean ownVideos;
 
     public PeertubeAdapter(Context context, String instance, List<Peertube> peertubes){
         this.peertubes = peertubes;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.instance = instance;
+        this.ownVideos = false;
 
+    }
+
+    public PeertubeAdapter(Context context, String instance, boolean ownVideos, List<Peertube> peertubes){
+        this.peertubes = peertubes;
+        layoutInflater = LayoutInflater.from(context);
+        this.context = context;
+        this.instance = instance;
+        this.ownVideos = ownVideos;
     }
 
 
@@ -101,49 +112,65 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         holder.peertube_date.setText(String.format(" - %s", Helper.dateDiff(context, peertube.getCreated_at())));
         holder.peertube_views.setText(context.getString(R.string.number_view_video, Helper.withSuffix(peertube.getView())));
 
-        holder.peertube_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //For remote peertube instance
-                if( !peertube.getInstance().equals(Helper.getLiveInstance(context)))
-                    CrossActions.doCrossProfile(context, account);
-                else {
-                    Intent intent = new Intent(context, ShowAccountActivity.class);
-                    Bundle b = new Bundle();
-                    b.putBoolean("peertubeaccount", true);
-                    b.putParcelable("account", peertube.getAccount());
 
-                    intent.putExtras(b);
-                    context.startActivity(intent);
-                }
-            }
-        });
         Glide.with(holder.peertube_video_image.getContext())
                 .load("https://" + peertube.getInstance() + peertube.getThumbnailPath())
                 .into(holder.peertube_video_image);
-        if( account.getAvatar() != null && !account.getAvatar().startsWith("http"))
+        if (account.getAvatar() != null && !account.getAvatar().startsWith("http"))
             account.setAvatar("https://" + peertube.getInstance() + account.getAvatar());
         Helper.loadGiF(context, account.getAvatar(), holder.peertube_profile);
-        holder.main_container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, PeertubeActivity.class);
-                Bundle b = new Bundle();
-                if( (instance == null || instance.trim().length() == 0) && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
-                    instance = Helper.getLiveInstance(context);
-                String finalUrl = "https://"  + instance + peertube.getEmbedPath();
-                Pattern link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/embed\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
-                Matcher matcherLink = link.matcher(finalUrl);
-                if( matcherLink.find()) {
-                    String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
-                    b.putString("peertubeLinkToFetch", url);
-                    b.putString("peertube_instance", matcherLink.group(1).replace("https://","").replace("http://",""));
-                    b.putString("video_id", matcherLink.group(2));
+
+
+        if( !this.ownVideos) {
+            holder.peertube_profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //For remote peertube instance
+                    if (!peertube.getInstance().equals(Helper.getLiveInstance(context)))
+                        CrossActions.doCrossProfile(context, account);
+                    else {
+                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                        Bundle b = new Bundle();
+                        b.putBoolean("peertubeaccount", true);
+                        b.putParcelable("account", peertube.getAccount());
+
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
                 }
-                intent.putExtras(b);
-                context.startActivity(intent);
-            }
-        });
+            });
+            holder.main_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PeertubeActivity.class);
+                    Bundle b = new Bundle();
+                    if ((instance == null || instance.trim().length() == 0) && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                        instance = Helper.getLiveInstance(context);
+                    String finalUrl = "https://" + instance + peertube.getEmbedPath();
+                    Pattern link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/embed\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
+                    Matcher matcherLink = link.matcher(finalUrl);
+                    if (matcherLink.find()) {
+                        String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
+                        b.putString("peertubeLinkToFetch", url);
+                        b.putString("peertube_instance", matcherLink.group(1).replace("https://", "").replace("http://", ""));
+                        b.putString("video_id", matcherLink.group(2));
+                    }
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
+        }else{
+            holder.main_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PeertubeEditUploadActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("video_id",peertube.getId());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
+        }
 
     }
 
