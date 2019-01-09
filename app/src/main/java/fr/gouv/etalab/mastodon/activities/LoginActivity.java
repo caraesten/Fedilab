@@ -45,6 +45,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -186,6 +187,16 @@ public class LoginActivity extends BaseActivity {
             info_pwd = findViewById(R.id.info_pwd);
             info_2FA = findViewById(R.id.info_2FA);
             peertube_instance = findViewById(R.id.peertube_instance);
+
+            peertube_instance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if( isChecked)
+                        login_uid.setHint(R.string.username);
+                    else
+                        login_uid.setHint(R.string.email);
+                }
+            });
             connectionButton = findViewById(R.id.login_button);
 
             info_instance.setOnClickListener(new View.OnClickListener() {
