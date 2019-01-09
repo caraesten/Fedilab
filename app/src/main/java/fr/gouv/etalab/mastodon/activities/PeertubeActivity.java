@@ -205,7 +205,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         }
 
 
-        mode = sharedpreferences.getInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_TORRENT);
+        mode = sharedpreferences.getInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_DIRECT);
         if( mode == Helper.VIDEO_MODE_WEBVIEW){
             webview_video.setVisibility(View.VISIBLE);
             playerView.setVisibility(View.GONE);
