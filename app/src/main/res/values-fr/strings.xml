@@ -690,12 +690,12 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="reply">Répondre</string>
     <string name="delete_comment">Supprimer le commentaire</string>
     <string name="delete_comment_confirm">Etes-vous sûr de vouloir supprimer ce commentaire ?</string>
-    <string name="fullscreen">Full screen video</string>
-    <string name="set_video_mode">Mode for videos</string>
+    <string name="fullscreen">Vidéo plein écran</string>
+    <string name="set_video_mode">Mode pour les vidéos</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
         <item>Webview</item>
-        <item>Direct stream</item>
+        <item>Flux direct</item>
     </string-array>
 </resources>
