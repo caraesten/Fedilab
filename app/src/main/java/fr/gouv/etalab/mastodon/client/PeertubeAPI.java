@@ -162,6 +162,7 @@ public class PeertubeAPI {
 
         LinkedHashMap<String, String> params = new LinkedHashMap<>();
 
+        params.put("name", peertube.getName());
         //Category
         Map.Entry<Integer,String> categoryM = peertube.getCategory().entrySet().iterator().next();
         Integer idCategory = categoryM.getKey();
@@ -174,39 +175,28 @@ public class PeertubeAPI {
         Map.Entry<String,String> languagesM = peertube.getLanguage().entrySet().iterator().next();
         String iDlanguage = languagesM.getKey();
         params.put("language", iDlanguage);
-        //Privacy
-        Map.Entry<Integer,String> privacyM = peertube.getPrivacy().entrySet().iterator().next();
-        Integer idPrivacy = privacyM.getKey();
-        params.put("privacy", String.valueOf(idPrivacy));
+        params.put("support", "null");
+        params.put("description", peertube.getDescription());
         //Channel
         Map.Entry<String,String> channelsM = peertube.getChannelForUpdate().entrySet().iterator().next();
         String iDChannel = channelsM.getValue();
         params.put("channelId", iDChannel);
-
-
-        params.put("name", peertube.getName());
-        params.put("description", peertube.getDescription());
-
-        params.put("nsfw", String.valueOf(peertube.isSensitive()));
-        params.put("commentsEnabled", String.valueOf(peertube.isCommentsEnabled()));
+        //Privacy
+        Map.Entry<Integer,String> privacyM = peertube.getPrivacy().entrySet().iterator().next();
+        Integer idPrivacy = privacyM.getKey();
+        params.put("privacy", String.valueOf(idPrivacy));
         if( peertube.getTags() != null && peertube.getTags().size() > 0){
             int i = 0;
             for(String tag: peertube.getTags()){
-                params.put("tags["+(i++)+"]", tag);
+                params.put("tags["+(i++)+"]", tag.trim());
             }
-           /* StringBuilder parameters = new StringBuilder();
-            for(String tag: peertube.getTags())
-                parameters.append("tags[]=").append(tag).append("&");
-            if( parameters.length() > 0) {
-                parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(10));
-                params.put("tags[]", parameters.toString());
-            }*/
         }else {
             params.put("tags", "null");
         }
+        params.put("nsfw", String.valueOf(peertube.isSensitive()));
         params.put("waitTranscoding", "true");
-        params.put("support", "null");
-
+        params.put("commentsEnabled", String.valueOf(peertube.isCommentsEnabled()));
+        params.put("scheduleUpdate","null");
         List<Peertube> peertubes = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
