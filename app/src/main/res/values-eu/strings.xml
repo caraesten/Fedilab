@@ -103,7 +103,7 @@
     <string name="fav_removed">Toot-a gogokoetatik kendu da!</string>
     <string name="reblog_added">Toot-ari bultzada eman zaio!</string>
     <string name="reblog_removed">Toot-ari bultzada kendu zaio!</string>
-    <string name="reblog_by">%1$s(e)n bultzada</string>
+    <string name="reblog_by">%1$s(e)k bultzatua</string>
     <string name="favourite_add">Gehitu toot hau zure gogokoetara?</string>
     <string name="favourite_remove">Kendu toot hau zure gogokoetatik?</string>
     <string name="reblog_add">Bultzada eman toot honi?</string>
