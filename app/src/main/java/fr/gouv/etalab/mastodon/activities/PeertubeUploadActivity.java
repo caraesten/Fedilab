@@ -18,6 +18,7 @@ package fr.gouv.etalab.mastodon.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,9 +44,21 @@ import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.ServerResponse;
+import net.gotev.uploadservice.UploadInfo;
+import net.gotev.uploadservice.UploadNotificationConfig;
+import net.gotev.uploadservice.UploadStatusDelegate;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
@@ -55,6 +68,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 
+import static fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeInformationAsyncTask.peertubeInformation;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeMaterialSpinnerColor;
 
@@ -67,6 +81,11 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
     private TextView set_upload_file_name;
     private HashMap<String, String> channels;
     private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 724;
+    private Uri uri;
+    private String filename;
+    private HashMap<Integer, String> privacyToSend;
+    private HashMap<String, String> channelToSend;
+    private String videoID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +142,8 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
 
         new RetrievePeertubeChannelsAsyncTask(PeertubeUploadActivity.this, PeertubeUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         channels = new HashMap<>();
+
+
     }
 
 
@@ -137,10 +158,10 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
             }
             set_upload_submit.setEnabled(true);
 
-            Uri uri = data.getData();
+            uri = data.getData();
             String uriString = uri.toString();
             File myFile = new File(uriString);
-            String filename = null;
+            filename = null;
             if (uriString.startsWith("content://")) {
                 Cursor cursor = null;
                 try {
@@ -186,24 +207,67 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
         //Populate channels
         List<Account> accounts = apiResponse.getAccounts();
         String[] channelName = new String[accounts.size()];
+        String[] channelId= new String[accounts.size()];
         int i = 0;
         for(Account account: accounts){
             channels.put(account.getUsername(),account.getId());
             channelName[i] = account.getUsername();
+            channelId[i] = account.getId();
             i++;
         }
+
+        channelToSend = new HashMap<>();
+        channelToSend.put(channelName[0], channelId[0]);
         ArrayAdapter<String> adapterChannel = new ArrayAdapter<>(PeertubeUploadActivity.this,
                 android.R.layout.simple_spinner_dropdown_item, channelName);
         set_upload_channel.setAdapter(adapterChannel);
 
-        //Populate privacy
-        String[] privacyName = new String[3];
-        privacyName[0] = getString(R.string.v_public);
-        privacyName[1] = getString(R.string.v_unlisted);
-        privacyName[2] = getString(R.string.v_private);
-        ArrayAdapter<String> adapterPrivacy = new ArrayAdapter<>(PeertubeUploadActivity.this,
-                android.R.layout.simple_spinner_dropdown_item, privacyName);
-        set_upload_privacy.setAdapter(adapterPrivacy);
+        LinkedHashMap<String, String> translations = null;
+        if( peertubeInformation.getTranslations() != null)
+            translations = new LinkedHashMap<>(peertubeInformation.getTranslations());
+
+        LinkedHashMap<Integer, String> privaciesInit = new LinkedHashMap<>(peertubeInformation.getPrivacies());
+        Map.Entry<Integer,String> entryInt = privaciesInit.entrySet().iterator().next();
+        privacyToSend = new HashMap<>();
+        privacyToSend.put(entryInt.getKey(), entryInt.getValue());
+        LinkedHashMap<Integer, String> privacies = new LinkedHashMap<>(peertubeInformation.getPrivacies());
+        //Populate privacies
+        String[] privaciesA = new String[privacies.size()];
+        Iterator it = privacies.entrySet().iterator();
+        i = 0;
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            if( translations == null || translations.size() == 0 || !translations.containsKey((String)pair.getValue()))
+                privaciesA[i] =  (String)pair.getValue();
+            else
+                privaciesA[i] =  translations.get((String)pair.getValue());
+            it.remove();
+            i++;
+        }
+
+        ArrayAdapter<String> adapterPrivacies = new ArrayAdapter<>(PeertubeUploadActivity.this,
+                android.R.layout.simple_spinner_dropdown_item, privaciesA);
+        set_upload_privacy.setAdapter(adapterPrivacies);
+
+        //Manage privacies
+        set_upload_privacy.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                LinkedHashMap<Integer, String> privaciesCheck = new LinkedHashMap<>(peertubeInformation.getPrivacies());
+                Iterator it = privaciesCheck.entrySet().iterator();
+                int i = 0;
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    if( i == position){
+                        privacyToSend = new HashMap<>();
+                        privacyToSend.put((Integer)pair.getKey(), (String)pair.getValue());
+                        break;
+                    }
+                    it.remove();
+                    i++;
+                }
+            }
+        });
 
         set_upload_file.setEnabled(true);
 
@@ -234,6 +298,92 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                     startActivityForResult(chooserIntent, PICK_IVDEO);
                 }
 
+            }
+        });
+
+        //Manage languages
+        set_upload_channel.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                LinkedHashMap<String, String> channelsCheck = new LinkedHashMap<>(channels);
+                Iterator it = channelsCheck.entrySet().iterator();
+                int i = 0;
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    if( i == position){
+                        channelToSend = new HashMap<>();
+                        channelToSend.put((String)pair.getKey(), (String)pair.getValue());
+
+                        break;
+                    }
+                    it.remove();
+                    i++;
+                }
+            }
+        });
+        set_upload_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( uri != null) {
+                    Map.Entry<String, String> channelM = channelToSend.entrySet().iterator().next();
+                    String idChannel = channelM.getValue();
+                    Map.Entry<Integer, String> privacyM = privacyToSend.entrySet().iterator().next();
+                    Integer idPrivacy = privacyM.getKey();
+
+                    try {
+                        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                        String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                        UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
+                        Intent in = new Intent(getApplicationContext(), PeertubeEditUploadActivity.class );
+                        in.putExtra("video_id", videoID);
+                        PendingIntent clickIntent = PendingIntent.getActivity(getApplicationContext(), 1, in, PendingIntent.FLAG_UPDATE_CURRENT);
+                        uploadConfig
+                                .setClickIntentForAllStatuses(clickIntent)
+                                .setClearOnActionForAllStatuses(true);
+
+                        String uploadId =
+                                new MultipartUploadRequest(PeertubeUploadActivity.this, "https://" + Helper.getLiveInstance(PeertubeUploadActivity.this) + "/api/v1/videos/upload")
+                                        .addFileToUpload(uri.toString(), "videofile")
+                                        .addHeader("Authorization", "Bearer " + token)
+                                        .setNotificationConfig(uploadConfig)
+                                        .addParameter("name", filename)
+                                        .addParameter("channelId", idChannel)
+                                        .addParameter("privacy", String.valueOf(idPrivacy))
+                                        .setMaxRetries(2)
+                                        .setDelegate(new UploadStatusDelegate() {
+                                            @Override
+                                            public void onProgress(Context context, UploadInfo uploadInfo) {
+                                                // your code here
+                                            }
+
+                                            @Override
+                                            public void onError(Context context, UploadInfo uploadInfo, ServerResponse serverResponse,
+                                                                Exception exception) {
+                                                // your code here
+                                                exception.printStackTrace();
+                                            }
+
+                                            @Override
+                                            public void onCompleted(Context context, UploadInfo uploadInfo, ServerResponse serverResponse) {
+                                                try {
+                                                    JSONObject response = new JSONObject(serverResponse.getBodyAsString());
+                                                    videoID = response.getJSONObject("video").get("id").toString();
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(Context context, UploadInfo uploadInfo) {
+                                                // your code here
+                                            }
+                                        })
+                                        .startUpload();
+                                        finish();
+                    } catch (Exception exc) {
+                        exc.printStackTrace();
+                    }
+                }
             }
         });
     }

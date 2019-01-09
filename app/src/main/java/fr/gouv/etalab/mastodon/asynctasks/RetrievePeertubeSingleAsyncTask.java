@@ -62,7 +62,8 @@ public class RetrievePeertubeSingleAsyncTask extends AsyncTask<Void, Void, Void>
             apiResponse = peertubeAPI.getSinglePeertube(this.instanceName, videoId);
             if (apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0) {
                 String rate = new PeertubeAPI(this.contextReference.get()).getRating(videoId);
-                apiResponse.getPeertubes().get(0).setMyRating(rate);
+                if( rate != null)
+                    apiResponse.getPeertubes().get(0).setMyRating(rate);
             }
         }
         return null;

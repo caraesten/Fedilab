@@ -67,7 +67,7 @@
                 android:minLines="2"
                 android:lines="2"
                 android:layout_height="wrap_content"
-                TagsEditText:allowSpaceInTag="false"
+                TagsEditText:allowSpaceInTag="true"
                 TagsEditText:tagsCloseImageRight="@drawable/tag_close"
                 TagsEditText:tagsTextColor="?colorAccent"
                 TagsEditText:tagsTextSize="@dimen/defaultTagsTextSize"

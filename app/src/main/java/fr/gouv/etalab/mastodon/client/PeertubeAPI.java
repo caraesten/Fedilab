@@ -162,7 +162,7 @@ public class PeertubeAPI {
     @SuppressWarnings("SameParameterValue")
     public APIResponse updateVideo(Peertube peertube) {
 
-        HashMap<String, String> params = new HashMap<>();
+        LinkedHashMap<String, String> params = new LinkedHashMap<>();
 
         //Category
         Map.Entry<Integer,String> categoryM = peertube.getCategory().entrySet().iterator().next();
@@ -182,7 +182,7 @@ public class PeertubeAPI {
         params.put("privacy", String.valueOf(idPrivacy));
         //Channel
         Map.Entry<String,String> channelsM = peertube.getChannelForUpdate().entrySet().iterator().next();
-        String iDChannel = channelsM.getKey();
+        String iDChannel = channelsM.getValue();
         params.put("channelId", iDChannel);
 
 
@@ -194,21 +194,26 @@ public class PeertubeAPI {
         if( peertube.getTags() != null && peertube.getTags().size() > 0){
             int i = 0;
             for(String tag: peertube.getTags()){
-                params.put("tags["+i+"]", tag);
-                i++;
+                params.put("tags["+(i++)+"]", tag);
             }
+           /* StringBuilder parameters = new StringBuilder();
+            for(String tag: peertube.getTags())
+                parameters.append("tags[]=").append(tag).append("&");
+            if( parameters.length() > 0) {
+                parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(10));
+                params.put("tags[]", parameters.toString());
+            }*/
+        }else {
+            params.put("tags", "null");
         }
+        params.put("waitTranscoding", "true");
         params.put("support", "null");
 
         List<Peertube> peertubes = new ArrayList<>();
         try {
-
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.put(getAbsoluteUrl(String.format("/videos/%s", peertube.getId())), 60, params, prefKeyOauthTokenT);
-
-            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
-            peertubes = parsePeertube(jsonArray);
-
+            httpsConnection.put(getAbsoluteUrl(String.format("/videos/%s", peertube.getId())), 60, params, prefKeyOauthTokenT);
+            peertubes.add(peertube);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -217,8 +222,6 @@ public class PeertubeAPI {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);

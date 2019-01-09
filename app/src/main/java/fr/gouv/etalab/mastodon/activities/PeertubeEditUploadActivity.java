@@ -242,20 +242,23 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
     @Override
     public void onRetrievePeertube(APIResponse apiResponse) {
         if( apiResponse.getError() != null || apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() == 0){
-            if ( apiResponse.getError().getError() != null)
+            if ( apiResponse.getError() != null && apiResponse.getError().getError() != null)
                 Toasty.error(PeertubeEditUploadActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             else
                 Toasty.error(PeertubeEditUploadActivity.this, getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            set_upload_submit.setEnabled(true);
             return;
         }
 
         //Peertube video
         Peertube peertube = apiResponse.getPeertubes().get(0);
-        new RetrievePeertubeChannelsAsyncTask(PeertubeEditUploadActivity.this, PeertubeEditUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         if( peertube.isUpdate()){
             Toasty.success(PeertubeEditUploadActivity.this, getString(R.string.toast_peertube_video_updated), Toast.LENGTH_LONG).show();
             peertube.setUpdate(false);
+            set_upload_submit.setEnabled(true);
+        }else {
+            new RetrievePeertubeChannelsAsyncTask(PeertubeEditUploadActivity.this, PeertubeEditUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
         languageToSend = peertube.getLanguage();
@@ -263,15 +266,30 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         privacyToSend = peertube.getPrivacy();
         categoryToSend = peertube.getCategory();
 
+        String language = null;
 
-        Map.Entry<String,String> entryString = languageToSend.entrySet().iterator().next();
-        String language = entryString.getValue();
-        Map.Entry<Integer,String> entryInt = licenseToSend.entrySet().iterator().next();
-        String license = entryInt.getValue();
-        entryInt = privacyToSend.entrySet().iterator().next();
-        String privacy = entryInt.getValue();
-        entryInt = categoryToSend.entrySet().iterator().next();
-        String category = entryInt.getValue();
+        if( languageToSend != null) {
+            Map.Entry<String, String> entryString = languageToSend.entrySet().iterator().next();
+            language = entryString.getValue();
+        }
+
+        String license = null;
+        if( licenseToSend != null) {
+            Map.Entry<Integer, String> entryInt = licenseToSend.entrySet().iterator().next();
+            license = entryInt.getValue();
+        }
+
+        String privacy = null;
+        if( privacyToSend != null) {
+            Map.Entry<Integer, String> entryInt = privacyToSend.entrySet().iterator().next();
+            privacy = entryInt.getValue();
+        }
+
+        String category = null;
+        if( categoryToSend != null) {
+            Map.Entry<Integer, String> entryInt = categoryToSend.entrySet().iterator().next();
+            category = entryInt.getValue();
+        }
 
         channel = peertube.getChannel();
         String title = peertube.getName();
@@ -306,7 +324,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
             }
         }
         int privacyPosition = 0;
-        if( privacies.containsValue(privacy)){
+        if( privacy != null && privacies.containsValue(privacy)){
             Iterator it = privacies.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
@@ -317,7 +335,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
             }
         }
         int licensePosition = 0;
-        if( licences.containsValue(license)){
+        if( license != null && licences.containsValue(license)){
             Iterator it = licences.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
@@ -328,7 +346,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
             }
         }
         int categoryPosition = 0;
-        if( categories.containsValue(category)){
+        if(category != null && categories.containsValue(category)){
             Iterator it = categories.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
@@ -429,6 +447,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                     if( i == position){
                         channelToSend = new HashMap<>();
                         channelToSend.put((String)pair.getKey(), (String)pair.getValue());
+
                         break;
                     }
                     it.remove();
@@ -445,7 +464,6 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 String description = p_video_description.getText().toString().trim();
                 boolean isNSFW = set_upload_nsfw.isChecked();
                 boolean commentEnabled = set_upload_enable_comments.isChecked();
-                Peertube peertubeSent = new Peertube();
                 peertube.setName(title);
                 peertube.setDescription(description);
                 peertube.setSensitive(isNSFW);
@@ -454,9 +472,9 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
                 peertube.setLicense(licenseToSend);
                 peertube.setLanguage(languageToSend);
                 peertube.setChannelForUpdate(channelToSend);
+                peertube.setPrivacy(privacyToSend);
                 List<String> tags = p_video_tags.getTags();
-                if( tags != null && tags.size() > 0)
-                    peertube.setTags(tags);
+                peertube.setTags(tags);
                 set_upload_submit.setEnabled(false);
                 new PostPeertubeAsyncTask(PeertubeEditUploadActivity.this, peertube, PeertubeEditUploadActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
             }
@@ -509,8 +527,11 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
             Iterator it = channelsIterator.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
-                if(pair.getKey().equals(channel.getUsername()))
+                if(pair.getKey().equals(channel.getUsername())) {
+                    channelToSend = new HashMap<>();
+                    channelToSend.put((String)pair.getKey(), (String)pair.getValue());
                     break;
+                }
                 it.remove();
                 channelPosition++;
             }
