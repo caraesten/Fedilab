@@ -716,7 +716,7 @@
     <string name="toast_cancelled">Загрузка отменена!</string>
     <string name="upload_video_success">Видео было загружено!</string>
     <string name="uploading">Загрузка, пожалуйста, подождите…</string>
-    <string name="video_uploaded_action">Click here to edit the video data.</string>
+    <string name="video_uploaded_action">Нажмите здесь, чтобы редактировать данные видео.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
