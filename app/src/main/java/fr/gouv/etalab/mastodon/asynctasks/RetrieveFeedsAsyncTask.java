@@ -85,7 +85,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         PRECENTLYADDED,
         PMYVIDEOS,
         PLOCAL,
-        CHANNEL
+        CHANNEL,
+        MYVIDEOS
     }
 
 
@@ -214,8 +215,12 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     apiResponse = peertubeAPI.getVideos(targetedID, max_id);
                 }
                 break;
-            case CHANNEL:
+            case MYVIDEOS:
                 PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getMyVideos(max_id);
+                break;
+            case CHANNEL:
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
                 apiResponse = peertubeAPI.getVideosChannel(targetedID, max_id);
                 break;
             case ONESTATUS:

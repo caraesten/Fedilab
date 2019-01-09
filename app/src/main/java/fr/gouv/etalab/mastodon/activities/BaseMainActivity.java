@@ -2036,7 +2036,7 @@ public abstract class BaseMainActivity extends BaseActivity
         } else if (id == R.id.nav_my_video) {
             bundle = new Bundle();
             DisplayStatusFragment fragment = new DisplayStatusFragment();
-            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
+            bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.MYVIDEOS);
             bundle.putString("instanceType","PEERTUBE");
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);

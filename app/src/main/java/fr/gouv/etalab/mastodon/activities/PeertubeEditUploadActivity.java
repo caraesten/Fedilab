@@ -152,7 +152,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
 
 
         //Get params from the API
-        LinkedHashMap<Integer, String> categories = new LinkedHashMap<>(peertubeInformation.getCategories());
+        LinkedHashMap<Integer, String>  categories = new LinkedHashMap<>(peertubeInformation.getCategories());
         LinkedHashMap<Integer, String> licences = new LinkedHashMap<>(peertubeInformation.getLicences());
         LinkedHashMap<Integer, String> privacies = new LinkedHashMap<>(peertubeInformation.getPrivacies());
         LinkedHashMap<String, String> languages = new LinkedHashMap<>(peertubeInformation.getLanguages());
@@ -236,6 +236,8 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         new RetrievePeertubeSingleAsyncTask(PeertubeEditUploadActivity.this, peertubeInstance, videoId, PeertubeEditUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         channels = new LinkedHashMap<>();
+
+
     }
 
 
@@ -267,6 +269,34 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         licenseToSend = peertube.getLicense();
         privacyToSend = peertube.getPrivacy();
         categoryToSend = peertube.getCategory();
+
+
+        if( languageToSend == null){
+            LinkedHashMap<String, String> languages = new LinkedHashMap<>(peertubeInformation.getLanguages());
+            Map.Entry<String,String> entryString = languages.entrySet().iterator().next();
+            languageToSend = new HashMap<>();
+            languageToSend.put(entryString.getKey(), entryString.getValue());
+        }
+
+        if( licenseToSend == null){
+            LinkedHashMap<Integer, String> licences = new LinkedHashMap<>(peertubeInformation.getLicences());
+            Map.Entry<Integer,String> entryInt = licences.entrySet().iterator().next();
+            licenseToSend = new HashMap<>();
+            licenseToSend.put(entryInt.getKey(), entryInt.getValue());
+        }
+
+        if( categoryToSend == null){
+            LinkedHashMap<Integer, String> categories = new LinkedHashMap<>(peertubeInformation.getCategories());
+            Map.Entry<Integer,String> entryInt = categories.entrySet().iterator().next();
+            categoryToSend = new HashMap<>();
+            categoryToSend.put(entryInt.getKey(), entryInt.getValue());
+        }
+        if( privacyToSend == null){
+            LinkedHashMap<Integer, String> privacies = new LinkedHashMap<>(peertubeInformation.getPrivacies());
+            Map.Entry<Integer,String> entryInt = privacies.entrySet().iterator().next();
+            privacyToSend = new HashMap<>();
+            privacyToSend.put(entryInt.getKey(), entryInt.getValue());
+        }
 
         String language = null;
 

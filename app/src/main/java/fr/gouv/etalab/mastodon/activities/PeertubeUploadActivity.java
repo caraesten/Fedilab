@@ -376,7 +376,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                                                     videoID = response.getJSONObject("video").get("id").toString();
                                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                                     editor.putString(Helper.VIDEO_ID, videoID);
-                                                    editor.apply();
+                                                    editor.commit();
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }

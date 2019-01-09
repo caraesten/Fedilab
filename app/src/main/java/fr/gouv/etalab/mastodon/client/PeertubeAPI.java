@@ -489,6 +489,62 @@ public class PeertubeAPI {
     }
 
 
+    /**
+     * Retrieves videos for the account *synchronously*
+     *
+     * @param max_id    String id max
+     * @return APIResponse
+     */
+    public APIResponse getMyVideos(String max_id) {
+        return getMyVideos(max_id, null, tootPerPage);
+    }
+
+
+
+    /**
+     * Retrieves status for the account *synchronously*
+     *
+     * @param max_id          String id max
+     * @param since_id        String since the id
+     * @param limit           int limit  - max value 40
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    private APIResponse getMyVideos(String max_id, String since_id, int limit) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("start", max_id);
+        if (since_id != null)
+            params.put("since_id", since_id);
+        if (0 < limit || limit > 40)
+            limit = 40;
+        params.put("count", String.valueOf(limit));
+        List<Peertube> peertubes = new ArrayList<>();
+        try {
+
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUrl("/users/me/videos"), 60, params, prefKeyOauthTokenT);
+
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            peertubes = parsePeertube(jsonArray);
+
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPeertubes(peertubes);
+        return apiResponse;
+    }
+
 
     /**
      * Retrieves status for the account *synchronously*
