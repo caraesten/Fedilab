@@ -47,6 +47,7 @@ import com.jaredrummler.materialspinner.MaterialSpinner;
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.ServerResponse;
 import net.gotev.uploadservice.UploadInfo;
+import net.gotev.uploadservice.UploadNotificationAction;
 import net.gotev.uploadservice.UploadNotificationConfig;
 import net.gotev.uploadservice.UploadStatusDelegate;
 
@@ -197,7 +198,7 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
     @Override
     public void onRetrievePeertubeChannels(APIResponse apiResponse) {
         if( apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0){
-            if ( apiResponse.getError().getError() != null)
+            if ( apiResponse.getError() != null && apiResponse.getError().getError() != null)
                 Toasty.error(PeertubeUploadActivity.this, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
             else
                 Toasty.error(PeertubeUploadActivity.this, getString(R.string.toast_error), Toast.LENGTH_LONG).show();
@@ -335,11 +336,16 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                         String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
                         UploadNotificationConfig uploadConfig = new UploadNotificationConfig();
                         Intent in = new Intent(getApplicationContext(), PeertubeEditUploadActivity.class );
-                        in.putExtra("video_id", videoID);
                         PendingIntent clickIntent = PendingIntent.getActivity(getApplicationContext(), 1, in, PendingIntent.FLAG_UPDATE_CURRENT);
                         uploadConfig
-                                .setClickIntentForAllStatuses(clickIntent)
                                 .setClearOnActionForAllStatuses(true);
+
+
+                        uploadConfig.getProgress().message = getString(R.string.uploading);
+                        uploadConfig.getCompleted().message = getString(R.string.upload_video_success);
+                        uploadConfig.getError().message = getString(R.string.toast_error);
+                        uploadConfig.getCancelled().message = getString(R.string.toast_cancelled);
+                        uploadConfig.getCompleted().actions.add(new UploadNotificationAction(R.drawable.ic_check, getString(R.string.video_uploaded_action), clickIntent));
 
                         String uploadId =
                                 new MultipartUploadRequest(PeertubeUploadActivity.this, "https://" + Helper.getLiveInstance(PeertubeUploadActivity.this) + "/api/v1/videos/upload")
@@ -368,6 +374,9 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                                                 try {
                                                     JSONObject response = new JSONObject(serverResponse.getBodyAsString());
                                                     videoID = response.getJSONObject("video").get("id").toString();
+                                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                                    editor.putString(Helper.VIDEO_ID, videoID);
+                                                    editor.apply();
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }

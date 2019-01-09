@@ -394,6 +394,7 @@ public class Helper {
 
     public static final String SET_YANDEX_API_KEY = "set_yandex_api_key";
     public static final String SET_DEEPL_API_KEY = "set_deepl_api_key";
+    public static final String VIDEO_ID = "video_id_update";
 
     private static boolean menuAccountsOpened = false;
 

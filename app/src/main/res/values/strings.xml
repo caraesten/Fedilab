@@ -810,6 +810,10 @@
     <string name="update_video">Update video</string>
     <string name="description">Description</string>
     <string name="toast_peertube_video_updated">The video has been updated!</string>
+    <string name="toast_cancelled">Upload cancelled!</string>
+    <string name="upload_video_success">The video has been uploaded!</string>
+    <string name="uploading">Uploading, please wait…</string>
+    <string name="video_uploaded_action">Click here to edit the video data.</string>
     <!-- end languages -->
 
 

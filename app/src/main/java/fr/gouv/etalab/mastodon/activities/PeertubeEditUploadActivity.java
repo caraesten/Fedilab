@@ -99,6 +99,9 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         if(b != null) {
             videoId = b.getString("video_id", null);
         }
+        if( videoId == null){
+            videoId = sharedpreferences.getString(Helper.VIDEO_ID, null);
+        }
 
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -156,7 +159,6 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         LinkedHashMap<String, String> translations = null;
         if( peertubeInformation.getTranslations() != null)
             translations = new LinkedHashMap<>(peertubeInformation.getTranslations());
-
         //Populate catgories
         String[] categoriesA = new String[categories.size()];
         Iterator it = categories.entrySet().iterator();
