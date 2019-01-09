@@ -701,6 +701,22 @@
     <string name="delete_comment_confirm">Вы уверены, что хотите удалить этот комментарий?</string>
     <string name="fullscreen">Полноэкранное видео</string>
     <string name="set_video_mode">Режим для видео</string>
+    <string name="file_to_upload">Выберите файл для загрузки</string>
+    <string name="my_videos">Мои видео</string>
+    <string name="title">Название</string>
+    <string name="categories">Категории</string>
+    <string name="license">Лицензия</string>
+    <string name="category">Категория</string>
+    <string name="language">Язык</string>
+    <string name="peertube_nsfw">Это видео содержит откровенный контент или контент для взрослых</string>
+    <string name="peertube_enable_comments">Включить комментарии к видео</string>
+    <string name="update_video">Обновить видео</string>
+    <string name="description">Описание</string>
+    <string name="toast_peertube_video_updated">Видео было обновлено!</string>
+    <string name="toast_cancelled">Загрузка отменена!</string>
+    <string name="upload_video_success">Видео было загружено!</string>
+    <string name="uploading">Загрузка, пожалуйста, подождите…</string>
+    <string name="video_uploaded_action">Нажмите здесь, чтобы редактировать данные видео.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
