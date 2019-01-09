@@ -43,6 +43,7 @@ import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.asynctasks.PostPeertubeAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeChannelsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSingleAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -52,6 +53,7 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 import mabbas007.tagsedittext.TagsEditText;
 
+import static android.os.AsyncTask.THREAD_POOL_EXECUTOR;
 import static fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeInformationAsyncTask.peertubeInformation;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeMaterialSpinnerColor;
@@ -67,6 +69,11 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
     private LinkedHashMap<String, String> channels;
     private String videoId;
     private Account channel;
+    HashMap<Integer, String> categoryToSend;
+    HashMap<Integer, String> licenseToSend;
+    HashMap<Integer, String> privacyToSend;
+    HashMap<String, String> languageToSend;
+    HashMap<String, String> channelToSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +138,9 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         set_upload_nsfw = findViewById(R.id.set_upload_nsfw);
         set_upload_enable_comments = findViewById(R.id.set_upload_enable_comments);
 
+
+
+        //Change spinner colors
         changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_channel);
         changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_categories);
         changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_licenses);
@@ -138,6 +148,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_privacy);
 
 
+        //Get params from the API
         LinkedHashMap<Integer, String> categories = new LinkedHashMap<>(peertubeInformation.getCategories());
         LinkedHashMap<Integer, String> licences = new LinkedHashMap<>(peertubeInformation.getLicences());
         LinkedHashMap<Integer, String> privacies = new LinkedHashMap<>(peertubeInformation.getPrivacies());
@@ -242,18 +253,24 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         Peertube peertube = apiResponse.getPeertubes().get(0);
         new RetrievePeertubeChannelsAsyncTask(PeertubeEditUploadActivity.this, PeertubeEditUploadActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        HashMap<String, String> languageM = peertube.getLanguage();
-        HashMap<Integer, String> licenseM = peertube.getLicense();
-        HashMap<Integer, String> privacyM = peertube.getPrivacy();
-        HashMap<Integer, String> categoryM = peertube.getCategory();
+        if( peertube.isUpdate()){
+            Toasty.success(PeertubeEditUploadActivity.this, getString(R.string.toast_peertube_video_updated), Toast.LENGTH_LONG).show();
+            peertube.setUpdate(false);
+        }
 
-        Map.Entry<String,String> entryString = languageM.entrySet().iterator().next();
+        languageToSend = peertube.getLanguage();
+        licenseToSend = peertube.getLicense();
+        privacyToSend = peertube.getPrivacy();
+        categoryToSend = peertube.getCategory();
+
+
+        Map.Entry<String,String> entryString = languageToSend.entrySet().iterator().next();
         String language = entryString.getValue();
-        Map.Entry<Integer,String> entryInt = licenseM.entrySet().iterator().next();
+        Map.Entry<Integer,String> entryInt = licenseToSend.entrySet().iterator().next();
         String license = entryInt.getValue();
-        entryInt = privacyM.entrySet().iterator().next();
+        entryInt = privacyToSend.entrySet().iterator().next();
         String privacy = entryInt.getValue();
-        entryInt = categoryM.entrySet().iterator().next();
+        entryInt = categoryToSend.entrySet().iterator().next();
         String category = entryInt.getValue();
 
         channel = peertube.getChannel();
@@ -322,6 +339,129 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
             }
         }
 
+        //Manage privacies
+        set_upload_privacy.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                LinkedHashMap<Integer, String> privaciesCheck = new LinkedHashMap<>(peertubeInformation.getPrivacies());
+                Iterator it = privaciesCheck.entrySet().iterator();
+                int i = 0;
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    if( i == position){
+                        privacyToSend = new HashMap<>();
+                        privacyToSend.put((Integer)pair.getKey(), (String)pair.getValue());
+                        break;
+                    }
+                    it.remove();
+                    i++;
+                }
+            }
+        });
+        //Manage license
+        set_upload_licenses.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                LinkedHashMap<Integer, String> licensesCheck = new LinkedHashMap<>(peertubeInformation.getLicences());
+                Iterator it = licensesCheck.entrySet().iterator();
+                int i = 0;
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    if( i == position){
+                        licenseToSend = new HashMap<>();
+                        licenseToSend.put((Integer)pair.getKey(), (String)pair.getValue());
+                        break;
+                    }
+                    it.remove();
+                    i++;
+                }
+            }
+        });
+        //Manage categories
+        set_upload_categories.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                LinkedHashMap<Integer, String> categoriesCheck = new LinkedHashMap<>(peertubeInformation.getCategories());
+                Iterator it = categoriesCheck.entrySet().iterator();
+                int i = 0;
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    if( i == position){
+                        categoryToSend = new HashMap<>();
+                        categoryToSend.put((Integer)pair.getKey(), (String)pair.getValue());
+                        break;
+                    }
+                    it.remove();
+                    i++;
+                }
+            }
+        });
+        //Manage languages
+        set_upload_languages.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                LinkedHashMap<String, String> languagesCheck = new LinkedHashMap<>(peertubeInformation.getLanguages());
+                Iterator it = languagesCheck.entrySet().iterator();
+                int i = 0;
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    if( i == position){
+                        languageToSend = new HashMap<>();
+                        languageToSend.put((String)pair.getKey(), (String)pair.getValue());
+                        break;
+                    }
+                    it.remove();
+                    i++;
+                }
+            }
+        });
+
+
+        //Manage languages
+        set_upload_channel.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                LinkedHashMap<String, String> channelsCheck = new LinkedHashMap<>(channels);
+                Iterator it = channelsCheck.entrySet().iterator();
+                int i = 0;
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    if( i == position){
+                        channelToSend = new HashMap<>();
+                        channelToSend.put((String)pair.getKey(), (String)pair.getValue());
+                        break;
+                    }
+                    it.remove();
+                    i++;
+                }
+            }
+        });
+
+
+        set_upload_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = p_video_title.getText().toString().trim();
+                String description = p_video_description.getText().toString().trim();
+                boolean isNSFW = set_upload_nsfw.isChecked();
+                boolean commentEnabled = set_upload_enable_comments.isChecked();
+                Peertube peertubeSent = new Peertube();
+                peertube.setName(title);
+                peertube.setDescription(description);
+                peertube.setSensitive(isNSFW);
+                peertube.setCommentsEnabled(commentEnabled);
+                peertube.setCategory(categoryToSend);
+                peertube.setLicense(licenseToSend);
+                peertube.setLanguage(languageToSend);
+                peertube.setChannelForUpdate(channelToSend);
+                List<String> tags = p_video_tags.getTags();
+                if( tags != null && tags.size() > 0)
+                    peertube.setTags(tags);
+                set_upload_submit.setEnabled(false);
+                new PostPeertubeAsyncTask(PeertubeEditUploadActivity.this, peertube, PeertubeEditUploadActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+            }
+        });
+
         set_upload_privacy.setSelectedIndex(privacyPosition);
         set_upload_languages.setSelectedIndex(languagePosition);
         set_upload_licenses.setSelectedIndex(licensePosition);
@@ -365,7 +505,8 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
 
         int channelPosition = 0;
         if( channels.containsKey(channel.getUsername())){
-            Iterator it = channels.entrySet().iterator();
+            LinkedHashMap<String, String> channelsIterator = new LinkedHashMap<>(channels);
+            Iterator it = channelsIterator.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
                 if(pair.getKey().equals(channel.getUsername()))

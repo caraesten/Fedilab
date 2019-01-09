@@ -50,7 +50,9 @@ public class Peertube {
     private HashMap<Integer, String>  license;
     private HashMap<String, String>  language;
     private HashMap<Integer, String> privacy;
+    private HashMap<String, String> channelForUpdate;
     private String myRating = "none";
+    private boolean isUpdate = false; // I allow to set it to true when dealing with API updates
 
     private JSONObject cache;
 
@@ -303,5 +305,21 @@ public class Peertube {
 
     public void setPrivacy(HashMap<Integer, String> privacy) {
         this.privacy = privacy;
+    }
+
+    public HashMap<String, String> getChannelForUpdate() {
+        return channelForUpdate;
+    }
+
+    public void setChannelForUpdate(HashMap<String, String> channelForUpdate) {
+        this.channelForUpdate = channelForUpdate;
+    }
+
+    public boolean isUpdate() {
+        return isUpdate;
+    }
+
+    public void setUpdate(boolean update) {
+        isUpdate = update;
     }
 }

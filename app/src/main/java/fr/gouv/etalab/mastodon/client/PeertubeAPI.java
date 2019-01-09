@@ -160,10 +160,45 @@ public class PeertubeAPI {
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse updateVideo(Peertube peertube) {
+    public APIResponse updateVideo(Peertube peertube) {
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("id",peertube.getId());
+
+        //Category
+        Map.Entry<Integer,String> categoryM = peertube.getCategory().entrySet().iterator().next();
+        Integer idCategory = categoryM.getKey();
+        params.put("category", String.valueOf(idCategory));
+        //License
+        Map.Entry<Integer,String> licenseM = peertube.getLicense().entrySet().iterator().next();
+        Integer idLicense= licenseM.getKey();
+        params.put("licence", String.valueOf(idLicense));
+        //language
+        Map.Entry<String,String> languagesM = peertube.getLanguage().entrySet().iterator().next();
+        String iDlanguage = languagesM.getKey();
+        params.put("language", iDlanguage);
+        //Privacy
+        Map.Entry<Integer,String> privacyM = peertube.getPrivacy().entrySet().iterator().next();
+        Integer idPrivacy = privacyM.getKey();
+        params.put("privacy", String.valueOf(idPrivacy));
+        //Channel
+        Map.Entry<String,String> channelsM = peertube.getChannelForUpdate().entrySet().iterator().next();
+        String iDChannel = channelsM.getKey();
+        params.put("channelId", iDChannel);
+
+
+        params.put("name", peertube.getName());
+        params.put("description", peertube.getDescription());
+
+        params.put("nsfw", String.valueOf(peertube.isSensitive()));
+        params.put("commentsEnabled", String.valueOf(peertube.isCommentsEnabled()));
+        if( peertube.getTags() != null && peertube.getTags().size() > 0){
+            int i = 0;
+            for(String tag: peertube.getTags()){
+                params.put("tags["+i+"]", tag);
+                i++;
+            }
+        }
+        params.put("support", "null");
 
         List<Peertube> peertubes = new ArrayList<>();
         try {

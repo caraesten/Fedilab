@@ -809,6 +809,7 @@
     <string name="peertube_enable_comments">Enable video comments</string>
     <string name="update_video">Update video</string>
     <string name="description">Description</string>
+    <string name="toast_peertube_video_updated">The video has been updated!</string>
     <!-- end languages -->
 
 
