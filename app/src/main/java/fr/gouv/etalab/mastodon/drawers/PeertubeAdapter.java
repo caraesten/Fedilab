@@ -116,7 +116,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         Glide.with(holder.peertube_video_image.getContext())
                 .load("https://" + peertube.getInstance() + peertube.getThumbnailPath())
                 .into(holder.peertube_video_image);
-        if (account.getAvatar() != null && !account.getAvatar().startsWith("http"))
+        if (account.getAvatar() != null && !account.getAvatar().equals("null") && !account.getAvatar().startsWith("http"))
             account.setAvatar("https://" + peertube.getInstance() + account.getAvatar());
         Helper.loadGiF(context, account.getAvatar(), holder.peertube_profile);
 
