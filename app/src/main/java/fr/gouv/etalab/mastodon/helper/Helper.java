@@ -1192,7 +1192,7 @@ public class Helper {
                                 menuAccountsOpened = false;
                                 String userId = account.getId();
                                 Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
-                                changeUser(activity, userId, true);
+                                changeUser(activity, userId, false);
                                 arrow.setImageResource(R.drawable.ic_arrow_drop_down);
                                 return true;
                             }
@@ -1279,7 +1279,7 @@ public class Helper {
      * @param activity Activity
      * @param userID String - the new user id
      */
-    public static void changeUser(Activity activity, String userID, boolean checkItem) {
+    public static void changeUser(Activity activity, String userID, boolean notificationIntent) {
 
 
         final NavigationView navigationView = activity.findViewById(R.id.nav_view);
@@ -1315,6 +1315,8 @@ public class Helper {
         editor.commit();
         Intent changeAccount = new Intent(activity, MainActivity.class);
         changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        if( notificationIntent)
+            changeAccount.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
         activity.finish();
         activity.startActivity(changeAccount);
 

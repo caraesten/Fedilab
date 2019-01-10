@@ -57,6 +57,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -1633,16 +1634,19 @@ public abstract class BaseMainActivity extends BaseActivity
 
         if( intent == null )
             return;
-
+        Log.v(Helper.TAG,"intent: " + intent);
         String action = intent.getAction();
         String type = intent.getType();
         Bundle extras = intent.getExtras();
         String userIdIntent;
+        Log.v(Helper.TAG,"action: " + action);
+        Log.v(Helper.TAG,"type: " + type);
+        Log.v(Helper.TAG,"extras: " + extras);
         if( extras != null && extras.containsKey(INTENT_ACTION) ){
             final NavigationView navigationView = findViewById(R.id.nav_view);
             userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
             if (extras.getInt(INTENT_ACTION) == NOTIFICATION_INTENT){
-                changeUser(BaseMainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
+                changeUser(BaseMainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
                 unCheckAllMenuItems(navigationView);
                 if( tabLayout.getTabAt(1) != null)
                     //noinspection ConstantConditions
@@ -1673,7 +1677,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 tabLayout.setVisibility(View.GONE);
                 toolbarTitle.setText(instance);
             }else if( extras.getInt(INTENT_ACTION) == HOME_TIMELINE_INTENT){
-                changeUser(BaseMainActivity.this, userIdIntent, true); //Connects the account which is related to the notification
+                changeUser(BaseMainActivity.this, userIdIntent, false); //Connects the account which is related to the notification
             }else if( extras.getInt(INTENT_ACTION) == BACK_TO_SETTINGS){
                 unCheckAllMenuItems(navigationView);
                 navigationView.setCheckedItem(R.id.nav_settings);
@@ -1845,8 +1849,6 @@ public abstract class BaseMainActivity extends BaseActivity
         updateNotifCounter();
         updateHomeCounter();
 
-        SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
 
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext())) {
@@ -1864,58 +1866,60 @@ public abstract class BaseMainActivity extends BaseActivity
     @Override
     public void onStart(){
         super.onStart();
-        if( receive_federated_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
-        receive_federated_data = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle b = intent.getExtras();
-                assert b != null;
-                userIdService = b.getString("userIdService", null);
-                if( userIdService != null && userIdService.equals(userId)) {
-                    Status status = b.getParcelable("data");
-                    if (federatedFragment != null) {
-                        federatedFragment.refresh(status);
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if (receive_federated_data != null)
+                LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
+                receive_federated_data = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        Bundle b = intent.getExtras();
+                        assert b != null;
+                        userIdService = b.getString("userIdService", null);
+                        if (userIdService != null && userIdService.equals(userId)) {
+                            Status status = b.getParcelable("data");
+                            if (federatedFragment != null) {
+                                federatedFragment.refresh(status);
+                            }
+                        }
                     }
-                }
-            }
-        };
-        if( receive_home_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_home_data);
-        receive_home_data = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle b = intent.getExtras();
-                assert b != null;
-                userIdService = b.getString("userIdService", null);
-                if( userIdService != null && userIdService.equals(userId)) {
-                    Status status = b.getParcelable("data");
-                    if (homeFragment != null) {
-                        homeFragment.refresh(status);
+                };
+            if (receive_home_data != null)
+                LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_home_data);
+                receive_home_data = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        Bundle b = intent.getExtras();
+                        assert b != null;
+                        userIdService = b.getString("userIdService", null);
+                        if (userIdService != null && userIdService.equals(userId)) {
+                            Status status = b.getParcelable("data");
+                            if (homeFragment != null) {
+                                homeFragment.refresh(status);
+                            }
+                        }
                     }
-                }
-            }
-        };
-        if( receive_local_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_local_data);
-        receive_local_data = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle b = intent.getExtras();
-                assert b != null;
-                userIdService = b.getString("userIdService", null);
-                if( userIdService != null && userIdService.equals(userId)) {
-                    Status status = b.getParcelable("data");
-                    if (localFragment != null) {
-                        localFragment.refresh(status);
+                };
+            if (receive_local_data != null)
+                LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_local_data);
+                receive_local_data = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        Bundle b = intent.getExtras();
+                        assert b != null;
+                        userIdService = b.getString("userIdService", null);
+                        if (userIdService != null && userIdService.equals(userId)) {
+                            Status status = b.getParcelable("data");
+                            if (localFragment != null) {
+                                localFragment.refresh(status);
+                            }
+                        }
                     }
-                }
-            }
-        };
+                };
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(receive_home_data, new IntentFilter(Helper.RECEIVE_HOME_DATA));
-        LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
-        LocalBroadcastManager.getInstance(this).registerReceiver(receive_local_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
+            LocalBroadcastManager.getInstance(this).registerReceiver(receive_home_data, new IntentFilter(Helper.RECEIVE_HOME_DATA));
+            LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
+            LocalBroadcastManager.getInstance(this).registerReceiver(receive_local_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
+        }
 
     }
 

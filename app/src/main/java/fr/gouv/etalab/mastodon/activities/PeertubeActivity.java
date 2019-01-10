@@ -139,7 +139,6 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private AppCompatImageView fullScreenIcon;
     private TextView resolution;
     private DefaultTrackSelector trackSelector;
-    private WebView webview_video;
     private int mode;
 
 
@@ -174,7 +173,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube_description = findViewById(R.id.peertube_description);
         peertube_title = findViewById(R.id.peertube_title);
         peertube_information_container = findViewById(R.id.peertube_information_container);
-        webview_video = findViewById(R.id.webview_video);
+        WebView webview_video = findViewById(R.id.webview_video);
         playerView = findViewById(R.id.media_video);
 
         Bundle b = getIntent().getExtras();
@@ -215,7 +214,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             FrameLayout webview_container = findViewById(R.id.main_media_frame);
             final ViewGroup videoLayout = findViewById(R.id.videoLayout);
 
-            MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(PeertubeActivity.this,  webview_video, webview_container, videoLayout);
+            MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(PeertubeActivity.this, webview_video, webview_container, videoLayout);
             mastalabWebChromeClient.setOnToggledFullscreen(new MastalabWebChromeClient.ToggledFullscreenCallback() {
                 @Override
                 public void toggledFullscreen(boolean fullscreen) {
