@@ -51,6 +51,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSearchAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Conversation;
@@ -216,8 +217,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     Bundle b = intent.getExtras();
                     assert b != null;
                     Status status = b.getParcelable("status");
+                    API.StatusAction statusAction = (API.StatusAction)b.getSerializable("action");
                     if( status != null) {
-                        applyAction(status);
+                        statusListAdapter.notifyStatusWithActionChanged(statusAction, status);
                     }
                 }
             };
@@ -426,7 +428,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         super.onDestroy();
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
-        Log.v(Helper.TAG,type + " - destroy: " + receive_action);
         if( receive_action != null)
             LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
     }
@@ -938,10 +939,4 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
     }
 
-
-    public void applyAction(Status status){
-        if( statusListAdapter != null && this.statuses != null && this.statuses.contains(status)){
-            statusListAdapter.notifyStatusWithActionChanged(status);
-        }
-    }
 }
