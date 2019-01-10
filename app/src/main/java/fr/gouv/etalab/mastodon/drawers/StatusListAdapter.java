@@ -2700,6 +2700,28 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
+    public void notifyStatusWithActionChanged(Status status){
+        for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
+            //noinspection ConstantConditions
+            if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
+                try {
+                    int countFav = statuses.get(i).getFavourites_count() -1;
+                    if( countFav < 0)
+                        countFav = 0;
+                    int countReblog = statuses.get(i).getReblogs_count() -1;
+                    if( countReblog < 0)
+                        countReblog = 0;
+                    statuses.get(i).setFavourited(status.isFavourited());
+                    statuses.get(i).setFavourites_count(countFav);
+                    statuses.get(i).setReblogged(status.isReblogged());
+                    statuses.get(i).setReblogs_count(countReblog);
+                    statusListAdapter.notifyItemChanged(i);
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    }
+
 
     @Override
     public void onRetrieveEmoji(Status status, boolean fromTranslation) {

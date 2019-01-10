@@ -15,8 +15,11 @@ package fr.gouv.etalab.mastodon.client;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1738,11 +1741,21 @@ public class API {
                 return -1;
         }
         if(statusAction != StatusAction.UNSTATUS ) {
-
             try {
                 HttpsConnection httpsConnection = new HttpsConnection(context);
-                httpsConnection.post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
+                String resp = httpsConnection.post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
                 actionCode = httpsConnection.getActionCode();
+                if( statusAction == StatusAction.REBLOG || statusAction == StatusAction.UNREBLOG || statusAction == StatusAction.FAVOURITE || statusAction == StatusAction.UNFAVOURITE) {
+                    Bundle b = new Bundle();
+                    try {
+                        Status status1 = parseStatuses(context, new JSONObject(resp));
+                        b.putParcelable("status", status1);
+                    } catch (JSONException ignored) {}
+                    b.putSerializable("action", statusAction);
+                    Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
+                    intentBC.putExtras(b);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
+                }
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
             } catch (NoSuchAlgorithmException e) {

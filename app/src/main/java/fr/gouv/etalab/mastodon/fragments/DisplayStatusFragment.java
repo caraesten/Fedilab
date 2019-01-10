@@ -15,8 +15,10 @@ package fr.gouv.etalab.mastodon.fragments;
  * see <http://www.gnu.org/licenses>. */
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -26,6 +28,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -107,12 +110,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String initialBookMark;
     private boolean fetchMoreButtonDisplayed;
     private TagTimeline tagTimeline;
-
     private String updatedBookMark;
     private String lastReadToot;
     private boolean ischannel;
     private boolean ownVideos;
-
+    private BroadcastReceiver receive_action;
     public DisplayStatusFragment(){
     }
 
@@ -204,7 +206,23 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mLayoutManager = new LinearLayoutManager(context);
         lv_status.setLayoutManager(mLayoutManager);
 
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
 
+            if( receive_action != null)
+                LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
+            receive_action = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    Bundle b = intent.getExtras();
+                    assert b != null;
+                    Status status = b.getParcelable("status");
+                    if( status != null) {
+                        applyAction(status);
+                    }
+                }
+            };
+            LocalBroadcastManager.getInstance(context).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
+        }
 
         if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE  && search_peertube != null)
             ((Activity)context).setTitle(remoteInstance + " - " + search_peertube);
@@ -408,6 +426,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         super.onDestroy();
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
+        Log.v(Helper.TAG,type + " - destroy: " + receive_action);
+        if( receive_action != null)
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
     }
 
 
@@ -914,6 +935,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     public void updateLastReadToot(){
         if (type == RetrieveFeedsAsyncTask.Type.HOME && this.statuses != null && this.statuses.size() > 0) {
             lastReadToot = this.statuses.get(0).getId();
+        }
+    }
+
+
+    public void applyAction(Status status){
+        if( statusListAdapter != null && this.statuses != null && this.statuses.contains(status)){
+            statusListAdapter.notifyStatusWithActionChanged(status);
         }
     }
 }

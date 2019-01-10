@@ -58,6 +58,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Patterns;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -214,6 +215,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public static HashMap<Integer, RetrieveFeedsAsyncTask.Type> typePosition = new HashMap<>();
     private FloatingActionButton federatedTimelines;
     public static UpdateAccountInfoAsyncTask.SOCIAL social;
+    SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1351,6 +1353,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
         Helper.switchLayout(BaseMainActivity.this);
 
+
         if( receive_data != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
         receive_data = new BroadcastReceiver() {
@@ -1368,6 +1371,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
             }
         };
+
         mamageNewIntent(getIntent());
 
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
@@ -1601,6 +1605,8 @@ public abstract class BaseMainActivity extends BaseActivity
         }
         return true;
     }
+
+
 
     public void refreshFilters(){
         if(homeFragment != null)
@@ -2383,8 +2389,10 @@ public abstract class BaseMainActivity extends BaseActivity
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
+            Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
+            registeredFragments.put(position, createdFragment);
             if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-                Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
+
                 // save the appropriate reference depending on position
                 if (position == 0) {
                     homeFragment = (DisplayStatusFragment) createdFragment;
@@ -2399,13 +2407,15 @@ public abstract class BaseMainActivity extends BaseActivity
                         artFragment = (DisplayStatusFragment) createdFragment;
 
                 }
-                return createdFragment;
-            }else if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
-                return super.instantiateItem(container, position);
-            }
-            return null;
-        }
 
+            }
+            return createdFragment;
+        }
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            registeredFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
         @Override
         public int getCount() {
             return mNumOfTabs;
