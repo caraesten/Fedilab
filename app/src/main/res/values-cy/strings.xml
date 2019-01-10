@@ -131,14 +131,14 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Cael gwared ar y tŵt hwn?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>Dileu &amp; ail-ddrafftio\'r tŵt hwn?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="zero">%d replies</item>
+        <item quantity="zero">%d o ymateb</item>
         <item quantity="one">%d ymateb</item>
         <item quantity="two">%d replies</item>
         <item quantity="few">%d replies</item>
-        <item quantity="many">%d replies</item>
+        <item quantity="many">%d o ymatebion</item>
         <item quantity="other">%d o ymatebion</item>
     </plurals>
     <string name="set_display_bookmark_button">Arddangos y bwtwm llyfrnodi</string>
@@ -202,7 +202,7 @@
     <string name="no_accounts">Dim cyfrif i\'w arddangos</string>
     <string name="no_follow_request">Dim cais dilyn</string>
     <string name="status_cnt">Tŵtiau \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
+    <string name="following_cnt">Yn dilyn \n %1$s</string>
     <string name="followers_cnt">Dilynwyr \n %1$s</string>
     <string name="pins_cnt">Wedi eu pinio \n %d</string>
     <string name="authorize">Caniatau</string>
@@ -314,7 +314,7 @@
     <string name="set_wifi_only">Ond hysbysu pan yn gysylltiedig i WIFI</string>
     <string name="set_notify">Hsybysu?</string>
     <string name="set_notif_silent">Hysbysiadau distaw</string>
-    <string name="set_night_mode">Night mode</string>
+    <string name="set_night_mode">Modd hwyrnos</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Golygu proffil</string>
     <string name="set_profile_description">Bywgraffiad…</string>
@@ -333,15 +333,15 @@
     <string name="settings_hour_init">Amser dechrau</string>
     <string name="settings_hour_end">Amser gorffen</string>
     <string name="embedded_browser">Defnyddio\'r porwr rhagosodedig</string>
-    <string name="custom_tabs">Custom tabs</string>
+    <string name="custom_tabs">Tabiau wedi\'u golygu</string>
     <string name="use_javascript">Caniatau Javascript</string>
     <string name="expand_cw">Ehangu cw yn awtomataidd</string>
     <string name="use_cookies">Caniatau cwcis trydydd parti</string>
     <string name="settings_ui_layout">Gosodiad ar gyfer ffrydiau: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Draenio batri arferol</item>
+        <item>Draenio batri cymhedrol</item>
+        <item>Draenio batri isel</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Tabiau</item>
