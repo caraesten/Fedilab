@@ -355,6 +355,9 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                                         .addParameter("name", filename)
                                         .addParameter("channelId", idChannel)
                                         .addParameter("privacy", String.valueOf(idPrivacy))
+                                        .addParameter("nsfw", "false")
+                                        .addParameter("commentsEnabled", "true")
+                                        .addParameter("waitTranscoding", "true")
                                         .setMaxRetries(2)
                                         .setDelegate(new UploadStatusDelegate() {
                                             @Override
