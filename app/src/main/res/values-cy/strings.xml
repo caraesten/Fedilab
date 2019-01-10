@@ -78,7 +78,7 @@
     <string name="communication_menu_title">Cyfathrebu</string>
     <string name="muted_menu">Defnyddwyr mud</string>
     <string name="blocked_menu">Defnyddwyr wedi’u blocio</string>
-    <string name="remote_follow_menu">Remote follow</string>
+    <string name="remote_follow_menu">Dilyn o bell</string>
     <string name="notifications">Hysbysiadau</string>
     <string name="follow_request">Dilyn ceisiadau</string>
     <string name="optimization">Optimeiddiad</string>
@@ -126,20 +126,20 @@
         <item>Blocio\'r parth hwn?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Hysbysu</item>
+        <item>Distaw</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Cael gwared ar y tŵt hwn?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>Dileu &amp; ail-ddrafftio\'r tŵt hwn?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="zero">%d replies</item>
-        <item quantity="one">%d reply</item>
+        <item quantity="zero">%d o ymateb</item>
+        <item quantity="one">%d ymateb</item>
         <item quantity="two">%d replies</item>
         <item quantity="few">%d replies</item>
-        <item quantity="many">%d replies</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="many">%d o ymatebion</item>
+        <item quantity="other">%d o ymatebion</item>
     </plurals>
     <string name="set_display_bookmark_button">Arddangos y bwtwm llyfrnodi</string>
     <string name="bookmarks">Llyfrnodau</string>
@@ -202,7 +202,7 @@
     <string name="no_accounts">Dim cyfrif i\'w arddangos</string>
     <string name="no_follow_request">Dim cais dilyn</string>
     <string name="status_cnt">Tŵtiau \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
+    <string name="following_cnt">Yn dilyn \n %1$s</string>
     <string name="followers_cnt">Dilynwyr \n %1$s</string>
     <string name="pins_cnt">Wedi eu pinio \n %d</string>
     <string name="authorize">Caniatau</string>
@@ -314,7 +314,7 @@
     <string name="set_wifi_only">Ond hysbysu pan yn gysylltiedig i WIFI</string>
     <string name="set_notify">Hsybysu?</string>
     <string name="set_notif_silent">Hysbysiadau distaw</string>
-    <string name="set_night_mode">Night mode</string>
+    <string name="set_night_mode">Modd hwyrnos</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Golygu proffil</string>
     <string name="set_profile_description">Bywgraffiad…</string>
@@ -333,15 +333,15 @@
     <string name="settings_hour_init">Amser dechrau</string>
     <string name="settings_hour_end">Amser gorffen</string>
     <string name="embedded_browser">Defnyddio\'r porwr rhagosodedig</string>
-    <string name="custom_tabs">Custom tabs</string>
+    <string name="custom_tabs">Tabiau wedi\'u golygu</string>
     <string name="use_javascript">Caniatau Javascript</string>
     <string name="expand_cw">Ehangu cw yn awtomataidd</string>
     <string name="use_cookies">Caniatau cwcis trydydd parti</string>
     <string name="settings_ui_layout">Gosodiad ar gyfer ffrydiau: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Draenio batri arferol</item>
+        <item>Draenio batri cymhedrol</item>
+        <item>Draenio batri isel</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Tabiau</item>
@@ -428,7 +428,7 @@
         Deleting the application immediately removes these data.\n
         &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
     </string>
-    <string name="privacy_authorizations_title">Permissions:</string>
+    <string name="privacy_authorizations_title">Caniatad:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n

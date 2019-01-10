@@ -691,28 +691,28 @@
     <string name="reply">Erantzun</string>
     <string name="delete_comment">Ezabatu iruzkin bat</string>
     <string name="delete_comment_confirm">Ziur iruzkin hau ezabatu nahi duzula?</string>
-    <string name="fullscreen">Full screen video</string>
-    <string name="set_video_mode">Mode for videos</string>
-    <string name="file_to_upload">Select the file to upload</string>
-    <string name="my_videos">My videos</string>
-    <string name="title">Title</string>
-    <string name="categories">Categories</string>
-    <string name="license">License</string>
-    <string name="category">Category</string>
-    <string name="language">Language</string>
-    <string name="peertube_nsfw">This video contains mature or explicit content</string>
-    <string name="peertube_enable_comments">Enable video comments</string>
-    <string name="update_video">Update video</string>
-    <string name="description">Description</string>
-    <string name="toast_peertube_video_updated">The video has been updated!</string>
-    <string name="toast_cancelled">Upload cancelled!</string>
-    <string name="upload_video_success">The video has been uploaded!</string>
-    <string name="uploading">Uploading, please wait…</string>
-    <string name="video_uploaded_action">Click here to edit the video data.</string>
+    <string name="fullscreen">Pantaila osoko bideoa</string>
+    <string name="set_video_mode">Bideorako modua</string>
+    <string name="file_to_upload">Igo nahi duzun fitxategia aukeratu</string>
+    <string name="my_videos">Nire bideoak</string>
+    <string name="title">Izenburua</string>
+    <string name="categories">Kategoriak</string>
+    <string name="license">Lizentzia</string>
+    <string name="category">Kategoria</string>
+    <string name="language">Hizkuntza</string>
+    <string name="peertube_nsfw">Bideo honetan helduei zuzendutako edukia du</string>
+    <string name="peertube_enable_comments">Bideo - iruzkinak gaitu</string>
+    <string name="update_video">Bideoa eguneratu</string>
+    <string name="description">Deskribapena</string>
+    <string name="toast_peertube_video_updated">Bideoa eguneratua izan da!</string>
+    <string name="toast_cancelled">Igoera baliogabetua!</string>
+    <string name="upload_video_success">Bideoa igo da!</string>
+    <string name="uploading">Igotzen, itxaron mesedez…</string>
+    <string name="video_uploaded_action">Klikatu hemen bideo datuak editatzeko.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
-        <item>Webview</item>
-        <item>Direct stream</item>
+        <item>Web ikuspegia</item>
+        <item>Zuzeneko streaming-a</item>
     </string-array>
 </resources>
