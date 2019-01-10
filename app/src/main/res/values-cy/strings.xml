@@ -78,7 +78,7 @@
     <string name="communication_menu_title">Cyfathrebu</string>
     <string name="muted_menu">Defnyddwyr mud</string>
     <string name="blocked_menu">Defnyddwyr wedi’u blocio</string>
-    <string name="remote_follow_menu">Remote follow</string>
+    <string name="remote_follow_menu">Dilyn o bell</string>
     <string name="notifications">Hysbysiadau</string>
     <string name="follow_request">Dilyn ceisiadau</string>
     <string name="optimization">Optimeiddiad</string>
@@ -126,8 +126,8 @@
         <item>Blocio\'r parth hwn?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Hysbysu</item>
+        <item>Distaw</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Cael gwared ar y tŵt hwn?</item>
@@ -135,11 +135,11 @@
     </string-array>
     <plurals name="preview_replies">
         <item quantity="zero">%d replies</item>
-        <item quantity="one">%d reply</item>
+        <item quantity="one">%d ymateb</item>
         <item quantity="two">%d replies</item>
         <item quantity="few">%d replies</item>
         <item quantity="many">%d replies</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="other">%d o ymatebion</item>
     </plurals>
     <string name="set_display_bookmark_button">Arddangos y bwtwm llyfrnodi</string>
     <string name="bookmarks">Llyfrnodau</string>
