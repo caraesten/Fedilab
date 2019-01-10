@@ -57,7 +57,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -243,6 +242,14 @@ public abstract class BaseMainActivity extends BaseActivity
         countNewStatus = 0;
         countNewNotifications = 0;
 
+        if (!isTaskRoot()
+                && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
+                && getIntent().getAction() != null
+                && getIntent().getAction().equals(Intent.ACTION_MAIN)) {
+
+            finish();
+            return;
+        }
         final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         switch (theme){
             case Helper.THEME_LIGHT:
@@ -1634,14 +1641,10 @@ public abstract class BaseMainActivity extends BaseActivity
 
         if( intent == null )
             return;
-        Log.v(Helper.TAG,"intent: " + intent);
         String action = intent.getAction();
         String type = intent.getType();
         Bundle extras = intent.getExtras();
         String userIdIntent;
-        Log.v(Helper.TAG,"action: " + action);
-        Log.v(Helper.TAG,"type: " + type);
-        Log.v(Helper.TAG,"extras: " + extras);
         if( extras != null && extras.containsKey(INTENT_ACTION) ){
             final NavigationView navigationView = findViewById(R.id.nav_view);
             userIdIntent = extras.getString(PREF_KEY_ID); //Id of the account in the intent
