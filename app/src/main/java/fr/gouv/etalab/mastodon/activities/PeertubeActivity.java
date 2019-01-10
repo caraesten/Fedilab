@@ -108,6 +108,7 @@ import fr.gouv.etalab.mastodon.webview.MastalabWebChromeClient;
 import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
+import static fr.gouv.etalab.mastodon.helper.Helper.VIDEO_MODE_DIRECT;
 import static fr.gouv.etalab.mastodon.helper.Helper.VIDEO_MODE_WEBVIEW;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
@@ -721,66 +722,87 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 if( playerView != null) {
                     loader.setVisibility(View.VISIBLE);
                     long position = player.getCurrentPosition();
-                    torrentStream.stopStream();
-                    torrentStream.removeListener(torrentListener);
+                    PlaybackControlView controlView = playerView.findViewById(R.id.exo_controller);
+                    resolution = controlView.findViewById(R.id.resolution);
+                    resolution.setText(String.format("%sp",res));
+                    if (mode == Helper.VIDEO_MODE_TORRENT) {
+                        torrentStream.stopStream();
+                        torrentStream.removeListener(torrentListener);
 
 
-                    TorrentOptions torrentOptions = new TorrentOptions.Builder()
-                            .saveLocation(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS))
-                            .removeFilesAfterStop(true)
-                            .build();
+                        TorrentOptions torrentOptions = new TorrentOptions.Builder()
+                                .saveLocation(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS))
+                                .removeFilesAfterStop(true)
+                                .build();
 
 
+                        DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+                        TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
+                        trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
 
-                    DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-                    TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
-                    trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+                        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
+                                Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
 
-                    DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
-                            Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
-
-                    ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                            .createMediaSource(Uri.parse(peertube.getTorrentUrl(null)));
+                        ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                                .createMediaSource(Uri.parse(peertube.getTorrentUrl(res)));
 
 
-                    player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this, trackSelector);
-                    playerView.setPlayer(player);
-                    torrentStream = TorrentStream.init(torrentOptions);
-                    player.prepare(videoSource);
-                    torrentStream.startStream(peertube.getTorrentUrl(res));
-                    torrentListener = new TorrentListener() {
-                        @Override
-                        public void onStreamPrepared(Torrent torrent) {
-                            resolution.setText(res);
-                        }
-                        @Override
-                        public void onStreamStarted(Torrent torrent) {
-                        }
-                        @Override
-                        public void onStreamError(Torrent torrent, Exception e) {
-                        }
-                        @Override
-                        public void onStreamReady(Torrent torrent) {
-                            loader.setVisibility(View.GONE);
-                            resolution.setText(res);
-                            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
-                                    Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
+                        player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this, trackSelector);
+                        playerView.setPlayer(player);
+                        torrentStream = TorrentStream.init(torrentOptions);
+                        torrentStream.startStream(peertube.getTorrentUrl(res));
+                        torrentListener = new TorrentListener() {
+                            @Override
+                            public void onStreamPrepared(Torrent torrent) {
+                                resolution.setText(res);
+                            }
 
-                            ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                                    .createMediaSource(Uri.fromFile(torrent.getVideoFile()));
-                            player.prepare(videoSource);
-                            player.seekTo(0,position);
-                            player.setPlayWhenReady(true);
-                        }
-                        @Override
-                        public void onStreamProgress(Torrent torrent, StreamStatus status) {
-                        }
-                        @Override
-                        public void onStreamStopped() {
-                            loader.setVisibility(View.GONE);
-                        }
-                    };
-                    torrentStream.addListener(torrentListener);
+                            @Override
+                            public void onStreamStarted(Torrent torrent) {
+                            }
+
+                            @Override
+                            public void onStreamError(Torrent torrent, Exception e) {
+                            }
+
+                            @Override
+                            public void onStreamReady(Torrent torrent) {
+                                loader.setVisibility(View.GONE);
+                                resolution.setText(res);
+                                DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
+                                        Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
+
+                                ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                                        .createMediaSource(Uri.fromFile(torrent.getVideoFile()));
+                                player.prepare(videoSource);
+                                player.seekTo(0, position);
+                                player.setPlayWhenReady(true);
+                            }
+
+                            @Override
+                            public void onStreamProgress(Torrent torrent, StreamStatus status) {
+                            }
+
+                            @Override
+                            public void onStreamStopped() {
+                                loader.setVisibility(View.GONE);
+                            }
+                        };
+                        torrentStream.addListener(torrentListener);
+                    }else if( mode == VIDEO_MODE_DIRECT){
+
+                        player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this);
+                        playerView.setPlayer(player);
+                        loader.setVisibility(View.GONE);
+                        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
+                                Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
+
+                        ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                                .createMediaSource(Uri.parse(peertube.getFileUrl(res)));
+                        player.prepare(videoSource);
+                        player.seekTo(0, position);
+                        player.setPlayWhenReady(true);
+                    }
                 }
 
             }
@@ -846,7 +868,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private void initResolution() {
         PlaybackControlView controlView = playerView.findViewById(R.id.exo_controller);
         resolution = controlView.findViewById(R.id.resolution);
-        resolution.setText(String.format("%s dp",peertube.getResolution().get(0)));
+        resolution.setText(String.format("%sp",peertube.getResolution().get(0)));
         resolution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

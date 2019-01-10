@@ -440,7 +440,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //handle other API error but discards 404 - error which can often happen due to toots which have been deleted
-        if( apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
+        if( this.peertubes == null ||  this.statuses == null || apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
             if( apiResponse == null)
                 Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             else
@@ -449,6 +449,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
+
         //For remote Peertube remote instances
         if(( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE || instanceType != null && instanceType.equals("PEERTUBE") || (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) && peertubeAdapater != null)){
             int previousPosition = this.peertubes.size();
@@ -456,6 +457,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 max_id = "0";
             //max_id needs to work like an offset
             max_id = String.valueOf(Integer.valueOf(max_id) + 50);
+            if( apiResponse.getPeertubes() == null){
+                return;
+            }
             this.peertubes.addAll(apiResponse.getPeertubes());
             //If no item were inserted previously the adapter is created
             if( previousPosition == 0) {
