@@ -2627,7 +2627,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
         }
 
-        if( statusAction == API.StatusAction.REBLOG){
+        /*if( statusAction == API.StatusAction.REBLOG){
             int position = 0;
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
@@ -2674,7 +2674,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
                 position++;
             }
-        }
+        }*/
         if( statusAction == API.StatusAction.PEERTUBEDELETECOMMENT){
             int position = 0;
             for(Status status: statuses){
