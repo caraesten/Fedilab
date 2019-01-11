@@ -710,8 +710,8 @@
     <string name="toast_peertube_video_updated">O vídeo foi actualizado!</string>
     <string name="toast_cancelled">Cancelouse a subida!</string>
     <string name="upload_video_success">O vídeo foi subido!</string>
-    <string name="uploading">Uploading, please wait…</string>
-    <string name="video_uploaded_action">Click here to edit the video data.</string>
+    <string name="uploading">Subindo, agarde por favor…</string>
+    <string name="video_uploaded_action">Pulse aquí para editar datos do vídeo.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
