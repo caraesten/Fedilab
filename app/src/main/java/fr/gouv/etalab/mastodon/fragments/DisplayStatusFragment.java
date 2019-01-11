@@ -115,6 +115,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean ischannel;
     private boolean ownVideos;
     private BroadcastReceiver receive_action;
+    private BroadcastReceiver  receive_data;
     public DisplayStatusFragment(){
     }
 
@@ -222,6 +223,30 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 }
             };
             LocalBroadcastManager.getInstance(context).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
+
+            if( type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.LOCAL || type == RetrieveFeedsAsyncTask.Type.PUBLIC){
+
+                if (receive_data != null)
+                    LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
+                receive_data = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        Bundle b = intent.getExtras();
+                        assert b != null;
+                        String userIdService = b.getString("userIdService", null);
+                        if (userIdService != null && userIdService.equals(userId)) {
+                            Status status = b.getParcelable("data");
+                            refresh(status);
+                        }
+                    }
+                };
+            }
+            if( type == RetrieveFeedsAsyncTask.Type.PUBLIC)
+                LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
+            else if( type == RetrieveFeedsAsyncTask.Type.HOME)
+                LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_HOME_DATA));
+            else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
+                LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
         }
 
         if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE  && search_peertube != null)
@@ -428,9 +453,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             asyncTask.cancel(true);
         if( receive_action != null)
             LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
+        if( receive_data != null)
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
     }
-
-
 
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {

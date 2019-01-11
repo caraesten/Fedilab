@@ -18,11 +18,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -44,7 +42,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -110,7 +107,6 @@ import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -190,7 +186,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private DisplayStatusFragment homeFragment, federatedFragment, localFragment, artFragment;
     private DisplayNotificationsFragment notificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
-    private static BroadcastReceiver receive_data, receive_home_data, receive_federated_data, receive_local_data;
+
     private boolean display_direct, display_local, display_global, display_art;
     public static int countNewStatus;
     public static int countNewNotifications;
@@ -1362,28 +1358,11 @@ public abstract class BaseMainActivity extends BaseActivity
         Helper.switchLayout(BaseMainActivity.this);
 
 
-        if( receive_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
-        receive_data = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle b = intent.getExtras();
-                assert b != null;
-                userIdService = b.getString("userIdService", null);
-                if( userIdService != null && userIdService.equals(userId)) {
-                    Notification notification = b.getParcelable("data");
-                    if (notificationsFragment != null) {
-                        notificationsFragment.refresh(notification);
-                    }
-                    updateNotifCounter();
-                }
-            }
-        };
 
         mamageNewIntent(getIntent());
 
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-            LocalBroadcastManager.getInstance(this).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+
             // Retrieves instance
             new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             // Retrieves filters
@@ -1866,76 +1845,6 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
 
-    @Override
-    public void onStart(){
-        super.onStart();
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-            if (receive_federated_data != null)
-                LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
-                receive_federated_data = new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        Bundle b = intent.getExtras();
-                        assert b != null;
-                        userIdService = b.getString("userIdService", null);
-                        if (userIdService != null && userIdService.equals(userId)) {
-                            Status status = b.getParcelable("data");
-                            if (federatedFragment != null) {
-                                federatedFragment.refresh(status);
-                            }
-                        }
-                    }
-                };
-            if (receive_home_data != null)
-                LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_home_data);
-                receive_home_data = new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        Bundle b = intent.getExtras();
-                        assert b != null;
-                        userIdService = b.getString("userIdService", null);
-                        if (userIdService != null && userIdService.equals(userId)) {
-                            Status status = b.getParcelable("data");
-                            if (homeFragment != null) {
-                                homeFragment.refresh(status);
-                            }
-                        }
-                    }
-                };
-            if (receive_local_data != null)
-                LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_local_data);
-                receive_local_data = new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        Bundle b = intent.getExtras();
-                        assert b != null;
-                        userIdService = b.getString("userIdService", null);
-                        if (userIdService != null && userIdService.equals(userId)) {
-                            Status status = b.getParcelable("data");
-                            if (localFragment != null) {
-                                localFragment.refresh(status);
-                            }
-                        }
-                    }
-                };
-
-            LocalBroadcastManager.getInstance(this).registerReceiver(receive_home_data, new IntentFilter(Helper.RECEIVE_HOME_DATA));
-            LocalBroadcastManager.getInstance(this).registerReceiver(receive_federated_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
-            LocalBroadcastManager.getInstance(this).registerReceiver(receive_local_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
-        }
-
-    }
-
-    @Override
-    public void onStop(){
-        super.onStop();
-        if( receive_home_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_home_data);
-        if( receive_federated_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_federated_data);
-        if( receive_local_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_local_data);
-    }
 
     @Override
     protected void onPause() {
@@ -1948,9 +1857,6 @@ public abstract class BaseMainActivity extends BaseActivity
     public void onDestroy(){
         super.onDestroy();
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( receive_data != null)
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(receive_data);
-
         boolean backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         if(!backgroundProcess)
             sendBroadcast(new Intent("StopLiveNotificationService"));
