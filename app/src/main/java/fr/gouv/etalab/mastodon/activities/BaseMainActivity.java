@@ -190,7 +190,6 @@ public abstract class BaseMainActivity extends BaseActivity
     private boolean display_direct, display_local, display_global, display_art;
     public static int countNewStatus;
     public static int countNewNotifications;
-    private String userIdService;
     public static String lastHomeId = null, lastNotificationId = null;
     boolean notif_follow, notif_add, notif_mention, notif_share, show_boosts, show_replies , show_nsfw;
     String show_filtered;
