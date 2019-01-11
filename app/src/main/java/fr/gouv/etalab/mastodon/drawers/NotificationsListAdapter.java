@@ -855,6 +855,24 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
     }
 
+
+    public void notifyNotificationWithActionChanged(Status status){
+        for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
+            if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getType().toLowerCase().equals("mention") && notificationsListAdapter.getItemAt(i).getStatus() != null && notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
+                try {
+                    if( notifications.get(i).getStatus() != null){
+                        notifications.get(i).getStatus().setFavourited(status.isFavourited());
+                        notifications.get(i).getStatus().setFavourites_count(status.getFavourites_count());
+                        notifications.get(i).getStatus().setReblogged(status.isReblogged());
+                        notifications.get(i).getStatus().setReblogs_count(status.getReblogs_count());
+                    }
+                    notificationsListAdapter.notifyItemChanged(i);
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    }
+
     @Override
     public long getItemId(int position) {
         return position;

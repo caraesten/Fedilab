@@ -14,7 +14,10 @@ package fr.gouv.etalab.mastodon.fragments;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +26,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,9 +45,11 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingNotificationsInterface;
@@ -72,6 +78,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private String userId, instance;
     private SharedPreferences sharedpreferences;
     LinearLayoutManager mLayoutManager;
+    private BroadcastReceiver receive_action;
 
     public DisplayNotificationsFragment(){
     }
@@ -124,6 +131,24 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 }
             }
         });
+
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+
+            if( receive_action != null)
+                LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
+            receive_action = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    Bundle b = intent.getExtras();
+                    assert b != null;
+                    Status status = b.getParcelable("status");
+                    if( status != null) {
+                        notificationsListAdapter.notifyNotificationWithActionChanged(status);
+                    }
+                }
+            };
+            LocalBroadcastManager.getInstance(context).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
+        }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -198,6 +223,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         super.onDestroy();
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
+        if( receive_action != null)
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
     }
 
     @Override
