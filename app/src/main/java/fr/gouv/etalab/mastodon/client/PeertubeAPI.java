@@ -186,10 +186,13 @@ public class PeertubeAPI {
         Integer idPrivacy = privacyM.getKey();
         params.put("privacy", String.valueOf(idPrivacy));
         if( peertube.getTags() != null && peertube.getTags().size() > 0){
-            int i = 0;
-            for(String tag: peertube.getTags()){
-                params.put("tags["+(i++)+"]", tag.trim());
-            }
+            StringBuilder parameters = new StringBuilder();
+            parameters.append("[]&");
+            for(String tag: peertube.getTags())
+                parameters.append("tags=").append(tag).append("&");
+            String strParam = parameters.toString();
+            strParam = strParam.substring(0, strParam.length() - 1);
+            params.put("tags[]", strParam);
         }else {
             params.put("tags", "null");
         }
