@@ -702,6 +702,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="delete_video">Delete video</string>
     <string name="delete_video_confirmation">Are you sure to delete this video?</string>
     <string name="no_video_uploaded">No videos uploaded yet!</string>
+    <string name="display_nsfw_videos">Display NSFW videos</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
