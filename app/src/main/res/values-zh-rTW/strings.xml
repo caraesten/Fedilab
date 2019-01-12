@@ -708,6 +708,10 @@
     <string name="upload_video_success">影片已上傳！</string>
     <string name="uploading">正在上傳，請稍候……</string>
     <string name="video_uploaded_action">點選這裡以編輯影片資料。</string>
+    <string name="delete_video">Delete video</string>
+    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
+    <string name="no_video_uploaded">No videos uploaded yet!</string>
+    <string name="display_nsfw_videos">Display NSFW videos</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

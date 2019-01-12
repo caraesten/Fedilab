@@ -655,7 +655,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <!-- languages not translated -->
     <string name="languages">Sprachen</string>
     <string name="show_media_only">Nur Medien</string>
-    <string name="show_media_nsfw">NSFW anzeigen</string>
+    <string name="show_media_nsfw">Unpassenden Inhalten anzeigen</string>
     <string name="crowdin_translations">Crowdin Übersetzungen</string>
     <string name="crowdin_manager">Crowdin Manager</string>
     <string name="translation_app">Übersetzung der App</string>
@@ -684,7 +684,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="delete_comment">Kommentar entfernen</string>
     <string name="delete_comment_confirm">Möchten Sie diesen Kommentar wirklich löschen?</string>
     <string name="fullscreen">Vollbildvideo</string>
-    <string name="set_video_mode">Mode for videos</string>
+    <string name="set_video_mode">Modus für Videoaufnahmen</string>
     <string name="file_to_upload">Eine Datei zum Hochladen auswählen</string>
     <string name="my_videos">Eigene Videos</string>
     <string name="title">Titel</string>
@@ -701,6 +701,10 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="upload_video_success">Dieses Video wurde aktualisiert!</string>
     <string name="uploading">Wird hochgeladen, bitte warten …</string>
     <string name="video_uploaded_action">Hier klicken, um die Videodaten zu bearbeiten.</string>
+    <string name="delete_video">Video löschen</string>
+    <string name="delete_video_confirmation">Möchten Sie dieses Video wirklich löschen?</string>
+    <string name="no_video_uploaded">Noch keine Videos hochgeladen!</string>
+    <string name="display_nsfw_videos">Videos mit unpassenden Inhalten anzeigen</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
