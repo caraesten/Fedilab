@@ -711,6 +711,9 @@
     <string name="upload_video_success">Il video è stato caricato!</string>
     <string name="uploading">Caricamento, attendere prego…</string>
     <string name="video_uploaded_action">Clicca qui per modificare i dati del video.</string>
+    <string name="delete_video">Delete video</string>
+    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
+    <string name="no_video_uploaded">No videos uploaded yet!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
