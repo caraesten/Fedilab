@@ -272,6 +272,7 @@ public class Helper {
     public static final String SET_LED_COLOUR = "set_led_colour";
     public static final String SET_SHOW_BOOSTS = "set_show_boost";
     public static final String SET_SHOW_REPLIES = "set_show_replies";
+    public static final String SET_VIDEO_NSFW = "set_video_nsfw";
     public static final String INSTANCE_VERSION = "instance_version";
     public static final String SET_LIVE_NOTIFICATIONS = "set_live_notifications";
     public static final String SET_DISABLE_GIF = "set_disable_gif";

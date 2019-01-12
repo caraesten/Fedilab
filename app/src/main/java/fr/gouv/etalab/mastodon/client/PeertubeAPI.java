@@ -729,7 +729,9 @@ public class PeertubeAPI {
             params.put("sort","publishedAt");
         if( filter != null)
             params.put("filter",filter);
-
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean nsfw = sharedpreferences.getBoolean(Helper.SET_VIDEO_NSFW, false);
+        params.put("nsfw", String.valueOf(nsfw));
         List<Peertube> peertubes = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);

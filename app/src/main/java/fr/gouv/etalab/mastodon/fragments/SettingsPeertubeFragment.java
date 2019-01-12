@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import fr.gouv.etalab.mastodon.R;
@@ -87,6 +88,20 @@ public class SettingsPeertubeFragment extends Fragment {
 
             }
         });
+
+        boolean video_nsfw = sharedpreferences.getBoolean(Helper.SET_VIDEO_NSFW, false);
+        final CheckBox set_video_nsfw = rootView.findViewById(R.id.set_video_nsfw);
+        set_video_nsfw.setChecked(video_nsfw);
+
+        set_video_nsfw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_VIDEO_NSFW, set_video_nsfw.isChecked());
+                editor.apply();
+            }
+        });
+
         return rootView;
     }
 
