@@ -699,6 +699,9 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="upload_video_success">Videoen har blitt lastet opp!</string>
     <string name="uploading">Laster opp, vennligst vent…</string>
     <string name="video_uploaded_action">Klikk her for å redigere videoinformasjon.</string>
+    <string name="delete_video">Delete video</string>
+    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
+    <string name="no_video_uploaded">No videos uploaded yet!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
