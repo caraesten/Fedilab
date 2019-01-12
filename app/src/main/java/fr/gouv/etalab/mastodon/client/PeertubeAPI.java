@@ -873,13 +873,12 @@ public class PeertubeAPI {
      * Retrieves Peertube videos from an instance *synchronously*
      * @return APIResponse
      */
-    public APIResponse getSinglePeertube(String instance, String videoId) {
-
+    public APIResponse getSinglePeertube(String instance, String videoId, String token) {
 
         Peertube peertube = null;
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/videos/%s", videoId), 60, null, null);
+            String response = httpsConnection.get(String.format("https://"+instance+"/api/v1/videos/%s", videoId), 60, null, token);
             JSONObject jsonObject = new JSONObject(response);
             peertube = parseSinglePeertube(context, instance, jsonObject);
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1016,6 +1015,10 @@ public class PeertubeAPI {
     public int deleteComment(String targetedId, String targetedComment){
         return postAction(API.StatusAction.PEERTUBEDELETECOMMENT, targetedId, null, targetedComment);
     }
+
+    public int deleteVideo(String targetedId){
+        return postAction(API.StatusAction.PEERTUBEDELETEVIDEO, targetedId, null, null);
+    }
     /**
      * Makes the post action
      * @param statusAction Enum
@@ -1052,6 +1055,10 @@ public class PeertubeAPI {
                 break;
             case PEERTUBEDELETECOMMENT:
                 action = String.format("/videos/%s/comments/%s", targetedId, targetedComment);
+                actionCall = "DELETE";
+                break;
+            case PEERTUBEDELETEVIDEO:
+                action = String.format("/videos/%s", targetedId);
                 actionCall = "DELETE";
                 break;
             case PEERTUBEREPLY:

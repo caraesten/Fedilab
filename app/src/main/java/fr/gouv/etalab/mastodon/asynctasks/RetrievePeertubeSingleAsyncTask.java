@@ -15,6 +15,7 @@
 package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
@@ -23,6 +24,7 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 
 
@@ -59,8 +61,10 @@ public class RetrievePeertubeSingleAsyncTask extends AsyncTask<Void, Void, Void>
             apiResponse = api.getSinglePeertube(this.instanceName, videoId);
         }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
             PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
-            apiResponse = peertubeAPI.getSinglePeertube(this.instanceName, videoId);
-            if (apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0) {
+            SharedPreferences sharedpreferences = contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            apiResponse = peertubeAPI.getSinglePeertube(this.instanceName, videoId, token);
+            if (apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0 &&  apiResponse.getPeertubes().get(0) != null) {
                 String rate = new PeertubeAPI(this.contextReference.get()).getRating(videoId);
                 if( rate != null)
                     apiResponse.getPeertubes().get(0).setMyRating(rate);

@@ -180,6 +180,8 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
             else if( apiAction == API.StatusAction.PEERTUBEDELETECOMMENT) {
                 statusCode = peertubeAPI.deleteComment(targetedId, comment);
                 targetedId = comment;
+            } else if( apiAction == API.StatusAction.PEERTUBEDELETEVIDEO) {
+                statusCode = peertubeAPI.deleteVideo(targetedId);
             }
             error = peertubeAPI.getError();
         }

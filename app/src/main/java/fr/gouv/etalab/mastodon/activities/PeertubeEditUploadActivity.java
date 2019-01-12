@@ -17,10 +17,13 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,25 +46,31 @@ import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.PostPeertubeAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeChannelsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSingleAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 import mabbas007.tagsedittext.TagsEditText;
 
 import static android.os.AsyncTask.THREAD_POOL_EXECUTOR;
 import static fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeInformationAsyncTask.peertubeInformation;
+import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
+import static fr.gouv.etalab.mastodon.helper.Helper.RELOAD_MYVIDEOS;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeMaterialSpinnerColor;
 
-public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrievePeertubeInterface {
+public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrievePeertubeInterface, OnPostActionInterface {
 
 
-    private Button set_upload_submit;
+    private Button set_upload_submit, set_upload_delete;
     private MaterialSpinner set_upload_privacy, set_upload_categories, set_upload_licenses, set_upload_languages, set_upload_channel;
     private EditText p_video_title, p_video_description;
     private TagsEditText p_video_tags;
@@ -102,7 +111,6 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         if( videoId == null){
             videoId = sharedpreferences.getString(Helper.VIDEO_ID, null);
         }
-
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
@@ -130,6 +138,7 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
 
 
         set_upload_submit = findViewById(R.id.set_upload_submit);
+        set_upload_delete = findViewById(R.id.set_upload_delete);
         set_upload_privacy = findViewById(R.id.set_upload_privacy);
         set_upload_channel = findViewById(R.id.set_upload_channel);
         set_upload_categories = findViewById(R.id.set_upload_categories);
@@ -151,6 +160,38 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         changeMaterialSpinnerColor(PeertubeEditUploadActivity.this, set_upload_privacy);
 
 
+        set_upload_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builderInner;
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
+                builderInner = new AlertDialog.Builder(PeertubeEditUploadActivity.this, style);
+                builderInner.setMessage(getString(R.string.delete_video_confirmation));
+                builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int which) {
+                        new PostActionAsyncTask(getApplicationContext(), API.StatusAction.PEERTUBEDELETEVIDEO, videoId, PeertubeEditUploadActivity.this).executeOnExecutor(THREAD_POOL_EXECUTOR);
+                        dialog.dismiss();
+                    }
+                });
+                builderInner.show();
+            }
+        });
         //Get params from the API
         LinkedHashMap<Integer, String>  categories = new LinkedHashMap<>(peertubeInformation.getCategories());
         LinkedHashMap<Integer, String> licences = new LinkedHashMap<>(peertubeInformation.getLicences());
@@ -571,5 +612,13 @@ public class PeertubeEditUploadActivity extends BaseActivity implements OnRetrie
         set_upload_channel.setSelectedIndex(channelPosition);
 
         set_upload_submit.setEnabled(true);
+    }
+
+    @Override
+    public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra(INTENT_ACTION, RELOAD_MYVIDEOS);
+        startActivity(intent);
+        finish();
     }
 }

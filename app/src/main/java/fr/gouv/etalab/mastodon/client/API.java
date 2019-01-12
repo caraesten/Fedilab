@@ -117,7 +117,8 @@ public class API {
         RATEVIDEO,
         PEERTUBECOMMENT,
         PEERTUBEREPLY,
-        PEERTUBEDELETECOMMENT
+        PEERTUBEDELETECOMMENT,
+        PEERTUBEDELETEVIDEO
 
     }
     public enum accountPrivacy {

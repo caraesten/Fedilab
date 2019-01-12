@@ -217,17 +217,42 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <!-- Videos upload edit submit -->
-        <Button
-            android:layout_marginTop="40dp"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/set_upload_submit"
+
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:text="@string/update_video" />
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center"
+            >
+
+            <!-- Videos upload edit submit -->
+            <Button
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/set_upload_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:backgroundTint="@color/unfollow"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_margin="10dp"
+                android:text="@string/delete_video" />
+
+            <!-- Videos upload edit submit -->
+            <Button
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/set_upload_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:enabled="false"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:text="@string/update_video" />
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
 </android.support.constraint.ConstraintLayout>

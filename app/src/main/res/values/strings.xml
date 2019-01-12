@@ -814,6 +814,8 @@
     <string name="upload_video_success">The video has been uploaded!</string>
     <string name="uploading">Uploading, please wait…</string>
     <string name="video_uploaded_action">Click here to edit the video data.</string>
+    <string name="delete_video">Delete video</string>
+    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
     <!-- end languages -->
 
 

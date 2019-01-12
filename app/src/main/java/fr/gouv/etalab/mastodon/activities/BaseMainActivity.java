@@ -156,6 +156,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_TARGETED_ACCOUNT;
 import static fr.gouv.etalab.mastodon.helper.Helper.NOTIFICATION_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_ID;
+import static fr.gouv.etalab.mastodon.helper.Helper.RELOAD_MYVIDEOS;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_INSTANCE;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_REMOTE;
 import static fr.gouv.etalab.mastodon.helper.Helper.SEARCH_URL;
@@ -977,8 +978,8 @@ public abstract class BaseMainActivity extends BaseActivity
                                 .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
                     }
                 }
-                //toolbar_search.setQuery("", false);
-                //toolbar_search.setIconified(true);
+                toolbar_search.setQuery("", false);
+                toolbar_search.setIconified(true);
                 if( main_app_container.getVisibility() == View.VISIBLE){
                     main_app_container.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
@@ -1639,7 +1640,24 @@ public abstract class BaseMainActivity extends BaseActivity
                     intentShow.putExtras(b);
                     startActivity(intentShow);
                 }
-            }else if( extras.getInt(INTENT_ACTION) == SEARCH_INSTANCE){
+            }else if( extras.getInt(INTENT_ACTION) == RELOAD_MYVIDEOS){
+                Bundle bundle = new Bundle();
+                DisplayStatusFragment fragment = new DisplayStatusFragment();
+                bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.MYVIDEOS);
+                bundle.putString("instanceType","PEERTUBE");
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(token);
+                bundle.putString("targetedid",account.getUsername());
+                bundle.putBoolean("ownvideos", true);
+                fragment.setArguments(bundle);
+                String fragmentTag = "MY_VIDEOS";
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_app_container, fragment, fragmentTag).commit();
+            }
+            else if( extras.getInt(INTENT_ACTION) == SEARCH_INSTANCE){
                 String instance = extras.getString(INSTANCE_NAME);
                 DisplayStatusFragment statusFragment;
                 Bundle bundle = new Bundle();

@@ -51,6 +51,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+
     <style name="AppTheme_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColor">@color/light_black</item>
         <item name="android:scrollbarThumbVertical">@color/transparent</item>

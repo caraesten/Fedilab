@@ -165,7 +165,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PeertubeEditUploadActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("video_id",peertube.getId());
+                    b.putString("video_id",peertube.getUuid());
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }
