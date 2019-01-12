@@ -2626,55 +2626,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 position++;
             }
         }
-
-        /*if( statusAction == API.StatusAction.REBLOG){
-            int position = 0;
-            for(Status status: statuses){
-                if( status.getId().equals(targetedId)) {
-                    status.setReblogs_count(status.getReblogs_count() + 1);
-                    statusListAdapter.notifyItemChanged(position);
-                    break;
-                }
-                position++;
-            }
-        }else if( statusAction == API.StatusAction.UNREBLOG){
-            int position = 0;
-            for(Status status: statuses){
-                if( status.getId().equals(targetedId)) {
-                    if( status.getReblogs_count() - 1 >= 0)
-                        status.setReblogs_count(status.getReblogs_count() - 1);
-                    statusListAdapter.notifyItemChanged(position);
-                    SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                    //Remove the status from cache also
-                    try {
-                        new StatusCacheDAO(context, db).remove(StatusCacheDAO.ARCHIVE_CACHE,status);
-                    }catch (Exception ignored){}
-                    break;
-                }
-                position++;
-            }
-        }else if( statusAction == API.StatusAction.FAVOURITE){
-            int position = 0;
-            for(Status status: statuses){
-                if( status.getId().equals(targetedId)) {
-                    status.setFavourites_count(status.getFavourites_count() + 1);
-                    statusListAdapter.notifyItemChanged(position);
-                    break;
-                }
-                position++;
-            }
-        }else if( statusAction == API.StatusAction.UNFAVOURITE){
-            int position = 0;
-            for(Status status: statuses){
-                if( status.getId().equals(targetedId)) {
-                    if( status.getFavourites_count() - 1 >= 0)
-                        status.setFavourites_count(status.getFavourites_count() - 1);
-                    statusListAdapter.notifyItemChanged(position);
-                    break;
-                }
-                position++;
-            }
-        }*/
         if( statusAction == API.StatusAction.PEERTUBEDELETECOMMENT){
             int position = 0;
             for(Status status: statuses){
@@ -2700,15 +2651,29 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
-    public void notifyStatusWithActionChanged(Status status){
+    public void notifyStatusWithActionChanged(API.StatusAction statusAction, Status status){
         for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
+                    int favCount = statuses.get(i).getFavourites_count();
+                    int boostCount = statuses.get(i).getReblogs_count();
+                    if( statusAction == API.StatusAction.REBLOG)
+                        boostCount++;
+                    else if( statusAction == API.StatusAction.UNREBLOG)
+                        boostCount--;
+                    else if( statusAction == API.StatusAction.FAVOURITE)
+                        favCount++;
+                    else if( statusAction == API.StatusAction.UNFAVOURITE)
+                        favCount--;
+                    if( boostCount < 0 )
+                        boostCount = 0;
+                    if( favCount < 0 )
+                        favCount = 0;
                     statuses.get(i).setFavourited(status.isFavourited());
-                    statuses.get(i).setFavourites_count(status.getFavourites_count());
+                    statuses.get(i).setFavourites_count(favCount);
                     statuses.get(i).setReblogged(status.isReblogged());
-                    statuses.get(i).setReblogs_count(status.getReblogs_count());
+                    statuses.get(i).setReblogs_count(boostCount);
                     statusListAdapter.notifyItemChanged(i);
                 } catch (Exception ignored) {
                 }

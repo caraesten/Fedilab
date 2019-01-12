@@ -46,6 +46,7 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
@@ -143,8 +144,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     Bundle b = intent.getExtras();
                     assert b != null;
                     Status status = b.getParcelable("status");
+                    API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
                     if( status != null) {
-                        notificationsListAdapter.notifyNotificationWithActionChanged(status);
+                        notificationsListAdapter.notifyNotificationWithActionChanged(statusAction, status);
                     }
                 }
             };

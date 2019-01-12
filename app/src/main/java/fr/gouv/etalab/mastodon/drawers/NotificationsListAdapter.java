@@ -856,15 +856,31 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     }
 
 
-    public void notifyNotificationWithActionChanged(Status status){
+    public void notifyNotificationWithActionChanged(API.StatusAction statusAction, Status status){
         for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
             if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getType().toLowerCase().equals("mention") && notificationsListAdapter.getItemAt(i).getStatus() != null && notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
                 try {
                     if( notifications.get(i).getStatus() != null){
+
+                        int favCount = notifications.get(i).getStatus().getFavourites_count();
+                        int boostCount = notifications.get(i).getStatus().getReblogs_count();
+                        if( statusAction == API.StatusAction.REBLOG)
+                            boostCount++;
+                        else if( statusAction == API.StatusAction.UNREBLOG)
+                            boostCount--;
+                        else if( statusAction == API.StatusAction.FAVOURITE)
+                            favCount++;
+                        else if( statusAction == API.StatusAction.UNFAVOURITE)
+                            favCount--;
+                        if( boostCount < 0 )
+                            boostCount = 0;
+                        if( favCount < 0 )
+                            favCount = 0;
+
                         notifications.get(i).getStatus().setFavourited(status.isFavourited());
-                        notifications.get(i).getStatus().setFavourites_count(status.getFavourites_count());
+                        notifications.get(i).getStatus().setFavourites_count(favCount);
                         notifications.get(i).getStatus().setReblogged(status.isReblogged());
-                        notifications.get(i).getStatus().setReblogs_count(status.getReblogs_count());
+                        notifications.get(i).getStatus().setReblogs_count(boostCount);
                     }
                     notificationsListAdapter.notifyItemChanged(i);
                 } catch (Exception ignored) {

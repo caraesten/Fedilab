@@ -45,6 +45,7 @@ import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveContextAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Context;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -126,8 +127,9 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
                     Bundle b = intent.getExtras();
                     assert b != null;
                     Status status = b.getParcelable("status");
+                    API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
                     if( status != null) {
-                        statusListAdapter.notifyStatusWithActionChanged(status);
+                        statusListAdapter.notifyStatusWithActionChanged(statusAction, status);
                     }
                 }
             };

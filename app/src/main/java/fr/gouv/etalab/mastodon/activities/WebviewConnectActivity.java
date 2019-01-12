@@ -167,7 +167,7 @@ public class WebviewConnectActivity extends BaseActivity {
                                     String token = resobj.get("access_token").toString();
                                     String refresh_token = null;
                                     if( resobj.has("refresh_token"))
-                                        refresh_token = resobj.get("access_token").toString();
+                                        refresh_token = resobj.get("refresh_token").toString();
                                     SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);

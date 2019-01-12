@@ -20,6 +20,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
+import android.util.Log;
 
 import com.google.common.io.ByteStreams;
 
@@ -1419,6 +1420,7 @@ public class HttpsConnection {
                 postData.append('=');
                 postData.append(String.valueOf(param.getValue()));
             }
+            Log.v(Helper.TAG,"postData.toString(): " + postData.toString());
             byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
             if (proxy != null)

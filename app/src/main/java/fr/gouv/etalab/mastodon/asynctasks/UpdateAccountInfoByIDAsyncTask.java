@@ -61,11 +61,7 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
             account = new API(this.contextReference.get()).getAccount(userId);
         else if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
-            try {
-                account = new PeertubeAPI(this.contextReference.get()).verifyCredentials();
-            } catch (HttpsConnection.HttpsConnectionException e) {
-                e.printStackTrace();
-            }
+
             try {
                 account = new PeertubeAPI(this.contextReference.get()).verifyCredentials();
                 account.setSocial("PEERTUBE");
