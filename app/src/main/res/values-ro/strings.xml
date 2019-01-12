@@ -711,6 +711,9 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="upload_video_success">The video has been uploaded!</string>
     <string name="uploading">Uploading, please wait…</string>
     <string name="video_uploaded_action">Click here to edit the video data.</string>
+    <string name="delete_video">Delete video</string>
+    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
+    <string name="no_video_uploaded">No videos uploaded yet!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
