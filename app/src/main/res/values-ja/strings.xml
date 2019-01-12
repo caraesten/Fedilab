@@ -123,11 +123,11 @@
         <item>このアカウントをミュートしますか？</item>
         <item>このアカウントをブロックしますか？</item>
         <item>このトゥートを報告しますか？</item>
-        <item>Block this domain?</item>
+        <item>このドメインをブロックしますか？</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>通知</item>
+        <item>サイレント</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>このトゥートを削除しますか？</item>
@@ -324,9 +324,9 @@
     <string name="use_cookies">サードパーティのCookieを許可する</string>
     <string name="settings_ui_layout">タイムラインのレイアウト: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>通常のバッテリー消費</item>
+        <item>中程度のバッテリー消費</item>
+        <item>低バッテリー消費</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>タブ</item>
@@ -485,7 +485,7 @@
     <string name="toast_instance_unavailable">このインスタンスにタイムラインが見つかりませんでした！</string>
     <string name="delete_instance">このインスタンスを削除しますか？</string>
     <string name="warning_delete_instance">%s をフォローインスタンスから削除しようとしています。</string>
-    <string name="which_language">Translate in</string>
+    <string name="which_language">次の言語に翻訳</string>
     <string name="crash_title">Mastalabは停止しました :(</string>
     <string name="crash_message">メールでクラッシュレポートを送ることができます。これは、問題の修正に役立ちます :)\n\n追加のコンテンツを付加することもできます。ありがとうございます！</string>
     <string name="send_crash_report">クラッシュレポートをメールで送信するか尋ねる？</string>
@@ -524,7 +524,7 @@
     <string name="action_filter_delete">フィルターを削除しますか？</string>
     <string name="action_update_filter">フィルターの更新</string>
     <string name="action_filter_create">フィルターの作成</string>
-    <string name="how_to_follow">Whom to follow</string>
+    <string name="how_to_follow">おすすめのアカウント</string>
     <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
     <string name="follow_account">フォロー</string>
     <string name="select_all">全て選択</string>
