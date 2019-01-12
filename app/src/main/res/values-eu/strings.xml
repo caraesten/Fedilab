@@ -709,11 +709,11 @@
     <string name="upload_video_success">Bideoa igo da!</string>
     <string name="uploading">Igotzen, itxaron mesedez…</string>
     <string name="video_uploaded_action">Klikatu hemen bideo datuak editatzeko.</string>
-    <string name="delete_video">Delete video</string>
-    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
-    <string name="no_video_uploaded">No videos uploaded yet!</string>
-    <string name="display_nsfw_videos">Display NSFW videos</string>
-    <string name="default_channel_of">Default %s channel</string>
+    <string name="delete_video">Bideoa ezabatu</string>
+    <string name="delete_video_confirmation">Bideo hau ezabatu nahi duzula ziur al zaude?</string>
+    <string name="no_video_uploaded">Oraindik ez duzu bideorik igo!</string>
+    <string name="display_nsfw_videos">NSFW bideoak erakutsi</string>
+    <string name="default_channel_of">%s kanal lehenetsia</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
