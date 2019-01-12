@@ -708,8 +708,8 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="upload_video_success">The video has been uploaded!</string>
     <string name="uploading">Uploading, please wait…</string>
     <string name="video_uploaded_action">Click here to edit the video data.</string>
-    <string name="delete_video">Delete video</string>
-    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
+    <string name="delete_video">Video verwijderen</string>
+    <string name="delete_video_confirmation">Weet je zeker dat je deze video wilt verwijderen?</string>
     <string name="no_video_uploaded">No videos uploaded yet!</string>
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
