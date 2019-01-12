@@ -978,7 +978,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     }
                 }
                 //toolbar_search.setQuery("", false);
-                toolbar_search.setIconified(true);
+                //toolbar_search.setIconified(true);
                 if( main_app_container.getVisibility() == View.VISIBLE){
                     main_app_container.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.GONE);
