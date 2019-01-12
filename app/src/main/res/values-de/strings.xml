@@ -684,7 +684,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="delete_comment">Kommentar entfernen</string>
     <string name="delete_comment_confirm">Möchten Sie diesen Kommentar wirklich löschen?</string>
     <string name="fullscreen">Vollbildvideo</string>
-    <string name="set_video_mode">Mode for videos</string>
+    <string name="set_video_mode">Modus für Videoaufnahmen</string>
     <string name="file_to_upload">Eine Datei zum Hochladen auswählen</string>
     <string name="my_videos">Eigene Videos</string>
     <string name="title">Titel</string>
