@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -827,6 +828,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if( relationship == null)
             return;
         account_follow.setEnabled(true);
+        account_follow.setBackgroundTintList(ColorStateList.valueOf( ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)));
         if( account.getId() != null && account.getId().equals(userId) && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
             account_follow.hide();
             header_edit_profile.show();
@@ -842,6 +844,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             doAction = action.UNFOLLOW;
         }else if( relationship.isFollowing()){
             account_follow.setImageResource(R.drawable.ic_user_times);
+            account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(ShowAccountActivity.this, R.color.unfollow)));
             doAction = action.UNFOLLOW;
             account_follow.show();
         }else if( !relationship.isFollowing()){

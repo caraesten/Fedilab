@@ -112,4 +112,6 @@
     <color name="negative_thumbs">#F44336</color>
 
     <color name="peertube_orange">#F1680D</color>
+
+    <color name="unfollow">#c52404</color>
 </resources>
