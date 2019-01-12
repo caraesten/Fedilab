@@ -31,6 +31,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -121,6 +122,31 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         Helper.loadGiF(context, account.getAvatar(), holder.peertube_profile);
 
 
+        if( peertube.getHeaderType() != null ) {
+            String type = peertube.getHeaderType();
+            switch (type){
+                case "categories":
+                    Map.Entry<Integer,String> categoryM = peertube.getCategory().entrySet().iterator().next();
+                    String categoryMValue = categoryM.getValue();
+                    holder.header_title.setText(categoryMValue);
+                    break;
+                case "channels":
+                    String sentence;
+                    if( peertube.getChannel().getUsername().split("-").length < 4)
+                        sentence = peertube.getChannel().getUsername();
+                    else
+                        sentence = context.getString(R.string.default_channel_of, peertube.getAccount().getUsername());
+                    holder.header_title.setText(sentence);
+                    break;
+                default:
+                    holder.header_title.setText(String.format("#%s", peertube.getHeaderType()));
+                    break;
+            }
+            holder.header_title.setVisibility(View.VISIBLE);
+        }else {
+            holder.header_title.setVisibility(View.GONE);
+        }
+
         if( !this.ownVideos) {
             holder.peertube_profile.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -194,7 +220,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         LinearLayout main_container;
         ImageView peertube_profile, peertube_video_image;
         TextView peertube_account_name, peertube_views, peertube_duration;
-        TextView peertube_title, peertube_date;
+        TextView peertube_title, peertube_date, header_title;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -206,6 +232,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
             peertube_views = itemView.findViewById(R.id.peertube_views);
             peertube_duration = itemView.findViewById(R.id.peertube_duration);
             main_container = itemView.findViewById(R.id.main_container);
+            header_title = itemView.findViewById(R.id.header_title);
         }
     }
 

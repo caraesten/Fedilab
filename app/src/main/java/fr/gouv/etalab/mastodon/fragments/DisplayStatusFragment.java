@@ -258,10 +258,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             ((Activity)context).setTitle(remoteInstance + " - " + search_peertube);
         if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE  && remote_channel_name != null)
             ((Activity)context).setTitle(remote_channel_name + " - " + remoteInstance);
+        if( type != RetrieveFeedsAsyncTask.Type.POVERVIEW )
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
             {
-                if (type != RetrieveFeedsAsyncTask.Type.ART && context instanceof  BaseMainActivity ) {
+                if (type != RetrieveFeedsAsyncTask.Type.ART  && context instanceof  BaseMainActivity ) {
                     if( dy < 0 && !((BaseMainActivity)context).getFloatingVisibility() )
                         ((BaseMainActivity) context).manageFloatingButton(true);
                     if( dy > 0 && ((BaseMainActivity)context).getFloatingVisibility() )

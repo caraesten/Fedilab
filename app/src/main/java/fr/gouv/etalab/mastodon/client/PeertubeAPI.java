@@ -743,26 +743,44 @@ public class PeertubeAPI {
                 JSONArray videoA = new JSONObject(response).getJSONArray("categories");
                 JSONArray values = videoA.getJSONObject(0).getJSONArray("videos");
                 List<Peertube> peertubes1 = parsePeertube(values);
-                peertubes.addAll(peertubes1);
+                if( peertubes1 != null && peertubes1.size() > 0) {
+                    peertubes1.get(0).setHeaderType("categories");
+                    peertubes.addAll(peertubes1);
+                }
                 values = videoA.getJSONObject(1).getJSONArray("videos");
                 List<Peertube> peertubes2 = parsePeertube(values);
-                peertubes.addAll(peertubes2);
+                if( peertubes2 != null && peertubes2.size() > 0) {
+                    peertubes2.get(0).setHeaderType("categories");
+                    peertubes.addAll(peertubes2);
+                }
 
                 videoA = new JSONObject(response).getJSONArray("channels");
                 values = videoA.getJSONObject(0).getJSONArray("videos");
                 List<Peertube> peertubes3 = parsePeertube(values);
-                peertubes.addAll(peertubes3);
+                if( peertubes3 != null && peertubes3.size() > 0) {
+                    peertubes3.get(0).setHeaderType("channels");
+                    peertubes.addAll(peertubes3);
+                }
                 values = videoA.getJSONObject(1).getJSONArray("videos");
                 List<Peertube> peertubes4 = parsePeertube(values);
-                peertubes.addAll(peertubes4);
+                if( peertubes4 != null && peertubes4.size() > 0) {
+                    peertubes4.get(0).setHeaderType("channels");
+                    peertubes.addAll(peertubes4);
+                }
 
                 videoA = new JSONObject(response).getJSONArray("tags");
                 values = videoA.getJSONObject(0).getJSONArray("videos");
                 List<Peertube> peertubes5 = parsePeertube(values);
-                peertubes.addAll(peertubes5);
+                if( peertubes5 != null && peertubes5.size() > 0) {
+                    peertubes5.get(0).setHeaderType(videoA.getJSONObject(0).getString("tag"));
+                    peertubes.addAll(peertubes5);
+                }
                 values = videoA.getJSONObject(1).getJSONArray("videos");
                 List<Peertube> peertubes6 = parsePeertube(values);
-                peertubes.addAll(peertubes6);
+                if( peertubes6 != null && peertubes6.size() > 0) {
+                    peertubes6.get(0).setHeaderType(videoA.getJSONObject(1).getString("tag"));
+                    peertubes.addAll(peertubes6);
+                }
 
             }
         } catch (HttpsConnection.HttpsConnectionException e) {

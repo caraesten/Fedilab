@@ -53,7 +53,7 @@ public class Peertube {
     private HashMap<String, String> channelForUpdate;
     private String myRating = "none";
     private boolean isUpdate = false; // I allow to set it to true when dealing with API updates
-
+    private String headerType = null;//For overview timeline
     private JSONObject cache;
 
     public Peertube() {
@@ -321,5 +321,13 @@ public class Peertube {
 
     public void setUpdate(boolean update) {
         isUpdate = update;
+    }
+
+    public String getHeaderType() {
+        return headerType;
+    }
+
+    public void setHeaderType(String headerType) {
+        this.headerType = headerType;
     }
 }
