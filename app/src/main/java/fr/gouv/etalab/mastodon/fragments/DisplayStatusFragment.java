@@ -36,6 +36,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -113,6 +114,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private TagTimeline tagTimeline;
     private String updatedBookMark;
     private String lastReadToot;
+    private TextView textviewNoActionText;
     private boolean ischannel;
     private boolean ownVideos;
     private BroadcastReceiver receive_action;
@@ -172,6 +174,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         mainLoader =  rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_status);
         textviewNoAction =  rootView.findViewById(R.id.no_action);
+        textviewNoActionText = rootView.findViewById(R.id.no_action_text);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
@@ -494,8 +497,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 peertubeAdapater.notifyItemRangeInserted(previousPosition, apiResponse.getPeertubes().size());
             //remove handlers
             swipeRefreshLayout.setRefreshing(false);
-            firstLoad = false;
+            if( firstLoad && (apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() ==0)){
+                textviewNoActionText.setText(R.string.no_video_uploaded);
+                textviewNoAction.setVisibility(View.VISIBLE);
+            }
             flag_loading = false;
+            firstLoad = false;
         }else {
             //When Mastodon statuses have been fetched.
             if( type == RetrieveFeedsAsyncTask.Type.CONVERSATION ){ //Conversation timeline
