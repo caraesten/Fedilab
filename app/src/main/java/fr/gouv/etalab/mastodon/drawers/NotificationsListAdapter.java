@@ -861,7 +861,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getType().toLowerCase().equals("mention") && notificationsListAdapter.getItemAt(i).getStatus() != null && notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
                 try {
                     if( notifications.get(i).getStatus() != null){
-
                         int favCount = notifications.get(i).getStatus().getFavourites_count();
                         int boostCount = notifications.get(i).getStatus().getReblogs_count();
                         if( statusAction == API.StatusAction.REBLOG)
@@ -876,11 +875,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                             boostCount = 0;
                         if( favCount < 0 )
                             favCount = 0;
-
                         notifications.get(i).getStatus().setFavourited(status.isFavourited());
                         notifications.get(i).getStatus().setFavourites_count(favCount);
                         notifications.get(i).getStatus().setReblogged(status.isReblogged());
                         notifications.get(i).getStatus().setReblogs_count(boostCount);
+                        break;
                     }
                     notificationsListAdapter.notifyItemChanged(i);
                 } catch (Exception ignored) {
@@ -962,51 +961,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             }
             notifications.removeAll(notificationsToRemove);
             notificationsListAdapter.notifyDataSetChanged();
-        }
-        if( targetedId != null ) {
-            if (statusAction == API.StatusAction.REBLOG) {
-                int position = 0;
-                for (Notification notification : notifications) {
-                    if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
-                        notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() + 1);
-                        notificationsListAdapter.notifyItemChanged(position);
-                        break;
-                    }
-
-                }
-            } else if (statusAction == API.StatusAction.UNREBLOG) {
-                int position = 0;
-                for (Notification notification : notifications) {
-                    if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
-                        if (notification.getStatus().getReblogs_count() - 1 >= 0)
-                            notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() - 1);
-                        notificationsListAdapter.notifyItemChanged(position);
-                        break;
-                    }
-                    position++;
-                }
-            } else if (statusAction == API.StatusAction.FAVOURITE) {
-                int position = 0;
-                for (Notification notification : notifications) {
-                    if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
-                        notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() + 1);
-                        notificationsListAdapter.notifyItemChanged(position);
-                        break;
-                    }
-                    position++;
-                }
-            } else if (statusAction == API.StatusAction.UNFAVOURITE) {
-                int position = 0;
-                for (Notification notification : notifications) {
-                    if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
-                        if (notification.getStatus().getFavourites_count() - 1 >= 0)
-                            notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() - 1);
-                        notificationsListAdapter.notifyItemChanged(position);
-                        break;
-                    }
-                    position++;
-                }
-            }
         }
     }
 

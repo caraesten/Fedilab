@@ -222,7 +222,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     assert b != null;
                     Status status = b.getParcelable("status");
                     API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
-                    if( status != null) {
+                    if( status != null && statusListAdapter != null) {
                         statusListAdapter.notifyStatusWithActionChanged(statusAction, status);
                     }
                 }

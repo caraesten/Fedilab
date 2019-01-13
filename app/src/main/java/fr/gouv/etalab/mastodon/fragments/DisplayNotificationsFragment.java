@@ -248,6 +248,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
         if( receive_data != null)
             LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
+
     }
 
     @Override

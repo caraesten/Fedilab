@@ -1220,7 +1220,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     @Override
     public void onRetrieveAccount(final Account account, Error error) {
 
-        if( error != null || account.getAcct() == null){
+        if( error != null || account == null || account.getAcct() == null){
             if( error == null)
                 Toasty.error(ShowAccountActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             else
