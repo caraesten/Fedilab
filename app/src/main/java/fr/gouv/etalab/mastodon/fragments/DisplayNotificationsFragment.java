@@ -288,6 +288,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 if( lastReadNotifications != null && Long.parseLong(tmpNotification.getId()) > Long.parseLong(lastReadNotifications)) {
                     MainActivity.countNewNotifications++;
                 }
+                try {
+                    ((MainActivity) context).updateNotifCounter();
+                }catch (Exception ignored){}
                 this.notifications.add(tmpNotification);
             }
             if( firstLoad) {
@@ -360,6 +363,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 MainActivity.lastNotificationId = notification.getId();
                 notifications.add(0, notification);
                 MainActivity.countNewNotifications++;
+                try {
+                    ((MainActivity) context).updateNotifCounter();
+                }catch (Exception ignored){}
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                 if (firstVisibleItem > 0)
                     notificationsListAdapter.notifyItemInserted(0);
