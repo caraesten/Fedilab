@@ -91,6 +91,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private TextView progress;
     private ProgressBar pbar_inf;
     private TextView message_ready;
+    private boolean canSwipe;
     private TextView media_description;
     private Attachment attachment;
     SwipeBackLayout mSwipeBackLayout;
@@ -118,10 +119,14 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         mSwipeBackLayout.setSwipeBackListener(new SwipeBackLayout.OnSwipeBackListener() {
             @Override
             public void onViewPositionChanged(View mView, float swipeBackFraction, float SWIPE_BACK_FACTOR) {
+                canSwipe = swipeBackFraction<0.1;
             }
+
             @Override
             public void onViewSwipeFinished(View mView, boolean isEnd) {
-                if( isEnd) {
+                if(!isEnd)
+                    canSwipe = true;
+                else {
                     finish();
                     overridePendingTransition(0, 0);
                 }
@@ -198,6 +203,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 scheduleHiddenDescription = false;
             }
         }, 6000);
+        canSwipe = true;
         loader = findViewById(R.id.loader);
         imageView = findViewById(R.id.media_picture);
         videoView = findViewById(R.id.media_video);
@@ -229,6 +235,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         imageView.setOnMatrixChangeListener(new OnMatrixChangedListener() {
             @Override
             public void onMatrixChanged(RectF rect) {
+                canSwipe = (imageView.getScale() == 1 );
                 mSwipeBackLayout.isDisabled(imageView.getScale() != 1 );
             }
         });
@@ -284,7 +291,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 }
             }, 6000);
         }
-        if( mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
+        if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
             return super.dispatchTouchEvent(event);
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN: {
