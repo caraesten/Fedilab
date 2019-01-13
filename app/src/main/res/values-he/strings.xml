@@ -574,7 +574,7 @@
     <string name="no_blocked_domain">No blocked domains!</string>
     <string name="unblock_domain_confirm">Unblock domain</string>
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+    <string name="block_domain_confirm_message">Are you sure to block %s?\n\nYou will not see any content from that domain in any public timeline or in your notifications. Your followers from that domain will be removed.</string>
     <string name="blocked_domains">Blocked domains</string>
     <string name="block_domain">Block domain</string>
     <string name="toast_block_domain">The domain is blocked</string>
