@@ -760,14 +760,14 @@ public class PeertubeAPI {
                 values = videoA.getJSONObject(0).getJSONArray("videos");
                 List<Peertube> peertubes5 = parsePeertube(values);
                 if( peertubes5 != null && peertubes5.size() > 0) {
-                    peertubes5.get(0).setHeaderType("tag");
+                    peertubes5.get(0).setHeaderType("tags");
                     peertubes5.get(0).setHeaderTypeValue(videoA.getJSONObject(0).getString("tag"));
                     peertubes.addAll(peertubes5);
                 }
                 values = videoA.getJSONObject(1).getJSONArray("videos");
                 List<Peertube> peertubes6 = parsePeertube(values);
                 if( peertubes6 != null && peertubes6.size() > 0) {
-                    peertubes6.get(0).setHeaderType("tag");
+                    peertubes6.get(0).setHeaderType("tags");
                     peertubes6.get(0).setHeaderTypeValue(videoA.getJSONObject(1).getString("tag"));
                     peertubes.addAll(peertubes6);
                 }
