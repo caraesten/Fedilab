@@ -2163,7 +2163,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }else if( statuses != null && statuses.size() > 0){
             Intent intent = new Intent(getApplicationContext(), ShowConversationActivity.class);
             Bundle b = new Bundle();
-            b.putString("statusId", statuses.get(0).getId());
+            b.putParcelable("status", statuses.get(0));
             intent.putExtras(b);
             startActivity(intent);
         }
