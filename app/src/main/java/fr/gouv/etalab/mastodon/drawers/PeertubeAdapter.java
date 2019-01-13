@@ -125,7 +125,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
             String type = peertube.getHeaderType();
             switch (type){
                 case "tags":
-                    holder.header_title.setText(String.format("#%s", peertube.getHeaderType()));
+                    holder.header_title.setText(String.format("#%s", peertube.getHeaderTypeValue()));
                     break;
                 default:
                     holder.header_title.setText(peertube.getHeaderTypeValue());
