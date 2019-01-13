@@ -706,8 +706,8 @@
     <string name="fullscreen">فيديو تملأ الشاشة</string>
     <string name="set_video_mode">أسلوب عرض الفيديوهات</string>
     <string name="file_to_upload">Select the file to upload</string>
-    <string name="my_videos">My videos</string>
-    <string name="title">Title</string>
+    <string name="my_videos">فيديوهاتي</string>
+    <string name="title">العنوان</string>
     <string name="categories">Categories</string>
     <string name="license">License</string>
     <string name="category">Category</string>
