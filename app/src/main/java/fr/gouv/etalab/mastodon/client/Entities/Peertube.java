@@ -54,6 +54,7 @@ public class Peertube {
     private String myRating = "none";
     private boolean isUpdate = false; // I allow to set it to true when dealing with API updates
     private String headerType = null;//For overview timeline
+    private String headerTypeValue = null;//For overview timeline
     private JSONObject cache;
 
     public Peertube() {
@@ -329,5 +330,13 @@ public class Peertube {
 
     public void setHeaderType(String headerType) {
         this.headerType = headerType;
+    }
+
+    public String getHeaderTypeValue() {
+        return headerTypeValue;
+    }
+
+    public void setHeaderTypeValue(String headerTypeValue) {
+        this.headerTypeValue = headerTypeValue;
     }
 }

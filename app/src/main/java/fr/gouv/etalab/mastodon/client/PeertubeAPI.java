@@ -745,13 +745,31 @@ public class PeertubeAPI {
                 List<Peertube> peertubes1 = parsePeertube(values);
                 if( peertubes1 != null && peertubes1.size() > 0) {
                     peertubes1.get(0).setHeaderType("categories");
+                    peertubes1.get(0).setHeaderTypeValue(videoA.getJSONObject(0).getJSONObject("category").getString("label"));
                     peertubes.addAll(peertubes1);
                 }
                 values = videoA.getJSONObject(1).getJSONArray("videos");
                 List<Peertube> peertubes2 = parsePeertube(values);
                 if( peertubes2 != null && peertubes2.size() > 0) {
                     peertubes2.get(0).setHeaderType("categories");
+                    peertubes2.get(0).setHeaderTypeValue(videoA.getJSONObject(1).getJSONObject("category").getString("label"));
                     peertubes.addAll(peertubes2);
+                }
+
+                videoA = new JSONObject(response).getJSONArray("tags");
+                values = videoA.getJSONObject(0).getJSONArray("videos");
+                List<Peertube> peertubes5 = parsePeertube(values);
+                if( peertubes5 != null && peertubes5.size() > 0) {
+                    peertubes5.get(0).setHeaderType("tag");
+                    peertubes5.get(0).setHeaderTypeValue(videoA.getJSONObject(0).getString("tag"));
+                    peertubes.addAll(peertubes5);
+                }
+                values = videoA.getJSONObject(1).getJSONArray("videos");
+                List<Peertube> peertubes6 = parsePeertube(values);
+                if( peertubes6 != null && peertubes6.size() > 0) {
+                    peertubes6.get(0).setHeaderType("tag");
+                    peertubes6.get(0).setHeaderTypeValue(videoA.getJSONObject(1).getString("tag"));
+                    peertubes.addAll(peertubes6);
                 }
 
                 videoA = new JSONObject(response).getJSONArray("channels");
@@ -759,28 +777,18 @@ public class PeertubeAPI {
                 List<Peertube> peertubes3 = parsePeertube(values);
                 if( peertubes3 != null && peertubes3.size() > 0) {
                     peertubes3.get(0).setHeaderType("channels");
+                    peertubes3.get(0).setHeaderTypeValue(videoA.getJSONObject(0).getJSONObject("channel").getString("displayName"));
                     peertubes.addAll(peertubes3);
                 }
                 values = videoA.getJSONObject(1).getJSONArray("videos");
                 List<Peertube> peertubes4 = parsePeertube(values);
                 if( peertubes4 != null && peertubes4.size() > 0) {
                     peertubes4.get(0).setHeaderType("channels");
+                    peertubes4.get(0).setHeaderTypeValue(videoA.getJSONObject(1).getJSONObject("channel").getString("displayName"));
                     peertubes.addAll(peertubes4);
                 }
 
-                videoA = new JSONObject(response).getJSONArray("tags");
-                values = videoA.getJSONObject(0).getJSONArray("videos");
-                List<Peertube> peertubes5 = parsePeertube(values);
-                if( peertubes5 != null && peertubes5.size() > 0) {
-                    peertubes5.get(0).setHeaderType(videoA.getJSONObject(0).getString("tag"));
-                    peertubes.addAll(peertubes5);
-                }
-                values = videoA.getJSONObject(1).getJSONArray("videos");
-                List<Peertube> peertubes6 = parsePeertube(values);
-                if( peertubes6 != null && peertubes6.size() > 0) {
-                    peertubes6.get(0).setHeaderType(videoA.getJSONObject(1).getString("tag"));
-                    peertubes.addAll(peertubes6);
-                }
+
 
             }
         } catch (HttpsConnection.HttpsConnectionException e) {

@@ -31,7 +31,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -122,24 +121,14 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         Helper.loadGiF(context, account.getAvatar(), holder.peertube_profile);
 
 
-        if( peertube.getHeaderType() != null ) {
+        if( peertube.getHeaderType() != null && peertube.getHeaderTypeValue() != null) {
             String type = peertube.getHeaderType();
             switch (type){
-                case "categories":
-                    Map.Entry<Integer,String> categoryM = peertube.getCategory().entrySet().iterator().next();
-                    String categoryMValue = categoryM.getValue();
-                    holder.header_title.setText(categoryMValue);
-                    break;
-                case "channels":
-                    String sentence;
-                    if( peertube.getChannel().getUsername().split("-").length < 4)
-                        sentence = peertube.getChannel().getUsername();
-                    else
-                        sentence = context.getString(R.string.default_channel_of, peertube.getAccount().getUsername());
-                    holder.header_title.setText(sentence);
+                case "tags":
+                    holder.header_title.setText(String.format("#%s", peertube.getHeaderType()));
                     break;
                 default:
-                    holder.header_title.setText(String.format("#%s", peertube.getHeaderType()));
+                    holder.header_title.setText(peertube.getHeaderTypeValue());
                     break;
             }
             holder.header_title.setVisibility(View.VISIBLE);
