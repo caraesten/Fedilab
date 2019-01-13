@@ -708,11 +708,11 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="upload_video_success">La vidéo a été transférée !</string>
     <string name="uploading">Transfert en cours, veuillez patienter …</string>
     <string name="video_uploaded_action">Cliquez ici pour éditer les données de la vidéo.</string>
-    <string name="delete_video">Delete video</string>
-    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
-    <string name="no_video_uploaded">No videos uploaded yet!</string>
-    <string name="display_nsfw_videos">Display NSFW videos</string>
-    <string name="default_channel_of">Default %s channel</string>
+    <string name="delete_video">Supprimer la vidéo</string>
+    <string name="delete_video_confirmation">Êtes-vous sûr de vouloir supprimer cette vidéo ?</string>
+    <string name="no_video_uploaded">Aucune vidéo n’a encore été transférée !</string>
+    <string name="display_nsfw_videos">Afficher les vidéos sensibles</string>
+    <string name="default_channel_of">Chaîne par défaut de %s</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
