@@ -40,13 +40,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
@@ -130,9 +131,11 @@ public class NotificationsSyncJob extends Job {
                 return;
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
-                API api = new API(getContext(), account.getInstance(), account.getToken());
-                APIResponse apiResponse = api.getNotificationsSince(null, false);
-                onRetrieveNotifications(apiResponse, account);
+                if( account.getSocial() == null || account.getSocial().equals("MASTODON")) {
+                    API api = new API(getContext(), account.getInstance(), account.getToken());
+                    APIResponse apiResponse = api.getNotificationsSince(null, false);
+                    onRetrieveNotifications(apiResponse, account);
+                }
             }
         }
     }

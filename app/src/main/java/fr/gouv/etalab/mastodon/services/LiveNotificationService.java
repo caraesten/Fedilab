@@ -108,12 +108,14 @@ public class LiveNotificationService extends Service implements NetworkStateRece
     }
 
     private void startStream(Account account){
+
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         backgroundProcess = sharedpreferences.getBoolean(Helper.SET_KEEP_BACKGROUND_PROCESS, true);
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         if( liveNotifications ){
             if( account == null){
+
                 Iterator it = threads.entrySet().iterator();
                 Thread thread;
                 while (it.hasNext()) {
@@ -127,14 +129,17 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
                 if (accountStreams != null) {
                     for (final Account accountStream : accountStreams) {
-                        thread = new Thread() {
-                            @Override
-                            public void run() {
-                                taks(accountStream);
-                            }
-                        };
-                        thread.start();
-                        threads.put(accountStream.getAcct()+"@"+accountStream.getInstance(), thread);
+                        if( accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON")) {
+                            thread = new Thread() {
+                                @Override
+                                public void run() {
+                                    taks(accountStream);
+                                }
+                            };
+                            thread.start();
+                            threads.put(accountStream.getAcct() + "@" + accountStream.getInstance(), thread);
+                        }
+
                     }
                 }
             }else {
