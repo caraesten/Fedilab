@@ -16,12 +16,14 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.util.Linkify;
@@ -102,7 +104,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
 
             if (action == RetrieveAccountsAsyncTask.Type.CHANNELS)
                 account.setFollowType(Account.followAction.NOT_FOLLOW);
-
+            holder.account_follow.setBackgroundTintList(ColorStateList.valueOf( ContextCompat.getColor(context, R.color.mastodonC4)));
             if (account.getFollowType() == Account.followAction.NOTHING) {
                 holder.account_follow.hide();
                 holder.account_follow_request.setVisibility(View.GONE);
@@ -112,6 +114,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
                 holder.account_follow_request.setVisibility(View.VISIBLE);
                 doAction = null;
             } else if (account.getFollowType() == Account.followAction.FOLLOW) {
+                holder.account_follow.setBackgroundTintList(ColorStateList.valueOf( ContextCompat.getColor(context, R.color.unfollow)));
                 holder.account_follow.setImageResource(R.drawable.ic_user_times);
                 doAction = API.StatusAction.UNFOLLOW;
                 holder.account_follow.show();
