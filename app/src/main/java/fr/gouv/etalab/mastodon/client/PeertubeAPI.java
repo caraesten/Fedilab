@@ -389,7 +389,7 @@ public class PeertubeAPI {
             JSONObject resobj = new JSONObject(response);
             String token = resobj.get("access_token").toString();
             if( resobj.has("refresh_token"))
-                refresh_token = resobj.get("access_token").toString();
+                refresh_token = resobj.get("refresh_token").toString();
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
