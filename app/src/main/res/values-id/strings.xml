@@ -40,7 +40,7 @@
     <string name="choose_picture">Memilih gambar…</string>
     <string name="clear">Bersih</string>
     <string name="microphone">Mikropon</string>
-    <string name="camera">Camera</string>
+    <string name="camera">Kamera</string>
     <string name="speech_prompt">Tolong katakan sesuatu</string>
     <string name="speech_not_supported">Maaf! Perangkat Anda tidak mendukung input suara!</string>
     <string name="delete_all">Hapus semua</string>
@@ -118,12 +118,12 @@
     <string name="more_action_6">Bagikan</string>
     <string name="more_action_7">Menyebut</string>
     <string name="more_action_8">Mematikan waktu</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_9">Hapus &amp; draf ulang</string>
     <string-array name="more_action_confirm">
         <item>Bisukan akun ini?</item>
         <item>Blok akun ini?</item>
         <item>Laporkan kutipan ini?</item>
-        <item>Block this domain?</item>
+        <item>Blok domain ini?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notify</item>
