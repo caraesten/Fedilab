@@ -303,7 +303,7 @@
     <string name="set_notify">Benachrichtigen?</string>
     <string name="set_notif_silent">Leise Benachrichtigungen</string>
     <string name="set_night_mode">Nachtmodus</string>
-    <string name="set_nsfw_timeout">NSFW Anzeige Dauer (Sekunden, 0 bedeutet aus)</string>
+    <string name="set_nsfw_timeout">NSFW Anzeigedauer (in Sekunden, 0 ≙ deaktiviert)</string>
     <string name="settings_title_profile">Ändere Profil</string>
     <string name="set_profile_description">Über mich…</string>
     <string name="set_lock_account">Konto sperren</string>

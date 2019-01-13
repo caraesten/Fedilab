@@ -721,7 +721,7 @@
     <string name="delete_video_confirmation">Вы уверены, что хотите удалить это видео?</string>
     <string name="no_video_uploaded">Нет загруженных видео!</string>
     <string name="display_nsfw_videos">Отображать видео NSFW</string>
-    <string name="default_channel_of">Default %s channel</string>
+    <string name="default_channel_of">Канал по умолчанию %s</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
