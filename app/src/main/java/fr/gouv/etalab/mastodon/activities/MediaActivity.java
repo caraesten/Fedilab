@@ -91,10 +91,9 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private TextView progress;
     private ProgressBar pbar_inf;
     private TextView message_ready;
-    private boolean canSwipe;
     private TextView media_description;
     private Attachment attachment;
-
+    SwipeBackLayout mSwipeBackLayout;
     private enum actionSwipe{
         RIGHT_TO_LEFT,
         LEFT_TO_RIGHT,
@@ -112,21 +111,17 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             setTheme(R.style.TransparentBlack);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media);
-        SwipeBackLayout mSwipeBackLayout = new SwipeBackLayout(MediaActivity.this);
+        mSwipeBackLayout = new SwipeBackLayout(MediaActivity.this);
         mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_BOTTOM);
         mSwipeBackLayout.setMaskAlpha(125);
         mSwipeBackLayout.setSwipeBackFactor(0.5f);
         mSwipeBackLayout.setSwipeBackListener(new SwipeBackLayout.OnSwipeBackListener() {
             @Override
             public void onViewPositionChanged(View mView, float swipeBackFraction, float SWIPE_BACK_FACTOR) {
-                canSwipe = swipeBackFraction<0.1;
             }
-
             @Override
             public void onViewSwipeFinished(View mView, boolean isEnd) {
-                if(!isEnd)
-                    canSwipe = true;
-                else {
+                if( isEnd) {
                     finish();
                     overridePendingTransition(0, 0);
                 }
@@ -203,7 +198,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 scheduleHiddenDescription = false;
             }
         }, 6000);
-        canSwipe = true;
         loader = findViewById(R.id.loader);
         imageView = findViewById(R.id.media_picture);
         videoView = findViewById(R.id.media_video);
@@ -235,7 +229,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         imageView.setOnMatrixChangeListener(new OnMatrixChangedListener() {
             @Override
             public void onMatrixChanged(RectF rect) {
-                canSwipe = (imageView.getScale() == 1 );
+                mSwipeBackLayout.isDisabled(imageView.getScale() != 1 );
             }
         });
         pbar_inf = findViewById(R.id.pbar_inf);
@@ -290,7 +284,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 }
             }, 6000);
         }
-        if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
+        if( mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
             return super.dispatchTouchEvent(event);
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN: {
