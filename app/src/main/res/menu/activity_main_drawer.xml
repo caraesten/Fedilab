@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
+        <!-- MASTODON MENU -->
         <item
             android:title="@string/communication_menu_title"
             android:id="@+id/nav_main_com"
@@ -50,6 +51,7 @@
                 </group>
             </menu>
         </item>
+        <!-- PEERTUBE MENU -->
         <item
             android:title="@string/communication_menu_title"
             android:id="@+id/nav_peertube_comm"
@@ -70,6 +72,43 @@
                         android:title="@string/upload_video" />
                     <item
                         android:id="@+id/nav_peertube_settings"
+                        android:icon="@drawable/ic_settings"
+                        android:title="@string/settings" />
+
+                </group>
+            </menu>
+        </item>
+        <!-- PIXELFED MENU -->
+        <item
+            android:title="@string/communication_menu_title"
+            android:id="@+id/nav_pixelfed_comm"
+            >
+            <menu>
+                <group android:checkableBehavior="single">
+                    <!--
+                    <item
+                        android:id="@+id/nav_peertube_fav"
+                        android:icon="@drawable/ic_favorite_peertube_full"
+                        android:title="@string/peertube_favorites" />
+                        -->
+                    <item
+                        android:id="@+id/nav_my_photo"
+                        android:icon="@drawable/ic_pixelfed_media"
+                        android:title="@string/my_videos" />
+                    <item
+                        android:id="@+id/nav_pixelfed_favorites"
+                        android:icon="@drawable/ic_pixelfed_favorite"
+                        android:title="@string/favorites_menu" />
+                    <item
+                        android:id="@+id/nav_pixelfed_blocked"
+                        android:icon="@drawable/ic_block"
+                        android:title="@string/blocked_menu" />
+                    <item
+                        android:id="@+id/nav_pixelfed_muted"
+                        android:icon="@drawable/ic_volume_mute"
+                        android:title="@string/muted_menu" />
+                    <item
+                        android:id="@+id/nav_pixelfed_settings"
                         android:icon="@drawable/ic_settings"
                         android:title="@string/settings" />
 

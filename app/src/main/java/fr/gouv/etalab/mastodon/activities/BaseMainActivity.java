@@ -233,7 +233,14 @@ public abstract class BaseMainActivity extends BaseActivity
             finish();
             return;
         }
-        social = (account.getSocial() == null || account.getSocial().equals("MASTODON")? UpdateAccountInfoAsyncTask.SOCIAL.MASTODON: UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE);
+
+        //Update the static variable which manages account type
+        if( account.getSocial() == null || account.getSocial().equals("MASTODON") )
+            social = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
+        else if( account.getSocial().equals("PEERTUBE"))
+            social = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
+        else if( account.getSocial().equals("PIXELFED"))
+            social = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
 
         countNewStatus = 0;
         countNewNotifications = 0;
@@ -278,12 +285,13 @@ public abstract class BaseMainActivity extends BaseActivity
         rateThisApp();
 
         //Intialize Peertube information
+        //This task will allow to instance a static PeertubeInformation class
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
             try{
                 new RetrievePeertubeInformationAsyncTask(getApplicationContext()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }catch (Exception ignored){}
         }
-
+        //For old Mastodon releases that can't pin, this support could be removed
         Helper.canPin = false;
         Helper.fillMapEmoji(getApplicationContext());
         //Here, the user is authenticated
@@ -823,16 +831,140 @@ public abstract class BaseMainActivity extends BaseActivity
                     viewPager.setVisibility(View.VISIBLE);
                     delete_instance.setVisibility(View.GONE);
                     Helper.switchLayout(BaseMainActivity.this);
-                    if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))) {
-                        toot.hide();
+                    tootShow();
+                    if( !displayFollowInstance)
                         federatedTimelines.hide();
-                    }else {
-                        tootShow();
-                        if( !displayFollowInstance)
-                            federatedTimelines.hide();
-                        else
-                            federatedTimelinesShow();
+                    else
+                        federatedTimelinesShow();
+                    DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    if( tab.getCustomView() != null) {
+                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                        if( icon != null)
+                            if( theme == THEME_BLACK)
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                            else
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+
                     }
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                    if( tab.getCustomView() != null) {
+                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                        if( icon != null)
+                            if( theme == THEME_LIGHT)
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                            else
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+                    if( tab.getCustomView() != null) {
+                        ImageView icon = tab.getCustomView().findViewById(R.id.tab_icon);
+                        if( icon != null)
+                            if( theme == THEME_BLACK)
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+                            else
+                                icon.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+            });
+
+            //Scroll to top when top bar is clicked for favourites/blocked/muted
+            toolbarTitle.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tabLayout.getSelectedTabPosition());
+                    DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
+                    displayStatusFragment.scrollToTop();
+                }
+            });
+        }else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
+            TabLayout.Tab pfTabHome = tabLayout.newTab();
+            TabLayout.Tab pfTabLocal = tabLayout.newTab();
+            TabLayout.Tab pfTabDiscover = tabLayout.newTab();
+
+
+
+            pfTabHome.setCustomView(R.layout.tab_badge);
+            pfTabLocal.setCustomView(R.layout.tab_badge);
+            pfTabDiscover.setCustomView(R.layout.tab_badge);
+
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconHome = pfTabHome.getCustomView().findViewById(R.id.tab_icon);
+
+            iconHome.setImageResource(R.drawable.ic_home);
+
+            if (theme == THEME_BLACK)
+                iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_icon), PorterDuff.Mode.SRC_IN);
+            else
+                iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
+
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconLocal = pfTabLocal.getCustomView().findViewById(R.id.tab_icon);
+            iconLocal.setImageResource(R.drawable.ic_people);
+
+
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconDiscover = pfTabDiscover.getCustomView().findViewById(R.id.tab_icon);
+            iconDiscover.setImageResource(R.drawable.ic_people);
+
+
+
+            iconHome.setContentDescription(getString(R.string.home_menu));
+            iconDiscover.setContentDescription(getString(R.string.overview));
+            iconLocal.setContentDescription(getString(R.string.local));
+
+
+            if (theme == THEME_LIGHT) {
+                iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconDiscover.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+            } else {
+                iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconDiscover.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+            }
+
+            toot.setImageResource(R.drawable.ic_cloud_upload);
+
+            tabLayout.addTab(pfTabHome);
+            tabLayout.addTab(pfTabLocal);
+            tabLayout.addTab(pfTabDiscover);
+
+
+
+            main_app_container = findViewById(R.id.main_app_container);
+            adapter = new PagerAdapter
+                    (getSupportFragmentManager(), tabLayout.getTabCount());
+            viewPager.setAdapter(adapter);
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                    if (stackBack.empty())
+                        stackBack.push(0);
+                    if (stackBack.contains(tab.getPosition())) {
+                        stackBack.remove(stackBack.indexOf(tab.getPosition()));
+                        stackBack.push(tab.getPosition());
+                    } else {
+                        stackBack.push(tab.getPosition());
+                    }
+                    main_app_container.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.VISIBLE);
+                    delete_instance.setVisibility(View.GONE);
+                    Helper.switchLayout(BaseMainActivity.this);
+                    tootShow();
+                    if( !displayFollowInstance)
+                        federatedTimelines.hide();
+                    else
+                        federatedTimelinesShow();
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
                     if( tab.getCustomView() != null) {
@@ -1096,7 +1228,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 popup.getMenuInflater()
                         .inflate(R.menu.main, popup.getMenu());
 
-                if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                if( social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
                     MenuItem action_about_instance = popup.getMenu().findItem(R.id.action_about_instance);
                     if( action_about_instance != null)
                         action_about_instance.setVisible(false);
@@ -1273,7 +1405,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 startActivity(intent);
             }
         });
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+        if( social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
             optionInfo.setVisibility(View.GONE);
         MenuFloating.tags = new ArrayList<>();
         updateHeaderAccountInfo(activity, account, headerLayout);
@@ -2310,6 +2442,26 @@ public abstract class BaseMainActivity extends BaseActivity
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PLOCAL);
                 }
                 bundle.putString("instanceType","PEERTUBE");
+                fragment.setArguments(bundle);
+                return fragment;
+            }else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
+                //Remove the search bar
+                if( !toolbar_search.isIconified() ) {
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
+                    toolbar_search.setIconified(true);
+                }
+                //Selection comes from another menu, no action to do
+                Bundle bundle = new Bundle();
+                DisplayStatusFragment fragment = new DisplayStatusFragment();
+                if (position == 0) {
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_HOME);
+                }else if( position == 1) {
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_LOCAL);
+                }else if( position == 2) {
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_DISCOVER);
+                }
+                bundle.putString("instanceType","PIXELFED");
                 fragment.setArguments(bundle);
                 return fragment;
             }

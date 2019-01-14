@@ -1267,11 +1267,27 @@ public class Helper {
             MenuItem itemOpt = menu.findItem(R.id.nav_main_opt);
             if( itemOpt != null)
                 itemOpt.setVisible(false);
+            MenuItem itemPFCom = menu.findItem(R.id.nav_pixelfed_comm);
+            if( itemPFCom != null)
+                itemPFCom.setVisible(false);
 
+        }else if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
+            MenuItem itemCom = menu.findItem(R.id.nav_main_com);
+            if( itemCom != null)
+                itemCom.setVisible(false);
+            MenuItem itemOpt = menu.findItem(R.id.nav_main_opt);
+            if( itemOpt != null)
+                itemOpt.setVisible(false);
+            MenuItem itemPCom = menu.findItem(R.id.nav_peertube_comm);
+            if( itemPCom != null)
+                itemPCom.setVisible(false);
         }else if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
             MenuItem itemCom = menu.findItem(R.id.nav_peertube_comm);
             if( itemCom != null)
                 itemCom.setVisible(false);
+            MenuItem itemPFCom = menu.findItem(R.id.nav_pixelfed_comm);
+            if( itemPFCom != null)
+                itemPFCom.setVisible(false);
         }
     }
 
