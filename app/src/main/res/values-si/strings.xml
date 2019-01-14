@@ -298,7 +298,7 @@
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">උසස් සිටුවම්</string>
+    <string name="settings_title_more_options">උසස් සැකසුම්</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Silent Notifications</string>
@@ -447,7 +447,7 @@
     </string>
     <string name="filter_regex">Filter out by regular expressions</string>
     <string name="search">සෙවීම</string>
-    <string name="delete">මකන්න</string>
+    <string name="delete">ඉවත් කරන්න</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
     <!-- About lists -->
     <string name="action_lists">Lists</string>
