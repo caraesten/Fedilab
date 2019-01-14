@@ -133,6 +133,7 @@ public class Account implements Parcelable {
         header_static = in.readString();
         token = in.readString();
         instance = in.readString();
+        social = in.readString();
         metaDataSize = in.readInt();
         for(int i = 0; i < metaDataSize; i++){
             if( fields == null)
@@ -149,6 +150,7 @@ public class Account implements Parcelable {
             Boolean value = in.readByte() != 0;
             fieldsVerified.put(key,value);
         }
+
 
     }
 
@@ -176,6 +178,7 @@ public class Account implements Parcelable {
         dest.writeString(header_static);
         dest.writeString(token);
         dest.writeString(instance);
+        dest.writeString(social);
         if( fields != null) {
             metaDataSize = fields.size();
             dest.writeInt(metaDataSize);

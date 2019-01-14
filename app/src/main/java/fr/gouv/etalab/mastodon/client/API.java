@@ -3580,6 +3580,7 @@ public class API {
             else
                 account.setNote("");
             account.setUrl(resobj.get("url").toString());
+            account.setSocial("PEERTUBE");
             if( resobj.has("avatar") && !resobj.get("avatar").toString().equals("null")){
                 account.setAvatar("https://" + instance + resobj.getJSONObject("avatar").get("path"));
             }else
@@ -3625,6 +3626,12 @@ public class API {
             account.setAvatar_static(resobj.get("avatar_static").toString());
             account.setHeader(resobj.get("header").toString());
             account.setHeader_static(resobj.get("header_static").toString());
+
+            try{
+                account.setSocial(resobj.get("software").toString().toUpperCase());
+            }catch (Exception ignored){
+                account.setSocial("MASTODON");
+            }
             try {
                 JSONArray fields = resobj.getJSONArray("fields");
                 LinkedHashMap<String, String> fieldsMap = new LinkedHashMap<>();

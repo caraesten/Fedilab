@@ -1827,7 +1827,7 @@ public class PeertubeAPI {
             account.setAcct(accountObject.get("name").toString()+"@" + accountObject.get("host"));
             account.setDisplay_name(accountObject.get("name").toString());
             account.setHost(accountObject.get("host").toString());
-
+            account.setSocial("PEERTUBE");
 
             if( accountObject.has("createdAt") )
                 account.setCreated_at(Helper.mstStringToDate(context, accountObject.get("createdAt").toString()));
