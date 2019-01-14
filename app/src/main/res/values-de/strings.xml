@@ -705,7 +705,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="delete_video_confirmation">Möchten Sie dieses Video wirklich löschen?</string>
     <string name="no_video_uploaded">Noch keine Videos hochgeladen!</string>
     <string name="display_nsfw_videos">Videos mit unpassenden Inhalten anzeigen</string>
-    <string name="default_channel_of">Default %s channel</string>
+    <string name="default_channel_of">Standard %s Kanal</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
