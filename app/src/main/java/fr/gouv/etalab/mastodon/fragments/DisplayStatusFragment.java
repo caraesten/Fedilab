@@ -303,7 +303,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             });
 
 
-        if( instanceType == null || instanceType.equals("MASTODON") || instanceType.equals("PIXELFED"))
+        if( !instanceType.equals("PEERTUBE"))
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
@@ -516,7 +516,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 safeStatuses.add(status);
                         }
                         this.statuses.addAll(safeStatuses);
-                        statusListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
+                        if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
+                            statusListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
+                        else if( instanceType.equals("PIXELFED"))
+                            pixelfedListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
+                        else if( instanceType.equals("ART"))
+                            artListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
                     }else if( tagTimeline == null || !tagTimeline.isART() || (tagTimeline.isART() && tagTimeline.isNSFW())) {
                         this.statuses.addAll(statuses);
                         statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
@@ -528,7 +533,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                             safeStatuses.add(status);
                         }
                         this.statuses.addAll(safeStatuses);
-                        statusListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
+
+                        if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
+                            statusListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
+                        else if( instanceType.equals("PIXELFED"))
+                            pixelfedListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
+                        else if( instanceType.equals("ART"))
+                            artListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
                     }
                 }
 
@@ -566,7 +577,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     try {
                         ((MainActivity) context).updateHomeCounter();
                     }catch (Exception ignored){}
-                    statusListAdapter.notifyItemInserted(0);
+
+                    if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
+                        statusListAdapter.notifyItemInserted(0);
+                    else if( instanceType.equals("PIXELFED"))
+                        pixelfedListAdapter.notifyItemInserted(0);
+                    else if( instanceType.equals("ART"))
+                        artListAdapter.notifyItemInserted(0);
                     if (textviewNoAction.getVisibility() == View.VISIBLE)
                         textviewNoAction.setVisibility(View.GONE);
                 }

@@ -177,68 +177,69 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         final String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        if( viewHolder.getItemViewType() != HIDDEN_STATUS ) {
+            final ViewHolderArt holder = (ViewHolderArt) viewHolder;
+            final Status status = statuses.get(viewHolder.getAdapterPosition());
+            if (!status.isClickable())
+                Status.transform(context, status);
+            if (!status.isEmojiFound())
+                Status.makeEmojis(context, this, status);
 
-        final ViewHolderArt holder = (ViewHolderArt) viewHolder;
-        final Status status = statuses.get(viewHolder.getAdapterPosition());
-        if( !status.isClickable())
-            Status.transform(context, status);
-        if( !status.isEmojiFound())
-            Status.makeEmojis(context, this, status);
+            if (status.getAccount() != null && status.getAccount().getAvatar() != null)
+                Glide.with(context)
+                        .load(status.getAccount().getAvatar())
+                        .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(10)))
+                        .into(holder.art_pp);
 
-        if( status.getAccount() != null && status.getAccount().getAvatar() != null)
-            Glide.with(context)
-                    .load(status.getAccount().getAvatar())
-                    .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(10)))
-                    .into(holder.art_pp);
+            if (status.getArt_attachment() != null)
+                Glide.with(context)
+                        .load(status.getArt_attachment().getPreview_url())
+                        .into(holder.art_media);
+            holder.art_pp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putParcelable("account", status.getAccount());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
 
-        if( status.getArt_attachment() != null)
-            Glide.with(context)
-                    .load(status.getArt_attachment().getPreview_url())
-                    .into(holder.art_media);
-        holder.art_pp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ShowAccountActivity.class);
-                Bundle b = new Bundle();
-                b.putParcelable("account", status.getAccount());
-                intent.putExtras(b);
-                context.startActivity(intent);
-            }
-        });
+            holder.art_media.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, MediaActivity.class);
+                    Bundle b = new Bundle();
+                    ArrayList<Attachment> attachments = new ArrayList<>();
+                    if (status.getArt_attachment() != null)
+                        attachments.add(status.getArt_attachment());
+                    else if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0)
+                        attachments.add(status.getMedia_attachments().get(0));
+                    intent.putParcelableArrayListExtra("mediaArray", attachments);
+                    b.putInt("position", 0);
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
+            holder.art_author.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    b.putParcelable("status", status);
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
 
-        holder.art_media.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MediaActivity.class);
-                Bundle b = new Bundle();
-                ArrayList<Attachment> attachments = new ArrayList<>();
-                if( status.getArt_attachment() != null)
-                    attachments.add(status.getArt_attachment());
-                else if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0)
-                    attachments.add(status.getMedia_attachments().get(0));
-                intent.putParcelableArrayListExtra("mediaArray", attachments);
-                b.putInt("position", 0);
-                intent.putExtras(b);
-                context.startActivity(intent);
-            }
-        });
-        holder.art_author.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ShowConversationActivity.class);
-                Bundle b = new Bundle();
-                b.putParcelable("status", status);
-                intent.putExtras(b);
-                context.startActivity(intent);
-            }
-        });
+            if (status.getDisplayNameSpan() != null && status.getDisplayNameSpan().toString().trim().length() > 0)
+                holder.art_username.setText(status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
+            else
+                holder.art_username.setText(status.getAccount().getUsername());
 
-        if( status.getDisplayNameSpan() != null && status.getDisplayNameSpan().toString().trim().length() > 0)
-            holder.art_username.setText( status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
-        else
-            holder.art_username.setText( status.getAccount().getUsername());
-
-        holder.art_acct.setText(String.format("@%s", status.getAccount().getAcct()));
+            holder.art_acct.setText(String.format("@%s", status.getAccount().getAcct()));
+        }
 
     }
 
