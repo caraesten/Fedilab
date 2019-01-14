@@ -824,13 +824,11 @@ public class API {
             params.put("page", max_id);
         statuses = new ArrayList<>();
         try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrlRemote(remoteInstance, "/timelines/public/"), 60, params, prefKeyOauthTokenT);
+            HttpsConnectionPix httpsConnection = new HttpsConnectionPix(context);
+            String response = httpsConnection.getPixelfed(getAbsoluteUrlRemote(remoteInstance, "/timelines/public/"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -838,6 +836,8 @@ public class API {
         } catch (KeyManagementException e) {
             e.printStackTrace();
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (HttpsConnectionPix.HttpsConnectionException e) {
             e.printStackTrace();
         }
         apiResponse.setStatuses(statuses);
