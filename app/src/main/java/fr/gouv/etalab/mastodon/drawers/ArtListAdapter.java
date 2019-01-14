@@ -15,7 +15,6 @@ package fr.gouv.etalab.mastodon.drawers;
  * see <http://www.gnu.org/licenses>. */
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,7 +44,6 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -53,7 +51,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
@@ -73,38 +70,16 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     private List<Status> statuses;
     private LayoutInflater layoutInflater;
     private ArtListAdapter statusListAdapter;
-    private RetrieveFeedsAsyncTask.Type type;
     private final int HIDDEN_STATUS = 0;
     private static final int DISPLAYED_STATUS = 1;
     private List<String> timedMute;
 
-    private TagTimeline tagTimeline;
-
-    public ArtListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, List<Status> statuses){
-        super();
-        this.context = context;
-        this.statuses = statuses;
-        layoutInflater = LayoutInflater.from(this.context);
-        statusListAdapter = this;
-        this.type = type;
-    }
-
-    public ArtListAdapter(Context context, TagTimeline tagTimeline, List<Status> statuses){
-        super();
-        this.context = context;
-        this.statuses = statuses;
-        layoutInflater = LayoutInflater.from(this.context);
-        statusListAdapter = this;
-        this.type = RetrieveFeedsAsyncTask.Type.TAG;
-        this.tagTimeline = tagTimeline;
-    }
 
     public ArtListAdapter(Context context,  List<Status> statuses){
         this.context = context;
         this.statuses = statuses;
         layoutInflater = LayoutInflater.from(this.context);
         statusListAdapter = this;
-        this.type = RetrieveFeedsAsyncTask.Type.CONTEXT;
     }
 
     public void updateMuted(List<String> timedMute){
@@ -180,7 +155,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     @Override
     public int getItemViewType(int position) {
 
-        if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !Helper.filterToots(context, statuses.get(position), timedMute, type))
+        if( !Helper.filterToots(context, statuses.get(position), timedMute, null))
             return HIDDEN_STATUS;
         else
             return DISPLAYED_STATUS;
@@ -189,7 +164,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if( type == RetrieveFeedsAsyncTask.Type.ART || (tagTimeline != null && tagTimeline.isART()))
+        if( viewType != HIDDEN_STATUS)
             return new ViewHolderArt(layoutInflater.inflate(R.layout.drawer_art, parent, false));
         else
             return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_empty, parent, false));
@@ -254,8 +229,6 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
                 Bundle b = new Bundle();
                 b.putParcelable("status", status);
                 intent.putExtras(b);
-                if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                    ((Activity) context).finish();
                 context.startActivity(intent);
             }
         });

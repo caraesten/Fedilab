@@ -1079,35 +1079,25 @@ public abstract class BaseMainActivity extends BaseActivity
                     intent.putExtra("search", query);
                     startActivity(intent);
                 }else{ //Peertube search
+                    DisplayStatusFragment statusFragment;
+                    Bundle bundle = new Bundle();
+                    statusFragment = new DisplayStatusFragment();
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                    bundle.putString("remote_instance", displayPeertube);
+                    bundle.putString("instanceType", "PEERTUBE");
+                    bundle.putString("search_peertube", query);
+                    statusFragment.setArguments(bundle);
+                    String fragmentTag = "REMOTE_INSTANCE";
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
                     if( main_app_container.getVisibility() == View.GONE){
-                        DisplayStatusFragment statusFragment;
-                        Bundle bundle = new Bundle();
-                        statusFragment = new DisplayStatusFragment();
-                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                        bundle.putString("remote_instance", displayPeertube);
-                        bundle.putString("search_peertube", query);
-                        statusFragment.setArguments(bundle);
-                        String fragmentTag = "REMOTE_INSTANCE";
-                        FragmentManager fragmentManager = getSupportFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
+
                         main_app_container.setVisibility(View.VISIBLE);
                         toolbarTitle.setVisibility(View.VISIBLE);
                         delete_instance.setVisibility(View.VISIBLE);
                         viewPager.setVisibility(View.GONE);
                         tabLayout.setVisibility(View.GONE);
-                    }else{
-                        DisplayStatusFragment statusFragment;
-                        Bundle bundle = new Bundle();
-                        statusFragment = new DisplayStatusFragment();
-                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                        bundle.putString("remote_instance", displayPeertube);
-                        bundle.putString("search_peertube", query);
-                        statusFragment.setArguments(bundle);
-                        String fragmentTag = "REMOTE_INSTANCE";
-                        FragmentManager fragmentManager = getSupportFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.main_app_container, statusFragment, fragmentTag).commit();
                     }
                 }
                 toolbar_search.setQuery("", false);
@@ -2352,7 +2342,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public static HashMap<String, DisplayStatusFragment> tagFragment = new HashMap<>();
 
     /**
-     * Page Adapter for Mastodon & Peertube
+     * Page Adapter for Mastodon & Peertube & PixelFed
      */
     public class PagerAdapter extends FragmentStatePagerAdapter  {
         int mNumOfTabs;
@@ -2414,9 +2404,13 @@ public abstract class BaseMainActivity extends BaseActivity
                                 tag = tagTimelines.get(0).getName();
 
                             bundle.putString("tag", tag);
+                            if( tagTimelines != null && tagTimelines.size() > 0 && tagTimelines.get(0).isART() )
+                                bundle.putString("instanceType","ART");
                             tagFragment.put(tag, statusFragment);
                         }
                     }
+                    if (typePosition.get(position) == RetrieveFeedsAsyncTask.Type.ART)
+                        bundle.putString("instanceType","ART");
                     statusFragment.setArguments(bundle);
                     return statusFragment;
                 }
@@ -3117,6 +3111,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
                                     bundle.putString("remote_instance", remoteInstance.getHost());
                                     bundle.putString("remote_channel_name", remoteInstance.getId());
+                                    bundle.putString("instanceType", "PEERTUBE");
                                     statusFragment.setArguments(bundle);
                                     instance_id = remoteInstance.getDbID();
                                     String fragmentTag = "REMOTE_INSTANCE";
@@ -3148,6 +3143,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                     statusFragment = new DisplayStatusFragment();
                                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PIXELFED);
                                     bundle.putString("remote_instance", remoteInstance.getHost());
+                                    bundle.putString("instanceType", "PIXELFED");
                                     statusFragment.setArguments(bundle);
                                     String fragmentTag = "REMOTE_INSTANCE";
                                     instance_id = remoteInstance.getDbID();
@@ -3180,6 +3176,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
                                     bundle.putString("remote_instance", remoteInstance.getHost());
                                     statusFragment.setArguments(bundle);
+                                    bundle.putString("instanceType", "MISSKEY");
                                     String fragmentTag = "REMOTE_INSTANCE";
                                     instance_id = remoteInstance.getDbID();
                                     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -3265,17 +3262,23 @@ public abstract class BaseMainActivity extends BaseActivity
                                                         public void run() {
                                                             JSONObject resobj;
                                                             dialog.dismiss();
-                                                            if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance)
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MASTODON");
-                                                            else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance)
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PEERTUBE");
-                                                            else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance)
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PIXELFED");
-                                                            else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance)
-                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MISSKEY");
                                                             DisplayStatusFragment statusFragment;
                                                             Bundle bundle = new Bundle();
                                                             statusFragment = new DisplayStatusFragment();
+                                                            if(radioGroup.getCheckedRadioButtonId() == R.id.mastodon_instance) {
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MASTODON");
+                                                                bundle.putString("instanceType", "MASTODON");
+                                                            }else  if( radioGroup.getCheckedRadioButtonId() == R.id.peertube_instance) {
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PEERTUBE");
+                                                                bundle.putString("instanceType", "PEERTUBE");
+                                                            } else  if( radioGroup.getCheckedRadioButtonId() == R.id.pixelfed_instance) {
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "PIXELFED");
+                                                                bundle.putString("instanceType", "PIXELFED");
+                                                            } else  if( radioGroup.getCheckedRadioButtonId() == R.id.misskey_instance) {
+                                                                new InstancesDAO(BaseMainActivity.this, db).insertInstance(instanceName, "MISSKEY");
+                                                                bundle.putString("instanceType", "MISSKEY");
+                                                            }
+
                                                             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
                                                             bundle.putString("remote_instance", instanceName);
                                                             statusFragment.setArguments(bundle);

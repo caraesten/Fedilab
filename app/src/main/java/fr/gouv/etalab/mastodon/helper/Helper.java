@@ -3089,12 +3089,16 @@ public class Helper {
         if( status == null)
             return true;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( type == RetrieveFeedsAsyncTask.Type.HOME)
-            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
-        else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
-            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
-        else
+        if( type != null) {
+            if (type == RetrieveFeedsAsyncTask.Type.HOME)
+                filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
+            else if (type == RetrieveFeedsAsyncTask.Type.LOCAL)
+                filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
+            else
+                filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
+        }else {
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
+        }
 
         String content = status.getContent();
         if( status.getSpoiler_text() != null)

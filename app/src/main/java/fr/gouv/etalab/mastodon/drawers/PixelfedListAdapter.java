@@ -47,8 +47,11 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
+import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -56,7 +59,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.client.Glide.GlideApp;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -76,40 +78,20 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     private Context context;
     private List<Status> statuses;
     private LayoutInflater layoutInflater;
-    private PixelfedListAdapter statusListAdapter;
-    private RetrieveFeedsAsyncTask.Type type;
+    private PixelfedListAdapter pixelfedListAdapter;
     private final int HIDDEN_STATUS = 0;
     private static final int DISPLAYED_STATUS = 1;
     private List<String> timedMute;
 
-    private TagTimeline tagTimeline;
-
-    public PixelfedListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, List<Status> statuses){
-        super();
-        this.context = context;
-        this.statuses = statuses;
-        layoutInflater = LayoutInflater.from(this.context);
-        statusListAdapter = this;
-        this.type = type;
-    }
-
-    public PixelfedListAdapter(Context context, TagTimeline tagTimeline, List<Status> statuses){
-        super();
-        this.context = context;
-        this.statuses = statuses;
-        layoutInflater = LayoutInflater.from(this.context);
-        statusListAdapter = this;
-        this.type = RetrieveFeedsAsyncTask.Type.TAG;
-        this.tagTimeline = tagTimeline;
-    }
 
     public PixelfedListAdapter(Context context, List<Status> statuses){
+        super();
         this.context = context;
         this.statuses = statuses;
         layoutInflater = LayoutInflater.from(this.context);
-        statusListAdapter = this;
-        this.type = RetrieveFeedsAsyncTask.Type.CONTEXT;
+        pixelfedListAdapter = this;
     }
+
 
     public void updateMuted(List<String> timedMute){
         this.timedMute = timedMute;
@@ -184,7 +166,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     @Override
     public int getItemViewType(int position) {
 
-        if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !Helper.filterToots(context, statuses.get(position), timedMute, type))
+        if( !Helper.filterToots(context, statuses.get(position), timedMute, null))
             return HIDDEN_STATUS;
         else
             return DISPLAYED_STATUS;
@@ -193,7 +175,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if( type == RetrieveFeedsAsyncTask.Type.ART || (tagTimeline != null && tagTimeline.isART()))
+        if( viewType != DISPLAYED_STATUS)
             return new ViewHolderPixelfed(layoutInflater.inflate(R.layout.drawer_pixelfed, parent, false));
         else
             return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_empty, parent, false));
@@ -263,7 +245,15 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         holder.art_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CrossActions.doCrossProfile(context, status.getAccount());
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
+                    CrossActions.doCrossProfile(context, status.getAccount());
+                }else{
+                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putParcelable("account", status.getAccount());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
             }
         });
 
@@ -286,7 +276,15 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
         holder.art_author.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CrossActions.doCrossConversation(context,status);
+                if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
+                    CrossActions.doCrossConversation(context, status);
+                }else {
+                    Intent intent = new Intent(context, ShowConversationActivity.class);
+                    Bundle b = new Bundle();
+                    b.putParcelable("status", status);
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
             }
         });
 
@@ -322,13 +320,13 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     statusesToRemove.add(status);
             }
             statuses.removeAll(statusesToRemove);
-            statusListAdapter.notifyDataSetChanged();
+            pixelfedListAdapter.notifyDataSetChanged();
         }else  if( statusAction == API.StatusAction.UNSTATUS ){
             int position = 0;
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
                     statuses.remove(status);
-                    statusListAdapter.notifyItemRemoved(position);
+                    pixelfedListAdapter.notifyItemRemoved(position);
                     SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                     //Remove the status from cache also
                     try {
@@ -347,7 +345,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                         status.setPinned(true);
                     else
                         status.setPinned(false);
-                    statusListAdapter.notifyItemChanged(position);
+                    pixelfedListAdapter.notifyItemChanged(position);
                     break;
                 }
                 position++;
@@ -358,7 +356,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             for(Status status: statuses){
                 if( status.getId().equals(targetedId)) {
                     statuses.remove(status);
-                    statusListAdapter.notifyItemRemoved(position);
+                    pixelfedListAdapter.notifyItemRemoved(position);
                     break;
                 }
                 position++;
@@ -367,11 +365,11 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     }
 
     public void notifyStatusChanged(Status status){
-        for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
+        for (int i = 0; i < pixelfedListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
-            if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
+            if (pixelfedListAdapter.getItemAt(i) != null && pixelfedListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
-                    statusListAdapter.notifyItemChanged(i);
+                    pixelfedListAdapter.notifyItemChanged(i);
                 } catch (Exception ignored) {
                 }
             }
@@ -379,9 +377,9 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     }
 
     public void notifyStatusWithActionChanged(API.StatusAction statusAction, Status status){
-        for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
+        for (int i = 0; i < pixelfedListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
-            if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
+            if (pixelfedListAdapter.getItemAt(i) != null && pixelfedListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
                     int favCount = statuses.get(i).getFavourites_count();
                     int boostCount = statuses.get(i).getReblogs_count();
@@ -401,7 +399,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     statuses.get(i).setFavourites_count(favCount);
                     statuses.get(i).setReblogged(status.isReblogged());
                     statuses.get(i).setReblogs_count(boostCount);
-                    statusListAdapter.notifyItemChanged(i);
+                    pixelfedListAdapter.notifyItemChanged(i);
                 } catch (Exception ignored) {
                 }
             }
