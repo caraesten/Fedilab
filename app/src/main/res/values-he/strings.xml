@@ -236,6 +236,12 @@
         <item quantity="many">and %d other toots to discover</item>
         <item quantity="other">and %d other toots to discover</item>
     </plurals>
+    <plurals name="likes">
+        <item quantity="one">%d like</item>
+        <item quantity="two">%d likes</item>
+        <item quantity="many">%d likes</item>
+        <item quantity="other">%d likes</item>
+    </plurals>
     <string name="delete_notification_ask">Delete a notification?</string>
     <string name="delete_notification_ask_all">Delete all notifications?</string>
     <string name="delete_notification">The notification has been deleted!</string>
@@ -722,6 +728,10 @@
     <string name="no_video_uploaded">No videos uploaded yet!</string>
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
+    <string name="no_video_to_display">No videos to display!</string>
+    <string name="add_image_to_favorite">Add media to favorites</string>
+    <string name="leave_a_comment">Leave a comment</string>
+    <string name="share">Share</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
