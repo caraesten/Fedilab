@@ -227,6 +227,9 @@
     <plurals name="other_notif_hometimeline">
         <item quantity="other">もう一つの発見</item>
     </plurals>
+    <plurals name="likes">
+        <item quantity="other">%d likes</item>
+    </plurals>
     <string name="delete_notification_ask">通知を削除しますか？</string>
     <string name="delete_notification_ask_all">すべての通知を削除しますか？</string>
     <string name="delete_notification">通知は削除されました！</string>
@@ -705,6 +708,10 @@
     <string name="no_video_uploaded">No videos uploaded yet!</string>
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
+    <string name="no_video_to_display">No videos to display!</string>
+    <string name="add_image_to_favorite">Add media to favorites</string>
+    <string name="leave_a_comment">Leave a comment</string>
+    <string name="share">Share</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
