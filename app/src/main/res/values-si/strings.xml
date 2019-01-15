@@ -94,7 +94,7 @@
     <string name="failed">අසාර්ථකයි!</string>
     <string name="scheduled_toots">Scheduled toots</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-    <string name="insert_emoji">Insert emoji</string>
+    <string name="insert_emoji">Emoji ඇතුල් කරන්න</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">සජීවී දැනුම්දීම්</string>
     <!-- Status -->
@@ -156,7 +156,7 @@
     <string name="cw">cw</string>
     <string name="toot_title">Write a toot</string>
     <string name="toot_title_reply">Reply to a toot</string>
-    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
+    <string name="toot_no_space">ලබා දී ඇති අකුරු 500 ක සීමාවට ඔබ ළඟා වී ඇත!</string>
     <string name="toot_select_image">Select a media</string>
     <string name="toot_select_image_error">මාධ්‍යය තෝරන අතරතුර දෝෂයක් සිදුවුණා!</string>
     <string name="toot_delete_media">මෙම මාධ්‍යය මකනවා ද?</string>
@@ -298,7 +298,7 @@
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">උසස් සිටුවම්</string>
+    <string name="settings_title_more_options">උසස් සැකසුම්</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Silent Notifications</string>
@@ -311,8 +311,8 @@
     <string name="set_header_picture_overlay">Choose a header picture</string>
     <string name="set_fit_preview">Fit preview images</string>
     <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
-    <string name="note_no_space">You have reached the 160 characters allowed!</string>
-    <string name="username_no_space">You have reached the 30 characters allowed!</string>
+    <string name="note_no_space">ලබා දී ඇති අකුරු 160 ක සීමාවට ඔබ ළඟා වී ඇත!</string>
+    <string name="username_no_space">ලබා දී ඇති අකුරු 30 ක සීමාවට ඔබ ළඟා වී ඇත!</string>
     <string name="settings_title_hour">Time slot for notifications:</string>
     <string name="settings_time_from">Between</string>
     <string name="settings_time_to">and</string>
@@ -447,7 +447,7 @@
     </string>
     <string name="filter_regex">Filter out by regular expressions</string>
     <string name="search">සෙවීම</string>
-    <string name="delete">මකන්න</string>
+    <string name="delete">ඉවත් කරන්න</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
     <!-- About lists -->
     <string name="action_lists">Lists</string>
@@ -515,7 +515,7 @@
     <string name="toast_unendorse">The account is no longer featured on profile</string>
     <string name="toast_show_boost">Boosts are now shown!</string>
     <string name="toast_hide_boost">Boosts are now hidden!</string>
-    <string name="direct_message">Direct message</string>
+    <string name="direct_message">සෘජු පණිවිඩයක්</string>
     <string name="filters">Filters</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
     <string name="filter_keyword">Keyword or phrase</string>
