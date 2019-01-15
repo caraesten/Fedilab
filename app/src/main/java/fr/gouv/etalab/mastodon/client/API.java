@@ -1179,6 +1179,62 @@ public class API {
     }
 
 
+    /**
+     * Retrieves discover timeline for the account *synchronously*
+     * @param local boolean only local timeline
+     * @param max_id String id max
+     * @return APIResponse
+     */
+    public APIResponse getDiscoverTimeline(boolean local, String max_id){
+        return getDiscoverTimeline(local, max_id, null, tootPerPage);
+    }
+
+
+    /**
+     * Retrieves discover timeline for the account *synchronously*
+     * @param local boolean only local timeline
+     * @param max_id String id max
+     * @param since_id String since the id
+     * @param limit int limit  - max value 40
+     * @return APIResponse
+     */
+    private APIResponse getDiscoverTimeline(boolean local, String max_id, String since_id, int limit){
+
+        HashMap<String, String> params = new HashMap<>();
+        if( local)
+            params.put("local", Boolean.toString(true));
+        if( max_id != null )
+            params.put("max_id", max_id);
+        if( since_id != null )
+            params.put("since_id", since_id);
+        if( 0 > limit || limit > 40)
+            limit = 40;
+        params.put("limit",String.valueOf(limit));
+        statuses = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String url;
+            url = getAbsoluteUr2l("/discover/posts");
+            String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            statuses = parseStatuses(context, new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setStatuses(statuses);
+        return apiResponse;
+    }
+
+
 
     public APIResponse getCustomArtTimeline(boolean local, String tag, String max_id, List<String> any, List<String> all, List<String> none){
         return getArtTimeline(local, tag, max_id, null, any, all, none);
@@ -3944,6 +4000,9 @@ public class API {
 
     private String getAbsoluteUrl(String action) {
         return Helper.instanceWithProtocol(this.instance) + "/api/v1" + action;
+    }
+    private String getAbsoluteUr2l(String action) {
+        return Helper.instanceWithProtocol(this.instance) + "/api/v2" + action;
     }
     private String getAbsoluteUrlRemote(String remote, String action) {
         return "https://" + remote + "/api/v1" + action;

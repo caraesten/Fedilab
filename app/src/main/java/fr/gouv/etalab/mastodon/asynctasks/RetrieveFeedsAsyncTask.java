@@ -296,6 +296,17 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 peertubeAPI = new PeertubeAPI(this.contextReference.get());
                 apiResponse = peertubeAPI.getLocalTL(max_id);
                 break;
+            case PF_HOME:
+                api = new API(this.contextReference.get());
+                apiResponse = api.getHomeTimeline(max_id);
+                break;
+            case PF_LOCAL:
+                api = new API(this.contextReference.get());
+                apiResponse = api.getPublicTimeline(true,max_id);
+            case PF_DISCOVER:
+                api = new API(this.contextReference.get());
+                apiResponse = api.getDiscoverTimeline(true,max_id);
+                break;
             case HASHTAG:
                 break;
         }

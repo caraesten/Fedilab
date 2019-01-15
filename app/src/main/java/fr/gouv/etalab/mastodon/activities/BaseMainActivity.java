@@ -885,13 +885,13 @@ public abstract class BaseMainActivity extends BaseActivity
         }else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
             TabLayout.Tab pfTabHome = tabLayout.newTab();
             TabLayout.Tab pfTabLocal = tabLayout.newTab();
-            TabLayout.Tab pfTabDiscover = tabLayout.newTab();
+            //TabLayout.Tab pfTabDiscover = tabLayout.newTab();
 
 
 
             pfTabHome.setCustomView(R.layout.tab_badge);
             pfTabLocal.setCustomView(R.layout.tab_badge);
-            pfTabDiscover.setCustomView(R.layout.tab_badge);
+            //pfTabDiscover.setCustomView(R.layout.tab_badge);
 
 
             @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
@@ -910,24 +910,24 @@ public abstract class BaseMainActivity extends BaseActivity
             iconLocal.setImageResource(R.drawable.ic_people);
 
 
-            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            /*@SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
             ImageView iconDiscover = pfTabDiscover.getCustomView().findViewById(R.id.tab_icon);
-            iconDiscover.setImageResource(R.drawable.ic_people);
+            iconDiscover.setImageResource(R.drawable.ic_people);*/
 
 
 
             iconHome.setContentDescription(getString(R.string.home_menu));
-            iconDiscover.setContentDescription(getString(R.string.overview));
+           // iconDiscover.setContentDescription(getString(R.string.overview));
             iconLocal.setContentDescription(getString(R.string.local));
 
 
             if (theme == THEME_LIGHT) {
                 iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-                iconDiscover.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+              //  iconDiscover.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
                 iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             } else {
                 iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
-                iconDiscover.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+              //  iconDiscover.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
                 iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
             }
 
@@ -935,7 +935,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
             tabLayout.addTab(pfTabHome);
             tabLayout.addTab(pfTabLocal);
-            tabLayout.addTab(pfTabDiscover);
+        //    tabLayout.addTab(pfTabDiscover);
 
 
 
@@ -2452,9 +2452,9 @@ public abstract class BaseMainActivity extends BaseActivity
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_HOME);
                 }else if( position == 1) {
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_LOCAL);
-                }else if( position == 2) {
+                }/*else if( position == 2) {
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_DISCOVER);
-                }
+                }*/
                 bundle.putString("instanceType","PIXELFED");
                 fragment.setArguments(bundle);
                 return fragment;
