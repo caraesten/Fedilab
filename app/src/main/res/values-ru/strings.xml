@@ -237,10 +237,10 @@
         <item quantity="other">и %d других тутов для просмотра</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="few">%d likes</item>
-        <item quantity="many">%d likes</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d лайк</item>
+        <item quantity="few">%d лайка</item>
+        <item quantity="many">%d лайков</item>
+        <item quantity="other">%d лайков</item>
     </plurals>
     <string name="delete_notification_ask">Удалить уведомление?</string>
     <string name="delete_notification_ask_all">Удалить все уведомления?</string>
@@ -728,9 +728,9 @@
     <string name="no_video_uploaded">Нет загруженных видео!</string>
     <string name="display_nsfw_videos">Отображать видео NSFW</string>
     <string name="default_channel_of">Канал по умолчанию %s</string>
-    <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
-    <string name="leave_a_comment">Leave a comment</string>
+    <string name="no_video_to_display">Нет видео для отображения!</string>
+    <string name="add_image_to_favorite">Добавить медиа в избранное</string>
+    <string name="leave_a_comment">Оставить комментарий</string>
     <string name="share">Share</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
