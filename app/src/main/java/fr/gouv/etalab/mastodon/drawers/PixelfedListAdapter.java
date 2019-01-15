@@ -143,8 +143,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
 
     private class ViewHolderPixelfed extends RecyclerView.ViewHolder{
-        ImageView art_media, pf_pp, pf_comment, pf_share;
-        SparkButton pf_fav;
+        ImageView art_media, pf_pp, pf_comment;
+        SparkButton pf_fav, pf_share;
         TextView pf_username, pf_likes, pf_description, pf_date;
         CardView pf_cardview;
         LinearLayout pf_bottom_container;
@@ -293,21 +293,21 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
             if (theme == Helper.THEME_BLACK) {
                 holder.pf_fav.setInActiveImageTint(R.color.action_black);
+                holder.pf_share.setInActiveImageTint(R.color.action_black);
                 changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, R.color.action_black);
                 changeDrawableColor(context, holder.pf_comment, R.color.action_black);
-                changeDrawableColor(context, holder.pf_share, R.color.action_black);
                 holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.black_3));
             } else if (theme == Helper.THEME_DARK) {
                 holder.pf_fav.setInActiveImageTint(R.color.action_dark);
+                holder.pf_share.setInActiveImageTint(R.color.action_dark);
                 changeDrawableColor(context, holder.pf_comment, R.color.action_dark);
                 changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, R.color.action_dark);
-                changeDrawableColor(context, holder.pf_share, R.color.action_dark);
                 holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1_));
             } else {
                 holder.pf_fav.setInActiveImageTint(R.color.action_light);
+                holder.pf_share.setInActiveImageTint(R.color.action_light);
                 changeDrawableColor(context, holder.pf_comment, R.color.action_light);
                 changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, R.color.action_light);
-                changeDrawableColor(context, holder.pf_share, R.color.action_light);
                 holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
             }
 
@@ -318,6 +318,13 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             holder.pf_fav.setDisableCircle(true);
             holder.pf_fav.setActiveImageTint(R.color.pixelfed_like);
             holder.pf_fav.setColors(R.color.pixelfed_like, R.color.pixelfed_like);
+
+            holder.pf_share.pressOnTouch(false);
+            holder.pf_share.setActiveImage(R.drawable.ic_boost_pixelfed);
+            holder.pf_share.setInactiveImage(R.drawable.ic_boost_pixelfed);
+            holder.pf_share.setDisableCircle(true);
+            holder.pf_share.setActiveImageTint(R.color.boost_icon);
+            holder.pf_share.setColors(R.color.boost_icon, R.color.boost_icon);
 
             if (!status.isFavAnimated()) {
                 if (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
@@ -331,6 +338,19 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 holder.pf_fav.setAnimationSpeed(1.0f);
                 holder.pf_fav.playAnimation();
             }
+
+            if (!status.isBoostAnimated()) {
+                if (status.isReblogged() || (status.getReblog() != null && status.getReblog().isReblogged())) {
+                    holder.pf_share.setChecked(true);
+                } else {
+                    holder.pf_share.setChecked(false);
+                }
+            } else {
+                status.setBoostAnimated(false);
+                holder.pf_share.setChecked(true);
+                holder.pf_share.setAnimationSpeed(1.0f);
+                holder.pf_share.playAnimation();
+            }
             boolean confirmFav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
             holder.pf_fav.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -342,6 +362,19 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                         notifyStatusChanged(status);
                     }
                     CrossActions.doCrossAction(context, type, status, null, (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) ? API.StatusAction.UNFAVOURITE : API.StatusAction.FAVOURITE, pixelfedListAdapter, PixelfedListAdapter.this, true);
+                }
+            });
+            boolean confirmBoost = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, false);
+            holder.pf_share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!status.isReblogged() && confirmBoost)
+                        status.setBoostAnimated(true);
+                    if (!status.isReblogged() && !confirmBoost) {
+                        status.setBoostAnimated(true);
+                        notifyStatusChanged(status);
+                    }
+                    CrossActions.doCrossAction(context, type, status, null, (status.isReblogged() || (status.getReblog() != null && status.getReblog().isReblogged())) ? API.StatusAction.UNREBLOG : API.StatusAction.REBLOG, pixelfedListAdapter, PixelfedListAdapter.this, true);
                 }
             });
         }

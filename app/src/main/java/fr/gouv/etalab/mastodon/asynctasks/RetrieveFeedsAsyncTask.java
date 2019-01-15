@@ -89,7 +89,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         MYVIDEOS,
         PF_HOME,
         PF_LOCAL,
-        PF_DISCOVER
+        PF_DISCOVER,
+        PF_NOTIFICATION
     }
 
 

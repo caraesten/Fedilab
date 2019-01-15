@@ -885,12 +885,14 @@ public abstract class BaseMainActivity extends BaseActivity
         }else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
             TabLayout.Tab pfTabHome = tabLayout.newTab();
             TabLayout.Tab pfTabLocal = tabLayout.newTab();
+            TabLayout.Tab pfTabNotification = tabLayout.newTab();
             //TabLayout.Tab pfTabDiscover = tabLayout.newTab();
 
 
 
             pfTabHome.setCustomView(R.layout.tab_badge);
             pfTabLocal.setCustomView(R.layout.tab_badge);
+            pfTabNotification.setCustomView(R.layout.tab_badge);
             //pfTabDiscover.setCustomView(R.layout.tab_badge);
 
 
@@ -910,6 +912,10 @@ public abstract class BaseMainActivity extends BaseActivity
             iconLocal.setImageResource(R.drawable.ic_people);
 
 
+              @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconNotif = pfTabNotification.getCustomView().findViewById(R.id.tab_icon);
+            iconNotif.setImageResource(R.drawable.ic_notifications);
+
             /*@SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
             ImageView iconDiscover = pfTabDiscover.getCustomView().findViewById(R.id.tab_icon);
             iconDiscover.setImageResource(R.drawable.ic_people);*/
@@ -919,22 +925,25 @@ public abstract class BaseMainActivity extends BaseActivity
             iconHome.setContentDescription(getString(R.string.home_menu));
            // iconDiscover.setContentDescription(getString(R.string.overview));
             iconLocal.setContentDescription(getString(R.string.local));
-
+            iconNotif.setContentDescription(getString(R.string.notifications));
 
             if (theme == THEME_LIGHT) {
                 iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
               //  iconDiscover.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
                 iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             } else {
                 iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
               //  iconDiscover.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
                 iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
             }
 
             toot.setImageResource(R.drawable.ic_cloud_upload);
 
             tabLayout.addTab(pfTabHome);
             tabLayout.addTab(pfTabLocal);
+            tabLayout.addTab(pfTabNotification);
         //    tabLayout.addTab(pfTabDiscover);
 
 
@@ -2447,17 +2456,30 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
                 //Selection comes from another menu, no action to do
                 Bundle bundle = new Bundle();
-                DisplayStatusFragment fragment = new DisplayStatusFragment();
+
                 if (position == 0) {
+                    DisplayStatusFragment fragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_HOME);
+                    bundle.putString("instanceType","PIXELFED");
+                    fragment.setArguments(bundle);
+                    return fragment;
                 }else if( position == 1) {
+                    DisplayStatusFragment fragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_LOCAL);
-                }/*else if( position == 2) {
+                    bundle.putString("instanceType","PIXELFED");
+                    fragment.setArguments(bundle);
+                    return fragment;
+                }else if( position == 2){
+                    DisplayNotificationsFragment fragment = new DisplayNotificationsFragment();
+                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_NOTIFICATION);
+                    fragment.setArguments(bundle);
+                    return fragment;
+                }
+                /*else if( position == 3) {
                     bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PF_DISCOVER);
                 }*/
-                bundle.putString("instanceType","PIXELFED");
-                fragment.setArguments(bundle);
-                return fragment;
+
+                return null;
             }
             return null;
         }
