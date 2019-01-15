@@ -717,10 +717,10 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="no_video_uploaded">Nog geen video\'s geüpload!</string>
     <string name="display_nsfw_videos">NSFW video\'s weergeven</string>
     <string name="default_channel_of">Standaard %s kanaal</string>
-    <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
-    <string name="leave_a_comment">Leave a comment</string>
-    <string name="share">Share</string>
+    <string name="no_video_to_display">Geen video\'s om weer te geven!</string>
+    <string name="add_image_to_favorite">Toevoegen aan favorieten</string>
+    <string name="leave_a_comment">Reageer</string>
+    <string name="share">Delen</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
