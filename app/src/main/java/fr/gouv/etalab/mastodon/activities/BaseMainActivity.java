@@ -3141,7 +3141,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                     DisplayStatusFragment statusFragment;
                                     Bundle bundle = new Bundle();
                                     statusFragment = new DisplayStatusFragment();
-                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.PIXELFED);
+                                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
                                     bundle.putString("remote_instance", remoteInstance.getHost());
                                     bundle.putString("instanceType", "PIXELFED");
                                     statusFragment.setArguments(bundle);
@@ -3209,6 +3209,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                     bundle.putString("remote_instance", remoteInstance.getHost());
                                     statusFragment.setArguments(bundle);
                                     String fragmentTag = "REMOTE_INSTANCE";
+                                    bundle.putString("instanceType", "PEERTUBE");
                                     instance_id = remoteInstance.getDbID();
                                     FragmentManager fragmentManager = getSupportFragmentManager();
                                     fragmentManager.beginTransaction()

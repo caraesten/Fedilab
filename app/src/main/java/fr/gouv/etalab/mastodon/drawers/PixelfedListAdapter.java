@@ -23,13 +23,13 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +67,8 @@ import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRepliesInterface;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
 /**
@@ -137,20 +139,21 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
 
     private class ViewHolderPixelfed extends RecyclerView.ViewHolder{
-        ImageView art_media, art_pp;
-        TextView art_username, art_acct;
-        LinearLayout art_author;
-        RelativeLayout status_show_more;
-        ImageView show_more_button_art;
+        ImageView art_media, pf_pp, pf_fav, pf_comment, pf_share;
+        TextView pf_username, pf_likes, pf_description, pf_date;
+        CardView pf_cardview;
         ViewHolderPixelfed(View itemView) {
             super(itemView);
             art_media = itemView.findViewById(R.id.art_media);
-            art_pp = itemView.findViewById(R.id.art_pp);
-            art_username = itemView.findViewById(R.id.art_username);
-            art_acct = itemView.findViewById(R.id.art_acct);
-            art_author = itemView.findViewById(R.id.art_author);
-            status_show_more = itemView.findViewById(R.id.status_show_more);
-            show_more_button_art = itemView.findViewById(R.id.show_more_button_art);
+            pf_pp = itemView.findViewById(R.id.pf_pp);
+            pf_username = itemView.findViewById(R.id.pf_username);
+            pf_likes = itemView.findViewById(R.id.pf_likes);
+            pf_description = itemView.findViewById(R.id.pf_description);
+            pf_date = itemView.findViewById(R.id.pf_date);
+            pf_fav = itemView.findViewById(R.id.pf_fav);
+            pf_comment = itemView.findViewById(R.id.pf_comment);
+            pf_share = itemView.findViewById(R.id.pf_share);
+            pf_cardview = itemView.findViewById(R.id.pf_cardview);
         }
     }
 
@@ -175,7 +178,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if( viewType != DISPLAYED_STATUS)
+        if( viewType == DISPLAYED_STATUS)
             return new ViewHolderPixelfed(layoutInflater.inflate(R.layout.drawer_pixelfed, parent, false));
         else
             return new ViewHolderEmpty(layoutInflater.inflate(R.layout.drawer_empty, parent, false));
@@ -199,8 +202,8 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             if (status.getAccount() != null && status.getAccount().getAvatar() != null)
                 Glide.with(context)
                         .load(status.getAccount().getAvatar())
-                        .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(10)))
-                        .into(holder.art_pp);
+                        .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(270)))
+                        .into(holder.pf_pp);
 
             boolean expand_media = sharedpreferences.getBoolean(Helper.SET_EXPAND_MEDIA, false);
             if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0)
@@ -221,28 +224,9 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                             }
                         })
                         .into(holder.art_media);
-            RelativeLayout.LayoutParams rel_btn = new RelativeLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, holder.art_media.getHeight());
-            holder.status_show_more.setLayoutParams(rel_btn);
-            if (expand_media || !status.isSensitive()) {
-                status.setAttachmentShown(true);
-                holder.status_show_more.setVisibility(View.GONE);
-            } else {
-                if (!status.isAttachmentShown()) {
-                    holder.status_show_more.setVisibility(View.VISIBLE);
-                } else {
-                    holder.status_show_more.setVisibility(View.GONE);
-                }
-            }
 
-            holder.show_more_button_art.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    status.setAttachmentShown(true);
-                    notifyStatusChanged(status);
-                }
-            });
-            holder.art_pp.setOnClickListener(new View.OnClickListener() {
+            holder.pf_likes.setText(context.getResources().getQuantityString(R.plurals.likes, status.getFavourites_count(), status.getFavourites_count()));
+            holder.pf_pp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
@@ -273,7 +257,9 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                     context.startActivity(intent);
                 }
             });
-            holder.art_author.setOnClickListener(new View.OnClickListener() {
+            holder.pf_description.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
+            holder.pf_date.setText(Helper.dateToString(status.getCreated_at()));
+            holder.pf_description.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
@@ -289,11 +275,27 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             });
 
             if (status.getDisplayNameSpan() != null && status.getDisplayNameSpan().toString().trim().length() > 0)
-                holder.art_username.setText(status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
+                holder.pf_username.setText(status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
             else
-                holder.art_username.setText(status.getAccount().getUsername());
+                holder.pf_username.setText(status.getAccount().getUsername());
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
-            holder.art_acct.setText(String.format("@%s", status.getAccount().getAcct()));
+            if (theme == Helper.THEME_BLACK) {
+                changeDrawableColor(context, holder.pf_fav, R.color.action_black);
+                changeDrawableColor(context, holder.pf_comment, R.color.action_black);
+                changeDrawableColor(context, holder.pf_share, R.color.action_black);
+                holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.black_3));
+            } else if (theme == Helper.THEME_DARK) {
+                changeDrawableColor(context, holder.pf_fav, R.color.action_dark);
+                changeDrawableColor(context, holder.pf_comment, R.color.action_dark);
+                changeDrawableColor(context, holder.pf_share, R.color.action_dark);
+                holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1_));
+            } else {
+                changeDrawableColor(context, holder.pf_fav, R.color.action_light);
+                changeDrawableColor(context, holder.pf_comment, R.color.action_light);
+                changeDrawableColor(context, holder.pf_share, R.color.action_light);
+                holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
+            }
         }
 
     }

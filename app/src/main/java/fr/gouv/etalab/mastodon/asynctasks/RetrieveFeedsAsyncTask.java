@@ -173,9 +173,6 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             case CONVERSATION:
                 apiResponse = api.getConversationTimeline(max_id);
                 break;
-            case PIXELFED:
-                apiResponse = api.getPixelfedTimeline(instanceName, max_id);
-                break;
             case REMOTE_INSTANCE:
                 if( this.name != null && this.remoteInstance != null){ //For Peertube channels
                     apiResponse = api.getPeertubeChannelVideos(this.remoteInstance, this.name);
@@ -197,7 +194,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                                 status.setType(action);
                             }
                         }
-                    } else {
+                    } else if(remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("PIXELFED") ) {
+                        apiResponse = api.getPixelfedTimeline(instanceName, max_id);
+                    }else {
                         apiResponse = api.getPeertube(this.instanceName, max_id);
                     }
                 }

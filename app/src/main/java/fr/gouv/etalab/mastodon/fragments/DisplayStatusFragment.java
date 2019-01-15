@@ -32,6 +32,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -212,6 +213,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             peertubeAdapater = new PeertubeAdapter(context, remoteInstance, ownVideos, this.peertubes);
             lv_status.setAdapter(peertubeAdapater);
         }else if( instanceType.equals("PIXELFED")){
+            if( remoteInstance != null && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) //if it's a Peertube account connected
+                remoteInstance = account.getInstance();
             pixelfedListAdapter = new PixelfedListAdapter(context, this.statuses);
             lv_status.setAdapter(pixelfedListAdapter);
         }else if( instanceType.equals("ART")){
@@ -447,7 +450,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             //remove handlers
             swipeRefreshLayout.setRefreshing(false);
             if( firstLoad && (apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() ==0)){
-                textviewNoActionText.setText(R.string.no_video_uploaded);
+                textviewNoActionText.setText(R.string.no_video_to_display);
                 textviewNoAction.setVisibility(View.VISIBLE);
             }
             flag_loading = false;
@@ -478,7 +481,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             int previousPosition = this.statuses.size();
             List<Status> statuses = apiResponse.getStatuses();
             //At this point all statuses are in "List<Status> statuses"
-
             //Pagination for Pixelfed
             if(instanceType.equals("PIXELFED")) {
                 if( max_id == null)
@@ -526,6 +528,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         artListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                     }
                 }else if(instanceType.equals("PIXELFED") ) {
+                    Log.v(Helper.TAG,"statuses: " + statuses.size());
                     this.statuses.addAll(statuses);
                     pixelfedListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 }
