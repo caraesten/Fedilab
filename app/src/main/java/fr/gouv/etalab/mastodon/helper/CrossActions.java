@@ -144,8 +144,34 @@ public class CrossActions {
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if (confirmation)
                 displayConfirmationDialogCrossAction(context, currentAccount, doAction, status, onPostActionInterface, baseAdapter);
-            else
+            else {
                 new PostActionAsyncTask(context, currentAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                if( doAction == API.StatusAction.FAVOURITE || doAction == API.StatusAction.UNFAVOURITE){
+                    if (doAction == API.StatusAction.FAVOURITE) {
+                        status.setFavourited(true);
+                        status.setFavAnimated(true);
+                    }else{
+                        status.setFavourited(false);
+                        status.setFavAnimated(false);
+                    }
+                    if(baseAdapter instanceof PixelfedListAdapter)
+                        ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
+                    else if(baseAdapter instanceof StatusListAdapter)
+                        ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
+                }else if(doAction == API.StatusAction.REBLOG || doAction == API.StatusAction.UNREBLOG){
+                    if (doAction == API.StatusAction.REBLOG) {
+                        status.setReblogged(true);
+                        status.setBoostAnimated(true);
+                    }else{
+                        status.setReblogged(false);
+                        status.setBoostAnimated(false);
+                    }
+                    if(baseAdapter instanceof PixelfedListAdapter)
+                        ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
+                    else if(baseAdapter instanceof StatusListAdapter)
+                        ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
+                }
+            }
         } else if (accounts.size() == 1 || undoAction) {
             if (confirmation)
                 displayConfirmationDialog(context, doAction, status, baseAdapter, onPostActionInterface);
