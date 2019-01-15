@@ -228,7 +228,7 @@
         <item quantity="other">和另外 %d 条嘟文等待发现</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="other">%d likes</item>
+        <item quantity="other">%d 赞</item>
     </plurals>
     <string name="delete_notification_ask">删除一条通知吗？</string>
     <string name="delete_notification_ask_all">删除所有通知吗？</string>
@@ -683,13 +683,13 @@
     <string name="change_tag_column">更改列名称</string>
     <string name="no_misskey_instance">没有 Misskey 实例</string>
     <string name="misskey_instance">Misskey 实例</string>
-    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
-    <string name="subscriptions">Subscriptions</string>
-    <string name="overview">Overview</string>
-    <string name="trending">Trending</string>
-    <string name="recently_added">Recently added</string>
-    <string name="local">Local</string>
-    <string name="upload_video">Upload</string>
+    <string name="toast_no_apps">您的设备上没有安装任何支持此链接的应用。</string>
+    <string name="subscriptions">订阅</string>
+    <string name="overview">概览</string>
+    <string name="trending">趋势</string>
+    <string name="recently_added">最近添加</string>
+    <string name="local">本地</string>
+    <string name="upload_video">上传</string>
     <string name="reply">Reply</string>
     <string name="delete_comment">Delete a comment</string>
     <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
