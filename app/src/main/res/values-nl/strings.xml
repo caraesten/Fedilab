@@ -230,6 +230,10 @@
         <item quantity="one">en één andere toot</item>
         <item quantity="other">en %d andere toots</item>
     </plurals>
+    <plurals name="likes">
+        <item quantity="one">%d like</item>
+        <item quantity="other">%d likes</item>
+    </plurals>
     <string name="delete_notification_ask">Deze melding verwijderen?</string>
     <string name="delete_notification_ask_all">Alle meldingen verwijderen?</string>
     <string name="delete_notification">De melding is verwijderd!</string>
@@ -713,6 +717,10 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="no_video_uploaded">Nog geen video\'s geüpload!</string>
     <string name="display_nsfw_videos">NSFW video\'s weergeven</string>
     <string name="default_channel_of">Standaard %s kanaal</string>
+    <string name="no_video_to_display">No videos to display!</string>
+    <string name="add_image_to_favorite">Add media to favorites</string>
+    <string name="leave_a_comment">Leave a comment</string>
+    <string name="share">Share</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
