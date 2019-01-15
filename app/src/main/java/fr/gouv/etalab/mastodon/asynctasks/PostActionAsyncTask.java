@@ -109,14 +109,13 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
             //Remote action
             API api;
             if (account != null)
                 api = new API(contextReference.get(), account.getInstance(), account.getToken());
             else
                 api = new API(contextReference.get());
-
             if (remoteStatus != null) {
                 String uri;
                 if (remoteStatus.getReblog() != null) {

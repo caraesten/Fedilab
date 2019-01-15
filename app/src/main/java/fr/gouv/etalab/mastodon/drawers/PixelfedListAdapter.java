@@ -30,6 +30,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.varunest.sparkbutton.SparkButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,7 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -84,12 +87,13 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
     private final int HIDDEN_STATUS = 0;
     private static final int DISPLAYED_STATUS = 1;
     private List<String> timedMute;
+    private RetrieveFeedsAsyncTask.Type type;
 
-
-    public PixelfedListAdapter(Context context, List<Status> statuses){
+    public PixelfedListAdapter(Context context, RetrieveFeedsAsyncTask.Type type, List<Status> statuses){
         super();
         this.context = context;
         this.statuses = statuses;
+        this.type = type;
         layoutInflater = LayoutInflater.from(this.context);
         pixelfedListAdapter = this;
     }
@@ -139,9 +143,11 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
 
 
     private class ViewHolderPixelfed extends RecyclerView.ViewHolder{
-        ImageView art_media, pf_pp, pf_fav, pf_comment, pf_share;
+        ImageView art_media, pf_pp, pf_comment, pf_share;
+        SparkButton pf_fav;
         TextView pf_username, pf_likes, pf_description, pf_date;
         CardView pf_cardview;
+        LinearLayout pf_bottom_container;
         ViewHolderPixelfed(View itemView) {
             super(itemView);
             art_media = itemView.findViewById(R.id.art_media);
@@ -154,6 +160,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             pf_comment = itemView.findViewById(R.id.pf_comment);
             pf_share = itemView.findViewById(R.id.pf_share);
             pf_cardview = itemView.findViewById(R.id.pf_cardview);
+            pf_bottom_container = itemView.findViewById(R.id.pf_bottom_container);
         }
     }
 
@@ -259,7 +266,7 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
             });
             holder.pf_description.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.pf_date.setText(Helper.dateToString(status.getCreated_at()));
-            holder.pf_description.setOnClickListener(new View.OnClickListener() {
+            holder.pf_comment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
@@ -274,28 +281,69 @@ public class PixelfedListAdapter extends RecyclerView.Adapter implements OnPostA
                 }
             });
 
+
+
             if (status.getDisplayNameSpan() != null && status.getDisplayNameSpan().toString().trim().length() > 0)
                 holder.pf_username.setText(status.getDisplayNameSpan(), TextView.BufferType.SPANNABLE);
             else
                 holder.pf_username.setText(status.getAccount().getUsername());
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
+
+
             if (theme == Helper.THEME_BLACK) {
-                changeDrawableColor(context, holder.pf_fav, R.color.action_black);
+                holder.pf_fav.setInActiveImageTint(R.color.action_black);
+                changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, R.color.action_black);
                 changeDrawableColor(context, holder.pf_comment, R.color.action_black);
                 changeDrawableColor(context, holder.pf_share, R.color.action_black);
                 holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.black_3));
             } else if (theme == Helper.THEME_DARK) {
-                changeDrawableColor(context, holder.pf_fav, R.color.action_dark);
+                holder.pf_fav.setInActiveImageTint(R.color.action_dark);
                 changeDrawableColor(context, holder.pf_comment, R.color.action_dark);
+                changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, R.color.action_dark);
                 changeDrawableColor(context, holder.pf_share, R.color.action_dark);
                 holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1_));
             } else {
-                changeDrawableColor(context, holder.pf_fav, R.color.action_light);
+                holder.pf_fav.setInActiveImageTint(R.color.action_light);
                 changeDrawableColor(context, holder.pf_comment, R.color.action_light);
+                changeDrawableColor(context, R.drawable.ic_pixelfed_favorite_border, R.color.action_light);
                 changeDrawableColor(context, holder.pf_share, R.color.action_light);
                 holder.pf_cardview.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
             }
+
+
+            holder.pf_fav.pressOnTouch(false);
+            holder.pf_fav.setActiveImage(R.drawable.ic_pixelfed_favorite);
+            holder.pf_fav.setInactiveImage(R.drawable.ic_pixelfed_favorite_border);
+            holder.pf_fav.setDisableCircle(true);
+            holder.pf_fav.setActiveImageTint(R.color.pixelfed_like);
+            holder.pf_fav.setColors(R.color.pixelfed_like, R.color.pixelfed_like);
+
+            if (!status.isFavAnimated()) {
+                if (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) {
+                    holder.pf_fav.setChecked(true);
+                } else {
+                    holder.pf_fav.setChecked(false);
+                }
+            } else {
+                status.setFavAnimated(false);
+                holder.pf_fav.setChecked(true);
+                holder.pf_fav.setAnimationSpeed(1.0f);
+                holder.pf_fav.playAnimation();
+            }
+            boolean confirmFav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
+            holder.pf_fav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!status.isFavourited() && confirmFav)
+                        status.setFavAnimated(true);
+                    if (!status.isFavourited() && !confirmFav) {
+                        status.setFavAnimated(true);
+                        notifyStatusChanged(status);
+                    }
+                    CrossActions.doCrossAction(context, type, status, null, (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) ? API.StatusAction.UNFAVOURITE : API.StatusAction.FAVOURITE, pixelfedListAdapter, PixelfedListAdapter.this, true);
+                }
+            });
         }
 
     }

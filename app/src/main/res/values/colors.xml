@@ -114,4 +114,6 @@
     <color name="peertube_orange">#F1680D</color>
 
     <color name="unfollow">#c52404</color>
+
+    <color name="pixelfed_like">#dc3545</color>
 </resources>

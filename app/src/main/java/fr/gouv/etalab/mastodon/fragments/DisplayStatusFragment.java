@@ -32,7 +32,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -215,7 +214,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }else if( instanceType.equals("PIXELFED")){
             if( remoteInstance != null && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) //if it's a Peertube account connected
                 remoteInstance = account.getInstance();
-            pixelfedListAdapter = new PixelfedListAdapter(context, this.statuses);
+            pixelfedListAdapter = new PixelfedListAdapter(context, type, this.statuses);
             lv_status.setAdapter(pixelfedListAdapter);
         }else if( instanceType.equals("ART")){
             artListAdapter = new ArtListAdapter(context, this.statuses);
@@ -528,7 +527,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         artListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                     }
                 }else if(instanceType.equals("PIXELFED") ) {
-                    Log.v(Helper.TAG,"statuses: " + statuses.size());
                     this.statuses.addAll(statuses);
                     pixelfedListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 }
