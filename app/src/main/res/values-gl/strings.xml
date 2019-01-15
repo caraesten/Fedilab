@@ -230,6 +230,10 @@
         <item quantity="one">e outro toot a descubrir</item>
         <item quantity="other">e %d toots máis a descubrir</item>
     </plurals>
+    <plurals name="likes">
+        <item quantity="one">%d like</item>
+        <item quantity="other">%d likes</item>
+    </plurals>
     <string name="delete_notification_ask">Borrar notificación?</string>
     <string name="delete_notification_ask_all">Borrar todas as notificacións?</string>
     <string name="delete_notification">Eliminouse a notificación!</string>
@@ -717,6 +721,10 @@
     <string name="no_video_uploaded">Aínda non ten vídeos subidos!</string>
     <string name="display_nsfw_videos">Mostar vídeos NSFW</string>
     <string name="default_channel_of">Canal por omisión de %s</string>
+    <string name="no_video_to_display">No videos to display!</string>
+    <string name="add_image_to_favorite">Add media to favorites</string>
+    <string name="leave_a_comment">Leave a comment</string>
+    <string name="share">Share</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
