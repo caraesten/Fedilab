@@ -3103,14 +3103,13 @@ public class Helper {
         String content = status.getContent();
         if( status.getSpoiler_text() != null)
             content += " "+ status.getSpoiler_text();
-        boolean addToot = true; //Flag to tell if the current toot will be added.
         if( status.getAccount()  == null)
-            addToot = false;
+            return false;
         boolean show_nsfw = sharedpreferences.getBoolean(Helper.SET_ART_WITH_NSFW, false);
-        if( type == RetrieveFeedsAsyncTask.Type.ART && !show_nsfw && status.isSensitive()) {
-            addToot = false;
-        }
-        if(addToot && MainActivity.filters != null){
+        if( type == RetrieveFeedsAsyncTask.Type.ART && !show_nsfw && status.isSensitive())
+            return false;
+
+        if(MainActivity.filters != null){
             for(Filters mfilter: filters){
                 ArrayList<String> filterContext = mfilter.getContext();
                 if(
@@ -3120,49 +3119,43 @@ public class Helper {
 
                         ) {
                     if (mfilter.isWhole_word() && content.contains(mfilter.getPhrase())) {
-                        addToot = false;
+                        return false;
                     } else {
                         try {
                             Pattern filterPattern = Pattern.compile("(" + mfilter.getPhrase() + ")", Pattern.CASE_INSENSITIVE);
                             Matcher matcher = filterPattern.matcher(content);
                             if (matcher.find())
-                                addToot = false;
+                                return false;
                         } catch (Exception ignored) { }
                     }
                 }
             }
         }
-        if( addToot && filter != null && filter.length() > 0){
+        if(filter != null && filter.length() > 0){
             try {
                 Pattern filterPattern = Pattern.compile("(" + filter + ")", Pattern.CASE_INSENSITIVE);
                 Matcher matcher = filterPattern.matcher(content);
                 if (matcher.find())
-                    addToot = false;
+                    return false;
             }catch (Exception ignored){ }
         }
-        if(addToot) {
-            if (type == RetrieveFeedsAsyncTask.Type.HOME) {
-                if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
-                    addToot = false;
-                else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
-                    addToot = false;
-                }
-            } else {
-                if (context instanceof ShowAccountActivity) {
-                    if (status.getReblog() != null && !((ShowAccountActivity) context).showBoosts())
-                        addToot = false;
-                    else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !((ShowAccountActivity) context).showReplies())
-                        addToot = false;
-                }
+        if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+            if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
+                return false;
+            else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
+                return false;
+            }
+        } else {
+            if (context instanceof ShowAccountActivity) {
+                if (status.getReblog() != null && !((ShowAccountActivity) context).showBoosts())
+                    return false;
+                else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !((ShowAccountActivity) context).showReplies())
+                    return false;
             }
         }
-        if( addToot){
-            if (timedMute != null && timedMute.size() > 0) {
-                if (timedMute.contains(status.getAccount().getId()))
-                    addToot = false;
-            }
-        }
-        return addToot;
+        if (timedMute != null && timedMute.size() > 0 && timedMute.contains(status.getAccount().getId()))
+            return false;
+        return true;
     }
 
     public static void colorizeIconMenu(Menu menu, int toolbarIconsColor) {
