@@ -44,7 +44,7 @@
     <string name="speech_prompt">Si noe, vær så snill</string>
     <string name="speech_not_supported">Beklager! Enheten støtter ikke taleinngangen!</string>
     <string name="delete_all">Vil du slette alt?</string>
-    <string name="translate_toot">Oversett denne tooten.</string>
+    <string name="translate_toot">Oversett dette tootet.</string>
     <string name="schedule">Planlegg</string>
     <string name="text_size">Tekst- og ikonstørrelser</string>
     <string name="text_size_change">Endre gjeldende tekststørrelse:</string>
@@ -99,17 +99,17 @@
     <string name="live_notif">Direktevarsler</string>
     <!-- Status -->
     <string name="no_status">Ingen toots å vise</string>
-    <string name="fav_added">Tooten ble lagt til i favoritter</string>
-    <string name="fav_removed">Tooten ble fjernet fra favoritter!</string>
-    <string name="reblog_added">Tooten ble boostet!</string>
-    <string name="reblog_removed">Tooten er ikke lenger boostet!</string>
+    <string name="fav_added">Tootet ble lagt til i favoritter</string>
+    <string name="fav_removed">Tootet ble fjernet fra favoritter!</string>
+    <string name="reblog_added">Tootet ble boostet!</string>
+    <string name="reblog_removed">Tootet er ikke lenger boostet!</string>
     <string name="reblog_by">Boostet av %1$s</string>
-    <string name="favourite_add">Legg til denne tooten til dine favoritter?</string>
-    <string name="favourite_remove">Fjern denne tooten fra favorittene dine?</string>
-    <string name="reblog_add">Booste denne tooten?</string>
-    <string name="reblog_remove">Fjerne boosten på denne tooten?</string>
-    <string name="pin_add">Pin denne tooten?</string>
-    <string name="pin_remove">Unpin denne tooten?</string>
+    <string name="favourite_add">Legge dette tootet til dine favoritter?</string>
+    <string name="favourite_remove">Fjerne dette tootet fra favorittene dine?</string>
+    <string name="reblog_add">Booste dette tootet?</string>
+    <string name="reblog_remove">Fjerne boosten på dette tootet?</string>
+    <string name="pin_add">Feste dette tootet?</string>
+    <string name="pin_remove">Løsne dette tootet?</string>
     <string name="more_action_1">Demp</string>
     <string name="more_action_2">Blokker</string>
     <string name="more_action_3">Rapporter</string>
@@ -122,7 +122,7 @@
     <string-array name="more_action_confirm">
         <item>Dempe denne kontoen?</item>
         <item>Blokkere denne kontoen?</item>
-        <item>Rapportere denne tooten?</item>
+        <item>Rapportere dette tootet?</item>
         <item>Blokkere dette domenet?</item>
     </string-array>
     <string-array name="action_notification">
@@ -130,8 +130,8 @@
         <item>Stille</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Fjern denne tooten?</item>
-        <item>Slette og kladde denne tooten på nytt?</item>
+        <item>Fjerne dette tootet?</item>
+        <item>Slette og kladde dette tootet på nytt?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d svar</item>
@@ -161,9 +161,9 @@
     <string name="toot_select_image_error">Det oppsto en feil under valg av media!</string>
     <string name="toot_delete_media">Slett dette mediet?</string>
     <string name="toot_error_no_content">Din toot er tom!</string>
-    <string name="toot_visibility_tilte">Synlighet av tooten</string>
+    <string name="toot_visibility_tilte">Synlighet av tootet</string>
     <string name="toots_visibility_tilte">Standardsynlighet på toots: </string>
-    <string name="toot_sent">Tooten er sendt!</string>
+    <string name="toot_sent">Tootet er sendt!</string>
     <string name="toot_reply_content_title">Du svarer på dette tootet:</string>
     <string name="toot_sensitive">Sensitivt innhold?</string>
     <string-array name="toot_visibility">
@@ -231,8 +231,8 @@
         <item quantity="other">og %d andre toots å oppdage</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d liker</item>
+        <item quantity="other">%d liker</item>
     </plurals>
     <string name="delete_notification_ask">Slett et varsel?</string>
     <string name="delete_notification_ask_all">Slett alle varsler?</string>
@@ -707,12 +707,12 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="delete_video_confirmation">Er du sikker på at du vil slette denne videoen?</string>
     <string name="no_video_uploaded">Ingen videoer er lastet opp!</string>
     <string name="display_nsfw_videos">Vis NSFW-videoer</string>
-    <string name="default_channel_of">Default %s channel</string>
-    <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
-    <string name="leave_a_comment">Leave a comment</string>
-    <string name="share">Share</string>
-    <string name="my_pictures">My pictures</string>
+    <string name="default_channel_of">Standard %s-kanal</string>
+    <string name="no_video_to_display">Ingen videoer å vise!</string>
+    <string name="add_image_to_favorite">Legg til i favoritter</string>
+    <string name="leave_a_comment">Legg igjen en kommentar</string>
+    <string name="share">Del</string>
+    <string name="my_pictures">Mine bilder</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

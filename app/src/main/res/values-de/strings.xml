@@ -714,7 +714,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="add_image_to_favorite">Medien zu Favoriten hinzufügen</string>
     <string name="leave_a_comment">Kommentar schreiben</string>
     <string name="share">Teilen</string>
-    <string name="my_pictures">My pictures</string>
+    <string name="my_pictures">Meine Bilder</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
