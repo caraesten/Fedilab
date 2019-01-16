@@ -347,9 +347,10 @@ public class PeertubeUploadActivity extends BaseActivity implements OnRetrievePe
                         uploadConfig.getCancelled().message = getString(R.string.toast_cancelled);
                         uploadConfig.getCompleted().actions.add(new UploadNotificationAction(R.drawable.ic_check, getString(R.string.video_uploaded_action), clickIntent));
 
+
                         String uploadId =
                                 new MultipartUploadRequest(PeertubeUploadActivity.this, "https://" + Helper.getLiveInstance(PeertubeUploadActivity.this) + "/api/v1/videos/upload")
-                                        .addFileToUpload(uri.toString(), "videofile")
+                                        .addFileToUpload(uri.toString().replace("file://",""), "videofile")
                                         .addHeader("Authorization", "Bearer " + token)
                                         .setNotificationConfig(uploadConfig)
                                         .addParameter("name", filename)
