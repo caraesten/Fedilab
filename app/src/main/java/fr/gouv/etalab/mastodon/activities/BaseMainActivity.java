@@ -939,13 +939,14 @@ public abstract class BaseMainActivity extends BaseActivity
                 iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
             }
 
-            toot.setImageResource(R.drawable.ic_cloud_upload);
+
 
             tabLayout.addTab(pfTabHome);
             tabLayout.addTab(pfTabLocal);
             tabLayout.addTab(pfTabNotification);
         //    tabLayout.addTab(pfTabDiscover);
-
+            tabLayout.setTabMode(TabLayout.MODE_FIXED);
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
             main_app_container = findViewById(R.id.main_app_container);
@@ -2092,7 +2093,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, settingsPeertubeFragment, fragmentTag).commit();
 
-        }else if (id == R.id.nav_favorites) {
+        }else if (id == R.id.nav_favorites || id == R.id.nav_pixelfed_favorites) {
             toot.hide();
             statusFragment = new DisplayStatusFragment();
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.FAVOURITES);
@@ -2115,7 +2116,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "MY_VIDEOS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, fragment, fragmentTag).commit();
-        } else if (id == R.id.nav_blocked) {
+        } else if (id == R.id.nav_blocked || id == R.id.nav_pixelfed_blocked) {
             toot.hide();
             accountsFragment = new DisplayAccountsFragment();
             bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.BLOCKED);
@@ -2135,7 +2136,7 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "HOW_TO_VIDEOS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayHowToFragment, fragmentTag).commit();
-        }else if (id == R.id.nav_muted) {
+        }else if (id == R.id.nav_muted || id == R.id.nav_pixelfed_muted) {
             toot.hide();
             accountsFragment = new DisplayAccountsFragment();
             bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.MUTED);
