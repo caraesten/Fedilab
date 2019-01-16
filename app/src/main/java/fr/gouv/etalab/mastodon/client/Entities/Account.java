@@ -110,92 +110,119 @@ public class Account implements Parcelable {
     private String client_secret;
     private String refresh_token;
 
-    protected Account(Parcel in) {
-        id = in.readString();
-        username = in.readString();
-        emojis = in.readArrayList(Emojis.class.getClassLoader());
-        moved_to_account = in.readParcelable(Account.class.getClassLoader());
-        acct = in.readString();
-        display_name = in.readString();
-        host =  in.readString();
-        displayNameSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
-        noteSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
-        locked = in.readByte() != 0;
-        isBot = in.readByte() != 0;
-        followers_count = in.readInt();
-        following_count = in.readInt();
-        statuses_count = in.readInt();
-        note = in.readString();
-        url = in.readString();
-        avatar = in.readString();
-        avatar_static = in.readString();
-        header = in.readString();
-        header_static = in.readString();
-        token = in.readString();
-        instance = in.readString();
-        social = in.readString();
-        metaDataSize = in.readInt();
-        for(int i = 0; i < metaDataSize; i++){
-            if( fields == null)
-                fields = new LinkedHashMap<>();
-            String key = in.readString();
-            String value = in.readString();
-            fields.put(key,value);
-        }
-        metaDataSizeVerified = in.readInt();
-        for(int i = 0; i < metaDataSizeVerified; i++){
-            if( fieldsVerified == null)
-                fieldsVerified = new LinkedHashMap<>();
-            String key = in.readString();
-            Boolean value = in.readByte() != 0;
-            fieldsVerified.put(key,value);
-        }
 
 
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(username);
-        dest.writeList(emojis);
-        dest.writeParcelable(moved_to_account, flags);
-        dest.writeString(acct);
-        dest.writeString(display_name);
-        dest.writeString(host);
-        TextUtils.writeToParcel(displayNameSpan, dest, flags);
-        TextUtils.writeToParcel(noteSpan, dest, flags);
-        dest.writeByte((byte) (locked ? 1 : 0));
-        dest.writeByte((byte) (isBot ? 1 : 0));
-        dest.writeInt(followers_count);
-        dest.writeInt(following_count);
-        dest.writeInt(statuses_count);
-        dest.writeString(note);
-        dest.writeString(url);
-        dest.writeString(avatar);
-        dest.writeString(avatar_static);
-        dest.writeString(header);
-        dest.writeString(header_static);
-        dest.writeString(token);
-        dest.writeString(instance);
-        dest.writeString(social);
-        if( fields != null) {
-            metaDataSize = fields.size();
-            dest.writeInt(metaDataSize);
-            for (Map.Entry<String, String> entry : fields.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeString(entry.getValue());
-            }
-        }
-        if( fieldsVerified != null) {
-            metaDataSizeVerified = fieldsVerified.size();
-            dest.writeInt(metaDataSizeVerified);
-            for (Map.Entry<String, Boolean> entry : fieldsVerified.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeByte((byte) (entry.getValue() ? 1 : 0));
-            }
-        }
+        dest.writeString(this.id);
+        dest.writeString(this.uuid);
+        dest.writeString(this.username);
+        TextUtils.writeToParcel(this.displayNameSpan, dest, flags);
+        dest.writeString(this.acct);
+        dest.writeString(this.display_name);
+        dest.writeString(this.stored_displayname);
+        dest.writeByte(this.locked ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.created_at != null ? this.created_at.getTime() : -1);
+        dest.writeInt(this.followers_count);
+        dest.writeInt(this.following_count);
+        dest.writeInt(this.statuses_count);
+        dest.writeString(this.followers_count_str);
+        dest.writeString(this.following_count_str);
+        dest.writeString(this.statuses_count_str);
+        dest.writeString(this.note);
+        TextUtils.writeToParcel(this.noteSpan, dest, flags);
+        dest.writeString(this.url);
+        dest.writeString(this.avatar);
+        dest.writeString(this.avatar_static);
+        dest.writeString(this.header);
+        dest.writeString(this.header_static);
+        dest.writeString(this.token);
+        dest.writeString(this.instance);
+        dest.writeByte(this.isFollowing ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.followType == null ? -1 : this.followType.ordinal());
+        dest.writeByte(this.isMakingAction ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.moved_to_account, flags);
+        dest.writeByte(this.muting_notifications ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.metaDataSize);
+        dest.writeInt(this.metaDataSizeVerified);
+        dest.writeSerializable(this.fields);
+        dest.writeSerializable(this.fieldsVerified);
+        dest.writeSerializable(this.fieldsSpan);
+        dest.writeTypedList(this.emojis);
+        dest.writeString(this.host);
+        dest.writeByte(this.isBot ? (byte) 1 : (byte) 0);
+        dest.writeString(this.social);
+        dest.writeString(this.client_id);
+        dest.writeString(this.client_secret);
+        dest.writeString(this.refresh_token);
     }
+
+    public Account() {
+    }
+
+    protected Account(Parcel in) {
+        this.id = in.readString();
+        this.uuid = in.readString();
+        this.username = in.readString();
+        this.displayNameSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        this.acct = in.readString();
+        this.display_name = in.readString();
+        this.stored_displayname = in.readString();
+        this.locked = in.readByte() != 0;
+        long tmpCreated_at = in.readLong();
+        this.created_at = tmpCreated_at == -1 ? null : new Date(tmpCreated_at);
+        this.followers_count = in.readInt();
+        this.following_count = in.readInt();
+        this.statuses_count = in.readInt();
+        this.followers_count_str = in.readString();
+        this.following_count_str = in.readString();
+        this.statuses_count_str = in.readString();
+        this.note = in.readString();
+        this.noteSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        this.url = in.readString();
+        this.avatar = in.readString();
+        this.avatar_static = in.readString();
+        this.header = in.readString();
+        this.header_static = in.readString();
+        this.token = in.readString();
+        this.instance = in.readString();
+        this.isFollowing = in.readByte() != 0;
+        int tmpFollowType = in.readInt();
+        this.followType = tmpFollowType == -1 ? null : followAction.values()[tmpFollowType];
+        this.isMakingAction = in.readByte() != 0;
+        this.moved_to_account = in.readParcelable(Account.class.getClassLoader());
+        this.muting_notifications = in.readByte() != 0;
+        this.metaDataSize = in.readInt();
+        this.metaDataSizeVerified = in.readInt();
+        this.fields = (LinkedHashMap<String, String>) in.readSerializable();
+        this.fieldsVerified = (LinkedHashMap<String, Boolean>) in.readSerializable();
+        this.fieldsSpan = (LinkedHashMap<SpannableString, SpannableString>) in.readSerializable();
+        this.emojis = in.createTypedArrayList(Emojis.CREATOR);
+        this.host = in.readString();
+        this.isBot = in.readByte() != 0;
+        this.social = in.readString();
+        this.client_id = in.readString();
+        this.client_secret = in.readString();
+        this.refresh_token = in.readString();
+    }
+
+    public static final Creator<Account> CREATOR = new Creator<Account>() {
+        @Override
+        public Account createFromParcel(Parcel source) {
+            return new Account(source);
+        }
+
+        @Override
+        public Account[] newArray(int size) {
+            return new Account[size];
+        }
+    };
 
     public followAction getFollowType() {
         return followType;
@@ -328,22 +355,6 @@ public class Account implements Parcelable {
         NOTHING
     }
 
-
-
-
-    public Account(){ }
-
-    public static final Creator<Account> CREATOR = new Creator<Account>() {
-        @Override
-        public Account createFromParcel(Parcel in) {
-            return new Account(in);
-        }
-
-        @Override
-        public Account[] newArray(int size) {
-            return new Account[size];
-        }
-    };
 
     public String getId() {
         return id;
@@ -504,12 +515,6 @@ public class Account implements Parcelable {
     public void setEmojis(List<Emojis> emojis) {
         this.emojis = emojis;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
 
 
     public boolean isFollowing() {
@@ -851,6 +856,7 @@ public class Account implements Parcelable {
             }
         }
     }
+
 
 
 }
