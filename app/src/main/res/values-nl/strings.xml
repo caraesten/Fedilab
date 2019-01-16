@@ -721,6 +721,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="add_image_to_favorite">Toevoegen aan favorieten</string>
     <string name="leave_a_comment">Reageer</string>
     <string name="share">Delen</string>
+    <string name="my_pictures">My pictures</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
