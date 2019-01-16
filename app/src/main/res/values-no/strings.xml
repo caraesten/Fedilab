@@ -712,6 +712,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="add_image_to_favorite">Add media to favorites</string>
     <string name="leave_a_comment">Leave a comment</string>
     <string name="share">Share</string>
+    <string name="my_pictures">My pictures</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
