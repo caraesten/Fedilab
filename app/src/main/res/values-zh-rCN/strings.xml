@@ -720,6 +720,7 @@
     <string name="add_image_to_favorite">添加媒体到收藏</string>
     <string name="leave_a_comment">发表评论</string>
     <string name="share">分享</string>
+    <string name="my_pictures">My pictures</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
