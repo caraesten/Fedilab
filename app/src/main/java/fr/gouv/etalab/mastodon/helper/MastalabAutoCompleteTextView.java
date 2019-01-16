@@ -11,7 +11,6 @@ import android.support.annotation.Px;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 
-import com.vanniktech.emoji.EmojiEditTextInterface;
 import com.vanniktech.emoji.EmojiManager;
 import com.vanniktech.emoji.emoji.Emoji;
 
