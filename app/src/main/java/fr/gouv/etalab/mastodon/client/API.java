@@ -2066,16 +2066,12 @@ public class API {
      * Retrieves Accounts and feeds when searching *synchronously*
      *
      * @param query  String search
-     * @return List<Account>
+     * @return Results
      */
     public Results search(String query) {
 
         HashMap<String, String> params = new HashMap<>();
-        try {
-            params.put("q", URLEncoder.encode(query, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            params.put("q", query);
-        }
+        params.put("q", query);
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/search"), 60, params, prefKeyOauthTokenT);
