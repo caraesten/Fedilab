@@ -33,6 +33,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
@@ -124,90 +125,125 @@ public class Status implements Parcelable{
     private String webviewURL = null;
 
     private boolean isBoostAnimated = false, isFavAnimated = false;
-    protected Status(Parcel in) {
-        id = in.readString();
-        uri = in.readString();
-        url = in.readString();
-        in_reply_to_id = in.readString();
-        conversationId = in.readString();
-        in_reply_to_account_id = in.readString();
-        content = in.readString();
-        contentCW = in.readString();
-        created_at =  (java.util.Date) in.readSerializable();
-        visibility = in.readString();
-        media_attachments = in.readArrayList(Attachment.class.getClassLoader());
-        reblog = in.readParcelable(Status.class.getClassLoader());
-        mentions = in.readArrayList(Mention.class.getClassLoader());
-        account = in.readParcelable(Account.class.getClassLoader());
-        try {
-            application = in.readParcelable(Application.class.getClassLoader());
-        }catch (Exception e){
-            application = new Application();
-        }
-        tags = in.readArrayList(Tag.class.getClassLoader());
-        contentTranslated = in.readString();
-        reblogs_count = in.readInt();
-        itemViewType = in.readInt();
-        favourites_count = in.readInt();
-        replies_count = in.readInt();
-        reblogged = in.readByte() != 0;
-        favourited = in.readByte() != 0;
-        muted = in.readByte() != 0;
-        sensitive = in.readByte() != 0;
-        language = in.readString();
-        attachmentShown = in.readByte() != 0;
-        spoilerShown = in.readByte() != 0;
-        isTranslated = in.readByte() != 0;
-        isTranslationShown = in.readByte() != 0;
-        isNew = in.readByte() != 0;
-        pinned = in.readByte() != 0;
-        emojis = in.readArrayList(Emojis.class.getClassLoader());
-        card = in.readParcelable(Card.class.getClassLoader());
-    }
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(uri);
-        dest.writeString(url);
-        dest.writeString(in_reply_to_id);
-        dest.writeString(conversationId);
-        dest.writeString(in_reply_to_account_id);
-        dest.writeString(content);
-        dest.writeString(contentCW);
-        dest.writeSerializable(created_at);
-        dest.writeString(visibility);
-        dest.writeList(media_attachments);
-        dest.writeParcelable(reblog, flags);
-        dest.writeList(mentions);
-        dest.writeParcelable(account, flags);
-        dest.writeParcelable(application, flags);
-        dest.writeList(tags);
-        dest.writeString(contentTranslated);
-        dest.writeInt(reblogs_count);
-        dest.writeInt(itemViewType);
-        dest.writeInt(favourites_count);
-        dest.writeInt(replies_count);
-        dest.writeByte((byte) (reblogged ? 1 : 0));
-        dest.writeByte((byte) (favourited ? 1 : 0));
-        dest.writeByte((byte) (muted ? 1 : 0));
-        dest.writeByte((byte) (sensitive ? 1 : 0));
-        dest.writeString(language);
-        dest.writeByte((byte) (attachmentShown ? 1 : 0));
-        dest.writeByte((byte) (spoilerShown ? 1 : 0));
-        dest.writeByte((byte) (isTranslated ? 1 : 0));
-        dest.writeByte((byte) (isTranslationShown ? 1 : 0));
-        dest.writeByte((byte) (isNew ? 1 : 0));
-        dest.writeByte((byte) (pinned ? 1 : 0));
-        dest.writeList(emojis);
-        dest.writeParcelable(card, flags);
+        dest.writeString(this.id);
+        dest.writeString(this.uri);
+        dest.writeString(this.url);
+        dest.writeParcelable(this.account, flags);
+        dest.writeString(this.in_reply_to_id);
+        dest.writeString(this.in_reply_to_account_id);
+        dest.writeParcelable(this.reblog, flags);
+        dest.writeLong(this.created_at != null ? this.created_at.getTime() : -1);
+        dest.writeInt(this.reblogs_count);
+        dest.writeInt(this.favourites_count);
+        dest.writeInt(this.replies_count);
+        dest.writeByte(this.reblogged ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.favourited ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.muted ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.pinned ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.sensitive ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.bookmarked ? (byte) 1 : (byte) 0);
+        dest.writeString(this.visibility);
+        dest.writeByte(this.attachmentShown ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.spoilerShown ? (byte) 1 : (byte) 0);
+        dest.writeTypedList(this.media_attachments);
+        dest.writeParcelable(this.art_attachment, flags);
+        dest.writeTypedList(this.mentions);
+        dest.writeTypedList(this.emojis);
+        dest.writeTypedList(this.tags);
+        dest.writeParcelable(this.application, flags);
+        dest.writeParcelable(this.card, flags);
+        dest.writeString(this.language);
+        dest.writeByte(this.isTranslated ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isEmojiFound ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isEmojiTranslateFound ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isClickable ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isTranslationShown ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isNew ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isVisible ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.fetchMore ? (byte) 1 : (byte) 0);
+        dest.writeString(this.content);
+        dest.writeString(this.contentCW);
+        dest.writeString(this.contentTranslated);
+        TextUtils.writeToParcel(this.contentSpan, dest, flags);
+        TextUtils.writeToParcel(this.displayNameSpan, dest, flags);
+        TextUtils.writeToParcel(this.contentSpanCW, dest, flags);
+        TextUtils.writeToParcel(this.contentSpanTranslated, dest, flags);
+        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+        dest.writeInt(this.itemViewType);
+        dest.writeString(this.conversationId);
+        dest.writeByte(this.isExpanded ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.numberLines);
+        dest.writeStringList(this.conversationProfilePicture);
+        dest.writeString(this.webviewURL);
+        dest.writeByte(this.isBoostAnimated ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isFavAnimated ? (byte) 1 : (byte) 0);
     }
 
+    protected Status(Parcel in) {
+        this.id = in.readString();
+        this.uri = in.readString();
+        this.url = in.readString();
+        this.account = in.readParcelable(Account.class.getClassLoader());
+        this.in_reply_to_id = in.readString();
+        this.in_reply_to_account_id = in.readString();
+        this.reblog = in.readParcelable(Status.class.getClassLoader());
+        long tmpCreated_at = in.readLong();
+        this.created_at = tmpCreated_at == -1 ? null : new Date(tmpCreated_at);
+        this.reblogs_count = in.readInt();
+        this.favourites_count = in.readInt();
+        this.replies_count = in.readInt();
+        this.reblogged = in.readByte() != 0;
+        this.favourited = in.readByte() != 0;
+        this.muted = in.readByte() != 0;
+        this.pinned = in.readByte() != 0;
+        this.sensitive = in.readByte() != 0;
+        this.bookmarked = in.readByte() != 0;
+        this.visibility = in.readString();
+        this.attachmentShown = in.readByte() != 0;
+        this.spoilerShown = in.readByte() != 0;
+        this.media_attachments = in.createTypedArrayList(Attachment.CREATOR);
+        this.art_attachment = in.readParcelable(Attachment.class.getClassLoader());
+        this.mentions = in.createTypedArrayList(Mention.CREATOR);
+        this.emojis = in.createTypedArrayList(Emojis.CREATOR);
+        this.tags = in.createTypedArrayList(Tag.CREATOR);
+        this.application = in.readParcelable(Application.class.getClassLoader());
+        this.card = in.readParcelable(Card.class.getClassLoader());
+        this.language = in.readString();
+        this.isTranslated = in.readByte() != 0;
+        this.isEmojiFound = in.readByte() != 0;
+        this.isEmojiTranslateFound = in.readByte() != 0;
+        this.isClickable = in.readByte() != 0;
+        this.isTranslationShown = in.readByte() != 0;
+        this.isNew = in.readByte() != 0;
+        this.isVisible = in.readByte() != 0;
+        this.fetchMore = in.readByte() != 0;
+        this.content = in.readString();
+        this.contentCW = in.readString();
+        this.contentTranslated = in.readString();
+        this.contentSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        this.displayNameSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        this.contentSpanCW = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        this.contentSpanTranslated = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        int tmpType = in.readInt();
+        this.type = tmpType == -1 ? null : RetrieveFeedsAsyncTask.Type.values()[tmpType];
+        this.itemViewType = in.readInt();
+        this.conversationId = in.readString();
+        this.isExpanded = in.readByte() != 0;
+        this.numberLines = in.readInt();
+        this.conversationProfilePicture = in.createStringArrayList();
+        this.webviewURL = in.readString();
+        this.isBoostAnimated = in.readByte() != 0;
+        this.isFavAnimated = in.readByte() != 0;
+    }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
         @Override
-        public Status createFromParcel(Parcel in) {
-            return new Status(in);
+        public Status createFromParcel(Parcel source) {
+            return new Status(source);
         }
 
         @Override
@@ -215,6 +251,7 @@ public class Status implements Parcelable{
             return new Status[size];
         }
     };
+
 
     public String getId() {
         return id;
@@ -398,11 +435,6 @@ public class Status implements Parcelable{
 
     public void setAttachmentShown(boolean attachmentShown) {
         this.attachmentShown = attachmentShown;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
 
@@ -1203,4 +1235,11 @@ public class Status implements Parcelable{
     public void setArt_attachment(Attachment art_attachment) {
         this.art_attachment = art_attachment;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
 }
