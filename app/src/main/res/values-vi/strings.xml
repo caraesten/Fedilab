@@ -229,6 +229,9 @@ và %d thông báo khác</item>
         <item quantity="other">và một cái còi khác để khám phá
 và %d toots khác để khám phá</item>
     </plurals>
+    <plurals name="likes">
+        <item quantity="other">%d likes</item>
+    </plurals>
     <string name="delete_notification_ask">Xóa thông báo?</string>
     <string name="delete_notification_ask_all">Xóa tất cả các thông báo?</string>
     <string name="delete_notification">Thông báo đã bị xóa!</string>
@@ -711,6 +714,11 @@ và %d toots khác để khám phá</item>
     <string name="no_video_uploaded">No videos uploaded yet!</string>
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
+    <string name="no_video_to_display">No videos to display!</string>
+    <string name="add_image_to_favorite">Add media to favorites</string>
+    <string name="leave_a_comment">Leave a comment</string>
+    <string name="share">Share</string>
+    <string name="my_pictures">My pictures</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

@@ -236,6 +236,12 @@
         <item quantity="many">a %d dalších toots k zobrazení</item>
         <item quantity="other">a %d dalších toots k zobrazení</item>
     </plurals>
+    <plurals name="likes">
+        <item quantity="one">%d like</item>
+        <item quantity="few">%d likes</item>
+        <item quantity="many">%d likes</item>
+        <item quantity="other">%d likes</item>
+    </plurals>
     <string name="delete_notification_ask">Smazat oznámení?</string>
     <string name="delete_notification_ask_all">Smazat všechna oznámení?</string>
     <string name="delete_notification">Oznámení bylo smazáno!</string>
@@ -718,6 +724,11 @@ Začněte psát první znaky pro návrh.\n\n
     <string name="no_video_uploaded">No videos uploaded yet!</string>
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
+    <string name="no_video_to_display">No videos to display!</string>
+    <string name="add_image_to_favorite">Add media to favorites</string>
+    <string name="leave_a_comment">Leave a comment</string>
+    <string name="share">Share</string>
+    <string name="my_pictures">My pictures</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
