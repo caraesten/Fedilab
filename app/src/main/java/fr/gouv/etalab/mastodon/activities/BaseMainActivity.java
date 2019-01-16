@@ -2527,6 +2527,9 @@ public abstract class BaseMainActivity extends BaseActivity
         tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                if( tabLayout.getTabAt(position) == null || tabLayout.getTabAt(position).getText() == null){
+                    return false;
+                }
                 String tabName = tabLayout.getTabAt(position).getText().toString().trim();
 
                 SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();

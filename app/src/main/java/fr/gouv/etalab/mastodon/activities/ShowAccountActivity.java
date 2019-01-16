@@ -524,7 +524,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
                 String label = (String)pair.getKey();
-                if( label != null && fieldsVerified.containsKey(label)) {
+                if( label != null && fieldsVerified != null && fieldsVerified.containsKey(label)) {
                     boolean verified = fieldsVerified.get(label);
 
                     LinearLayout field;
