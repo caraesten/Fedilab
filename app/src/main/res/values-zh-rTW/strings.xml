@@ -228,7 +228,7 @@
         <item quantity="other">和 %d 個其他的嘟文待發現</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="other">%d likes</item>
+        <item quantity="other">%d 個喜歡</item>
     </plurals>
     <string name="delete_notification_ask">刪除通知？</string>
     <string name="delete_notification_ask_all">刪除全部通知？</string>
@@ -716,11 +716,11 @@
     <string name="no_video_uploaded">未有已上傳的影片！</string>
     <string name="display_nsfw_videos">顯示 NSFW 影片</string>
     <string name="default_channel_of">預設的 %s 頻道</string>
-    <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
-    <string name="leave_a_comment">Leave a comment</string>
-    <string name="share">Share</string>
-    <string name="my_pictures">My pictures</string>
+    <string name="no_video_to_display">沒有可以顯示的影片</string>
+    <string name="add_image_to_favorite">新增媒體到收藏</string>
+    <string name="leave_a_comment">留下評論</string>
+    <string name="share">分享</string>
+    <string name="my_pictures">我的圖片</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

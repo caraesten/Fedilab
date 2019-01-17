@@ -231,8 +231,8 @@
         <item quantity="other">et %d autres pouets à découvrir</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d aime</item>
+        <item quantity="other">%d aimes</item>
     </plurals>
     <string name="delete_notification_ask">Supprimer une notification ?</string>
     <string name="delete_notification_ask_all">Supprimer toutes les notifications ?</string>
@@ -719,7 +719,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="default_channel_of">Chaîne par défaut de %s</string>
     <string name="no_video_to_display">No videos to display!</string>
     <string name="add_image_to_favorite">Add media to favorites</string>
-    <string name="leave_a_comment">Leave a comment</string>
+    <string name="leave_a_comment">Laisser un commentaire</string>
     <string name="share">Partager</string>
     <string name="my_pictures">Mes images</string>
     <!-- end languages -->
