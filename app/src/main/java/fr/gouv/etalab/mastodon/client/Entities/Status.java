@@ -158,9 +158,6 @@ public class Status implements Parcelable{
         dest.writeParcelable(this.card, flags);
         dest.writeString(this.language);
         dest.writeByte(this.isTranslated ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isEmojiFound ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isEmojiTranslateFound ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isClickable ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isTranslationShown ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isNew ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isVisible ? (byte) 1 : (byte) 0);
@@ -214,9 +211,6 @@ public class Status implements Parcelable{
         this.card = in.readParcelable(Card.class.getClassLoader());
         this.language = in.readString();
         this.isTranslated = in.readByte() != 0;
-        this.isEmojiFound = in.readByte() != 0;
-        this.isEmojiTranslateFound = in.readByte() != 0;
-        this.isClickable = in.readByte() != 0;
         this.isTranslationShown = in.readByte() != 0;
         this.isNew = in.readByte() != 0;
         this.isVisible = in.readByte() != 0;
