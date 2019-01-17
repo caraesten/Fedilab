@@ -231,8 +231,8 @@
         <item quantity="other">e un altro toot per scoprire</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d mi piace</item>
+        <item quantity="other">%d mi piace</item>
     </plurals>
     <string name="delete_notification_ask">Eliminare una notifica?</string>
     <string name="delete_notification_ask_all">Eliminare tutte le notifiche?</string>
