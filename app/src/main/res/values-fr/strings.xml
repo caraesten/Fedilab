@@ -724,7 +724,6 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="my_pictures">Mes images</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
         <item>Webview</item>
         <item>Flux direct</item>
     </string-array>

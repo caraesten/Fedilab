@@ -729,7 +729,7 @@
     <string name="my_pictures">My pictures</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
+
         <item>Widok sieci Web</item>
         <item>Transmisja bezpośrednia</item>
     </string-array>

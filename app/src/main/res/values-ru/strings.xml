@@ -735,7 +735,7 @@
     <string name="my_pictures">Мои изображения</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
+
         <item>Webview</item>
         <item>Прямой поток</item>
     </string-array>

@@ -720,7 +720,7 @@
     <string name="my_pictures">My pictures</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
+
         <item>Webview</item>
         <item>Direct stream</item>
     </string-array>

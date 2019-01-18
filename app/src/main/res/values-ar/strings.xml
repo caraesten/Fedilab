@@ -741,7 +741,6 @@
     <string name="my_pictures">My pictures</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>تورنت</item>
         <item>Webview</item>
         <item>تدفق مباشر</item>
     </string-array>

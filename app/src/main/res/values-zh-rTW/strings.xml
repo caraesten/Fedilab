@@ -723,7 +723,7 @@
     <string name="my_pictures">我的圖片</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
+
         <item>Webview</item>
         <item>直接串流</item>
     </string-array>

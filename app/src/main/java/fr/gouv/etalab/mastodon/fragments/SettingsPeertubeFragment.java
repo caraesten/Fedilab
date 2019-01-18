@@ -59,7 +59,8 @@ public class SettingsPeertubeFragment extends Fragment {
         ArrayAdapter<CharSequence> video_mode_spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.settings_video_mode, android.R.layout.simple_spinner_item);
         video_mode_spinner.setAdapter(video_mode_spinnerAdapter);
-
+        if (videoMode == Helper.VIDEO_MODE_TORRENT)
+            videoMode = 2;
         video_mode_spinner.setSelection(videoMode);
         video_mode_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -67,10 +68,10 @@ public class SettingsPeertubeFragment extends Fragment {
                 if( count1 > 0 ) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     switch (position) {
-                        case 0:
+                        /*case 0:
                             editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_TORRENT);
                             editor.apply();
-                            break;
+                            break;*/
                         case 1:
                             editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_WEBVIEW);
                             editor.apply();

@@ -725,7 +725,6 @@
     <string name="my_pictures">My pictures</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
         <item>Web ikuspegia</item>
         <item>Zuzeneko streaming-a</item>
     </string-array>
