@@ -232,7 +232,7 @@
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d like</item>
-        <item quantity="other">%d gústame</item>
+        <item quantity="other">%d gústanme</item>
     </plurals>
     <string name="delete_notification_ask">Borrar notificación?</string>
     <string name="delete_notification_ask_all">Borrar todas as notificacións?</string>
@@ -725,7 +725,7 @@
     <string name="add_image_to_favorite">Engadir medios a favoritos</string>
     <string name="leave_a_comment">Deixar comentario</string>
     <string name="share">Compartir</string>
-    <string name="my_pictures">My pictures</string>
+    <string name="my_pictures">As miñas fotos</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
