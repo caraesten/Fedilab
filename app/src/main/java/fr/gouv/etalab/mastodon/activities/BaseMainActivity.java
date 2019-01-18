@@ -81,13 +81,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1258,55 +1256,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                 startActivity(intent);
                                 return true;
                             case R.id.action_cache:
-
-                                new AsyncTask<Void, Void, Void>() {
-                                    private float cacheSize;
-                                    @Override
-                                    protected Void doInBackground(Void... params) {
-                                        long sizeCache = Helper.cacheSize(getCacheDir().getParentFile());
-                                        cacheSize = 0;
-                                        if( sizeCache > 0 ) {
-                                            cacheSize = (float) sizeCache / 1000000.0f;
-                                        }
-                                        return null;
-                                    }
-                                    @Override
-                                    protected void onPostExecute(Void result){
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(BaseMainActivity.this, style);
-                                        builder.setTitle(R.string.cache_title);
-
-                                        final float finalCacheSize = cacheSize;
-                                        builder.setMessage(getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), getString(R.string.cache_units))))
-                                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        // continue with delete
-                                                        AsyncTask.execute(new Runnable() {
-                                                            @Override
-                                                            public void run() {
-                                                                try {
-                                                                    String path = getCacheDir().getParentFile().getPath();
-                                                                    File dir = new File(path);
-                                                                    if (dir.isDirectory()) {
-                                                                        Helper.deleteDir(dir);
-                                                                    }
-                                                                } catch (Exception ignored) {}
-                                                            }
-                                                        });
-                                                        Toasty.success(BaseMainActivity.this, getString(R.string.toast_cache_clear,String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
-                                                        dialog.dismiss();
-                                                    }
-                                                })
-                                                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        dialog.dismiss();
-                                                    }
-                                                })
-                                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                                .show();
-                                    }
-                                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-
+                                new Helper.CacheTask(BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 return true;
                             case R.id.action_size:
                                 final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

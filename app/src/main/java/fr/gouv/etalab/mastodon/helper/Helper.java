@@ -130,6 +130,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.security.MessageDigest;
@@ -3454,5 +3455,70 @@ public class Helper {
             materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.black));
         }
 
+    }
+
+    public static class CacheTask extends AsyncTask<Void, Void, Void> {
+        private float cacheSize;
+        private WeakReference<Context> contextReference;
+
+        public CacheTask(Context context) {
+            contextReference = new WeakReference<>(context);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            long sizeCache = Helper.cacheSize(contextReference.get().getCacheDir().getParentFile());
+            cacheSize = 0;
+            if (sizeCache > 0) {
+                cacheSize = (float) sizeCache / 1000000.0f;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            int style;
+            SharedPreferences sharedpreferences = contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if (theme == Helper.THEME_DARK) {
+                style = R.style.DialogDark;
+            } else if (theme == Helper.THEME_BLACK) {
+                style = R.style.DialogBlack;
+            } else {
+                style = R.style.Dialog;
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(contextReference.get(), style);
+            builder.setTitle(R.string.cache_title);
+
+            final float finalCacheSize = cacheSize;
+            builder.setMessage(contextReference.get().getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), contextReference.get().getString(R.string.cache_units))))
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            AsyncTask.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        String path = contextReference.get().getCacheDir().getParentFile().getPath();
+                                        File dir = new File(path);
+                                        if (dir.isDirectory()) {
+                                            Helper.deleteDir(dir);
+                                        }
+                                    } catch (Exception ignored) {
+                                    }
+                                }
+                            });
+                            Toasty.success(contextReference.get(), contextReference.get().getString(R.string.toast_cache_clear, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), contextReference.get().getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 }
