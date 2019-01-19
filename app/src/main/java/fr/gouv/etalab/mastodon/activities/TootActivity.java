@@ -499,35 +499,7 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         toot_it.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toot_it.setEnabled(false);
-                if(toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0){
-                    Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
-                    toot_it.setEnabled(true);
-                    return;
-                }
-                boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
-                int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE, Helper.SPLIT_TOOT_SIZE);
-                String tootContent;
-                if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
-                    split_toot_size -= toot_cw_content.getText().toString().trim().length();
-                if( !split_toot || (toot_content.getText().toString().trim().length()  < split_toot_size)){
-                    tootContent = toot_content.getText().toString().trim();
-                }else{
-                    splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
-                    tootContent = splitToot.get(0);
-                    stepSpliToot = 1;
-                }
-                Status toot = new Status();
-                toot.setSensitive(isSensitive);
-                toot.setMedia_attachments(attachments);
-                if( toot_cw_content.getText().toString().trim().length() > 0)
-                    toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
-                toot.setVisibility(visibility);
-                if( tootReply != null)
-                    toot.setIn_reply_to_id(tootReply.getId());
-                toot.setContent(tootContent);
-                new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
+                sendToot(null);
             }
         });
 
@@ -1259,29 +1231,33 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                         if( (time - new Date().getTime()) < 60000 ){
                             Toasty.warning(getApplicationContext(), getString(R.string.toot_scheduled_date), Toast.LENGTH_LONG).show();
                         }else {
-                            //Store the toot as draft first
-                            storeToot(false, false);
-                            //Schedules the toot
-                            ScheduledTootsSyncJob.schedule(getApplicationContext(), currentToId, time);
-                            //Clear content
-                            toot_content.setText("");
-                            toot_cw_content.setText("");
-                            toot_space_left.setText("0");
-                            if( attachments != null) {
-                                for (Attachment attachment : attachments) {
-                                    View namebar = findViewById(Integer.parseInt(attachment.getId()));
-                                    if (namebar != null && namebar.getParent() != null)
-                                        ((ViewGroup) namebar.getParent()).removeView(namebar);
-                                }
-                                List<Attachment> tmp_attachment = new ArrayList<>();
-                                tmp_attachment.addAll(attachments);
-                                attachments.removeAll(tmp_attachment);
-                                tmp_attachment.clear();
+                            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                            String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+                            Version currentVersion = new Version(instanceVersion);
+                            Version minVersion = new Version("2.7");
+                            if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                                AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this, style);
+                                builderSingle.setTitle(getString(R.string.choose_schedule));
+                                builderSingle.setNegativeButton(R.string.device_schedule, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        deviceSchedule(time);
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builderSingle.setPositiveButton(R.string.server_schedule, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(final DialogInterface dialog, int which) {
+
+                                        serverSchedule(time);
+                                    }
+                                });
+                                builderSingle.show();
+
+                            } else {
+                                deviceSchedule(time);
                             }
-                            isSensitive = false;
-                            toot_sensitive.setVisibility(View.GONE);
-                            currentToId = -1;
-                            Toasty.info(TootActivity.this,getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
+
                             alertDialog.dismiss();
                         }
                     }
@@ -1291,6 +1267,80 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    private void sendToot(String timestamp){
+        toot_it.setEnabled(false);
+        if(toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0){
+            Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
+            toot_it.setEnabled(true);
+            return;
+        }
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
+        int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE, Helper.SPLIT_TOOT_SIZE);
+        String tootContent;
+        if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
+            split_toot_size -= toot_cw_content.getText().toString().trim().length();
+        if( !split_toot || (toot_content.getText().toString().trim().length()  < split_toot_size)){
+            tootContent = toot_content.getText().toString().trim();
+        }else{
+            splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
+            tootContent = splitToot.get(0);
+            stepSpliToot = 1;
+        }
+        Status toot = new Status();
+        toot.setSensitive(isSensitive);
+        toot.setMedia_attachments(attachments);
+        if( toot_cw_content.getText().toString().trim().length() > 0)
+            toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
+        toot.setVisibility(visibility);
+        if( tootReply != null)
+            toot.setIn_reply_to_id(tootReply.getId());
+        toot.setContent(tootContent);
+        if( timestamp != null ){
+            toot.setScheduled_at(timestamp);
+        }
+        new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+    }
+
+
+    private void serverSchedule(long time){
+        sendToot(String.valueOf(time));
+        resetForNextToot();
+    }
+
+    private void deviceSchedule(long time){
+        //Store the toot as draft first
+        storeToot(false, false);
+        //Schedules the toot
+        ScheduledTootsSyncJob.schedule(getApplicationContext(), currentToId, time);
+        resetForNextToot();
+    }
+
+
+    private void resetForNextToot(){
+        //Clear content
+        toot_content.setText("");
+        toot_cw_content.setText("");
+        toot_space_left.setText("0");
+        if( attachments != null) {
+            for (Attachment attachment : attachments) {
+                View namebar = findViewById(Integer.parseInt(attachment.getId()));
+                if (namebar != null && namebar.getParent() != null)
+                    ((ViewGroup) namebar.getParent()).removeView(namebar);
+            }
+            List<Attachment> tmp_attachment = new ArrayList<>();
+            tmp_attachment.addAll(attachments);
+            attachments.removeAll(tmp_attachment);
+            tmp_attachment.clear();
+        }
+        isSensitive = false;
+        toot_sensitive.setVisibility(View.GONE);
+        currentToId = -1;
+        Toasty.info(TootActivity.this,getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
     }
 
     @Override

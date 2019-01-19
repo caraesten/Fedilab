@@ -90,7 +90,8 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         PF_HOME,
         PF_LOCAL,
         PF_DISCOVER,
-        PF_NOTIFICATION
+        PF_NOTIFICATION,
+        SCHEDULED_TOOTS
     }
 
 
@@ -167,6 +168,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case PUBLIC:
                 apiResponse = api.getPublicTimeline(false, max_id);
+                break;
+            case SCHEDULED_TOOTS:
+                apiResponse = api.scheduledAction("GET", null, max_id);
                 break;
             case DIRECT:
                 apiResponse = api.getDirectTimeline(max_id);

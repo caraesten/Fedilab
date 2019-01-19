@@ -13,10 +13,23 @@ package fr.gouv.etalab.mastodon.client;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.content.Context;
+
 import java.util.List;
-import fr.gouv.etalab.mastodon.client.Entities.*;
+
+import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Conversation;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.Filters;
+import fr.gouv.etalab.mastodon.client.Entities.HowToVideo;
+import fr.gouv.etalab.mastodon.client.Entities.Instance;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Peertube;
+import fr.gouv.etalab.mastodon.client.Entities.Relationship;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 
 /**
  * Created by Thomas on 03/06/2017.
@@ -40,7 +53,7 @@ public class APIResponse {
     private fr.gouv.etalab.mastodon.client.Entities.Error error = null;
     private String since_id, max_id;
     private Instance instance;
-
+    private List<StoredStatus> storedStatuses;
     public List<Account> getAccounts() {
         return accounts;
     }
@@ -167,5 +180,13 @@ public class APIResponse {
 
     public void setConversations(List<Conversation> conversations) {
         this.conversations = conversations;
+    }
+
+    public List<StoredStatus> getStoredStatuses() {
+        return storedStatuses;
+    }
+
+    public void setStoredStatuses(List<StoredStatus> storedStatuses) {
+        this.storedStatuses = storedStatuses;
     }
 }

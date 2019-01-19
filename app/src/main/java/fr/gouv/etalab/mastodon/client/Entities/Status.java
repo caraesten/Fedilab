@@ -125,7 +125,7 @@ public class Status implements Parcelable{
     private String webviewURL = null;
 
     private boolean isBoostAnimated = false, isFavAnimated = false;
-
+    private String scheduled_at;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -178,6 +178,7 @@ public class Status implements Parcelable{
         dest.writeString(this.webviewURL);
         dest.writeByte(this.isBoostAnimated ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isFavAnimated ? (byte) 1 : (byte) 0);
+        dest.writeString(this.scheduled_at);
     }
 
     protected Status(Parcel in) {
@@ -232,6 +233,7 @@ public class Status implements Parcelable{
         this.webviewURL = in.readString();
         this.isBoostAnimated = in.readByte() != 0;
         this.isFavAnimated = in.readByte() != 0;
+        this.scheduled_at = in.readString();
     }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -1236,4 +1238,11 @@ public class Status implements Parcelable{
     }
 
 
+    public String getScheduled_at() {
+        return scheduled_at;
+    }
+
+    public void setScheduled_at(String scheduled_at) {
+        this.scheduled_at = scheduled_at;
+    }
 }
