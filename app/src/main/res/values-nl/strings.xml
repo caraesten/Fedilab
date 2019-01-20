@@ -703,7 +703,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="license">Licentie</string>
     <string name="category">Categorie</string>
     <string name="language">Taal</string>
-    <string name="peertube_nsfw">Deze video bevat volwassen of expliciete inhoud</string>
+    <string name="peertube_nsfw">Deze video bevat volwassen of gevoelige inhoud</string>
     <string name="peertube_enable_comments">Video-opmerkingen toestaan</string>
     <string name="update_video">Video updaten</string>
     <string name="description">Beschrijving</string>
