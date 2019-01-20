@@ -1317,7 +1317,6 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if( tootReply != null)
             toot.setIn_reply_to_id(tootReply.getId());
         toot.setContent(tootContent);
-
         if( timestamp == null)
             if( scheduledstatus == null)
                 new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
