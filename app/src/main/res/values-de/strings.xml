@@ -719,7 +719,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="device_schedule">Vom Gerät</string>
     <string name="server_schedule">Vom Server</string>
     <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
+    <string name="toots_client">Toots (Gerät)</string>
     <string name="modify">Bearbeiten</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
