@@ -1227,8 +1227,9 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                                 datePicker.getDayOfMonth(),
                                 hour,
                                 minute);
-                        long time = calendar.getTimeInMillis();
-                        if( (time - new Date().getTime()) < 60000 ){
+                        final long[] time = {calendar.getTimeInMillis()};
+                        final String date = Helper.dateToString(new Date(calendar.getTimeInMillis()));
+                        if( (time[0] - new Date().getTime()) < 60000 ){
                             Toasty.warning(getApplicationContext(), getString(R.string.toot_scheduled_date), Toast.LENGTH_LONG).show();
                         }else {
                             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
@@ -1241,21 +1242,20 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
                                 builderSingle.setNegativeButton(R.string.device_schedule, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        deviceSchedule(time);
+                                        deviceSchedule(time[0]);
                                         dialog.dismiss();
                                     }
                                 });
                                 builderSingle.setPositiveButton(R.string.server_schedule, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(final DialogInterface dialog, int which) {
-
-                                        serverSchedule(time);
+                                        serverSchedule(date);
                                     }
                                 });
                                 builderSingle.show();
 
                             } else {
-                                deviceSchedule(time);
+                                deviceSchedule(time[0]);
                             }
 
                             alertDialog.dismiss();
@@ -1299,16 +1299,19 @@ public class TootActivity extends BaseActivity implements OnRetrieveSearcAccount
         if( tootReply != null)
             toot.setIn_reply_to_id(tootReply.getId());
         toot.setContent(tootContent);
-        if( timestamp != null ){
+
+        if( timestamp == null)
+            new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else {
             toot.setScheduled_at(timestamp);
+            new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
-        new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
 
-    private void serverSchedule(long time){
-        sendToot(String.valueOf(time));
+    private void serverSchedule(String time){
+        sendToot(time);
         resetForNextToot();
     }
 

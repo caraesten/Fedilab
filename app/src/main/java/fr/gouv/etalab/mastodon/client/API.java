@@ -57,6 +57,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
+import fr.gouv.etalab.mastodon.client.Entities.Schedule;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
@@ -1800,7 +1801,7 @@ public class API {
                         params.put("spoiler_text", status.getSpoiler_text());
                     }
                 params.put("visibility", status.getVisibility());
-                break;
+            break;
             default:
                 return -1;
         }
@@ -1897,7 +1898,6 @@ public class API {
                 response = httpsConnection.get(getAbsoluteUrl(String.format("/scheduled_statuses/%s", status.getId())), 60, params, prefKeyOauthTokenT);
             else if( call.equals("DELETE"))
                 responseCode = httpsConnection.delete(getAbsoluteUrl(String.format("/scheduled_statuses/%s", status.getId())), 60, params, prefKeyOauthTokenT);
-
             if(call.equals("GET")) {
                 apiResponse.setSince_id(httpsConnection.getSince_id());
                 apiResponse.setMax_id(httpsConnection.getMax_id());
@@ -1917,22 +1917,21 @@ public class API {
                 st.setStatus(statusreturned);
                 storedStatus.add(st);
             }else if (response != null && call.equals("GET")) {
-                List<Status> statusreturned = parseStatuses(context, new JSONArray(response));
-                for(Status status1: statusreturned){
+                List<Schedule> scheduleList = parseSchedule(context, new JSONArray(response));
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                for(Schedule schedule: scheduleList){
                     StoredStatus st = new StoredStatus();
-                    st.setCreation_date(status.getCreated_at());
+                    st.setCreation_date(null);
                     st.setId(-1);
                     st.setJobId(-1);
-                    st.setScheduled_date(new Date(Long.parseLong(status.getScheduled_at())));
+                    st.setScheduled_date(schedule.getScheduled_at());
                     st.setStatusReply(null);
                     st.setSent_date(null);
-                    final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                    String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     st.setUserId(userId);
-                    st.setStatus(status1);
+                    st.setStatus(schedule.getStatus());
                     storedStatus.add(st);
                 }
-                storedStatus.addAll(storedStatus);
             }
 
         } catch (HttpsConnection.HttpsConnectionException e) {
@@ -1975,6 +1974,8 @@ public class API {
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(12));
             params.put("media_ids[]", parameters.toString());
         }
+        if( status.getScheduled_at() != null)
+            params.put("scheduled_at", status.getScheduled_at());
         if( status.isSensitive())
             params.put("sensitive", Boolean.toString(status.isSensitive()));
         if( status.getSpoiler_text() != null)
@@ -1985,7 +1986,6 @@ public class API {
             }
         params.put("visibility", status.getVisibility());
         statuses = new ArrayList<>();
-
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.post(getAbsoluteUrl("/statuses"), 60, params, prefKeyOauthTokenT);
@@ -3195,12 +3195,43 @@ public class API {
         }catch (JSONException ignored) {}
         return conversation;
     }
+
+
+    /**
+     * Parse json response for several scheduled toots
+     * @param jsonArray JSONArray
+     * @return List<Status>
+     */
+    private static List<Schedule> parseSchedule(Context context, JSONArray jsonArray){
+
+        List<Schedule> schedules = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ){
+                Schedule schedule = new Schedule();
+                JSONObject resobj = jsonArray.getJSONObject(i).getJSONObject("params");
+                Status status = parseSchedule(context, resobj);
+                List<Attachment> attachements = parseAttachmentResponse(jsonArray.getJSONObject(i).getJSONArray("media_attachments"));
+                status.setMedia_attachments((ArrayList<Attachment>) attachements);
+                schedule.setStatus(status);
+                schedule.setAttachmentList(attachements);
+                schedules.add(schedule);
+                schedule.setId(jsonArray.getJSONObject(i).get("id").toString());
+                schedule.setScheduled_at(Helper.stringToDate(context, resobj.get("scheduled_at").toString()));
+                i++;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return schedules;
+    }
+
     /**
      * Parse json response for several status
      * @param jsonArray JSONArray
      * @return List<Status>
      */
-    public static List<Status> parseStatuses(Context context, JSONArray jsonArray){
+    private static List<Status> parseStatuses(Context context, JSONArray jsonArray){
 
         List<Status> statuses = new ArrayList<>();
         try {
@@ -3361,6 +3392,26 @@ public class API {
         return status;
     }
 
+
+    /**
+     * Parse json response for unique schedule
+     * @param resobj JSONObject
+     * @return Status
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    private static Status parseSchedule(Context context, JSONObject resobj){
+        Status status = new Status();
+        try {
+            status.setIn_reply_to_id(resobj.get("in_reply_to_id").toString());
+            status.setSensitive(Boolean.parseBoolean(resobj.get("sensitive").toString()));
+            status.setSpoiler_text(resobj.get("spoiler_text").toString());
+            try {
+                status.setVisibility(resobj.get("visibility").toString());
+            }catch (Exception e){status.setVisibility("public");}
+            status.setContent(resobj.get("text").toString());
+        } catch (JSONException ignored) {}
+        return status;
+    }
 
     /**
      * Parse json response for several notes (Misskey)
@@ -3985,6 +4036,27 @@ public class API {
         return context;
     }
 
+
+
+    /**
+     * Parse json response for list of relationship
+     * @param jsonArray JSONArray
+     * @return List<Relationship>
+     */
+    private static List<Attachment> parseAttachmentResponse(JSONArray jsonArray){
+
+        List<Attachment> attachments = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Attachment attachment = parseAttachmentResponse(resobj);
+                attachments.add(attachment);
+                i++;
+            }
+        } catch (JSONException ignored) { }
+        return attachments;
+    }
     /**
      * Parse json response an unique attachment
      * @param resobj JSONObject

@@ -93,7 +93,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
     }
 
     @Override
-    public Object getItem(int position) {
+    public StoredStatus getItem(int position) {
         return storedStatuses.get(position);
     }
 
@@ -107,6 +107,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         final StoredStatus storedStatus = storedStatuses.get(position);
+        final Status status = storedStatuses.get(position).getStatus();
         final ViewHolder holder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_scheduled_toot, parent, false);
@@ -147,8 +148,6 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
             changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.action_light);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.action_light);
         }
-
-        final Status status = storedStatus.getStatus();
 
         switch (status.getVisibility()) {
             case "public":
