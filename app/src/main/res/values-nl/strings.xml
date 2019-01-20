@@ -232,7 +232,7 @@
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="other">%d vind-ik-leuks</item>
     </plurals>
     <string name="delete_notification_ask">Deze melding verwijderen?</string>
     <string name="delete_notification_ask_all">Alle meldingen verwijderen?</string>
@@ -696,22 +696,22 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="delete_comment_confirm">Weet u zeker dat deze opmerking verwijderen?</string>
     <string name="fullscreen">Video op volledig scherm</string>
     <string name="set_video_mode">Modus voor video\'s</string>
-    <string name="file_to_upload">Select the file to upload</string>
-    <string name="my_videos">My videos</string>
-    <string name="title">Title</string>
-    <string name="categories">Categories</string>
-    <string name="license">License</string>
-    <string name="category">Category</string>
-    <string name="language">Language</string>
-    <string name="peertube_nsfw">This video contains mature or explicit content</string>
-    <string name="peertube_enable_comments">Enable video comments</string>
-    <string name="update_video">Update video</string>
-    <string name="description">Description</string>
-    <string name="toast_peertube_video_updated">The video has been updated!</string>
-    <string name="toast_cancelled">Upload cancelled!</string>
-    <string name="upload_video_success">The video has been uploaded!</string>
-    <string name="uploading">Uploading, please wait…</string>
-    <string name="video_uploaded_action">Click here to edit the video data.</string>
+    <string name="file_to_upload">Selecteer het bestand om te uploaden</string>
+    <string name="my_videos">Mijn video\'s</string>
+    <string name="title">Titel</string>
+    <string name="categories">Categorieën</string>
+    <string name="license">Licentie</string>
+    <string name="category">Categorie</string>
+    <string name="language">Taal</string>
+    <string name="peertube_nsfw">Deze video bevat volwassen of expliciete inhoud</string>
+    <string name="peertube_enable_comments">Video-opmerkingen toestaan</string>
+    <string name="update_video">Video updaten</string>
+    <string name="description">Beschrijving</string>
+    <string name="toast_peertube_video_updated">De video is geüpdatet!</string>
+    <string name="toast_cancelled">Uploaden geannuleerd!</string>
+    <string name="upload_video_success">De video is geüpload!</string>
+    <string name="uploading">Aan het uploaden, een ogenblik geduld…</string>
+    <string name="video_uploaded_action">Klik hier om de videodata te bewerken.</string>
     <string name="delete_video">Video verwijderen</string>
     <string name="delete_video_confirmation">Weet je zeker dat je deze video wilt verwijderen?</string>
     <string name="no_video_uploaded">Nog geen video\'s geüpload!</string>
@@ -722,12 +722,12 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="leave_a_comment">Reageer</string>
     <string name="share">Delen</string>
     <string name="my_pictures">Mijn foto\'s</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
-    <string name="server_schedule">From server</string>
+    <string name="choose_schedule">Kies een planmodus</string>
+    <string name="device_schedule">Vanaf apparaat</string>
+    <string name="server_schedule">Vanaf server</string>
     <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
-    <string name="modify">Modify</string>
+    <string name="toots_client">Toots (Apparaat)</string>
+    <string name="modify">Aanpassen</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
