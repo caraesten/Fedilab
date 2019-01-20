@@ -725,10 +725,15 @@
     <string name="leave_a_comment">Lascia un commento</string>
     <string name="share">Condividi</string>
     <string name="my_pictures">Le mie immagini</string>
+    <string name="choose_schedule">Choose a schedule mode</string>
+    <string name="device_schedule">From device</string>
+    <string name="server_schedule">From server</string>
+    <string name="toots_server">Toots (Server)</string>
+    <string name="toots_client">Toots (Device)</string>
+    <string name="modify">Modify</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
 
         <item>Webview</item>
-        <item>Flusso diretto</item>
     </string-array>
 </resources>

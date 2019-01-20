@@ -723,9 +723,14 @@
     <string name="leave_a_comment">Egin iruzkin bat</string>
     <string name="share">Partekatu</string>
     <string name="my_pictures">Nire irudiak</string>
+    <string name="choose_schedule">Choose a schedule mode</string>
+    <string name="device_schedule">From device</string>
+    <string name="server_schedule">From server</string>
+    <string name="toots_server">Toots (Server)</string>
+    <string name="toots_client">Toots (Device)</string>
+    <string name="modify">Modify</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Web ikuspegia</item>
-        <item>Zuzeneko streaming-a</item>
     </string-array>
 </resources>

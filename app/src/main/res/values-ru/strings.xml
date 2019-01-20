@@ -733,10 +733,15 @@
     <string name="leave_a_comment">Оставить комментарий</string>
     <string name="share">Поделиться</string>
     <string name="my_pictures">Мои изображения</string>
+    <string name="choose_schedule">Выберите режим расписания</string>
+    <string name="device_schedule">С устройства</string>
+    <string name="server_schedule">С сервера</string>
+    <string name="toots_server">Туты (Сервер)</string>
+    <string name="toots_client">Туты (Устройство)</string>
+    <string name="modify">Изменить</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
 
         <item>Webview</item>
-        <item>Прямой поток</item>
     </string-array>
 </resources>
