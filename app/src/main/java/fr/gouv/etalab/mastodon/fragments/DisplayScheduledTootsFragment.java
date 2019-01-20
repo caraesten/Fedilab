@@ -135,56 +135,59 @@ public class DisplayScheduledTootsFragment extends Fragment implements OnRetriev
     @Override
     public void onResume(){
         super.onResume();
-        //Retrieves scheduled toots
-        asyncTask = new RetrieveScheduledTootsAsyncTask(context, type,DisplayScheduledTootsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            final PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            //Battery saver is one and user never asked to stop showing the message
-            changeDrawableColor(context, R.drawable.ic_report, R.color.mastodonC4);
-            changeDrawableColor(context, R.drawable.ic_cancel, R.color.mastodonC4);
-            if( powerManager != null && powerManager.isPowerSaveMode() && sharedpreferences.getBoolean(Helper.SHOW_BATTERY_SAVER_MESSAGE,true)){
-                warning_battery_message.setVisibility(View.VISIBLE);
-            }else {
-                warning_battery_message.setVisibility(View.GONE);
-            }
-            warning_battery_message.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    final int DRAWABLE_RIGHT = 2;
-                    if(event.getAction() == MotionEvent.ACTION_UP) {
-                        if(event.getRawX() >= (warning_battery_message.getRight() - warning_battery_message.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                            SharedPreferences.Editor editor = sharedpreferences.edit();
-                            editor.putBoolean(Helper.SHOW_BATTERY_SAVER_MESSAGE, false);
-                            editor.apply();
-                            warning_battery_message.setVisibility(View.GONE);
-                            return true;
+        if( type != null && type != typeOfSchedule.SERVER) {
+            //Retrieves scheduled toots
+            asyncTask = new RetrieveScheduledTootsAsyncTask(context, type, DisplayScheduledTootsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                final PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+                final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                //Battery saver is one and user never asked to stop showing the message
+                changeDrawableColor(context, R.drawable.ic_report, R.color.mastodonC4);
+                changeDrawableColor(context, R.drawable.ic_cancel, R.color.mastodonC4);
+                if (powerManager != null && powerManager.isPowerSaveMode() && sharedpreferences.getBoolean(Helper.SHOW_BATTERY_SAVER_MESSAGE, true)) {
+                    warning_battery_message.setVisibility(View.VISIBLE);
+                } else {
+                    warning_battery_message.setVisibility(View.GONE);
+                }
+                warning_battery_message.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        final int DRAWABLE_RIGHT = 2;
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                            if (event.getRawX() >= (warning_battery_message.getRight() - warning_battery_message.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putBoolean(Helper.SHOW_BATTERY_SAVER_MESSAGE, false);
+                                editor.apply();
+                                warning_battery_message.setVisibility(View.GONE);
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                });
+                warning_battery_message.setOnClickListener(new View.OnClickListener() {
+                    @SuppressLint("BatteryLife")
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Intent battSaverIntent = new Intent();
+                            battSaverIntent.setComponent(new ComponentName("com.android.settings", "com.android.settings.Settings$BatterySaverSettingsActivity"));
+                            startActivityForResult(battSaverIntent, 0);
+                        } catch (ActivityNotFoundException e) {
+                            try {
+                                Intent batterySaverIntent;
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+                                    batterySaverIntent = new Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS);
+                                    startActivity(batterySaverIntent);
+                                }
+                            } catch (ActivityNotFoundException ignored) {
+                            }
                         }
                     }
-                    return false;
-                }
-            });
-            warning_battery_message.setOnClickListener(new View.OnClickListener() {
-                @SuppressLint("BatteryLife")
-                @Override
-                public void onClick(View v) {
-                    try {
-                        Intent battSaverIntent = new Intent();
-                        battSaverIntent.setComponent(new ComponentName("com.android.settings", "com.android.settings.Settings$BatterySaverSettingsActivity"));
-                        startActivityForResult(battSaverIntent, 0);
-                    }catch (ActivityNotFoundException e){
-                        try {
-                            Intent batterySaverIntent;
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
-                                batterySaverIntent = new Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS);
-                                startActivity(batterySaverIntent);
-                            }
-                        }catch (ActivityNotFoundException ignored){}
-                    }
-                }
-            });
-        }else {
-            warning_battery_message.setVisibility(View.GONE);
+                });
+            } else {
+                warning_battery_message.setVisibility(View.GONE);
+            }
         }
     }
 

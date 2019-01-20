@@ -25,6 +25,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
+import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
@@ -48,6 +49,14 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Context> contextReference;
     private boolean muteNotifications;
     private Error error;
+    private StoredStatus storedStatus;
+
+    public PostActionAsyncTask(Context context, API.StatusAction apiAction, StoredStatus storedStatus, OnPostActionInterface onPostActionInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.listener = onPostActionInterface;
+        this.apiAction = apiAction;
+        this.storedStatus = storedStatus;
+    }
 
     public PostActionAsyncTask(Context context, API.StatusAction apiAction, String targetedId, OnPostActionInterface onPostActionInterface){
         this.contextReference = new WeakReference<>(context);
@@ -154,7 +163,12 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
                     statusCode = api.reportAction(status, comment);
                 else if (apiAction == API.StatusAction.CREATESTATUS)
                     statusCode = api.statusAction(status);
-                else if (apiAction == API.StatusAction.MUTE_NOTIFICATIONS)
+                else if(apiAction == API.StatusAction.UPDATESERVERSCHEDULE) {
+                    api.scheduledAction("PUT", storedStatus.getStatus(), null, storedStatus.getScheduledServerdId());
+                }
+                else if(apiAction == API.StatusAction.DELETESCHEDULED) {
+                    api.scheduledAction("DELETE", null, null, storedStatus.getScheduledServerdId());
+                }else if (apiAction == API.StatusAction.MUTE_NOTIFICATIONS)
                     statusCode = api.muteNotifications(targetedId, muteNotifications);
                 else
                     statusCode = api.postAction(apiAction, targetedId);

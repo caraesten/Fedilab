@@ -120,7 +120,9 @@ public class API {
         PEERTUBECOMMENT,
         PEERTUBEREPLY,
         PEERTUBEDELETECOMMENT,
-        PEERTUBEDELETEVIDEO
+        PEERTUBEDELETEVIDEO,
+        UPDATESERVERSCHEDULE,
+        DELETESCHEDULED
 
     }
     public enum accountPrivacy {
@@ -1856,33 +1858,12 @@ public class API {
      * @param status Status object related to the status
      * @return APIResponse
      */
-    public APIResponse scheduledAction(String call, Status status, String max_id){
+    public APIResponse scheduledAction(String call, Status status, String max_id, String targetedId){
 
         HashMap<String, String> params = new HashMap<>();
         if( call.equals("PUT")){
-            try {
-                params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                params.put("status", status.getContent());
-            }
-            if( status.getIn_reply_to_id() != null)
-                params.put("in_reply_to_id", status.getIn_reply_to_id());
-            if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
-                StringBuilder parameters = new StringBuilder();
-                for(Attachment attachment: status.getMedia_attachments())
-                    parameters.append("media_ids[]=").append(attachment.getId()).append("&");
-                parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(12));
-                params.put("media_ids[]", parameters.toString());
-            }
-            if( status.isSensitive())
-                params.put("sensitive", Boolean.toString(status.isSensitive()));
-            if( status.getSpoiler_text() != null)
-                try {
-                    params.put("spoiler_text", URLEncoder.encode(status.getSpoiler_text(), "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    params.put("spoiler_text", status.getSpoiler_text());
-                }
-            params.put("visibility", status.getVisibility());
+            if( status.getScheduled_at() != null)
+                params.put("scheduled_at", status.getScheduled_at());
         }else if(call.equals("GET")){
             if( max_id != null )
                 params.put("max_id", max_id);
@@ -1891,30 +1872,30 @@ public class API {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = null;
-            int responseCode;
+            int responseCode = -1;
             if( call.equals("GET"))
                 response = httpsConnection.get(getAbsoluteUrl("/scheduled_statuses/"), 60, null, prefKeyOauthTokenT);
             else if( call.equals("PUT"))
-                response = httpsConnection.get(getAbsoluteUrl(String.format("/scheduled_statuses/%s", status.getId())), 60, params, prefKeyOauthTokenT);
+                response = httpsConnection.put(getAbsoluteUrl(String.format("/scheduled_statuses/%s", targetedId)), 60, params, prefKeyOauthTokenT);
             else if( call.equals("DELETE"))
-                responseCode = httpsConnection.delete(getAbsoluteUrl(String.format("/scheduled_statuses/%s", status.getId())), 60, params, prefKeyOauthTokenT);
+                responseCode = httpsConnection.delete(getAbsoluteUrl(String.format("/scheduled_statuses/%s",targetedId)), 60, null, prefKeyOauthTokenT);
             if(call.equals("GET")) {
                 apiResponse.setSince_id(httpsConnection.getSince_id());
                 apiResponse.setMax_id(httpsConnection.getMax_id());
             }
             if (response != null && call.equals("PUT")) {
-                Status statusreturned = parseStatuses(context, new JSONObject(response));
+                Schedule schedule = parseSimpleSchedule(context, new JSONObject(response));
                 StoredStatus st = new StoredStatus();
                 st.setCreation_date(status.getCreated_at());
                 st.setId(-1);
                 st.setJobId(-1);
-                st.setScheduled_date(new Date(Long.parseLong(status.getScheduled_at())));
+                st.setScheduled_date(schedule.getScheduled_at());
                 st.setStatusReply(null);
                 st.setSent_date(null);
                 final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                 st.setUserId(userId);
-                st.setStatus(statusreturned);
+                st.setStatus(schedule.getStatus());
                 storedStatus.add(st);
             }else if (response != null && call.equals("GET")) {
                 List<Schedule> scheduleList = parseSchedule(context, new JSONArray(response));
@@ -1923,7 +1904,7 @@ public class API {
                 for(Schedule schedule: scheduleList){
                     StoredStatus st = new StoredStatus();
                     st.setCreation_date(null);
-                    st.setId(-1);
+                    st.setScheduledServerdId(schedule.getId());
                     st.setJobId(-1);
                     st.setScheduled_date(schedule.getScheduled_at());
                     st.setStatusReply(null);
@@ -3196,6 +3177,29 @@ public class API {
         return conversation;
     }
 
+    /**
+     * Parse json response for several scheduled toots
+     * @param jsonObject JSONObject
+     * @return List<Status>
+     */
+    private static Schedule parseSimpleSchedule(Context context, JSONObject jsonObject){
+        Schedule schedule = new Schedule();
+        try {
+            JSONObject resobj = jsonObject.getJSONObject("params");
+            Status status = parseSchedule(context, resobj);
+            List<Attachment> attachements = parseAttachmentResponse(jsonObject.getJSONArray("media_attachments"));
+            status.setMedia_attachments((ArrayList<Attachment>) attachements);
+            schedule.setStatus(status);
+            schedule.setAttachmentList(attachements);
+            schedule.setId(jsonObject.get("id").toString());
+            schedule.setScheduled_at(Helper.mstStringToDate(context, jsonObject.get("scheduled_at").toString()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return schedule;
+    }
 
     /**
      * Parse json response for several scheduled toots
@@ -3217,10 +3221,12 @@ public class API {
                 schedule.setAttachmentList(attachements);
                 schedules.add(schedule);
                 schedule.setId(jsonArray.getJSONObject(i).get("id").toString());
-                schedule.setScheduled_at(Helper.stringToDate(context, resobj.get("scheduled_at").toString()));
+                schedule.setScheduled_at(Helper.mstStringToDate(context, jsonArray.getJSONObject(i).get("scheduled_at").toString()));
                 i++;
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return schedules;

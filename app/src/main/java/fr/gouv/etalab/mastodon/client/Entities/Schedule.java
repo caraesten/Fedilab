@@ -15,6 +15,9 @@
 package fr.gouv.etalab.mastodon.client.Entities;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +26,7 @@ import java.util.List;
  * Manages scheduled toots
  */
 
-public class Schedule {
+public class Schedule implements Parcelable {
 
     private String id;
     private Date scheduled_at;
@@ -64,4 +67,37 @@ public class Schedule {
     public void setAttachmentList(List<Attachment> attachmentList) {
         this.attachmentList = attachmentList;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeLong(this.scheduled_at != null ? this.scheduled_at.getTime() : -1);
+        dest.writeParcelable(this.status, flags);
+        dest.writeTypedList(this.attachmentList);
+    }
+
+    protected Schedule(Parcel in) {
+        this.id = in.readString();
+        long tmpScheduled_at = in.readLong();
+        this.scheduled_at = tmpScheduled_at == -1 ? null : new Date(tmpScheduled_at);
+        this.status = in.readParcelable(Status.class.getClassLoader());
+        this.attachmentList = in.createTypedArrayList(Attachment.CREATOR);
+    }
+
+    public static final Parcelable.Creator<Schedule> CREATOR = new Parcelable.Creator<Schedule>() {
+        @Override
+        public Schedule createFromParcel(Parcel source) {
+            return new Schedule(source);
+        }
+
+        @Override
+        public Schedule[] newArray(int size) {
+            return new Schedule[size];
+        }
+    };
 }

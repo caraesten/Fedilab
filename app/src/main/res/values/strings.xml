@@ -833,6 +833,7 @@
     <string name="server_schedule">From server</string>
     <string name="toots_server">Toots (Server)</string>
     <string name="toots_client">Toots (Device)</string>
+    <string name="modify">Modify</string>
     <!-- end languages -->
 
 
