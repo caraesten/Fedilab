@@ -44,6 +44,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
@@ -360,7 +361,10 @@ public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActi
                                 } catch (Exception ignored) {
                                 }
                             }else{
-                                storedStatus.getStatus().setScheduled_at(Helper.dateToString(calendar.getTime()));
+                                int offset = TimeZone.getDefault().getRawOffset();
+                                calendar.add(Calendar.MILLISECOND, -offset);
+                                final String date = Helper.dateToString(new Date(calendar.getTimeInMillis()));
+                                storedStatus.getStatus().setScheduled_at(date);
                                 new PostActionAsyncTask(context, API.StatusAction.UPDATESERVERSCHEDULE, storedStatus, ScheduledTootsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                 Toasty.success(context, context.getString(R.string.boost_scheduled), Toast.LENGTH_LONG).show();
                             }

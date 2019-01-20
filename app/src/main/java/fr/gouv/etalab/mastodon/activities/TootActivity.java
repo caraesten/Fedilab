@@ -96,6 +96,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1246,7 +1247,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                                 hour,
                                 minute);
                         final long[] time = {calendar.getTimeInMillis()};
-                        final String date = Helper.dateToString(new Date(calendar.getTimeInMillis()));
+
                         if( (time[0] - new Date().getTime()) < 60000 ){
                             Toasty.warning(getApplicationContext(), getString(R.string.toot_scheduled_date), Toast.LENGTH_LONG).show();
                         }else {
@@ -1267,6 +1268,9 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                                 builderSingle.setPositiveButton(R.string.server_schedule, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(final DialogInterface dialog, int which) {
+                                        int offset = TimeZone.getDefault().getRawOffset();
+                                        calendar.add(Calendar.MILLISECOND, -offset);
+                                        final String date = Helper.dateToString(new Date(calendar.getTimeInMillis()));
                                         serverSchedule(date);
                                     }
                                 });
