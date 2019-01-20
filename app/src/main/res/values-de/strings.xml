@@ -715,12 +715,12 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="leave_a_comment">Kommentar schreiben</string>
     <string name="share">Teilen</string>
     <string name="my_pictures">Meine Bilder</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
-    <string name="server_schedule">From server</string>
+    <string name="choose_schedule">Zeitplanungsmodus wählen</string>
+    <string name="device_schedule">Vom Gerät</string>
+    <string name="server_schedule">Vom Server</string>
     <string name="toots_server">Toots (Server)</string>
     <string name="toots_client">Toots (Device)</string>
-    <string name="modify">Modify</string>
+    <string name="modify">Bearbeiten</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
