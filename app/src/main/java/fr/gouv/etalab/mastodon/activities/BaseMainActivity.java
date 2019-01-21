@@ -2356,13 +2356,16 @@ public abstract class BaseMainActivity extends BaseActivity
 
                             SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
 
-                            List<TagTimeline> tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTabInfo(tabLayout.getTabAt(position).getText().toString());
+                            List<TagTimeline> tagTimelines;
+                            tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTabInfo(tabLayout.getTabAt(position).getText().toString());
+                            if( tagTimelines == null){
+                                tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTabInfoKeyword(tabLayout.getTabAt(position).getText().toString());
+                            }
                             String tag;
                             if (tagTimelines == null || tagTimelines.size() == 0)
                                 tag = tabLayout.getTabAt(position).getText().toString();
                             else
                                 tag = tagTimelines.get(0).getName();
-
                             bundle.putString("tag", tag);
                             if( tagTimelines != null && tagTimelines.size() > 0 && tagTimelines.get(0).isART() )
                                 bundle.putString("instanceType","ART");
@@ -2511,12 +2514,26 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
                 itemMediaOnly.setChecked(mediaOnly[0]);
                 itemShowNSFW.setChecked(showNSFW[0]);
+                List<TagTimeline> finalTagTimelines = tagTimelines;
                 popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                     @Override
                     public void onDismiss(PopupMenu menu) {
                         if(changes[0]) {
                             FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+                            String tag;
+                            if (finalTagTimelines == null || finalTagTimelines.size() == 0)
+                                tag = tabLayout.getTabAt(position).getText().toString();
+                            else
+                                tag = finalTagTimelines.get(0).getName();
                             fragTransaction.detach(tagFragment.get(tag));
+                            Bundle bundle = new Bundle();
+                            if( mediaOnly[0])
+                                bundle.putString("instanceType","ART");
+                            else
+                                bundle.putString("instanceType","MASTODON");
+                            bundle.putString("tag", tag);
+                            bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.TAG);
+                            tagFragment.get(tag).setArguments(bundle);
                             fragTransaction.attach(tagFragment.get(tag));
                             fragTransaction.commit();
                         }

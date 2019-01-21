@@ -196,6 +196,19 @@ public class SearchDAO {
         }
     }
 
+    /**
+     * Returns TagTimeline information by its keyword in db
+     * @return info List<TagTimeline>
+     */
+    public List<TagTimeline> getTabInfoKeyword(String name){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_SEARCH, null, Sqlite.COL_KEYWORDS + " = \"" + name + "\" AND " + Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, null, null);
+            return cursorToTagTimelineSearch(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     /***
      * Method to hydrate stored search from database
      * @param c Cursor

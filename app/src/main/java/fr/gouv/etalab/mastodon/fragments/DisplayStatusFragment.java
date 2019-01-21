@@ -509,10 +509,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             //Let's deal with statuses
             if( statuses != null && statuses.size() > 0) {
-                if ( statusListAdapter != null || ( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))) {
+                if ( statusListAdapter != null && ( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))) {
                     this.statuses.addAll(statuses);
                     statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
-                }else if(instanceType.equals("ART") ) {
+                }else if(artListAdapter != null && instanceType.equals("ART") ) {
                     boolean show_nsfw = sharedpreferences.getBoolean(Helper.SET_ART_WITH_NSFW, false);
                     if( !show_nsfw) {
                         ArrayList<Status> safeStatuses = new ArrayList<>();
@@ -526,7 +526,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         this.statuses.addAll(statuses);
                         artListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                     }
-                }else if(instanceType.equals("PIXELFED") ) {
+
+                }else if(pixelfedListAdapter != null && instanceType.equals("PIXELFED") ) {
                     this.statuses.addAll(statuses);
                     pixelfedListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 }
@@ -772,8 +773,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void scrollToTop(){
-        if( lv_status != null) {
-            lv_status.setAdapter(statusListAdapter);
+        if( lv_status != null && instanceType != null) {
+            if( statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY")))
+                lv_status.setAdapter(statusListAdapter);
+            else if( pixelfedListAdapter != null && instanceType.equals("PIXELFED"))
+                lv_status.setAdapter(pixelfedListAdapter);
+            else if( artListAdapter != null && instanceType.equals("ART"))
+                lv_status.setAdapter(artListAdapter);
         }
     }
 
