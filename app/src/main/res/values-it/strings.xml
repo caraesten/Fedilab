@@ -122,7 +122,7 @@
     <string-array name="more_action_confirm">
         <item>Silenziare questo account?</item>
         <item>Bloccare questo account?</item>
-        <item>Segnala questo toot?</item>
+        <item>Segnalare questo toot?</item>
         <item>Bloccare questo dominio?</item>
     </string-array>
     <string-array name="action_notification">
@@ -131,7 +131,7 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Rimuovere questo toot?</item>
-        <item>Cancella &amp; riscrivi questo toot?</item>
+        <item>Cancellare &amp; riscrivere questo toot?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d risposta</item>
@@ -718,7 +718,7 @@
     <string name="delete_video">Elimina video</string>
     <string name="delete_video_confirmation">Sei sicuro di voler eliminare questo video?</string>
     <string name="no_video_uploaded">Non è ancora stato caricato nessun video!</string>
-    <string name="display_nsfw_videos">Visualizzare video NSFW</string>
+    <string name="display_nsfw_videos">Mostrare video NSFW</string>
     <string name="default_channel_of">Canale predefinito di %s</string>
     <string name="no_video_to_display">Nessun video da mostrare!</string>
     <string name="add_image_to_favorite">Aggiungi media ai preferiti</string>
