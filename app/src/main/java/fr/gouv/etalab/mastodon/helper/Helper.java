@@ -3123,6 +3123,8 @@ public class Helper {
                         return false;
                     } else {
                         try {
+                            if( mfilter.getPhrase().contains("#"))
+                                mfilter.setPhrase(mfilter.getPhrase().replaceAll("\\#", "\\#"));
                             Pattern filterPattern = Pattern.compile("(" + mfilter.getPhrase() + ")", Pattern.CASE_INSENSITIVE);
                             Matcher matcher = filterPattern.matcher(content);
                             if (matcher.find())
