@@ -3275,7 +3275,9 @@ public class API {
             try {
                 status.setVisibility(resobj.get("visibility").toString());
             }catch (Exception e){status.setVisibility("public");}
-            status.setLanguage(resobj.get("language").toString());
+            try {
+                status.setLanguage(resobj.get("language").toString());
+            }catch (Exception e){status.setLanguage(null);}
             status.setUrl(resobj.get("url").toString());
             //Retrieves attachments
             JSONArray arrayAttachement = resobj.getJSONArray("media_attachments");
@@ -3296,11 +3298,11 @@ public class API {
                     attachments.add(attachment);
                 }
             }
+
             try {
 
                 status.setCard(parseCardResponse(resobj.getJSONObject("card")));
             }catch (Exception e){status.setCard(null);}
-
 
             status.setMedia_attachments(attachments);
             //Retrieves mentions
@@ -3331,7 +3333,6 @@ public class API {
                 }
             }
             status.setTags(tags);
-
             //Retrieves emjis
             List<Emojis> emojiList = new ArrayList<>();
             try {
@@ -3347,7 +3348,6 @@ public class API {
             }catch (Exception e){
                 status.setEmojis(new ArrayList<>());
             }
-
             //Retrieve Application
             Application application = new Application();
             try {
