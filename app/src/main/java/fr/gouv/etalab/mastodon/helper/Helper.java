@@ -295,6 +295,7 @@ public class Helper {
     public static final String SET_BATTERY_PROFILE = "set_battery_profile";
     public static final String SET_DEFAULT_LOCALE_NEW = "set_default_locale_new";
     public static final String SET_NOTIFICATION_ACTION = "set_notification_action";
+    public static final String SET_DISPLAY_CONTENT_AFTER_FM = "set_display_content_after_fm";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;

@@ -947,6 +947,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
         }
         this.statuses.addAll(position, tmpStatuses);
+        boolean display_content_after_fetch_more = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONTENT_AFTER_FM, true);
+        if( position > 0 && display_content_after_fetch_more)
+            lv_status.scrollToPosition(position + tmpStatuses.size());
         statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
         if( textviewNoAction.getVisibility() == View.VISIBLE && tmpStatuses.size() > 0){
             textviewNoAction.setVisibility(View.GONE);

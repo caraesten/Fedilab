@@ -100,6 +100,19 @@ public class SettingsFragment extends Fragment {
                 editor.apply();
             }
         });
+
+        boolean display_content_after_fetch_more = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CONTENT_AFTER_FM, true);
+        final CheckBox set_display_content_after_fetch_more = rootView.findViewById(R.id.set_display_content_after_fetch_more);
+        set_display_content_after_fetch_more.setChecked(display_content_after_fetch_more);
+        set_display_content_after_fetch_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_DISPLAY_CONTENT_AFTER_FM, set_display_content_after_fetch_more.isChecked());
+                editor.apply();
+            }
+        });
+
         count1 = 0;
         count2 = 0;
         count3 = 0;
