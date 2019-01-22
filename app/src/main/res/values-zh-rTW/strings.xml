@@ -721,15 +721,15 @@
     <string name="leave_a_comment">留下評論</string>
     <string name="share">分享</string>
     <string name="my_pictures">我的圖片</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
-    <string name="server_schedule">From server</string>
-    <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
-    <string name="modify">Modify</string>
+    <string name="choose_schedule">選擇排定模式</string>
+    <string name="device_schedule">從裝置</string>
+    <string name="server_schedule">從伺服器</string>
+    <string name="toots_server">嘟文（伺服器）</string>
+    <string name="toots_client">嘟文（裝置）</string>
+    <string name="modify">修改</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-
+        <item>Torrent</item>
         <item>Webview</item>
     </string-array>
 </resources>
