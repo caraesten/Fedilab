@@ -205,7 +205,7 @@
     <string name="following_cnt">المُتابَعون \n %1$s</string>
     <string name="followers_cnt">المتابِعون \n %1$s</string>
     <string name="pins_cnt">تم تثبيت \n%d</string>
-    <string name="authorize">تصريح</string>
+    <string name="authorize">تفويض</string>
     <string name="reject">رفض</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">ليس عندك أية تبويقات مبرمَجة للعرض!</string>
@@ -243,12 +243,12 @@
         <item quantity="other">و %d تبويقات أخرى اكتشفها</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="zero">%d likes</item>
-        <item quantity="one">%d like</item>
-        <item quantity="two">%d likes</item>
-        <item quantity="few">%d likes</item>
-        <item quantity="many">%d likes</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="zero">%d إعجاب</item>
+        <item quantity="one">%d إعجاب</item>
+        <item quantity="two">%d إعجابان</item>
+        <item quantity="few">%d إعجابين</item>
+        <item quantity="many">%d إعجابات</item>
+        <item quantity="other">%d إعجابات</item>
     </plurals>
     <string name="delete_notification_ask">هل تريد حذف الإخطار ؟</string>
     <string name="delete_notification_ask_all">هل تود حذف كل الإخطارات ؟</string>
@@ -734,20 +734,20 @@
     <string name="no_video_uploaded">لم يتم ارسال أية فيديوهات بعد!</string>
     <string name="display_nsfw_videos">عرض الفيديوهات الحساسة</string>
     <string name="default_channel_of">القناة الافتراضية لـ %s</string>
-    <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
-    <string name="leave_a_comment">Leave a comment</string>
-    <string name="share">Share</string>
-    <string name="my_pictures">My pictures</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
-    <string name="server_schedule">From server</string>
-    <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
-    <string name="modify">Modify</string>
+    <string name="no_video_to_display">لا توجد أية فيديوهات لعرضها!</string>
+    <string name="add_image_to_favorite">إضافة إلى المفضلة</string>
+    <string name="leave_a_comment">اترك تعليقاً</string>
+    <string name="share">شارك</string>
+    <string name="my_pictures">صوري</string>
+    <string name="choose_schedule">اختر أسلوب برمجة التبويقات</string>
+    <string name="device_schedule">عبر الجهاز</string>
+    <string name="server_schedule">عبر الخادِم</string>
+    <string name="toots_server">التبويقات (السيرفر)</string>
+    <string name="toots_client">التبويقات (الجهاز)</string>
+    <string name="modify">تغيير</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>تورنت</item>
-        <item>Direct stream</item>
+        <item>تدفق مباشر</item>
     </string-array>
 </resources>
