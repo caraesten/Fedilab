@@ -733,9 +733,10 @@
     <string name="toots_server">Toots (Server)</string>
     <string name="toots_client">Toots (Device)</string>
     <string name="modify">Modify</string>
+    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-
+        <item>Torrent</item>
         <item>Widok sieci Web</item>
     </string-array>
 </resources>
