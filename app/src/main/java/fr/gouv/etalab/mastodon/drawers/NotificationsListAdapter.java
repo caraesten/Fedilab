@@ -504,6 +504,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             holder.spark_button_fav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     if( !status.isFavourited() && confirmFav)
                         status.setFavAnimated(true);
                     if( !status.isFavourited() && !confirmFav) {
@@ -849,8 +850,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getId().equals(notification.getId())) {
                 try {
                     notificationsListAdapter.notifyItemChanged(i);
-                } catch (Exception ignored) {
-                }
+                } catch (Exception ignored) { }
             }
         }
     }
@@ -858,7 +858,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     public void notifyNotificationWithActionChanged(API.StatusAction statusAction, Status status){
         for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
-            if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getType().toLowerCase().equals("mention") && notificationsListAdapter.getItemAt(i).getStatus() != null && notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
+            if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getStatus() != null && notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
                 try {
                     if( notifications.get(i).getStatus() != null){
                         int favCount = notifications.get(i).getStatus().getFavourites_count();
@@ -879,11 +879,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         notifications.get(i).getStatus().setFavourites_count(favCount);
                         notifications.get(i).getStatus().setReblogged(status.isReblogged());
                         notifications.get(i).getStatus().setReblogs_count(boostCount);
+                        notificationsListAdapter.notifyItemChanged(i);
                         break;
                     }
-                    notificationsListAdapter.notifyItemChanged(i);
-                } catch (Exception ignored) {
-                }
+                } catch (Exception ignored) {}
             }
         }
     }
