@@ -3277,7 +3277,7 @@ public class API {
             }catch (Exception e){status.setVisibility("public");}
             try {
                 status.setLanguage(resobj.get("language").toString());
-            }catch (Exception e){status.setLanguage(null);}
+            }catch (Exception e){status.setLanguage("ja");}
             status.setUrl(resobj.get("url").toString());
             //Retrieves attachments
             JSONArray arrayAttachement = resobj.getJSONArray("media_attachments");
