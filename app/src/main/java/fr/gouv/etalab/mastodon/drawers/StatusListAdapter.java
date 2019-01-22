@@ -1017,9 +1017,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         status.setFetchMore(false);
                         holder.fetch_more.setEnabled(false);
                         holder.fetch_more.setVisibility(View.GONE);
-                        DisplayStatusFragment homeFragment = ((BaseMainActivity) context).getHomeFragment();
-                        if (homeFragment != null)
-                            homeFragment.fetchMore(status.getId());
+                        if( context instanceof BaseMainActivity) {
+                            DisplayStatusFragment homeFragment = ((BaseMainActivity) context).getHomeFragment();
+                            if (homeFragment != null)
+                                homeFragment.fetchMore(status.getId());
+                        }else{
+                            Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
             } else {
