@@ -1037,6 +1037,12 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 popup.getMenu().findItem(R.id.action_hide_boost).setVisible(false);
                 popup.getMenu().findItem(R.id.action_endorse).setVisible(false);
             }
+            if( relationship.isBlocking()){
+                popup.getMenu().findItem(R.id.action_block).setTitle(R.string.action_unblock);
+            }
+            if( relationship.isMuting()){
+                popup.getMenu().findItem(R.id.action_mute).setTitle(R.string.action_unmute);
+            }
             if(relationship.isEndorsed()){
                 popup.getMenu().findItem(R.id.action_endorse).setTitle(R.string.unendorse);
             }else {
