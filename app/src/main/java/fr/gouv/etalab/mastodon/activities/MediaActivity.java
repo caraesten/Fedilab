@@ -107,6 +107,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
 
     private ImageButton media_save, media_close;
     private boolean scheduleHidden, scheduleHiddenDescription;
+    private SimpleExoPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -438,7 +439,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                             .createMediaSource(uri);
 
-                    SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(MediaActivity.this);
+                    player = ExoPlayerFactory.newSimpleInstance(MediaActivity.this);
                     videoView.setPlayer(player);
                     loader.setVisibility(View.GONE);
                     player.prepare(videoSource);
@@ -457,7 +458,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                             .createMediaSource(uri);
 
-                    SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(MediaActivity.this);
+                    player = ExoPlayerFactory.newSimpleInstance(MediaActivity.this);
                     videoView.setPlayer(player);
                     loader.setVisibility(View.GONE);
                     player.prepare(videoSource);
@@ -497,9 +498,21 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     }
 
     @Override
+    public void onPause(){
+        super.onPause();
+        if( player != null) {
+            player.setPlayWhenReady(false);
+        }
+    }
+
+    @Override
     public void onResume(){
         super.onResume();
         FullScreencall();
+        if( player != null) {
+            player.setPlayWhenReady(true);
+        }
+
     }
     public void FullScreencall() {
         if(Build.VERSION.SDK_INT < 19) {

@@ -97,6 +97,7 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
 
 
         if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            holder.account_mute_notification.hide();
             if (action == RetrieveAccountsAsyncTask.Type.BLOCKED)
                 account.setFollowType(Account.followAction.BLOCK);
             else if (action == RetrieveAccountsAsyncTask.Type.MUTED)
