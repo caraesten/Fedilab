@@ -17,12 +17,15 @@ package fr.gouv.etalab.mastodon.client.Entities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -31,7 +34,10 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
+import android.text.style.URLSpan;
+import android.util.Patterns;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -42,13 +48,18 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 
+import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 
 import static android.support.v4.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
 
 /**
@@ -59,10 +70,11 @@ import static android.support.v4.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 public class Account implements Parcelable {
 
     private String id;
+    private String uuid;
     private String username;
     private SpannableString displayNameSpan;
     private String acct;
-    private String display_name;
+    private String display_name, stored_displayname;
     private boolean locked;
     private Date created_at;
     private int followers_count;
@@ -91,89 +103,126 @@ public class Account implements Parcelable {
     private LinkedHashMap<String, Boolean> fieldsVerified;
     private LinkedHashMap<SpannableString, SpannableString> fieldsSpan;
     private List<Emojis> emojis;
-    private Account account;
     private String host;
+    private boolean isBot;
+    private String social;
+    private String client_id;
+    private String client_secret;
+    private String refresh_token;
 
 
-    protected Account(Parcel in) {
-        id = in.readString();
-        username = in.readString();
-        emojis = in.readArrayList(Emojis.class.getClassLoader());
-        acct = in.readString();
-        display_name = in.readString();
-        host =  in.readString();
-        displayNameSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
-        noteSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
-        locked = in.readByte() != 0;
-        followers_count = in.readInt();
-        following_count = in.readInt();
-        statuses_count = in.readInt();
-        note = in.readString();
-        url = in.readString();
-        avatar = in.readString();
-        avatar_static = in.readString();
-        header = in.readString();
-        header_static = in.readString();
-        token = in.readString();
-        instance = in.readString();
-        metaDataSize = in.readInt();
-        for(int i = 0; i < metaDataSize; i++){
-            if( fields == null)
-                fields = new LinkedHashMap<>();
-            String key = in.readString();
-            String value = in.readString();
-            fields.put(key,value);
-        }
-        metaDataSizeVerified = in.readInt();
-        for(int i = 0; i < metaDataSizeVerified; i++){
-            if( fieldsVerified == null)
-                fieldsVerified = new LinkedHashMap<>();
-            String key = in.readString();
-            Boolean value = in.readByte() != 0;
-            fieldsVerified.put(key,value);
-        }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(username);
-        dest.writeList(emojis);
-        dest.writeString(acct);
-        dest.writeString(display_name);
-        dest.writeString(host);
-        TextUtils.writeToParcel(displayNameSpan, dest, flags);
-        TextUtils.writeToParcel(noteSpan, dest, flags);
-        dest.writeByte((byte) (locked ? 1 : 0));
-        dest.writeInt(followers_count);
-        dest.writeInt(following_count);
-        dest.writeInt(statuses_count);
-        dest.writeString(note);
-        dest.writeString(url);
-        dest.writeString(avatar);
-        dest.writeString(avatar_static);
-        dest.writeString(header);
-        dest.writeString(header_static);
-        dest.writeString(token);
-        dest.writeString(instance);
-        if( fields != null) {
-            metaDataSize = fields.size();
-            dest.writeInt(metaDataSize);
-            for (Map.Entry<String, String> entry : fields.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeString(entry.getValue());
-            }
-        }
-        if( fieldsVerified != null) {
-            metaDataSizeVerified = fieldsVerified.size();
-            dest.writeInt(metaDataSizeVerified);
-            for (Map.Entry<String, Boolean> entry : fieldsVerified.entrySet()) {
-                dest.writeString(entry.getKey());
-                dest.writeByte((byte) (entry.getValue() ? 1 : 0));
-            }
-        }
+        dest.writeString(this.id);
+        dest.writeString(this.uuid);
+        dest.writeString(this.username);
+        TextUtils.writeToParcel(this.displayNameSpan, dest, flags);
+        dest.writeString(this.acct);
+        dest.writeString(this.display_name);
+        dest.writeString(this.stored_displayname);
+        dest.writeByte(this.locked ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.created_at != null ? this.created_at.getTime() : -1);
+        dest.writeInt(this.followers_count);
+        dest.writeInt(this.following_count);
+        dest.writeInt(this.statuses_count);
+        dest.writeString(this.followers_count_str);
+        dest.writeString(this.following_count_str);
+        dest.writeString(this.statuses_count_str);
+        dest.writeString(this.note);
+        TextUtils.writeToParcel(this.noteSpan, dest, flags);
+        dest.writeString(this.url);
+        dest.writeString(this.avatar);
+        dest.writeString(this.avatar_static);
+        dest.writeString(this.header);
+        dest.writeString(this.header_static);
+        dest.writeString(this.token);
+        dest.writeString(this.instance);
+        dest.writeByte(this.isFollowing ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.followType == null ? -1 : this.followType.ordinal());
+        dest.writeByte(this.isMakingAction ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.moved_to_account, flags);
+        dest.writeByte(this.muting_notifications ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.metaDataSize);
+        dest.writeInt(this.metaDataSizeVerified);
+        dest.writeSerializable(this.fields);
+        dest.writeSerializable(this.fieldsVerified);
+        dest.writeSerializable(this.fieldsSpan);
+        dest.writeTypedList(this.emojis);
+        dest.writeString(this.host);
+        dest.writeByte(this.isBot ? (byte) 1 : (byte) 0);
+        dest.writeString(this.social);
+        dest.writeString(this.client_id);
+        dest.writeString(this.client_secret);
+        dest.writeString(this.refresh_token);
     }
+
+    public Account() {
+    }
+
+    protected Account(Parcel in) {
+        this.id = in.readString();
+        this.uuid = in.readString();
+        this.username = in.readString();
+        this.displayNameSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        this.acct = in.readString();
+        this.display_name = in.readString();
+        this.stored_displayname = in.readString();
+        this.locked = in.readByte() != 0;
+        long tmpCreated_at = in.readLong();
+        this.created_at = tmpCreated_at == -1 ? null : new Date(tmpCreated_at);
+        this.followers_count = in.readInt();
+        this.following_count = in.readInt();
+        this.statuses_count = in.readInt();
+        this.followers_count_str = in.readString();
+        this.following_count_str = in.readString();
+        this.statuses_count_str = in.readString();
+        this.note = in.readString();
+        this.noteSpan = (SpannableString) TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        this.url = in.readString();
+        this.avatar = in.readString();
+        this.avatar_static = in.readString();
+        this.header = in.readString();
+        this.header_static = in.readString();
+        this.token = in.readString();
+        this.instance = in.readString();
+        this.isFollowing = in.readByte() != 0;
+        int tmpFollowType = in.readInt();
+        this.followType = tmpFollowType == -1 ? null : followAction.values()[tmpFollowType];
+        this.isMakingAction = in.readByte() != 0;
+        this.moved_to_account = in.readParcelable(Account.class.getClassLoader());
+        this.muting_notifications = in.readByte() != 0;
+        this.metaDataSize = in.readInt();
+        this.metaDataSizeVerified = in.readInt();
+        this.fields = (LinkedHashMap<String, String>) in.readSerializable();
+        this.fieldsVerified = (LinkedHashMap<String, Boolean>) in.readSerializable();
+        this.fieldsSpan = (LinkedHashMap<SpannableString, SpannableString>) in.readSerializable();
+        this.emojis = in.createTypedArrayList(Emojis.CREATOR);
+        this.host = in.readString();
+        this.isBot = in.readByte() != 0;
+        this.social = in.readString();
+        this.client_id = in.readString();
+        this.client_secret = in.readString();
+        this.refresh_token = in.readString();
+    }
+
+    public static final Creator<Account> CREATOR = new Creator<Account>() {
+        @Override
+        public Account createFromParcel(Parcel source) {
+            return new Account(source);
+        }
+
+        @Override
+        public Account[] newArray(int size) {
+            return new Account[size];
+        }
+    };
 
     public followAction getFollowType() {
         return followType;
@@ -240,6 +289,62 @@ public class Account implements Parcelable {
         this.host = host;
     }
 
+    public boolean isBot() {
+        return isBot;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
+    }
+
+    public String getStored_displayname() {
+        return stored_displayname;
+    }
+
+    public void setStored_displayname(String stored_displayname) {
+        this.stored_displayname = stored_displayname;
+    }
+
+    public String getSocial() {
+        return social;
+    }
+
+    public void setSocial(String social) {
+        this.social = social;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getClient_id() {
+        return client_id;
+    }
+
+    public void setClient_id(String client_id) {
+        this.client_id = client_id;
+    }
+
+    public String getClient_secret() {
+        return client_secret;
+    }
+
+    public void setClient_secret(String client_secret) {
+        this.client_secret = client_secret;
+    }
+
+    public String getRefresh_token() {
+        return refresh_token;
+    }
+
+    public void setRefresh_token(String refresh_token) {
+        this.refresh_token = refresh_token;
+    }
+
 
     public enum followAction{
         FOLLOW,
@@ -250,24 +355,6 @@ public class Account implements Parcelable {
         NOTHING
     }
 
-
-
-
-    public Account(){
-        this.account = this;
-    }
-
-    public static final Creator<Account> CREATOR = new Creator<Account>() {
-        @Override
-        public Account createFromParcel(Parcel in) {
-            return new Account(in);
-        }
-
-        @Override
-        public Account[] newArray(int size) {
-            return new Account[size];
-        }
-    };
 
     public String getId() {
         return id;
@@ -429,12 +516,6 @@ public class Account implements Parcelable {
         this.emojis = emojis;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-
 
     public boolean isFollowing() {
         return isFollowing;
@@ -479,14 +560,14 @@ public class Account implements Parcelable {
             spannableString = new SpannableString(context.getString(R.string.account_moved_to, this.getAcct(), "@"+this.getMoved_to_account().getAcct()));
             int startPositionTar = spannableString.toString().indexOf("@"+this.getMoved_to_account().getAcct());
             int endPositionTar = startPositionTar + ("@"+this.getMoved_to_account().getAcct()).length();
-            final String idTar = this.getMoved_to_account().getId();
+            final Account idTar = this.getMoved_to_account();
             if( endPositionTar <= spannableString.toString().length() && endPositionTar >= startPositionTar)
                 spannableString.setSpan(new ClickableSpan() {
                             @Override
                             public void onClick(View textView) {
                                 Intent intent = new Intent(context, ShowAccountActivity.class);
                                 Bundle b = new Bundle();
-                                b.putString("accountId", idTar);
+                                b.putParcelable("account", idTar);
                                 intent.putExtras(b);
                                 context.startActivity(intent);
                             }
@@ -501,7 +582,7 @@ public class Account implements Parcelable {
         return spannableString;
     }
 
-    public void makeEmojisAccountProfile(final Context context, final OnRetrieveEmojiAccountInterface listener){
+    public void makeEmojisAccountProfile(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account){
         if( ((Activity)context).isFinishing() )
             return;
         if( fields == null)
@@ -524,6 +605,135 @@ public class Account implements Parcelable {
             }
             account.setFieldsSpan(fieldsSpan);
         }
+        Iterator it = fieldsSpan.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            SpannableString fieldSpan = (SpannableString) pair.getValue();
+            SpannableString keySpan = (SpannableString) pair.getKey();
+            Matcher matcher = Helper.xmppPattern.matcher(fieldSpan);
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            while (matcher.find()){
+                URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
+                for(URLSpan span : urls)
+                    fieldSpan.removeSpan(span);
+                int matchStart = matcher.start(0);
+                int matchEnd = matcher.end();
+                final String url = fieldSpan.toString().substring(matchStart, matchEnd);
+                if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
+                    fieldSpan.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View textView) {
+                            try {
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                context.startActivity(intent);
+                            }catch (Exception e){
+                                Toasty.error(context, context.getString(R.string.toast_no_apps), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setUnderlineText(false);
+                            if (theme == THEME_DARK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                            else if (theme == THEME_BLACK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                            else if (theme == THEME_LIGHT)
+                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        }
+                    }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    fieldsSpan.put(keySpan, fieldSpan);
+                }
+
+            }
+            matcher = android.util.Patterns.EMAIL_ADDRESS.matcher(fieldSpan);
+            while (matcher.find()){
+                URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
+                for(URLSpan span : urls)
+                    fieldSpan.removeSpan(span);
+                int matchStart = matcher.start(0);
+                int matchEnd = matcher.end();
+                final String email = fieldSpan.toString().substring(matchStart, matchEnd);
+                if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
+                    fieldSpan.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View textView) {
+                            try {
+                                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                                emailIntent.setType("plain/text");
+                                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{email});
+                                context.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.send_email)));
+                            }catch (Exception e){
+                                Toasty.error(context, context.getString(R.string.toast_no_apps), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setUnderlineText(false);
+                            if (theme == THEME_DARK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                            else if (theme == THEME_BLACK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                            else if (theme == THEME_LIGHT)
+                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                        }
+                    }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    fieldsSpan.put(keySpan, fieldSpan);
+                }
+
+            }
+        }
+
+        it = fieldsSpan.entrySet().iterator();
+        fieldsVerified = account.getFieldsVerified();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            SpannableString fieldSpan = (SpannableString) pair.getValue();
+            SpannableString keySpan = (SpannableString) pair.getKey();
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            Matcher matcher;
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+                matcher = Patterns.WEB_URL.matcher(fieldSpan);
+            else
+                matcher = Helper.urlPattern.matcher(fieldSpan);
+            while (matcher.find()){
+                URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
+                for(URLSpan span : urls)
+                    fieldSpan.removeSpan(span);
+                int matchStart = matcher.start(0);
+                int matchEnd = matcher.end();
+                final String url = fieldSpan.toString().substring(matchStart, matchEnd);
+                if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
+                    int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                    fieldSpan.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View textView) {
+                            Helper.openBrowser(context, url);
+                        }
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setUnderlineText(false);
+
+                            if (theme == THEME_DARK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                            else if (theme == THEME_BLACK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                            else if (theme == THEME_LIGHT)
+                                ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+
+                        }
+                    }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    fieldsSpan.put(keySpan, fieldSpan);
+                }
+
+            }
+        }
+
+
+
         final List<Emojis> emojis = account.getEmojis();
         if( emojis != null && emojis.size() > 0 ) {
 
@@ -597,40 +807,23 @@ public class Account implements Parcelable {
                 }catch (Exception ignored){}
 
             }
+        }else {
+            if (listener != null)
+                listener.onRetrieveEmojiAccount(account);
         }
+
     }
 
 
-    public void makeEmojisAccount(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account){
+    public void makeAccountNameEmoji(final Context context, final OnRetrieveEmojiAccountInterface listener, Account account){
         if( ((Activity)context).isFinishing() )
             return;
-
-        fields = new LinkedHashMap<>();
-        fieldsVerified = new LinkedHashMap<>();
-        fieldsSpan = new LinkedHashMap<>();
-        noteSpan = account.getNoteSpan();
         if( account.getDisplay_name() != null)
             displayNameSpan = new SpannableString(account.getDisplay_name());
-        if( account.getFields() != null && account.getFields().size() > 0) {
-            Iterator it = account.getFields().entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
-                SpannableString fieldSpan;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    fieldSpan = new SpannableString(Html.fromHtml((String)pair.getValue(), FROM_HTML_MODE_LEGACY));
-                else
-                    //noinspection deprecation
-                    fieldSpan = new SpannableString(Html.fromHtml((String)pair.getValue()));
-                fieldsSpan.put(new SpannableString((String)pair.getKey()), fieldSpan);
-            }
-            account.setFieldsSpan(fieldsSpan);
-        }
         final List<Emojis> emojis = account.getEmojis();
         if( emojis != null && emojis.size() > 0 ) {
-
             final int[] i = {0};
             for (final Emojis emoji : emojis) {
-                fields = account.getFields();
                 try {
                     Glide.with(context)
                             .asBitmap()
@@ -653,8 +846,6 @@ public class Account implements Parcelable {
                                     }
                                     i[0]++;
                                     if (i[0] == (emojis.size())) {
-                                        if (noteSpan != null)
-                                            account.setNoteSpan(noteSpan);
                                         if (listener != null)
                                             listener.onRetrieveEmojiAccount(account);
                                     }
@@ -665,5 +856,7 @@ public class Account implements Parcelable {
             }
         }
     }
+
+
 
 }

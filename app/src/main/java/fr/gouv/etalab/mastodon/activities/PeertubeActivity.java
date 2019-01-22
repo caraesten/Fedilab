@@ -17,22 +17,23 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -43,13 +44,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
+
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
+import com.google.android.exoplayer2.ui.PlaybackControlView;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
 import java.lang.ref.WeakReference;
 import java.security.KeyManagementException;
@@ -61,11 +76,14 @@ import javax.net.ssl.HttpsURLConnection;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSingleAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSingleCommentsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -73,12 +91,17 @@ import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.FullScreenMediaController;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.webview.MastalabWebChromeClient;
+import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
 
-import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
+import static fr.gouv.etalab.mastodon.helper.Helper.VIDEO_MODE_DIRECT;
+import static fr.gouv.etalab.mastodon.helper.Helper.VIDEO_MODE_WEBVIEW;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
 
 
@@ -87,19 +110,26 @@ import static fr.gouv.etalab.mastodon.helper.Helper.manageDownloads;
  * Peertube activity
  */
 
-public class PeertubeActivity extends BaseActivity implements OnRetrievePeertubeInterface {
+public class PeertubeActivity extends BaseActivity implements OnRetrievePeertubeInterface, OnPostActionInterface {
 
     private String peertubeInstance, videoId;
     private FullScreenMediaController.fullscreen fullscreen;
-    private VideoView videoView;
     private RelativeLayout loader;
     private TextView peertube_view_count, peertube_bookmark, peertube_like_count, peertube_dislike_count, peertube_share, peertube_download, peertube_description, peertube_title;
     private ScrollView peertube_information_container;
-    private MediaPlayer mediaPlayer;
-    private FullScreenMediaController fullScreenMediaController;
     private int stopPosition;
     private Peertube peertube;
     private TextView toolbar_title;
+    public static String video_id;
+    private SimpleExoPlayerView playerView;
+    private SimpleExoPlayer player;
+    private boolean fullScreenMode;
+    private Dialog fullScreenDialog;
+    private AppCompatImageView fullScreenIcon;
+    private TextView resolution;
+    private DefaultTrackSelector trackSelector;
+    private int mode;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +150,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             default:
                 setTheme(R.style.AppThemeDark);
         }
-
+        fullScreenMode = false;
         setContentView(R.layout.activity_peertube);
         loader = findViewById(R.id.loader);
         peertube_view_count = findViewById(R.id.peertube_view_count);
@@ -132,8 +162,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube_description = findViewById(R.id.peertube_description);
         peertube_title = findViewById(R.id.peertube_title);
         peertube_information_container = findViewById(R.id.peertube_information_container);
+        WebView webview_video = findViewById(R.id.webview_video);
+        playerView = findViewById(R.id.media_video);
 
-        loader.setVisibility(View.VISIBLE);
         Bundle b = getIntent().getExtras();
         if(b != null) {
             peertubeInstance = b.getString("peertube_instance", null);
@@ -161,15 +192,75 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 Helper.colorizeToolbar(toolbar, R.color.black, PeertubeActivity.this);
             }
         }
-        videoView = findViewById(R.id.media_video);
-        new RetrievePeertubeSingleAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
+
+        mode = sharedpreferences.getInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_DIRECT);
+        if( mode != Helper.VIDEO_MODE_WEBVIEW && mode != Helper.VIDEO_MODE_DIRECT)
+            mode = VIDEO_MODE_DIRECT;
+        if( mode == Helper.VIDEO_MODE_WEBVIEW){
+            webview_video.setVisibility(View.VISIBLE);
+            playerView.setVisibility(View.GONE);
+
+            webview_video = Helper.initializeWebview(PeertubeActivity.this, R.id.webview_video);
+            FrameLayout webview_container = findViewById(R.id.main_media_frame);
+            final ViewGroup videoLayout = findViewById(R.id.videoLayout);
+
+            MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(PeertubeActivity.this, webview_video, webview_container, videoLayout);
+            mastalabWebChromeClient.setOnToggledFullscreen(new MastalabWebChromeClient.ToggledFullscreenCallback() {
+                @Override
+                public void toggledFullscreen(boolean fullscreen) {
+
+                    if (fullscreen) {
+                        videoLayout.setVisibility(View.VISIBLE);
+                        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+                        attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                        attrs.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+                        getWindow().setAttributes(attrs);
+                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+                        peertube_information_container.setVisibility(View.GONE);
+                    } else {
+                        WindowManager.LayoutParams attrs = getWindow().getAttributes();
+                        attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                        attrs.flags &= ~WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+                        getWindow().setAttributes(attrs);
+                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                        videoLayout.setVisibility(View.GONE);
+                        peertube_information_container.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+            webview_video.getSettings().setAllowFileAccess(true);
+            webview_video.setWebChromeClient(mastalabWebChromeClient);
+            webview_video.getSettings().setDomStorageEnabled(true);
+            webview_video.getSettings().setAppCacheEnabled(true);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                webview_video.getSettings().setMediaPlaybackRequiresUserGesture(false);
+            }
+            webview_video.setWebViewClient(new MastalabWebViewClient(PeertubeActivity.this));
+            webview_video.loadUrl("https://" + peertubeInstance + "/videos/embed/" + videoId);
+        }else {
+            webview_video.setVisibility(View.GONE);
+            playerView.setVisibility(View.VISIBLE);
+            loader.setVisibility(View.VISIBLE);
+        }
+
+
+        if( mode != Helper.VIDEO_MODE_WEBVIEW){
+            playerView.setControllerShowTimeoutMs(1000);
+            playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+            initFullscreenDialog();
+            initFullscreenButton();
+        }
+
+
+
+        new RetrievePeertubeSingleAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public void change(){
         if(fullscreen == FullScreenMediaController.fullscreen.ON){
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN |
+                    WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             Objects.requireNonNull(getSupportActionBar()).hide();
             peertube_information_container.setVisibility(View.GONE);
         }else{
@@ -200,41 +291,84 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 finish();
                 return true;
             case R.id.action_comment:
-                Toasty.info(PeertubeActivity.this, getString(R.string.retrieve_remote_status), Toast.LENGTH_LONG).show();
-                new AsyncTask<Void, Void, Void>() {
+                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                    Toasty.info(PeertubeActivity.this, getString(R.string.retrieve_remote_status), Toast.LENGTH_LONG).show();
+                    new AsyncTask<Void, Void, Void>() {
 
-                    private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
-                    private WeakReference<Context> contextReference = new WeakReference<>(PeertubeActivity.this);
+                        private List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses;
+                        private WeakReference<Context> contextReference = new WeakReference<>(PeertubeActivity.this);
 
-                    @Override
-                    protected Void doInBackground(Void... voids) {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
 
-                        if(peertube != null) {
-                            Results search = new API(contextReference.get()).search("https://" + peertube.getAccount().getHost() +  "/videos/watch/" + peertube.getUuid());
-                            if (search != null) {
-                                remoteStatuses = search.getStatuses();
+                            if (peertube != null) {
+                                Results search = new API(contextReference.get()).search("https://" + peertube.getAccount().getHost() + "/videos/watch/" + peertube.getUuid());
+                                if (search != null) {
+                                    remoteStatuses = search.getStatuses();
+                                }
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void result) {
+                            Intent intent = new Intent(contextReference.get(), TootActivity.class);
+                            Bundle b = new Bundle();
+                            if (remoteStatuses == null || remoteStatuses.size() == 0) {
+                                Toasty.error(contextReference.get(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            if (remoteStatuses.get(0).getReblog() != null) {
+                                b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
+                            } else {
+                                b.putParcelable("tootReply", remoteStatuses.get(0));
+                            }
+                            intent.putExtras(b); //Put your id to your next Intent
+                            contextReference.get().startActivity(intent);
+                        }
+                    }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                    if(! peertube.isCommentsEnabled()) {
+                        Toasty.info(PeertubeActivity.this, getString(R.string.comment_no_allowed_peertube),Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                    int style;
+                    SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                    if (theme == Helper.THEME_DARK) {
+                        style = R.style.DialogDark;
+                    } else if (theme == Helper.THEME_BLACK){
+                        style = R.style.DialogBlack;
+                    }else {
+                        style = R.style.Dialog;
+                    }
+                    AlertDialog.Builder builderInner;
+                    builderInner = new AlertDialog.Builder(PeertubeActivity.this, style);
+                    builderInner.setTitle(R.string.comment);
+                    EditText input = new EditText(PeertubeActivity.this);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                    input.setLayoutParams(lp);
+                    builderInner.setView(input);
+                    builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog,int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builderInner.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog,int which) {
+                            String comment = input.getText().toString();
+                            if( comment.trim().length() > 0 ) {
+                                new PostActionAsyncTask(getApplicationContext(), API.StatusAction.PEERTUBECOMMENT, peertube.getId(), null, comment, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                dialog.dismiss();
                             }
                         }
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Void result) {
-                        Intent intent = new Intent(contextReference.get(), TootActivity.class);
-                        Bundle b = new Bundle();
-                        if( remoteStatuses == null || remoteStatuses.size() == 0){
-                            Toasty.error(contextReference.get(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if( remoteStatuses.get(0).getReblog() != null ) {
-                            b.putParcelable("tootReply", remoteStatuses.get(0).getReblog());
-                        }else {
-                            b.putParcelable("tootReply", remoteStatuses.get(0));
-                        }
-                        intent.putExtras(b); //Put your id to your next Intent
-                        contextReference.get().startActivity(intent);
-                    }
-                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR );
+                    });
+                    builderInner.show();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -280,8 +414,32 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube_dislike_count.setText(String.valueOf(peertube.getDislike()));
         peertube_like_count.setText(String.valueOf(peertube.getLike()));
         peertube_view_count.setText(String.valueOf(peertube.getView()));
+        video_id = peertube.getId();
 
-        Uri uri = Uri.parse(apiResponse.getPeertubes().get(0).getFileUrl(null));
+        changeColor();
+        initResolution();
+
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            peertube_like_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String newState = peertube.getMyRating().equals("like")?"none":"like";
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.RATEVIDEO, peertube.getId(), null, newState, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    peertube.setMyRating(newState);
+                    changeColor();
+                }
+            });
+            peertube_dislike_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String newState = peertube.getMyRating().equals("dislike")?"none":"dislike";
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.RATEVIDEO, peertube.getId(), null, newState, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    peertube.setMyRating(newState);
+                    changeColor();
+                }
+            });
+        }
+
         try {
             HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
         } catch (KeyManagementException e) {
@@ -289,29 +447,30 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        videoView.setVideoURI(uri);
-        videoView.getCurrentPosition();
-        fullScreenMediaController = new FullScreenMediaController(PeertubeActivity.this, peertube);
-        fullScreenMediaController.setPadding(0, 0, 0, (int)Helper.convertDpToPixel(25, PeertubeActivity.this));
-        fullScreenMediaController.setAnchorView(videoView);
-        videoView.setMediaController(fullScreenMediaController);
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                loader.setVisibility(View.GONE);
-                mediaPlayer = mp;
-                mp.start();
-            }
-        });
 
-        videoView.start();
+        if( mode == Helper.VIDEO_MODE_DIRECT){
+
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
+                    Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
+
+            ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(Uri.parse(apiResponse.getPeertubes().get(0).getFileUrl(null)));
+
+            player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this);
+            playerView.setPlayer(player);
+            loader.setVisibility(View.GONE);
+
+            player.prepare(videoSource);
+            player.setPlayWhenReady(true);
+        }
+
+
 
         peertube_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Build.VERSION.SDK_INT >= 23 ){
                     if (ContextCompat.checkSelfPermission(PeertubeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(PeertubeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(PeertubeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
                     } else {
                         manageDownloads(PeertubeActivity.this, peertube.getFileDownloadUrl(null));
                     }
@@ -380,6 +539,34 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         });
     }
 
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if( mode != VIDEO_MODE_WEBVIEW) {
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                openFullscreenDialog();
+                setFullscreen(FullScreenMediaController.fullscreen.ON);
+            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                closeFullscreenDialog();
+                setFullscreen(FullScreenMediaController.fullscreen.OFF);
+            }
+            change();
+        }else {
+           final ViewGroup videoLayout = findViewById(R.id.videoLayout);
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                setFullscreen(FullScreenMediaController.fullscreen.ON);
+            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                setFullscreen(FullScreenMediaController.fullscreen.OFF);
+            }
+            change();
+
+
+        }
+
+    }
+
     @Override
     public void onRetrievePeertubeComments(APIResponse apiResponse) {
         if( apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
@@ -390,19 +577,18 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
+        RelativeLayout no_action = findViewById(R.id.no_action);
+        RecyclerView lv_comments = findViewById(R.id.peertube_comments);
         if( statuses == null || statuses.size() == 0){
-            RelativeLayout no_action = findViewById(R.id.no_action);
             no_action.setVisibility(View.VISIBLE);
-            RecyclerView lv_comments = findViewById(R.id.peertube_comments);
             lv_comments.setVisibility(View.GONE);
         }else {
+            no_action.setVisibility(View.GONE);
+            lv_comments.setVisibility(View.VISIBLE);
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean isOnWifi = Helper.isOnWIFI(PeertubeActivity.this);
-            int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
             String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            StatusListAdapter statusListAdapter = new StatusListAdapter(PeertubeActivity.this, RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, userId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
-            RecyclerView lv_comments = findViewById(R.id.peertube_comments);
+            StatusListAdapter statusListAdapter = new StatusListAdapter(PeertubeActivity.this, RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE, userId, isOnWifi, statuses);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(PeertubeActivity.this);
             lv_comments.setLayoutManager(mLayoutManager);
             lv_comments.setNestedScrollingEnabled(false);
@@ -412,21 +598,29 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     }
 
     @Override
+    public void onRetrievePeertubeChannels(APIResponse apiResponse) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
-        if( videoView != null) {
-            stopPosition = videoView.getCurrentPosition(); //stopPosition is an int
-            videoView.pause();
+        if( player != null) {
+            player.setPlayWhenReady(false);
         }
     }
+
 
     @Override
     public void onResume(){
         super.onResume();
-        if( videoView != null) {
-            videoView.seekTo(stopPosition);
-            videoView.resume();
-            videoView.start();
+        if( player != null) {
+            player.setPlayWhenReady(true);
         }
     }
 
@@ -456,17 +650,117 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String res = arrayAdapter.getItem(which).substring(0, arrayAdapter.getItem(which).length() - 1);
-                if( mediaPlayer != null) {
-                    int position = videoView.getCurrentPosition();
-                    mediaPlayer.stop();
-                    videoView.setVideoURI(Uri.parse(peertube.getFileUrl(res)));
-                    fullScreenMediaController.setResolutionVal(res);
-                    videoView.seekTo(position);
-                    videoView.start();
+
+                if( playerView != null) {
+                    loader.setVisibility(View.VISIBLE);
+                    long position = player.getCurrentPosition();
+                    PlaybackControlView controlView = playerView.findViewById(R.id.exo_controller);
+                    resolution = controlView.findViewById(R.id.resolution);
+                    resolution.setText(String.format("%sp",res));
+                    if( mode == VIDEO_MODE_DIRECT){
+
+                        player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this);
+                        playerView.setPlayer(player);
+                        loader.setVisibility(View.GONE);
+                        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
+                                Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
+
+                        ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                                .createMediaSource(Uri.parse(peertube.getFileUrl(res)));
+                        player.prepare(videoSource);
+                        player.seekTo(0, position);
+                        player.setPlayWhenReady(true);
+                    }
                 }
 
             }
         });
         builderSingle.show();
+    }
+
+    @Override
+    public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
+
+        if( peertube.isCommentsEnabled() && statusAction == API.StatusAction.PEERTUBECOMMENT)
+            new RetrievePeertubeSingleCommentsAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+    }
+
+
+    private void initFullscreenDialog() {
+
+        fullScreenDialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen) {
+            public void onBackPressed() {
+                if (fullScreenMode)
+                    closeFullscreenDialog();
+                super.onBackPressed();
+            }
+        };
+    }
+
+    private void openFullscreenDialog() {
+
+        ((ViewGroup) playerView.getParent()).removeView(playerView);
+        fullScreenDialog.addContentView(playerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        fullScreenIcon.setImageDrawable(ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_fullscreen_exit));
+        fullScreenMode = true;
+        fullScreenDialog.show();
+    }
+
+
+    private void closeFullscreenDialog() {
+
+        ((ViewGroup) playerView.getParent()).removeView(playerView);
+        ((FrameLayout) findViewById(R.id.main_media_frame)).addView(playerView);
+        fullScreenMode = false;
+        fullScreenDialog.dismiss();
+        fullScreenIcon.setImageDrawable(ContextCompat.getDrawable(PeertubeActivity.this, R.drawable.ic_fullscreen));
+    }
+
+    private void initFullscreenButton() {
+
+        PlaybackControlView controlView = playerView.findViewById(R.id.exo_controller);
+        fullScreenIcon = controlView.findViewById(R.id.exo_fullscreen_icon);
+        View fullScreenButton = controlView.findViewById(R.id.exo_fullscreen_button);
+        fullScreenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!fullScreenMode)
+                    openFullscreenDialog();
+                else
+                    closeFullscreenDialog();
+            }
+        });
+    }
+
+    private void initResolution() {
+        PlaybackControlView controlView = playerView.findViewById(R.id.exo_controller);
+        resolution = controlView.findViewById(R.id.resolution);
+        resolution.setText(String.format("%sp",peertube.getResolution().get(0)));
+        resolution.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayResolution();
+            }
+        });
+    }
+
+
+
+    private void changeColor(){
+        if( peertube.getMyRating() != null && peertube.getMyRating().equals("like")){
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube,R.color.positive_thumbs);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube,R.color.neutral_thumbs);
+        }else if( peertube.getMyRating() != null && peertube.getMyRating().equals("dislike")){
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube,R.color.neutral_thumbs);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube,R.color.negative_thumbs);
+        }else {
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_up_peertube,R.color.neutral_thumbs);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_thumb_down_peertube,R.color.neutral_thumbs);
+        }
+        Drawable thumbUp = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_thumb_up_peertube);
+        Drawable thumbDown = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_thumb_down_peertube);
+        peertube_like_count.setCompoundDrawablesWithIntrinsicBounds( null, thumbUp, null, null);
+        peertube_dislike_count.setCompoundDrawablesWithIntrinsicBounds( null, thumbDown, null, null);
     }
 }

@@ -24,13 +24,16 @@ import android.os.AsyncTask;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
+import java.util.HashMap;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.HttpsConnection;
+import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -39,19 +42,49 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 
 public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private String token;
+    private String token, client_id, client_secret, refresh_token;
     private String instance;
     private WeakReference<Context> contextReference;
+    private SOCIAL social;
 
-    public UpdateAccountInfoAsyncTask(Context context, String token, String instance){
+    public enum SOCIAL{
+        MASTODON,
+        PEERTUBE,
+        PIXELFED
+    }
+    public UpdateAccountInfoAsyncTask(Context context, String token, String client_id, String client_secret, String refresh_token, String instance, SOCIAL social){
         this.contextReference = new WeakReference<>(context);
         this.token = token;
         this.instance = instance;
+        this.social = social;
+        this.client_id = client_id;
+        this.client_secret = client_secret;
+        this.refresh_token = refresh_token;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        Account account = new API(this.contextReference.get(), instance, null).verifyCredentials();
+        Account account = null;
+        if( social == SOCIAL.MASTODON) {
+            account = new API(this.contextReference.get(), instance, null).verifyCredentials();
+            account.setSocial("MASTODON");
+        }else if( social == SOCIAL.PEERTUBE) {
+            try {
+                account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
+                account.setSocial("PEERTUBE");
+            }catch (HttpsConnection.HttpsConnectionException exception){
+                if(exception.getStatusCode() == 401){
+                    HashMap<String, String> values = new PeertubeAPI(this.contextReference.get(), instance, null).refreshToken(client_id, client_secret, refresh_token);
+                    if( values.get("access_token") != null)
+                        this.token = values.get("access_token");
+                    if( values.get("refresh_token") != null)
+                        this.refresh_token = values.get("refresh_token");
+                }
+            }
+        }
+
+        if( account == null)
+            return null;
         try {
             //At the state the instance can be encoded
             instance = URLDecoder.decode(instance, "utf-8");
@@ -60,9 +93,12 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         if( token == null) {
             token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         }
-
         account.setToken(token);
+        account.setClient_id(client_id);
+        account.setClient_secret(client_secret);
+        account.setRefresh_token(refresh_token);
         account.setInstance(instance);
+
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         boolean userExists = new AccountDAO(this.contextReference.get(), db).userExist(account);
         SharedPreferences.Editor editor = sharedpreferences.edit();

@@ -3,6 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_displayname"
+        app:showAsAction="always"
+        android:title="@string/change_tag_column" />
+    <item
         android:id="@+id/action_show_media_only"
         android:checkable="true"
         android:title="@string/show_media_only"
@@ -15,6 +19,18 @@
         android:title="@string/show_media_nsfw"
         app:actionViewClass="android.widget.CheckBox"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_any"
+        app:showAsAction="always"
+        android:title="@string/any_tags" />
+    <item
+        android:id="@+id/action_all"
+        app:showAsAction="always"
+        android:title="@string/all_tags" />
+    <item
+        android:id="@+id/action_none"
+        app:showAsAction="always"
+        android:title="@string/none_tags" />
     <item
         android:id="@+id/action_delete"
         app:showAsAction="always"

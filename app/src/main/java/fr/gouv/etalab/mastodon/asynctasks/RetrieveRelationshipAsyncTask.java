@@ -16,9 +16,14 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
 import java.lang.ref.WeakReference;
+
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
+import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 
 /**
@@ -32,7 +37,7 @@ public class RetrieveRelationshipAsyncTask extends AsyncTask<Void, Void, Void> {
     private String accountId;
     private Relationship relationship;
     private OnRetrieveRelationshipInterface listener;
-    private API api;
+    private Error error;
     private WeakReference<Context> contextReference;
 
     public RetrieveRelationshipAsyncTask(Context context, String accountId, OnRetrieveRelationshipInterface onRetrieveRelationshipInterface){
@@ -43,14 +48,23 @@ public class RetrieveRelationshipAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        api = new API(this.contextReference.get());
-        relationship = api.getRelationship(accountId);
+
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            API api = new API(this.contextReference.get());
+            relationship = api.getRelationship(accountId);
+            error = api.getError();
+        }else {
+            PeertubeAPI api = new PeertubeAPI(this.contextReference.get());
+            relationship = new Relationship();
+            relationship.setFollowing(api.isFollowing(accountId));
+            error = api.getError();
+        }
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveRelationship(relationship, api.getError());
+        listener.onRetrieveRelationship(relationship, error);
     }
 
 }

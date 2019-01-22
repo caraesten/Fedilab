@@ -45,6 +45,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -91,6 +92,9 @@ public class LoginActivity extends BaseActivity {
     boolean isLoadingInstance = false;
     private String oldSearch;
     private ImageView info_uid, info_instance, info_pwd, info_2FA;
+    private CheckBox peertube_instance;
+    private  Button connectionButton;
+    private String actionToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,12 +121,15 @@ public class LoginActivity extends BaseActivity {
                         try {
                             resobj = new JSONObject(response);
                             String token = resobj.get("access_token").toString();
+                            String refresh_token = null;
+                            if( resobj.has("refresh_token"))
+                                refresh_token = resobj.get("refresh_token").toString();
                             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedpreferences.edit();
                             editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
                             editor.apply();
                             //Update the account with the token;
-                            new UpdateAccountInfoAsyncTask(LoginActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new UpdateAccountInfoAsyncTask(LoginActivity.this, token, client_id, client_secret, refresh_token, instance, peertube_instance.isChecked()?UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE:UpdateAccountInfoAsyncTask.SOCIAL.MASTODON).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } catch (JSONException ignored) {}
                     } catch (Exception ignored) {}
                 }}).start();
@@ -171,7 +178,7 @@ public class LoginActivity extends BaseActivity {
             } else {
                 changeDrawableColor(getApplicationContext(), R.drawable.mastodon_icon, R.color.mastodonC3);
             }
-            final Button connectionButton = findViewById(R.id.login_button);
+
             login_instance = findViewById(R.id.login_instance);
             login_uid = findViewById(R.id.login_uid);
             login_passwd = findViewById(R.id.login_passwd);
@@ -179,6 +186,18 @@ public class LoginActivity extends BaseActivity {
             info_instance = findViewById(R.id.info_instance);
             info_pwd = findViewById(R.id.info_pwd);
             info_2FA = findViewById(R.id.info_2FA);
+            peertube_instance = findViewById(R.id.peertube_instance);
+
+            peertube_instance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if( isChecked)
+                        login_uid.setHint(R.string.username);
+                    else
+                        login_uid.setHint(R.string.email);
+                }
+            });
+            connectionButton = findViewById(R.id.login_button);
 
             info_instance.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -309,6 +328,7 @@ public class LoginActivity extends BaseActivity {
                     startActivity(browserIntent);
                 }
             });
+
             login_instance.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -369,7 +389,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Button connectionButton = findViewById(R.id.login_button);
+
         if (login_instance != null &&login_instance.getText() != null && login_instance.getText().toString().length() > 0 && client_id_for_webview) {
             connectionButton.setEnabled(false);
             client_id_for_webview = false;
@@ -378,24 +398,35 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void retrievesClientId(){
-        final Button connectionButton = findViewById(R.id.login_button);
         try {
             instance =  URLEncoder.encode(login_instance.getText().toString().trim(), "utf-8");
         } catch (UnsupportedEncodingException e) {
             Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
         }
-        final String action = "/api/v1/apps";
+        if( !peertube_instance.isChecked())
+            actionToken = "/api/v1/apps";
+        else
+            actionToken = "/api/v1/oauth-clients/local";
         final HashMap<String, String> parameters = new HashMap<>();
         parameters.put(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
         parameters.put(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
-        parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES);
+        if( !peertube_instance.isChecked()) {
+            parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES);
+        }else {
+            parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES_PEERTUBE);
+        }
         parameters.put(Helper.WEBSITE, Helper.WEBSITE_VALUE);
 
         new Thread(new Runnable(){
             @Override
             public void run() {
                 try {
-                    final String response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + action, 30, parameters, null );
+                    String response;
+                    if( !peertube_instance.isChecked())
+                        response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
+                    else
+                        response = new HttpsConnection(LoginActivity.this).get(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
+
                     runOnUiThread(new Runnable() {
                       public void run() {
                           JSONObject resobj;
@@ -403,7 +434,9 @@ public class LoginActivity extends BaseActivity {
                               resobj = new JSONObject(response);
                               client_id = resobj.get(Helper.CLIENT_ID).toString();
                               client_secret = resobj.get(Helper.CLIENT_SECRET).toString();
-                              String id = resobj.get(Helper.ID).toString();
+                              String id = null;
+                              if( !peertube_instance.isChecked())
+                                id = resobj.get(Helper.ID).toString();
                               SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                               SharedPreferences.Editor editor = sharedpreferences.edit();
                               editor.putString(Helper.CLIENT_ID, client_id);
@@ -418,6 +451,7 @@ public class LoginActivity extends BaseActivity {
                                   boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
                                   if( embedded_browser) {
                                       Intent i = new Intent(LoginActivity.this, WebviewConnectActivity.class);
+                                      i.putExtra("social", peertube_instance.isChecked()?UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE:UpdateAccountInfoAsyncTask.SOCIAL.MASTODON);
                                       i.putExtra("instance", instance);
                                       startActivity(i);
                                   }else{
@@ -471,25 +505,34 @@ public class LoginActivity extends BaseActivity {
                 } catch (UnsupportedEncodingException e) {
                     parameters.put("password",login_passwd.getText().toString());
                 }
-                parameters.put("scope"," read write follow");
-
+                String oauthUrl;
+                if( !peertube_instance.isChecked()) {
+                    parameters.put("scope", " read write follow");
+                    oauthUrl = "/oauth/token";
+                }else {
+                    parameters.put("scope", "user");
+                    oauthUrl = "/api/v1/users/token";
+                }
                 new Thread(new Runnable(){
                     @Override
                     public void run() {
                         try {
-                            final String response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + "/oauth/token", 30, parameters, null );
+                            final String response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + oauthUrl, 30, parameters, null );
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     JSONObject resobj;
                                     try {
                                         resobj = new JSONObject(response);
                                         String token = resobj.get("access_token").toString();
+                                        String refresh_token = null;
+                                        if( resobj.has("refresh_token"))
+                                            refresh_token = resobj.get("refresh_token").toString();
                                         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                                         SharedPreferences.Editor editor = sharedpreferences.edit();
                                         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
                                         editor.apply();
                                         //Update the account with the token;
-                                        new UpdateAccountInfoAsyncTask(LoginActivity.this, token, instance).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                        new UpdateAccountInfoAsyncTask(LoginActivity.this, token, client_id, client_secret, refresh_token, instance, peertube_instance.isChecked()?UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE:UpdateAccountInfoAsyncTask.SOCIAL.MASTODON).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     } catch (JSONException ignored) {ignored.printStackTrace();}
                                 }
                             });

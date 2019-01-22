@@ -46,6 +46,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.AccountsSearchAdapter;
+import fr.gouv.etalab.mastodon.drawers.PixelfedListAdapter;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -87,7 +88,8 @@ public class CrossActions {
                         for(Account account: accountstmp){
                             String mentionAcct = (mention.getAcct().contains("@"))?mention.getAcct():mention.getAcct()+"@"+currentAccount.getInstance();
                             if( (account.getAcct() + "@" + account.getInstance()).equals(mentionAcct) && !addedAccount.contains(account.getId() + "|" + account.getAcct())) {
-                                accounts.add(account);
+                                if( account.getSocial() == null || account.getSocial().equals("MASTODON"))
+                                    accounts.add(account);
                             }
                         }
                     }
@@ -95,7 +97,8 @@ public class CrossActions {
                         Account tootOwner = status.getAccount();
                         String mentionAcct = (tootOwner.getAcct().contains("@"))?tootOwner.getAcct():tootOwner.getAcct()+"@"+currentAccount.getInstance();
                         if( (account.getAcct() + "@" + account.getInstance()).equals(mentionAcct) && !addedAccount.contains(account.getId() + "|" + account.getAcct())) {
-                            accounts.add(account);
+                            if( account.getSocial() == null || account.getSocial().equals("MASTODON"))
+                                accounts.add(account);
                         }
                     }
                 }else {
@@ -140,22 +143,74 @@ public class CrossActions {
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
             Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
             if (confirmation)
-                displayConfirmationDialogCrossAction(context, currentAccount, doAction, status, onPostActionInterface);
-            else
+                displayConfirmationDialogCrossAction(context, currentAccount, doAction, status, onPostActionInterface, baseAdapter);
+            else {
                 new PostActionAsyncTask(context, currentAccount, status, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                if( doAction == API.StatusAction.FAVOURITE || doAction == API.StatusAction.UNFAVOURITE){
+                    if (doAction == API.StatusAction.FAVOURITE) {
+                        status.setFavourited(true);
+                        status.setFavAnimated(true);
+                    }else{
+                        status.setFavourited(false);
+                        status.setFavAnimated(false);
+                    }
+                    if(baseAdapter instanceof PixelfedListAdapter)
+                        ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
+                    else if(baseAdapter instanceof StatusListAdapter)
+                        ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
+                }else if(doAction == API.StatusAction.REBLOG || doAction == API.StatusAction.UNREBLOG){
+                    if (doAction == API.StatusAction.REBLOG) {
+                        status.setReblogged(true);
+                        status.setBoostAnimated(true);
+                    }else{
+                        status.setReblogged(false);
+                        status.setBoostAnimated(false);
+                    }
+                    if(baseAdapter instanceof PixelfedListAdapter)
+                        ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
+                    else if(baseAdapter instanceof StatusListAdapter)
+                        ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
+                }
+            }
         } else if (accounts.size() == 1 || undoAction) {
-
             if (confirmation)
                 displayConfirmationDialog(context, doAction, status, baseAdapter, onPostActionInterface);
             else {
                 if (doAction == API.StatusAction.REBLOG || doAction == API.StatusAction.UNREBLOG)
-                    reblogAction(context, status, baseAdapter, onPostActionInterface);
+                    reblogAction(context, status, onPostActionInterface);
                 else if (doAction == API.StatusAction.FAVOURITE || doAction == API.StatusAction.UNFAVOURITE)
-                    favouriteAction(context, status, baseAdapter, onPostActionInterface);
+                    favouriteAction(context, status, onPostActionInterface);
                 else if (doAction == API.StatusAction.PIN || doAction == API.StatusAction.UNPIN)
                     pinAction(context, status, baseAdapter, onPostActionInterface);
+
+                if( doAction == API.StatusAction.FAVOURITE || doAction == API.StatusAction.UNFAVOURITE){
+                    if (doAction == API.StatusAction.FAVOURITE) {
+                        status.setFavourited(true);
+                        status.setFavAnimated(true);
+                    }else{
+                        status.setFavourited(false);
+                        status.setFavAnimated(false);
+                    }
+                    if(baseAdapter instanceof PixelfedListAdapter)
+                        ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
+                    else if(baseAdapter instanceof StatusListAdapter)
+                        ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
+                }else if(doAction == API.StatusAction.REBLOG || doAction == API.StatusAction.UNREBLOG){
+                    if (doAction == API.StatusAction.REBLOG) {
+                        status.setReblogged(true);
+                        status.setBoostAnimated(true);
+                    }else{
+                        status.setReblogged(false);
+                        status.setBoostAnimated(false);
+                    }
+                    if(baseAdapter instanceof PixelfedListAdapter)
+                        ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
+                    else if(baseAdapter instanceof StatusListAdapter)
+                        ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
+                }
             }
         } else {
+
             AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, style);
             builderSingle.setTitle(context.getString(R.string.choose_accounts));
             final AccountsSearchAdapter accountsSearchAdapter = new AccountsSearchAdapter(context, accounts, true);
@@ -196,7 +251,8 @@ public class CrossActions {
                             } else if (doAction == API.StatusAction.PIN) {
                                 status.setPinned(true);
                             }
-                            baseAdapter.notifyDataSetChanged();
+                            if( baseAdapter != null)
+                                baseAdapter.notifyDataSetChanged();
                         }
                     }else{
                         new PostActionAsyncTask(context, selectedAccount, targetedAccount, doAction, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -204,7 +260,8 @@ public class CrossActions {
                             if (doAction == API.StatusAction.FOLLOW) {
                                 targetedAccount.setFollowing(true);
                             }
-                            baseAdapter.notifyDataSetChanged();
+                            if( baseAdapter != null)
+                                baseAdapter.notifyDataSetChanged();
                         }
                     }
                     dialog.dismiss();
@@ -264,11 +321,13 @@ public class CrossActions {
             @Override
             protected Void doInBackground(Void... voids) {
                 API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                String url;
-                if( remoteAccount.getHost() != null && remoteAccount.getAcct().split("@").length > 1) //Peertube compatibility
-                    url = "https://" + remoteAccount.getHost() + "/accounts/" + remoteAccount.getAcct().split("@")[0];
-                else
-                    url = "https://" + remoteAccount.getInstance() + "/@" + remoteAccount.getAcct();
+                String url = remoteAccount.getUrl();
+                if( url == null) {
+                    if (remoteAccount.getHost() != null && remoteAccount.getAcct().split("@").length > 1) //Peertube compatibility
+                        url = "https://" + remoteAccount.getHost() + "/accounts/" + remoteAccount.getAcct().split("@")[0];
+                    else
+                        url = "https://" + remoteAccount.getInstance() + "/@" + remoteAccount.getAcct();
+                }
                 response = api.search(url);
                 return null;
             }
@@ -283,8 +342,8 @@ public class CrossActions {
                     Bundle b = new Bundle();
                     //Flag it has a peertube account
                     if( remoteAccount.getHost() != null && remoteAccount.getAcct().split("@").length > 1)
-                        b.putBoolean("peertubeAccount", true);
-                    b.putString("accountId", remoteAccounts.get(0).getId());
+                        b.putBoolean("peertubeaccount", true);
+                    b.putParcelable("account", remoteAccounts.get(0));
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }
@@ -696,11 +755,37 @@ public class CrossActions {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if( action == API.StatusAction.REBLOG || action == API.StatusAction.UNREBLOG)
-                            reblogAction(context, status, baseAdapter, onPostActionInterface);
+                            reblogAction(context, status, onPostActionInterface);
                         else if( action == API.StatusAction.FAVOURITE || action == API.StatusAction.UNFAVOURITE)
-                            favouriteAction(context, status, baseAdapter, onPostActionInterface);
+                            favouriteAction(context, status, onPostActionInterface);
                         else if ( action == API.StatusAction.PIN || action == API.StatusAction.UNPIN)
                             pinAction(context, status, baseAdapter, onPostActionInterface);
+
+                        if( action == API.StatusAction.FAVOURITE || action == API.StatusAction.UNFAVOURITE){
+                            if (action == API.StatusAction.FAVOURITE) {
+                                status.setFavourited(true);
+                                status.setFavAnimated(true);
+                            }else{
+                                status.setFavourited(false);
+                                status.setFavAnimated(false);
+                            }
+                            if(baseAdapter instanceof PixelfedListAdapter)
+                                ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
+                            else if(baseAdapter instanceof StatusListAdapter)
+                                ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
+                        }else if(action == API.StatusAction.REBLOG || action == API.StatusAction.UNREBLOG){
+                            if (action == API.StatusAction.REBLOG) {
+                                status.setReblogged(true);
+                                status.setBoostAnimated(true);
+                            }else{
+                                status.setReblogged(false);
+                                status.setBoostAnimated(false);
+                            }
+                            if(baseAdapter instanceof PixelfedListAdapter)
+                                ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
+                            else if(baseAdapter instanceof StatusListAdapter)
+                                ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
+                        }
                         dialog.dismiss();
                     }
                 })
@@ -721,7 +806,7 @@ public class CrossActions {
      * @param action int
      * @param status Status
      */
-    private static void displayConfirmationDialogCrossAction(final Context context,Account currentAccount, final API.StatusAction action, final Status status, final OnPostActionInterface onPostActionInterface){
+    private static void displayConfirmationDialogCrossAction(final Context context,Account currentAccount, final API.StatusAction action, final Status status, final OnPostActionInterface onPostActionInterface, final RecyclerView.Adapter baseAdapter){
 
         String title = null;
         if( action == API.StatusAction.FAVOURITE){
@@ -750,6 +835,31 @@ public class CrossActions {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if( action == API.StatusAction.FAVOURITE || action == API.StatusAction.UNFAVOURITE){
+                            if (action == API.StatusAction.FAVOURITE) {
+                                status.setFavourited(true);
+                                status.setFavAnimated(true);
+                            }else{
+                                status.setFavourited(false);
+                                status.setFavAnimated(false);
+                            }
+                            if(baseAdapter instanceof PixelfedListAdapter)
+                                ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
+                            else if(baseAdapter instanceof StatusListAdapter)
+                                ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
+                        }else if(action == API.StatusAction.REBLOG || action == API.StatusAction.UNREBLOG){
+                            if (action == API.StatusAction.REBLOG) {
+                                status.setReblogged(true);
+                                status.setBoostAnimated(true);
+                            }else{
+                                status.setReblogged(false);
+                                status.setBoostAnimated(false);
+                            }
+                            if(baseAdapter instanceof PixelfedListAdapter)
+                                ((PixelfedListAdapter) baseAdapter).notifyStatusChanged(status);
+                            else if(baseAdapter instanceof StatusListAdapter)
+                                ((StatusListAdapter) baseAdapter).notifyStatusChanged(status);
+                        }
                         new PostActionAsyncTask(context, currentAccount, status, action, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         dialog.dismiss();
                     }
@@ -783,7 +893,8 @@ public class CrossActions {
      * Favourites/Unfavourites a status
      * @param status Status
      */
-    private static void favouriteAction(Context context, Status status, RecyclerView.Adapter baseAdapter, OnPostActionInterface onPostActionInterface){
+    private static void favouriteAction(Context context, Status status,OnPostActionInterface onPostActionInterface){
+
         if( status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())){
             new PostActionAsyncTask(context, API.StatusAction.UNFAVOURITE, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             status.setFavourited(false);
@@ -791,14 +902,13 @@ public class CrossActions {
             new PostActionAsyncTask(context, API.StatusAction.FAVOURITE, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             status.setFavourited(true);
         }
-        baseAdapter.notifyDataSetChanged();
     }
 
     /**
      * Reblog/Unreblog a status
      * @param status Status
      */
-    private static void reblogAction(Context context, Status status, RecyclerView.Adapter baseAdapter, OnPostActionInterface onPostActionInterface){
+    private static void reblogAction(Context context, Status status,  OnPostActionInterface onPostActionInterface){
         if( status.isReblogged() || (status.getReblog()!= null && status.getReblog().isReblogged())){
             String statusId = status.getReblog()!=null?status.getReblog().getId():status.getId();
             new PostActionAsyncTask(context, API.StatusAction.UNREBLOG, statusId, onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -807,7 +917,6 @@ public class CrossActions {
             new PostActionAsyncTask(context, API.StatusAction.REBLOG, status.getId(), onPostActionInterface).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             status.setReblogged(true);
         }
-        baseAdapter.notifyDataSetChanged();
     }
 
     /**

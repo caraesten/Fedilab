@@ -51,6 +51,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+
     <style name="AppTheme_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColor">@color/light_black</item>
         <item name="android:scrollbarThumbVertical">@color/transparent</item>
@@ -251,6 +252,7 @@
         <item name="android:windowBackground">@color/black_3</item>
         <item name="android:colorBackground">@color/black_3</item>
     </style>
+
     <style name="BlackSpinnerItemStyle" parent="Base.Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:padding">10dp</item>
     </style>

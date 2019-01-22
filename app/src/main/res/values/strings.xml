@@ -132,6 +132,11 @@
         <item>Block this domain?</item>
     </string-array>
 
+    <string-array name="action_notification">
+        <item>Notify</item>
+        <item>Silent</item>
+    </string-array>
+
     <string-array name="more_action_owner_confirm">
         <item>Remove this toot?</item>
         <item>Delete &amp; re-draft this toot?</item>
@@ -244,6 +249,10 @@
     <plurals name="other_notif_hometimeline">
         <item quantity="one">and another toot to discover</item>
         <item quantity="other">and %d other toots to discover</item>
+    </plurals>
+    <plurals name="likes">
+        <item quantity="one">%d like</item>
+        <item quantity="other">%d likes</item>
     </plurals>
     <string name="delete_notification_ask">Delete a notification?</string>
     <string name="delete_notification_ask_all">Delete all notifications?</string>
@@ -635,7 +644,7 @@
     <string name="no_blocked_domain">No blocked domains!</string>
     <string name="unblock_domain_confirm">Unblock domain</string>
     <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?</string>
+    <string name="block_domain_confirm_message">Are you sure to block %s?\n\nYou will not see any content from that domain in any public timeline or in your notifications. Your followers from that domain will be removed.</string>
     <string name="blocked_domains">Blocked domains</string>
     <string name="block_domain">Block domain</string>
     <string name="toast_block_domain">The domain is blocked</string>
@@ -738,6 +747,7 @@
 
 
     <!-- languages not translated -->
+    <string name="languages">Languages</string>
     <string name="english" translatable="false">English</string>
     <string name="french" translatable="false">Français</string>
     <string name="arabic" translatable="false">العربية</string>
@@ -760,8 +770,76 @@
     <string name="serbian" translatable="false">Српски</string>
     <string name="ukrainian" translatable="false">Українська</string>
     <string name="russian" translatable="false">Русский</string>
+    <string name="norwegian" translatable="false">Norsk</string>
     <string name="show_media_only">Media only</string>
     <string name="show_media_nsfw">Show NSFW</string>
+    <string name="crowdin_translations">Crowdin translations</string>
+    <string name="crowdin_manager">Crowdin manager</string>
+    <string name="translation_app">Translation of the application</string>
+    <string name="about_crowdin">About Crowdin</string>
+    <string name="bot">Bot</string>
+    <string name="pixelfed_instance">Pixelfed instance</string>
+    <string name="mastodon_instance">Mastodon instance</string>
+    <string name="no_pixelfed_instance">No Pixelfed instances</string>
+    <string name="any_tags">Any of these</string>
+    <string name="all_tags">All of these</string>
+    <string name="none_tags">None of these</string>
+    <string name="some_words_any">Any of these words (space-separated)</string>
+    <string name="some_words_all">All these words (space-separated)</string>
+    <string name="some_words_none">None of these words (space-separated)</string>
+    <string name="change_tag_column">Change column name</string>
+    <string name="no_misskey_instance">No Misskey instances</string>
+    <string name="misskey_instance">Misskey instance</string>
+    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="overview">Overview</string>
+    <string name="trending">Trending</string>
+    <string name="recently_added">Recently added</string>
+    <string name="local">Local</string>
+    <string name="upload_video">Upload</string>
+    <string name="reply">Reply</string>
+    <string name="delete_comment">Delete a comment</string>
+    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
+    <string name="fullscreen">Full screen video</string>
+    <string name="set_video_mode">Mode for videos</string>
+    <string name="file_to_upload">Select the file to upload</string>
+    <string name="my_videos">My videos</string>
+    <string name="title">Title</string>
+    <string name="categories">Categories</string>
+    <string name="license">License</string>
+    <string name="category">Category</string>
+    <string name="language">Language</string>
+    <string name="peertube_nsfw">This video contains mature or explicit content</string>
+    <string name="peertube_enable_comments">Enable video comments</string>
+    <string name="update_video">Update video</string>
+    <string name="description">Description</string>
+    <string name="toast_peertube_video_updated">The video has been updated!</string>
+    <string name="toast_cancelled">Upload cancelled!</string>
+    <string name="upload_video_success">The video has been uploaded!</string>
+    <string name="uploading">Uploading, please wait…</string>
+    <string name="video_uploaded_action">Click here to edit the video data.</string>
+    <string name="delete_video">Delete video</string>
+    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
+    <string name="no_video_uploaded">No videos uploaded yet!</string>
+    <string name="display_nsfw_videos">Display NSFW videos</string>
+    <string name="default_channel_of">Default %s channel</string>
+    <string name="no_video_to_display">No videos to display!</string>
+    <string name="add_image_to_favorite">Add media to favorites</string>
+    <string name="leave_a_comment">Leave a comment</string>
+    <string name="share">Share</string>
+    <string name="my_pictures">My pictures</string>
+    <string name="choose_schedule">Choose a schedule mode</string>
+    <string name="device_schedule">From device</string>
+    <string name="server_schedule">From server</string>
+    <string name="toots_server">Toots (Server)</string>
+    <string name="toots_client">Toots (Device)</string>
+    <string name="modify">Modify</string>
     <!-- end languages -->
 
+
+
+    <string-array name="settings_video_mode">
+        <item>Webview</item>
+        <item>Direct stream</item>
+    </string-array>
 </resources>

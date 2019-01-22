@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 20;
+    public static final int DB_VERSION = 24;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -82,7 +82,10 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_INSTANCE = "INSTANCE";
     static final String COL_OAUTHTOKEN = "OAUTH_TOKEN";
     static final String COL_EMOJIS = "EMOJIS";
-
+    static final String COL_SOCIAL = "SOCIAL";
+    static final String COL_CLIENT_ID = "CLIENT_ID";
+    static final String COL_CLIENT_SECRET = "CLIENT_SECRET";
+    static final String COL_REFRESH_TOKEN = "REFRESH_TOKEN";
 
     private static final String CREATE_TABLE_USER_ACCOUNT = "CREATE TABLE " + TABLE_USER_ACCOUNT + " ("
             + COL_USER_ID + " TEXT PRIMARY KEY, " + COL_USERNAME + " TEXT NOT NULL, " + COL_ACCT + " TEXT NOT NULL, "
@@ -92,6 +95,8 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_AVATAR + " TEXT NOT NULL, "+ COL_AVATAR_STATIC + " TEXT NOT NULL, "
             + COL_HEADER + " TEXT NOT NULL, "+ COL_HEADER_STATIC + " TEXT NOT NULL, "
             + COL_EMOJIS + " TEXT, "
+            + COL_SOCIAL + " TEXT, "
+            + COL_CLIENT_ID + " TEXT, " + COL_CLIENT_SECRET + " TEXT, " + COL_REFRESH_TOKEN + " TEXT,"
             + COL_INSTANCE + " TEXT NOT NULL, " + COL_OAUTHTOKEN + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL)";
 
 
@@ -123,9 +128,14 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_KEYWORDS = "KEYWORDS";
     static final String COL_IS_ART= "IS_ART";
     static final String COL_IS_NSFW= "IS_NSFW";
+    static final String COL_ANY= "ANY_TAG";
+    static final String COL_ALL= "ALL_TAG";
+    static final String COL_NONE = "NONE_TAG";
+    static final String COL_NAME = "NAME";
     private final String CREATE_TABLE_SEARCH = "CREATE TABLE " + TABLE_SEARCH + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_KEYWORDS + " TEXT NOT NULL, " + COL_USER_ID + " TEXT NOT NULL, "
+            + COL_ANY + " TEXT, " + COL_ALL + " TEXT, " + COL_NONE + " TEXT, "+ COL_NAME + " TEXT, "
             + COL_IS_ART + " INTEGER  DEFAULT 0, " + COL_IS_NSFW + " INTEGER  DEFAULT 0, "
             + COL_DATE_CREATION + " TEXT NOT NULL)";
 
@@ -160,6 +170,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_PINNED = "PINNED";
     static final String COL_DATE_BACKUP = "DATE_BACKUP";
     static final String COL_CARD = "CARD";
+
 
     private final String CREATE_TABLE_STATUSES_CACHE = "CREATE TABLE " + TABLE_STATUSES_CACHE + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -291,6 +302,22 @@ public class Sqlite extends SQLiteOpenHelper {
                     db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_IS_ART + " INTEGER  DEFAULT 0");
                     db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_IS_NSFW + " INTEGER  DEFAULT 0");
                 }
+            case 20:
+                if( oldVersion > 6) {
+                    db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_ANY + " TEXT");
+                    db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_ALL + " TEXT");
+                    db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_NONE + " TEXT");
+                }
+            case 21:
+                if( oldVersion > 6) {
+                    db.execSQL("ALTER TABLE " + TABLE_SEARCH + " ADD COLUMN " + COL_NAME + " TEXT");
+                }
+            case 22:
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_SOCIAL + " TEXT");
+            case 23:
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_CLIENT_ID + " TEXT");
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_CLIENT_SECRET + " TEXT");
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " + COL_REFRESH_TOKEN + " TEXT");
             default:
                 break;
         }

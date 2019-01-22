@@ -21,11 +21,13 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
+import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.FilterToots;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
@@ -74,7 +76,22 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         CACHE_BOOKMARKS_PEERTUBE,
         CACHE_STATUS,
         REMOTE_INSTANCE,
-        ART
+        ART,
+        NOTIFICATION,
+        PIXELFED,
+        PSUBSCRIPTIONS,
+        POVERVIEW,
+        PTRENDING,
+        PRECENTLYADDED,
+        PMYVIDEOS,
+        PLOCAL,
+        CHANNEL,
+        MYVIDEOS,
+        PF_HOME,
+        PF_LOCAL,
+        PF_DISCOVER,
+        PF_NOTIFICATION,
+        SCHEDULED_TOOTS
     }
 
 
@@ -152,6 +169,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             case PUBLIC:
                 apiResponse = api.getPublicTimeline(false, max_id);
                 break;
+            case SCHEDULED_TOOTS:
+                apiResponse = api.scheduledAction("GET", null, max_id, null);
+                break;
             case DIRECT:
                 apiResponse = api.getDirectTimeline(max_id);
                 break;
@@ -171,6 +191,16 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                                 status.setType(action);
                             }
                         }
+                    }else if(remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("MISSKEY")){
+                        apiResponse = api.getMisskey(this.instanceName, max_id);
+                        List<fr.gouv.etalab.mastodon.client.Entities.Status> statusesTemp = apiResponse.getStatuses();
+                        if( statusesTemp != null){
+                            for(fr.gouv.etalab.mastodon.client.Entities.Status status: statusesTemp){
+                                status.setType(action);
+                            }
+                        }
+                    } else if(remoteInstanceObj != null && remoteInstanceObj.size() > 0 && remoteInstanceObj.get(0).getType().equals("PIXELFED") ) {
+                        apiResponse = api.getPixelfedTimeline(instanceName, max_id);
                     }else {
                         apiResponse = api.getPeertube(this.instanceName, max_id);
                     }
@@ -180,12 +210,25 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getFavourites(max_id);
                 break;
             case USER:
-                if( showMediaOnly)
-                    apiResponse = api.getStatusWithMedia(targetedID, max_id);
-                else if (showPinned)
-                    apiResponse = api.getPinnedStatuses(targetedID, max_id);
-                else
-                    apiResponse = api.getAccountTLStatuses(targetedID, max_id, !showReply);
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                    if (showMediaOnly)
+                        apiResponse = api.getStatusWithMedia(targetedID, max_id);
+                    else if (showPinned)
+                        apiResponse = api.getPinnedStatuses(targetedID, max_id);
+                    else
+                        apiResponse = api.getAccountTLStatuses(targetedID, max_id, !showReply);
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                    PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                    apiResponse = peertubeAPI.getVideos(targetedID, max_id);
+                }
+                break;
+            case MYVIDEOS:
+                PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getMyVideos(max_id);
+                break;
+            case CHANNEL:
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getVideosChannel(targetedID, max_id);
                 break;
             case ONESTATUS:
                 apiResponse = api.getStatusbyId(targetedID);
@@ -196,16 +239,16 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     TagTimeline tagTimeline = tagTimelines.get(0);
                     boolean isArt = tagTimeline.isART();
                     if( isArt)
-                        apiResponse = api.getCustomArtTimeline(false, tag, max_id);
+                        apiResponse = api.getCustomArtTimeline(false, tag, max_id,tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
                     else
-                        apiResponse = api.getPublicTimelineTag(tag, false, max_id);
+                        apiResponse = api.getPublicTimelineTag(tag, false, max_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
                 }else{
-                    apiResponse = api.getPublicTimelineTag(tag, false, max_id);
+                    apiResponse = api.getPublicTimelineTag(tag, false, max_id, null, null, null);
                 }
 
                 break;
             case ART:
-                apiResponse = api.getArtTimeline(false, max_id);
+                apiResponse = api.getArtTimeline(false, max_id, null, null, null);
                 break;
             case CACHE_BOOKMARKS:
                 apiResponse = new APIResponse();
@@ -233,8 +276,53 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                     apiResponse.setSince_id(null);
                 }
                 break;
+
+            case PSUBSCRIPTIONS:
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getSubscriptionsTL(max_id);
+                break;
+            case POVERVIEW:
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getOverviewTL(max_id);
+                break;
+            case PTRENDING:
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getTrendingTL(max_id);
+                break;
+            case PRECENTLYADDED:
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getRecentlyAddedTL(max_id);
+                break;
+            case PLOCAL:
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getLocalTL(max_id);
+                break;
+            case PMYVIDEOS:
+                peertubeAPI = new PeertubeAPI(this.contextReference.get());
+                apiResponse = peertubeAPI.getLocalTL(max_id);
+                break;
+            case PF_HOME:
+                api = new API(this.contextReference.get());
+                apiResponse = api.getHomeTimeline(max_id);
+                break;
+            case PF_LOCAL:
+                api = new API(this.contextReference.get());
+                apiResponse = api.getPublicTimeline(true,max_id);
+            case PF_DISCOVER:
+                api = new API(this.contextReference.get());
+                apiResponse = api.getDiscoverTimeline(true,max_id);
+                break;
             case HASHTAG:
                 break;
+        }
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            List<String> bookmarks = new StatusCacheDAO(contextReference.get(), db).getAllStatusId(StatusCacheDAO.BOOKMARK_CACHE);
+            if (apiResponse != null && apiResponse.getStatuses() != null && bookmarks != null && apiResponse.getStatuses().size() > 0) {
+                List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = apiResponse.getStatuses();
+                for (fr.gouv.etalab.mastodon.client.Entities.Status status : statuses) {
+                    status.setBookmarked(bookmarks.contains(status.getId()));
+                }
+            }
         }
         return null;
     }

@@ -16,8 +16,8 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -37,8 +37,8 @@ public class RetrieveMissingNotificationsAsyncTask extends AsyncTask<Void, Void,
 
     private String since_id;
     private OnRetrieveMissingNotificationsInterface listener;
-    private List<Notification> notifications = new ArrayList<>();
     private WeakReference<Context> contextReference;
+    private List<Notification> notifications;
 
     public RetrieveMissingNotificationsAsyncTask(Context context, String since_id, OnRetrieveMissingNotificationsInterface onRetrieveMissingNotifications){
         this.contextReference = new WeakReference<>(context);
@@ -49,20 +49,10 @@ public class RetrieveMissingNotificationsAsyncTask extends AsyncTask<Void, Void,
 
     @Override
     protected Void doInBackground(Void... params) {
-        int loopInc = 0;
         API api = new API(this.contextReference.get());
-        List<Notification> tempNotifications;
-        while (loopInc < 10){
-            APIResponse apiResponse = api.getNotificationsSince(since_id, 40, false);
-            String max_id = apiResponse.getMax_id();
-            since_id = apiResponse.getSince_id();
-            tempNotifications = apiResponse.getNotifications();
-            if( notifications != null && tempNotifications != null)
-                notifications.addAll(0, tempNotifications);
-            loopInc++;
-            if( max_id == null || max_id.equals(since_id))
-                break;
-        }
+        APIResponse apiResponse = api.getNotificationsSince(since_id, 40, false);
+        since_id = apiResponse.getSince_id();
+        notifications = apiResponse.getNotifications();
         if( notifications != null && notifications.size() > 0) {
             MainActivity.lastNotificationId = notifications.get(0).getId();
         }

@@ -731,7 +731,6 @@
     <string name="modify">Modify</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
         <item>Web ikuspegia</item>
     </string-array>
 </resources>

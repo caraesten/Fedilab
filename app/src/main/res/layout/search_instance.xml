@@ -10,9 +10,31 @@
         android:hint="@string/instance"
         android:maxLines="1"
         />
-    <CheckBox
-        android:text="@string/peertube_instance"
-        android:id="@+id/peertube_instance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RadioGroup
+        android:id="@+id/set_attachment_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RadioButton android:id="@+id/mastodon_instance"
+            android:layout_width="wrap_content"
+            android:checked="true"
+            android:layout_height="wrap_content"
+            android:text="@string/mastodon_instance"
+            />
+        <RadioButton android:id="@+id/peertube_instance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/peertube_instance"
+            />
+        <RadioButton android:id="@+id/pixelfed_instance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pixelfed_instance"
+            />
+        <RadioButton android:id="@+id/misskey_instance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/misskey_instance"
+            />
+    </RadioGroup>
 </LinearLayout>

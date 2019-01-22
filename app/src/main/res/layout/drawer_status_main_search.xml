@@ -24,7 +24,6 @@
         android:id="@+id/status_search_title"
         android:visibility="gone"
         android:text="@string/toots"
-        android:textColor="?attr/colorPrimary"
         android:textSize="18sp"
         android:background="?attr/colorAccent"
         android:paddingBottom="10dp"

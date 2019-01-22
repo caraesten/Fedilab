@@ -198,9 +198,9 @@ public class SearchListAdapter extends BaseAdapter {
                     Intent intent = new Intent(context, ShowAccountActivity.class);
                     Bundle b = new Bundle();
                     if( status.getReblog() == null)
-                        b.putString("accountId", status.getAccount().getId());
+                        b.putParcelable("account", status.getAccount());
                     else
-                        b.putString("accountId", status.getReblog().getAccount().getId());
+                        b.putParcelable("account", status.getReblog().getAccount());
                     intent.putExtras(b);
                     context.startActivity(intent);
                 }

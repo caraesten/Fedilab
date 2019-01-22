@@ -112,6 +112,7 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
@@ -129,6 +130,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.net.InetAddress;
 import java.security.MessageDigest;
@@ -160,6 +162,7 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Application;
@@ -193,7 +196,10 @@ public class Helper {
     public static  final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Mastalab";
     public static final String OAUTH_SCOPES = "read write follow";
+    public static final String OAUTH_SCOPES_PEERTUBE = "user";
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
+
+
     public static final String PREF_KEY_ID = "userID";
     public static final String PREF_INSTANCE = "instance";
     public static final String REDIRECT_CONTENT = "urn:ietf:wg:oauth:2.0:oob";
@@ -222,8 +228,10 @@ public class Helper {
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
     public static final String BOOKMARK_ID = "bookmark_id";
+    public static final String LAST_READ_TOOT_ID = "last_read_toot_id";
     public static final String LAST_HOMETIMELINE_NOTIFICATION_MAX_ID = "last_hometimeline_notification_max_id";
     public static final String SHOULD_CONTINUE_STREAMING = "should_continue_streaming";
+    public static final String SHOULD_CONTINUE_STREAMING_HOME = "should_continue_streaming_home";
     public static final String SHOULD_CONTINUE_STREAMING_FEDERATED = "should_continue_streaming_federated";
     public static final String SHOULD_CONTINUE_STREAMING_LOCAL = "should_continue_streaming_local";
     public static final String SEARCH_KEYWORD = "search_keyword";
@@ -239,14 +247,14 @@ public class Helper {
     //Notifications
     public static final int NOTIFICATION_INTENT = 1;
     public static final int HOME_TIMELINE_INTENT = 2;
-    public static final int CHANGE_THEME_INTENT = 3;
+    public static final int BACK_TO_SETTINGS = 3;
     public static final int CHANGE_USER_INTENT = 4;
     public static final int ADD_USER_INTENT = 5;
     public static final int BACKUP_INTENT = 6;
     public static final int SEARCH_TAG = 7;
     public static final int SEARCH_INSTANCE = 8;
     public static final int SEARCH_REMOTE = 9;
-
+    public static final int RELOAD_MYVIDEOS = 10;
     //Settings
     public static final String SET_TOOTS_PER_PAGE = "set_toots_per_page";
     public static final String SET_ACCOUNTS_PER_PAGE = "set_accounts_per_page";
@@ -265,6 +273,7 @@ public class Helper {
     public static final String SET_LED_COLOUR = "set_led_colour";
     public static final String SET_SHOW_BOOSTS = "set_show_boost";
     public static final String SET_SHOW_REPLIES = "set_show_replies";
+    public static final String SET_VIDEO_NSFW = "set_video_nsfw";
     public static final String INSTANCE_VERSION = "instance_version";
     public static final String SET_LIVE_NOTIFICATIONS = "set_live_notifications";
     public static final String SET_DISABLE_GIF = "set_disable_gif";
@@ -283,12 +292,19 @@ public class Helper {
     public static final String SET_OLD_DIRECT_TIMELINE = "sset_old_direct_timeline";
     public static final String SET_BATTERY_PROFILE = "set_battery_profile";
     public static final String SET_DEFAULT_LOCALE_NEW = "set_default_locale_new";
+    public static final String SET_NOTIFICATION_ACTION = "set_notification_action";
     public static final int S_512KO = 1;
     public static final int S_1MO = 2;
     public static final int S_2MO = 3;
     public static final int ATTACHMENT_ALWAYS = 1;
     public static final int ATTACHMENT_WIFI = 2;
     public static final int ATTACHMENT_ASK = 3;
+
+
+    public static final String SET_VIDEO_MODE = "set_video_mode";
+    public static final int VIDEO_MODE_TORRENT = 0;
+    public static final int VIDEO_MODE_WEBVIEW = 1;
+    public static final int VIDEO_MODE_DIRECT = 2;
 
     public static final int BATTERY_PROFILE_NORMAL = 1;
     public static final int BATTERY_PROFILE_MEDIUM = 2;
@@ -303,6 +319,9 @@ public class Helper {
     public static final int TRANS_YANDEX = 0;
     public static final int TRANS_DEEPL = 1;
     public static final int TRANS_NONE = 2;
+
+    public static final int ACTION_SILENT = 0;
+    public static final int ACTION_ACTIVE = 1;
 
     public static final String SET_TRANS_FORCED = "set_trans_forced";
     public static final String SET_NOTIFY = "set_notify";
@@ -341,6 +360,7 @@ public class Helper {
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";
     public static final String SET_TRUNCATE_TOOTS_SIZE = "set_truncate_toots_size";
     public static final String SET_ART_WITH_NSFW = "set_art_with_nsfw";
+
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -366,6 +386,8 @@ public class Helper {
     public static final String INTENT_BACKUP_FINISH = "intent_backup_finish";
     //Receiver
     public static final String RECEIVE_DATA = "receive_data";
+    public static final String RECEIVE_ACTION = "receive_action";
+    public static final String RECEIVE_HOME_DATA = "receive_home_data";
     public static final String RECEIVE_FEDERATED_DATA = "receive_federated_data";
     public static final String RECEIVE_LOCAL_DATA = "receive_local_data";
     public static final String RECEIVE_PICTURE = "receive_picture";
@@ -375,6 +397,7 @@ public class Helper {
 
     public static final String SET_YANDEX_API_KEY = "set_yandex_api_key";
     public static final String SET_DEEPL_API_KEY = "set_deepl_api_key";
+    public static final String VIDEO_ID = "video_id_update";
 
     private static boolean menuAccountsOpened = false;
 
@@ -391,7 +414,7 @@ public class Helper {
     public static final Pattern twitterPattern = Pattern.compile("((@[\\w]+)@twitter\\.com)");
     private static final Pattern mentionPattern = Pattern.compile("(@[\\w_]+(\\s|$))");
     private static final Pattern mentionLongPattern = Pattern.compile("(@[\\w_-]+@[a-z0-9.\\-]+[.][a-z]{2,10})");
-
+    public static final Pattern xmppPattern = Pattern.compile("xmpp\\:[-a-zA-Z0-9+$&@#\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#\\/%=~_|]");
     //Event Type
     public enum EventStreaming{
         UPDATE,
@@ -531,7 +554,15 @@ public class Helper {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(STRING_DATE_FORMAT, userLocale);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
         simpleDateFormat.setLenient(true);
-        return simpleDateFormat.parse(date);
+        try {
+            return simpleDateFormat.parse(date);
+        }catch (Exception e){
+            String newdate = date.split("\\+")[0];
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", userLocale);
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
+            simpleDateFormat.setLenient(true);
+            return simpleDateFormat.parse(newdate);
+        }
     }
 
 
@@ -717,7 +748,7 @@ public class Helper {
      */
     public static void manageMessageStatusCode(Context context, int statusCode,API.StatusAction statusAction){
         String message = "";
-        if( statusCode == 200){
+        if( statusCode >= 200 && statusCode < 400){
             if( statusAction == API.StatusAction.BLOCK){
                 message = context.getString(R.string.toast_block);
             }else if(statusAction == API.StatusAction.UNBLOCK){
@@ -958,7 +989,7 @@ public class Helper {
 
         final String fileName = URLUtil.guessFileName(url, null, null);final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
-
+        String mime = getMimeType(url);
         try {
             File file;
             if( bitmap != null) {
@@ -967,7 +998,10 @@ public class Helper {
                 file.createNewFile();
 
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                if( mime !=null && (mime.contains("png") || mime.contains(".PNG")))
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                else
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
                 byte[] bitmapdata = bos.toByteArray();
 
                 FileOutputStream fos = new FileOutputStream(file);
@@ -1050,15 +1084,7 @@ public class Helper {
      */
     public static String getLiveInstance(Context context){
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        if( userId == null) //User not authenticated
-            return null;
-        Account account = new AccountDAO(context, db).getAccountByID(userId);
-        if( account != null){
-            return account.getInstance().trim();
-        } //User not in db
-        return null;
+        return sharedpreferences.getString(Helper.PREF_INSTANCE, null);
     }
 
     public static String getLiveInstanceWithProtocol(Context context) {
@@ -1136,8 +1162,9 @@ public class Helper {
                     item.setIcon(R.drawable.ic_person);
                     String url = account.getAvatar();
                     if( url.startsWith("/") ){
-                        url = Helper.getLiveInstanceWithProtocol(activity) + account.getAvatar();
+                        url = "https://" + account.getInstance() + account.getAvatar();
                     }
+                    if(!url.equals("null"))
                     Glide.with(activity.getApplicationContext())
                             .asBitmap()
                             .load(url)
@@ -1148,6 +1175,17 @@ public class Helper {
                                     item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
                                 }
                             });
+                    else
+                        Glide.with(activity.getApplicationContext())
+                                .asBitmap()
+                                .load(R.drawable.missing_peertube)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                        item.setIcon(new BitmapDrawable(activity.getResources(), resource));
+                                        item.getIcon().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
+                                    }
+                                });
 
                     item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override
@@ -1156,7 +1194,7 @@ public class Helper {
                                 menuAccountsOpened = false;
                                 String userId = account.getId();
                                 Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + account.getAcct() + "@" + account.getInstance()), Toast.LENGTH_LONG).show();
-                                changeUser(activity, userId, true);
+                                changeUser(activity, userId, false);
                                 arrow.setImageResource(R.drawable.ic_arrow_drop_down);
                                 return true;
                             }
@@ -1214,6 +1252,7 @@ public class Helper {
         }else{
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer);
+            hideMenuItem(navigationView.getMenu());
             arrow.setImageResource(R.drawable.ic_arrow_drop_down);
             switchLayout(activity);
         }
@@ -1221,12 +1260,44 @@ public class Helper {
 
     }
 
+    public static void hideMenuItem(Menu menu){
+        if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            MenuItem itemCom = menu.findItem(R.id.nav_main_com);
+            if( itemCom != null)
+                itemCom.setVisible(false);
+            MenuItem itemOpt = menu.findItem(R.id.nav_main_opt);
+            if( itemOpt != null)
+                itemOpt.setVisible(false);
+            MenuItem itemPFCom = menu.findItem(R.id.nav_pixelfed_comm);
+            if( itemPFCom != null)
+                itemPFCom.setVisible(false);
+
+        }else if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
+            MenuItem itemCom = menu.findItem(R.id.nav_main_com);
+            if( itemCom != null)
+                itemCom.setVisible(false);
+            MenuItem itemOpt = menu.findItem(R.id.nav_main_opt);
+            if( itemOpt != null)
+                itemOpt.setVisible(false);
+            MenuItem itemPCom = menu.findItem(R.id.nav_peertube_comm);
+            if( itemPCom != null)
+                itemPCom.setVisible(false);
+        }else if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+            MenuItem itemCom = menu.findItem(R.id.nav_peertube_comm);
+            if( itemCom != null)
+                itemCom.setVisible(false);
+            MenuItem itemPFCom = menu.findItem(R.id.nav_pixelfed_comm);
+            if( itemPFCom != null)
+                itemPFCom.setVisible(false);
+        }
+    }
+
     /**
      * Changes the user in shared preferences
      * @param activity Activity
      * @param userID String - the new user id
      */
-    public static void changeUser(Activity activity, String userID, boolean checkItem) {
+    public static void changeUser(Activity activity, String userID, boolean notificationIntent) {
 
 
         final NavigationView navigationView = activity.findViewById(R.id.nav_view);
@@ -1234,6 +1305,8 @@ public class Helper {
         MainActivity.lastNotificationId = null;
         MainActivity.lastHomeId = null;
         navigationView.inflateMenu(R.menu.activity_main_drawer);
+        hideMenuItem(navigationView.getMenu());
+
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         Account account = new AccountDAO(activity,db).getAccountByID(userID);
         //Can happen when an account has been deleted and there is a click on an old notification
@@ -1258,12 +1331,13 @@ public class Helper {
         editor.putString(Helper.PREF_KEY_ID, account.getId());
         editor.putString(Helper.PREF_INSTANCE, account.getInstance().trim());
         editor.commit();
-        activity.recreate();
-        if( checkItem ) {
-            Intent intent = new Intent(activity, MainActivity.class);
-            intent.putExtra(INTENT_ACTION, CHANGE_USER_INTENT);
-            activity.startActivity(intent);
-        }
+        Intent changeAccount = new Intent(activity, MainActivity.class);
+        changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        if( notificationIntent)
+            changeAccount.putExtra(INTENT_ACTION, NOTIFICATION_INTENT);
+        activity.finish();
+        activity.startActivity(changeAccount);
+
 
     }
 
@@ -1352,6 +1426,7 @@ public class Helper {
         TextView username = headerLayout.findViewById(R.id.username);
         TextView displayedName = headerLayout.findViewById(R.id.displayedName);
         LinearLayout more_option_container = headerLayout.findViewById(R.id.more_option_container);
+        LinearLayout more_account_container = headerLayout.findViewById(R.id.more_account_container);
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -1360,7 +1435,6 @@ public class Helper {
 
         FloatingActionButton.LayoutParams layoutparmans = new FloatingActionButton.LayoutParams((int)Helper.convertDpToPixel(35,activity),(int)Helper.convertDpToPixel(35,activity));
         FloatingActionButton.LayoutParams layoutparmanImg = new FloatingActionButton.LayoutParams((int)Helper.convertDpToPixel(25,activity),(int)Helper.convertDpToPixel(25,activity));
-        layoutparmans.setMargins((int)Helper.convertDpToPixel(20, activity),0,0,0);
         MenuFloating actionButton = null;
         if( theme == THEME_LIGHT) {
             icon.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush));
@@ -1391,7 +1465,6 @@ public class Helper {
                     .build();
         }
 
-
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(activity);
 
         // repeat many times:
@@ -1400,7 +1473,6 @@ public class Helper {
         SubActionButton buttonLight = itemBuilder
                 .setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular))
                 .setContentView(itemIconLight).build();
-
 
         ImageView itemDark = new ImageView(activity);
         itemDark.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.ic_brush_white));
@@ -1454,9 +1526,6 @@ public class Helper {
                 editor.putInt(Helper.SET_THEME, Helper.THEME_LIGHT);
                 editor.apply();
                 activity.recreate();
-                Intent intent = new Intent(activity, MainActivity.class);
-                activity.finish();
-                activity.startActivity(intent);
             }
         });
         buttonDark.setOnClickListener(new View.OnClickListener() {
@@ -1467,9 +1536,6 @@ public class Helper {
                 editor.putInt(Helper.SET_THEME, Helper.THEME_DARK);
                 editor.apply();
                 activity.recreate();
-                Intent intent = new Intent(activity, MainActivity.class);
-                activity.finish();
-                activity.startActivity(intent);
             }
         });
         buttonBlack.setOnClickListener(new View.OnClickListener() {
@@ -1480,12 +1546,188 @@ public class Helper {
                 editor.putInt(Helper.SET_THEME, Helper.THEME_BLACK);
                 editor.apply();
                 activity.recreate();
-                Intent intent = new Intent(activity, MainActivity.class);
-                activity.finish();
-                activity.startActivity(intent);
             }
         });
 
+
+        SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        final List<Account> accounts = new AccountDAO(activity, db).getAllAccount();
+
+        if( accounts != null && accounts.size() > 1) {
+
+            FloatingActionButton.LayoutParams layoutparmansAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(37, activity), (int) Helper.convertDpToPixel(37, activity));
+            FloatingActionButton.LayoutParams layoutparmanImgAcc = new FloatingActionButton.LayoutParams((int) Helper.convertDpToPixel(35, activity), (int) Helper.convertDpToPixel(35, activity));
+            MenuFloating actionButtonAcc = null;
+            SharedPreferences mSharedPreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String currrentUserId = mSharedPreferences.getString(Helper.PREF_KEY_ID, null);
+            for(final Account accountChoice: accounts) {
+                if( !accountChoice.getAvatar().startsWith("http"))
+                    accountChoice.setAvatar("https://" + accountChoice.getInstance() + accountChoice.getAvatar());
+                if (currrentUserId != null && !currrentUserId.equals(accountChoice.getId())) {
+                    icon = new ImageView(activity);
+                    ImageView finalIcon = icon;
+                    Glide.with(activity.getApplicationContext())
+                            .asBitmap()
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(270)))
+                            .listener(new RequestListener<Bitmap>(){
+
+                                @Override
+                                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                    return false;
+                                }
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                                        finalIcon.setImageResource(R.drawable.missing);
+                                    else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                        finalIcon.setImageResource(R.drawable.missing_peertube);
+                                    return false;
+                                }
+                            })
+                            .load(accountChoice.getAvatar())
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                    finalIcon.setImageBitmap(resource);
+                                }
+                            });
+                    MenuFloating.Builder actionButtonAccBuild = new MenuFloating.Builder(activity);
+                    if( theme == THEME_LIGHT) {
+                        actionButtonAccBuild.setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular));
+                    }else if( theme == THEME_DARK) {
+                        actionButtonAccBuild.setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_dark));
+                    }else if( theme == THEME_BLACK) {
+                        actionButtonAccBuild.setBackgroundDrawable(activity.getResources().getDrawable( R.drawable.circular_black));
+                    }
+
+                    actionButtonAcc = actionButtonAccBuild
+                            .setContentView(finalIcon, layoutparmanImgAcc)
+                            .setLayoutParams(layoutparmansAcc)
+                            .setTag("ACCOUNT")
+                            .intoView(more_account_container)
+                            .build();
+
+                    break;
+                }
+            }
+
+            FloatingActionMenu.Builder actionMenuAccBuilder = new FloatingActionMenu.Builder(activity);
+
+            for(final Account accountChoice: accounts) {
+                if (currrentUserId != null && !currrentUserId.equals(accountChoice.getId())) {
+                    SubActionButton.Builder itemBuilderAcc = new SubActionButton.Builder(activity);
+                    if( !accountChoice.getAvatar().startsWith("http"))
+                        accountChoice.setAvatar("https://" + accountChoice.getInstance() + accountChoice.getAvatar());
+                    ImageView itemIconAcc = new ImageView(activity);
+                    Glide.with(activity.getApplicationContext())
+                            .asBitmap()
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(270)))
+                            .load(accountChoice.getAvatar())
+                            .listener(new RequestListener<Bitmap>(){
+
+                                @Override
+                                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                    return false;
+                                }
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                                        itemIconAcc.setImageResource(R.drawable.missing);
+                                    else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                        itemIconAcc.setImageResource(R.drawable.missing_peertube);
+                                    return false;
+                                }
+                            })
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                    itemIconAcc.setImageBitmap(resource);
+                                }
+                            });
+
+                    if( accounts.size() > 2 ) {
+                        if(accountChoice.getSocial() != null && accountChoice.getSocial().equals("PEERTUBE"))
+                            itemBuilderAcc.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_peertube));
+                        else
+                            itemBuilderAcc.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.circular_mastodon));
+                        SubActionButton subActionButtonAcc = itemBuilderAcc.setContentView(itemIconAcc, layoutparmanImgAcc)
+                                .setLayoutParams(layoutparmansAcc)
+                                .build();
+
+                        subActionButtonAcc.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, accountChoice.getToken());
+                                editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
+                                editor.putString(Helper.PREF_INSTANCE, accountChoice.getInstance().trim());
+                                editor.commit();
+                                if(accountChoice.getSocial() != null && accountChoice.getSocial().equals("PEERTUBE"))
+                                    Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct()), Toast.LENGTH_LONG).show();
+                                else
+                                    Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct() + "@" + accountChoice.getInstance()), Toast.LENGTH_LONG).show();
+                                Intent changeAccount = new Intent(activity, MainActivity.class);
+                                changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                activity.finish();
+                                activity.startActivity(changeAccount);
+                            }
+                        });
+                        actionMenuAccBuilder.addSubActionView(subActionButtonAcc);
+                    }
+                }
+            }
+
+            FloatingActionMenu actionMenuAcc = actionMenuAccBuilder.attachTo(actionButtonAcc)
+                    .setStartAngle(0)
+                    .setEndAngle(135)
+                    .build();
+            if( actionButtonAcc != null) {
+                if( accounts.size() > 2){
+                    actionButtonAcc.setFocusableInTouchMode(true);
+                    actionButtonAcc.setFocusable(true);
+                    actionButtonAcc.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            if(actionMenuAcc.isOpen())
+                                actionMenuAcc.close(true);
+                            else
+                                actionMenuAcc.open(true);
+                            return false;
+                        }
+                    });
+                    actionButtonAcc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            try {
+                                actionMenuAcc.close(true);
+                            }catch (Exception ignored){}
+
+                        }
+                    });
+                }else{
+                    actionButtonAcc.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            for(final Account accountChoice: accounts) {
+                                if (!currrentUserId.equals(accountChoice.getId())) {
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, accountChoice.getToken());
+                                    editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
+                                    editor.putString(Helper.PREF_INSTANCE, accountChoice.getInstance().trim());
+                                    editor.commit();
+                                    Intent changeAccount = new Intent(activity, MainActivity.class);
+                                    changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    activity.finish();
+                                    activity.startActivity(changeAccount);
+                                }
+                            }
+                        }
+                    });
+                }
+
+            }
+
+        }
         if( account == null ) {
             Helper.logout(activity);
             Intent myIntent = new Intent(activity, LoginActivity.class);
@@ -1493,7 +1735,7 @@ public class Helper {
             activity.startActivity(myIntent);
             activity.finish(); //User is logged out to get a new token
         }else {
-            account.makeEmojisAccount(activity, ((BaseMainActivity)activity), account);
+            account.makeAccountNameEmoji(activity, ((BaseMainActivity)activity), account);
             username.setText(String.format("@%s",account.getUsername() + "@" + account.getInstance()));
             displayedName.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
             String url = account.getAvatar();
@@ -1551,7 +1793,11 @@ public class Helper {
                 if (account != null) {
                     Intent intent = new Intent(activity, ShowAccountActivity.class);
                     Bundle b = new Bundle();
-                    b.putString("accountId", account.getId());
+                    if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                        b.putBoolean("peertubeaccount", true);
+                        b.putString("accountId", account.getAcct());
+                    }else
+                        b.putString("accountId", account.getId());
                     intent.putExtras(b);
                     activity.startActivity(intent);
                 }
@@ -1647,24 +1893,26 @@ public class Helper {
             int matchStart = matcher.start(1);
             int matchEnd = matcher.end();
             final String url = spannableString.toString().substring(matchStart, matchEnd);
-            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
-                spannableString.setSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(View textView) {
-                        Helper.openBrowser(context, url);
-                    }
-                    @Override
-                    public void updateDrawState(TextPaint ds) {
-                        super.updateDrawState(ds);
-                        ds.setUnderlineText(false);
-                        if (theme == THEME_DARK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                        else if (theme == THEME_BLACK)
-                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                        else if (theme == THEME_LIGHT)
-                            ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                    }
-                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            if( url.startsWith("http"))
+                if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
+                    spannableString.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View textView) {
+                            Helper.openBrowser(context, url);
+                        }
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setUnderlineText(false);
+                            if (theme == THEME_DARK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                            else if (theme == THEME_BLACK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                            else if (theme == THEME_LIGHT)
+                                ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                        }
+                    }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         matcher = hashtagPattern.matcher(spannableString);
         while (matcher.find()){
@@ -1725,7 +1973,76 @@ public class Helper {
                 }
             }
         }
+        matcher = android.util.Patterns.EMAIL_ADDRESS.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(0);
+            int matchEnd = matcher.end();
+            final String email = spannableString.toString().substring(matchStart, matchEnd);
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart) {
+                urls = spannableString.getSpans(matchStart, matchEnd, URLSpan.class);
+                for(URLSpan span : urls)
+                    spannableString.removeSpan(span);
+                spannableString.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        try {
+                            final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                            emailIntent.setType("plain/text");
+                            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{email});
+                            context.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.send_email)));
+                        }catch (Exception e){
+                            Toasty.error(context, context.getString(R.string.toast_no_apps), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
+                        if (theme == THEME_DARK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                        else if (theme == THEME_BLACK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                        else if (theme == THEME_LIGHT)
+                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                    }
+                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
 
+        }
+        matcher = Helper.xmppPattern.matcher(spannableString);
+        while (matcher.find()){
+            int matchStart = matcher.start(0);
+            int matchEnd = matcher.end();
+            final String url = spannableString.toString().substring(matchStart, matchEnd);
+            if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart) {
+                urls = spannableString.getSpans(matchStart, matchEnd, URLSpan.class);
+                for(URLSpan span : urls)
+                    spannableString.removeSpan(span);
+                spannableString.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View textView) {
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            context.startActivity(intent);
+                        }catch (Exception e){
+                            Toasty.error(context, context.getString(R.string.toast_no_apps), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        super.updateDrawState(ds);
+                        ds.setUnderlineText(false);
+                        if (theme == THEME_DARK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                        else if (theme == THEME_BLACK)
+                            ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                        else if (theme == THEME_LIGHT)
+                            ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                    }
+                }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+
+        }
         return spannableString;
     }
 
@@ -1895,6 +2212,7 @@ public class Helper {
             return true;
         String dateIni = sharedpreferences.getString(Helper.SET_TIME_FROM, "07:00");
         String dateEnd = sharedpreferences.getString(Helper.SET_TIME_TO, "22:00");
+        int notification = sharedpreferences.getInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_ACTIVE);
         Calendar now = Calendar.getInstance();
         int hour = now.get(Calendar.HOUR_OF_DAY);
         int minute = now.get(Calendar.MINUTE);
@@ -1913,7 +2231,12 @@ public class Helper {
             Date dateIniD = formatter.parse(dateIni);
             Date dateEndD = formatter.parse(dateEnd);
             Date currentDateD = formatter.parse(currentDate);
-            return currentDateD.before(dateEndD)&&currentDateD.after(dateIniD);
+            boolean canNotify = false;
+            if( currentDateD.before(dateEndD) && currentDateD.after(dateIniD) && notification == Helper.ACTION_ACTIVE)
+                canNotify = true;
+            else if ( currentDateD.after(dateEndD) && currentDateD.before(dateIniD) && notification == Helper.ACTION_SILENT )
+                canNotify = true;
+            return canNotify;
         } catch (java.text.ParseException e) {
             return true;
         }
@@ -1941,7 +2264,11 @@ public class Helper {
      */
     public static String localeToStringStorage(Locale locale){
         Gson gson = new Gson();
-        return gson.toJson(locale);
+        try {
+            return gson.toJson(locale);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -1951,7 +2278,11 @@ public class Helper {
      */
     public static String statusToStringStorage(Status status){
         Gson gson = new Gson();
-        return gson.toJson(status);
+        try {
+            return gson.toJson(status);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -1975,7 +2306,11 @@ public class Helper {
      */
     public static String cardToStringStorage(Card card){
         Gson gson = new Gson();
-        return gson.toJson(card);
+        try {
+            return gson.toJson(card);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -1999,7 +2334,11 @@ public class Helper {
      */
     public static String arrayToStringStorage(List<String> list){
         Gson gson = new Gson();
-        return gson.toJson(list);
+        try {
+            return gson.toJson(list);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -2023,7 +2362,11 @@ public class Helper {
      */
     public static String applicationToStringStorage(Application application){
         Gson gson = new Gson();
-        return gson.toJson(application);
+        try {
+            return gson.toJson(application);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -2067,7 +2410,6 @@ public class Helper {
         try {
             return gson.fromJson(serializedAccount, Account.class);
         }catch (Exception e){
-            e.printStackTrace();
             return null;
         }
     }
@@ -2080,7 +2422,11 @@ public class Helper {
      */
     public static String emojisToStringStorage(List<Emojis> emojis){
         Gson gson = new Gson();
-        return gson.toJson(emojis);
+        try {
+            return gson.toJson(emojis);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -2090,7 +2436,11 @@ public class Helper {
      */
     public static List<Emojis> restoreEmojisFromString(String serializedEmojis){
         Type listType = new TypeToken<ArrayList<Emojis>>(){}.getType();
-        return new Gson().fromJson(serializedEmojis, listType);
+        try {
+            return new Gson().fromJson(serializedEmojis, listType);
+        }catch (Exception e){
+            return null;
+        }
     }
 
 
@@ -2101,7 +2451,11 @@ public class Helper {
      */
     public static String attachmentToStringStorage(List<Attachment> attachments){
         Gson gson = new Gson();
-        return gson.toJson(attachments);
+        try {
+            return gson.toJson(attachments);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -2128,7 +2482,11 @@ public class Helper {
      */
     public static String mentionToStringStorage(List<Mention> mentions){
         Gson gson = new Gson();
-        return gson.toJson(mentions);
+        try {
+            return gson.toJson(mentions);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -2138,7 +2496,11 @@ public class Helper {
      */
     public static List<Mention> restoreMentionFromString(String serializedMention){
         Type listType = new TypeToken<ArrayList<Mention>>(){}.getType();
-        return new Gson().fromJson(serializedMention, listType);
+        try {
+            return new Gson().fromJson(serializedMention, listType);
+        }catch (Exception e){
+            return null;
+        }
     }
 
 
@@ -2149,7 +2511,11 @@ public class Helper {
      */
     public static String tagToStringStorage(List<Tag> tags){
         Gson gson = new Gson();
-        return gson.toJson(tags);
+        try {
+            return gson.toJson(tags);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -2159,7 +2525,11 @@ public class Helper {
      */
     public static List<Tag> restoreTagFromString(String serializedTag){
         Type listType = new TypeToken<ArrayList<Tag>>(){}.getType();
-        return new Gson().fromJson(serializedTag, listType);
+        try {
+            return new Gson().fromJson(serializedTag, listType);
+        }catch (Exception e){
+            return null;
+        }
     }
 
 
@@ -2347,14 +2717,26 @@ public class Helper {
                 return;
             }
         }
-        if( url == null || url.contains("missing.png")) {
-            try {
-                Glide.with(imageView.getContext())
-                        .load(R.drawable.missing)
-                        .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
-                        .into(imageView);
-            }catch (Exception ignored){}
-            return;
+        if( url == null  || url.equals("null") || url.contains("missing.png") || url.contains(".svg")) {
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                try {
+                    Glide.with(imageView.getContext())
+                            .load(R.drawable.missing)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                } catch (Exception ignored) {
+                }
+                return;
+            }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+                try {
+                    Glide.with(imageView.getContext())
+                            .load(R.drawable.missing_peertube)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                } catch (Exception ignored) {
+                }
+                return;
+            }
         }
         if( !disableGif)
             try {
@@ -2396,7 +2778,9 @@ public class Helper {
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                 CustomTabsIntent customTabsIntent = builder.build();
                 builder.setToolbarColor(ContextCompat.getColor(context, R.color.mastodonC1));
-                customTabsIntent.launchUrl(context, Uri.parse(url));
+                try {
+                    customTabsIntent.launchUrl(context, Uri.parse(url));
+                }catch (Exception ignored){Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();}
             }else{
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
@@ -2589,9 +2973,12 @@ public class Helper {
                 allTabCount -=1;
             }
         }
+        int i = countInitialTab;
         if( searches != null) {
             for (String search : searches) {
                 addTab(tableLayout, pagerAdapter, search);
+                BaseMainActivity.typePosition.put(i, RetrieveFeedsAsyncTask.Type.TAG);
+                i++;
             }
             if( searches.size() > 0 ){
                 tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -2703,24 +3090,27 @@ public class Helper {
         if( status == null)
             return true;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( type == RetrieveFeedsAsyncTask.Type.HOME)
-            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
-        else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
-            filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
-        else
+        if( type != null) {
+            if (type == RetrieveFeedsAsyncTask.Type.HOME)
+                filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
+            else if (type == RetrieveFeedsAsyncTask.Type.LOCAL)
+                filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
+            else
+                filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
+        }else {
             filter = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
+        }
 
         String content = status.getContent();
         if( status.getSpoiler_text() != null)
             content += " "+ status.getSpoiler_text();
-        boolean addToot = true; //Flag to tell if the current toot will be added.
         if( status.getAccount()  == null)
-            addToot = false;
+            return false;
         boolean show_nsfw = sharedpreferences.getBoolean(Helper.SET_ART_WITH_NSFW, false);
-        if( type == RetrieveFeedsAsyncTask.Type.ART && !show_nsfw && status.isSensitive()) {
-            addToot = false;
-        }
-        if(addToot && MainActivity.filters != null){
+        if( type == RetrieveFeedsAsyncTask.Type.ART && !show_nsfw && status.isSensitive())
+            return false;
+
+        if(MainActivity.filters != null){
             for(Filters mfilter: filters){
                 ArrayList<String> filterContext = mfilter.getContext();
                 if(
@@ -2730,49 +3120,45 @@ public class Helper {
 
                         ) {
                     if (mfilter.isWhole_word() && content.contains(mfilter.getPhrase())) {
-                        addToot = false;
+                        return false;
                     } else {
                         try {
+                            if( mfilter.getPhrase().contains("#"))
+                                mfilter.setPhrase(mfilter.getPhrase().replaceAll("\\#", "\\#"));
                             Pattern filterPattern = Pattern.compile("(" + mfilter.getPhrase() + ")", Pattern.CASE_INSENSITIVE);
                             Matcher matcher = filterPattern.matcher(content);
                             if (matcher.find())
-                                addToot = false;
+                                return false;
                         } catch (Exception ignored) { }
                     }
                 }
             }
         }
-        if( addToot && filter != null && filter.length() > 0){
+        if(filter != null && filter.length() > 0){
             try {
                 Pattern filterPattern = Pattern.compile("(" + filter + ")", Pattern.CASE_INSENSITIVE);
                 Matcher matcher = filterPattern.matcher(content);
                 if (matcher.find())
-                    addToot = false;
+                    return false;
             }catch (Exception ignored){ }
         }
-        if(addToot) {
-            if (type == RetrieveFeedsAsyncTask.Type.HOME) {
-                if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
-                    addToot = false;
-                else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
-                    addToot = false;
-                }
-            } else {
-                if (context instanceof ShowAccountActivity) {
-                    if (status.getReblog() != null && !((ShowAccountActivity) context).showBoosts())
-                        addToot = false;
-                    else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !((ShowAccountActivity) context).showReplies())
-                        addToot = false;
-                }
+        if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+            if (status.getReblog() != null && !sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true))
+                return false;
+            else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)) {
+                return false;
+            }
+        } else {
+            if (context instanceof ShowAccountActivity) {
+                if (status.getReblog() != null && !((ShowAccountActivity) context).showBoosts())
+                    return false;
+                else if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().equals("null") && !((ShowAccountActivity) context).showReplies())
+                    return false;
             }
         }
-        if( addToot){
-            if (timedMute != null && timedMute.size() > 0) {
-                if (timedMute.contains(status.getAccount().getId()))
-                    addToot = false;
-            }
-        }
-        return addToot;
+        if (timedMute != null && timedMute.size() > 0 && timedMute.contains(status.getAccount().getId()))
+            return false;
+        return true;
     }
 
     public static void colorizeIconMenu(Menu menu, int toolbarIconsColor) {
@@ -2910,7 +3296,7 @@ public class Helper {
     }
 
     public static String[] getLocales(Context context){
-        String[] locale = new String[19];
+        String[] locale = new String[20];
         locale[0] = context.getString(R.string.default_language);
         locale[1] = context.getString(R.string.english);
         locale[2] = context.getString(R.string.french);
@@ -2930,6 +3316,7 @@ public class Helper {
         locale[16] = context.getString(R.string.serbian);
         locale[17] = context.getString(R.string.ukrainian);
         locale[18] = context.getString(R.string.russian);
+        locale[19] = context.getString(R.string.norwegian);
         return locale;
     }
 
@@ -2982,21 +3369,13 @@ public class Helper {
                 return "uk";
             case R.string.russian:
                 return "ru";
+            case R.string.norwegian:
+                return "no";
             default:
                 return Locale.getDefault().getLanguage();
         }
     }
 
-    public static String getDefaultLocale(){
-        String locale = Locale.getDefault().getCountry();
-        if( locale.startsWith("zh")){
-            if(  Locale.getDefault().getLanguage().equals("TW") || Locale.getDefault().getLanguage().equals("CN"))
-                locale = Locale.getDefault().getCountry() + "-" + Locale.getDefault().getLanguage();
-            else
-                locale = Locale.getDefault().getCountry() + "-TW";
-        }
-        return locale;
-    }
 
     public static int languageSpinnerPosition(Context context){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
@@ -3040,63 +3419,11 @@ public class Helper {
                 return 17;
             case "ru":
                 return 18;
+            case "no":
+                return 19;
             default:
                 return 0;
         }
-    }
-
-    public static RetrieveFeedsAsyncTask.Type timelineType(Context context, int position, int pageCount){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        boolean display_direct = sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true);
-        boolean display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
-        boolean display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
-        boolean display_art = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true);
-        if (position == 0) {
-            return RetrieveFeedsAsyncTask.Type.HOME;
-        }else if(position == 2 && pageCount > 2) {
-            if( display_direct) {
-                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
-                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
-
-                if (instanceVersion != null) {
-                    Version currentVersion = new Version(instanceVersion);
-                    Version minVersion = new Version("2.6");
-                    if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
-                        boolean old_direct_timeline = sharedpreferences.getBoolean(Helper.SET_OLD_DIRECT_TIMELINE, false);
-                        if( !old_direct_timeline)
-                            return RetrieveFeedsAsyncTask.Type.CONVERSATION;
-                        else
-                            return RetrieveFeedsAsyncTask.Type.DIRECT;
-                    } else {
-                        return RetrieveFeedsAsyncTask.Type.DIRECT;
-                    }
-                }else{
-                    return RetrieveFeedsAsyncTask.Type.DIRECT;
-                }
-            }if( display_local)
-                return RetrieveFeedsAsyncTask.Type.LOCAL;
-            if( display_global)
-                return RetrieveFeedsAsyncTask.Type.PUBLIC;
-            if( display_art)
-                return RetrieveFeedsAsyncTask.Type.ART;
-        }else if( position == 3 && pageCount > 3){
-            if( display_direct && display_local)
-                return RetrieveFeedsAsyncTask.Type.LOCAL;
-            if( display_global)
-                return RetrieveFeedsAsyncTask.Type.PUBLIC;
-            if( display_art)
-                return RetrieveFeedsAsyncTask.Type.ART;
-        }else if (position == 4 && pageCount > 4){
-            if( display_direct && display_local && display_global)
-                return RetrieveFeedsAsyncTask.Type.PUBLIC;
-            if( display_art)
-                return RetrieveFeedsAsyncTask.Type.ART;
-        }else if (position == 5 && pageCount > 5){
-            if( display_direct && display_local && display_global && display_art)
-                return RetrieveFeedsAsyncTask.Type.ART;
-        }
-        return RetrieveFeedsAsyncTask.Type.TAG;
     }
 
     public static boolean containsCaseInsensitive(String s, List<String> l){
@@ -3110,5 +3437,90 @@ public class Helper {
 
     public static boolean isTablet(Context context){
         return context.getResources().getBoolean(R.bool.isTablet);
+    }
+
+    public static void changeMaterialSpinnerColor(Context context, MaterialSpinner materialSpinner){
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if( theme == THEME_BLACK) {
+            materialSpinner.setBackgroundColor(ContextCompat.getColor(context, R.color.black_3));
+            materialSpinner.setArrowColor(ContextCompat.getColor(context, R.color.dark_text));
+            materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
+        }else if( theme == THEME_DARK){
+            materialSpinner.setBackgroundColor(ContextCompat.getColor(context, R.color.mastodonC1));
+            materialSpinner.setArrowColor(ContextCompat.getColor(context, R.color.dark_text));
+            materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.dark_text));
+        }else {
+            materialSpinner.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+            materialSpinner.setArrowColor(ContextCompat.getColor(context, R.color.black));
+            materialSpinner.setTextColor(ContextCompat.getColor(context, R.color.black));
+        }
+
+    }
+
+    public static class CacheTask extends AsyncTask<Void, Void, Void> {
+        private float cacheSize;
+        private WeakReference<Context> contextReference;
+
+        public CacheTask(Context context) {
+            contextReference = new WeakReference<>(context);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            long sizeCache = Helper.cacheSize(contextReference.get().getCacheDir().getParentFile());
+            cacheSize = 0;
+            if (sizeCache > 0) {
+                cacheSize = (float) sizeCache / 1000000.0f;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            int style;
+            SharedPreferences sharedpreferences = contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            if (theme == Helper.THEME_DARK) {
+                style = R.style.DialogDark;
+            } else if (theme == Helper.THEME_BLACK) {
+                style = R.style.DialogBlack;
+            } else {
+                style = R.style.Dialog;
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(contextReference.get(), style);
+            builder.setTitle(R.string.cache_title);
+
+            final float finalCacheSize = cacheSize;
+            builder.setMessage(contextReference.get().getString(R.string.cache_message, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", cacheSize), contextReference.get().getString(R.string.cache_units))))
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            AsyncTask.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        String path = contextReference.get().getCacheDir().getParentFile().getPath();
+                                        File dir = new File(path);
+                                        if (dir.isDirectory()) {
+                                            Helper.deleteDir(dir);
+                                        }
+                                    } catch (Exception ignored) {
+                                    }
+                                }
+                            });
+                            Toasty.success(contextReference.get(), contextReference.get().getString(R.string.toast_cache_clear, String.format("%s %s", String.format(Locale.getDefault(), "%.2f", finalCacheSize), contextReference.get().getString(R.string.cache_units))), Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 }

@@ -32,16 +32,30 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
-            <VideoView
-                android:id="@+id/media_video"
-                android:layout_centerInParent="true"
+            <FrameLayout
+                android:id="@+id/main_media_frame"
                 android:layout_width="match_parent"
+                android:layout_centerInParent="true"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="#000000">
+                <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                    android:id="@+id/media_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center" />
+                <WebView
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:id="@+id/webview_video"
+                    android:layout_height="match_parent"/>
+
+            </FrameLayout>
+
             <!-- Main Loader -->
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/loader"
@@ -97,7 +111,6 @@
                         android:id="@+id/peertube_like_count"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
-                        android:drawableTop="@drawable/ic_thumb_up_peertube"
                         android:drawablePadding="5dp"
                         android:layout_width="wrap_content"
                         android:layout_marginRight="10dp"
@@ -111,7 +124,6 @@
                         android:id="@+id/peertube_dislike_count"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
-                        android:drawableTop="@drawable/ic_thumb_down_peertube"
                         android:drawablePadding="5dp"
                         android:layout_width="wrap_content"
                         android:layout_marginRight="10dp"
@@ -199,6 +211,12 @@
                 </RelativeLayout>
             </LinearLayout>
         </ScrollView>
-
+        <!-- View where the video will be shown when video goes fullscreen -->
+        <RelativeLayout
+            android:id="@+id/videoLayout"
+            android:visibility="gone"
+            android:background="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

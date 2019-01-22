@@ -28,6 +28,26 @@
         </menu>
     </item>
     <item
+        android:id="@+id/action_show_pixelfed"
+        android:title="Pixelfed"
+        android:icon="@drawable/pixelfed"
+        app:showAsAction="never"
+        >
+        <menu>
+            <item android:id="@+id/pixelfed_instance" android:title="@string/no_pixelfed_instance"/>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/action_show_misskey"
+        android:title="Misskey"
+        android:icon="@drawable/misskey"
+        app:showAsAction="never"
+        >
+        <menu>
+            <item android:id="@+id/misskey_instance" android:title="@string/no_misskey_instance"/>
+        </menu>
+    </item>
+    <item
         android:id="@+id/action_show_channel"
         android:title="@string/channel"
         android:icon="@drawable/ic_video_channel"

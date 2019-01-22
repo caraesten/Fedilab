@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -74,6 +75,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -123,12 +125,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private FloatingActionButton account_follow;
 
     private ViewPager mPager;
-    private String accountId;
     private TabLayout tabLayout;
-    private TextView account_note, account_follow_request, account_type;
+    private TextView account_note, account_follow_request, account_type, account_bot;
     private String userId;
     private Relationship relationship;
-    private ImageView pp_actionBar;
     private FloatingActionButton header_edit_profile;
     private List<Status> pins;
     private String accountUrl;
@@ -142,6 +142,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     private boolean show_boosts, show_replies;
     private boolean showMediaOnly, showPinned;
     private boolean peertubeAccount;
+    private ImageView pp_actionBar;
+    private String accountId;
+    private boolean ischannel;
 
     public enum action{
         FOLLOW,
@@ -183,11 +186,19 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         account_dn = findViewById(R.id.account_dn);
         account_un = findViewById(R.id.account_un);
         account_type = findViewById(R.id.account_type);
+        account_bot = findViewById(R.id.account_bot);
         if(b != null){
-            accountId = b.getString("accountId");
-            peertubeAccount = b.getBoolean("peertubeAccount", false);
-            new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new RetrieveAccountAsyncTask(getApplicationContext(),accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            account = b.getParcelable("account");
+            if( account == null){
+                accountId = b.getString("accountId");
+            }else {
+                accountId = account.getId();
+            }
+            ischannel = b.getBoolean("ischannel", false);
+            peertubeAccount = b.getBoolean("peertubeaccount", false);
+            if (account == null) {
+                new RetrieveAccountAsyncTask(getApplicationContext(), accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
             userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
 
         }else{
@@ -196,13 +207,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         accountUrl = null;
         show_boosts = true;
         show_replies = true;
-
         statuses = new ArrayList<>();
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
-        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
-
-        statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+        statusListAdapter = new StatusListAdapter(getApplicationContext(), RetrieveFeedsAsyncTask.Type.USER, accountId, isOnWifi, this.statuses);
 
         showMediaOnly = false;
         showPinned = false;
@@ -211,8 +218,6 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         tabLayout = findViewById(R.id.account_tabLayout);
 
         account_note = findViewById(R.id.account_note);
-
-
 
 
 
@@ -241,8 +246,754 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                 showMenu(account_menu);
             }
         });
+        if( account != null){
+            ManageAccount();
+        }
+    }
 
 
+    private void ManageAccount(){
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        accountUrl = account.getUrl();
+        if( theme == Helper.THEME_BLACK){
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.dark_icon);
+        }else {
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
+        }
+        String accountIdRelation = accountId;
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+            accountIdRelation = account.getAcct();
+        }
+        new RetrieveRelationshipAsyncTask(getApplicationContext(), accountIdRelation, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        String urlHeader = account.getHeader();
+        if (urlHeader != null && urlHeader.startsWith("/")) {
+            urlHeader = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + account.getHeader();
+        }
+        if (urlHeader != null && !urlHeader.contains("missing.png")) {
+
+            Glide.with(getApplicationContext())
+                    .asBitmap()
+                    .load(urlHeader)
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                            ImageView banner_pp = findViewById(R.id.banner_pp);
+                            banner_pp.setImageBitmap(resource);
+                            if( theme == THEME_LIGHT){
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                    banner_pp.setImageAlpha(80);
+                                }else {
+                                    banner_pp.setAlpha(80);
+                                }
+                            }else {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                    banner_pp.setImageAlpha(60);
+                                }else {
+                                    banner_pp.setAlpha(60);
+                                }
+                            }
+
+                        }
+                    });
+
+        }
+        //Redraws icon for locked accounts
+        final float scale = getResources().getDisplayMetrics().density;
+        if(account.isLocked()){
+            Drawable img = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_lock_outline);
+            assert img != null;
+            img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
+            account_dn.setCompoundDrawables( img, null, null, null);
+        }else{
+            account_dn.setCompoundDrawables( null, null, null, null);
+        }
+
+        //Peertube account watched by a Mastodon account
+        if( peertubeAccount && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            account_type.setVisibility(View.VISIBLE);
+        }
+        //Bot account
+        if( account.isBot()){
+            account_bot.setVisibility(View.VISIBLE);
+        }
+
+        TextView actionbar_title = findViewById(R.id.show_account_title);
+        if( account.getAcct() != null)
+            actionbar_title.setText(account.getAcct());
+        pp_actionBar = findViewById(R.id.pp_actionBar);
+        if( account.getAvatar() != null){
+            String url = account.getAvatar();
+            if( url.startsWith("/") ){
+                url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
+            }
+            Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
+
+        }
+        final AppBarLayout appBar = findViewById(R.id.appBar);
+        maxScrollSize = appBar.getTotalScrollRange();
+
+        final TextView warning_message = findViewById(R.id.warning_message);
+        final SpannableString content = new SpannableString(getString(R.string.disclaimer_full));
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        if( theme == THEME_DARK)
+            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.dark_link_toot)), 0, content.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        else if( theme == THEME_BLACK)
+            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.black_link_toot)), 0, content.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        else if( theme == THEME_LIGHT)
+            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)), 0, content.length(),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        warning_message.setText(content);
+        warning_message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
+                    accountUrl = "http://" + accountUrl;
+                Helper.openBrowser(ShowAccountActivity.this, accountUrl);
+            }
+        });
+        //Timed muted account
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        final Account authenticatedAccount = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
+        boolean isTimedMute = new TempMuteDAO(getApplicationContext(), db).isTempMuted(authenticatedAccount, accountId);
+        if( isTimedMute){
+            String date_mute = new TempMuteDAO(getApplicationContext(), db).getMuteDateByID(authenticatedAccount, accountId);
+            if( date_mute != null) {
+                final TextView temp_mute = findViewById(R.id.temp_mute);
+                temp_mute.setVisibility(View.VISIBLE);
+                SpannableString content_temp_mute = new SpannableString(getString(R.string.timed_mute_profile, account.getAcct(), date_mute));
+                content_temp_mute.setSpan(new UnderlineSpan(), 0, content_temp_mute.length(), 0);
+                temp_mute.setText(content_temp_mute);
+                temp_mute.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new TempMuteDAO(getApplicationContext(), db).remove(authenticatedAccount, accountId);
+                        Toasty.success(getApplicationContext(), getString(R.string.toast_unmute), Toast.LENGTH_LONG).show();
+                        temp_mute.setVisibility(View.GONE);
+                    }
+                });
+            }
+        }
+        //This account was moved to another one
+        if( account.getMoved_to_account() != null){
+            TextView account_moved = findViewById(R.id.account_moved);
+            account_moved.setVisibility(View.VISIBLE);
+            if( theme == THEME_DARK || theme == THEME_BLACK)
+                changeDrawableColor(ShowAccountActivity.this, R.drawable.ic_card_travel,R.color.dark_icon);
+            else
+                changeDrawableColor(ShowAccountActivity.this, R.drawable.ic_card_travel,R.color.black);
+            Drawable imgTravel = ContextCompat.getDrawable(ShowAccountActivity.this, R.drawable.ic_card_travel);
+            assert imgTravel != null;
+            imgTravel.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20  * scale + 0.5f));
+            account_moved.setCompoundDrawables(imgTravel, null, null, null);
+            //Retrieves content and make account names clickable
+            SpannableString spannableString = account.moveToText(ShowAccountActivity.this);
+            account_moved.setText(spannableString, TextView.BufferType.SPANNABLE);
+            account_moved.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+
+
+
+        if( account.getAcct().contains("@") )
+            warning_message.setVisibility(View.VISIBLE);
+        else
+            warning_message.setVisibility(View.GONE);
+        appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                LinearLayout toolbarContent = findViewById(R.id.toolbar_content);
+                if( toolbarContent != null) {
+                    if (Math.abs(verticalOffset) - appBar.getTotalScrollRange() == 0) {
+                        if (toolbarContent.getVisibility() == View.GONE)
+                            toolbarContent.setVisibility(View.VISIBLE);
+                    } else {
+                        if (toolbarContent.getVisibility() == View.VISIBLE)
+                            toolbarContent.setVisibility(View.GONE);
+                    }
+                }
+                if (maxScrollSize == 0)
+                    maxScrollSize = appBarLayout.getTotalScrollRange();
+
+                int percentage = (Math.abs(verticalOffset)) * 100 / maxScrollSize;
+
+                if (percentage >= 40 && avatarShown) {
+                    avatarShown = false;
+
+                    account_pp.animate()
+                            .scaleY(0).scaleX(0)
+                            .setDuration(400)
+                            .start();
+                    warning_message.setVisibility(View.GONE);
+                }
+                if (percentage <= 40 && !avatarShown) {
+                    avatarShown = true;
+                    account_pp.animate()
+                            .scaleY(1).scaleX(1)
+                            .start();
+                    if( account.getAcct().contains("@") )
+                        warning_message.setVisibility(View.VISIBLE);
+                    else
+                        warning_message.setVisibility(View.GONE);
+                }
+            }
+        });
+        mPager = findViewById(R.id.account_viewpager);
+        if( !peertubeAccount) {
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
+            mPager.setOffscreenPageLimit(3);
+        }else if( ! ischannel){
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.videos)));
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.channels)));
+            mPager.setOffscreenPageLimit(2);
+        }else{
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.videos)));
+            mPager.setOffscreenPageLimit(1);
+        }
+
+
+
+        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                TabLayout.Tab tab = tabLayout.getTabAt(position);
+                if( tab != null)
+                    tab.select();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                Fragment fragment = null;
+                if( mPager.getAdapter() != null)
+                    fragment = (Fragment) mPager.getAdapter().instantiateItem(mPager, tab.getPosition());
+                switch (tab.getPosition()){
+                    case 0:
+                        if( displayStatusFragment != null )
+                            displayStatusFragment.scrollToTop();
+                        break;
+                    case 1:
+                    case 2:
+                        if( fragment != null) {
+                            DisplayAccountsFragment displayAccountsFragment = ((DisplayAccountsFragment) fragment);
+                            displayAccountsFragment.scrollToTop();
+                        }
+                        break;
+                }
+            }
+        });
+
+
+        if ( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && account.getFields() != null && account.getFields().size() > 0){
+            LinkedHashMap<String, String> fields = account.getFields();
+            LinkedHashMap<String, Boolean> fieldsVerified = account.getFieldsVerified();
+            Iterator it = fields.entrySet().iterator();
+            int i = 1;
+            LinearLayout fields_container = findViewById(R.id.fields_container);
+            if( fields_container != null)
+                fields_container.setVisibility(View.VISIBLE);
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                String label = (String)pair.getKey();
+                if( label != null && fieldsVerified != null && fieldsVerified.containsKey(label)) {
+                    boolean verified = fieldsVerified.get(label);
+
+                    LinearLayout field;
+                    TextView labelView;
+                    TextView valueView;
+                    LinearLayout verifiedView;
+                    switch (i) {
+                        case 1:
+                            field = findViewById(R.id.field1);
+                            labelView = findViewById(R.id.label1);
+                            valueView = findViewById(R.id.value1);
+                            verifiedView = findViewById(R.id.value1BG);
+                            break;
+                        case 2:
+                            field = findViewById(R.id.field2);
+                            labelView = findViewById(R.id.label2);
+                            valueView = findViewById(R.id.value2);
+                            verifiedView = findViewById(R.id.value2BG);
+                            break;
+                        case 3:
+                            field = findViewById(R.id.field3);
+                            labelView = findViewById(R.id.label3);
+                            valueView = findViewById(R.id.value3);
+                            verifiedView = findViewById(R.id.value3BG);
+                            break;
+                        case 4:
+                            field = findViewById(R.id.field4);
+                            labelView = findViewById(R.id.label4);
+                            valueView = findViewById(R.id.value4);
+                            verifiedView = findViewById(R.id.value4BG);
+                            break;
+                        default:
+                            field = findViewById(R.id.field1);
+                            labelView = findViewById(R.id.label1);
+                            valueView = findViewById(R.id.value1);
+                            verifiedView = findViewById(R.id.value1BG);
+                            break;
+                    }
+                    if (field != null && labelView != null && valueView != null) {
+                        switch (theme) {
+                            case Helper.THEME_LIGHT:
+                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_2));
+                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_4));
+                                break;
+                            case Helper.THEME_DARK:
+                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
+                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
+                                break;
+                            case Helper.THEME_BLACK:
+                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_2));
+                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_4));
+                                break;
+                            default:
+                                labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
+                                valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
+                        }
+                        field.setVisibility(View.VISIBLE);
+                        if (verified) {
+                            verifiedView.setBackgroundResource(R.drawable.verified);
+                        }
+
+                    }
+                }
+                i++;
+            }
+        }
+
+        account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
+        if( !ischannel || account.getAcct().split("-").length < 4) {
+            account_un.setText(String.format("@%s", account.getAcct()));
+            account_un.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    String account_id = account.getAcct();
+                    if (account_id.split("@").length == 1)
+                        account_id += "@" + Helper.getLiveInstance(getApplicationContext());
+                    ClipData clip = ClipData.newPlainText("mastodon_account_id", "@" + account_id);
+                    Toasty.info(getApplicationContext(), getString(R.string.account_id_clipbloard), Toast.LENGTH_SHORT).show();
+                    assert clipboard != null;
+                    clipboard.setPrimaryClip(clip);
+                    return false;
+                }
+            });
+        }else {
+            account_un.setVisibility(View.GONE);
+        }
+        SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
+        account.setNoteSpan(spannableString);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+            account.makeEmojisAccountProfile(ShowAccountActivity.this, ShowAccountActivity.this, account);
+        account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
+        account_note.setMovementMethod(LinkMovementMethod.getInstance());
+        if (!peertubeAccount && tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
+            //noinspection ConstantConditions
+            tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, withSuffix(account.getStatuses_count())));
+            //noinspection ConstantConditions
+            tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, withSuffix(account.getFollowing_count())));
+            //noinspection ConstantConditions
+            tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, withSuffix(account.getFollowers_count())));
+
+            //Allows to filter by long click
+            final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+            tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    PopupMenu popup = new PopupMenu(ShowAccountActivity.this, tabStrip.getChildAt(0));
+                    popup.getMenuInflater()
+                            .inflate(R.menu.option_filter_toots_account, popup.getMenu());
+                    Menu menu = popup.getMenu();
+
+                    if( !Helper.canPin ) {
+                        popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
+                    }
+                    final MenuItem itemShowPined = menu.findItem(R.id.action_show_pinned);
+                    final MenuItem itemShowMedia = menu.findItem(R.id.action_show_media);
+                    final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);
+                    final MenuItem itemShowReplies = menu.findItem(R.id.action_show_replies);
+
+                    itemShowMedia.setChecked(showMediaOnly);
+                    itemShowPined.setChecked(showPinned);
+                    itemShowBoosts.setChecked(show_boosts);
+                    itemShowReplies.setChecked(show_replies);
+
+                    popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                        @Override
+                        public void onDismiss(PopupMenu menu) {
+                            if( displayStatusFragment != null)
+                                displayStatusFragment.refreshFilter();
+                        }
+                    });
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                            item.setActionView(new View(getApplicationContext()));
+                            item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                                @Override
+                                public boolean onMenuItemActionExpand(MenuItem item) {
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onMenuItemActionCollapse(MenuItem item) {
+                                    return false;
+                                }
+                            });
+                            switch (item.getItemId()) {
+                                case R.id.action_show_pinned:
+                                    showPinned = !showPinned;
+                                    break;
+                                case R.id.action_show_media:
+                                    showMediaOnly = !showMediaOnly;
+                                    break;
+                                case R.id.action_show_boosts:
+                                    show_boosts = !show_boosts;
+
+                                    break;
+                                case R.id.action_show_replies:
+                                    show_replies = !show_replies;
+                                    break;
+                            }
+                            if( tabLayout.getTabAt(0) != null)
+                                //noinspection ConstantConditions
+                                tabLayout.getTabAt(0).select();
+                            PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                            mPager.setAdapter(mPagerAdapter);
+                            itemShowMedia.setChecked(showMediaOnly);
+                            itemShowPined.setChecked(showPinned);
+                            itemShowReplies.setChecked(show_replies);
+                            itemShowBoosts.setChecked(show_boosts);
+                            return true;
+                        }
+                    });
+                    popup.show();
+                    return true;
+                }
+            });
+
+
+        }
+        boolean disableGif = sharedpreferences.getBoolean(Helper.SET_DISABLE_GIF, false);
+        if( (account.getAvatar() == null || account.getAvatar().equals("null"))&& MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+            Glide.with(getApplicationContext()).load(R.drawable.missing_peertube).apply(RequestOptions.circleCropTransform()).into(account_pp);
+        }else{
+            if( !disableGif)
+                Glide.with(getApplicationContext()).load(account.getAvatar()).apply(RequestOptions.circleCropTransform()).into(account_pp);
+            else
+                Glide.with(getApplicationContext())
+                        .asBitmap()
+                        .load(account.getAvatar())
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), Helper.addBorder(resource, account_pp.getContext()));
+                                circularBitmapDrawable.setCircular(true);
+                                account_pp.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
+        }
+        account_pp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShowAccountActivity.this, MediaActivity.class);
+                Bundle b = new Bundle();
+                Attachment attachment = new Attachment();
+                attachment.setDescription(account.getAcct());
+                attachment.setPreview_url(account.getAvatar());
+                attachment.setUrl(account.getAvatar());
+                attachment.setRemote_url(account.getAvatar());
+                attachment.setType("image");
+                ArrayList<Attachment> attachments = new ArrayList<>();
+                attachments.add(attachment);
+                intent.putParcelableArrayListExtra("mediaArray", attachments);
+                b.putInt("position", 1);
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
+        //Follow button
+        String target = account.getId();
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            target = account.getAcct();
+        String finalTarget = target;
+        account_follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( doAction == action.NOTHING){
+                    Toasty.info(getApplicationContext(), getString(R.string.nothing_to_do), Toast.LENGTH_LONG).show();
+                }else if( doAction == action.FOLLOW){
+                    account_follow.setEnabled(false);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, finalTarget, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else if( doAction == action.UNFOLLOW){
+                    account_follow.setEnabled(false);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNFOLLOW, finalTarget, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else if( doAction == action.UNBLOCK){
+                    account_follow.setEnabled(false);
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNBLOCK, finalTarget, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            }
+        });
+        account_follow.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CrossActions.doCrossAction(ShowAccountActivity.this, null, null, account, API.StatusAction.FOLLOW , null, ShowAccountActivity.this, false);
+                return false;
+            }
+        });
+    }
+
+
+
+
+    @Override
+    public void onRetrieveFeedsAccount(List<Status> statuses) {
+        if( statuses != null) {
+            this.statuses.addAll(statuses);
+            statusListAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onRetrieveFeeds(APIResponse apiResponse) {
+        if( apiResponse.getError() != null){
+            Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+        pins = apiResponse.getStatuses();
+        if (pins != null && pins.size() > 0) {
+            if (pins.get(0).isPinned()) {
+                this.statuses.addAll(pins);
+                //noinspection ConstantConditions
+                tabLayout.getTabAt(3).setText(getString(R.string.pins_cnt, pins.size()));
+                statusListAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+
+    @Override
+    public void onRetrieveRelationship(Relationship relationship, Error error) {
+
+        if( error != null){
+            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+            return;
+        }
+        this.relationship = relationship;
+        manageButtonVisibility();
+
+
+        //The authenticated account is followed by the account
+        if( relationship != null && relationship.isFollowed_by()){
+            TextView account_followed_by = findViewById(R.id.account_followed_by);
+            account_followed_by.setVisibility(View.VISIBLE);
+        }
+        invalidateOptionsMenu();
+
+    }
+
+    //Manages the visibility of the button
+    private void manageButtonVisibility(){
+        if( relationship == null)
+            return;
+        account_follow.setEnabled(true);
+        account_follow.setBackgroundTintList(ColorStateList.valueOf( ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)));
+        if( account.getId() != null && account.getId().equals(userId) && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+            account_follow.hide();
+            header_edit_profile.show();
+            header_edit_profile.bringToFront();
+        }else if( relationship.isBlocking()){
+            account_follow.setImageResource(R.drawable.ic_lock_open);
+            doAction = action.UNBLOCK;
+            account_follow.show();
+        }else if( relationship.isRequested()){
+            account_follow_request.setVisibility(View.VISIBLE);
+            account_follow.setImageResource(R.drawable.ic_hourglass_full);
+            account_follow.show();
+            doAction = action.UNFOLLOW;
+        }else if( relationship.isFollowing()){
+            account_follow.setImageResource(R.drawable.ic_user_times);
+            account_follow.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(ShowAccountActivity.this, R.color.unfollow)));
+            doAction = action.UNFOLLOW;
+            account_follow.show();
+        }else if( !relationship.isFollowing()){
+            account_follow.setImageResource(R.drawable.ic_user_plus);
+            doAction = action.FOLLOW;
+            account_follow.show();
+        }else{
+            account_follow.hide();
+            doAction = action.NOTHING;
+        }
+    }
+
+    /**
+     * Pager adapter for the 4 fragments
+     */
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+
+        ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Bundle bundle = new Bundle();
+            switch (position){
+                case 0:
+                    if( ! peertubeAccount){
+                        TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
+                        bundle.putString("targetedid", account.getId());
+                        tabLayoutTootsFragment.setArguments(bundle);
+                        return tabLayoutTootsFragment;
+                    }else{
+                        DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
+                        bundle = new Bundle();
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
+                        bundle.putString("targetedid", account.getAcct());
+                        bundle.putBoolean("showReply",false);
+                        bundle.putBoolean("ischannel",ischannel);
+                        displayStatusFragment.setArguments(bundle);
+                        return displayStatusFragment;
+                    }
+                case 1:
+                    if( peertubeAccount){
+                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
+                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.CHANNELS);
+                        bundle.putString("targetedid", account.getId());
+                        bundle.putString("instance",account.getAcct().split("@")[1]);
+                        bundle.putString("name",account.getAcct().split("@")[0]);
+                        displayAccountsFragment.setArguments(bundle);
+                        return displayAccountsFragment;
+                    }else{
+                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
+                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
+                        bundle.putString("targetedid", account.getId());
+                        displayAccountsFragment.setArguments(bundle);
+                        return displayAccountsFragment;
+                    }
+
+                case 2:
+                    DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
+                    bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
+                    bundle.putString("targetedid", account.getId());
+                    displayAccountsFragment.setArguments(bundle);
+                    return displayAccountsFragment;
+
+            }
+            return null;
+        }
+
+
+        @Override
+        public int getCount() {
+            if( ischannel)
+                return 1;
+            else if( peertubeAccount)
+                return 2;
+            else
+                return 3;
+        }
+    }
+
+    @Override
+    public void onRetrieveEmojiAccount(Account account) {
+        account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
+        account_dn.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
+        LinkedHashMap<String, Boolean> fieldsVerified = account.getFieldsVerified();
+        if ( account.getFieldsSpan() != null && account.getFieldsSpan().size() > 0){
+            HashMap<SpannableString, SpannableString> fieldsSpan = account.getFieldsSpan();
+            Iterator it = fieldsSpan.entrySet().iterator();
+            int i = 1;
+            LinearLayout fields_container = findViewById(R.id.fields_container);
+            if( fields_container != null)
+                fields_container.setVisibility(View.VISIBLE);
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                SpannableString label = (SpannableString)pair.getKey();
+                SpannableString value = (SpannableString)pair.getValue();
+                LinearLayout field;
+                TextView labelView;
+                TextView valueView;
+                switch(i){
+                    case 1:
+                        field = findViewById(R.id.field1);
+                        labelView = findViewById(R.id.label1);
+                        valueView = findViewById(R.id.value1);
+                        break;
+                    case 2:
+                        field = findViewById(R.id.field2);
+                        labelView = findViewById(R.id.label2);
+                        valueView = findViewById(R.id.value2);
+                        break;
+                    case 3:
+                        field = findViewById(R.id.field3);
+                        labelView = findViewById(R.id.label3);
+                        valueView = findViewById(R.id.value3);
+                        break;
+                    case 4:
+                        field = findViewById(R.id.field4);
+                        labelView = findViewById(R.id.label4);
+                        valueView = findViewById(R.id.value4);
+                        break;
+                    default:
+                        field = findViewById(R.id.field1);
+                        labelView = findViewById(R.id.label1);
+                        valueView = findViewById(R.id.value1);
+                        break;
+                }
+                if( field != null && labelView != null && valueView != null) {
+                    field.setVisibility(View.VISIBLE);
+                    valueView.setText(value, TextView.BufferType.SPANNABLE);
+                    valueView.setMovementMethod(LinkMovementMethod.getInstance());
+                    labelView.setText(label);
+                }
+                if( field != null && labelView != null && valueView != null) {
+                    boolean verified = fieldsVerified.get((String)pair.getKey().toString());
+                    if( verified) {
+                        valueView.setBackgroundResource(R.drawable.verified);
+                        value.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.verified_text)), 0, value.toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    }
+                    field.setVisibility(View.VISIBLE);
+                    valueView.setText(value, TextView.BufferType.SPANNABLE);
+                    valueView.setMovementMethod(LinkMovementMethod.getInstance());
+                    labelView.setText(label);
+
+                }
+                i++;
+            }
+        }
     }
 
     private void showMenu(View account_menu){
@@ -453,19 +1204,23 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
     }
     @Override
     public void onPostAction(int statusCode,API.StatusAction statusAction, String targetedId, Error error) {
+
         if( error != null){
             Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
             return;
         }
         Helper.manageMessageStatusCode(getApplicationContext(), statusCode, statusAction);
-        new RetrieveRelationshipAsyncTask(getApplicationContext(), accountId,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        String target = account.getId();
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            target = account.getAcct();
+        new RetrieveRelationshipAsyncTask(getApplicationContext(), target,ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
-
 
 
     @Override
     public void onRetrieveAccount(final Account account, Error error) {
-        if( error != null || account.getAcct() == null){
+
+        if( error != null || account == null || account.getAcct() == null){
             if( error == null)
                 Toasty.error(ShowAccountActivity.this, getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             else
@@ -473,724 +1228,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             return;
         }
         this.account = account;
-        accountUrl = account.getUrl();
-        final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == Helper.THEME_BLACK){
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.dark_icon);
-        }else {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
-        }
-        String urlHeader = account.getHeader();
-        if (urlHeader != null && urlHeader.startsWith("/")) {
-            urlHeader = Helper.getLiveInstanceWithProtocol(ShowAccountActivity.this) + account.getHeader();
-        }
-        if (urlHeader != null && !urlHeader.contains("missing.png")) {
-
-            Glide.with(getApplicationContext())
-                    .asBitmap()
-                    .load(urlHeader)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                            ImageView banner_pp = findViewById(R.id.banner_pp);
-                            banner_pp.setImageBitmap(resource);
-                            if( theme == THEME_LIGHT){
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                    banner_pp.setImageAlpha(80);
-                                }else {
-                                    banner_pp.setAlpha(80);
-                                }
-                            }else {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                    banner_pp.setImageAlpha(60);
-                                }else {
-                                    banner_pp.setAlpha(60);
-                                }
-                            }
-
-                        }
-                    });
-
-        }
-        //Redraws icon for locked accounts
-        final float scale = getResources().getDisplayMetrics().density;
-        if(account.isLocked()){
-            Drawable img = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_lock_outline);
-            assert img != null;
-            img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
-            account_dn.setCompoundDrawables( img, null, null, null);
-        }else{
-            account_dn.setCompoundDrawables( null, null, null, null);
-        }
-
-        //Peertube account
-        if( peertubeAccount) {
-            account_type.setVisibility(View.VISIBLE);
-        }
-        TextView actionbar_title = findViewById(R.id.show_account_title);
-        if( account.getAcct() != null)
-            actionbar_title.setText(account.getAcct());
-        pp_actionBar = findViewById(R.id.pp_actionBar);
-        if( account.getAvatar() != null){
-            String url = account.getAvatar();
-            if( url.startsWith("/") ){
-                url = Helper.getLiveInstanceWithProtocol(getApplicationContext()) + account.getAvatar();
-            }
-            Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
-
-        }
-        final AppBarLayout appBar = findViewById(R.id.appBar);
-        maxScrollSize = appBar.getTotalScrollRange();
-
-        final TextView warning_message = findViewById(R.id.warning_message);
-        final SpannableString content = new SpannableString(getString(R.string.disclaimer_full));
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        if( theme == THEME_DARK)
-            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.dark_link_toot)), 0, content.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        else if( theme == THEME_BLACK)
-            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.black_link_toot)), 0, content.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        else if( theme == THEME_LIGHT)
-            content.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)), 0, content.length(),
-                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        warning_message.setText(content);
-        warning_message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if( !accountUrl.startsWith("http://") && ! accountUrl.startsWith("https://"))
-                    accountUrl = "http://" + accountUrl;
-                Helper.openBrowser(ShowAccountActivity.this, accountUrl);
-            }
-        });
-        //Timed muted account
-        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        final Account authenticatedAccount = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
-        boolean isTimedMute = new TempMuteDAO(getApplicationContext(), db).isTempMuted(authenticatedAccount, account.getId());
-        if( isTimedMute){
-            String date_mute = new TempMuteDAO(getApplicationContext(), db).getMuteDateByID(authenticatedAccount, account.getId());
-            if( date_mute != null) {
-                final TextView temp_mute = findViewById(R.id.temp_mute);
-                temp_mute.setVisibility(View.VISIBLE);
-                SpannableString content_temp_mute = new SpannableString(getString(R.string.timed_mute_profile, account.getAcct(), date_mute));
-                content_temp_mute.setSpan(new UnderlineSpan(), 0, content_temp_mute.length(), 0);
-                temp_mute.setText(content_temp_mute);
-                temp_mute.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        new TempMuteDAO(getApplicationContext(), db).remove(authenticatedAccount, account.getId());
-                        Toasty.success(getApplicationContext(), getString(R.string.toast_unmute), Toast.LENGTH_LONG).show();
-                        temp_mute.setVisibility(View.GONE);
-                    }
-                });
-            }
-        }
-        //This account was moved to another one
-        if( account.getMoved_to_account() != null){
-            TextView account_moved = findViewById(R.id.account_moved);
-            account_moved.setVisibility(View.VISIBLE);
-            if( theme == THEME_DARK || theme == THEME_BLACK)
-                changeDrawableColor(ShowAccountActivity.this, R.drawable.ic_card_travel,R.color.dark_icon);
-            else
-                changeDrawableColor(ShowAccountActivity.this, R.drawable.ic_card_travel,R.color.black);
-            Drawable imgTravel = ContextCompat.getDrawable(ShowAccountActivity.this, R.drawable.ic_card_travel);
-            assert imgTravel != null;
-            imgTravel.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20  * scale + 0.5f));
-            account_moved.setCompoundDrawables(imgTravel, null, null, null);
-            //Retrieves content and make account names clickable
-            SpannableString spannableString = account.moveToText(ShowAccountActivity.this);
-            account_moved.setText(spannableString, TextView.BufferType.SPANNABLE);
-            account_moved.setMovementMethod(LinkMovementMethod.getInstance());
-        }
-
-
-
-        if( account.getAcct().contains("@") )
-            warning_message.setVisibility(View.VISIBLE);
-        else
-            warning_message.setVisibility(View.GONE);
-        appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                LinearLayout toolbarContent = findViewById(R.id.toolbar_content);
-                if( toolbarContent != null) {
-                    if (Math.abs(verticalOffset) - appBar.getTotalScrollRange() == 0) {
-                        if (toolbarContent.getVisibility() == View.GONE)
-                            toolbarContent.setVisibility(View.VISIBLE);
-                    } else {
-                        if (toolbarContent.getVisibility() == View.VISIBLE)
-                            toolbarContent.setVisibility(View.GONE);
-                    }
-                }
-                if (maxScrollSize == 0)
-                    maxScrollSize = appBarLayout.getTotalScrollRange();
-
-                int percentage = (Math.abs(verticalOffset)) * 100 / maxScrollSize;
-
-                if (percentage >= 40 && avatarShown) {
-                    avatarShown = false;
-
-                    account_pp.animate()
-                            .scaleY(0).scaleX(0)
-                            .setDuration(400)
-                            .start();
-                    warning_message.setVisibility(View.GONE);
-                }
-                if (percentage <= 40 && !avatarShown) {
-                    avatarShown = true;
-                    account_pp.animate()
-                            .scaleY(1).scaleX(1)
-                            .start();
-                    if( account.getAcct().contains("@") )
-                        warning_message.setVisibility(View.VISIBLE);
-                    else
-                        warning_message.setVisibility(View.GONE);
-                }
-            }
-        });
-        mPager = findViewById(R.id.account_viewpager);
-        if( !peertubeAccount) {
-            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
-            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
-            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
-            mPager.setOffscreenPageLimit(3);
-        }else {
-            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.videos)));
-            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.channels)));
-            mPager.setOffscreenPageLimit(2);
-        }
-
-
-
-        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-
-        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                TabLayout.Tab tab = tabLayout.getTabAt(position);
-                if( tab != null)
-                    tab.select();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                Fragment fragment = null;
-                if( mPager.getAdapter() != null)
-                    fragment = (Fragment) mPager.getAdapter().instantiateItem(mPager, tab.getPosition());
-                switch (tab.getPosition()){
-                    case 0:
-                        if( displayStatusFragment != null )
-                            displayStatusFragment.scrollToTop();
-                        break;
-                    case 1:
-                    case 2:
-                        if( fragment != null) {
-                            DisplayAccountsFragment displayAccountsFragment = ((DisplayAccountsFragment) fragment);
-                            displayAccountsFragment.scrollToTop();
-                        }
-                        break;
-                }
-            }
-        });
-
-
-        if ( account.getFields() != null && account.getFields().size() > 0){
-            LinkedHashMap<String, String> fields = account.getFields();
-            LinkedHashMap<String, Boolean> fieldsVerified = account.getFieldsVerified();
-            Iterator it = fields.entrySet().iterator();
-            int i = 1;
-            LinearLayout fields_container = findViewById(R.id.fields_container);
-            if( fields_container != null)
-                fields_container.setVisibility(View.VISIBLE);
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                String label = (String)pair.getKey();
-                String value = (String)pair.getValue();
-                boolean verified = fieldsVerified.get(label);
-
-                LinearLayout field;
-                TextView labelView;
-                TextView valueView;
-                LinearLayout verifiedView;
-                switch(i){
-                    case 1:
-                        field = findViewById(R.id.field1);
-                        labelView = findViewById(R.id.label1);
-                        valueView = findViewById(R.id.value1);
-                        verifiedView = findViewById(R.id.value1BG);
-                        break;
-                    case 2:
-                        field = findViewById(R.id.field2);
-                        labelView = findViewById(R.id.label2);
-                        valueView = findViewById(R.id.value2);
-                        verifiedView = findViewById(R.id.value2BG);
-                        break;
-                    case 3:
-                        field = findViewById(R.id.field3);
-                        labelView = findViewById(R.id.label3);
-                        valueView = findViewById(R.id.value3);
-                        verifiedView = findViewById(R.id.value3BG);
-                        break;
-                    case 4:
-                        field = findViewById(R.id.field4);
-                        labelView = findViewById(R.id.label4);
-                        valueView = findViewById(R.id.value4);
-                        verifiedView = findViewById(R.id.value4BG);
-                        break;
-                    default:
-                        field = findViewById(R.id.field1);
-                        labelView = findViewById(R.id.label1);
-                        valueView = findViewById(R.id.value1);
-                        verifiedView = findViewById(R.id.value1BG);
-                        break;
-                }
-                if( field != null && labelView != null && valueView != null) {
-                    switch (theme){
-                        case Helper.THEME_LIGHT:
-                            labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_2));
-                            valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_light_4));
-                            break;
-                        case Helper.THEME_DARK:
-                            labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
-                            valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
-                            break;
-                        case Helper.THEME_BLACK:
-                            labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_2));
-                            valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_black_4));
-                            break;
-                        default:
-                            labelView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_2));
-                            valueView.setBackgroundColor(ContextCompat.getColor(ShowAccountActivity.this, R.color.notif_dark_4));
-                    }
-                    field.setVisibility(View.VISIBLE);
-                    SpannableString spannableValueString;
-                    if( verified ){
-                        value =  "✓ " + value;
-                        verifiedView.setBackgroundResource(R.drawable.verified);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            valueView.setBackground(null);
-                        }
-                        spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value);
-                        spannableValueString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(ShowAccountActivity.this, R.color.verified_text)), 0, spannableValueString.toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    }else {
-                        spannableValueString = Helper.clickableElementsDescription(ShowAccountActivity.this, value);
-                    }
-                    valueView.setText(spannableValueString, TextView.BufferType.SPANNABLE);
-                    valueView.setMovementMethod(LinkMovementMethod.getInstance());
-                    labelView.setText(label);
-                }
-                i++;
-            }
-        }
-
-        account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
-        account_un.setText(String.format("@%s", account.getAcct()));
-        account_un.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                String account_id = account.getAcct();
-                if( account_id.split("@").length == 1)
-                    account_id += "@" + Helper.getLiveInstance(getApplicationContext());
-                ClipData clip = ClipData.newPlainText("mastodon_account_id", "@"+account_id);
-                Toasty.info(getApplicationContext(),getString(R.string.account_id_clipbloard), Toast.LENGTH_SHORT).show();
-                assert clipboard != null;
-                clipboard.setPrimaryClip(clip);
-                return false;
-            }
-        });
-        SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
-        account.setNoteSpan(spannableString);
-        account.makeEmojisAccountProfile(ShowAccountActivity.this, ShowAccountActivity.this);
-        account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
-        account_note.setMovementMethod(LinkMovementMethod.getInstance());
-        if (!peertubeAccount && tabLayout.getTabAt(0) != null && tabLayout.getTabAt(1) != null && tabLayout.getTabAt(2) != null) {
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(0).setText(getString(R.string.status_cnt, withSuffix(account.getStatuses_count())));
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(1).setText(getString(R.string.following_cnt, withSuffix(account.getFollowing_count())));
-            //noinspection ConstantConditions
-            tabLayout.getTabAt(2).setText(getString(R.string.followers_cnt, withSuffix(account.getFollowers_count())));
-
-            //Allows to filter by long click
-            final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
-            tabStrip.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    PopupMenu popup = new PopupMenu(ShowAccountActivity.this, tabStrip.getChildAt(0));
-                    popup.getMenuInflater()
-                            .inflate(R.menu.option_filter_toots_account, popup.getMenu());
-                    Menu menu = popup.getMenu();
-
-                    if( !Helper.canPin ) {
-                        popup.getMenu().findItem(R.id.action_show_pinned).setVisible(false);
-                    }
-                    final MenuItem itemShowPined = menu.findItem(R.id.action_show_pinned);
-                    final MenuItem itemShowMedia = menu.findItem(R.id.action_show_media);
-                    final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);
-                    final MenuItem itemShowReplies = menu.findItem(R.id.action_show_replies);
-
-                    itemShowMedia.setChecked(showMediaOnly);
-                    itemShowPined.setChecked(showPinned);
-                    itemShowBoosts.setChecked(show_boosts);
-                    itemShowReplies.setChecked(show_replies);
-
-                    popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
-                        @Override
-                        public void onDismiss(PopupMenu menu) {
-                            if( displayStatusFragment != null)
-                                displayStatusFragment.refreshFilter();
-                        }
-                    });
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        public boolean onMenuItemClick(MenuItem item) {
-                            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-                            item.setActionView(new View(getApplicationContext()));
-                            item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-                                @Override
-                                public boolean onMenuItemActionExpand(MenuItem item) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean onMenuItemActionCollapse(MenuItem item) {
-                                    return false;
-                                }
-                            });
-                            switch (item.getItemId()) {
-                                case R.id.action_show_pinned:
-                                    showPinned = !showPinned;
-                                    break;
-                                case R.id.action_show_media:
-                                    showMediaOnly = !showMediaOnly;
-                                    break;
-                                case R.id.action_show_boosts:
-                                    show_boosts = !show_boosts;
-
-                                    break;
-                                case R.id.action_show_replies:
-                                    show_replies = !show_replies;
-                                    break;
-                            }
-                            if( tabLayout.getTabAt(0) != null)
-                                //noinspection ConstantConditions
-                                tabLayout.getTabAt(0).select();
-                            PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                            mPager.setAdapter(mPagerAdapter);
-                            itemShowMedia.setChecked(showMediaOnly);
-                            itemShowPined.setChecked(showPinned);
-                            itemShowReplies.setChecked(show_replies);
-                            itemShowBoosts.setChecked(show_boosts);
-                            return true;
-                        }
-                    });
-                    popup.show();
-                    return true;
-                }
-            });
-
-
-        }
-        boolean disableGif = sharedpreferences.getBoolean(Helper.SET_DISABLE_GIF, false);
-        if( !disableGif)
-            Glide.with(getApplicationContext()).load(account.getAvatar()).apply(RequestOptions.circleCropTransform()).into(account_pp);
-        else
-            Glide.with(getApplicationContext())
-                    .asBitmap()
-                    .load(account.getAvatar())
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                            RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), Helper.addBorder(resource, account_pp.getContext()));
-                            circularBitmapDrawable.setCircular(true);
-                            account_pp.setImageDrawable(circularBitmapDrawable);
-                        }
-                    });
-        account_pp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ShowAccountActivity.this, MediaActivity.class);
-                Bundle b = new Bundle();
-                Attachment attachment = new Attachment();
-                attachment.setDescription(account.getAcct());
-                attachment.setPreview_url(account.getAvatar());
-                attachment.setUrl(account.getAvatar());
-                attachment.setRemote_url(account.getAvatar());
-                attachment.setType("image");
-                ArrayList<Attachment> attachments = new ArrayList<>();
-                attachments.add(attachment);
-                intent.putParcelableArrayListExtra("mediaArray", attachments);
-                b.putInt("position", 1);
-                intent.putExtras(b);
-                startActivity(intent);
-            }
-        });
-        //Follow button
-        account_follow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( doAction == action.NOTHING){
-                    Toasty.info(getApplicationContext(), getString(R.string.nothing_to_do), Toast.LENGTH_LONG).show();
-                }else if( doAction == action.FOLLOW){
-                    account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.FOLLOW, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else if( doAction == action.UNFOLLOW){
-                    account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNFOLLOW, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else if( doAction == action.UNBLOCK){
-                    account_follow.setEnabled(false);
-                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.UNBLOCK, accountId, ShowAccountActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-            }
-        });
-        account_follow.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                CrossActions.doCrossAction(ShowAccountActivity.this, null, null, account, API.StatusAction.FOLLOW , null, ShowAccountActivity.this, false);
-                return false;
-            }
-        });
-
+        ManageAccount();
     }
 
 
-
-    @Override
-    public void onRetrieveFeedsAccount(List<Status> statuses) {
-        if( statuses != null) {
-            this.statuses.addAll(statuses);
-            statusListAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void onRetrieveFeeds(APIResponse apiResponse) {
-        if( apiResponse.getError() != null){
-            Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        pins = apiResponse.getStatuses();
-        if (pins != null && pins.size() > 0) {
-            if( pins.get(0).isPinned()) {
-                this.statuses.addAll(pins);
-                //noinspection ConstantConditions
-                tabLayout.getTabAt(3).setText(getString(R.string.pins_cnt, pins.size()));
-                statusListAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-
-    @Override
-    public void onRetrieveRelationship(Relationship relationship, Error error) {
-
-        if( error != null){
-            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
-            return;
-        }
-        this.relationship = relationship;
-        manageButtonVisibility();
-
-
-        //The authenticated account is followed by the account
-        if( relationship != null && relationship.isFollowed_by()){
-            TextView account_followed_by = findViewById(R.id.account_followed_by);
-            account_followed_by.setVisibility(View.VISIBLE);
-        }
-        invalidateOptionsMenu();
-
-    }
-
-    //Manages the visibility of the button
-    private void manageButtonVisibility(){
-        if( relationship == null)
-            return;
-        account_follow.setEnabled(true);
-        if( accountId != null && accountId.equals(userId)){
-            account_follow.hide();
-            header_edit_profile.show();
-            header_edit_profile.bringToFront();
-        }else if( relationship.isBlocking()){
-            account_follow.setImageResource(R.drawable.ic_lock_open);
-            doAction = action.UNBLOCK;
-            account_follow.show();
-        }else if( relationship.isRequested()){
-            account_follow_request.setVisibility(View.VISIBLE);
-            account_follow.hide();
-            doAction = action.NOTHING;
-        }else if( relationship.isFollowing()){
-            account_follow.setImageResource(R.drawable.ic_user_times);
-            doAction = action.UNFOLLOW;
-            account_follow.show();
-        }else if( !relationship.isFollowing()){
-            account_follow.setImageResource(R.drawable.ic_user_plus);
-            doAction = action.FOLLOW;
-            account_follow.show();
-        }else{
-            account_follow.hide();
-            doAction = action.NOTHING;
-        }
-    }
-
-    /**
-     * Pager adapter for the 4 fragments
-     */
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-
-        ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Bundle bundle = new Bundle();
-            switch (position){
-                case 0:
-                    if( ! peertubeAccount){
-                        TabLayoutTootsFragment tabLayoutTootsFragment = new TabLayoutTootsFragment();
-                        bundle.putString("targetedId", accountId);
-                        tabLayoutTootsFragment.setArguments(bundle);
-                        return tabLayoutTootsFragment;
-                    }else{
-                        DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
-                        bundle = new Bundle();
-                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
-                        bundle.putString("targetedId", accountId);
-                        bundle.putBoolean("showReply",false);
-                        displayStatusFragment.setArguments(bundle);
-                        return displayStatusFragment;
-                    }
-                case 1:
-                    if( peertubeAccount){
-                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
-                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.CHANNELS);
-                        bundle.putString("targetedId", accountId);
-                        bundle.putString("instance",account.getAcct().split("@")[1]);
-                        bundle.putString("name",account.getAcct().split("@")[0]);
-                        displayAccountsFragment.setArguments(bundle);
-                        return displayAccountsFragment;
-                    }else{
-                        DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
-                        bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWING);
-                        bundle.putString("targetedId", accountId);
-                        displayAccountsFragment.setArguments(bundle);
-                        return displayAccountsFragment;
-                    }
-
-                case 2:
-                    DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
-                    bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FOLLOWERS);
-                    bundle.putString("targetedId", accountId);
-                    displayAccountsFragment.setArguments(bundle);
-                    return displayAccountsFragment;
-
-            }
-            return null;
-        }
-
-        /*@NonNull
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
-            // save the appropriate reference depending on position
-            switch (position) {
-                case 0:
-                    displayStatusFragment = (DisplayStatusFragment) createdFragment;
-                    break;
-            }
-            return createdFragment;
-        }*/
-
-        @Override
-        public int getCount() {
-            if( peertubeAccount)
-                return 2;
-            else
-                return 3;
-        }
-    }
-
-    @Override
-    public void onRetrieveEmojiAccount(Account account) {
-        account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
-        account_dn.setText(account.getdisplayNameSpan(), TextView.BufferType.SPANNABLE);;
-        if ( account.getFieldsSpan() != null && account.getFieldsSpan().size() > 0){
-            HashMap<SpannableString, SpannableString> fieldsSpan = account.getFieldsSpan();
-            Iterator it = fieldsSpan.entrySet().iterator();
-            int i = 1;
-            LinearLayout fields_container = findViewById(R.id.fields_container);
-            if( fields_container != null)
-                fields_container.setVisibility(View.VISIBLE);
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                SpannableString label = (SpannableString)pair.getKey();
-                SpannableString value = (SpannableString)pair.getValue();
-                LinearLayout field;
-                TextView labelView;
-                TextView valueView;
-                switch(i){
-                    case 1:
-                        field = findViewById(R.id.field1);
-                        labelView = findViewById(R.id.label1);
-                        valueView = findViewById(R.id.value1);
-                        break;
-                    case 2:
-                        field = findViewById(R.id.field2);
-                        labelView = findViewById(R.id.label2);
-                        valueView = findViewById(R.id.value2);
-                        break;
-                    case 3:
-                        field = findViewById(R.id.field3);
-                        labelView = findViewById(R.id.label3);
-                        valueView = findViewById(R.id.value3);
-                        break;
-                    case 4:
-                        field = findViewById(R.id.field4);
-                        labelView = findViewById(R.id.label4);
-                        valueView = findViewById(R.id.value4);
-                        break;
-                    default:
-                        field = findViewById(R.id.field1);
-                        labelView = findViewById(R.id.label1);
-                        valueView = findViewById(R.id.value1);
-                        break;
-                }
-                if( field != null && labelView != null && valueView != null) {
-                    field.setVisibility(View.VISIBLE);
-                    valueView.setText(value, TextView.BufferType.SPANNABLE);
-                    valueView.setMovementMethod(LinkMovementMethod.getInstance());
-                    labelView.setText(label);
-                }
-                i++;
-            }
-        }
-    }
 
     public boolean showReplies(){
         return show_replies;

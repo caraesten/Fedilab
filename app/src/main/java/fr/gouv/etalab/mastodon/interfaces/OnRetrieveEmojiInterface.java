@@ -14,11 +14,10 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.interfaces;
 
-import android.text.SpannableString;
-
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
+import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 
 
@@ -28,5 +27,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Status;
  */
 public interface OnRetrieveEmojiInterface {
     void onRetrieveEmoji(Status status, boolean fromTranslation);
+    void onRetrieveEmoji(Notification notification);
     void onRetrieveSearchEmoji(List<Emojis> emojis);
 }

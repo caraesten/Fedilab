@@ -83,7 +83,11 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp" />
                 </LinearLayout>
-
+                <CheckBox
+                    android:id="@+id/peertube_instance"
+                    android:layout_width="wrap_content"
+                    android:text="@string/peertube_instance"
+                    android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
             <LinearLayout
                 android:layout_width="match_parent"

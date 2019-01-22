@@ -99,4 +99,21 @@
     <color name="black_link_toot">#27a7fc</color>
     <color name="dark_link_toot">#27a7fc</color>
     <color name="light_link_toot">#27a7fc</color>
+
+
+    <!-- TOASTY -->
+    <color name="toasty_text">#2e2e2e</color>
+    <color name="toasty_background">#c8c8c8</color>
+
+
+
+    <color name="neutral_thumbs">#606984</color>
+    <color name="positive_thumbs">#2b90d9</color>
+    <color name="negative_thumbs">#F44336</color>
+
+    <color name="peertube_orange">#F1680D</color>
+
+    <color name="unfollow">#c52404</color>
+
+    <color name="pixelfed_like">#dc3545</color>
 </resources>

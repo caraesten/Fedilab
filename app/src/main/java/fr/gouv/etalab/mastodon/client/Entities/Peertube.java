@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.client.Entities;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -40,8 +41,20 @@ public class Peertube {
     private int duration;
     private String instance;
     private Account account;
+    private Account channel;
     private List<String> resolution;
+    private List<String> tags;
     private boolean commentsEnabled;
+    private boolean sensitive;
+    private HashMap<Integer, String> category;
+    private HashMap<Integer, String>  license;
+    private HashMap<String, String>  language;
+    private HashMap<Integer, String> privacy;
+    private HashMap<String, String> channelForUpdate;
+    private String myRating = "none";
+    private boolean isUpdate = false; // I allow to set it to true when dealing with API updates
+    private String headerType = null;//For overview timeline
+    private String headerTypeValue = null;//For overview timeline
     private JSONObject cache;
 
     public Peertube() {
@@ -170,6 +183,15 @@ public class Peertube {
     }
 
 
+    public String getTorrentUrl(String resolution) {
+        if( resolution == null)
+            resolution = this.getResolution().get(0);
+        if(resolution == null)
+            return null;
+        return "https://" + this.host + "/static/torrents/" + getUuid()+ "-" + resolution + ".torrent";
+
+    }
+
     public String getTorrentDownloadUrl(String resolution) {
         if( resolution == null)
             resolution = this.getResolution().get(0);
@@ -216,5 +238,105 @@ public class Peertube {
 
     public void setCache(JSONObject cache) {
         this.cache = cache;
+    }
+
+    public boolean isSensitive() {
+        return sensitive;
+    }
+
+    public void setSensitive(boolean sensitive) {
+        this.sensitive = sensitive;
+    }
+
+
+
+
+    public String getMyRating() {
+        return myRating;
+    }
+
+    public void setMyRating(String myRating) {
+        this.myRating = myRating;
+    }
+
+    public Account getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Account channel) {
+        this.channel = channel;
+    }
+
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public HashMap<Integer, String> getCategory() {
+        return category;
+    }
+
+    public void setCategory(HashMap<Integer, String> category) {
+        this.category = category;
+    }
+
+    public HashMap<Integer, String> getLicense() {
+        return license;
+    }
+
+    public void setLicense(HashMap<Integer, String> license) {
+        this.license = license;
+    }
+
+    public HashMap<String, String> getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(HashMap<String, String> language) {
+        this.language = language;
+    }
+
+    public HashMap<Integer, String> getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(HashMap<Integer, String> privacy) {
+        this.privacy = privacy;
+    }
+
+    public HashMap<String, String> getChannelForUpdate() {
+        return channelForUpdate;
+    }
+
+    public void setChannelForUpdate(HashMap<String, String> channelForUpdate) {
+        this.channelForUpdate = channelForUpdate;
+    }
+
+    public boolean isUpdate() {
+        return isUpdate;
+    }
+
+    public void setUpdate(boolean update) {
+        isUpdate = update;
+    }
+
+    public String getHeaderType() {
+        return headerType;
+    }
+
+    public void setHeaderType(String headerType) {
+        this.headerType = headerType;
+    }
+
+    public String getHeaderTypeValue() {
+        return headerTypeValue;
+    }
+
+    public void setHeaderTypeValue(String headerTypeValue) {
+        this.headerTypeValue = headerTypeValue;
     }
 }

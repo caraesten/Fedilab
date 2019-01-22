@@ -35,8 +35,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
+import fr.gouv.etalab.mastodon.activities.PeertubeEditUploadActivity;
+import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
@@ -56,13 +60,23 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
     private LayoutInflater layoutInflater;
     private Context context;
     private String instance;
+    private boolean ownVideos;
 
     public PeertubeAdapter(Context context, String instance, List<Peertube> peertubes){
         this.peertubes = peertubes;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.instance = instance;
+        this.ownVideos = false;
 
+    }
+
+    public PeertubeAdapter(Context context, String instance, boolean ownVideos, List<Peertube> peertubes){
+        this.peertubes = peertubes;
+        layoutInflater = LayoutInflater.from(context);
+        this.context = context;
+        this.instance = instance;
+        this.ownVideos = ownVideos;
     }
 
 
@@ -78,6 +92,8 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
 
         final PeertubeAdapter.ViewHolder holder = (PeertubeAdapter.ViewHolder) viewHolder;
         final Peertube peertube = peertubes.get(position);
+        if( peertube.getInstance() == null)
+            peertube.setInstance(Helper.getLiveInstance(context));
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == Helper.THEME_LIGHT){
@@ -96,34 +112,80 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         holder.peertube_date.setText(String.format(" - %s", Helper.dateDiff(context, peertube.getCreated_at())));
         holder.peertube_views.setText(context.getString(R.string.number_view_video, Helper.withSuffix(peertube.getView())));
 
-        holder.peertube_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CrossActions.doCrossProfile(context, account);
-            }
-        });
+
         Glide.with(holder.peertube_video_image.getContext())
                 .load("https://" + peertube.getInstance() + peertube.getThumbnailPath())
                 .into(holder.peertube_video_image);
+        if (account.getAvatar() != null && !account.getAvatar().equals("null") && !account.getAvatar().startsWith("http"))
+            account.setAvatar("https://" + peertube.getInstance() + account.getAvatar());
         Helper.loadGiF(context, account.getAvatar(), holder.peertube_profile);
-        holder.main_container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, PeertubeActivity.class);
-                Bundle b = new Bundle();
-                String finalUrl = "https://"  + instance + peertube.getEmbedPath();
-                Pattern link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/embed\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
-                Matcher matcherLink = link.matcher(finalUrl);
-                if( matcherLink.find()) {
-                    String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
-                    b.putString("peertubeLinkToFetch", url);
-                    b.putString("peertube_instance", matcherLink.group(1).replace("https://","").replace("http://",""));
-                    b.putString("video_id", matcherLink.group(2));
-                }
-                intent.putExtras(b);
-                context.startActivity(intent);
+
+
+        if( peertube.getHeaderType() != null && peertube.getHeaderTypeValue() != null) {
+            String type = peertube.getHeaderType();
+            switch (type){
+                case "tags":
+                    holder.header_title.setText(String.format("#%s", peertube.getHeaderTypeValue()));
+                    break;
+                default:
+                    holder.header_title.setText(peertube.getHeaderTypeValue());
+                    break;
             }
-        });
+            holder.header_title.setVisibility(View.VISIBLE);
+        }else {
+            holder.header_title.setVisibility(View.GONE);
+        }
+
+        if( !this.ownVideos) {
+            holder.peertube_profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //For remote peertube instance
+                    if (!peertube.getInstance().equals(Helper.getLiveInstance(context)))
+                        CrossActions.doCrossProfile(context, account);
+                    else {
+                        Intent intent = new Intent(context, ShowAccountActivity.class);
+                        Bundle b = new Bundle();
+                        b.putBoolean("peertubeaccount", true);
+                        b.putParcelable("account", peertube.getAccount());
+
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
+                }
+            });
+            holder.main_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PeertubeActivity.class);
+                    Bundle b = new Bundle();
+                    if ((instance == null || instance.trim().length() == 0) && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                        instance = Helper.getLiveInstance(context);
+                    String finalUrl = "https://" + instance + peertube.getEmbedPath();
+                    Pattern link = Pattern.compile("(https?:\\/\\/[\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/videos\\/embed\\/(\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})$");
+                    Matcher matcherLink = link.matcher(finalUrl);
+                    if (matcherLink.find()) {
+                        String url = matcherLink.group(1) + "/videos/watch/" + matcherLink.group(2);
+                        b.putString("peertubeLinkToFetch", url);
+                        b.putString("peertube_instance", matcherLink.group(1).replace("https://", "").replace("http://", ""));
+                        b.putString("video_id", matcherLink.group(2));
+                    }
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
+        }else{
+            holder.main_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PeertubeEditUploadActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("video_id",peertube.getUuid());
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
+        }
 
     }
 
@@ -147,7 +209,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         LinearLayout main_container;
         ImageView peertube_profile, peertube_video_image;
         TextView peertube_account_name, peertube_views, peertube_duration;
-        TextView peertube_title, peertube_date;
+        TextView peertube_title, peertube_date, header_title;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -159,6 +221,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
             peertube_views = itemView.findViewById(R.id.peertube_views);
             peertube_duration = itemView.findViewById(R.id.peertube_duration);
             main_container = itemView.findViewById(R.id.main_container);
+            header_title = itemView.findViewById(R.id.header_title);
         }
     }
 

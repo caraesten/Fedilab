@@ -86,13 +86,13 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         holder.account_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openAccountDetails(account.getId());
+                openAccountDetails(account);
             }
         });
         holder.account_un.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openAccountDetails(account.getId());
+                openAccountDetails(account);
             }
         });
         holder.btn_authorize.setOnClickListener(new View.OnClickListener() {
@@ -125,10 +125,10 @@ public class AccountsFollowRequestAdapter extends RecyclerView.Adapter implement
         return accounts.size();
     }
 
-    private void openAccountDetails(String userId){
+    private void openAccountDetails(Account account){
         Intent intent = new Intent(context, ShowAccountActivity.class);
         Bundle b = new Bundle();
-        b.putString("accountId", userId);
+        b.putParcelable("account", account);
         intent.putExtras(b);
         context.startActivity(intent);
     }

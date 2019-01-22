@@ -30,8 +30,6 @@ public class ApplicationJob implements JobCreator {
         switch (tag) {
             case NotificationsSyncJob.NOTIFICATION_REFRESH:
                 return new NotificationsSyncJob();
-            case HomeTimelineSyncJob.HOME_TIMELINE:
-                return new HomeTimelineSyncJob();
             case ScheduledTootsSyncJob.SCHEDULED_TOOT:
                 return new ScheduledTootsSyncJob();
             case ScheduledBoostsSyncJob.SCHEDULED_BOOST:

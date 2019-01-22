@@ -730,7 +730,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="modify">Aanpassen</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
+
         <item>Webview</item>
     </string-array>
 </resources>

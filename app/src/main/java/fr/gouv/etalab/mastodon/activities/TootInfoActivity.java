@@ -142,13 +142,13 @@ public class TootInfoActivity extends BaseActivity {
                 case 0:
                     DisplayAccountsFragment displayAccountsFragment = new DisplayAccountsFragment();
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.REBLOGGED);
-                    bundle.putString("targetedId", toot_id);
+                    bundle.putString("targetedid", toot_id);
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
                 case 1:
                     displayAccountsFragment = new DisplayAccountsFragment();
                     bundle.putSerializable("type", RetrieveAccountsAsyncTask.Type.FAVOURITED);
-                    bundle.putString("targetedId", toot_id);
+                    bundle.putString("targetedid", toot_id);
                     displayAccountsFragment.setArguments(bundle);
                     return displayAccountsFragment;
             }

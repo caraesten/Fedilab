@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
+        <!-- MASTODON MENU -->
         <item
             android:title="@string/communication_menu_title"
             android:id="@+id/nav_main_com"
@@ -50,6 +51,73 @@
                 </group>
             </menu>
         </item>
+        <!-- PEERTUBE MENU -->
+        <item
+            android:title="@string/communication_menu_title"
+            android:id="@+id/nav_peertube_comm"
+            >
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_peertube_fav"
+                        android:icon="@drawable/ic_favorite_peertube_full"
+                        android:title="@string/peertube_favorites" />
+                    <item
+                        android:id="@+id/nav_my_video"
+                        android:icon="@drawable/ic_video_library"
+                        android:title="@string/my_videos" />
+                    <item
+                        android:id="@+id/nav_upload"
+                        android:icon="@drawable/ic_cloud_upload"
+                        android:title="@string/upload_video" />
+                    <item
+                        android:id="@+id/nav_peertube_settings"
+                        android:icon="@drawable/ic_settings"
+                        android:title="@string/settings" />
+
+                </group>
+            </menu>
+        </item>
+        <!-- PIXELFED MENU -->
+        <item
+            android:title="@string/communication_menu_title"
+            android:id="@+id/nav_pixelfed_comm"
+            >
+            <menu>
+                <group android:checkableBehavior="single">
+                    <!--
+                    <item
+                        android:id="@+id/nav_peertube_fav"
+                        android:icon="@drawable/ic_favorite_peertube_full"
+                        android:title="@string/peertube_favorites" />
+                        -->
+                    <!--
+                    <item
+                        android:id="@+id/nav_my_photo"
+                        android:icon="@drawable/ic_pixelfed_media"
+                        android:title="@string/my_pictures" />
+-->
+                    <item
+                        android:id="@+id/nav_pixelfed_favorites"
+                        android:icon="@drawable/ic_pixelfed_favorite"
+                        android:title="@string/favorites_menu" />
+                    <item
+                        android:id="@+id/nav_pixelfed_blocked"
+                        android:icon="@drawable/ic_block"
+                        android:title="@string/blocked_menu" />
+                    <item
+                        android:id="@+id/nav_pixelfed_muted"
+                        android:icon="@drawable/ic_volume_mute"
+                        android:title="@string/muted_menu" />
+                    <!--
+                    <item
+                        android:id="@+id/nav_pixelfed_settings"
+                        android:icon="@drawable/ic_settings"
+                        android:title="@string/settings" />
+                    -->
+                </group>
+            </menu>
+        </item>
         <item
             android:title="@string/neutral_menu_title"
             android:id="@+id/nav_main_opt">
@@ -76,9 +144,9 @@
                         android:icon="@drawable/ic_block"
                         android:title="@string/blocked_domains" />
                     <item
-                        android:id="@+id/nav_how_to"
-                        android:icon="@drawable/ic_videocam"
-                        android:title="@string/how_to_videos" />
+                        android:id="@+id/nav_language"
+                        android:icon="@drawable/ic_translate_menu"
+                        android:title="@string/languages" />
                 </group>
             </menu>
         </item>
@@ -87,6 +155,10 @@
             android:id="@+id/nav_main_info">
             <menu>
                 <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_how_to"
+                        android:icon="@drawable/ic_videocam"
+                        android:title="@string/how_to_videos" />
                     <item
                         android:id="@+id/nav_bug_report"
                         android:icon="@drawable/ic_bug_report"

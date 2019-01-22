@@ -52,6 +52,16 @@
             <LinearLayout
                 android:id="@+id/more_option_container"
                 android:layout_width="0dp"
+                android:paddingLeft="20dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:ignore="UselessLeaf" >
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/more_account_container"
+                android:layout_width="0dp"
+                android:paddingLeft="20dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

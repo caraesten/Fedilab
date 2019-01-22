@@ -14,7 +14,10 @@ package fr.gouv.etalab.mastodon.fragments;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +26,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,9 +45,12 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingNotificationsInterface;
@@ -72,6 +79,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private String userId, instance;
     private SharedPreferences sharedpreferences;
     LinearLayoutManager mLayoutManager;
+    private BroadcastReceiver receive_action;
+    private BroadcastReceiver receive_data;
 
     public DisplayNotificationsFragment(){
     }
@@ -125,6 +134,43 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
         });
 
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+
+            if( receive_action != null)
+                LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
+            receive_action = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    Bundle b = intent.getExtras();
+                    assert b != null;
+                    Status status = b.getParcelable("status");
+                    API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
+                    if( status != null) {
+                        notificationsListAdapter.notifyNotificationWithActionChanged(statusAction, status);
+                    }
+                }
+            };
+            LocalBroadcastManager.getInstance(context).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
+
+            if( receive_data != null)
+                LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
+            receive_data = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    Bundle b = intent.getExtras();
+                    assert b != null;
+                    String userIdService = b.getString("userIdService", null);
+                    if( userIdService != null && userIdService.equals(userId)) {
+                        Notification notification = b.getParcelable("data");
+                        refresh(notification);
+                        if( context instanceof MainActivity)
+                            ((MainActivity)context).updateNotifCounter();
+                    }
+                }
+            };
+            LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+        }
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -133,8 +179,14 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 flag_loading = true;
                 swiped = true;
                 MainActivity.countNewNotifications = 0;
+                try {
+                    ((MainActivity) context).updateNotifCounter();
+                }catch (Exception ignored){}
+                String sinceId = null;
+                if( notifications != null && notifications.size() > 0 )
+                    sinceId = notifications.get(0).getId();
                 if( context != null)
-                    asyncTask = new RetrieveNotificationsAsyncTask(context, true, null, null, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveMissingNotificationsAsyncTask(context, sinceId, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -192,6 +244,11 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         super.onDestroy();
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
+        if( receive_action != null)
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
+        if( receive_data != null)
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
+
     }
 
     @Override
@@ -231,6 +288,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 if( lastReadNotifications != null && Long.parseLong(tmpNotification.getId()) > Long.parseLong(lastReadNotifications)) {
                     MainActivity.countNewNotifications++;
                 }
+                try {
+                    ((MainActivity) context).updateNotifCounter();
+                }catch (Exception ignored){}
                 this.notifications.add(tmpNotification);
             }
             if( firstLoad) {
@@ -267,6 +327,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             return;
         //Store last notification id to avoid to notify for those that have been already seen
         if (visible && notifications != null && notifications.size() > 0) {
+            retrieveMissingNotifications(notifications.get(0).getId());
             updateNotificationLastId(notifications.get(0).getId());
         }
     }
@@ -302,6 +363,9 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 MainActivity.lastNotificationId = notification.getId();
                 notifications.add(0, notification);
                 MainActivity.countNewNotifications++;
+                try {
+                    ((MainActivity) context).updateNotifCounter();
+                }catch (Exception ignored){}
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                 if (firstVisibleItem > 0)
                     notificationsListAdapter.notifyItemInserted(0);
@@ -317,7 +381,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
     @Override
     public void onRetrieveMissingNotifications(List<Notification> notifications) {
-
+        flag_loading = false;
+        swipeRefreshLayout.setRefreshing(false);
         if( notifications != null && notifications.size() > 0) {
             for (int i = notifications.size()-1 ; i >= 0 ; i--) {
                 if (this.notifications.size() == 0 ||

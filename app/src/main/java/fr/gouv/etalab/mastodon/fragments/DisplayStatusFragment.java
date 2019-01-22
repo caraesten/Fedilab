@@ -15,8 +15,10 @@ package fr.gouv.etalab.mastodon.fragments;
  * see <http://www.gnu.org/licenses>. */
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -26,6 +28,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +36,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -43,9 +47,12 @@ import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAfterBookmarkAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSearchAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Conversation;
@@ -53,12 +60,16 @@ import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
+import fr.gouv.etalab.mastodon.drawers.ArtListAdapter;
 import fr.gouv.etalab.mastodon.drawers.PeertubeAdapter;
+import fr.gouv.etalab.mastodon.drawers.PixelfedListAdapter;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsAfterBookmarkInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
 import fr.gouv.etalab.mastodon.services.StreamingFederatedTimelineService;
+import fr.gouv.etalab.mastodon.services.StreamingHomeTimelineService;
 import fr.gouv.etalab.mastodon.services.StreamingLocalTimelineService;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
@@ -71,7 +82,7 @@ import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
  * Created by Thomas on 24/04/2017.
  * Fragment to display content related to status
  */
-public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface, OnRetrieveMissingFeedsInterface {
+public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface, OnRetrieveMissingFeedsInterface, OnRetrieveFeedsAfterBookmarkInterface {
 
 
     private boolean flag_loading;
@@ -79,6 +90,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private AsyncTask<Void, Void, Void> asyncTask;
     private StatusListAdapter statusListAdapter;
     private PeertubeAdapter peertubeAdapater;
+    private ArtListAdapter artListAdapter;
+    private PixelfedListAdapter pixelfedListAdapter;
     private String max_id;
     private List<Status> statuses;
     private List<Peertube> peertubes;
@@ -90,7 +103,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String tag;
     private RecyclerView lv_status;
     private boolean showMediaOnly, showPinned, showReply;
-    private Intent streamingFederatedIntent, streamingLocalIntent;
+    private Intent streamingHomeIntent, streamingFederatedIntent, streamingLocalIntent;
     LinearLayoutManager mLayoutManager;
     boolean firstTootsLoaded;
     private String userId, instance;
@@ -103,7 +116,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private String initialBookMark;
     private boolean fetchMoreButtonDisplayed;
     private TagTimeline tagTimeline;
-
+    private String updatedBookMark;
+    private String lastReadToot;
+    private TextView textviewNoActionText;
+    private boolean ischannel;
+    private boolean ownVideos;
+    private BroadcastReceiver receive_action;
+    private BroadcastReceiver  receive_data;
     public DisplayStatusFragment(){
     }
 
@@ -116,14 +135,15 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         Bundle bundle = this.getArguments();
         showMediaOnly = false;
         //Will allow to load first toots if bookmark != null
-        firstTootsLoaded = true;
+        firstTootsLoaded = false;
         fetchMoreButtonDisplayed = false;
         showPinned = false;
         showReply = false;
         tagTimeline = null;
         if (bundle != null) {
             type = (RetrieveFeedsAsyncTask.Type) bundle.get("type");
-            targetedId = bundle.getString("targetedId", null);
+            targetedId = bundle.getString("targetedid", null);
+            ownVideos = bundle.getBoolean("ownvideos", false); //Peetube account watching its videos
             tag = bundle.getString("tag", null);
             showMediaOnly = bundle.getBoolean("showMediaOnly",false);
             showPinned = bundle.getBoolean("showPinned",false);
@@ -131,10 +151,15 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             remoteInstance = bundle.getString("remote_instance", "");
             search_peertube = bundle.getString("search_peertube", null);
             remote_channel_name = bundle.getString("remote_channel_name", null);
-
+            instanceType  = bundle.getString("instanceType", "MASTODON");
+            ischannel = bundle.getBoolean("ischannel",false);
         }
+        if( ischannel)
+            type = RetrieveFeedsAsyncTask.Type.CHANNEL;
+
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        if( !remoteInstance.equals("")){
+        //instanceType should not be null only for Peertube accounts
+        if( !remoteInstance.equals("") && instanceType == null){
             List<RemoteInstance> remoteInstanceObj = new InstancesDAO(context, db).getInstanceByName(remoteInstance);
             if( remoteInstanceObj != null && remoteInstanceObj.size() > 0)
                 instanceType = remoteInstanceObj.get(0).getType();
@@ -143,104 +168,144 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         max_id = null;
         flag_loading = true;
         firstLoad = true;
+        initialBookMark = null;
+
         assert context != null;
         sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isOnWifi = Helper.isOnWIFI(context);
-        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
-        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
         lv_status = rootView.findViewById(R.id.lv_status);
         mainLoader =  rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_status);
         textviewNoAction =  rootView.findViewById(R.id.no_action);
+        textviewNoActionText = rootView.findViewById(R.id.no_action_text);
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
-
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
         Account account = new AccountDAO(context, db).getAccountByID(userId);
         mutedAccount = new TempMuteDAO(context, db).getAllTimeMuted(account);
 
-        if( type == RetrieveFeedsAsyncTask.Type.TAG && tag != null) {
-            BaseMainActivity.displayPeertube = null;
-            List<TagTimeline> tagTimelines = new SearchDAO(context, db).getTimelineInfo(tag);
-            if( tagTimelines != null && tagTimelines.size() > 0) {
-                tagTimeline = tagTimelines.get(0);
-                statusListAdapter = new StatusListAdapter(context, tagTimeline, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+        //For Home timeline, fetch stored values for bookmark and last read toot
+        if( type == RetrieveFeedsAsyncTask.Type.HOME) {
+            initialBookMark = sharedpreferences.getString(Helper.BOOKMARK_ID + userId + instance, null);
+            lastReadToot = sharedpreferences.getString(Helper.LAST_READ_TOOT_ID + userId + instance, null);
+        }
+        if( instanceType.equals("MASTODON") ||  instanceType.equals("MISSKEY") ){
+            if( type == RetrieveFeedsAsyncTask.Type.TAG && tag != null) {
+                BaseMainActivity.displayPeertube = null;
+                List<TagTimeline> tagTimelines = new SearchDAO(context, db).getTimelineInfo(tag);
+                if( tagTimelines != null && tagTimelines.size() > 0) {
+                    tagTimeline = tagTimelines.get(0);
+                    statusListAdapter = new StatusListAdapter(context, tagTimeline, targetedId, isOnWifi, this.statuses);
+                    lv_status.setAdapter(statusListAdapter);
+                }
+            }else{
+                BaseMainActivity.displayPeertube = null;
+                statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, this.statuses);
                 lv_status.setAdapter(statusListAdapter);
             }
-        }else if( search_peertube == null && (instanceType == null || instanceType.equals("MASTODON"))) {
-            BaseMainActivity.displayPeertube = null;
-            statusListAdapter = new StatusListAdapter(context, type, targetedId, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
-            lv_status.setAdapter(statusListAdapter);
-        }else {
+        }else if( instanceType.equals("PEERTUBE")){
+            if( remoteInstance != null && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) //if it's a Peertube account connected
+                remoteInstance = account.getInstance();
             BaseMainActivity.displayPeertube = remoteInstance;
-            peertubeAdapater = new PeertubeAdapter(context, remoteInstance, this.peertubes);
+            peertubeAdapater = new PeertubeAdapter(context, remoteInstance, ownVideos, this.peertubes);
             lv_status.setAdapter(peertubeAdapater);
+        }else if( instanceType.equals("PIXELFED")){
+            if( remoteInstance != null && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) //if it's a Peertube account connected
+                remoteInstance = account.getInstance();
+            pixelfedListAdapter = new PixelfedListAdapter(context, type, this.statuses);
+            lv_status.setAdapter(pixelfedListAdapter);
+        }else if( instanceType.equals("ART")){
+            artListAdapter = new ArtListAdapter(context, this.statuses);
+            lv_status.setAdapter(artListAdapter);
         }
         mLayoutManager = new LinearLayoutManager(context);
         lv_status.setLayoutManager(mLayoutManager);
 
 
-        instance = sharedpreferences.getString(Helper.PREF_INSTANCE, context!=null?Helper.getLiveInstance(context):null);
+        //Manage broadcast receiver for Mastodon timelines
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if( receive_action != null)
+                LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
+            receive_action = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    Bundle b = intent.getExtras();
+                    assert b != null;
+                    Status status = b.getParcelable("status");
+                    API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
+                    if( status != null && statusListAdapter != null) {
+                        statusListAdapter.notifyStatusWithActionChanged(statusAction, status);
+                    }
+                }
+            };
+            LocalBroadcastManager.getInstance(context).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
+
+            if( type == RetrieveFeedsAsyncTask.Type.HOME || type == RetrieveFeedsAsyncTask.Type.LOCAL || type == RetrieveFeedsAsyncTask.Type.PUBLIC){
+
+                if (receive_data != null)
+                    LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
+                receive_data = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        Bundle b = intent.getExtras();
+                        assert b != null;
+                        String userIdService = b.getString("userIdService", null);
+                        if (userIdService != null && userIdService.equals(userId)) {
+                            Status status = b.getParcelable("data");
+                            refresh(status);
+                        }
+                    }
+                };
+            }
+            if( type == RetrieveFeedsAsyncTask.Type.PUBLIC)
+                LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_FEDERATED_DATA));
+            else if( type == RetrieveFeedsAsyncTask.Type.HOME)
+                LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_HOME_DATA));
+            else if( type == RetrieveFeedsAsyncTask.Type.LOCAL)
+                LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_LOCAL_DATA));
+        }
 
         if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE  && search_peertube != null)
             ((Activity)context).setTitle(remoteInstance + " - " + search_peertube);
         if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE  && remote_channel_name != null)
             ((Activity)context).setTitle(remote_channel_name + " - " + remoteInstance);
-        lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
-            {
-                if (type != RetrieveFeedsAsyncTask.Type.ART && context instanceof  BaseMainActivity ) {
-                    if( dy < 0 && !((BaseMainActivity)context).getFloatingVisibility() )
-                        ((BaseMainActivity) context).manageFloatingButton(true);
-                    if( dy > 0 && ((BaseMainActivity)context).getFloatingVisibility() )
-                        ((BaseMainActivity) context).manageFloatingButton(false);
-                }
-                int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-                if(dy > 0){
-                    int visibleItemCount = mLayoutManager.getChildCount();
-                    int totalItemCount = mLayoutManager.getItemCount();
-                    if(firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
-                        if(!flag_loading ) {
-                            flag_loading = true;
-                            if( type == RetrieveFeedsAsyncTask.Type.USER)
-                                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            else if( type == RetrieveFeedsAsyncTask.Type.TAG)
-                                asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) {
-                                if( search_peertube == null) {
-                                    if( remote_channel_name == null)
-                                        asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    else
-                                        asyncTask = new RetrieveFeedsAsyncTask(context, remoteInstance, remote_channel_name, null,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                }
-                                else
-                                    asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }else{
-                                if( type == RetrieveFeedsAsyncTask.Type.HOME){
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                }else {
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                }
+        if( type != RetrieveFeedsAsyncTask.Type.POVERVIEW ) //No paginations for Peertube Overviews (it's a fixed size content
+            lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
+                {
+                    if (type != RetrieveFeedsAsyncTask.Type.ART  && context instanceof  BaseMainActivity ) {
+                        if( dy < 0 && !((BaseMainActivity)context).getFloatingVisibility() )
+                            ((BaseMainActivity) context).manageFloatingButton(true);
+                        if( dy > 0 && ((BaseMainActivity)context).getFloatingVisibility() )
+                            ((BaseMainActivity) context).manageFloatingButton(false);
+                    }
+                    int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                    if(dy > 0){
+                        int visibleItemCount = mLayoutManager.getChildCount();
+                        int totalItemCount = mLayoutManager.getItemCount();
+                        if(firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
+                            if(!flag_loading ) {
+                                flag_loading = true;
+                                manageAsyncTask(true);
+                                nextElementLoader.setVisibility(View.VISIBLE);
                             }
-                            nextElementLoader.setVisibility(View.VISIBLE);
+                        } else {
+                            nextElementLoader.setVisibility(View.GONE);
                         }
-                    } else {
-                        nextElementLoader.setVisibility(View.GONE);
+                    }
+                    if(type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > firstVisibleItem && firstVisibleItem >= 0) {
+                        Long bookmarkL = Long.parseLong(statuses.get(firstVisibleItem).getId()) + 1;
+                        updatedBookMark = String.valueOf(bookmarkL);
+                        if( lastReadToot == null || bookmarkL > Long.parseLong(lastReadToot)) //Last read toot, only incremented if the id of the toot is greater than the recorded one
+                            lastReadToot = String.valueOf(bookmarkL);
                     }
                 }
-                if(type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > firstVisibleItem && firstVisibleItem >= 0)
-                    if( context instanceof BaseMainActivity){
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        Long bookmarkL = Long.parseLong(statuses.get(firstVisibleItem).getId()) + 1;
-                        editor.putString(Helper.BOOKMARK_ID + userId + instance, String.valueOf(bookmarkL));
-                        editor.apply();
-                    }
-            }
-        });
+            });
 
 
-        if( instanceType == null || instanceType.equals("MASTODON"))
+        if( !instanceType.equals("PEERTUBE"))
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
@@ -292,65 +357,34 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 break;
         }
         if( context != null) {
-            if (type == RetrieveFeedsAsyncTask.Type.USER)
-                asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else if (type == RetrieveFeedsAsyncTask.Type.TAG)
-                asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) {
-                if( search_peertube == null) {
-                    if( remote_channel_name == null)
-                        asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    else
-                        asyncTask = new RetrieveFeedsAsyncTask(context, remoteInstance, remote_channel_name, null,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-                else
-                    asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }else {
-                if( type == RetrieveFeedsAsyncTask.Type.HOME ){
-                    firstTootsLoaded = false;
-                    if( context instanceof BaseMainActivity){
-                        initialBookMark = ((BaseMainActivity) context).getBookmark();
-                        asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark,  DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    }
-                }else {
-                    asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-            }
+            //Load data depending of the value
+            manageAsyncTask(false);
         }else {
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if( context != null){
-                        if (type == RetrieveFeedsAsyncTask.Type.USER)
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        else if (type == RetrieveFeedsAsyncTask.Type.TAG)
-                            asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE ) {
-                            if( search_peertube == null) {
-                                if( remote_channel_name == null)
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                else
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, remoteInstance, remote_channel_name, null,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }
-                            else
-                                asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        }else {
-                            if( type == RetrieveFeedsAsyncTask.Type.HOME ){
-                                firstTootsLoaded = false;
-                                if( context instanceof BaseMainActivity){
-                                    initialBookMark = ((BaseMainActivity) context).getBookmark();
-                                    asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                }
-                            }else {
-                                asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                            }
-                        }
+                        manageAsyncTask(false);
                     }
                 }
             }, 500);
         }
-
         return rootView;
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        //Store bookmark on pause
+        if (context instanceof BaseMainActivity && type == RetrieveFeedsAsyncTask.Type.HOME) {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            if(updatedBookMark != null)
+                editor.putString(Helper.BOOKMARK_ID + userId + instance, updatedBookMark);
+            if( lastReadToot != null)
+                editor.putString(Helper.LAST_READ_TOOT_ID + userId + instance, lastReadToot);
+            if( lastReadToot != null || updatedBookMark != null)
+                editor.apply();
+        }
     }
 
 
@@ -373,16 +407,19 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         super.onDestroy();
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
+        if( receive_action != null)
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
+        if( receive_data != null)
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
     }
-
-
 
     @Override
     public void onRetrieveFeeds(APIResponse apiResponse) {
+        //hide loaders
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
-        //Discards 404 - error which can often happen due to toots which have been deleted
-        if( apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
+        //handle other API error but discards 404 - error which can often happen due to toots which have been deleted
+        if( this.peertubes == null ||  this.statuses == null || apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
             if( apiResponse == null)
                 Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             else
@@ -392,24 +429,38 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         }
 
-        if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && peertubeAdapater != null){
+        //For remote Peertube remote instances
+        if(instanceType.equals("PEERTUBE")){
             int previousPosition = this.peertubes.size();
             if( max_id == null)
                 max_id = "0";
+            //max_id needs to work like an offset
             max_id = String.valueOf(Integer.valueOf(max_id) + 50);
+            if( apiResponse.getPeertubes() == null){
+                return;
+            }
             this.peertubes.addAll(apiResponse.getPeertubes());
+            //If no item were inserted previously the adapter is created
             if( previousPosition == 0) {
-                peertubeAdapater = new PeertubeAdapter(context, remoteInstance, this.peertubes);
+                peertubeAdapater = new PeertubeAdapter(context, remoteInstance, ownVideos, this.peertubes);
                 lv_status.setAdapter(peertubeAdapater);
             }else
                 peertubeAdapater.notifyItemRangeInserted(previousPosition, apiResponse.getPeertubes().size());
+            //remove handlers
             swipeRefreshLayout.setRefreshing(false);
-            firstLoad = false;
+            if( firstLoad && (apiResponse.getPeertubes() == null || apiResponse.getPeertubes().size() ==0)){
+                textviewNoActionText.setText(R.string.no_video_to_display);
+                textviewNoAction.setVisibility(View.VISIBLE);
+            }
             flag_loading = false;
+            firstLoad = false;
         }else {
-            //Add conversation in status
-            if( type == RetrieveFeedsAsyncTask.Type.CONVERSATION ){
+
+            //When Mastodon statuses have been fetched.
+            if( type == RetrieveFeedsAsyncTask.Type.CONVERSATION ){ //Conversation timeline
+                //this timeline is dealt differently because it is embedded in Conversation entity and  not directly in statuses
                 List<Conversation> conversations = apiResponse.getConversations();
+                //Statuses from conversation entity are retrieved
                 List<Status> statusesConversations = new ArrayList<>();
                 if( conversations != null) {
                     for (Conversation conversation : conversations) {
@@ -428,90 +479,58 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             int previousPosition = this.statuses.size();
             List<Status> statuses = apiResponse.getStatuses();
-            if( type == RetrieveFeedsAsyncTask.Type.HOME) {
-                if (max_id == null || (apiResponse.getMax_id() != null && Long.parseLong(max_id) > Long.parseLong(apiResponse.getMax_id())))
-                    max_id = apiResponse.getMax_id();
-            }else {
+            //At this point all statuses are in "List<Status> statuses"
+            //Pagination for Pixelfed
+            if(instanceType.equals("PIXELFED")) {
+                if( max_id == null)
+                    max_id = "1";
+                //max_id needs to work like an offset
+                max_id = String.valueOf(Integer.valueOf(max_id) + 1);
+            }else{
                 max_id = apiResponse.getMax_id();
             }
+            //while max_id is different from null, there are some more toots to load when scrolling
             flag_loading = (max_id == null );
-            if( firstLoad && (statuses == null || statuses.size() == 0))
+            //If it's the first load and the reply doesn't contain any toots, a message is displayed.
+            if( firstLoad && (statuses == null || statuses.size() == 0)) {
                 textviewNoAction.setVisibility(View.VISIBLE);
-            else
+                lv_status.setVisibility(View.GONE);
+            }else {
+                lv_status.setVisibility(View.VISIBLE);
                 textviewNoAction.setVisibility(View.GONE);
+            }
 
             //First toot are loaded as soon as the bookmark has been retrieved
+            //Only for the Home timeline
+
             if( type == RetrieveFeedsAsyncTask.Type.HOME && !firstTootsLoaded){
-                asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 firstTootsLoaded = true;
             }
+            //Let's deal with statuses
             if( statuses != null && statuses.size() > 0) {
-                if (type == RetrieveFeedsAsyncTask.Type.HOME) {
-                    //Toots are older than the bookmark -> no special treatment with them
-                    if( initialBookMark == null || Long.parseLong(statuses.get(0).getId()) + 1 < Long.parseLong(initialBookMark)){
-                        this.statuses.addAll(statuses);
-                        statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
-                    }else { //Toots are younger than the bookmark
-                        String currentMaxId = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
-                        int position = 0;
-                        while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
-                            position++;
-                        }
-                        ArrayList<Status> tmpStatuses = new ArrayList<>();
-                        for (Status tmpStatus : statuses) {
-                            //Mark status at new ones when their id is greater than the bookmark id / Also increments counter
-                            if (currentMaxId != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(currentMaxId)) {
-                                tmpStatus.setNew(true);
-                                MainActivity.countNewStatus++;
-                            }
-                            //Put the toot at its place in the list (id desc)
-                            if( !this.statuses.contains(tmpStatus) ) { //Element not already addeds
-                                tmpStatuses.add(tmpStatus);
-                            }
-                        }
-                        int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
-                        if( tmpStatuses.size()  >= tootPerPage) {
-                            if (!fetchMoreButtonDisplayed && tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(initialBookMark)) {
-                                tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
-                                fetchMoreButtonDisplayed = true;
-                            }
-                        }
-                        this.statuses.addAll(position, tmpStatuses);
-                        statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
-                        if( tmpStatuses.size() < 3) //If new toots are only two
-                            lv_status.scrollToPosition(0);
-                        else {
-                            lv_status.scrollToPosition(position + tmpStatuses.size());
-                        }
-                    }
-
-                }else if ( statusListAdapter != null){
-                    if( tagTimeline == null || !tagTimeline.isART() || (tagTimeline.isART() && tagTimeline.isNSFW())) {
-                        this.statuses.addAll(statuses);
-                        statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
-                    }else { //If it's an Art timeline not allowing NSFW
+                if ( statusListAdapter != null && ( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))) {
+                    this.statuses.addAll(statuses);
+                    statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
+                }else if(artListAdapter != null && instanceType.equals("ART") ) {
+                    boolean show_nsfw = sharedpreferences.getBoolean(Helper.SET_ART_WITH_NSFW, false);
+                    if( !show_nsfw) {
                         ArrayList<Status> safeStatuses = new ArrayList<>();
-
                         for(Status status: statuses){
                             if( !status.isSensitive())
-                            safeStatuses.add(status);
+                                safeStatuses.add(status);
                         }
                         this.statuses.addAll(safeStatuses);
-                        statusListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
+                        artListAdapter.notifyItemRangeInserted(previousPosition, safeStatuses.size());
+                    }else {
+                        this.statuses.addAll(statuses);
+                        artListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                     }
+
+                }else if(pixelfedListAdapter != null && instanceType.equals("PIXELFED") ) {
+                    this.statuses.addAll(statuses);
+                    pixelfedListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
                 }
-                if( type == RetrieveFeedsAsyncTask.Type.HOME ) {
-                    //Update the id of the last toot retrieved
-                    if( MainActivity.lastHomeId == null || Long.parseLong(statuses.get(0).getId()) > Long.parseLong(MainActivity.lastHomeId))
-                        MainActivity.lastHomeId = statuses.get(0).getId();
-                    if( firstLoad )
-                        updateStatusLastId(statuses.get(0).getId());
-                }
-                if( type == RetrieveFeedsAsyncTask.Type.HOME)
-                    //Display new value in counter
-                    try {
-                        ((MainActivity) context).updateHomeCounter();
-                    }catch (Exception ignored){}
             }
             swipeRefreshLayout.setRefreshing(false);
             firstLoad = false;
@@ -540,13 +559,15 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     //Update the id of the last toot retrieved
                     MainActivity.lastHomeId = status.getId();
                     statuses.add(0, status);
-                    if (!status.getAccount().getId().equals(userId))
+                    if (status.getAccount() != null && !status.getAccount().getId().equals(userId)) {
                         MainActivity.countNewStatus++;
-                    statusListAdapter.notifyItemInserted(0);
-                    if (textviewNoAction.getVisibility() == View.VISIBLE)
-                        textviewNoAction.setVisibility(View.GONE);
-                }
+                    }
+                    try {
+                        ((MainActivity) context).updateHomeCounter();
+                    }catch (Exception ignored){}
 
+                    statusListAdapter.notifyItemInserted(0);
+                }
 
             } else if (type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL|| type == RetrieveFeedsAsyncTask.Type.DIRECT) {
 
@@ -570,8 +591,24 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         super.onResume();
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         int batteryProfile = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
-        if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
 
+
+        if (type == RetrieveFeedsAsyncTask.Type.HOME){
+            if( getUserVisibleHint() ){
+                statusListAdapter.updateMuted(mutedAccount);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, true);
+                editor.apply();
+                if(liveNotifications && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
+                    streamingHomeIntent = new Intent(context, StreamingHomeTimelineService.class);
+                    try {
+                        context.startService(streamingHomeIntent);
+                    }catch (Exception ignored){}
+                }
+                if( statuses != null && statuses.size() > 0)
+                    retrieveMissingToots(statuses.get(0).getId());
+            }
+        } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
             if( getUserVisibleHint() ){
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, true);
@@ -610,10 +647,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }
-        }else if (type == RetrieveFeedsAsyncTask.Type.HOME){
-            statusListAdapter.updateMuted(mutedAccount);
-            if( statuses != null && statuses.size() > 0)
-                retrieveMissingToots(statuses.get(0).getId());
         }else if (type == RetrieveFeedsAsyncTask.Type.TAG){
             if( getUserVisibleHint() ){
                 if( statuses != null && statuses.size() > 0)
@@ -627,8 +660,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      * @param sinceId String
      */
     public void retrieveMissingToots(String sinceId){
-        if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
+
+        if( type == RetrieveFeedsAsyncTask.Type.HOME)
+            asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE )
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, remoteInstance, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else if(type == RetrieveFeedsAsyncTask.Type.TAG)
+            asyncTask = new RetrieveMissingFeedsAsyncTask(context, tag, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else
             asyncTask = new RetrieveMissingFeedsAsyncTask(context, sinceId, type, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -646,8 +684,28 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         boolean liveNotifications = sharedpreferences.getBoolean(Helper.SET_LIVE_NOTIFICATIONS, true);
         int batteryProfile = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
-        if (type == RetrieveFeedsAsyncTask.Type.HOME && visible && statuses != null && statuses.size() > 0) {
-            updateStatusLastId(statuses.get(0).getId());
+        if (type == RetrieveFeedsAsyncTask.Type.HOME ) {
+
+            if (visible) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, true);
+                editor.apply();
+                if(liveNotifications  && batteryProfile == Helper.BATTERY_PROFILE_NORMAL) {
+                    streamingHomeIntent = new Intent(context, StreamingHomeTimelineService.class);
+                    try {
+                        context.startService(streamingHomeIntent);
+                    }catch (Exception ignored){}
+                }
+                if( statuses != null && statuses.size() > 0)
+                    retrieveMissingToots(statuses.get(0).getId());
+            }else {
+                if( streamingHomeIntent != null ){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, false);
+                    editor.apply();
+                    context.stopService(streamingHomeIntent);
+                }
+            }
         } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC ){
             if (visible) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -696,7 +754,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     @Override
     public void onStop(){
         super.onStop();
-        if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && streamingFederatedIntent != null){
+        if( type == RetrieveFeedsAsyncTask.Type.HOME && streamingHomeIntent != null){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, false);
+            editor.apply();
+            context.stopService(streamingHomeIntent);
+        } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC && streamingFederatedIntent != null){
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_FEDERATED + userId + instance, false);
             editor.apply();
@@ -710,12 +773,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
     public void scrollToTop(){
-        if( lv_status != null) {
-            lv_status.setAdapter(statusListAdapter);
-            //Store last toot id for home timeline to avoid to notify for those that have been already seen
-            if (type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > 0) {
-                updateStatusLastId(statuses.get(0).getId());
-            }
+        if( lv_status != null && instanceType != null) {
+            if( statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY")))
+                lv_status.setAdapter(statusListAdapter);
+            else if( pixelfedListAdapter != null && instanceType.equals("PIXELFED"))
+                lv_status.setAdapter(pixelfedListAdapter);
+            else if( artListAdapter != null && instanceType.equals("ART"))
+                lv_status.setAdapter(artListAdapter);
         }
     }
 
@@ -723,7 +787,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
      * Refresh status in list
      */
     public void refreshFilter(){
-        statusListAdapter.notifyDataSetChanged();
+
+        if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
+            statusListAdapter.notifyDataSetChanged();
+        else if( instanceType.equals("PIXELFED"))
+            pixelfedListAdapter.notifyDataSetChanged();
+        else if( instanceType.equals("ART"))
+            artListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -736,7 +806,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             for (Status status : this.statuses) {
                 status.setNew(false);
             }
-            statusListAdapter.notifyItemRangeChanged(0, this.statuses.size());
+            if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
+                statusListAdapter.notifyItemRangeChanged(0, this.statuses.size());
+            else if( instanceType.equals("PIXELFED"))
+                pixelfedListAdapter.notifyItemRangeChanged(0, this.statuses.size());
+            else if( instanceType.equals("ART"))
+                artListAdapter.notifyItemRangeChanged(0, this.statuses.size());
         }
         isSwipped = false;
         if( statuses != null && statuses.size() > 0) {
@@ -746,14 +821,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 int position = 0;
                 insertedConversation = statuses.size();
                 if( this.statuses != null) {
-                    long initialConversationId = -1;
-                    if( this.statuses.size() > 0 )
-                        initialConversationId = Long.parseLong(this.statuses.get(0).getConversationId());
                     for (Iterator<Status> it = this.statuses.iterator(); it.hasNext(); ) {
                         Status status = it.next();
                         for (Status status1 : statuses) {
                             if (status.getConversationId() != null && status.getConversationId().equals(status1.getConversationId())) {
-                                statusListAdapter.notifyItemRemoved(position);
+                                if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
+                                    statusListAdapter.notifyItemRemoved(position);
+                                else if( instanceType.equals("PIXELFED"))
+                                    pixelfedListAdapter.notifyItemRemoved(position);
+                                else if( instanceType.equals("ART"))
+                                    artListAdapter.notifyItemRemoved(position);
                                 it.remove();
                             }
                         }
@@ -763,18 +840,45 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             }
             for (int i = statuses.size() - 1; i >= 0; i--) {
                 if( this.statuses != null) {
-                    if (this.statuses.size() == 0 ||
-                            Long.parseLong(statuses.get(i).getId()) > Long.parseLong(this.statuses.get(0).getId())) {
-                        if (type == RetrieveFeedsAsyncTask.Type.HOME)
-                            statuses.get(i).setNew(true);
-                        inserted++;
-                        this.statuses.add(0, statuses.get(i));
-                        if (type == RetrieveFeedsAsyncTask.Type.HOME && !statuses.get(i).getAccount().getId().equals(userId))
-                            MainActivity.countNewStatus++;
+                    if( type != RetrieveFeedsAsyncTask.Type.HOME){
+                        if( tagTimeline == null || !tagTimeline.isART() || (tagTimeline.isART() && tagTimeline.isNSFW())) {
+                            if (this.statuses.size() == 0 || Long.parseLong(statuses.get(i).getId()) > Long.parseLong(this.statuses.get(0).getId())) {
+                                inserted++;
+                                this.statuses.add(0, statuses.get(i));
+
+                            }
+                        }else{
+                            ArrayList<Status> safeStatuses = new ArrayList<>();
+                            for(Status status: statuses){
+                                if( !status.isSensitive())
+                                    safeStatuses.add(status);
+                            }
+                            this.statuses.addAll(safeStatuses);
+                            if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
+                                statusListAdapter.notifyItemRangeInserted(0, safeStatuses.size());
+                            else if( instanceType.equals("PIXELFED"))
+                                pixelfedListAdapter.notifyItemRangeInserted(0, safeStatuses.size());
+                            else if( instanceType.equals("ART"))
+                                artListAdapter.notifyItemRangeInserted(0, safeStatuses.size());
+                        }
+                    }else {
+                        if( lastReadToot != null && Long.parseLong(statuses.get(i).getId()) > Long.parseLong(lastReadToot)) {
+                            if( !this.statuses.contains(statuses.get(i)) ) {
+                                statuses.get(i).setNew(true);
+                                MainActivity.countNewStatus++;
+                                inserted++;
+                                this.statuses.add(0, statuses.get(i));
+                            }
+                        }
                     }
                 }
             }
-            statusListAdapter.notifyItemRangeInserted(0, inserted);
+            if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
+                statusListAdapter.notifyItemRangeInserted(0, inserted);
+            else if( instanceType.equals("PIXELFED"))
+                pixelfedListAdapter.notifyItemRangeInserted(0, inserted);
+            else if( instanceType.equals("ART"))
+                artListAdapter.notifyItemRangeInserted(0, inserted);
             try {
                 if( type == RetrieveFeedsAsyncTask.Type.HOME)
                     ((MainActivity) context).updateHomeCounter();
@@ -790,22 +894,102 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     public void fetchMore(String max_id){
         fetchMoreButtonDisplayed = false;
-        asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveFeedsAfterBookmarkAsyncTask(context, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-
-    /**
-     * Records the id of the status only if its greater than the previous one.
-     * @param statusId String current status id to check
-     */
-    private void updateStatusLastId(String statusId){
-
-        String lastNotif = sharedpreferences.getString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, null);
-        if( lastNotif == null || Long.parseLong(statusId) > Long.parseLong(lastNotif)){
-            MainActivity.countNewStatus = 0;
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.LAST_HOMETIMELINE_MAX_ID + userId + instance, statusId);
-            editor.apply();
+    @Override
+    public void onRetrieveFeedsAfterBookmark(APIResponse apiResponse) {
+        if( apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
+            if( apiResponse == null)
+                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            else
+                Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            swipeRefreshLayout.setRefreshing(false);
+            flag_loading = false;
+            return;
+        }
+        List<Status> statuses = apiResponse.getStatuses();
+        if( statuses == null || statuses.size() == 0 )
+            return;
+        //Find the position of toots between those already present
+        int position = 0;
+        while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
+            position++;
+        }
+        ArrayList<Status> tmpStatuses = new ArrayList<>();
+        for (Status tmpStatus : statuses) {
+            //Put the toot at its place in the list (id desc)
+            if( !this.statuses.contains(tmpStatus) ) { //Element not already added
+                //Mark status at new ones when their id is greater than the last read toot id
+                if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadToot != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadToot)) {
+                    tmpStatus.setNew(true);
+                    MainActivity.countNewStatus++;
+                }
+                tmpStatuses.add(tmpStatus);
+            }
+        }
+        try {
+            ((MainActivity) context).updateHomeCounter();
+        }catch (Exception ignored){}
+        int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
+        //Display the fetch more toot button
+        if( tmpStatuses.size()  >= tootPerPage) {
+            if (initialBookMark != null && !fetchMoreButtonDisplayed && tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(initialBookMark)) {
+                tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
+                fetchMoreButtonDisplayed = true;
+            }
+        }
+        this.statuses.addAll(position, tmpStatuses);
+        statusListAdapter.notifyItemRangeInserted(position, tmpStatuses.size());
+        if( textviewNoAction.getVisibility() == View.VISIBLE && tmpStatuses.size() > 0){
+            textviewNoAction.setVisibility(View.GONE);
+            lv_status.setVisibility(View.VISIBLE);
         }
     }
+
+    //Update last read toots value when pressing tab button
+    public void updateLastReadToot(){
+        if (type == RetrieveFeedsAsyncTask.Type.HOME && this.statuses != null && this.statuses.size() > 0) {
+            lastReadToot = this.statuses.get(0).getId();
+        }
+    }
+
+    private void manageAsyncTask(boolean pagination){
+        //Message for an account
+        if (type == RetrieveFeedsAsyncTask.Type.USER || type == RetrieveFeedsAsyncTask.Type.CHANNEL)
+            asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        //Tag timelines
+        else if (type == RetrieveFeedsAsyncTask.Type.TAG)
+            asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+            //Remote instances
+            if( search_peertube == null) { //Not a Peertube search
+                if( remote_channel_name == null) { //Not a channel
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+                else
+                    asyncTask = new RetrieveFeedsAsyncTask(context, remoteInstance, remote_channel_name, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+            else
+                asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }else {
+            if( !pagination) {
+                if (type == RetrieveFeedsAsyncTask.Type.HOME) {
+                    if (context instanceof BaseMainActivity) {
+                        asyncTask = new RetrieveFeedsAsyncTask(context, type, initialBookMark, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
+                } else { //Most classical search will be done by this call
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            }else {
+                if( type == RetrieveFeedsAsyncTask.Type.HOME){
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else {//Most classical search will be done by this call for pagination
+                    asyncTask = new RetrieveFeedsAsyncTask(context, type, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            }
+        }
+    }
+
+
 }

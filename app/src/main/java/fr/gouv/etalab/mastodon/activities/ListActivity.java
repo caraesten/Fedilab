@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -116,10 +117,8 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         boolean isOnWifi = Helper.isOnWIFI(ListActivity.this);
-        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
 
-        statusListAdapter = new StatusListAdapter(ListActivity.this, RetrieveFeedsAsyncTask.Type.LIST, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, this.statuses);
+        statusListAdapter = new StatusListAdapter(ListActivity.this, RetrieveFeedsAsyncTask.Type.LIST, null, isOnWifi, this.statuses);
 
         lv_status.setAdapter(statusListAdapter);
         mLayoutManager = new LinearLayoutManager(ListActivity.this);
@@ -139,7 +138,7 @@ public class ListActivity extends BaseActivity implements OnListActionInterface 
 
 
         lv_status.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
             {
                 int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
                 if(dy > 0){

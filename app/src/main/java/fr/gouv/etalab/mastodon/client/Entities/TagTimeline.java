@@ -14,6 +14,8 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+import java.util.List;
+
 /**
  * Created by Thomas on 15/12/2018.
  * Manage Tags timeline settings
@@ -22,10 +24,12 @@ package fr.gouv.etalab.mastodon.client.Entities;
 public class TagTimeline {
 
     private String name;
+    private String displayname;
     private boolean isART;
     private boolean isNSFW;
-
-
+    private List<String> any;
+    private List<String> all;
+    private List<String> none;
 
     public String getName() {
         return name;
@@ -49,5 +53,37 @@ public class TagTimeline {
 
     public void setNSFW(boolean NSFW) {
         isNSFW = NSFW;
+    }
+
+    public List<String> getAny() {
+        return any;
+    }
+
+    public void setAny(List<String> any) {
+        this.any = any;
+    }
+
+    public List<String> getAll() {
+        return all;
+    }
+
+    public void setAll(List<String> all) {
+        this.all = all;
+    }
+
+    public List<String> getNone() {
+        return none;
+    }
+
+    public void setNone(List<String> none) {
+        this.none = none;
+    }
+
+    public String getDisplayname() {
+        return displayname;
+    }
+
+    public void setDisplayname(String displayname) {
+        this.displayname = displayname;
     }
 }

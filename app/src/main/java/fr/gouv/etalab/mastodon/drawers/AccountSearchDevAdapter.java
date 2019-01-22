@@ -144,7 +144,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
             public void onClick(View v) {
                 Intent intent = new Intent(context, ShowAccountActivity.class);
                 Bundle b = new Bundle();
-                b.putString("accountId", account.getId());
+                b.putParcelable("account", account);
                 intent.putExtras(b);
                 context.startActivity(intent);
             }

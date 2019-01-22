@@ -13,6 +13,7 @@ package fr.gouv.etalab.mastodon.client;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,7 +22,9 @@ import android.text.Html;
 import android.text.SpannableString;
 
 import com.google.common.io.ByteStreams;
+
 import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -49,7 +52,9 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.net.ssl.HttpsURLConnection;
+
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
@@ -410,6 +415,50 @@ public class HttpsConnection {
         }
 
     }
+
+    public String postMisskey(String urlConnection, int timeout, JSONObject paramaters, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
+        URL url = new URL(urlConnection);
+        byte[] postDataBytes = paramaters.toString().getBytes("UTF-8");
+
+        if (proxy != null)
+            httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
+        else
+            httpsURLConnection = (HttpsURLConnection) url.openConnection();
+        httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+        httpsURLConnection.setConnectTimeout(timeout * 1000);
+        httpsURLConnection.setDoOutput(true);
+        httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+        httpsURLConnection.setRequestMethod("POST");
+        if (token != null)
+            httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+        httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+
+
+        httpsURLConnection.getOutputStream().write(postDataBytes);
+        String response;
+        if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+            getSinceMaxId();
+            response = converToString(httpsURLConnection.getInputStream());
+        } else {
+            String error = null;
+            if( httpsURLConnection.getErrorStream() != null) {
+                InputStream stream = httpsURLConnection.getErrorStream();
+                if (stream == null) {
+                    stream = httpsURLConnection.getInputStream();
+                }
+                try (Scanner scanner = new Scanner(stream)) {
+                    scanner.useDelimiter("\\Z");
+                    error = scanner.next();
+                }catch (Exception e){e.printStackTrace();}
+            }
+            int responseCode = httpsURLConnection.getResponseCode();
+            throw new HttpsConnectionException(responseCode, error);
+        }
+        getSinceMaxId();
+        httpsURLConnection.getInputStream().close();
+        return response;
+    }
+
 
     /***
      * Download method which works for http and https connections
@@ -1511,7 +1560,6 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
 
             httpsURLConnection.getOutputStream().write(postDataBytes);
-
             if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
                 getSinceMaxId();
                 httpsURLConnection.getInputStream().close();

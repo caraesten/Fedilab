@@ -26,6 +26,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
     <application
         android:name=".activities.MainApplication"
@@ -42,6 +43,7 @@
         <service
             android:name=".services.LiveNotificationService"
             android:exported="false"/>
+
         <service android:name=".services.BackupStatusService"
             android:exported="false"/>
         <service android:name=".services.BackupStatusInDataBaseService"
@@ -59,6 +61,9 @@
                 <action android:name="StopLiveNotificationReceiver" />
             </intent-filter>
         </receiver>
+        <service
+            android:name=".services.StreamingHomeTimelineService"
+            android:exported="false"/>
         <service
             android:name=".services.StreamingFederatedTimelineService"
             android:exported="false"/>
@@ -178,6 +183,11 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             />
+        <activity android:name=".activities.LanguageActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            />
         <activity android:name=".activities.AboutActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"
@@ -224,6 +234,16 @@
         <activity android:name=".activities.TagCacheActivity"
             android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
             android:excludeFromRecents="true"
+            />
+        <activity android:name=".activities.PeertubeUploadActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            />
+        <activity android:name=".activities.PeertubeEditUploadActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
             />
         <provider
             android:name="android.support.v4.content.FileProvider"

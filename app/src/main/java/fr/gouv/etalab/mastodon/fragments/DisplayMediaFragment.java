@@ -90,7 +90,7 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         mainLoader.setVisibility(View.VISIBLE);
         nextElementLoader.setVisibility(View.GONE);
         if (bundle != null) {
-            targetedId = bundle.getString("targetedId", null);
+            targetedId = bundle.getString("targetedid", null);
         }
 
         attachments = new ArrayList<>();
@@ -170,8 +170,11 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
         //Discards 404 - error which can often happen due to toots which have been deleted
-        if( apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 ){
-            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+        if(apiResponse == null || apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404 ){
+            if( apiResponse != null && apiResponse.getError() != null && apiResponse.getError().getError() != null)
+                Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            else
+                Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             flag_loading = false;
             return;
         }

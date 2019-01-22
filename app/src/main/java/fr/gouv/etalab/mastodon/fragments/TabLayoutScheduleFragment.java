@@ -43,7 +43,8 @@ public class TabLayoutScheduleFragment extends Fragment {
         View inflatedView = inflater.inflate(R.layout.tablayout_toots, container, false);
 
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots_server)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots_client)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.reblog)));
         final ViewPager viewPager = inflatedView.findViewById(R.id.viewpager);
         viewPager.setAdapter(new PagerAdapter
@@ -87,10 +88,16 @@ public class TabLayoutScheduleFragment extends Fragment {
                 case 0:
                     DisplayScheduledTootsFragment displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.TOOT);
+                    bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.SERVER);
                     displayScheduledTootsFragment.setArguments(bundle);
                     return displayScheduledTootsFragment;
                 case 1:
+                    displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
+                    bundle = new Bundle();
+                    bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.TOOT);
+                    displayScheduledTootsFragment.setArguments(bundle);
+                    return displayScheduledTootsFragment;
+                case 2:
                     displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
                     bundle = new Bundle();
                     bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.BOOST);

@@ -19,18 +19,22 @@ import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import android.support.v4.content.ContextCompat;
 
 import com.evernote.android.job.JobManager;
 import com.franmontiel.localechanger.LocaleChanger;
+
+import net.gotev.uploadservice.UploadService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
+import fr.gouv.etalab.mastodon.BuildConfig;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.jobs.ApplicationJob;
-import fr.gouv.etalab.mastodon.jobs.HomeTimelineSyncJob;
 import fr.gouv.etalab.mastodon.jobs.NotificationsSyncJob;
 
 /**
@@ -47,25 +51,37 @@ public class MainApplication extends MultiDexApplication {
         super.onCreate();
         JobManager.create(this).addJobCreator(new ApplicationJob());
         NotificationsSyncJob.schedule(false);
-        HomeTimelineSyncJob.schedule(false);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         try {
             List<Locale> SUPPORTED_LOCALES = new ArrayList<>();
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-            String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, Helper.getDefaultLocale());
-            Locale defaultLocale;
-            if( defaultLocaleString.equals("zh-CN"))
-                defaultLocale = Locale.SIMPLIFIED_CHINESE;
-            else if( defaultLocaleString.equals("zh-TW"))
-                defaultLocale = Locale.TRADITIONAL_CHINESE;
-            else
-                defaultLocale = new Locale(defaultLocaleString);
-            SUPPORTED_LOCALES.add(defaultLocale);
+            String defaultLocaleString = sharedpreferences.getString(Helper.SET_DEFAULT_LOCALE_NEW, null);
+            if( defaultLocaleString != null){
+                Locale defaultLocale;
+                if( defaultLocaleString.equals("zh-CN"))
+                    defaultLocale = Locale.SIMPLIFIED_CHINESE;
+                else if( defaultLocaleString.equals("zh-TW"))
+                    defaultLocale = Locale.TRADITIONAL_CHINESE;
+                else
+                    defaultLocale = new Locale(defaultLocaleString);
+                SUPPORTED_LOCALES.add(defaultLocale);
+            }else {
+                SUPPORTED_LOCALES.add(Locale.getDefault());
+            }
             LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
         }catch (Exception ignored){ignored.printStackTrace();}
-        Toasty.Config.getInstance().apply();
-    }
+        //Initialize upload service
+        UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
+        Toasty.Config.getInstance()
+                .setErrorColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
+                .setInfoColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
+                .setSuccessColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
+                .setWarningColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_background))
+                .setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.toasty_text))
+                .apply();
+                    Toasty.Config.getInstance().apply();
+                }
 
 
     @Override

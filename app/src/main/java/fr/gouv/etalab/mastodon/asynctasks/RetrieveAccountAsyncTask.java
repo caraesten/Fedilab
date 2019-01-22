@@ -19,9 +19,12 @@ import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
 
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountInterface;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.PeertubeAPI;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountInterface;
 
 
 /**
@@ -35,7 +38,7 @@ public class RetrieveAccountAsyncTask extends AsyncTask<Void, Void, Void> {
     private String targetedId;
     private Account account;
     private OnRetrieveAccountInterface listener;
-    private API api;
+    private Error error;
     private WeakReference<Context> contextReference;
 
     public RetrieveAccountAsyncTask(Context context, String targetedId, OnRetrieveAccountInterface onRetrieveAccountInterface){
@@ -46,14 +49,21 @@ public class RetrieveAccountAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        api = new API(this.contextReference.get());
-        account = api.getAccount(targetedId);
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            API api = new API(this.contextReference.get());
+            account = api.getAccount(targetedId);
+            error = api.getError();
+        }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+            PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
+            account = peertubeAPI.getAccount(targetedId);
+            error = peertubeAPI.getError();
+        }
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveAccount(account, api.getError());
+        listener.onRetrieveAccount(account, error);
     }
 
 }

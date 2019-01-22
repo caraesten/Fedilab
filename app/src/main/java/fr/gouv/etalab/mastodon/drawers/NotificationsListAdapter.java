@@ -159,6 +159,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             style = R.style.Dialog;
         }
         Drawable imgH = null;
+        holder.status_date.setVisibility(View.VISIBLE);
         switch (type){
             case "mention":
                 holder.status_action_container.setVisibility(View.VISIBLE);
@@ -222,6 +223,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 break;
             case "follow":
                 holder.status_action_container.setVisibility(View.GONE);
+                holder.status_date.setVisibility(View.GONE);
                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
                     typeString = String.format("%s %s", Helper.shortnameToUnicode(notification.getAccount().getDisplay_name(), true),context.getString(R.string.notif_follow));
                 else
@@ -253,10 +255,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
         if( notification.getAccount().getdisplayNameSpan() == null) {
             holder.notification_type.setText(typeString);
+            notification.getAccount().setStored_displayname(notification.getAccount().getDisplay_name());
             notification.getAccount().setDisplay_name(typeString);
         }else
             holder.notification_type.setText(notification.getAccount().getdisplayNameSpan(), TextView.BufferType.SPANNABLE);
-        notification.getAccount().makeEmojisAccount(context, NotificationsListAdapter.this, notification.getAccount());
+        notification.getAccount().makeAccountNameEmoji(context, NotificationsListAdapter.this, notification.getAccount());
         if( imgH != null) {
             holder.notification_type.setCompoundDrawablePadding((int)Helper.convertDpToPixel(5, context));
             imgH.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
@@ -338,7 +341,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             if( !status.isClickable())
                 Status.transform(context, status);
             if( !status.isEmojiFound())
-                Status.makeEmojis(context, NotificationsListAdapter.this, status);
+                Notification.makeEmojis(context, NotificationsListAdapter.this, notification);
             holder.notification_status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
             holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
@@ -642,7 +645,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             public void onClick(View v) {
                 Intent intent = new Intent(context, ShowAccountActivity.class);
                 Bundle b = new Bundle();
-                b.putString("accountId", notification.getAccount().getId());
+                notification.getAccount().setDisplay_name(notification.getAccount().getStored_displayname());
+                b.putParcelable("account", notification.getAccount());
                 intent.putExtras(b);
                 context.startActivity(intent);
             }
@@ -851,6 +855,39 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
     }
 
+
+    public void notifyNotificationWithActionChanged(API.StatusAction statusAction, Status status){
+        for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
+            if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getType().toLowerCase().equals("mention") && notificationsListAdapter.getItemAt(i).getStatus() != null && notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
+                try {
+                    if( notifications.get(i).getStatus() != null){
+                        int favCount = notifications.get(i).getStatus().getFavourites_count();
+                        int boostCount = notifications.get(i).getStatus().getReblogs_count();
+                        if( statusAction == API.StatusAction.REBLOG)
+                            boostCount++;
+                        else if( statusAction == API.StatusAction.UNREBLOG)
+                            boostCount--;
+                        else if( statusAction == API.StatusAction.FAVOURITE)
+                            favCount++;
+                        else if( statusAction == API.StatusAction.UNFAVOURITE)
+                            favCount--;
+                        if( boostCount < 0 )
+                            boostCount = 0;
+                        if( favCount < 0 )
+                            favCount = 0;
+                        notifications.get(i).getStatus().setFavourited(status.isFavourited());
+                        notifications.get(i).getStatus().setFavourites_count(favCount);
+                        notifications.get(i).getStatus().setReblogged(status.isReblogged());
+                        notifications.get(i).getStatus().setReblogs_count(boostCount);
+                        break;
+                    }
+                    notificationsListAdapter.notifyItemChanged(i);
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    }
+
     @Override
     public long getItemId(int position) {
         return position;
@@ -919,56 +956,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         List<Notification> notificationsToRemove = new ArrayList<>();
         if( statusAction == API.StatusAction.MUTE || statusAction == API.StatusAction.BLOCK){
             for(Notification notification: notifications){
-                if( notification.getType().equals("mention") && notification.getAccount().getId().equals(targetedId))
+                if( notification.getType().toLowerCase().equals("mention") && notification.getAccount().getId().equals(targetedId))
                     notificationsToRemove.add(notification);
             }
             notifications.removeAll(notificationsToRemove);
             notificationsListAdapter.notifyDataSetChanged();
-        }
-        if( targetedId != null ) {
-            if (statusAction == API.StatusAction.REBLOG) {
-                int position = 0;
-                for (Notification notification : notifications) {
-                    if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
-                        notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() + 1);
-                        notificationsListAdapter.notifyItemChanged(position);
-                        break;
-                    }
-
-                }
-            } else if (statusAction == API.StatusAction.UNREBLOG) {
-                int position = 0;
-                for (Notification notification : notifications) {
-                    if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
-                        if (notification.getStatus().getReblogs_count() - 1 >= 0)
-                            notification.getStatus().setReblogs_count(notification.getStatus().getReblogs_count() - 1);
-                        notificationsListAdapter.notifyItemChanged(position);
-                        break;
-                    }
-                    position++;
-                }
-            } else if (statusAction == API.StatusAction.FAVOURITE) {
-                int position = 0;
-                for (Notification notification : notifications) {
-                    if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
-                        notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() + 1);
-                        notificationsListAdapter.notifyItemChanged(position);
-                        break;
-                    }
-                    position++;
-                }
-            } else if (statusAction == API.StatusAction.UNFAVOURITE) {
-                int position = 0;
-                for (Notification notification : notifications) {
-                    if (notification.getStatus() != null && notification.getStatus().getId().equals(targetedId)) {
-                        if (notification.getStatus().getFavourites_count() - 1 >= 0)
-                            notification.getStatus().setFavourites_count(notification.getStatus().getFavourites_count() - 1);
-                        notificationsListAdapter.notifyItemChanged(position);
-                        break;
-                    }
-                    position++;
-                }
-            }
         }
     }
 
@@ -1031,25 +1023,25 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 ImageView imageView;
                 if( i == 0) {
                     imageView = holder.status_prev1;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().toLowerCase().equals("image"))
                         holder.status_prev1_play.setVisibility(View.GONE);
                     else
                         holder.status_prev1_play.setVisibility(View.VISIBLE);
                 }else if( i == 1) {
                     imageView = holder.status_prev2;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().toLowerCase().equals("image"))
                         holder.status_prev2_play.setVisibility(View.GONE);
                     else
                         holder.status_prev2_play.setVisibility(View.VISIBLE);
                 }else if(i == 2) {
                     imageView = holder.status_prev3;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().toLowerCase().equals("image"))
                         holder.status_prev3_play.setVisibility(View.GONE);
                     else
                         holder.status_prev3_play.setVisibility(View.VISIBLE);
                 }else {
                     imageView = holder.status_prev4;
-                    if( attachment.getType().equals("image"))
+                    if( attachment.getType().toLowerCase().equals("image"))
                         holder.status_prev4_play.setVisibility(View.GONE);
                     else
                         holder.status_prev4_play.setVisibility(View.VISIBLE);
@@ -1085,18 +1077,14 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
     @Override
     public void onRetrieveEmoji(Status status, boolean fromTranslation) {
-        if( !status.isEmojiFound()) {
-            for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
-                if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getStatus() != null &&  notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
-                    if( notificationsListAdapter.getItemAt(i).getStatus() != null) {
-                        notificationsListAdapter.getItemAt(i).getStatus().setEmojiFound(true);
-                        try {
-                            notificationsListAdapter.notifyItemChanged(i);
-                        }catch (Exception ignored){}
-                    }
-                }
-            }
 
+    }
+
+    @Override
+    public void onRetrieveEmoji(Notification notification) {
+        if( notification != null && notification.getStatus() != null) {
+            notification.getStatus().setEmojiFound(true);
+            notifyNotificationChanged(notification);
         }
     }
 

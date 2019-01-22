@@ -13,11 +13,18 @@
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.asynctasks;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
 import java.lang.ref.WeakReference;
+
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.PeertubeAPI;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
 
 
@@ -49,8 +56,20 @@ public class RetrievePeertubeSingleAsyncTask extends AsyncTask<Void, Void, Void>
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api = new API(this.contextReference.get());
-        apiResponse = api.getSinglePeertube(this.instanceName, videoId);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            API api = new API(this.contextReference.get());
+            apiResponse = api.getSinglePeertube(this.instanceName, videoId);
+        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
+            SharedPreferences sharedpreferences = contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            apiResponse = peertubeAPI.getSinglePeertube(this.instanceName, videoId, token);
+            if (apiResponse.getPeertubes() != null && apiResponse.getPeertubes().size() > 0 &&  apiResponse.getPeertubes().get(0) != null) {
+                String rate = new PeertubeAPI(this.contextReference.get()).getRating(videoId);
+                if( rate != null)
+                    apiResponse.getPeertubes().get(0).setMyRating(rate);
+            }
+        }
         return null;
     }
 

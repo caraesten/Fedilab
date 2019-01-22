@@ -723,7 +723,6 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="modify">Bearbeiten</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
         <item>Webansicht</item>
     </string-array>
 </resources>

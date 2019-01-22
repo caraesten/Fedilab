@@ -16,12 +16,15 @@ package fr.gouv.etalab.mastodon.activities;
 
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,6 +44,8 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveContextAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Context;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -72,6 +77,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
     private List<Status> statuses;
     private StatusListAdapter statusListAdapter;
     private boolean expanded;
+    private BroadcastReceiver receive_action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +115,26 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
         }
         if( detailsStatus == null || detailsStatus.getId() == null)
             finish();
+
+
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+
+            if( receive_action != null)
+                LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(receive_action);
+            receive_action = new BroadcastReceiver() {
+                @Override
+                public void onReceive(android.content.Context context, Intent intent) {
+                    Bundle b = intent.getExtras();
+                    assert b != null;
+                    Status status = b.getParcelable("status");
+                    API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
+                    if( status != null) {
+                        statusListAdapter.notifyStatusWithActionChanged(statusAction, status);
+                    }
+                }
+            };
+            LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
+        }
 
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -198,13 +224,11 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
 
         swipeRefreshLayout = findViewById(R.id.swipeContainer);
         boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
-        int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-        int positionSpinnerTrans = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
         if( initialStatus != null)
             statuses.add(initialStatus);
         else
             statuses.add(detailsStatus);
-        statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, 0, null, isOnWifi, behaviorWithAttachments, positionSpinnerTrans, statuses);
+        statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, 0, null, isOnWifi, statuses);
 
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
@@ -271,6 +295,12 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if( receive_action != null)
+            LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(receive_action);
+    }
 
     @Override
     public void onRetrieveContext(Context context, Error error) {

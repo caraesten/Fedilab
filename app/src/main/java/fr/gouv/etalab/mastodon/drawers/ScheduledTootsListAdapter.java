@@ -20,6 +20,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -43,16 +44,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
+import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
+import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.fragments.DisplayScheduledTootsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.jobs.ApplicationJob;
 import fr.gouv.etalab.mastodon.jobs.ScheduledBoostsSyncJob;
 import fr.gouv.etalab.mastodon.jobs.ScheduledTootsSyncJob;
@@ -67,7 +73,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
  * Created by Thomas on 16/07/2017.
  * Adapter for scheduled toots
  */
-public class ScheduledTootsListAdapter extends BaseAdapter  {
+public class ScheduledTootsListAdapter extends BaseAdapter implements OnPostActionInterface {
 
     private Context context;
     private List<StoredStatus> storedStatuses;
@@ -93,7 +99,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
     }
 
     @Override
-    public Object getItem(int position) {
+    public StoredStatus getItem(int position) {
         return storedStatuses.get(position);
     }
 
@@ -107,6 +113,7 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         final StoredStatus storedStatus = storedStatuses.get(position);
+        final Status status = storedStatuses.get(position).getStatus();
         final ViewHolder holder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.drawer_scheduled_toot, parent, false);
@@ -147,8 +154,6 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
             changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.action_light);
             changeDrawableColor(context, R.drawable.ic_mail_outline,R.color.action_light);
         }
-
-        final Status status = storedStatus.getStatus();
 
         switch (status.getVisibility()) {
             case "public":
@@ -196,18 +201,27 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if( type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT)
-                                    new StatusStoredDAO(context, db).remove(storedStatus.getId());
-                                else if (type == DisplayScheduledTootsFragment.typeOfSchedule.BOOST)
-                                    new BoostScheduleDAO(context, db).remove(storedStatus.getId());
-                                storedStatuses.remove(storedStatus);
-                                scheduledTootsListAdapter.notifyDataSetChanged();
-                                if( storedStatuses.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
+                                if( type != DisplayScheduledTootsFragment.typeOfSchedule.SERVER) {
+                                    if (type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT)
+                                        new StatusStoredDAO(context, db).remove(storedStatus.getId());
+                                    else if (type == DisplayScheduledTootsFragment.typeOfSchedule.BOOST)
+                                        new BoostScheduleDAO(context, db).remove(storedStatus.getId());
+                                    storedStatuses.remove(storedStatus);
+                                    scheduledTootsListAdapter.notifyDataSetChanged();
+                                    if (storedStatuses.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
                                         textviewNoAction.setVisibility(View.VISIBLE);
-                                try {
-                                    //Cancel the job
-                                    ApplicationJob.cancelJob(storedStatus.getJobId());
-                                }catch (Exception ignored){}
+                                    try {
+                                        //Cancel the job
+                                        ApplicationJob.cancelJob(storedStatus.getJobId());
+                                    } catch (Exception ignored) {
+                                    }
+                                }else{
+                                    new PostActionAsyncTask(context, API.StatusAction.DELETESCHEDULED, storedStatus, ScheduledTootsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                    storedStatuses.remove(storedStatus);
+                                    scheduledTootsListAdapter.notifyDataSetChanged();
+                                    if (storedStatuses.size() == 0 && textviewNoAction != null && textviewNoAction.getVisibility() == View.GONE)
+                                        textviewNoAction.setVisibility(View.VISIBLE);
+                                }
                                 dialog.dismiss();
                             }
                         })
@@ -222,10 +236,12 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
             }
         });
 
-        if (storedStatus.getJobId() > 0) {
-            holder.scheduled_toot_failed.setVisibility(View.GONE);
-        }else {
-            holder.scheduled_toot_failed.setVisibility(View.VISIBLE);
+        if( type != DisplayScheduledTootsFragment.typeOfSchedule.SERVER) {
+            if (storedStatus.getJobId() > 0) {
+                holder.scheduled_toot_failed.setVisibility(View.GONE);
+            } else {
+                holder.scheduled_toot_failed.setVisibility(View.VISIBLE);
+            }
         }
         holder.scheduled_toot_media_count.setText(context.getString(R.string.media_count, status.getMedia_attachments().size()));
         holder.scheduled_toot_date_creation.setText(Helper.dateToString(storedStatus.getCreation_date()));
@@ -320,28 +336,38 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
                             Toasty.error(context, context.getString(R.string.toot_scheduled_date), Toast.LENGTH_LONG).show();
                         }else {
                             //Schedules the toot to the new date
-                            try {
-                                //Removes the job
-                                ApplicationJob.cancelJob(storedStatus.getJobId());
-                                //Replace it by the new one
-                                StoredStatus storedStatusnew = null;
-                                if( type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT) {
-                                    ScheduledTootsSyncJob.schedule(context, storedStatus.getId(), time);
-                                    storedStatusnew = new StatusStoredDAO(context, db).getStatus(storedStatus.getId());
-                                }else if(type == DisplayScheduledTootsFragment.typeOfSchedule.BOOST){
-                                    ScheduledBoostsSyncJob.scheduleUpdate(context, storedStatus.getId(), time);
-                                    storedStatusnew = new BoostScheduleDAO(context, db).getStatus(storedStatus.getId());
+                            if( type != DisplayScheduledTootsFragment.typeOfSchedule.SERVER) {
+                                try {
+                                    //Removes the job
+                                    ApplicationJob.cancelJob(storedStatus.getJobId());
+                                    //Replace it by the new one
+                                    StoredStatus storedStatusnew = null;
+                                    if (type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT) {
+                                        ScheduledTootsSyncJob.schedule(context, storedStatus.getId(), time);
+                                        storedStatusnew = new StatusStoredDAO(context, db).getStatus(storedStatus.getId());
+                                    } else if (type == DisplayScheduledTootsFragment.typeOfSchedule.BOOST) {
+                                        ScheduledBoostsSyncJob.scheduleUpdate(context, storedStatus.getId(), time);
+                                        storedStatusnew = new BoostScheduleDAO(context, db).getStatus(storedStatus.getId());
+                                    }
+                                    //Date displayed is changed
+                                    assert storedStatusnew != null;
+                                    storedStatus.setScheduled_date(storedStatusnew.getScheduled_date());
+                                    scheduledTootsListAdapter.notifyDataSetChanged();
+                                    //Notifiy all is ok
+                                    if (type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT)
+                                        Toasty.success(context, context.getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
+                                    else
+                                        Toasty.success(context, context.getString(R.string.boost_scheduled), Toast.LENGTH_LONG).show();
+                                } catch (Exception ignored) {
                                 }
-                                //Date displayed is changed
-                                assert storedStatusnew != null;
-                                storedStatus.setScheduled_date(storedStatusnew.getScheduled_date());
-                                scheduledTootsListAdapter.notifyDataSetChanged();
-                                //Notifiy all is ok
-                                if( type == DisplayScheduledTootsFragment.typeOfSchedule.TOOT)
-                                    Toasty.success(context,context.getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
-                                else
-                                    Toasty.success(context,context.getString(R.string.boost_scheduled), Toast.LENGTH_LONG).show();
-                            }catch (Exception ignored){}
+                            }else{
+                                int offset = TimeZone.getDefault().getRawOffset();
+                                calendar.add(Calendar.MILLISECOND, -offset);
+                                final String date = Helper.dateToString(new Date(calendar.getTimeInMillis()));
+                                storedStatus.getStatus().setScheduled_at(date);
+                                new PostActionAsyncTask(context, API.StatusAction.UPDATESERVERSCHEDULE, storedStatus, ScheduledTootsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                Toasty.success(context, context.getString(R.string.boost_scheduled), Toast.LENGTH_LONG).show();
+                            }
                             alertDialog.dismiss();
                         }
                     }
@@ -386,7 +412,25 @@ public class ScheduledTootsListAdapter extends BaseAdapter  {
                     context.startActivity(intentToot);
                 }
             });
+        else if( type == DisplayScheduledTootsFragment.typeOfSchedule.SERVER)
+            holder.scheduled_toot_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentToot = new Intent(context, TootActivity.class);
+                    Bundle b = new Bundle();
+                    if( storedStatus.getStatus().getSpoiler_text().equals("null"))
+                        storedStatus.getStatus().setSpoiler_text("");
+                    b.putParcelable("storedStatus", storedStatus);
+                    intentToot.putExtras(b);
+                    context.startActivity(intentToot);
+                }
+            });
         return convertView;
+    }
+
+    @Override
+    public void onPostAction(int statusCode, API.StatusAction statusAction, String userId, Error error) {
+
     }
 
     private class ViewHolder {

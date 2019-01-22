@@ -57,7 +57,7 @@ public class SettingsNotificationsFragment extends Fragment {
     private int style;
     private static final int ACTIVITY_CHOOSE_SOUND = 412;
     int count = 0;
-
+    int count1 = 0;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
@@ -206,6 +206,48 @@ public class SettingsNotificationsFragment extends Fragment {
                 }, Integer.valueOf(datetime[0]), Integer.valueOf(datetime[1]), true);
                 timePickerDialog.setTitle(context.getString(R.string.settings_hour_end));
                 timePickerDialog.show();
+            }
+        });
+
+
+        final Spinner action_notification = rootView.findViewById(R.id.action_notification);
+        ArrayAdapter<CharSequence> adapterAction = ArrayAdapter.createFromResource(getContext(),
+                R.array.action_notification, android.R.layout.simple_spinner_item);
+        action_notification.setAdapter(adapterAction);
+        int positionNotificationAntion;
+        switch (sharedpreferences.getInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_ACTIVE)){
+            case Helper.ACTION_ACTIVE:
+                positionNotificationAntion = 0;
+                break;
+            case Helper.ACTION_SILENT:
+                positionNotificationAntion = 1;
+                break;
+            default:
+                positionNotificationAntion = 0;
+        }
+        action_notification.setSelection(positionNotificationAntion);
+        action_notification.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count1 > 0 ) {
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                    switch (position) {
+                        case 0:
+                            editor.putInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_ACTIVE);
+                            editor.apply();
+                            break;
+                        case 1:
+                            editor.putInt(Helper.SET_NOTIFICATION_ACTION, Helper.ACTION_SILENT);
+                            editor.apply();
+                            break;
+                    }
+                }
+                count1++;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 

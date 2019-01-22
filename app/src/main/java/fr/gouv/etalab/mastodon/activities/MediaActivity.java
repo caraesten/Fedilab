@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,17 +32,22 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 import com.gw.swipeback.SwipeBackLayout;
 
 import java.io.File;
@@ -77,7 +81,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private RelativeLayout loader;
     private ArrayList<Attachment>  attachments;
     private PhotoView imageView;
-    private VideoView videoView;
+    private SimpleExoPlayerView videoView;
     private float downX;
     private int mediaPosition;
     MediaActivity.actionSwipe currentAction;
@@ -94,7 +98,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private boolean canSwipe;
     private TextView media_description;
     private Attachment attachment;
-
+    SwipeBackLayout mSwipeBackLayout;
     private enum actionSwipe{
         RIGHT_TO_LEFT,
         LEFT_TO_RIGHT,
@@ -112,7 +116,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             setTheme(R.style.TransparentBlack);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media);
-        SwipeBackLayout mSwipeBackLayout = new SwipeBackLayout(MediaActivity.this);
+        mSwipeBackLayout = new SwipeBackLayout(MediaActivity.this);
         mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_BOTTOM);
         mSwipeBackLayout.setMaskAlpha(125);
         mSwipeBackLayout.setSwipeBackFactor(0.5f);
@@ -157,7 +161,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         media_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(attachment.getType().equals("video") || attachment.getType().equals("gifv")) {
+                if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("gifv")) {
                     if( attachment != null ) {
                         progress.setText("0 %");
                         progress.setVisibility(View.VISIBLE);
@@ -236,6 +240,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             @Override
             public void onMatrixChanged(RectF rect) {
                 canSwipe = (imageView.getScale() == 1 );
+                mSwipeBackLayout.isDisabled(imageView.getScale() != 1 );
             }
         });
         pbar_inf = findViewById(R.id.pbar_inf);
@@ -344,9 +349,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         String url = attachment.getUrl();
         finalUrlDownload = url;
         videoView.setVisibility(View.GONE);
-        if( videoView.isPlaying()) {
-            videoView.stopPlayback();
-        }
+
         imageView.setVisibility(View.GONE);
 
         if( attachment.getDescription() != null && !attachment.getDescription().equals("null")){
@@ -368,7 +371,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             attachment.setType(type);
         }
         final String finalUrl = url;
-        switch (type){
+        switch (type.toLowerCase()){
             case "image":
                 pbar_inf.setScaleY(1f);
                 imageView.setVisibility(View.VISIBLE);
@@ -429,37 +432,36 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     Uri uri = Uri.parse(file.getAbsolutePath());
                     videoView.setVisibility(View.VISIBLE);
 
-                    videoView.setVideoURI(uri);
-                    videoView.start();
-                    MediaController mc = new MediaController(MediaActivity.this);
-                    mc.setPadding(0, 0, 0, (int)Helper.convertDpToPixel(25, MediaActivity.this));
-                    videoView.setMediaController(mc);
-                    videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mp) {
-                            loader.setVisibility(View.GONE);
-                            mp.start();
-                            mp.setLooping(true);
-                        }
-                    });
+                    DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
+                            Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
+
+                    ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                            .createMediaSource(uri);
+
+                    SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(MediaActivity.this);
+                    videoView.setPlayer(player);
+                    loader.setVisibility(View.GONE);
+                    player.prepare(videoSource);
+                    player.setPlayWhenReady(true);
                     fileVideo = file;
                     downloadedImage = null;
                 }else{
                     videoView.setVisibility(View.VISIBLE);
                     Uri uri = Uri.parse(url);
-                    videoView.setVideoURI(uri);
-                    videoView.start();
-                    MediaController mc = new MediaController(MediaActivity.this);
-                    mc.setAnchorView(videoView);
-                    videoView.setMediaController(mc);
-                    videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mp) {
-                            mp.start();
-                            mp.setLooping(true);
-                        }
-                    });
-                    videoView.start();
+
+                    videoView.setVisibility(View.VISIBLE);
+
+                    DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
+                            Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
+
+                    ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                            .createMediaSource(uri);
+
+                    SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(MediaActivity.this);
+                    videoView.setPlayer(player);
+                    loader.setVisibility(View.GONE);
+                    player.prepare(videoSource);
+                    player.setPlayWhenReady(true);
                 }
                 break;
         }

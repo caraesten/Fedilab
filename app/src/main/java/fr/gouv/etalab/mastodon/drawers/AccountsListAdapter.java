@@ -16,12 +16,14 @@ package fr.gouv.etalab.mastodon.drawers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.util.Linkify;
@@ -38,9 +40,11 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -92,80 +96,86 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         final Account account = accounts.get(position);
 
 
-        if( action == RetrieveAccountsAsyncTask.Type.BLOCKED)
-            account.setFollowType(Account.followAction.BLOCK);
-        else if( action == RetrieveAccountsAsyncTask.Type.MUTED)
-            account.setFollowType(Account.followAction.MUTE);
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if (action == RetrieveAccountsAsyncTask.Type.BLOCKED)
+                account.setFollowType(Account.followAction.BLOCK);
+            else if (action == RetrieveAccountsAsyncTask.Type.MUTED)
+                account.setFollowType(Account.followAction.MUTE);
 
-        if( action == RetrieveAccountsAsyncTask.Type.CHANNELS)
-            account.setFollowType(Account.followAction.NOT_FOLLOW);
+            if (action == RetrieveAccountsAsyncTask.Type.CHANNELS)
+                account.setFollowType(Account.followAction.NOT_FOLLOW);
+            holder.account_follow.setBackgroundTintList(ColorStateList.valueOf( ContextCompat.getColor(context, R.color.mastodonC4)));
+            if (account.getFollowType() == Account.followAction.NOTHING) {
+                holder.account_follow.hide();
+                holder.account_follow_request.setVisibility(View.GONE);
+                doAction = null;
+            } else if (account.getFollowType() == Account.followAction.REQUEST_SENT) {
+                holder.account_follow.hide();
+                holder.account_follow_request.setVisibility(View.VISIBLE);
+                doAction = null;
+            } else if (account.getFollowType() == Account.followAction.FOLLOW) {
+                holder.account_follow.setBackgroundTintList(ColorStateList.valueOf( ContextCompat.getColor(context, R.color.unfollow)));
+                holder.account_follow.setImageResource(R.drawable.ic_user_times);
+                doAction = API.StatusAction.UNFOLLOW;
+                holder.account_follow.show();
+                holder.account_follow_request.setVisibility(View.GONE);
+            } else if (account.getFollowType() == Account.followAction.NOT_FOLLOW) {
+                holder.account_follow.setImageResource(R.drawable.ic_user_plus);
+                doAction = API.StatusAction.FOLLOW;
+                holder.account_follow.show();
+                holder.account_follow_request.setVisibility(View.GONE);
+            } else if (account.getFollowType() == Account.followAction.BLOCK) {
+                holder.account_follow.setImageResource(R.drawable.ic_lock_open);
+                doAction = API.StatusAction.UNBLOCK;
+                holder.account_follow.show();
+                holder.account_follow_request.setVisibility(View.GONE);
+            } else if (account.getFollowType() == Account.followAction.MUTE) {
 
-        if (account.getFollowType() == Account.followAction.NOTHING){
+                if (account.isMuting_notifications())
+                    holder.account_mute_notification.setImageResource(R.drawable.ic_notifications_active);
+                else
+                    holder.account_mute_notification.setImageResource(R.drawable.ic_notifications_off);
+
+                holder.account_mute_notification.show();
+                holder.account_follow.setImageResource(R.drawable.ic_volume_up);
+                doAction = API.StatusAction.UNMUTE;
+                holder.account_follow.show();
+                holder.account_follow_request.setVisibility(View.GONE);
+                final int positionFinal = position;
+                holder.account_mute_notification.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        account.setMuting_notifications(!account.isMuting_notifications());
+                        new PostActionAsyncTask(context, API.StatusAction.MUTE_NOTIFICATIONS, account.getId(), account.isMuting_notifications(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        accountsListAdapter.notifyItemChanged(positionFinal);
+                    }
+                });
+            }
+
+
+            if (action != RetrieveAccountsAsyncTask.Type.CHANNELS) {
+                holder.account_container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (holder.account_info.getVisibility() == View.VISIBLE)
+                            holder.account_info.setVisibility(View.GONE);
+                        else
+                            holder.account_info.setVisibility(View.VISIBLE);
+                    }
+                });
+            } else {
+                holder.account_container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
+        }else {
             holder.account_follow.hide();
-            holder.account_follow_request.setVisibility(View.GONE);
-            doAction = null;
-        }else if( account.getFollowType() == Account.followAction.REQUEST_SENT){
-            holder.account_follow.hide();
-            holder.account_follow_request.setVisibility(View.VISIBLE);
-            doAction = null;
-        }else if( account.getFollowType() == Account.followAction.FOLLOW){
-            holder.account_follow.setImageResource(R.drawable.ic_user_times);
-            doAction = API.StatusAction.UNFOLLOW;
-            holder.account_follow.show();
-            holder.account_follow_request.setVisibility(View.GONE);
-        }else if( account.getFollowType() == Account.followAction.NOT_FOLLOW){
-            holder.account_follow.setImageResource(R.drawable.ic_user_plus);
-            doAction = API.StatusAction.FOLLOW;
-            holder.account_follow.show();
-            holder.account_follow_request.setVisibility(View.GONE);
-        }else if( account.getFollowType() == Account.followAction.BLOCK){
-            holder.account_follow.setImageResource(R.drawable.ic_lock_open);
-            doAction = API.StatusAction.UNBLOCK;
-            holder.account_follow.show();
-            holder.account_follow_request.setVisibility(View.GONE);
-        }else if( account.getFollowType() == Account.followAction.MUTE){
-
-            if(account.isMuting_notifications())
-                holder.account_mute_notification.setImageResource(R.drawable.ic_notifications_active);
-            else
-                holder.account_mute_notification.setImageResource(R.drawable.ic_notifications_off);
-
-            holder.account_mute_notification.show();
-            holder.account_follow.setImageResource(R.drawable.ic_volume_up);
-            doAction = API.StatusAction.UNMUTE;
-            holder.account_follow.show();
-            holder.account_follow_request.setVisibility(View.GONE);
-            final int positionFinal = position;
-            holder.account_mute_notification.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    account.setMuting_notifications(!account.isMuting_notifications());
-                    new PostActionAsyncTask(context, API.StatusAction.MUTE_NOTIFICATIONS, account.getId(), account.isMuting_notifications(), AccountsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    accountsListAdapter.notifyItemChanged(positionFinal);
-                }
-            });
         }
 
-        if( action != RetrieveAccountsAsyncTask.Type.CHANNELS){
-            holder.account_container.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if( holder.account_info.getVisibility() == View.VISIBLE)
-                        holder.account_info.setVisibility(View.GONE);
-                    else
-                        holder.account_info.setVisibility(View.VISIBLE);
-                }
-            });
-        }else{
-            holder.account_container.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-        }
-
-        account.makeEmojisAccount(context, AccountsListAdapter.this, account);
+        account.makeAccountNameEmoji(context, AccountsListAdapter.this, account);
         if( account.getdisplayNameSpan() == null || account.getdisplayNameSpan().toString().trim().equals("")) {
             if( account.getDisplay_name() != null && !account.getDisplay_name().trim().equals(""))
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
@@ -212,12 +222,17 @@ public class AccountsListAdapter extends RecyclerView.Adapter implements OnPostA
         holder.account_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(action != RetrieveAccountsAsyncTask.Type.CHANNELS) {
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE || action != RetrieveAccountsAsyncTask.Type.CHANNELS) {
                     //Avoid to reopen details about the current account
                     if (targetedId == null || !targetedId.equals(account.getId())) {
                         Intent intent = new Intent(context, ShowAccountActivity.class);
                         Bundle b = new Bundle();
-                        b.putString("accountId", account.getId());
+                        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                            b.putBoolean("peertubeaccount", true);
+                            b.putBoolean("ischannel", true);
+                            b.putString("targetedid", account.getAcct());
+                        }
+                        b.putParcelable("account", account);
                         intent.putExtras(b);
                         context.startActivity(intent);
                     }
