@@ -42,6 +42,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
@@ -440,6 +441,8 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                             .createMediaSource(uri);
 
                     player = ExoPlayerFactory.newSimpleInstance(MediaActivity.this);
+                    if( type.toLowerCase().equals("gifv"))
+                        player.setRepeatMode(Player.REPEAT_MODE_ONE);
                     videoView.setPlayer(player);
                     loader.setVisibility(View.GONE);
                     player.prepare(videoSource);
@@ -459,6 +462,8 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                             .createMediaSource(uri);
 
                     player = ExoPlayerFactory.newSimpleInstance(MediaActivity.this);
+                    if( type.toLowerCase().equals("gifv"))
+                        player.setRepeatMode(Player.REPEAT_MODE_ONE);
                     videoView.setPlayer(player);
                     loader.setVisibility(View.GONE);
                     player.prepare(videoSource);

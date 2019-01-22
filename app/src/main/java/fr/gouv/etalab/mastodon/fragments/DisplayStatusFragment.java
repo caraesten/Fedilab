@@ -869,7 +869,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 artListAdapter.notifyItemRangeInserted(0, safeStatuses.size());
                         }
                     }else {
-                        if( lastReadToot != null && statuses.get(i).getCreated_at().after(lastReadTootDate)) {
+                        if( lastReadTootDate != null && statuses.get(i).getCreated_at().after(lastReadTootDate)) {
                             if( !this.statuses.contains(statuses.get(i)) ) {
                                 statuses.get(i).setNew(true);
                                 MainActivity.countNewStatus++;
@@ -928,7 +928,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             //Put the toot at its place in the list (id desc)
             if( !this.statuses.contains(tmpStatus) ) { //Element not already added
                 //Mark status at new ones when their id is greater than the last read toot id
-                if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadToot != null && tmpStatus.getCreated_at().after(lastReadTootDate) ) {
+                if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadTootDate != null && tmpStatus.getCreated_at().after(lastReadTootDate) ) {
                     tmpStatus.setNew(true);
                     MainActivity.countNewStatus++;
                 }
@@ -941,7 +941,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         //Display the fetch more toot button
         if( tmpStatuses.size()  >= tootPerPage) {
-            if (initialBookMark != null && !fetchMoreButtonDisplayed && tmpStatuses.size() > 0 && tmpStatuses.get(tmpStatuses.size() - 1).getCreated_at().after(initialBookMarkDate)) {
+            if (initialBookMarkDate != null && !fetchMoreButtonDisplayed && tmpStatuses.size() > 0 && tmpStatuses.get(tmpStatuses.size() - 1).getCreated_at().after(initialBookMarkDate)) {
                 tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
                 fetchMoreButtonDisplayed = true;
             }
