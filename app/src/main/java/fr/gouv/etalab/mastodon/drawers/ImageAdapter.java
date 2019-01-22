@@ -32,7 +32,9 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
+import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 
 
 /**
@@ -42,21 +44,21 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 
 public class ImageAdapter extends RecyclerView.Adapter {
     private Context context;
-    private List<Attachment> attachments;
+    private List<Status> statuses;
     private LayoutInflater layoutInflater;
 
-    public ImageAdapter(Context context, List<Attachment> attachments) {
+    public ImageAdapter(Context context, List<Status> statuses) {
         this.context = context;
-        this.attachments = attachments;
+        this.statuses = statuses;
         this.layoutInflater = LayoutInflater.from(this.context);
     }
 
     public int getCount() {
-        return attachments.size();
+        return statuses.size();
     }
 
-    public Attachment getItem(int position) {
-        return attachments.get(position);
+    public Status getItem(int position) {
+        return statuses.get(position);
     }
 
     @NonNull
@@ -67,26 +69,38 @@ public class ImageAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        Attachment attachment = attachments.get(position);
+        Status status = statuses.get(position);
 
         final ImageAdapter.ViewHolder holder = (ImageAdapter.ViewHolder) viewHolder;
 
         if( !((ShowAccountActivity)context).isFinishing())
-            Glide.with(context).load(attachment.getPreview_url()).into(holder.imageView);
+            Glide.with(context).load(status.getArt_attachment().getPreview_url()).into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MediaActivity.class);
                 Bundle b = new Bundle();
                 ArrayList<Attachment> attachmentsTmp = new ArrayList<>();
-                attachmentsTmp.add(attachments.get(position));
+                for(Status status1: statuses){
+                    attachmentsTmp.add(status1.getArt_attachment());
+                }
                 intent.putParcelableArrayListExtra("mediaArray", attachmentsTmp);
                 b.putInt("position", 1);
                 intent.putExtras(b);
                 context.startActivity(intent);
             }
         });
-
+        holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(context, ShowConversationActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable("status", status);
+                intent.putExtras(b);
+                context.startActivity(intent);
+                return false;
+            }
+        });
     }
 
     public long getItemId(int position) {
@@ -95,7 +109,7 @@ public class ImageAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return attachments.size();
+        return statuses.size();
     }
 
 

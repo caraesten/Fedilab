@@ -62,7 +62,7 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
     private boolean showMediaOnly, showPinned, showReply;
     boolean firstTootsLoaded;
     private SharedPreferences sharedpreferences;
-    private ArrayList<Attachment> attachments;
+    private ArrayList<Status> statuses;
     private ImageAdapter gridAdaper;
 
     public DisplayMediaFragment(){
@@ -93,8 +93,8 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
             targetedId = bundle.getString("targetedid", null);
         }
 
-        attachments = new ArrayList<>();
-        gridAdaper = new ImageAdapter(context, attachments);
+        statuses = new ArrayList<>();
+        gridAdaper = new ImageAdapter(context, statuses);
         RecyclerView gridview = rootView.findViewById(R.id.gridview_media);
 
         gridview.setAdapter(gridAdaper);
@@ -180,21 +180,33 @@ public class DisplayMediaFragment extends Fragment implements OnRetrieveFeedsInt
         }
         List<Status> statuses = apiResponse.getStatuses();
         max_id = apiResponse.getMax_id();
-        if( attachments == null)
-            attachments = new ArrayList<>();
-        int previousPosition = this.attachments.size();
+        if( this.statuses == null)
+            this.statuses = new ArrayList<>();
+        int previousPosition = this.statuses.size();
         flag_loading = (max_id == null );
         if( firstLoad && (statuses == null || statuses.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
-        if( statuses != null && statuses.size() > 0) {
-            for(Status status: statuses){
-                if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0) {
-                    attachments.addAll(status.getMedia_attachments());
-                    gridAdaper.notifyItemRangeInserted(previousPosition, attachments.size());
+
+        List<Status> convertedStatuses = new ArrayList<>();
+        if( apiResponse.getStatuses() != null && apiResponse.getStatuses().size() > 0){
+            for( Status status: apiResponse.getStatuses()){
+                if( status.getMedia_attachments() != null ) {
+                    String statusSerialized = Helper.statusToStringStorage(status);
+                    for (Attachment attachment : status.getMedia_attachments()) {
+                        Status newStatus = Helper.restoreStatusFromString(statusSerialized);
+                        if (newStatus == null)
+                            break;
+                        newStatus.setArt_attachment(attachment);
+                        convertedStatuses.add(newStatus);
+                    }
                 }
             }
+        }
+        if(  convertedStatuses.size() > 0) {
+            this.statuses.addAll(convertedStatuses);
+            gridAdaper.notifyItemRangeInserted(previousPosition, this.statuses.size());
         }
         firstLoad = false;
     }
