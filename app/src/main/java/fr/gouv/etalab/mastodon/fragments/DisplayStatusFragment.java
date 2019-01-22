@@ -40,6 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -123,6 +124,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     private boolean ownVideos;
     private BroadcastReceiver receive_action;
     private BroadcastReceiver  receive_data;
+    private Date lastReadTootDate, initialBookMarkDate, updatedBookMarkDate;
     public DisplayStatusFragment(){
     }
 
@@ -189,7 +191,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         //For Home timeline, fetch stored values for bookmark and last read toot
         if( type == RetrieveFeedsAsyncTask.Type.HOME) {
             initialBookMark = sharedpreferences.getString(Helper.BOOKMARK_ID + userId + instance, null);
+            initialBookMarkDate =  Helper.stringToDate(context, sharedpreferences.getString(Helper.BOOKMARK_DATE + userId + instance, null));
             lastReadToot = sharedpreferences.getString(Helper.LAST_READ_TOOT_ID + userId + instance, null);
+            lastReadTootDate  = Helper.stringToDate(context, sharedpreferences.getString(Helper.LAST_READ_TOOT_DATE + userId + instance, null));
         }
         if( instanceType.equals("MASTODON") ||  instanceType.equals("MISSKEY") ){
             if( type == RetrieveFeedsAsyncTask.Type.TAG && tag != null) {
@@ -296,10 +300,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         }
                     }
                     if(type == RetrieveFeedsAsyncTask.Type.HOME && statuses != null && statuses.size() > firstVisibleItem && firstVisibleItem >= 0) {
-                        Long bookmarkL = Long.parseLong(statuses.get(firstVisibleItem).getId()) + 1;
-                        updatedBookMark = String.valueOf(bookmarkL);
-                        if( lastReadToot == null || bookmarkL > Long.parseLong(lastReadToot)) //Last read toot, only incremented if the id of the toot is greater than the recorded one
-                            lastReadToot = String.valueOf(bookmarkL);
+                        Date bookmarkL = statuses.get(firstVisibleItem).getCreated_at();
+                        updatedBookMark = statuses.get(firstVisibleItem).getId();
+                        updatedBookMarkDate = statuses.get(firstVisibleItem).getCreated_at();
+                        if( lastReadTootDate == null || bookmarkL.after(lastReadTootDate) ) //Last read toot, only incremented if the id of the toot is greater than the recorded one
+                            lastReadTootDate = bookmarkL;
                     }
                 }
             });
@@ -380,6 +385,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             SharedPreferences.Editor editor = sharedpreferences.edit();
             if(updatedBookMark != null)
                 editor.putString(Helper.BOOKMARK_ID + userId + instance, updatedBookMark);
+            if(updatedBookMarkDate != null)
+                editor.putString(Helper.BOOKMARK_DATE + userId + instance, Helper.dateToString(updatedBookMarkDate));
             if( lastReadToot != null)
                 editor.putString(Helper.LAST_READ_TOOT_ID + userId + instance, lastReadToot);
             if( lastReadToot != null || updatedBookMark != null)
@@ -547,7 +554,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if (context == null)
             return;
         if( status.getId() != null && statuses != null && statuses.size() > 0 && statuses.get(0)!= null
-                && Long.parseLong(status.getId()) > Long.parseLong(statuses.get(0).getId())) {
+                && status.getCreated_at().after(statuses.get(0).getCreated_at()) ) {
             List<Status> tempTootResult = new ArrayList();
             tempTootResult.add(status);
             if( tempTootResult.size() > 0)
@@ -842,7 +849,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( this.statuses != null) {
                     if( type != RetrieveFeedsAsyncTask.Type.HOME){
                         if( tagTimeline == null || !tagTimeline.isART() || (tagTimeline.isART() && tagTimeline.isNSFW())) {
-                            if (this.statuses.size() == 0 || Long.parseLong(statuses.get(i).getId()) > Long.parseLong(this.statuses.get(0).getId())) {
+                            if (this.statuses.size() == 0 || statuses.get(i).getCreated_at().after(this.statuses.get(0).getCreated_at())) {
                                 inserted++;
                                 this.statuses.add(0, statuses.get(i));
 
@@ -862,7 +869,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                                 artListAdapter.notifyItemRangeInserted(0, safeStatuses.size());
                         }
                     }else {
-                        if( lastReadToot != null && Long.parseLong(statuses.get(i).getId()) > Long.parseLong(lastReadToot)) {
+                        if( lastReadToot != null && statuses.get(i).getCreated_at().after(lastReadTootDate)) {
                             if( !this.statuses.contains(statuses.get(i)) ) {
                                 statuses.get(i).setNew(true);
                                 MainActivity.countNewStatus++;
@@ -913,7 +920,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             return;
         //Find the position of toots between those already present
         int position = 0;
-        while (position < this.statuses.size() && Long.parseLong(statuses.get(0).getId()) < Long.parseLong(this.statuses.get(position).getId())) {
+        while (position < this.statuses.size() && statuses.get(0).getCreated_at().before(this.statuses.get(position).getCreated_at())) {
             position++;
         }
         ArrayList<Status> tmpStatuses = new ArrayList<>();
@@ -921,7 +928,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             //Put the toot at its place in the list (id desc)
             if( !this.statuses.contains(tmpStatus) ) { //Element not already added
                 //Mark status at new ones when their id is greater than the last read toot id
-                if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadToot != null && Long.parseLong(tmpStatus.getId()) > Long.parseLong(lastReadToot)) {
+                if (type == RetrieveFeedsAsyncTask.Type.HOME && lastReadToot != null && tmpStatus.getCreated_at().after(lastReadTootDate) ) {
                     tmpStatus.setNew(true);
                     MainActivity.countNewStatus++;
                 }
@@ -934,7 +941,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         int tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         //Display the fetch more toot button
         if( tmpStatuses.size()  >= tootPerPage) {
-            if (initialBookMark != null && !fetchMoreButtonDisplayed && tmpStatuses.size() > 0 && Long.parseLong(tmpStatuses.get(tmpStatuses.size() - 1).getId()) > Long.parseLong(initialBookMark)) {
+            if (initialBookMark != null && !fetchMoreButtonDisplayed && tmpStatuses.size() > 0 && tmpStatuses.get(tmpStatuses.size() - 1).getCreated_at().after(initialBookMarkDate)) {
                 tmpStatuses.get(tmpStatuses.size() - 1).setFetchMore(true);
                 fetchMoreButtonDisplayed = true;
             }
