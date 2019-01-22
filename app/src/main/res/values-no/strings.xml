@@ -713,15 +713,15 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="leave_a_comment">Legg igjen en kommentar</string>
     <string name="share">Del</string>
     <string name="my_pictures">Mine bilder</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
-    <string name="server_schedule">From server</string>
+    <string name="choose_schedule">Velg en tidsplan-modus</string>
+    <string name="device_schedule">Fra enhet</string>
+    <string name="server_schedule">Fra server</string>
     <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
-    <string name="modify">Modify</string>
+    <string name="toots_client">Toots (enhet)</string>
+    <string name="modify">Endre</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-
+        <item>Torrent</item>
         <item>Webvisning</item>
     </string-array>
 </resources>
