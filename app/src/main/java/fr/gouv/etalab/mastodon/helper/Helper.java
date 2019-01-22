@@ -228,7 +228,9 @@ public class Helper {
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";
     public static final String BOOKMARK_ID = "bookmark_id";
+    public static final String BOOKMARK_DATE = "bookmark_date";
     public static final String LAST_READ_TOOT_ID = "last_read_toot_id";
+    public static final String LAST_READ_TOOT_DATE = "last_read_toot_date";
     public static final String LAST_HOMETIMELINE_NOTIFICATION_MAX_ID = "last_hometimeline_notification_max_id";
     public static final String SHOULD_CONTINUE_STREAMING = "should_continue_streaming";
     public static final String SHOULD_CONTINUE_STREAMING_HOME = "should_continue_streaming_home";
@@ -544,6 +546,8 @@ public class Helper {
      */
     public static Date mstStringToDate(Context context, String date) throws ParseException {
         Locale userLocale;
+        if (date == null )
+            return null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             userLocale = context.getResources().getConfiguration().getLocales().get(0);
         } else {
