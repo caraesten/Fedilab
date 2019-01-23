@@ -33,67 +33,86 @@
         android:orientation="vertical"
         tools:ignore="UselessParent">
 
+        <TextView
+            android:layout_marginTop="@dimen/settings_category_label_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_category_label_confirmations"/>
 
         <CheckBox
             android:id="@+id/set_share_validation"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_share_validation"
             android:layout_height="wrap_content" />
 
         <CheckBox
             android:id="@+id/set_share_validation_fav"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_share_validation_fav"
             android:layout_height="wrap_content" />
 
-
-        <CheckBox
-            android:id="@+id/set_auto_add_media_url"
+        <TextView
+            android:layout_marginTop="@dimen/settings_category_label_margin"
             android:layout_width="wrap_content"
-            android:text="@string/set_auto_add_media_url"
-            android:layout_height="wrap_content" />
-
-        <CheckBox
-            android:id="@+id/set_auto_store"
-            android:layout_width="wrap_content"
-            android:text="@string/set_auto_store_toot"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/settings_category_label_timelines"/>
 
         <CheckBox
             android:id="@+id/set_display_direct"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_display_direct"
             android:layout_height="wrap_content" />
 
         <CheckBox
             android:id="@+id/set_display_local"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_display_local"
             android:layout_height="wrap_content" />
 
         <CheckBox
             android:id="@+id/set_display_global"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_display_global"
             android:layout_height="wrap_content" />
 
         <CheckBox
             android:id="@+id/set_display_art"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_display_art"
             android:layout_height="wrap_content" />
 
-        <!-- CARRIAGE RETURN AFTER MENTION IN REPLIES -->
         <CheckBox
-            android:id="@+id/set_capitalize"
+            android:id="@+id/set_old_direct_timeline"
             android:layout_width="wrap_content"
-            android:text="@string/set_capitalize"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_old_direct_timeline"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="@dimen/settings_category_label_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_category_label_notification"/>
 
         <!-- LIVE NOTIFICATIONS SETTINGS -->
         <CheckBox
             android:id="@+id/set_live_notify"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/live_notif"
             android:layout_height="wrap_content" />
 
@@ -101,49 +120,23 @@
         <CheckBox
             android:id="@+id/set_keep_background_process"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_keep_background_process"
             android:layout_height="wrap_content" />
 
-        <!-- GIF AVATARS -->
-        <CheckBox
-            android:id="@+id/set_disable_gif"
+        <TextView
+            android:layout_marginTop="@dimen/settings_category_label_margin"
             android:layout_width="wrap_content"
-            android:text="@string/set_disable_gif"
-            android:layout_height="wrap_content" />
-
-
-        <!-- EXPAND CW -->
-        <CheckBox
-            android:id="@+id/set_expand_cw"
-            android:layout_width="wrap_content"
-            android:text="@string/expand_cw"
-            android:layout_height="wrap_content" />
-
-        <!-- EXPAND Images -->
-        <CheckBox
-            android:id="@+id/set_expand_image"
-            android:layout_width="wrap_content"
-            android:text="@string/expand_image"
-            android:layout_height="wrap_content" />
-
-        <!-- DISPLAY BOOKMARK BUTTON -->
-        <CheckBox
-            android:id="@+id/set_display_bookmarks"
-            android:layout_width="wrap_content"
-            android:text="@string/set_display_bookmark_button"
-            android:layout_height="wrap_content" />
-
-        <!-- FIT PREVIEWS  -->
-        <CheckBox
-            android:id="@+id/set_fit_preview"
-            android:layout_width="wrap_content"
-            android:text="@string/set_fit_preview"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/settings_category_label_interface"/>
 
         <!-- COMPACT MODE  -->
         <CheckBox
             android:id="@+id/set_compact_mode"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_compact_mode"
             android:layout_height="wrap_content" />
 
@@ -151,52 +144,151 @@
         <CheckBox
             android:id="@+id/set_display_follow_instance"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_display_follow_instance"
             android:layout_height="wrap_content" />
 
-        <!-- PUT THE WHOLE CONTENT WHEN SHARING  -->
+        <!-- DISPLAY BOOKMARK BUTTON -->
         <CheckBox
-            android:id="@+id/set_share_details"
+            android:id="@+id/set_display_bookmarks"
             android:layout_width="wrap_content"
-            android:text="@string/set_share_details"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_display_bookmark_button"
             android:layout_height="wrap_content" />
 
+        <!-- FIT PREVIEWS  -->
         <CheckBox
-            android:id="@+id/set_automatically_split_toot"
+            android:id="@+id/set_fit_preview"
             android:layout_width="wrap_content"
-            android:text="@string/set_automatically_split_toot"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_fit_preview"
             android:layout_height="wrap_content" />
 
+        <!-- GIF AVATARS -->
         <CheckBox
-            android:id="@+id/set_display_emoji"
+            android:id="@+id/set_disable_gif"
             android:layout_width="wrap_content"
-            android:text="@string/set_display_emoji"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_disable_gif"
             android:layout_height="wrap_content" />
-
 
         <CheckBox
             android:id="@+id/set_display_card"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_display_card"
             android:layout_height="wrap_content" />
 
         <CheckBox
             android:id="@+id/set_display_video_preview"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_display_video_preview"
-            android:layout_height="wrap_content" />
-
-        <CheckBox
-            android:id="@+id/set_old_direct_timeline"
-            android:layout_width="wrap_content"
-            android:text="@string/set_old_direct_timeline"
             android:layout_height="wrap_content" />
 
         <CheckBox
             android:id="@+id/set_display_content_after_fetch_more"
             android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_display_content_after_fetch_more"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="@dimen/settings_category_label_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_category_label_composing"/>
+
+        <CheckBox
+            android:id="@+id/set_auto_add_media_url"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_auto_add_media_url"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/set_auto_store"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_auto_store_toot"
+            android:layout_height="wrap_content" />
+
+        <!-- CARRIAGE RETURN AFTER MENTION IN REPLIES -->
+        <CheckBox
+            android:id="@+id/set_capitalize"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_capitalize"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/set_automatically_split_toot"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_automatically_split_toot"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/set_display_emoji"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_display_emoji"
+            android:layout_height="wrap_content" />
+
+        <!-- PUT THE WHOLE CONTENT WHEN SHARING  -->
+        <CheckBox
+            android:id="@+id/set_share_details"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_share_details"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="@dimen/settings_category_label_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_category_label_hiddencontent"/>
+
+        <!-- EXPAND CW -->
+        <CheckBox
+            android:id="@+id/set_expand_cw"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/expand_cw"
+            android:layout_height="wrap_content" />
+
+        <!-- EXPAND Images -->
+        <CheckBox
+            android:id="@+id/set_expand_image"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/expand_image"
+            android:layout_height="wrap_content" />
+
+
+
+
+
+
+
+
+
+
 
         <!-- TRUNCATE LONG TOOTS -->
         <TextView

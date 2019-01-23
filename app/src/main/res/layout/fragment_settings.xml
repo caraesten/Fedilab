@@ -41,7 +41,7 @@
             android:layout_marginTop="@dimen/settings_category_label_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_labelconfirmations"/>
+            android:text="@string/settings_category_label_confirmations"/>
         <CheckBox
             android:id="@+id/set_share_validation"
             android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
             android:layout_marginTop="@dimen/settings_category_label_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_labeltimelines"/>
+            android:text="@string/settings_category_label_timelines"/>
 
         <CheckBox
             android:id="@+id/set_display_direct"
@@ -106,7 +106,7 @@
             android:layout_marginTop="@dimen/settings_category_label_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_labelnotification"/>
+            android:text="@string/settings_category_label_notification"/>
 
         <!-- LIVE NOTIFICATIONS SETTINGS -->
         <CheckBox
@@ -130,7 +130,7 @@
             android:layout_marginTop="@dimen/settings_category_label_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_labelinterface"/>
+            android:text="@string/settings_category_label_interface"/>
 
         <!-- COMPACT MODE  -->
         <CheckBox
@@ -205,7 +205,7 @@
             android:layout_marginTop="@dimen/settings_category_label_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_labelcomposing"/>
+            android:text="@string/settings_category_label_composing"/>
 
         <CheckBox
             android:id="@+id/set_auto_add_media_url"
@@ -261,7 +261,7 @@
             android:layout_marginTop="@dimen/settings_category_label_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_labelhiddencontent"/>
+            android:text="@string/settings_category_label_hiddencontent"/>
 
         <!-- EXPAND CW -->
         <CheckBox
