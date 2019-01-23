@@ -721,7 +721,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="toots_server">Toots (Server)</string>
     <string name="toots_client">Toots (Gerät)</string>
     <string name="modify">Bearbeiten</string>
-    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
+    <string name="set_display_content_after_fetch_more">Neugeladene Toots oberhalb der \"Mehr Toots abrufen\" Schaltfläche anzeigen</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
