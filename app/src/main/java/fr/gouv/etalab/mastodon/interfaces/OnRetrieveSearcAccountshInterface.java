@@ -23,4 +23,5 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
  */
 public interface OnRetrieveSearcAccountshInterface {
     void onRetrieveSearchAccounts(APIResponse apiResponse);
+    void onRetrieveContact(APIResponse apiResponse);
 }

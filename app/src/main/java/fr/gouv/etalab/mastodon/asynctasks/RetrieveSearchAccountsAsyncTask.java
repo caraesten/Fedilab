@@ -35,24 +35,38 @@ public class RetrieveSearchAccountsAsyncTask extends AsyncTask<Void, Void, Void>
     private APIResponse apiResponse;
     private OnRetrieveSearcAccountshInterface listener;
     private WeakReference<Context> contextReference;
+    private boolean following;
 
     public RetrieveSearchAccountsAsyncTask(Context context, String query, OnRetrieveSearcAccountshInterface onRetrieveSearcAccountshInterface){
         this.contextReference = new WeakReference<>(context);
         this.query = query;
         this.listener = onRetrieveSearcAccountshInterface;
+        this.following = false;
     }
 
+    public RetrieveSearchAccountsAsyncTask(Context context, String query, boolean following, OnRetrieveSearcAccountshInterface onRetrieveSearcAccountshInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.query = query;
+        this.listener = onRetrieveSearcAccountshInterface;
+        this.following = following;
+    }
 
     @Override
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
-        apiResponse = api.searchAccounts(query, 20);
+        if( !following)
+            apiResponse = api.searchAccounts(query, 20);
+        else
+            apiResponse = new API(contextReference.get()).searchAccounts(query, 20, true);
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveSearchAccounts(apiResponse);
+        if( !following)
+            listener.onRetrieveSearchAccounts(apiResponse);
+        else
+            listener.onRetrieveContact(apiResponse);
     }
 
 }

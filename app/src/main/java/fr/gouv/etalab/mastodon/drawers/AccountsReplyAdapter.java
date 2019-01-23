@@ -55,6 +55,18 @@ public class AccountsReplyAdapter extends BaseAdapter{
         this.checked = checked;
     }
 
+    public AccountsReplyAdapter(Context context, List<Account> accounts, List<Boolean> checked){
+        this.accounts = accounts;
+        this.context = context;
+        layoutInflater = LayoutInflater.from(context);
+        this.checked = new boolean[checked.size()];
+        int index = 0;
+        for (Boolean val : checked) {
+            this.checked[index++] = val;
+        }
+
+    }
+
     @Override
     public int getCount() {
         return accounts.size();

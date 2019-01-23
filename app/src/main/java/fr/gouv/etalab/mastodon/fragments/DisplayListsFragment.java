@@ -15,6 +15,7 @@ package fr.gouv.etalab.mastodon.fragments;
  * see <http://www.gnu.org/licenses>. */
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -103,7 +104,7 @@ public class DisplayListsFragment extends Fragment implements OnListActionInterf
                     style = R.style.Dialog;
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
-                LayoutInflater inflater = getLayoutInflater();
+                LayoutInflater inflater = ((Activity)context).getLayoutInflater();
                 @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.add_list, null);
                 dialogBuilder.setView(dialogView);
                 final EditText editText = dialogView.findViewById(R.id.add_list);

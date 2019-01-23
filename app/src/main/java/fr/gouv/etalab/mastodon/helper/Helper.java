@@ -1682,11 +1682,11 @@ public class Helper {
                 }
             }
 
-            FloatingActionMenu actionMenuAcc = actionMenuAccBuilder.attachTo(actionButtonAcc)
-                    .setStartAngle(0)
-                    .setEndAngle(135)
-                    .build();
             if( actionButtonAcc != null) {
+                FloatingActionMenu actionMenuAcc = actionMenuAccBuilder.attachTo(actionButtonAcc)
+                        .setStartAngle(0)
+                        .setEndAngle(135)
+                        .build();
                 if( accounts.size() > 2){
                     actionButtonAcc.setFocusableInTouchMode(true);
                     actionButtonAcc.setFocusable(true);

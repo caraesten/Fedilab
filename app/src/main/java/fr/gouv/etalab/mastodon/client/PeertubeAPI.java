@@ -92,8 +92,13 @@ public class PeertubeAPI {
             this.instance = Helper.getLiveInstance(context);
         else {
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-            Account account = new AccountDAO(context, db).getAccountByID(userId);
+            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            Account account = new AccountDAO(context, db).getAccountByToken(token);
+            if( account == null) {
+                apiResponse = new APIResponse();
+                APIError = new Error();
+                return;
+            }
             this.instance = account.getInstance().trim();
         }
         this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);

@@ -47,9 +47,11 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -66,6 +68,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -204,6 +207,11 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     private int style;
     private StoredStatus scheduledstatus;
     private boolean isScheduled;
+    private List<Boolean> checkedValues;
+    private List<Account> contacts;
+    private ListView lv_accounts_search;
+    private AccountsReplyAdapter contactAdapter;
+    private RelativeLayout loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -265,7 +273,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         currentToId = -1;
         restoredScheduled = false;
 
-
+        checkedValues = new ArrayList<>();
+        contacts = new ArrayList<>();
         toot_it = findViewById(R.id.toot_it);
         Button toot_cw = findViewById(R.id.toot_cw);
         toot_space_left = findViewById(R.id.toot_space_left);
@@ -787,6 +796,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         }
     }
 
+
+
     private class asyncPicture extends AsyncTask<Void, Void, Void> {
 
         ByteArrayInputStream bs;
@@ -871,6 +882,17 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        int style;
+        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        if (theme == Helper.THEME_DARK) {
+            style = R.style.DialogDark;
+        } else if (theme == Helper.THEME_BLACK){
+            style = R.style.DialogBlack;
+        }else {
+            style = R.style.Dialog;
+        }
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
@@ -905,8 +927,6 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 return true;
             case R.id.action_translate:
                 final CountryPicker picker = CountryPicker.newInstance(getString(R.string.which_language));  // dialog title
-                final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-                final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                 if( theme == Helper.THEME_LIGHT){
                     picker.setStyle(R.style.AppTheme, R.style.AlertDialog);
                 }else {
@@ -1099,6 +1119,62 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             case R.id.action_photo_camera:
                 dispatchTakePictureIntent();
                 return true;
+            case R.id.action_contacts:
+
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this, style);
+
+                builderSingle.setTitle(getString(R.string.select_accounts));
+                LayoutInflater inflater = getLayoutInflater();
+                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_contact, null);
+
+                loader = dialogView.findViewById(R.id.loader);
+                EditText search_account = dialogView.findViewById(R.id.search_account);
+                lv_accounts_search = dialogView.findViewById(R.id.lv_accounts_search);
+                loader.setVisibility(View.VISIBLE);
+                new RetrieveSearchAccountsAsyncTask(TootActivity.this, "a",  true,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                search_account.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (count > 0) {
+                            search_account.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_close, 0);
+                        }else{
+                            search_account.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_search, 0);
+                        }
+                    }
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if( s != null && s.length() > 0){
+                            new RetrieveSearchAccountsAsyncTask(TootActivity.this, s.toString(),  true,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+                    }
+                });
+                search_account.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        final int DRAWABLE_RIGHT = 2;
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                            if (search_account.length() > 0 && event.getRawX() >= (search_account.getRight() - search_account.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                                search_account.setText("");
+                            }
+                        }
+
+                        return false;
+                    }
+                });
+                builderSingle.setView(dialogView);
+                builderSingle.setNegativeButton(R.string.validate, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        toot_content.setSelection(toot_content.getText().length());
+                    }
+                });
+                builderSingle.show();
+
+                return true;
             case R.id.action_microphone:
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -1129,7 +1205,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                         Toasty.info(getApplicationContext(), getString(R.string.no_draft), Toast.LENGTH_LONG).show();
                         return true;
                     }
-                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(TootActivity.this, style);
+                    builderSingle = new AlertDialog.Builder(TootActivity.this, style);
                     builderSingle.setTitle(getString(R.string.choose_toot));
                     final DraftsListAdapter draftsListAdapter = new DraftsListAdapter(TootActivity.this, drafts);
                     final int[] ids = new int[drafts.size()];
@@ -1188,8 +1264,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     return true;
                 }
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TootActivity.this, style);
-                LayoutInflater inflater = this.getLayoutInflater();
-                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.datetime_picker, null);
+                inflater = this.getLayoutInflater();
+                dialogView = inflater.inflate(R.layout.datetime_picker, null);
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
 
@@ -1842,6 +1918,23 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 }
             }
         }
+    }
+
+    @Override
+    public void onRetrieveContact(APIResponse apiResponse) {
+        if( apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0)
+            return;
+        if( contacts == null) {
+            this.contacts = new ArrayList<>();
+        }
+        this.contacts = apiResponse.getAccounts();
+        for(Account account: contacts) {
+            checkedValues.add(toot_content.getText().toString().contains("@" + account.getAcct()));
+            Log.v(Helper.TAG,"@" + account.getAcct() + " -> " + toot_content.getText().toString().contains("@" + account.getAcct()));
+        }
+        loader.setVisibility(View.GONE);
+        contactAdapter = new AccountsReplyAdapter(TootActivity.this, contacts, checkedValues);
+        lv_accounts_search.setAdapter(contactAdapter);
     }
 
     @Override

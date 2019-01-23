@@ -2515,30 +2515,28 @@ public abstract class BaseMainActivity extends BaseActivity
                 itemMediaOnly.setChecked(mediaOnly[0]);
                 itemShowNSFW.setChecked(showNSFW[0]);
                 List<TagTimeline> finalTagTimelines = tagTimelines;
-                popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
-                    @Override
-                    public void onDismiss(PopupMenu menu) {
-                        if(changes[0]) {
-                            FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
-                            String tag;
-                            if (finalTagTimelines == null || finalTagTimelines.size() == 0)
-                                tag = tabLayout.getTabAt(position).getText().toString();
-                            else
+                if (finalTagTimelines != null && finalTagTimelines.size() > 0)
+                    popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                        @Override
+                        public void onDismiss(PopupMenu menu) {
+                            if(changes[0]) {
+                                FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+                                String tag;
                                 tag = finalTagTimelines.get(0).getName();
-                            fragTransaction.detach(tagFragment.get(tag));
-                            Bundle bundle = new Bundle();
-                            if( mediaOnly[0])
-                                bundle.putString("instanceType","ART");
-                            else
-                                bundle.putString("instanceType","MASTODON");
-                            bundle.putString("tag", tag);
-                            bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.TAG);
-                            tagFragment.get(tag).setArguments(bundle);
-                            fragTransaction.attach(tagFragment.get(tag));
-                            fragTransaction.commit();
+                                fragTransaction.detach(tagFragment.get(tag));
+                                Bundle bundle = new Bundle();
+                                if( mediaOnly[0])
+                                    bundle.putString("instanceType","ART");
+                                else
+                                    bundle.putString("instanceType","MASTODON");
+                                bundle.putString("tag", tag);
+                                bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.TAG);
+                                tagFragment.get(tag).setArguments(bundle);
+                                fragTransaction.attach(tagFragment.get(tag));
+                                fragTransaction.commit();
+                            }
                         }
-                    }
-                });
+                    });
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
