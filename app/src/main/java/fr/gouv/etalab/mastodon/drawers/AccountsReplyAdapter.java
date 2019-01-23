@@ -36,7 +36,6 @@ import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 
 
-
 /**
  * Created by Thomas on 25/10/2017.
  * Adapter for accounts when replying
@@ -64,7 +63,6 @@ public class AccountsReplyAdapter extends BaseAdapter{
         for (Boolean val : checked) {
             this.checked[index++] = val;
         }
-
     }
 
     @Override

@@ -47,7 +47,6 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -210,7 +209,6 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     private List<Boolean> checkedValues;
     private List<Account> contacts;
     private ListView lv_accounts_search;
-    private AccountsReplyAdapter contactAdapter;
     private RelativeLayout loader;
 
     @Override
@@ -1158,6 +1156,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                         if (event.getAction() == MotionEvent.ACTION_UP) {
                             if (search_account.length() > 0 && event.getRawX() >= (search_account.getRight() - search_account.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                                 search_account.setText("");
+                                new RetrieveSearchAccountsAsyncTask(TootActivity.this, "a",  true,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             }
                         }
 
@@ -1922,19 +1921,17 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
 
     @Override
     public void onRetrieveContact(APIResponse apiResponse) {
-        if( apiResponse.getError() != null || apiResponse.getAccounts() == null || apiResponse.getAccounts().size() == 0)
+        if( apiResponse.getError() != null || apiResponse.getAccounts() == null)
             return;
-        if( contacts == null) {
-            this.contacts = new ArrayList<>();
-        }
-        this.contacts = apiResponse.getAccounts();
+        this.contacts = new ArrayList<>();
+        this.checkedValues = new ArrayList<>();
+        this.contacts.addAll(apiResponse.getAccounts());
         for(Account account: contacts) {
-            checkedValues.add(toot_content.getText().toString().contains("@" + account.getAcct()));
-            Log.v(Helper.TAG,"@" + account.getAcct() + " -> " + toot_content.getText().toString().contains("@" + account.getAcct()));
+            this.checkedValues.add(toot_content.getText().toString().contains("@" + account.getAcct()));
         }
-        loader.setVisibility(View.GONE);
-        contactAdapter = new AccountsReplyAdapter(TootActivity.this, contacts, checkedValues);
-        lv_accounts_search.setAdapter(contactAdapter);
+        this.loader.setVisibility(View.GONE);
+        AccountsReplyAdapter contactAdapter = new AccountsReplyAdapter(TootActivity.this, this.contacts, this.checkedValues);
+        this.lv_accounts_search.setAdapter(contactAdapter);
     }
 
     @Override
