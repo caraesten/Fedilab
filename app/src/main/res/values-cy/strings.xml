@@ -747,12 +747,6 @@
     <string name="toots_client">Toots (Device)</string>
     <string name="modify">Modify</string>
     <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
-    <string name="settings_category_labelconfirmations">Confirmations</string>
-    <string name="settings_category_labeltimelines">Timelines</string>
-    <string name="settings_category_labelnotification">Notification service</string>
-    <string name="settings_category_labelinterface">Interface</string>
-    <string name="settings_category_labelhiddencontent">Hidden content</string>
-    <string name="settings_category_labelcomposing">Composing</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
