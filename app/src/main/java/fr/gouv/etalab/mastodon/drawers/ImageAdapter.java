@@ -85,7 +85,7 @@ public class ImageAdapter extends RecyclerView.Adapter {
                     attachmentsTmp.add(status1.getArt_attachment());
                 }
                 intent.putParcelableArrayListExtra("mediaArray", attachmentsTmp);
-                b.putInt("position", 1);
+                b.putInt("position", (viewHolder.getAdapterPosition()+1));
                 intent.putExtras(b);
                 context.startActivity(intent);
             }
