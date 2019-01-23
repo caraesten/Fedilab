@@ -70,7 +70,7 @@
     <string name="translate">Suqel</string>
     <string name="please_wait">Please, wait few seconds before making this action.</string>
     <!--- Menu -->
-    <string name="home_menu">Home</string>
+    <string name="home_menu">Agegdan</string>
     <string name="local_menu">Local timeline</string>
     <string name="global_menu">Federated timeline</string>
     <string name="neutral_menu_title">Tinefrunin</string>
@@ -361,7 +361,7 @@
     <string-array name="led_colours">
         <item>Azegzaw</item>
         <item>Cyan</item>
-        <item>Magenta</item>
+        <item>Axuxi</item>
         <item>Adal</item>
         <item>Azeggaγ</item>
         <item>Awraγ</item>
@@ -399,7 +399,7 @@
     <string name="owner_cached_toots">Your toots</string>
     <string name="v_public">Public</string>
     <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
+    <string name="v_private">Uslig</string>
     <string name="v_direct">Direct</string>
     <string name="v_keywords">Some keywords…</string>
     <string name="show_media">Sken all n teγwalt</string>
@@ -457,14 +457,14 @@
     <string name="action_lists">Tibdarin</string>
     <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-    <string name="action_lists_add_to">Add to list</string>
-    <string name="action_lists_remove_from">Remove from list</string>
-    <string name="action_lists_create">Add list</string>
-    <string name="action_lists_delete">Delete list</string>
+    <string name="action_lists_add_to">Rnu γer tabdart</string>
+    <string name="action_lists_remove_from">Kkes seg tebdart</string>
+    <string name="action_lists_create">Rnu tabdart</string>
+    <string name="action_lists_delete">Kkes tabdart</string>
     <string name="action_lists_update">Edit list</string>
     <string name="action_lists_title_placeholder">New list title</string>
     <string name="action_lists_search_users">Search among people you follow</string>
-    <string name="action_lists_owner">Your lists</string>
+    <string name="action_lists_owner">Tibdarin-ik·m</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
     <string name="show_boost_count">Show boosts/favourites count</string>
@@ -596,7 +596,7 @@
     <string name="no_peertube_channels">Wlac kra n ibuda n PeerTube</string>
     <string name="no_peertube_instances">No Peertube instances</string>
     <string name="no_mastodon_instances">No Mastodon instances</string>
-    <string name="no_lists">No lists</string>
+    <string name="no_lists">Ulac tibdarin</string>
     <string name="videos">Tividyutin</string>
     <string name="channels">Ibuda</string>
     <string name="set_display_emoji">Use Emoji One</string>
@@ -684,7 +684,7 @@
     <string name="some_words_any">Any of these words (space-separated)</string>
     <string name="some_words_all">All these words (space-separated)</string>
     <string name="some_words_none">None of these words (space-separated)</string>
-    <string name="change_tag_column">Change column name</string>
+    <string name="change_tag_column">Beddel isem n wejgu</string>
     <string name="no_misskey_instance">No Misskey instances</string>
     <string name="misskey_instance">Misskey instance</string>
     <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
@@ -694,22 +694,22 @@
     <string name="recently_added">Recently added</string>
     <string name="local">Local</string>
     <string name="upload_video">Upload</string>
-    <string name="reply">Reply</string>
-    <string name="delete_comment">Delete a comment</string>
-    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
-    <string name="fullscreen">Full screen video</string>
+    <string name="reply">Err</string>
+    <string name="delete_comment">Kkes awennit</string>
+    <string name="delete_comment_confirm">Tebγiḍ ad ekkeseḍ awennit-a?</string>
+    <string name="fullscreen">Tabidyutt deg ugdil aččuṛan</string>
     <string name="set_video_mode">Mode for videos</string>
     <string name="file_to_upload">Select the file to upload</string>
-    <string name="my_videos">My videos</string>
-    <string name="title">Title</string>
-    <string name="categories">Categories</string>
-    <string name="license">License</string>
-    <string name="category">Category</string>
-    <string name="language">Language</string>
+    <string name="my_videos">Tibidyutin-iw</string>
+    <string name="title">Azwel</string>
+    <string name="categories">Taggayin</string>
+    <string name="license">Turagt</string>
+    <string name="category">Taggayt</string>
+    <string name="language">Tutlayt</string>
     <string name="peertube_nsfw">This video contains mature or explicit content</string>
     <string name="peertube_enable_comments">Enable video comments</string>
     <string name="update_video">Update video</string>
-    <string name="description">Description</string>
+    <string name="description">Aglam</string>
     <string name="toast_peertube_video_updated">The video has been updated!</string>
     <string name="toast_cancelled">Upload cancelled!</string>
     <string name="upload_video_success">The video has been uploaded!</string>
@@ -724,7 +724,7 @@
     <string name="add_image_to_favorite">Add media to favorites</string>
     <string name="leave_a_comment">Leave a comment</string>
     <string name="share">Share</string>
-    <string name="my_pictures">My pictures</string>
+    <string name="my_pictures">Tugniwin-iw</string>
     <string name="choose_schedule">Choose a schedule mode</string>
     <string name="device_schedule">From device</string>
     <string name="server_schedule">From server</string>
@@ -732,6 +732,12 @@
     <string name="toots_client">Toots (Device)</string>
     <string name="modify">Modify</string>
     <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
+    <string name="settings_category_label_confirmations">Confirmations</string>
+    <string name="settings_category_label_timelines">Timelines</string>
+    <string name="settings_category_label_notification">Notification service</string>
+    <string name="settings_category_label_interface">Agrudem</string>
+    <string name="settings_category_label_hiddencontent">Hidden content</string>
+    <string name="settings_category_label_composing">Composing</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>

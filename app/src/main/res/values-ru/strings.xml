@@ -337,7 +337,7 @@
     <string name="use_javascript">Включить Javascript</string>
     <string name="expand_cw">Автоматически раскрывать cw</string>
     <string name="use_cookies">Разрешить сторонние куки</string>
-    <string name="settings_ui_layout">Схема временной шкалы: </string>
+    <string name="settings_ui_layout">Временные рамки ленты: </string>
     <string-array name="battery_profiles">
         <item>Обычный расход батареи</item>
         <item>Средний расход батареи</item>
@@ -740,6 +740,12 @@
     <string name="toots_client">Туты (Устройство)</string>
     <string name="modify">Изменить</string>
     <string name="set_display_content_after_fetch_more">Отображать новые туты над кнопкой \"Получить больше\"</string>
+    <string name="settings_category_label_confirmations">Подтверждения</string>
+    <string name="settings_category_label_timelines">Ленты</string>
+    <string name="settings_category_label_notification">Служба уведомлений</string>
+    <string name="settings_category_label_interface">Интерфейс</string>
+    <string name="settings_category_label_hiddencontent">Скрытый контент</string>
+    <string name="settings_category_label_composing">Создание</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

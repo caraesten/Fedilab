@@ -728,7 +728,13 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="toots_server">Toots (Server)</string>
     <string name="toots_client">Toots (Apparaat)</string>
     <string name="modify">Aanpassen</string>
-    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
+    <string name="set_display_content_after_fetch_more">Nieuwe toots boven de \'Meer ophalen\' knop weergeven</string>
+    <string name="settings_category_label_confirmations">Bevestigingen</string>
+    <string name="settings_category_label_timelines">Tijdlijnen</string>
+    <string name="settings_category_label_notification">Notificatieservice</string>
+    <string name="settings_category_label_interface">Uiterlijk</string>
+    <string name="settings_category_label_hiddencontent">Verborgen inhoud</string>
+    <string name="settings_category_label_composing">Samenstellen</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
