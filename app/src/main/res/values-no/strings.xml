@@ -720,6 +720,12 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="toots_client">Toots (enhet)</string>
     <string name="modify">Endre</string>
     <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
+    <string name="settings_category_label_confirmations">Confirmations</string>
+    <string name="settings_category_label_timelines">Timelines</string>
+    <string name="settings_category_label_notification">Notification service</string>
+    <string name="settings_category_label_interface">Interface</string>
+    <string name="settings_category_label_hiddencontent">Hidden content</string>
+    <string name="settings_category_label_composing">Composing</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
