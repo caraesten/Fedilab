@@ -221,6 +221,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             pixelfedListAdapter = new PixelfedListAdapter(context, type, this.statuses);
             lv_status.setAdapter(pixelfedListAdapter);
         }else if( instanceType.equals("ART")){
+            List<TagTimeline> tagTimelines = new SearchDAO(context, db).getTimelineInfo(tag);
+            if( tagTimelines != null && tagTimelines.size() > 0) {
+                tagTimeline = tagTimelines.get(0);
+            }
             artListAdapter = new ArtListAdapter(context, this.statuses);
             lv_status.setAdapter(artListAdapter);
         }
@@ -808,7 +812,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if(swipeRefreshLayout == null)
             return;
         swipeRefreshLayout.setRefreshing(false);
-
         if( isSwipped && this.statuses != null && this.statuses.size() > 0) {
             for (Status status : this.statuses) {
                 status.setNew(false);
@@ -848,25 +851,16 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             for (int i = statuses.size() - 1; i >= 0; i--) {
                 if( this.statuses != null) {
                     if( type != RetrieveFeedsAsyncTask.Type.HOME){
-                        if( tagTimeline == null || !tagTimeline.isART() || (tagTimeline.isART() && tagTimeline.isNSFW())) {
+                        if( tagTimeline != null && instanceType.equals("ART") && !tagTimeline.isNSFW() ){
+                            if( !statuses.get(i).isSensitive()) {
+                                this.statuses.add(0, statuses.get(i));
+                                inserted++;
+                            }
+                        }else {
                             if (this.statuses.size() == 0 || statuses.get(i).getCreated_at().after(this.statuses.get(0).getCreated_at())) {
                                 inserted++;
                                 this.statuses.add(0, statuses.get(i));
-
                             }
-                        }else{
-                            ArrayList<Status> safeStatuses = new ArrayList<>();
-                            for(Status status: statuses){
-                                if( !status.isSensitive())
-                                    safeStatuses.add(status);
-                            }
-                            this.statuses.addAll(safeStatuses);
-                            if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
-                                statusListAdapter.notifyItemRangeInserted(0, safeStatuses.size());
-                            else if( instanceType.equals("PIXELFED"))
-                                pixelfedListAdapter.notifyItemRangeInserted(0, safeStatuses.size());
-                            else if( instanceType.equals("ART"))
-                                artListAdapter.notifyItemRangeInserted(0, safeStatuses.size());
                         }
                     }else {
                         if( lastReadTootDate != null && statuses.get(i).getCreated_at().after(lastReadTootDate)) {
@@ -880,11 +874,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     }
                 }
             }
-            if( instanceType.equals("MASTODON") || instanceType.equals("MISSKEY"))
+            if( statusListAdapter != null && (instanceType.equals("MASTODON") || instanceType.equals("MISSKEY")))
                 statusListAdapter.notifyItemRangeInserted(0, inserted);
-            else if( instanceType.equals("PIXELFED"))
+            else if( pixelfedListAdapter != null && instanceType.equals("PIXELFED"))
                 pixelfedListAdapter.notifyItemRangeInserted(0, inserted);
-            else if( instanceType.equals("ART"))
+            else if( artListAdapter != null && instanceType.equals("ART"))
                 artListAdapter.notifyItemRangeInserted(0, inserted);
             try {
                 if( type == RetrieveFeedsAsyncTask.Type.HOME)
