@@ -221,9 +221,11 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             pixelfedListAdapter = new PixelfedListAdapter(context, type, this.statuses);
             lv_status.setAdapter(pixelfedListAdapter);
         }else if( instanceType.equals("ART")){
-            List<TagTimeline> tagTimelines = new SearchDAO(context, db).getTimelineInfo(tag);
-            if( tagTimelines != null && tagTimelines.size() > 0) {
-                tagTimeline = tagTimelines.get(0);
+            if ( type == RetrieveFeedsAsyncTask.Type.TAG) {
+                List<TagTimeline> tagTimelines = new SearchDAO(context, db).getTimelineInfo(tag);
+                if (tagTimelines != null && tagTimelines.size() > 0) {
+                    tagTimeline = tagTimelines.get(0);
+                }
             }
             artListAdapter = new ArtListAdapter(context, this.statuses);
             lv_status.setAdapter(artListAdapter);
