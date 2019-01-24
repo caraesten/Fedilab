@@ -881,6 +881,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                         bundle = new Bundle();
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.USER);
                         bundle.putString("targetedid", account.getAcct());
+                        bundle.putString("instanceType", "PEERTUBE");
                         bundle.putBoolean("showReply",false);
                         bundle.putBoolean("ischannel",ischannel);
                         displayStatusFragment.setArguments(bundle);

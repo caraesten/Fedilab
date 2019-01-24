@@ -569,10 +569,8 @@ public class PeertubeAPI {
         params.put("count", String.valueOf(limit));
         List<Peertube> peertubes = new ArrayList<>();
         try {
-
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/videos", acct)), 60, params, prefKeyOauthTokenT);
-
             JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
             peertubes = parsePeertube(jsonArray);
 

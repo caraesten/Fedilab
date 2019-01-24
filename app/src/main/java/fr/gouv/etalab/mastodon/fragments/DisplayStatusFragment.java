@@ -441,7 +441,6 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
-
         //For remote Peertube remote instances
         if(instanceType.equals("PEERTUBE")){
             int previousPosition = this.peertubes.size();
