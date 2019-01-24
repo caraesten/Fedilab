@@ -28,7 +28,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -100,7 +99,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
 
 
         lv_notifications = rootView.findViewById(R.id.lv_notifications);
-        lv_notifications.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         mainLoader = rootView.findViewById(R.id.loader);
         nextElementLoader = rootView.findViewById(R.id.loading_next_notifications);
         textviewNoAction = rootView.findViewById(R.id.no_action);

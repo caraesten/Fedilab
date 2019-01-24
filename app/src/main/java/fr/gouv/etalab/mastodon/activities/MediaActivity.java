@@ -41,11 +41,9 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
@@ -424,7 +422,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             case "gifv":
                 pbar_inf.setIndeterminate(false);
                 pbar_inf.setScaleY(3f);
-                File file = new File(getCacheDir() + "/" + Helper.md5(url)+".mp4");
                 try {
                     HttpsURLConnection.setDefaultSSLSocketFactory(new TLSSocketFactory());
                 } catch (KeyManagementException e) {
@@ -432,53 +429,19 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
-                if(file.exists()) {
-                    Uri uri = Uri.parse(file.getAbsolutePath());
-                    videoView.setVisibility(View.VISIBLE);
-
-                    DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
-                            Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
-
-                    ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                            .createMediaSource(uri);
-
-                    player = ExoPlayerFactory.newSimpleInstance(MediaActivity.this);
-                    if( type.toLowerCase().equals("gifv")) {
-                        AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                                .setUsage(C.USAGE_MEDIA)
-                                .setContentType(C.CONTENT_TYPE_MOVIE)
-                                .build();
-                        player.setAudioAttributes(audioAttributes);
-                        player.setRepeatMode(Player.REPEAT_MODE_ONE);
-                    }
-                    videoView.setPlayer(player);
-                    loader.setVisibility(View.GONE);
-                    player.prepare(videoSource);
-
-
-                    player.setPlayWhenReady(true);
-                    fileVideo = file;
-                    downloadedImage = null;
-                }else{
-                    videoView.setVisibility(View.VISIBLE);
-                    Uri uri = Uri.parse(url);
-
-                    videoView.setVisibility(View.VISIBLE);
-
-                    DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
-                            Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
-
-                    ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                            .createMediaSource(uri);
-
-                    player = ExoPlayerFactory.newSimpleInstance(MediaActivity.this);
-                    if( type.toLowerCase().equals("gifv"))
-                        player.setRepeatMode(Player.REPEAT_MODE_ONE);
-                    videoView.setPlayer(player);
-                    loader.setVisibility(View.GONE);
-                    player.prepare(videoSource);
-                    player.setPlayWhenReady(true);
-                }
+                videoView.setVisibility(View.VISIBLE);
+                Uri uri = Uri.parse(url);
+                DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getApplicationContext(),
+                        Util.getUserAgent(getApplicationContext(), "Mastalab"), null);
+                ExtractorMediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+                        .createMediaSource(uri);
+                player = ExoPlayerFactory.newSimpleInstance(MediaActivity.this);
+                if( type.toLowerCase().equals("gifv"))
+                    player.setRepeatMode(Player.REPEAT_MODE_ONE);
+                videoView.setPlayer(player);
+                loader.setVisibility(View.GONE);
+                player.prepare(videoSource);
+                player.setPlayWhenReady(true);
                 break;
         }
     }

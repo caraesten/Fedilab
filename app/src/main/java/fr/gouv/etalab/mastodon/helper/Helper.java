@@ -2825,7 +2825,7 @@ public class Helper {
         try (InputStream inputStream = context.getContentResolver().openInputStream(uriFile)) {
             assert inputStream != null;
             exif = new ExifInterface(inputStream);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         Matrix matrix = null;
