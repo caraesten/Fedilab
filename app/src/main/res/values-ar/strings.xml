@@ -752,6 +752,7 @@
     <string name="settings_category_label_interface">الواجهة</string>
     <string name="settings_category_label_hiddencontent">المحتوى المخفي</string>
     <string name="settings_category_label_composing">التحرير</string>
+    <string name="contact">Contacts</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>تورنت</item>

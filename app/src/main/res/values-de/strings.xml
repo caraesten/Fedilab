@@ -728,6 +728,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="settings_category_label_interface">Benutzeroberfläche</string>
     <string name="settings_category_label_hiddencontent">Ausgeblendeter Inhalt</string>
     <string name="settings_category_label_composing">Verfassen</string>
+    <string name="contact">Kontakte</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

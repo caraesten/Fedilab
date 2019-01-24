@@ -232,7 +232,7 @@
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d like</item>
-        <item quantity="other">%d gústanme</item>
+        <item quantity="other">%d gústame</item>
     </plurals>
     <string name="delete_notification_ask">Borrar notificación?</string>
     <string name="delete_notification_ask_all">Borrar todas as notificacións?</string>
@@ -732,13 +732,14 @@
     <string name="toots_server">Toots (Servidor)</string>
     <string name="toots_client">Toots (Dispositivo)</string>
     <string name="modify">Modificar</string>
-    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
-    <string name="settings_category_label_confirmations">Confirmations</string>
-    <string name="settings_category_label_timelines">Timelines</string>
-    <string name="settings_category_label_notification">Notification service</string>
+    <string name="set_display_content_after_fetch_more">Mostrar novos toots enriba do botón \"Obter máis\"</string>
+    <string name="settings_category_label_confirmations">Confirmacións</string>
+    <string name="settings_category_label_timelines">Liñas temporais</string>
+    <string name="settings_category_label_notification">Servizo de notificación</string>
     <string name="settings_category_label_interface">Interface</string>
-    <string name="settings_category_label_hiddencontent">Hidden content</string>
-    <string name="settings_category_label_composing">Composing</string>
+    <string name="settings_category_label_hiddencontent">Contido oculto</string>
+    <string name="settings_category_label_composing">Redactando</string>
+    <string name="contact">Contactos</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

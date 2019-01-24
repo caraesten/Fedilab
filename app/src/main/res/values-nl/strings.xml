@@ -735,6 +735,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="settings_category_label_interface">Uiterlijk</string>
     <string name="settings_category_label_hiddencontent">Verborgen inhoud</string>
     <string name="settings_category_label_composing">Samenstellen</string>
+    <string name="contact">Contacts</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

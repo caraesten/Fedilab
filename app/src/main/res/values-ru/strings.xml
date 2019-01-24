@@ -746,6 +746,7 @@
     <string name="settings_category_label_interface">Интерфейс</string>
     <string name="settings_category_label_hiddencontent">Скрытый контент</string>
     <string name="settings_category_label_composing">Создание</string>
+    <string name="contact">Контакты</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
