@@ -626,6 +626,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             //Manages theme for icon colors
 
 
+
             if (theme == Helper.THEME_BLACK)
                 changeDrawableColor(context, R.drawable.ic_fiber_new, R.color.dark_icon);
             else
@@ -798,7 +799,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
 
             }
-
+            if( expand_media && status.isSensitive()) {
+                changeDrawableColor(context, holder.hide_preview, R.color.red_1);
+                changeDrawableColor(context, holder.hide_preview_h, R.color.red_1);
+            }else {
+                changeDrawableColor(context, holder.hide_preview, R.color.white);
+                changeDrawableColor(context, holder.hide_preview_h, R.color.white);
+            }
 
             holder.vertical_content.setLayoutParams(params);
             holder.left_buttons.setLayoutParams(paramsB);
@@ -1116,7 +1123,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     Helper.loadGiF(context, status.getConversationProfilePicture().get(3), holder.conversation_pp_4);
                 }
             }
-            boolean differentLanguage = false;
+            boolean differentLanguage;
             if (status.getReblog() == null)
                 differentLanguage = status.getLanguage() != null && !status.getLanguage().trim().equals(currentLocale);
             else
@@ -1141,8 +1148,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             } else {
                 holder.status_translate.setVisibility(View.GONE);
             }
-            if (expand_cw)
-                holder.status_spoiler_button.setVisibility(View.GONE);
+            /*if (expand_cw)
+                holder.status_spoiler_button.setVisibility(View.GONE);*/
             if (status.getReblog() == null) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
