@@ -726,6 +726,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="settings_category_label_interface">Brukergrensesnitt</string>
     <string name="settings_category_label_hiddencontent">Skjult innhold</string>
     <string name="settings_category_label_composing">Komponering</string>
+    <string name="contact">Contacts</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
