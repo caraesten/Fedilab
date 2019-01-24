@@ -735,7 +735,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="peertube_video_published"><![CDATA[Ihr Video <b>%1$s</b> wurde veröffentlicht]]></string>
     <string name="peertube_video_import_success"><![CDATA[Ihr Video <b>%1$s</b> wurde erfolgreich importiert]]></string>
     <string name="peertube_video_import_error"><![CDATA[Der Import Ihres Videos <b>%1$s</b> ist fehlgeschlagen]]></string>
-    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
+    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> hat ein neues Video veröffentlicht: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
     <!-- end languages -->
