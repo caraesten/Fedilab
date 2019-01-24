@@ -842,6 +842,16 @@
     <string name="settings_category_label_hiddencontent">Hidden content</string>
     <string name="settings_category_label_composing">Composing</string>
     <string name="contact">Contacts</string>
+    <string name="peertube_comment_on_video">%1$s commented your video %2$s</string>
+    <string name="peertube_follow_channel">%1$s is following your channel %2$s</string>
+    <string name="peertube_follow_account">%1$s is following your account</string>
+
+    <string name="peertube_video_published">Your video %1$s has been published</string>
+    <string name="peertube_video_import_success">Your video import %1$s succeeded</string>
+    <string name="peertube_video_import_error">Your video import %1$s failed</string>
+    <string name="peertube_video_from_subscription">%1$s published a new video: %2$s</string>
+    <string name="peertube_video_blacklist">Your video %1$s has been blacklisted</string>
+    <string name="peertube_video_unblacklist">Your video %1$s has been unblacklisted</string>
     <!-- end languages -->
 
 

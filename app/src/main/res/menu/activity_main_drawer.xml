@@ -71,6 +71,10 @@
                         android:icon="@drawable/ic_cloud_upload"
                         android:title="@string/upload_video" />
                     <item
+                        android:id="@+id/nav_peertube_notifications"
+                        android:icon="@drawable/ic_notifications_peertube"
+                        android:title="@string/notifications" />
+                    <item
                         android:id="@+id/nav_peertube_settings"
                         android:icon="@drawable/ic_settings"
                         android:title="@string/settings" />

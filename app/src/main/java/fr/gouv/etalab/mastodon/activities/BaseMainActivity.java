@@ -121,6 +121,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayHowToFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayMutedInstanceFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayPeertubeNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.fragments.SettingsPeertubeFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutScheduleFragment;
@@ -2042,6 +2043,13 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "TABLAYOUT_PEERTUBE_SETTINGS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, settingsPeertubeFragment, fragmentTag).commit();
+
+        }else if (id == R.id.nav_peertube_notifications) {
+            toot.hide();
+            DisplayPeertubeNotificationsFragment displayPeertubeNotificationsFragment= new DisplayPeertubeNotificationsFragment();
+            fragmentTag = "PEERTUBE_NOTIFICATIONS";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayPeertubeNotificationsFragment, fragmentTag).commit();
 
         }else if (id == R.id.nav_favorites || id == R.id.nav_pixelfed_favorites) {
             toot.hide();
