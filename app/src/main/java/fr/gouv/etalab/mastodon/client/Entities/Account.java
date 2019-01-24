@@ -43,16 +43,20 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
+import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 
@@ -60,6 +64,7 @@ import static android.support.v4.text.HtmlCompat.FROM_HTML_MODE_LEGACY;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
+import static fr.gouv.etalab.mastodon.helper.Helper.hashtagPattern;
 
 
 /**
@@ -564,7 +569,7 @@ public class Account implements Parcelable {
             if( endPositionTar <= spannableString.toString().length() && endPositionTar >= startPositionTar)
                 spannableString.setSpan(new ClickableSpan() {
                             @Override
-                            public void onClick(View textView) {
+                            public void onClick(@NonNull View textView) {
                                 Intent intent = new Intent(context, ShowAccountActivity.class);
                                 Bundle b = new Bundle();
                                 b.putParcelable("account", idTar);
@@ -572,7 +577,7 @@ public class Account implements Parcelable {
                                 context.startActivity(intent);
                             }
                             @Override
-                            public void updateDrawState(TextPaint ds) {
+                            public void updateDrawState(@NonNull TextPaint ds) {
                                 super.updateDrawState(ds);
                             }
                         },
@@ -591,6 +596,7 @@ public class Account implements Parcelable {
             fieldsSpan = new LinkedHashMap<>();
         if( account.getDisplay_name() != null)
             displayNameSpan = new SpannableString(account.getDisplay_name());
+        ArrayList<Account> accountsMentionUnknown = new ArrayList<>();
         if( account.getFields() != null && account.getFields().size() > 0) {
             Iterator it = account.getFields().entrySet().iterator();
             while (it.hasNext()) {
@@ -602,14 +608,28 @@ public class Account implements Parcelable {
                     //noinspection deprecation
                     fieldSpan = new SpannableString(Html.fromHtml((String)pair.getValue()));
                 fieldsSpan.put(new SpannableString((String)pair.getKey()), fieldSpan);
+                Pattern aLink = Pattern.compile("(<\\s?a\\s?href=\"https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\/\\w._-]*)\"\\s?[^.]*<\\s?\\/\\s?a\\s?>)");
+                Matcher matcherALink = aLink.matcher((String)pair.getValue());
+                while (matcherALink.find()){
+                    String acct = matcherALink.group(3).replace("@","");
+                    String instance = matcherALink.group(2);
+                    Account accountMention = new Account();
+                    accountMention.setAcct(acct);
+                    accountMention.setInstance(instance);
+                    accountsMentionUnknown.add(accountMention);
+                }
             }
             account.setFieldsSpan(fieldsSpan);
         }
+
         Iterator it = fieldsSpan.entrySet().iterator();
         while (it.hasNext()) {
+
+
             Map.Entry pair = (Map.Entry) it.next();
             SpannableString fieldSpan = (SpannableString) pair.getValue();
             SpannableString keySpan = (SpannableString) pair.getKey();
+
             Matcher matcher = Helper.xmppPattern.matcher(fieldSpan);
             SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -623,7 +643,7 @@ public class Account implements Parcelable {
                 if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
                     fieldSpan.setSpan(new ClickableSpan() {
                         @Override
-                        public void onClick(View textView) {
+                        public void onClick(@NonNull View textView) {
                             try {
                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                                 context.startActivity(intent);
@@ -632,7 +652,7 @@ public class Account implements Parcelable {
                             }
                         }
                         @Override
-                        public void updateDrawState(TextPaint ds) {
+                        public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(false);
                             if (theme == THEME_DARK)
@@ -658,7 +678,7 @@ public class Account implements Parcelable {
                 if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart) {
                     fieldSpan.setSpan(new ClickableSpan() {
                         @Override
-                        public void onClick(View textView) {
+                        public void onClick(@NonNull View textView) {
                             try {
                                 final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                                 emailIntent.setType("plain/text");
@@ -669,7 +689,7 @@ public class Account implements Parcelable {
                             }
                         }
                         @Override
-                        public void updateDrawState(TextPaint ds) {
+                        public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(false);
                             if (theme == THEME_DARK)
@@ -684,6 +704,72 @@ public class Account implements Parcelable {
                 }
 
             }
+            matcher = hashtagPattern.matcher(fieldSpan);
+            while (matcher.find()){
+                URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
+                for(URLSpan span : urls)
+                    fieldSpan.removeSpan(span);
+                int matchStart = matcher.start(1);
+                int matchEnd = matcher.end();
+                final String tag = fieldSpan.toString().substring(matchStart, matchEnd);
+                if( matchEnd <= fieldSpan.toString().length() && matchEnd >= matchStart)
+                    fieldSpan.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(@NonNull View textView) {
+                            Intent intent = new Intent(context, HashTagActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("tag", tag.substring(1));
+                            intent.putExtras(b);
+                            context.startActivity(intent);
+                        }
+                        @Override
+                        public void updateDrawState(@NonNull TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setUnderlineText(false);
+                            if (theme == THEME_DARK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                            else if (theme == THEME_BLACK)
+                                ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                            else if (theme == THEME_LIGHT)
+                                ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                        }
+                    }, matchStart, matchEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+            if( accountsMentionUnknown.size() > 0 ) {
+                for(Account accountMention: accountsMentionUnknown){
+                    String targetedAccount = "@" + accountMention.getAcct();
+                    if (fieldSpan.toString().toLowerCase().contains(targetedAccount.toLowerCase())) {
+                        //Accounts can be mentioned several times so we have to loop
+                        for(int startPosition = -1 ; (startPosition = fieldSpan.toString().toLowerCase().indexOf(targetedAccount.toLowerCase(), startPosition + 1)) != -1 ; startPosition++){
+                            URLSpan[] urls = fieldSpan.getSpans(0, fieldSpan.length(), URLSpan.class);
+                            for(URLSpan span : urls)
+                                fieldSpan.removeSpan(span);
+                            int endPosition = startPosition + targetedAccount.length();
+                            if( endPosition <= fieldSpan.toString().length() && endPosition >= startPosition)
+                                fieldSpan.setSpan(new ClickableSpan() {
+                                                @Override
+                                                public void onClick(@NonNull View textView) {
+                                                    CrossActions.doCrossProfile(context,accountMention);
+                                                }
+                                                @Override
+                                                public void updateDrawState(@NonNull TextPaint ds) {
+                                                    super.updateDrawState(ds);
+                                                    ds.setUnderlineText(false);
+                                                    if (theme == THEME_DARK)
+                                                        ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                                    else if (theme == THEME_BLACK)
+                                                        ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                                    else if (theme == THEME_LIGHT)
+                                                        ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                                }
+                                            },
+                            startPosition, endPosition,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        }
+                    }
+                }
+            }
+
         }
 
         it = fieldsSpan.entrySet().iterator();
@@ -709,11 +795,11 @@ public class Account implements Parcelable {
                     int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
                     fieldSpan.setSpan(new ClickableSpan() {
                         @Override
-                        public void onClick(View textView) {
+                        public void onClick(@NonNull View textView) {
                             Helper.openBrowser(context, url);
                         }
                         @Override
-                        public void updateDrawState(TextPaint ds) {
+                        public void updateDrawState(@NonNull TextPaint ds) {
                             super.updateDrawState(ds);
                             ds.setUnderlineText(false);
 

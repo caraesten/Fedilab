@@ -802,14 +802,14 @@ public class Status implements Parcelable{
             if( matchEnd <= spannableString.toString().length() && matchEnd >= matchStart)
                 spannableString.setSpan(new ClickableSpan() {
                             @Override
-                            public void onClick(View textView) {
+                            public void onClick(@NonNull View textView) {
                                 String finalUrl = url;
                                 if( !url.startsWith("http://") && ! url.startsWith("https://"))
                                     finalUrl = "http://" + url;
                                 Helper.openBrowser(context, finalUrl);
                             }
                             @Override
-                            public void updateDrawState(TextPaint ds) {
+                            public void updateDrawState(@NonNull TextPaint ds) {
                                 super.updateDrawState(ds);
                                 ds.setUnderlineText(false);
                                 if (theme == THEME_DARK)
@@ -844,12 +844,12 @@ public class Status implements Parcelable{
             if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
                 spannableStringT.setSpan(new ClickableSpan() {
                     @Override
-                    public void onClick(View textView) {
+                    public void onClick(@NonNull View textView) {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/"+twittername.substring(1).replace("@twitter.com","")));
                         context.startActivity(intent);
                     }
                     @Override
-                    public void updateDrawState(TextPaint ds) {
+                    public void updateDrawState(@NonNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
                         if (theme == THEME_DARK)
@@ -872,11 +872,11 @@ public class Status implements Parcelable{
                         if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
                             spannableStringT.setSpan(new ClickableSpan() {
                                  @Override
-                                 public void onClick(View textView) {
+                                 public void onClick(@NonNull View textView) {
                                      CrossActions.doCrossProfile(context,account);
                                  }
                                  @Override
-                                 public void updateDrawState(TextPaint ds) {
+                                 public void updateDrawState(@NonNull TextPaint ds) {
                                      super.updateDrawState(ds);
                                      ds.setUnderlineText(false);
                                      if (theme == THEME_DARK)
@@ -887,8 +887,8 @@ public class Status implements Parcelable{
                                          ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
                                  }
                              },
-                                    startPosition, endPosition,
-                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                            startPosition, endPosition,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
                 }
             }
@@ -908,7 +908,7 @@ public class Status implements Parcelable{
                         if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition) {
                             spannableStringT.setSpan(new ClickableSpan() {
                                  @Override
-                                 public void onClick(View textView) {
+                                 public void onClick(@NonNull View textView) {
                                      String finalUrl = url;
                                      Pattern link = Pattern.compile("https?:\\/\\/([\\da-z\\.-]+\\.[a-z\\.]{2,10})\\/(@[\\w._-]*[0-9]*)(\\/[0-9]{1,})?$");
                                      Matcher matcherLink = link.matcher(url);
@@ -943,7 +943,7 @@ public class Status implements Parcelable{
                                      }
                                  }
                                  @Override
-                                 public void updateDrawState(TextPaint ds) {
+                                 public void updateDrawState(@NonNull TextPaint ds) {
                                      super.updateDrawState(ds);
                                      ds.setUnderlineText(false);
                                      if (theme == THEME_DARK)
@@ -977,7 +977,7 @@ public class Status implements Parcelable{
                             if (endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
                                 spannableStringT.setSpan(new ClickableSpan() {
                                      @Override
-                                     public void onClick(View textView) {
+                                     public void onClick(@NonNull View textView) {
                                          Intent intent = new Intent(context, ShowAccountActivity.class);
                                          Bundle b = new Bundle();
                                          b.putString("accountId", mention.getId());
@@ -986,7 +986,7 @@ public class Status implements Parcelable{
                                      }
 
                                      @Override
-                                     public void updateDrawState(TextPaint ds) {
+                                     public void updateDrawState(@NonNull TextPaint ds) {
                                          super.updateDrawState(ds);
                                          ds.setUnderlineText(false);
                                          if (theme == THEME_DARK)
@@ -1008,28 +1008,28 @@ public class Status implements Parcelable{
                         int endPosition = startPosition + targetedAccount.length();
                         if( endPosition <= spannableStringT.toString().length() && endPosition >= startPosition)
                             spannableStringT.setSpan(new ClickableSpan() {
-                                                         @Override
-                                                         public void onClick(View textView) {
-                                                             Intent intent = new Intent(context, ShowAccountActivity.class);
-                                                             Bundle b = new Bundle();
-                                                             b.putString("accountId", mention.getId());
-                                                             intent.putExtras(b);
-                                                             context.startActivity(intent);
-                                                         }
-                                                         @Override
-                                                         public void updateDrawState(TextPaint ds) {
-                                                             super.updateDrawState(ds);
-                                                             ds.setUnderlineText(false);
-                                                             if (theme == THEME_DARK)
-                                                                 ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                             else if (theme == THEME_BLACK)
-                                                                 ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                             else if (theme == THEME_LIGHT)
-                                                                 ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
-                                                         }
-                                                     },
-                                    startPosition, endPosition,
-                                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                                 @Override
+                                 public void onClick(@NonNull View textView) {
+                                     Intent intent = new Intent(context, ShowAccountActivity.class);
+                                     Bundle b = new Bundle();
+                                     b.putString("accountId", mention.getId());
+                                     intent.putExtras(b);
+                                     context.startActivity(intent);
+                                 }
+                                 @Override
+                                 public void updateDrawState(@NonNull TextPaint ds) {
+                                     super.updateDrawState(ds);
+                                     ds.setUnderlineText(false);
+                                     if (theme == THEME_DARK)
+                                         ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                     else if (theme == THEME_BLACK)
+                                         ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                     else if (theme == THEME_LIGHT)
+                                         ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                                 }
+                             },
+                            startPosition, endPosition,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                     }
                 }
             }
@@ -1042,7 +1042,7 @@ public class Status implements Parcelable{
             if( matchEnd <= spannableStringT.toString().length() && matchEnd >= matchStart)
                 spannableStringT.setSpan(new ClickableSpan() {
                     @Override
-                    public void onClick(View textView) {
+                    public void onClick(@NonNull View textView) {
                         Intent intent = new Intent(context, HashTagActivity.class);
                         Bundle b = new Bundle();
                         b.putString("tag", tag.substring(1));
@@ -1050,7 +1050,7 @@ public class Status implements Parcelable{
                         context.startActivity(intent);
                     }
                     @Override
-                    public void updateDrawState(TextPaint ds) {
+                    public void updateDrawState(@NonNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
                         if (theme == THEME_DARK)
