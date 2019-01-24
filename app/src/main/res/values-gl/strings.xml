@@ -739,7 +739,7 @@
     <string name="settings_category_label_interface">Interface</string>
     <string name="settings_category_label_hiddencontent">Contido oculto</string>
     <string name="settings_category_label_composing">Redactando</string>
-    <string name="contact">Contacts</string>
+    <string name="contact">Contactos</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
