@@ -187,7 +187,7 @@
     <string name="about_license">Lisens: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Kildekode: </string>
-    <string name="about_yandex">Oversettelse av toots:</string>
+    <string name="about_yandex">Oversetting av toots:</string>
     <string name="about_thekinrar">Søk instanser:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Ikon-designer:</string>
@@ -347,8 +347,8 @@
     </string-array>
     <string name="your_api_key">API-nøkkel, du kan la denne stå tom dersom Yandex benyttes</string>
     <string-array name="settings_theme">
-        <item>Mørk</item>
-        <item>Lys</item>
+        <item>Mørkt</item>
+        <item>Lyst</item>
         <item>Svart</item>
     </string-array>
     <string-array name="settings_resize_picture">
