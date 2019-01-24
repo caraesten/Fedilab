@@ -747,22 +747,22 @@ public class Account implements Parcelable {
                             int endPosition = startPosition + targetedAccount.length();
                             if( endPosition <= fieldSpan.toString().length() && endPosition >= startPosition)
                                 fieldSpan.setSpan(new ClickableSpan() {
-                                                @Override
-                                                public void onClick(@NonNull View textView) {
-                                                    CrossActions.doCrossProfile(context,accountMention);
-                                                }
-                                                @Override
-                                                public void updateDrawState(@NonNull TextPaint ds) {
-                                                    super.updateDrawState(ds);
-                                                    ds.setUnderlineText(false);
-                                                    if (theme == THEME_DARK)
-                                                        ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
-                                                    else if (theme == THEME_BLACK)
-                                                        ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
-                                                    else if (theme == THEME_LIGHT)
-                                                        ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
-                                                }
-                                            },
+                                @Override
+                                public void onClick(@NonNull View textView) {
+                                    CrossActions.doCrossProfile(context,accountMention);
+                                }
+                                @Override
+                                public void updateDrawState(@NonNull TextPaint ds) {
+                                    super.updateDrawState(ds);
+                                    ds.setUnderlineText(false);
+                                    if (theme == THEME_DARK)
+                                        ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                    else if (theme == THEME_BLACK)
+                                        ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                    else if (theme == THEME_LIGHT)
+                                        ds.setColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                                }
+                            },
                             startPosition, endPosition,
                             Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                         }
