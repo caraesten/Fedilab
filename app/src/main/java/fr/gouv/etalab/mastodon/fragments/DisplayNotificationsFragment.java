@@ -383,15 +383,20 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     public void onRetrieveMissingNotifications(List<Notification> notifications) {
         flag_loading = false;
         swipeRefreshLayout.setRefreshing(false);
+        if( this.notifications != null && this.notifications.size() > 0){
+            notificationsListAdapter.notifyItemRangeChanged(0,this.notifications.size());
+        }
         if( notifications != null && notifications.size() > 0) {
+            int inserted = 0;
             for (int i = notifications.size()-1 ; i >= 0 ; i--) {
-                if (this.notifications.size() == 0 ||
+                if (this.notifications != null && this.notifications.size() == 0 ||
                         Long.parseLong(notifications.get(i).getId()) > Long.parseLong(this.notifications.get(0).getId())) {
                     MainActivity.countNewNotifications++;
                     this.notifications.add(0, notifications.get(i));
+                    inserted++;
                 }
             }
-            notificationsListAdapter.notifyDataSetChanged();
+            notificationsListAdapter.notifyItemRangeInserted(0,inserted);
             try {
                 ((MainActivity) context).updateNotifCounter();
             }catch (Exception ignored){}
