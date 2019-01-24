@@ -60,8 +60,11 @@ public class SettingsPeertubeFragment extends Fragment {
                 R.array.settings_video_mode, android.R.layout.simple_spinner_item);
         video_mode_spinner.setAdapter(video_mode_spinnerAdapter);
         if (videoMode == Helper.VIDEO_MODE_TORRENT)
-            videoMode = 2;
-        video_mode_spinner.setSelection(videoMode);
+            videoMode = Helper.VIDEO_MODE_DIRECT;
+        int positionVideoMode = 0;
+        if( videoMode == Helper.VIDEO_MODE_DIRECT)
+            positionVideoMode = 1;
+        video_mode_spinner.setSelection(positionVideoMode);
         video_mode_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -72,11 +75,11 @@ public class SettingsPeertubeFragment extends Fragment {
                             editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_TORRENT);
                             editor.apply();
                             break;*/
-                        case 1:
+                        case 0:
                             editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_WEBVIEW);
                             editor.apply();
                             break;
-                        case 2:
+                        case 1:
                             editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_DIRECT);
                             editor.apply();
                             break;
