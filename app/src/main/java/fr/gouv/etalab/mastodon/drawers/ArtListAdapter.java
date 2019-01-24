@@ -32,9 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.FitCenter;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -186,10 +183,7 @@ public class ArtListAdapter extends RecyclerView.Adapter implements OnPostAction
                 Status.makeEmojis(context, this, status);
 
             if (status.getAccount() != null && status.getAccount().getAvatar() != null)
-                Glide.with(context)
-                        .load(status.getAccount().getAvatar())
-                        .apply(new RequestOptions().transforms(new FitCenter(), new RoundedCorners(10)))
-                        .into(holder.art_pp);
+                Helper.loadGiF(context, status.getAccount().getAvatar(), holder.art_pp);
 
             if (status.getArt_attachment() != null)
                 Glide.with(context)
