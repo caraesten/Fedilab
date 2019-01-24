@@ -48,7 +48,12 @@ import fr.gouv.etalab.mastodon.client.Entities.Filters;
 import fr.gouv.etalab.mastodon.client.Entities.HowToVideo;
 import fr.gouv.etalab.mastodon.client.Entities.Instance;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
+import fr.gouv.etalab.mastodon.client.Entities.PeertubeAccountNotification;
+import fr.gouv.etalab.mastodon.client.Entities.PeertubeActorFollow;
+import fr.gouv.etalab.mastodon.client.Entities.PeertubeComment;
 import fr.gouv.etalab.mastodon.client.Entities.PeertubeInformation;
+import fr.gouv.etalab.mastodon.client.Entities.PeertubeNotification;
+import fr.gouv.etalab.mastodon.client.Entities.PeertubeVideoNotification;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -584,6 +589,67 @@ public class PeertubeAPI {
             e.printStackTrace();
         }
         apiResponse.setPeertubes(peertubes);
+        return apiResponse;
+    }
+
+    /**
+     * Retrieves Peertube notifications for the account *synchronously*
+     *
+     * @param max_id          String id max
+     * @return APIResponse
+     */
+    public APIResponse getNotifications(String max_id){
+        return getNotifications(max_id, null, 20);
+    }
+
+    /**
+     * Retrieves Peertube notifications since id for the account *synchronously*
+     *
+     * @param since_id          String id since
+     * @return APIResponse
+     */
+    public APIResponse getNotificationsSince(String since_id){
+        return getNotifications(null, since_id, 20);
+    }
+
+    /**
+     * Retrieves Peertube notifications for the account *synchronously*
+     *
+     * @param max_id          String id max
+     * @param since_id        String since the id
+     * @param limit           int limit  - max value 40
+     * @return APIResponse
+     */
+    @SuppressWarnings("SameParameterValue")
+    private APIResponse getNotifications(String max_id, String since_id, int limit) {
+
+        HashMap<String, String> params = new HashMap<>();
+        if (max_id != null)
+            params.put("start", max_id);
+        if (since_id != null)
+            params.put("since_id", since_id);
+        if (0 < limit || limit > 40)
+            limit = 40;
+        params.put("count", String.valueOf(limit));
+        List<PeertubeNotification> peertubeNotifications = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUrl("/users/me/notifications"), 60, params, prefKeyOauthTokenT);
+            JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+            peertubeNotifications = parsePeertubeNotifications(jsonArray);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setPeertubeNotifications(peertubeNotifications);
         return apiResponse;
     }
 
@@ -1392,6 +1458,120 @@ public class PeertubeAPI {
     }
 
     /**
+     * Parse json response for peertube notifications
+     * @param jsonArray JSONArray
+     * @return List<PeertubeNotification>
+     */
+    private List<PeertubeNotification> parsePeertubeNotifications(JSONArray jsonArray){
+        List<PeertubeNotification> peertubeNotifications = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ){
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                PeertubeNotification peertubeNotification = parsePeertubeNotifications(context, resobj);
+                i++;
+                peertubeNotifications.add(peertubeNotification);
+            }
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return peertubeNotifications;
+    }
+
+    /**
+     * Parse json response for unique how to
+     * @param resobj JSONObject
+     * @return Peertube
+     */
+    public static PeertubeNotification parsePeertubeNotifications(Context context,JSONObject resobj){
+        PeertubeNotification peertubeNotification = new PeertubeNotification();
+        try {
+            peertubeNotification.setId(resobj.get("id").toString());
+            peertubeNotification.setType(resobj.getInt("type"));
+            peertubeNotification.setUpdatedAt(Helper.mstStringToDate(context, resobj.get("updatedAt").toString()));
+            peertubeNotification.setCreatedAt(Helper.mstStringToDate(context, resobj.get("createdAt").toString()));
+            peertubeNotification.setRead(resobj.getBoolean("read"));
+
+            if( resobj.has("comment")){
+                PeertubeComment peertubeComment = new PeertubeComment();
+                JSONObject comment = resobj.getJSONObject("comment");
+                PeertubeAccountNotification peertubeAccountNotification = new PeertubeAccountNotification();
+                peertubeAccountNotification.setDisplayName(comment.get("displayName").toString());
+                peertubeAccountNotification.setName(comment.get("name").toString());
+                peertubeAccountNotification.setId(comment.get("id").toString());
+                if( comment.has("avatar")){
+                    peertubeAccountNotification.setAvatar(comment.getJSONObject("avatar").get("path").toString());
+                }
+                peertubeComment.setPeertubeAccountNotification(peertubeAccountNotification);
+                PeertubeVideoNotification peertubeVideoNotification = new PeertubeVideoNotification();
+                peertubeVideoNotification.setUuid(comment.get("uuid").toString());
+                peertubeVideoNotification.setName(comment.get("name").toString());
+                peertubeVideoNotification.setId(comment.get("id").toString());
+                peertubeComment.setPeertubeVideoNotification(peertubeVideoNotification);
+                peertubeNotification.setPeertubeComment(peertubeComment);
+            }
+
+            if( resobj.has("video")){
+                PeertubeVideoNotification peertubeVideoNotification = new PeertubeVideoNotification();
+                JSONObject video = resobj.getJSONObject("video");
+                peertubeVideoNotification.setUuid(video.get("uuid").toString());
+                peertubeVideoNotification.setName(video.get("name").toString());
+                peertubeVideoNotification.setId(video.get("id").toString());
+                if( video.has("channel")){
+                    PeertubeAccountNotification peertubeAccountNotification = new PeertubeAccountNotification();
+                    JSONObject channel = resobj.getJSONObject("video");
+                    peertubeAccountNotification.setDisplayName(channel.get("displayName").toString());
+                    peertubeAccountNotification.setName(channel.get("name").toString());
+                    peertubeAccountNotification.setId(channel.get("id").toString());
+                    if( channel.has("avatar")){
+                        peertubeAccountNotification.setAvatar(channel.getJSONObject("avatar").get("path").toString());
+                    }
+                    peertubeVideoNotification.setPeertubeAccountNotification(peertubeAccountNotification);
+                }
+                peertubeNotification.setPeertubeVideoNotification(peertubeVideoNotification);
+            }
+
+            if( resobj.has("actorFollow")){
+                PeertubeActorFollow peertubeActorFollow = new PeertubeActorFollow();
+                JSONObject actorFollow = resobj.getJSONObject("actorFollow");
+
+                JSONObject follower = actorFollow.getJSONObject("follower");
+                JSONObject following = actorFollow.getJSONObject("following");
+
+                PeertubeAccountNotification peertubeAccountNotification = new PeertubeAccountNotification();
+                peertubeAccountNotification.setDisplayName(follower.get("displayName").toString());
+                peertubeAccountNotification.setName(follower.get("name").toString());
+                peertubeAccountNotification.setId(follower.get("id").toString());
+                if( follower.has("avatar")){
+                    peertubeAccountNotification.setAvatar(follower.getJSONObject("avatar").get("path").toString());
+                }
+                peertubeActorFollow.setFollower(peertubeAccountNotification);
+
+                PeertubeAccountNotification peertubeAccounFollowingNotification = new PeertubeAccountNotification();
+                peertubeAccounFollowingNotification.setDisplayName(following.get("displayName").toString());
+                peertubeAccounFollowingNotification.setName(following.get("name").toString());
+                peertubeAccounFollowingNotification.setId(following.get("id").toString());
+                if( following.has("avatar")){
+                    peertubeAccounFollowingNotification.setAvatar(following.getJSONObject("avatar").get("path").toString());
+                }
+                peertubeActorFollow.setFollowing(peertubeAccounFollowingNotification);
+                peertubeActorFollow.setId(actorFollow.get("id").toString());
+                peertubeNotification.setPeertubeActorFollow(peertubeActorFollow);
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return peertubeNotification;
+    }
+
+
+
+    /**
      * Parse json response for several howto
      * @param jsonArray JSONArray
      * @return List<Peertube>
@@ -1413,6 +1593,8 @@ public class PeertubeAPI {
         }
         return peertubes;
     }
+
+
 
     /**
      * Parse json response for unique how to

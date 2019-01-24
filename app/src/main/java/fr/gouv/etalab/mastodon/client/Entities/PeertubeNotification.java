@@ -26,7 +26,7 @@ public class PeertubeNotification  {
 
     private String id;
     private boolean read;
-    private Date updatedAt;
+    private Date updatedAt, createdAt;
     private int type;
     private PeertubeComment peertubeComment;
     private PeertubeVideoNotification peertubeVideoNotification;
@@ -90,5 +90,13 @@ public class PeertubeNotification  {
 
     public void setPeertubeVideoNotification(PeertubeVideoNotification peertubeVideoNotification) {
         this.peertubeVideoNotification = peertubeVideoNotification;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

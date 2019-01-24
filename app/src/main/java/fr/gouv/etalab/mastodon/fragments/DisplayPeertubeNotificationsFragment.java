@@ -14,10 +14,7 @@ package fr.gouv.etalab.mastodon.fragments;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,7 +23,6 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,24 +39,21 @@ import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingNotificationsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveNotificationsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
-import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingNotificationsInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
+import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeNotificationsInterface;
 
 
 /**
  * Created by Thomas on 24/01/2019.
  * Fragment to display peertube notifications
  */
-public class DisplayPeertubeNotificationsFragment extends Fragment implements OnRetrieveNotificationsInterface, OnRetrieveMissingNotificationsInterface {
+public class DisplayPeertubeNotificationsFragment extends Fragment implements  OnRetrieveMissingNotificationsInterface, OnRetrievePeertubeNotificationsInterface {
 
 
 
@@ -78,8 +71,7 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements On
     private String userId, instance;
     private SharedPreferences sharedpreferences;
     LinearLayoutManager mLayoutManager;
-    private BroadcastReceiver receive_action;
-    private BroadcastReceiver receive_data;
+
 
     //Peertube notification type
     public static int NEW_VIDEO_FROM_SUBSCRIPTION = 1;
@@ -135,7 +127,7 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements On
                     if (firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            asyncTask = new RetrieveNotificationsAsyncTask(context, true, null,  max_id,   DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            asyncTask = new RetrievePeertubeNotificationsAsyncTask(context,  null,  max_id,   DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -145,42 +137,6 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements On
             }
         });
 
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-
-            if( receive_action != null)
-                LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
-            receive_action = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    Bundle b = intent.getExtras();
-                    assert b != null;
-                    Status status = b.getParcelable("status");
-                    API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
-                    if( status != null) {
-                        notificationsListAdapter.notifyNotificationWithActionChanged(statusAction, status);
-                    }
-                }
-            };
-            LocalBroadcastManager.getInstance(context).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
-
-            if( receive_data != null)
-                LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
-            receive_data = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    Bundle b = intent.getExtras();
-                    assert b != null;
-                    String userIdService = b.getString("userIdService", null);
-                    if( userIdService != null && userIdService.equals(userId)) {
-                        Notification notification = b.getParcelable("data");
-                        refresh(notification);
-                        if( context instanceof MainActivity)
-                            ((MainActivity)context).updateNotifCounter();
-                    }
-                }
-            };
-            LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
-        }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -223,13 +179,13 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements On
                 break;
         }
         if( context != null)
-            asyncTask = new RetrieveNotificationsAsyncTask(context, true, null,  max_id,  DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrievePeertubeNotificationsAsyncTask(context, null,  max_id,  DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if( context != null)
-                        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null,  max_id,  DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        asyncTask = new RetrievePeertubeNotificationsAsyncTask(context, null,  max_id,  DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }, 500);
         return rootView;
@@ -255,73 +211,10 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements On
         super.onDestroy();
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
             asyncTask.cancel(true);
-        if( receive_action != null)
-            LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
-        if( receive_data != null)
-            LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
 
     }
 
-    @Override
-    public void onRetrieveNotifications(APIResponse apiResponse, Account account, boolean refreshData) {
-        mainLoader.setVisibility(View.GONE);
-        nextElementLoader.setVisibility(View.GONE);
-        String lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
-        if( apiResponse.getError() != null){
-            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
-            flag_loading = false;
-            swipeRefreshLayout.setRefreshing(false);
-            swiped = false;
-            return;
-        }
 
-        int previousPosition = notifications.size();
-        max_id = apiResponse.getMax_id();
-        List<Notification> notifications = apiResponse.getNotifications();
-
-        if( !swiped && firstLoad && (notifications == null || notifications.size() == 0))
-            textviewNoAction.setVisibility(View.VISIBLE);
-        else
-            textviewNoAction.setVisibility(View.GONE);
-        if( swiped ){
-            if (previousPosition > 0) {
-                for (int i = 0; i < previousPosition; i++) {
-                    this.notifications.remove(0);
-                }
-                notificationsListAdapter.notifyItemRangeRemoved(0, previousPosition);
-            }
-            swiped = false;
-        }
-
-        if( notifications != null && notifications.size() > 0) {
-            for(Notification tmpNotification: notifications){
-
-                if( lastReadNotifications != null && Long.parseLong(tmpNotification.getId()) > Long.parseLong(lastReadNotifications)) {
-                    MainActivity.countNewNotifications++;
-                }
-                try {
-                    ((MainActivity) context).updateNotifCounter();
-                }catch (Exception ignored){}
-                this.notifications.add(tmpNotification);
-            }
-            if( firstLoad) {
-                //Update the id of the last notification retrieved
-                if( MainActivity.lastNotificationId == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(MainActivity.lastNotificationId))
-                    MainActivity.lastNotificationId = notifications.get(0).getId();
-                updateNotificationLastId(notifications.get(0).getId());
-            }
-            notificationsListAdapter.notifyItemRangeInserted(previousPosition, notifications.size());
-        }else {
-            if( firstLoad)
-                textviewNoAction.setVisibility(View.VISIBLE);
-        }
-        if( firstLoad )
-            ((MainActivity)context).updateNotifCounter();
-        swipeRefreshLayout.setRefreshing(false);
-        firstLoad = false;
-        //The initial call comes from a classic tab refresh
-        flag_loading = (max_id == null );
-    }
 
     /**
      * Called from main activity in onResume to retrieve missing notifications
@@ -360,7 +253,7 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements On
         flag_loading = true;
         swiped = true;
         MainActivity.countNewNotifications = 0;
-        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null,  null,   DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrievePeertubeNotificationsAsyncTask(context, null,  null,   DisplayPeertubeNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -429,5 +322,66 @@ public class DisplayPeertubeNotificationsFragment extends Fragment implements On
             editor.putString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, notificationId);
             editor.apply();
         }
+    }
+
+    @Override
+    public void onRetrievePeertubeNotifications(APIResponse apiResponse, Account account) {
+        mainLoader.setVisibility(View.GONE);
+        nextElementLoader.setVisibility(View.GONE);
+        String lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
+        if( apiResponse.getError() != null){
+            Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            flag_loading = false;
+            swipeRefreshLayout.setRefreshing(false);
+            swiped = false;
+            return;
+        }
+
+        int previousPosition = notifications.size();
+        max_id = apiResponse.getMax_id();
+        List<Notification> notifications = apiResponse.getNotifications();
+
+        if( !swiped && firstLoad && (notifications == null || notifications.size() == 0))
+            textviewNoAction.setVisibility(View.VISIBLE);
+        else
+            textviewNoAction.setVisibility(View.GONE);
+        if( swiped ){
+            if (previousPosition > 0) {
+                for (int i = 0; i < previousPosition; i++) {
+                    this.notifications.remove(0);
+                }
+                notificationsListAdapter.notifyItemRangeRemoved(0, previousPosition);
+            }
+            swiped = false;
+        }
+
+        if( notifications != null && notifications.size() > 0) {
+            for(Notification tmpNotification: notifications){
+
+                if( lastReadNotifications != null && Long.parseLong(tmpNotification.getId()) > Long.parseLong(lastReadNotifications)) {
+                    MainActivity.countNewNotifications++;
+                }
+                try {
+                    ((MainActivity) context).updateNotifCounter();
+                }catch (Exception ignored){}
+                this.notifications.add(tmpNotification);
+            }
+            if( firstLoad) {
+                //Update the id of the last notification retrieved
+                if( MainActivity.lastNotificationId == null || Long.parseLong(notifications.get(0).getId()) > Long.parseLong(MainActivity.lastNotificationId))
+                    MainActivity.lastNotificationId = notifications.get(0).getId();
+                updateNotificationLastId(notifications.get(0).getId());
+            }
+            notificationsListAdapter.notifyItemRangeInserted(previousPosition, notifications.size());
+        }else {
+            if( firstLoad)
+                textviewNoAction.setVisibility(View.VISIBLE);
+        }
+        if( firstLoad )
+            ((MainActivity)context).updateNotifCounter();
+        swipeRefreshLayout.setRefreshing(false);
+        firstLoad = false;
+        //The initial call comes from a classic tab refresh
+        flag_loading = (max_id == null );
     }
 }
