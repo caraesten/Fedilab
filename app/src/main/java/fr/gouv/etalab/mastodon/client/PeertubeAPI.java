@@ -1483,7 +1483,7 @@ public class PeertubeAPI {
      * @param resobj JSONObject
      * @return Peertube
      */
-    public static PeertubeNotification parsePeertubeNotifications(Context context,JSONObject resobj){
+    private static PeertubeNotification parsePeertubeNotifications(Context context,JSONObject resobj){
         PeertubeNotification peertubeNotification = new PeertubeNotification();
         try {
             peertubeNotification.setId(resobj.get("id").toString());
@@ -1495,19 +1495,25 @@ public class PeertubeAPI {
             if( resobj.has("comment")){
                 PeertubeComment peertubeComment = new PeertubeComment();
                 JSONObject comment = resobj.getJSONObject("comment");
-                PeertubeAccountNotification peertubeAccountNotification = new PeertubeAccountNotification();
-                peertubeAccountNotification.setDisplayName(comment.get("displayName").toString());
-                peertubeAccountNotification.setName(comment.get("name").toString());
-                peertubeAccountNotification.setId(comment.get("id").toString());
-                if( comment.has("avatar")){
-                    peertubeAccountNotification.setAvatar(comment.getJSONObject("avatar").get("path").toString());
+                if( comment.has("account")){
+                    JSONObject account = comment.getJSONObject("account");
+                    PeertubeAccountNotification peertubeAccountNotification = new PeertubeAccountNotification();
+                    peertubeAccountNotification.setDisplayName(account.get("displayName").toString());
+                    peertubeAccountNotification.setName(account.get("name").toString());
+                    peertubeAccountNotification.setId(account.get("id").toString());
+                    peertubeAccountNotification.setAvatar(account.getJSONObject("avatar").get("path").toString());
+                    peertubeComment.setPeertubeAccountNotification(peertubeAccountNotification);
                 }
-                peertubeComment.setPeertubeAccountNotification(peertubeAccountNotification);
-                PeertubeVideoNotification peertubeVideoNotification = new PeertubeVideoNotification();
-                peertubeVideoNotification.setUuid(comment.get("uuid").toString());
-                peertubeVideoNotification.setName(comment.get("name").toString());
-                peertubeVideoNotification.setId(comment.get("id").toString());
-                peertubeComment.setPeertubeVideoNotification(peertubeVideoNotification);
+                if( comment.has("video")){
+                    JSONObject video = comment.getJSONObject("video");
+                    PeertubeVideoNotification peertubeVideoNotification = new PeertubeVideoNotification();
+                    peertubeVideoNotification.setUuid(video.get("uuid").toString());
+                    peertubeVideoNotification.setName(video.get("name").toString());
+                    peertubeVideoNotification.setId(video.get("id").toString());
+                    peertubeComment.setPeertubeVideoNotification(peertubeVideoNotification);
+                }
+                peertubeComment.setId(comment.get("id").toString());
+                peertubeComment.setThreadId(comment.get("threadId").toString());
                 peertubeNotification.setPeertubeComment(peertubeComment);
             }
 
@@ -1519,7 +1525,7 @@ public class PeertubeAPI {
                 peertubeVideoNotification.setId(video.get("id").toString());
                 if( video.has("channel")){
                     PeertubeAccountNotification peertubeAccountNotification = new PeertubeAccountNotification();
-                    JSONObject channel = resobj.getJSONObject("video");
+                    JSONObject channel = video.getJSONObject("channel");
                     peertubeAccountNotification.setDisplayName(channel.get("displayName").toString());
                     peertubeAccountNotification.setName(channel.get("name").toString());
                     peertubeAccountNotification.setId(channel.get("id").toString());
@@ -1550,7 +1556,9 @@ public class PeertubeAPI {
                 PeertubeAccountNotification peertubeAccounFollowingNotification = new PeertubeAccountNotification();
                 peertubeAccounFollowingNotification.setDisplayName(following.get("displayName").toString());
                 peertubeAccounFollowingNotification.setName(following.get("name").toString());
-                peertubeAccounFollowingNotification.setId(following.get("id").toString());
+                try {
+                    peertubeAccounFollowingNotification.setId(following.get("id").toString());
+                }catch (Exception ignored){}
                 if( following.has("avatar")){
                     peertubeAccounFollowingNotification.setAvatar(following.getJSONObject("avatar").get("path").toString());
                 }
