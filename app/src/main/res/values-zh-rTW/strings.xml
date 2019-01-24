@@ -734,6 +734,7 @@
     <string name="settings_category_label_interface">界面</string>
     <string name="settings_category_label_hiddencontent">隱藏內容</string>
     <string name="settings_category_label_composing">正在合成</string>
+    <string name="contact">Contacts</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
