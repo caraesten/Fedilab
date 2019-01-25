@@ -752,6 +752,8 @@
     <string name="toot_select_import">選取要匯入的檔案</string>
     <string name="toot_select_file_error">選擇備份檔時發生錯誤！</string>
     <string name="data_import_start">請不要在處理時砍除應用程式。這不會太久。</string>
+    <string name="add_public_comment">Add a public comment</string>
+    <string name="send_comment">Send comment</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
