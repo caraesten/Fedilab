@@ -739,19 +739,19 @@
     <string name="settings_category_label_composing">正在合成</string>
     <string name="contact">聯絡人</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> 已在您的影片留言 <b>%2$s</b>]]></string>
-    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
-    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
-    <string name="peertube_video_published"><![CDATA[Your video <b>%1$s</b> has been published]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
-    <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
-    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
-    <string name="export_data">Export data</string>
-    <string name="import_data">Import Data</string>
-    <string name="toot_select_import">Select the file to import</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
-    <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
+    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> 追蹤您的頻道 <b>%2$s</b>]]></string>
+    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> 追蹤您的帳號]]></string>
+    <string name="peertube_video_published"><![CDATA[您的影片 <b>%1$s</b> 已發佈]]></string>
+    <string name="peertube_video_import_success"><![CDATA[您的影片匯入 <b>%1$s</b> 成功]]></string>
+    <string name="peertube_video_import_error"><![CDATA[您的影片匯入 <b>%1$s</b> 失敗]]></string>
+    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> 發佈了新影片：<b>%2$s</b>]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[您的影片 <b>%1$s</b> 已被加入黑名單]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[您的影片 <b>%1$s</b> 已被解除黑名單]]></string>
+    <string name="export_data">匯出資料</string>
+    <string name="import_data">匯入資料</string>
+    <string name="toot_select_import">選取要匯入的檔案</string>
+    <string name="toot_select_file_error">選擇備份檔時發生錯誤！</string>
+    <string name="data_import_start">請不要在處理時砍除應用程式。這不會太久。</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
