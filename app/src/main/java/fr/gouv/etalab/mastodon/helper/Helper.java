@@ -2722,6 +2722,9 @@ public class Helper {
                 return;
             }
         }
+        if( url != null && url.startsWith("/")){
+            url = Helper.getLiveInstanceWithProtocol(context) + url;
+        }
         if( url == null  || url.equals("null") || url.contains("missing.png") || url.contains(".svg")) {
             if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                 try {

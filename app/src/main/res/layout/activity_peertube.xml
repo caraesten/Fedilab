@@ -22,6 +22,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:keepScreenOn="true"
     tools:context=".activities.PeertubeActivity">
 
     <LinearLayout
@@ -188,6 +189,64 @@
                     android:id="@+id/peertube_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:id="@+id/write_comment_container"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:contentDescription="@string/profile_picture"
+                            android:id="@+id/my_pp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp" />
+                        <ImageView
+                            android:contentDescription="@string/send_comment"
+                            android:id="@+id/send"
+                            android:layout_marginTop="5dp"
+                            android:visibility="gone"
+                            android:src="@drawable/ic_send"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/add_comment_read"
+                            android:text="@string/add_public_comment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        <EditText
+                            android:visibility="gone"
+                            android:hint="@string/add_public_comment"
+                            android:id="@+id/add_comment_write"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:overScrollMode="always"
+                            android:scrollbarStyle="insideInset"
+                            android:scrollbars="vertical"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:maxLines="4"
+                            android:inputType="textMultiLine" />
+                    </LinearLayout>
+
+                </LinearLayout>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/peertube_comments"
                     android:layout_width="match_parent"

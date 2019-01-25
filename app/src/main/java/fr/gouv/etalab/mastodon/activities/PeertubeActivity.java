@@ -17,6 +17,7 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -41,9 +42,11 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -83,6 +86,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrievePeertubeSingleCommentsAsyncTas
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
@@ -93,6 +97,7 @@ import fr.gouv.etalab.mastodon.helper.FullScreenMediaController;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrievePeertubeInterface;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.PeertubeFavoritesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.webview.MastalabWebChromeClient;
@@ -129,6 +134,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     private TextView resolution;
     private DefaultTrackSelector trackSelector;
     private int mode;
+    private LinearLayout write_comment_container;
+    private ImageView my_pp, send;
+    private TextView add_comment_read;
+    private EditText add_comment_write;
 
 
     @Override
@@ -164,7 +173,45 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube_information_container = findViewById(R.id.peertube_information_container);
         WebView webview_video = findViewById(R.id.webview_video);
         playerView = findViewById(R.id.media_video);
+        write_comment_container = findViewById(R.id.write_comment_container);
+        my_pp = findViewById(R.id.my_pp);
+        add_comment_read = findViewById(R.id.add_comment_read);
+        add_comment_write = findViewById(R.id.add_comment_write);
+        send  = findViewById(R.id.send);
+        add_comment_read.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_comment_read.setVisibility(View.GONE);
+                add_comment_write.setVisibility(View.VISIBLE);
+                send.setVisibility(View.VISIBLE);
+                add_comment_write.requestFocus();
+                add_comment_write.setSelection(add_comment_write.getText().length());
 
+            }
+        });
+        Helper.changeDrawableColor(getApplicationContext(), send, R.color.mastodonC4);
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            write_comment_container.setVisibility(View.GONE);
+        }
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String comment = add_comment_write.getText().toString();
+                if( comment.trim().length() > 0 ) {
+                    new PostActionAsyncTask(getApplicationContext(), API.StatusAction.PEERTUBECOMMENT, peertube.getId(), null, comment, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    add_comment_write.setText("");
+                    add_comment_read.setVisibility(View.VISIBLE);
+                    add_comment_write.setVisibility(View.GONE);
+                    send.setVisibility(View.GONE);
+                    add_comment_read.requestFocus();
+                }
+            }
+        });
+        String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
+        Helper.loadGiF(getApplicationContext(), account.getAvatar(), my_pp);
         Bundle b = getIntent().getExtras();
         if(b != null) {
             peertubeInstance = b.getString("peertube_instance", null);
@@ -271,7 +318,34 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         }
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View v = getCurrentFocus();
 
+        if ((ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
+                v instanceof EditText &&
+                v.getId() == R.id.add_comment_write) {
+            int scrcoords[] = new int[2];
+            v.getLocationOnScreen(scrcoords);
+            float x = ev.getRawX() + v.getLeft() - scrcoords[0];
+            float y = ev.getRawY() + v.getTop() - scrcoords[1];
+
+            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
+                add_comment_read.setVisibility(View.VISIBLE);
+                add_comment_write.setVisibility(View.GONE);
+                send.setVisibility(View.GONE);
+                hideKeyboard(PeertubeActivity.this);
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -282,6 +356,11 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         if( theme == THEME_LIGHT)
             Helper.colorizeIconMenu(menu, R.color.black);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            MenuItem item = menu.findItem(R.id.action_comment);
+            if( item != null)
+                item.setVisible(false);
+        }
         return true;
     }
     @Override
@@ -398,13 +477,15 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         }
 
         peertube = apiResponse.getPeertubes().get(0);
-        if( peertube.isCommentsEnabled())
+        if( peertube.isCommentsEnabled()) {
             new RetrievePeertubeSingleCommentsAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        else {
+            write_comment_container.setVisibility(View.VISIBLE);
+        }else {
             RelativeLayout no_action = findViewById(R.id.no_action);
             TextView no_action_text = findViewById(R.id.no_action_text);
             no_action_text.setText(getString(R.string.comment_no_allowed_peertube));
             no_action.setVisibility(View.VISIBLE);
+            write_comment_container.setVisibility(View.GONE);
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
 
@@ -577,13 +658,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
             return;
         }
         List<Status> statuses = apiResponse.getStatuses();
-        RelativeLayout no_action = findViewById(R.id.no_action);
         RecyclerView lv_comments = findViewById(R.id.peertube_comments);
         if( statuses == null || statuses.size() == 0){
-            no_action.setVisibility(View.VISIBLE);
             lv_comments.setVisibility(View.GONE);
         }else {
-            no_action.setVisibility(View.GONE);
             lv_comments.setVisibility(View.VISIBLE);
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             boolean isOnWifi = Helper.isOnWIFI(PeertubeActivity.this);
