@@ -482,6 +482,9 @@
     <string name="data_export_toots">Արտահանել գրառումները %1$s-ի համար</string>
     <string name="data_export_success">%2$s-ից %1$s թութ արտահանվել է։</string>
     <string name="data_export_error">Ինչ-որ բան սխալ է գնացել %1$s-ի բովանդակությունն արտահանելու ընթացքում</string>
+    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
+    <string name="data_import_success_simple">Data have been imported!</string>
+    <string name="data_import_error_simple">Something went wrong when importing data!</string>
     <!-- Proxy -->
     <string name="proxy_set">Պրոքսի</string>
     <string name="proxy_type">Ձև</string>
@@ -747,6 +750,11 @@
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
+    <string name="export_data">Export data</string>
+    <string name="import_data">Import Data</string>
+    <string name="toot_select_import">Select the file to import</string>
+    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
+    <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
