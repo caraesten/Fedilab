@@ -474,6 +474,9 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="data_export_toots">Beiträge exportieren für %1$s</string>
     <string name="data_export_success">%1$s Toots von %2$s wurden exportiert.</string>
     <string name="data_export_error">Etwas ist schief gelaufen beim exportieren von%1$s</string>
+    <string name="data_export_error_simple">Beim Exportieren von Daten ist ein Problem aufgetreten!</string>
+    <string name="data_import_success_simple">Daten wurden importiert!</string>
+    <string name="data_import_error_simple">Beim Importieren von Daten ist ein Problem aufgetreten!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Typ</string>
@@ -738,6 +741,11 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> hat ein neues Video veröffentlicht: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Ihr Video <b>%1$s</b> wurde zurückgezogen/gesperrt]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Die Sperre zu Ihr Video <b>%1$s</b> wurde aufgehoben]]></string>
+    <string name="export_data">Daten exportieren</string>
+    <string name="import_data">Daten importieren</string>
+    <string name="toot_select_import">Zu importierende Datei auswählen</string>
+    <string name="toot_select_file_error">Bei der Auswahl der Sicherungsdatei ist ein Problem aufgetreten!</string>
+    <string name="data_import_start">Bitte beenden Sie die App nicht während sie ausgeführt wird. Bitte ein wenig Geduld.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

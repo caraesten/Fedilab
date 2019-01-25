@@ -487,6 +487,9 @@
     <string name="data_export_toots">Статуси извоза за %1$s</string>
     <string name="data_export_success">Извежено %1$s од укупно %2$s тутова.</string>
     <string name="data_export_error">Дошло је до грешке приликом извоза података за %1$s</string>
+    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
+    <string name="data_import_success_simple">Data have been imported!</string>
+    <string name="data_import_error_simple">Something went wrong when importing data!</string>
     <!-- Proxy -->
     <string name="proxy_set">Прокси</string>
     <string name="proxy_type">Тип</string>
@@ -752,6 +755,11 @@
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
+    <string name="export_data">Export data</string>
+    <string name="import_data">Import Data</string>
+    <string name="toot_select_import">Select the file to import</string>
+    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
+    <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
