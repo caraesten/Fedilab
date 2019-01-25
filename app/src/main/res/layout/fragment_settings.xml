@@ -37,11 +37,30 @@
         android:paddingRight="@dimen/fab_margin"
         android:orientation="vertical"
         tools:ignore="UselessParent">
-        <TextView
-            android:layout_marginTop="@dimen/settings_category_label_margin"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_label_confirmations"/>
+            android:orientation="horizontal" >
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/settings_category_label_confirmations"
+                android:textColor="?colorAccent"
+                android:textSize="16sp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+        </LinearLayout>
         <CheckBox
             android:id="@+id/set_share_validation"
             android:layout_width="wrap_content"
@@ -56,12 +75,30 @@
             android:text="@string/set_share_validation_fav"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_marginTop="@dimen/settings_category_label_margin"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_label_timelines"/>
-
+            android:orientation="horizontal" >
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/settings_category_label_timelines"
+                android:textColor="?colorAccent"
+                android:textSize="16sp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+        </LinearLayout>
         <CheckBox
             android:id="@+id/set_display_direct"
             android:layout_width="wrap_content"
@@ -102,11 +139,30 @@
             android:text="@string/set_old_direct_timeline"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_marginTop="@dimen/settings_category_label_margin"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_label_notification"/>
+            android:orientation="horizontal" >
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/settings_category_label_notification"
+                android:textColor="?colorAccent"
+                android:textSize="16sp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+        </LinearLayout>
 
         <!-- LIVE NOTIFICATIONS SETTINGS -->
         <CheckBox
@@ -126,11 +182,31 @@
             android:text="@string/set_keep_background_process"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_marginTop="@dimen/settings_category_label_margin"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_label_interface"/>
+            android:orientation="horizontal" >
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/settings_category_label_interface"
+                android:textColor="?colorAccent"
+                android:textSize="16sp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+        </LinearLayout>
 
         <!-- COMPACT MODE  -->
         <CheckBox
@@ -201,11 +277,30 @@
             android:text="@string/set_display_content_after_fetch_more"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_marginTop="@dimen/settings_category_label_margin"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_label_composing"/>
+            android:orientation="horizontal" >
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/settings_category_label_composing"
+                android:textColor="?colorAccent"
+                android:textSize="16sp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+        </LinearLayout>
 
         <CheckBox
             android:id="@+id/set_auto_add_media_url"
@@ -257,11 +352,30 @@
             android:text="@string/set_share_details"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_marginTop="@dimen/settings_category_label_margin"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings_category_label_hiddencontent"/>
+            android:orientation="horizontal" >
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/settings_category_label_hiddencontent"
+                android:textColor="?colorAccent"
+                android:textSize="16sp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="?colorAccent" />
+        </LinearLayout>
 
         <!-- EXPAND CW -->
         <CheckBox
