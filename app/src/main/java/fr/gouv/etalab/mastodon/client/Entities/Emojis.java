@@ -27,26 +27,9 @@ public class Emojis implements Parcelable {
     private String shortcode;
     private String static_url;
     private String url;
+    private boolean visible_in_picker;
 
     public Emojis(){}
-
-    protected Emojis(Parcel in) {
-        shortcode = in.readString();
-        static_url = in.readString();
-        url = in.readString();
-    }
-
-    public static final Creator<Emojis> CREATOR = new Creator<Emojis>() {
-        @Override
-        public Emojis createFromParcel(Parcel in) {
-            return new Emojis(in);
-        }
-
-        @Override
-        public Emojis[] newArray(int size) {
-            return new Emojis[size];
-        }
-    };
 
     public String getShortcode() {
         return shortcode;
@@ -72,6 +55,14 @@ public class Emojis implements Parcelable {
         this.url = url;
     }
 
+    public boolean isVisible_in_picker() {
+        return visible_in_picker;
+    }
+
+    public void setVisible_in_picker(boolean visible_in_picker) {
+        this.visible_in_picker = visible_in_picker;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -79,8 +70,28 @@ public class Emojis implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(shortcode);
-        dest.writeString(static_url);
-        dest.writeString(url);
+        dest.writeString(this.shortcode);
+        dest.writeString(this.static_url);
+        dest.writeString(this.url);
+        dest.writeByte(this.visible_in_picker ? (byte) 1 : (byte) 0);
     }
+
+    protected Emojis(Parcel in) {
+        this.shortcode = in.readString();
+        this.static_url = in.readString();
+        this.url = in.readString();
+        this.visible_in_picker = in.readByte() != 0;
+    }
+
+    public static final Creator<Emojis> CREATOR = new Creator<Emojis>() {
+        @Override
+        public Emojis createFromParcel(Parcel source) {
+            return new Emojis(source);
+        }
+
+        @Override
+        public Emojis[] newArray(int size) {
+            return new Emojis[size];
+        }
+    };
 }

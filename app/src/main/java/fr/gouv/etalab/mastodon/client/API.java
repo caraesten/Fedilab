@@ -3596,7 +3596,8 @@ public class API {
             while (i < jsonArray.length() ) {
                 JSONObject resobj = jsonArray.getJSONObject(i);
                 Emojis emojis1 = parseEmojis(resobj);
-                emojis.add(emojis1);
+                if( emojis1.isVisible_in_picker())
+                    emojis.add(emojis1);
                 i++;
             }
         } catch (JSONException e) {
@@ -3617,6 +3618,11 @@ public class API {
             emojis.setShortcode(resobj.get("shortcode").toString());
             emojis.setStatic_url(resobj.get("static_url").toString());
             emojis.setUrl(resobj.get("url").toString());
+            try {
+                emojis.setVisible_in_picker((resobj.getBoolean("visible_in_picker")));
+            }catch (Exception e){
+                emojis.setVisible_in_picker(true);
+            }
         }catch (Exception ignored){}
         return emojis;
     }

@@ -189,7 +189,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     private int currentCursorPosition, searchLength;
     private TextView toot_space_left;
     private String initialContent;
-    private final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 754;
     private Account accountReply;
     private View popup_trans;
     private AlertDialog dialogTrans;

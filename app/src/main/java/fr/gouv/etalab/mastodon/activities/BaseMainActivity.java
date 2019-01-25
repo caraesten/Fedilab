@@ -25,6 +25,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -54,6 +55,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -77,15 +79,23 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ajts.androidmads.library.ExcelToSQLite;
+import com.ajts.androidmads.library.SQLiteToExcel;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -123,6 +133,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayMutedInstanceFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayPeertubeNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
+import fr.gouv.etalab.mastodon.fragments.SettingsFragment;
 import fr.gouv.etalab.mastodon.fragments.SettingsPeertubeFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutScheduleFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
@@ -166,6 +177,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeUser;
 import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
 import static fr.gouv.etalab.mastodon.helper.Helper.unCheckAllMenuItems;
 import static fr.gouv.etalab.mastodon.helper.Helper.updateHeaderAccountInfo;
+import static fr.gouv.etalab.mastodon.sqlite.Sqlite.DB_NAME;
 
 
 public abstract class BaseMainActivity extends BaseActivity
@@ -211,6 +223,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private FloatingActionButton federatedTimelines;
     public static UpdateAccountInfoAsyncTask.SOCIAL social;
     SparseArray<Fragment> registeredFragments = new SparseArray<>();
+    private final int PICK_IMPORT = 5556;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,7 +235,7 @@ public abstract class BaseMainActivity extends BaseActivity
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
-        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), DB_NAME, null, Sqlite.DB_VERSION).open();
         boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
         Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(token);
         if( account == null){
@@ -1340,6 +1353,61 @@ public abstract class BaseMainActivity extends BaseActivity
                                     startService(backupIntent);
                                 }
                                 return true;
+
+                            case R.id.action_import_data:
+
+                                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                    if (ContextCompat.checkSelfPermission(BaseMainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                                            PackageManager.PERMISSION_GRANTED) {
+                                        ActivityCompat.requestPermissions(BaseMainActivity.this,
+                                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                                TootActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                                        return true;
+                                    }
+                                }
+                                intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                                    intent.setType("application/vnd.ms-excel");
+                                    String[] mimetypes = {"application/vnd.ms-excel"};
+                                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                                    startActivityForResult(intent, PICK_IMPORT);
+                                }else {
+                                    intent.setType("application/vnd.ms-excel");
+                                    Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                    Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_import));
+                                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+                                    startActivityForResult(chooserIntent, PICK_IMPORT);
+                                }
+                                return true;
+                            case R.id.action_export_data:
+                                SQLiteToExcel sqliteToExcel = new SQLiteToExcel(BaseMainActivity.this, DB_NAME);
+                                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                                final String fileName = "Mastalab_export_"+timeStamp+".xls";
+                                sqliteToExcel.exportAllTables(fileName, new SQLiteToExcel.ExportListener() {
+                                    @Override
+                                    public void onStart() {
+
+                                    }
+                                    @Override
+                                    public void onCompleted(String filePath) {
+                                        final Intent intent = new Intent();
+                                        Random r = new Random();
+                                        final int notificationIdTmp = r.nextInt(10000);
+                                        File file = new File(filePath);
+                                        intent.setAction(android.content.Intent.ACTION_VIEW);
+                                        Uri uri = Uri.fromFile(file);
+                                        intent.setDataAndType(uri, "application/vnd.ms-excel");
+                                        Helper.notify_user(getApplicationContext(), intent, notificationIdTmp, BitmapFactory.decodeResource(getResources(),
+                                                R.mipmap.ic_launcher),  Helper.NotifType.STORE, getString(R.string.save_over), getString(R.string.download_from, fileName));
+                                        Toasty.success(getApplicationContext(), getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
+                                    }
+                                    @Override
+                                    public void onError(Exception e) {
+                                        Toasty.error(getApplicationContext(), getString(R.string.data_export_error_simple),Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                                return true;
                             default:
                                 return true;
                         }
@@ -1730,7 +1798,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 bundle.putString("instanceType","PEERTUBE");
                 SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), DB_NAME, null, Sqlite.DB_VERSION).open();
                 Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(token);
                 bundle.putString("targetedid",account.getUsername());
                 bundle.putBoolean("ownvideos", true);
@@ -2066,7 +2134,7 @@ public abstract class BaseMainActivity extends BaseActivity
             bundle.putString("instanceType","PEERTUBE");
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
             String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), DB_NAME, null, Sqlite.DB_VERSION).open();
             Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(token);
             bundle.putString("targetedid",account.getUsername());
             bundle.putBoolean("ownvideos", true);
@@ -2189,7 +2257,7 @@ public abstract class BaseMainActivity extends BaseActivity
             startActivity(myIntent);
             finish();
         }else {
-            SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, DB_NAME, null, Sqlite.DB_VERSION).open();
             Account account = new AccountDAO(getApplicationContext(), db).getAccountByID(userId);
             updateHeaderAccountInfo(activity, account, headerLayout);
         }
@@ -2199,12 +2267,37 @@ public abstract class BaseMainActivity extends BaseActivity
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //noinspection StatementWithEmptyBody
-        if (requestCode == ERROR_DIALOG_REQUEST_CODE) {
-            // Adding a fragment via GooglePlayServicesUtil.showErrorDialogFragment
-            // before the instance state is restored throws an error. So instead,
-            // set a flag here, which will cause the fragment to delay until
-            // onPostResume.
+        if (requestCode == PICK_IMPORT && resultCode == Activity.RESULT_OK) {
+            if (data == null || data.getData() == null) {
+                Toasty.error(getApplicationContext(),getString(R.string.toot_select_file_error),Toast.LENGTH_LONG).show();
+                return;
+            }
+            ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DB_NAME, true);
+            String filename = SettingsFragment.getPath(getApplicationContext(), data.getData());
+            assert filename != null;
+            excelToSQLite.importFromFile(filename, new ExcelToSQLite.ImportListener() {
+                @Override
+                public void onStart() {
+                    Toasty.success(getApplicationContext(),getString(R.string.data_import_start),Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onCompleted(String dbName) {
+                    Log.v(Helper.TAG,"onCompleted");
+                    Toasty.success(getApplicationContext(),getString(R.string.data_import_success_simple),Toast.LENGTH_LONG).show();
+                    Intent changeAccount = new Intent(activity, MainActivity.class);
+                    changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    activity.finish();
+                    activity.startActivity(changeAccount);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.v(Helper.TAG,"onError");
+                    e.printStackTrace();
+                    Toasty.error(getApplicationContext(),getString(R.string.data_import_error_simple),Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 
@@ -2362,7 +2455,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     if (typePosition.get(position) == RetrieveFeedsAsyncTask.Type.TAG) {
                         if (tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null) {
 
-                            SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                            SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, DB_NAME, null, Sqlite.DB_VERSION).open();
 
                             List<TagTimeline> tagTimelines;
                             tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTabInfo(tabLayout.getTabAt(position).getText().toString());
@@ -2493,7 +2586,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
                 String tabName = tabLayout.getTabAt(position).getText().toString().trim();
 
-                SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, DB_NAME, null, Sqlite.DB_VERSION).open();
 
                 List<TagTimeline> tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTabInfo(tabName);
                 String tag;
@@ -3001,7 +3094,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private void displayFollowInstances(){
 
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, DB_NAME, null, Sqlite.DB_VERSION).open();
         federatedTimelines = findViewById(R.id.federated_timeline);
 
         federatedTimelinesShow();
@@ -3043,7 +3136,7 @@ public abstract class BaseMainActivity extends BaseActivity
             public void onClick(View v) {
                 if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
                     new ManageListsAsyncTask(BaseMainActivity.this, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, DB_NAME, null, Sqlite.DB_VERSION).open();
                 new InstancesDAO(BaseMainActivity.this, db).cleanDoublon();
                 List<RemoteInstance> remoteInstances = new InstancesDAO(BaseMainActivity.this, db).getAllInstances();
                 popup = new PopupMenu(BaseMainActivity.this, federatedTimelines);
@@ -3243,7 +3336,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
-                                        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                        SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), DB_NAME, null, Sqlite.DB_VERSION).open();
                                         String instanceName = instance_list.getText().toString().trim();
                                         new Thread(new Runnable(){
                                             @Override
