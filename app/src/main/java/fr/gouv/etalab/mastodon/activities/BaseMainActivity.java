@@ -55,7 +55,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -2283,7 +2282,6 @@ public abstract class BaseMainActivity extends BaseActivity
 
                 @Override
                 public void onCompleted(String dbName) {
-                    Log.v(Helper.TAG,"onCompleted");
                     Toasty.success(getApplicationContext(),getString(R.string.data_import_success_simple),Toast.LENGTH_LONG).show();
                     Intent changeAccount = new Intent(activity, MainActivity.class);
                     changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -2293,8 +2291,6 @@ public abstract class BaseMainActivity extends BaseActivity
 
                 @Override
                 public void onError(Exception e) {
-                    Log.v(Helper.TAG,"onError");
-                    e.printStackTrace();
                     Toasty.error(getApplicationContext(),getString(R.string.data_import_error_simple),Toast.LENGTH_LONG).show();
                 }
             });

@@ -1786,10 +1786,14 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             toot_it.setEnabled(true);
             if( apiResponse.getError().getError().contains("422")){
                 showAToast(getString(R.string.toast_error_char_limit));
-            }else {
+                return;
+            }else if( apiResponse.getError().getStatusCode() == -33){
+                storeToot(false, true);
+            } else {
                 showAToast(apiResponse.getError().getError());
+                return;
             }
-            return;
+
         }
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
@@ -1836,10 +1840,15 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         isSensitive = false;
         toot_sensitive.setVisibility(View.GONE);
         currentToId = -1;
-        if( scheduledstatus == null && !isScheduled)
-            Toasty.success(TootActivity.this, getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
-        else
-            Toasty.success(TootActivity.this, getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
+        if(apiResponse.getError() == null) {
+            if (scheduledstatus == null && !isScheduled)
+                Toasty.success(TootActivity.this, getString(R.string.toot_sent), Toast.LENGTH_LONG).show();
+            else
+                Toasty.success(TootActivity.this, getString(R.string.toot_scheduled), Toast.LENGTH_LONG).show();
+        }else {
+            if(apiResponse.getError().getStatusCode() == -33)
+                Toasty.info(TootActivity.this, getString(R.string.toast_toot_saved_error), Toast.LENGTH_LONG).show();
+        }
         toot_it.setEnabled(true);
         //It's a reply, so the user will be redirect to its answer
         if( tootReply != null){
