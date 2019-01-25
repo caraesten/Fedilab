@@ -474,9 +474,9 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="data_export_toots">Eksportere statuser for %1$s</string>
     <string name="data_export_success">%1$s av %2$s toots har blitt eksportert.</string>
     <string name="data_export_error">Noe gikk galt under eksport av data for %1$s</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_export_error_simple">Noe gikk galt under eksport av data!</string>
+    <string name="data_import_success_simple">Data er importert!</string>
+    <string name="data_import_error_simple">Noe gikk galt under import av data!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Type</string>
@@ -739,11 +739,11 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> publiserte en ny video: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Din video <b>%1$s</b> er blitt svartelistet]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Din video <b>%1$s</b> er ikke lenger svartelistet]]></string>
-    <string name="export_data">Export data</string>
-    <string name="import_data">Import Data</string>
-    <string name="toot_select_import">Select the file to import</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
-    <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
+    <string name="export_data">Eksporter data</string>
+    <string name="import_data">Importer data</string>
+    <string name="toot_select_import">Velg filen som skal importeres</string>
+    <string name="toot_select_file_error">Det oppsto en feil under valg av fil!</string>
+    <string name="data_import_start">Vennligst ikke stopp programmet mens prosessen kjører.</string>
     <string name="add_public_comment">Ny kommentar</string>
     <string name="send_comment">Send kommentar</string>
     <string name="toast_toot_saved_error">Enheten er ikke koblet til internett. Meldingen er lagret som kladd.</string>
