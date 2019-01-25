@@ -425,11 +425,10 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
              - <b>BOOT_COMPLETED</b>: Benachrichtigungsdienst starten.\n
              - <b>WAKE_LOCK</b>: Benachrichtigungsdienst.</string>
     <string name="privacy_API_authorizations_title">API Berechtigungen:</string>
-    <string name="privacy_API_authorizations">- <b>Read</b>: Daten lesen.\n
-             - <b>Write</b>: Beiträge veröffentlichen und Dateien hochladen.\n
-             - <b>Follow</b>: Folgen, nicht mehr folgen, blockieren, nicht mehr blockieren.\n
-    \n
-             <b>⚠ Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b></string>
+    <string name="privacy_API_authorizations">• <b>Lesen</b>: Daten lesen.\n
+• <b>Schreiben</b>: Beiträge veröffentlichen und Dateien hochladen.\n
+• <b>Folgen</b>: Folgen, nicht mehr folgen, blockieren, nicht mehr blockieren.\n\n
+<b>&#9888; Diese Aktionen werden nur auf Verlangen des Benutzers durchgeführt.</b>    </string>
     <string name="privacy_API_title">Tracking und Bibliotheken</string>
     <string name="privacy_API">Die Anwendung <b>nutzt keine Trackingwergzeuge</b>(Zielgruppenbestimmung, Fehlerberichte, etc.) und enthält keinerlei Werbung.\n\n
         Die Nutzung von Bibliotheken ist minimiert:\n
@@ -746,6 +745,9 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="toot_select_import">Zu importierende Datei auswählen</string>
     <string name="toot_select_file_error">Bei der Auswahl der Sicherungsdatei ist ein Problem aufgetreten!</string>
     <string name="data_import_start">Bitte beenden Sie die App nicht während sie ausgeführt wird. Bitte ein wenig Geduld.</string>
+    <string name="add_public_comment">Einen öffentlichen Kommentar verfassen</string>
+    <string name="send_comment">Kommentar senden</string>
+    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

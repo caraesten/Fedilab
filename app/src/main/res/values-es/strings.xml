@@ -751,6 +751,9 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="toot_select_import">Select the file to import</string>
     <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
     <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
+    <string name="add_public_comment">Add a public comment</string>
+    <string name="send_comment">Send comment</string>
+    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
