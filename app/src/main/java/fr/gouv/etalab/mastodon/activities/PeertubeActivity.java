@@ -479,7 +479,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         peertube = apiResponse.getPeertubes().get(0);
         if( peertube.isCommentsEnabled()) {
             new RetrievePeertubeSingleCommentsAsyncTask(PeertubeActivity.this, peertubeInstance, videoId, PeertubeActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            write_comment_container.setVisibility(View.VISIBLE);
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                write_comment_container.setVisibility(View.VISIBLE);
         }else {
             RelativeLayout no_action = findViewById(R.id.no_action);
             TextView no_action_text = findViewById(R.id.no_action_text);
@@ -660,7 +661,11 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
         List<Status> statuses = apiResponse.getStatuses();
         RecyclerView lv_comments = findViewById(R.id.peertube_comments);
         if( statuses == null || statuses.size() == 0){
-            lv_comments.setVisibility(View.GONE);
+            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                RelativeLayout no_action = findViewById(R.id.no_action);
+                no_action.setVisibility(View.VISIBLE);
+                lv_comments.setVisibility(View.GONE);
+            }
         }else {
             lv_comments.setVisibility(View.VISIBLE);
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -683,6 +688,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     @Override
     public void onDestroy() {
         super.onDestroy();
+        player.release();
     }
 
     @Override
@@ -736,7 +742,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                     resolution = controlView.findViewById(R.id.resolution);
                     resolution.setText(String.format("%sp",res));
                     if( mode == VIDEO_MODE_DIRECT){
-
+                        if( player != null)
+                            player.release();
                         player = ExoPlayerFactory.newSimpleInstance(PeertubeActivity.this);
                         playerView.setPlayer(player);
                         loader.setVisibility(View.GONE);
