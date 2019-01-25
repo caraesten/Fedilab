@@ -764,6 +764,8 @@
     <string name="toot_select_import">Выберите файл для импорта</string>
     <string name="toot_select_file_error">Произошла ошибка при выборе файла резервной копии!</string>
     <string name="data_import_start">Пожалуйста, не завершайте приложение во время обработки. Это ненадолго.</string>
+    <string name="add_public_comment">Add a public comment</string>
+    <string name="send_comment">Send comment</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
