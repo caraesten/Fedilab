@@ -754,6 +754,7 @@
     <string name="data_import_start">請不要在處理時砍除應用程式。這不會太久。</string>
     <string name="add_public_comment">Add a public comment</string>
     <string name="send_comment">Send comment</string>
+    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
