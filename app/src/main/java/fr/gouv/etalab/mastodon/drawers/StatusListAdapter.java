@@ -89,6 +89,7 @@ import java.util.regex.Pattern;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
@@ -842,7 +843,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 ((Activity) context).finish();
                             context.startActivity(intent);
                         } else {
-                            CrossActions.doCrossConversation(context, status);
+                            if( social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                CrossActions.doCrossConversation(context, status);
                         }
                     }
                 });
@@ -861,7 +863,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 ((Activity) context).finish();
                             context.startActivity(intent);
                         } else {
-                            CrossActions.doCrossConversation(context, status);
+                            if( social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                CrossActions.doCrossConversation(context, status);
                         }
                     }
                 });
@@ -2138,7 +2141,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 instance = matcher.group(1);
                             }
                             account.setInstance(instance);
-                            CrossActions.doCrossProfile(context, account);
+                            if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                CrossActions.doCrossProfile(context, account);
+                            else {
+                                Intent intent = new Intent(context, ShowAccountActivity.class);
+                                Bundle b = new Bundle();
+                                b.putParcelable("account", status.getAccount());
+                                b.putBoolean("peertubeaccount", true);
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
                         }
                     }
                 });
@@ -2154,7 +2166,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 instance = matcher.group(1);
                             }
                             account.setInstance(instance);
-                            CrossActions.doCrossProfile(context, account);
+                            if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                CrossActions.doCrossProfile(context, account);
+                            else {
+                                Intent intent = new Intent(context, ShowAccountActivity.class);
+                                Bundle b = new Bundle();
+                                b.putParcelable("account", status.getAccount());
+                                b.putBoolean("peertubeaccount", true);
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                            }
                         }
                     }
                 });
