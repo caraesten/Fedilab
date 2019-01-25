@@ -746,6 +746,8 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="toot_select_import">Zu importierende Datei auswählen</string>
     <string name="toot_select_file_error">Bei der Auswahl der Sicherungsdatei ist ein Problem aufgetreten!</string>
     <string name="data_import_start">Bitte beenden Sie die App nicht während sie ausgeführt wird. Bitte ein wenig Geduld.</string>
+    <string name="add_public_comment">Add a public comment</string>
+    <string name="send_comment">Send comment</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
