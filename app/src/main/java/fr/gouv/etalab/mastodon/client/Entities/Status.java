@@ -37,6 +37,7 @@ import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
+import android.util.Patterns;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -560,6 +561,40 @@ public class Status implements Parcelable{
         }else {
             displayName = status.getAccount().getDisplay_name();
         }
+        SpannableString contentSpanTranslated = status.getContentSpanTranslated();
+        Matcher matcherALink = Patterns.WEB_URL.matcher(contentSpanTranslated.toString());
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        while (matcherALink.find()){
+            int matchStart = matcherALink.start();
+            int matchEnd = matcherALink.end();
+            final String url = contentSpanTranslated.toString().substring(matcherALink.start(1), matcherALink.end(1));
+            if( matchEnd <= contentSpanTranslated.toString().length() && matchEnd >= matchStart)
+                contentSpanTranslated.setSpan(new ClickableSpan() {
+                            @Override
+                            public void onClick(@NonNull View textView) {
+                                String finalUrl = url;
+                                if( !url.startsWith("http://") && ! url.startsWith("https://"))
+                                    finalUrl = "http://" + url;
+                                Helper.openBrowser(context, finalUrl);
+                            }
+                            @Override
+                            public void updateDrawState(@NonNull TextPaint ds) {
+                                super.updateDrawState(ds);
+                                ds.setUnderlineText(false);
+                                if (theme == THEME_DARK)
+                                    ds.setColor(ContextCompat.getColor(context, R.color.dark_link_toot));
+                                else if (theme == THEME_BLACK)
+                                    ds.setColor(ContextCompat.getColor(context, R.color.black_link_toot));
+                                else if (theme == THEME_LIGHT)
+                                    ds.setColor(ContextCompat.getColor(context, R.color.light_link_toot));
+                            }
+                        },
+                        matchStart, matchEnd,
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        }
+        status.setContentSpanTranslated(contentSpanTranslated);
         SpannableString displayNameSpan = new SpannableString(displayName);
         status.setDisplayNameSpan(displayNameSpan);
     }
