@@ -690,7 +690,7 @@
     <string name="change_tag_column">Rinomina colonna</string>
     <string name="no_misskey_instance">Nessuna istanza Misskey</string>
     <string name="misskey_instance">Istanza Misskey</string>
-    <string name="toast_no_apps">Nessun app con supporto a questo link è installata sul tuo dispositivo.</string>
+    <string name="toast_no_apps">Nessuna app che supporta questo collegamento è installata sul tuo dispositivo.</string>
     <string name="subscriptions">Iscrizioni</string>
     <string name="overview">Panoramica</string>
     <string name="trending">Di tendenza</string>
