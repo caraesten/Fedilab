@@ -800,7 +800,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
 
             }
-            if( expand_media && status.isSensitive()) {
+            if( expand_media && status.isSensitive() || (status.getReblog() != null && status.getReblog().isSensitive())) {
                 changeDrawableColor(context, holder.hide_preview, R.color.red_1);
                 changeDrawableColor(context, holder.hide_preview_h, R.color.red_1);
             }else {
