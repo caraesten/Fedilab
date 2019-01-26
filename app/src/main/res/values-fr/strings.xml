@@ -678,9 +678,9 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="pixelfed_instance">Instance PixelFed</string>
     <string name="mastodon_instance">Instance Mastodon</string>
     <string name="no_pixelfed_instance">Aucune instance PixelFed</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
+    <string name="any_tags">N’importe lequel</string>
+    <string name="all_tags">Tous</string>
+    <string name="none_tags">Aucun</string>
     <string name="some_words_any">N’importe lequel de ces mots (séparés par des espaces)</string>
     <string name="some_words_all">Tous ces mots (séparés par des espaces)</string>
     <string name="some_words_none">Aucun de ces mots (séparés par des espaces)</string>
@@ -743,19 +743,19 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> suit votre chaîne <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> suit votre compte]]></string>
     <string name="peertube_video_published"><![CDATA[Votre vidéo <b>%1$s</b> a été publiée]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
+    <string name="peertube_video_import_success"><![CDATA[L’importation de votre vidéo <b>%1$s</b> a réussi]]></string>
     <string name="peertube_video_import_error"><![CDATA[Échec lors de l’importation de votre vidéo <b>%1$s</b>]]></string>
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> a publié une nouvelle vidéo : <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[Votre vidéo <b>%1$s</b> a été blacklisté]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Votre vidéo <b>%1$s</b> n’est plus blacklisté]]></string>
     <string name="export_data">Exporter les données</string>
     <string name="import_data">Importer les données</string>
-    <string name="toot_select_import">Select the file to import</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
-    <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
+    <string name="toot_select_import">Sélectionner le fichier à importer</string>
+    <string name="toot_select_file_error">Une erreur s’est produite lors de la sélection du fichier de sauvegarde !</string>
+    <string name="data_import_start">S’il vous plaît, ne tuez pas l’application pendant le traitement. Il ne sera pas très long.</string>
     <string name="add_public_comment">Ajouter un commentaire public</string>
     <string name="send_comment">Envoyer un commentaire</string>
-    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
+    <string name="toast_toot_saved_error">Il n’y a pas de connexion Internet. Votre message a été stocké dans les brouillons.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
