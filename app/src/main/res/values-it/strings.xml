@@ -483,9 +483,9 @@
     <string name="data_export_toots">Stati esportati per %1$s</string>
     <string name="data_export_success">%1$s toot di %2$s sono stati esportati.</string>
     <string name="data_export_error">Qualcosa è andato storto esportando i dati per %1$s</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_export_error_simple">Qualcosa è andato storto durante l\'esportazione dei dati!</string>
+    <string name="data_import_success_simple">I dati sono stati importati!</string>
+    <string name="data_import_error_simple">Qualcosa è andato storto durante l\'importazione dei dati!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Tipo</string>
@@ -742,9 +742,9 @@
     <string name="settings_category_label_hiddencontent">Contenuto nascosto</string>
     <string name="settings_category_label_composing">Componendo</string>
     <string name="contact">Contatti</string>
-    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
-    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
-    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
+    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> ha commentato il tuo video <b>%2$s</b>]]></string>
+    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> sta seguendo il tuo canale <b>%2$s</b>]]></string>
+    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> sta seguendo il tuo account]]></string>
     <string name="peertube_video_published"><![CDATA[Your video <b>%1$s</b> has been published]]></string>
     <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
     <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
