@@ -106,9 +106,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         POP
     }
 
-    private ImageButton media_save, media_close;
+    private ImageButton media_save,media_share, media_close;
     private boolean scheduleHidden, scheduleHiddenDescription;
     private SimpleExoPlayer player;
+    private boolean isSHaring;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,11 +159,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         media_save = findViewById(R.id.media_save);
+        media_share = findViewById(R.id.media_share);
         media_close = findViewById(R.id.media_close);
         progress = findViewById(R.id.loader_progress);
         media_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isSHaring = false;
                 if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("gifv")) {
                     if( attachment != null ) {
                         progress.setText("0 %");
@@ -174,10 +177,33 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
                         } else {
-                            Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
+                            Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo, false);
                         }
                     } else {
-                        Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
+                        Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo, false);
+                    }
+                }
+            }
+        });
+        media_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isSHaring = true;
+                if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("gifv")) {
+                    if( attachment != null ) {
+                        progress.setText("0 %");
+                        progress.setVisibility(View.VISIBLE);
+                        new HttpsConnection(MediaActivity.this).download(attachment.getUrl(), MediaActivity.this);
+                    }
+                }else {
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
+                        } else {
+                            Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo, true);
+                        }
+                    } else {
+                        Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo, true);
                     }
                 }
             }
@@ -197,6 +223,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 // DO DELAYED STUFF
                 media_close.setVisibility(View.GONE);
                 media_save.setVisibility(View.GONE);
+                media_share.setVisibility(View.GONE);
                 scheduleHidden = false;
             }
         }, 2000);
@@ -268,12 +295,14 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             scheduleHidden = true;
             media_close.setVisibility(View.VISIBLE);
             media_save.setVisibility(View.VISIBLE);
+            media_share.setVisibility(View.VISIBLE);
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     media_close.setVisibility(View.GONE);
                     media_save.setVisibility(View.GONE);
+                    media_share.setVisibility(View.GONE);
                     scheduleHidden = false;
                 }
             }, 2000);
@@ -464,10 +493,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(MediaActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
             } else {
-                Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
+                Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo, isSHaring);
             }
         } else {
-            Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo);
+            Helper.manageMoveFileDownload(MediaActivity.this, preview_url, finalUrlDownload, downloadedImage, fileVideo, isSHaring);
         }
         if( progress != null)
             progress.setVisibility(View.GONE);

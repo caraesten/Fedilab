@@ -990,9 +990,10 @@ public class Helper {
      * @param context Context
      * @param url String download url
      */
-    public static void manageMoveFileDownload(final Context context, final String preview_url, final String url, Bitmap bitmap, File fileVideo){
+    public static void manageMoveFileDownload(final Context context, final String preview_url, final String url, Bitmap bitmap, File fileVideo, boolean isSharing){
 
-        final String fileName = URLUtil.guessFileName(url, null, null);final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        final String fileName = URLUtil.guessFileName(url, null, null);
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String myDir = sharedpreferences.getString(Helper.SET_FOLDER_RECORD, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
         String mime = getMimeType(url);
         try {
@@ -1027,31 +1028,42 @@ public class Helper {
             Uri uri = Uri.parse("file://" + file.getAbsolutePath());
             intent.setDataAndType(uri, getMimeType(url));
 
-            Glide.with(context)
-                    .asBitmap()
-                    .load(preview_url)
-                    .listener(new RequestListener<Bitmap>(){
+            if( !isSharing)
+                Glide.with(context)
+                        .asBitmap()
+                        .load(preview_url)
+                        .listener(new RequestListener<Bitmap>(){
 
-                        @Override
-                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                            return false;
-                        }
+                            @Override
+                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
 
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                            notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
-                                    R.mipmap.ic_launcher),  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
-                            Toasty.success(context, context.getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
-                            return false;
-                        }
-                    })
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                            notify_user(context, intent, notificationIdTmp, resource,  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
-                            Toasty.success(context, context.getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
-                        }
-                    });
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                                notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                                        R.mipmap.ic_launcher),  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                                Toasty.success(context, context.getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
+                                return false;
+                            }
+                        })
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                notify_user(context, intent, notificationIdTmp, resource,  NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, fileName));
+                                Toasty.success(context, context.getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
+                            }
+                        });
+            else {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                if( bitmap != null)
+                    shareIntent.setType("image/*");
+                else
+                    shareIntent.setType("video/*");
+                shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, R.string.share_with);
+                context.startActivity(shareIntent);
+            }
         } catch (Exception ignored) {}
     }
 

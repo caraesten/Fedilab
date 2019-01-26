@@ -796,12 +796,13 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
 
 
 
-    private class asyncPicture extends AsyncTask<Void, Void, Void> {
+    static class asyncPicture extends AsyncTask<Void, Void, Void> {
 
         ByteArrayInputStream bs;
         WeakReference<Activity> activityWeakReference;
         android.net.Uri uriFile;
         Account accountReply;
+        boolean error = false;
 
         asyncPicture(Activity activity, Account accountReply, android.net.Uri uri){
             this.activityWeakReference = new WeakReference<>(activity);
@@ -810,37 +811,40 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-
-
+        protected  void onPreExecute(){
             if( uriFile == null) {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        Toasty.error(activityWeakReference.get(), getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
-                    }
-                });
-                return null;
+                Toasty.error(activityWeakReference.get(), activityWeakReference.get().getString(R.string.toast_error), Toast.LENGTH_SHORT).show();
+                error = true;
             }
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if( error)
+                return null;
             bs = Helper.compressImage(activityWeakReference.get(), uriFile, Helper.MediaType.MEDIA);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
-            if( bs == null)
-                return;
-            ImageButton toot_picture;
-            Button toot_it;
-            LinearLayout toot_picture_container;
-            toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
-            toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
-            toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
+            if( !error) {
+                if (bs == null)
+                    return;
+                ImageButton toot_picture;
+                Button toot_it;
+                LinearLayout toot_picture_container;
+                toot_picture = this.activityWeakReference.get().findViewById(R.id.toot_picture);
+                toot_it = this.activityWeakReference.get().findViewById(R.id.toot_it);
+                toot_picture_container = this.activityWeakReference.get().findViewById(R.id.toot_picture_container);
 
-            toot_picture_container.setVisibility(View.VISIBLE);
-            toot_picture.setEnabled(false);
-            toot_it.setEnabled(false);
-            String filename =  Helper.getFileName(this.activityWeakReference.get(), uriFile);
-            new HttpsConnection(this.activityWeakReference.get()).upload(bs, filename, accountReply!=null?accountReply.getToken():null, (TootActivity)this.activityWeakReference.get());
+                toot_picture_container.setVisibility(View.VISIBLE);
+                toot_picture.setEnabled(false);
+                toot_it.setEnabled(false);
+                String filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
+                new HttpsConnection(this.activityWeakReference.get()).upload(bs, filename, accountReply != null ? accountReply.getToken() : null, (TootActivity) this.activityWeakReference.get());
+            }
         }
     }
 

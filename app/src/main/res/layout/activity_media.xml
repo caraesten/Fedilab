@@ -134,21 +134,44 @@
             android:contentDescription="@string/close"
             />
 
-        <ImageButton
-            android:id="@+id/media_save"
+
+
+        <LinearLayout
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             app:layout_anchorGravity="top|left"
-            android:layout_marginStart="10dp"
-            android:background="@color/transparent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_save_white"
-            android:contentDescription="@string/download"
-            />
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/media_share"
+                app:layout_anchorGravity="top|left"
+                android:layout_marginStart="10dp"
+                android:background="@color/transparent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_share_media"
+                android:contentDescription="@string/share"
+                />
+
+            <ImageButton
+                android:id="@+id/media_save"
+                android:layout_marginStart="20dp"
+                android:background="@color/transparent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_save_white"
+                android:contentDescription="@string/download"
+                />
+        </LinearLayout>
+
+
 
         <TextView
             android:visibility="gone"
