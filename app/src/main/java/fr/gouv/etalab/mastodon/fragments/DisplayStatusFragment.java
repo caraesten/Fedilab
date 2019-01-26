@@ -325,8 +325,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     isSwipped = true;
                     if( type != RetrieveFeedsAsyncTask.Type.CONVERSATION)
                         retrieveMissingToots(null);
-                    else if( statuses.size() > 0)
-                        retrieveMissingToots(statuses.get(0).getId());
+                    else{
+                        if( statuses.size() > 0)
+                            retrieveMissingToots(statuses.get(0).getId());
+                        else
+                            retrieveMissingToots(null);
+                    }
 
                 }
             });
@@ -825,7 +829,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 artListAdapter.notifyItemRangeChanged(0, this.statuses.size());
         }
         isSwipped = false;
+
         if( statuses != null && statuses.size() > 0) {
+            if( textviewNoAction.getVisibility() == View.VISIBLE){
+                textviewNoAction.setVisibility(View.GONE);
+                lv_status.setVisibility(View.VISIBLE);
+            }
             int inserted = 0;
             int insertedConversation = 0;
             if(type == RetrieveFeedsAsyncTask.Type.CONVERSATION){ //Remove conversation already displayed if new messages
