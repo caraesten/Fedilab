@@ -745,20 +745,20 @@
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> ha commentato il tuo video <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> sta seguendo il tuo canale <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> sta seguendo il tuo account]]></string>
-    <string name="peertube_video_published"><![CDATA[Your video <b>%1$s</b> has been published]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
-    <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
-    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
-    <string name="export_data">Export data</string>
-    <string name="import_data">Import Data</string>
-    <string name="toot_select_import">Select the file to import</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
-    <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
-    <string name="add_public_comment">Add a public comment</string>
-    <string name="send_comment">Send comment</string>
-    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
+    <string name="peertube_video_published"><![CDATA[Il tuo video <b>%1$s</b> è stato pubblicato]]></string>
+    <string name="peertube_video_import_success"><![CDATA[La tua importazione video <b>%1$s</b> ha avuto successo]]></string>
+    <string name="peertube_video_import_error"><![CDATA[La tua importazione video <b>%1$s</b> non è riuscita]]></string>
+    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> ha pubblicato un nuovo video: <b>%2$s</b>]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[Il tuo video <b>%1$s</b> è stato messo nella lista nera]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Il tuo video <b>%1$s</b> è stato rimosso dalla lista nera]]></string>
+    <string name="export_data">Esporta dati</string>
+    <string name="import_data">Importa dati</string>
+    <string name="toot_select_import">Seleziona il file da importare</string>
+    <string name="toot_select_file_error">Si è verificato un errore durante la selezione del file di backup!</string>
+    <string name="data_import_start">Per favore, non terminare l\'app durante l\'elaborazione. Non ci metterà molto.</string>
+    <string name="add_public_comment">Aggiungi un commento pubblico</string>
+    <string name="send_comment">Invia commento</string>
+    <string name="toast_toot_saved_error">Non c\'è connessione ad Internet. Il tuo messaggio è stato salvato nelle bozze.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
