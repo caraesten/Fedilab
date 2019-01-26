@@ -2620,6 +2620,8 @@ public abstract class BaseMainActivity extends BaseActivity
                                 FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
                                 String tag;
                                 tag = finalTagTimelines.get(0).getName();
+                                if( tagFragment.get(tag) == null)
+                                    return;
                                 fragTransaction.detach(tagFragment.get(tag));
                                 Bundle bundle = new Bundle();
                                 if( mediaOnly[0])
@@ -2798,26 +2800,10 @@ public abstract class BaseMainActivity extends BaseActivity
                                 dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                        new SearchDAO(BaseMainActivity.this, db).remove(tag);
-                                        String tag;
-                                        if( position > 0 && tabLayout.getTabAt(position - 1).getText() != null) {
-                                            tag = tabLayout.getTabAt(position - 1).getText().toString();
-                                        }else if( tabLayout.getTabCount() > 1 && tabLayout.getTabAt(1).getText() != null) {
-                                            tag = tabLayout.getTabAt(1).getText().toString();
-                                        }else //Last element
-                                            tag = "";
-                                        Helper.removeTab(tabLayout, adapter, position);
-                                        adapter = new BaseMainActivity.PagerAdapter
-                                                (getSupportFragmentManager(), tabLayout.getTabCount());
-                                        viewPager.setAdapter(adapter);
-                                        for(int i = 0; i < tabLayout.getTabCount() ; i++ ){
-                                            if( tabLayout.getTabAt(i).getText() != null && tabLayout.getTabAt(i).getText().equals(tag.trim())){
-                                                tabLayout.getTabAt(i).select();
-                                                break;
-                                            }
 
-                                        }
+                                        new SearchDAO(BaseMainActivity.this, db).remove(tag);
+                                        Helper.refreshSearchTag(BaseMainActivity.this, tabLayout, adapter);
+                                        dialog.dismiss();
                                     }
                                 });
                                 dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

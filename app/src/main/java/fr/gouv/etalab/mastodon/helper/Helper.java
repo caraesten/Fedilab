@@ -3015,7 +3015,7 @@ public class Helper {
             tableLayout.setTabTextColors(ContextCompat.getColor(context, R.color.dark_text), ContextCompat.getColor(context, R.color.mastodonC4));
     }
 
-    public static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
+    private static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
         if (tableLayout.getTabCount() >= position  ) {
             try {
                 if(tableLayout.getTabCount() > 0)
