@@ -1946,6 +1946,8 @@ public class API {
         } catch (UnsupportedEncodingException e) {
             params.put("status", status.getContent());
         }
+        if( status.getContentType() != null)
+            params.put("content_type", status.getContentType());
         if( status.getIn_reply_to_id() != null)
             params.put("in_reply_to_id", status.getIn_reply_to_id());
         if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {

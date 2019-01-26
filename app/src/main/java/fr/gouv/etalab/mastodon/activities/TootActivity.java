@@ -68,6 +68,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -210,7 +211,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     private List<Account> contacts;
     private ListView lv_accounts_search;
     private RelativeLayout loader;
-
+    private String contentType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -270,7 +271,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         //By default the toot is not restored so the id -1 is defined
         currentToId = -1;
         restoredScheduled = false;
-
+        contentType = null;
         checkedValues = new ArrayList<>();
         contacts = new ArrayList<>();
         toot_it = findViewById(R.id.toot_it);
@@ -513,7 +514,36 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         toot_it.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendToot(null);
+                sendToot(null, null);
+            }
+        });
+
+        toot_it.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                PopupMenu popup = new PopupMenu(TootActivity.this, toot_it);
+                popup.getMenuInflater()
+                        .inflate(R.menu.main_content_type, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.action_plain_text:
+                                contentType = "text/plain";
+                                break;
+                            case R.id.action_html:
+                                contentType = "text/html";
+                                break;
+                            case R.id.action_markdown:
+                                contentType = "text/markdown";
+                                break;
+                        }
+                        popup.dismiss();
+                        sendToot(null, contentType);
+                        return false;
+                    }
+                });
+                popup.show();
+                return false;
             }
         });
 
@@ -1371,7 +1401,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     }
 
 
-    private void sendToot(String timestamp){
+    private void sendToot(String timestamp, String content_type){
         toot_it.setEnabled(false);
         if(toot_content.getText().toString().trim().length() == 0 && attachments.size() == 0){
             Toasty.error(getApplicationContext(),getString(R.string.toot_error_no_content),Toast.LENGTH_LONG).show();
@@ -1392,6 +1422,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             stepSpliToot = 1;
         }
         Status toot = new Status();
+        if(content_type != null)
+            toot.setContentType(content_type);
         toot.setSensitive(isSensitive);
         toot.setMedia_attachments(attachments);
         if( toot_cw_content.getText().toString().trim().length() > 0)
@@ -1419,7 +1451,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
 
 
     private void serverSchedule(String time){
-        sendToot(time);
+        sendToot(time, null);
         isScheduled = true;
         resetForNextToot();
     }
