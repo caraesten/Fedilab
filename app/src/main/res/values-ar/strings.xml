@@ -235,7 +235,7 @@
         <item quantity="other">و %d اشعارات</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="zero">و تبويق آخر لاكتشافه</item>
+        <item quantity="zero">ولا تبويق آخر لاكتشافه</item>
         <item quantity="one">and another toot to discover</item>
         <item quantity="two">و تبويقين آخرين لاكتشافهما</item>
         <item quantity="few">و %d تبويقات لاكتشافها</item>
@@ -772,7 +772,7 @@
     <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
     <string name="add_public_comment">أضف تعليقًا عامًا</string>
     <string name="send_comment">ارسل تعليق</string>
-    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
+    <string name="toast_toot_saved_error">لا يوجد اتصال بالإنترنت. تم تخزين رسالتك في المسودات.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>تورنت</item>
