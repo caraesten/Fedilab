@@ -755,7 +755,7 @@
     <string name="settings_category_label_interface">الواجهة</string>
     <string name="settings_category_label_hiddencontent">المحتوى المخفي</string>
     <string name="settings_category_label_composing">التحرير</string>
-    <string name="contact">Contacts</string>
+    <string name="contact">المتراسلون</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
@@ -768,7 +768,7 @@
     <string name="export_data">صدّر البيانات</string>
     <string name="import_data">استورد البيانات</string>
     <string name="toot_select_import">حدّد الملف الذي تريد استيراده</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
+    <string name="toot_select_file_error">حدث خطأ عند اختيار ملف النسخ الاحتياطي!</string>
     <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
     <string name="add_public_comment">أضف تعليقًا عامًا</string>
     <string name="send_comment">ارسل تعليق</string>
