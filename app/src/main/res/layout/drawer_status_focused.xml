@@ -158,7 +158,6 @@
         <fr.gouv.etalab.mastodon.helper.CustomTextView
             android:id="@+id/status_content"
             android:textIsSelectable="true"
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
@@ -169,7 +168,6 @@
             android:drawableStart="@drawable/ic_more_toot_content"
             android:gravity="center_vertical"
             android:drawablePadding="5dp"
-            android:layout_marginTop="-10dp"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
             android:maxLines="1"

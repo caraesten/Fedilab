@@ -265,11 +265,9 @@
                 <fr.gouv.etalab.mastodon.helper.CustomTextView
                     android:id="@+id/status_content"
                     android:textIsSelectable="true"
-                    android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <Button
-                    android:layout_marginTop="-10dp"
                     android:paddingTop="2dp"
                     android:paddingBottom="2dp"
                     android:id="@+id/status_show_more_content"

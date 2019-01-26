@@ -1891,10 +1891,10 @@ public class Helper {
             accountsMentionUnknown.add(account);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableString = new SpannableString(Html.fromHtml(spannableStringT.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>",""), Html.FROM_HTML_MODE_LEGACY));
+            spannableString = new SpannableString(Html.fromHtml(spannableStringT.toString(), Html.TO_HTML_PARAGRAPH_LINES_INDIVIDUAL));
         else
             //noinspection deprecation
-            spannableString = new SpannableString(Html.fromHtml(spannableStringT.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","")));
+            spannableString = new SpannableString(Html.fromHtml(spannableStringT.toString()));
 
         URLSpan[] urls = spannableString.getSpans(0, spannableString.length(), URLSpan.class);
         for(URLSpan span : urls)
