@@ -60,6 +60,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
@@ -398,8 +400,17 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void retrievesClientId(){
+        String instanceFromField = login_instance.getText().toString().trim();
+        String host;
         try {
-            instance =  URLEncoder.encode(login_instance.getText().toString().trim(), "utf-8");
+            URL url = new URL(instanceFromField);
+            host = url.getHost();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            host = instanceFromField;
+        }
+        try {
+            instance =  URLEncoder.encode(host, "utf-8");
         } catch (UnsupportedEncodingException e) {
             Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
         }
