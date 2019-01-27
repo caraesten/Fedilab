@@ -759,6 +759,9 @@
     <string name="add_public_comment">Aggiungi un commento pubblico</string>
     <string name="send_comment">Invia commento</string>
     <string name="toast_toot_saved_error">Non c\'è connessione ad Internet. Il tuo messaggio è stato salvato nelle bozze.</string>
+    <string name="action_plain_text">Plain text</string>
+    <string name="action_html">HTML</string>
+    <string name="action_markdown">Markdown</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
