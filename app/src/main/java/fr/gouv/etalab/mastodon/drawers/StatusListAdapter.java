@@ -477,6 +477,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
             boolean confirmFav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
             boolean confirmBoost = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
+
+            boolean isModerator = sharedpreferences.getBoolean(Helper.PREF_IS_MODERATOR, false);
+            boolean isAdmin = sharedpreferences.getBoolean(Helper.PREF_IS_ADMINISTRATOR, false);
+
             int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
             if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && displayBookmarkButton)
@@ -1650,7 +1654,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
                     } else {
                         popup.getMenu().findItem(R.id.action_redraft).setVisible(false);
-                        popup.getMenu().findItem(R.id.action_remove).setVisible(false);
+                        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA && (isAdmin || isModerator))
+                            popup.getMenu().findItem(R.id.action_remove).setVisible(true);
+                        else
+                            popup.getMenu().findItem(R.id.action_remove).setVisible(false);
                         //Same instance
                         if (status.getAccount().getAcct().split("@").length < 2)
                             popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);

@@ -104,6 +104,8 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         boolean userExists = new AccountDAO(this.contextReference.get(), db).userExist(account);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Helper.PREF_KEY_ID, account.getId());
+        editor.putBoolean(Helper.PREF_IS_MODERATOR, account.isModerator());
+        editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, account.isAdmin());
         editor.putString(Helper.PREF_INSTANCE, instance);
         editor.apply();
         if( userExists)

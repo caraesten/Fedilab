@@ -201,6 +201,8 @@ public class Helper {
 
 
     public static final String PREF_KEY_ID = "userID";
+    public static final String PREF_IS_MODERATOR = "is_moderator";
+    public static final String PREF_IS_ADMINISTRATOR = "is_administrator";
     public static final String PREF_INSTANCE = "instance";
     public static final String REDIRECT_CONTENT = "urn:ietf:wg:oauth:2.0:oob";
     public static final String REDIRECT_CONTENT_WEB = "mastalab://backtomastalab";
@@ -533,6 +535,8 @@ public class Helper {
         editor.putString(Helper.CLIENT_ID, null);
         editor.putString(Helper.CLIENT_SECRET, null);
         editor.putString(Helper.PREF_KEY_ID, null);
+        editor.putBoolean(Helper.PREF_IS_MODERATOR, false);
+        editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, false);
         editor.putString(Helper.PREF_INSTANCE, null);
         editor.putString(Helper.ID, null);
         editor.apply();
@@ -1347,6 +1351,8 @@ public class Helper {
         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, account.getToken());
         editor.putString(Helper.PREF_KEY_ID, account.getId());
         editor.putString(Helper.PREF_INSTANCE, account.getInstance().trim());
+        editor.putBoolean(Helper.PREF_IS_MODERATOR, account.isModerator());
+        editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, account.isAdmin());
         editor.commit();
         Intent changeAccount = new Intent(activity, MainActivity.class);
         changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -1678,6 +1684,8 @@ public class Helper {
                                 editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, accountChoice.getToken());
                                 editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
                                 editor.putString(Helper.PREF_INSTANCE, accountChoice.getInstance().trim());
+                                editor.putBoolean(Helper.PREF_IS_MODERATOR, accountChoice.isModerator());
+                                editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, accountChoice.isAdmin());
                                 editor.commit();
                                 if(accountChoice.getSocial() != null && accountChoice.getSocial().equals("PEERTUBE"))
                                     Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct()), Toast.LENGTH_LONG).show();
@@ -1731,6 +1739,8 @@ public class Helper {
                                     editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, accountChoice.getToken());
                                     editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
                                     editor.putString(Helper.PREF_INSTANCE, accountChoice.getInstance().trim());
+                                    editor.putBoolean(Helper.PREF_IS_MODERATOR, accountChoice.isModerator());
+                                    editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, accountChoice.isAdmin());
                                     editor.commit();
                                     Intent changeAccount = new Intent(activity, MainActivity.class);
                                     changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
