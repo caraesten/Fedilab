@@ -114,6 +114,8 @@ public class Account implements Parcelable {
     private String client_id;
     private String client_secret;
     private String refresh_token;
+    private boolean isModerator = false;
+    private boolean isAdmin = false;
 
 
 
@@ -166,6 +168,8 @@ public class Account implements Parcelable {
         dest.writeString(this.client_id);
         dest.writeString(this.client_secret);
         dest.writeString(this.refresh_token);
+        dest.writeByte(this.isModerator ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isAdmin ? (byte) 1 : (byte) 0);
     }
 
     public Account() {
@@ -215,6 +219,8 @@ public class Account implements Parcelable {
         this.client_id = in.readString();
         this.client_secret = in.readString();
         this.refresh_token = in.readString();
+        this.isModerator = in.readByte() != 0;
+        this.isAdmin = in.readByte() != 0;
     }
 
     public static final Creator<Account> CREATOR = new Creator<Account>() {
@@ -348,6 +354,22 @@ public class Account implements Parcelable {
 
     public void setRefresh_token(String refresh_token) {
         this.refresh_token = refresh_token;
+    }
+
+    public boolean isModerator() {
+        return isModerator;
+    }
+
+    public void setModerator(boolean moderator) {
+        isModerator = moderator;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
 

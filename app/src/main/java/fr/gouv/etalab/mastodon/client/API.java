@@ -3863,9 +3863,18 @@ public class API {
                 account.setSocial("MASTODON");
             }
             try{
-                if( resobj.has("pleroma") )
+                if( resobj.has("pleroma") ) {
                     account.setSocial("PLEROMA");
+                    try{
+                        account.setModerator(resobj.getJSONObject("pleroma").getBoolean("is_moderator"));
+                        account.setAdmin(resobj.getJSONObject("pleroma").getBoolean("is_admin"));
+                    }catch (Exception ignored){
+                        account.setModerator(false);
+                        account.setAdmin(false);
+                    }
+                }
             }catch (Exception ignored){}
+
             try {
                 JSONArray fields = resobj.getJSONArray("fields");
                 LinkedHashMap<String, String> fieldsMap = new LinkedHashMap<>();
