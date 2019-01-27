@@ -773,6 +773,9 @@
     <string name="add_public_comment">أضف تعليقًا عامًا</string>
     <string name="send_comment">ارسل تعليق</string>
     <string name="toast_toot_saved_error">لا يوجد اتصال بالإنترنت. تم تخزين رسالتك في المسودات.</string>
+    <string name="action_plain_text">Plain text</string>
+    <string name="action_html">HTML</string>
+    <string name="action_markdown">Markdown</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>تورنت</item>
