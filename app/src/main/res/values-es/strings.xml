@@ -644,7 +644,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="card_view_image">Imagen de la tarjeta</string>
     <string name="hide_media">Ocultar media</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Medios para agregar una descripción</string>
     <string-array name="filter_expire">
         <item>Nunca</item>
         <item>30 minutos</item>
@@ -662,7 +662,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     </string>
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Más información</string>
     <string name="showcase_2FA">Si utilizas 2FA (autenticación de dos factores), es necesario utilizar este enlace. \nTu también puedes utilizarlo si no deseas ingresar tus credenciales aquí.</string>
     <!-- languages not translated -->
     <string name="languages">Idiomas</string>
@@ -673,35 +673,35 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="translation_app">Traducir la Aplicación</string>
     <string name="about_crowdin">Acerca de Crowdin</string>
     <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
-    <string name="change_tag_column">Change column name</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
+    <string name="pixelfed_instance">Instancia Pixelfed</string>
+    <string name="mastodon_instance">Instancia de Mastodon</string>
+    <string name="no_pixelfed_instance">No hay instancia de Pixelfed</string>
+    <string name="any_tags">Cualquiera de estos</string>
+    <string name="all_tags">Todos estos</string>
+    <string name="none_tags">Ninguno de estos</string>
+    <string name="some_words_any">Cualquiera de estas palabras (separados por espacios)</string>
+    <string name="some_words_all">Todas estas palabras (separados por espacios)</string>
+    <string name="some_words_none">Ninguna de estas palabras (separados por espacios)</string>
+    <string name="change_tag_column">Cambiar nombre de columna</string>
+    <string name="no_misskey_instance">No hay instancias Misskey</string>
     <string name="misskey_instance">Misskey instance</string>
     <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
-    <string name="subscriptions">Subscriptions</string>
-    <string name="overview">Overview</string>
-    <string name="trending">Trending</string>
-    <string name="recently_added">Recently added</string>
+    <string name="subscriptions">Suscripciones</string>
+    <string name="overview">Resumen</string>
+    <string name="trending">Tendencias</string>
+    <string name="recently_added">Añadido recientemente</string>
     <string name="local">Local</string>
-    <string name="upload_video">Upload</string>
-    <string name="reply">Reply</string>
-    <string name="delete_comment">Delete a comment</string>
-    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
-    <string name="fullscreen">Full screen video</string>
-    <string name="set_video_mode">Mode for videos</string>
-    <string name="file_to_upload">Select the file to upload</string>
-    <string name="my_videos">My videos</string>
-    <string name="title">Title</string>
-    <string name="categories">Categories</string>
-    <string name="license">License</string>
+    <string name="upload_video">Subir</string>
+    <string name="reply">Responder</string>
+    <string name="delete_comment">Eliminar un comentario</string>
+    <string name="delete_comment_confirm">¿Estás seguro de eliminar éste comentario?</string>
+    <string name="fullscreen">Video en pantalla completa</string>
+    <string name="set_video_mode">Modo para videos</string>
+    <string name="file_to_upload">Seleciona un archivo para subir</string>
+    <string name="my_videos">Mis videos</string>
+    <string name="title">Título</string>
+    <string name="categories">Categorías</string>
+    <string name="license">Licencia</string>
     <string name="category">Category</string>
     <string name="language">Language</string>
     <string name="peertube_nsfw">This video contains mature or explicit content</string>
@@ -746,17 +746,17 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
-    <string name="export_data">Export data</string>
-    <string name="import_data">Import Data</string>
-    <string name="toot_select_import">Select the file to import</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
+    <string name="export_data">Exportar datos</string>
+    <string name="import_data">Importar Datos</string>
+    <string name="toot_select_import">Selecciona el archivo para importar</string>
+    <string name="toot_select_file_error">! Se produjo un error al seleccionar el archivo de copia de seguridad!</string>
     <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
     <string name="add_public_comment">Add a public comment</string>
-    <string name="send_comment">Send comment</string>
+    <string name="send_comment">Enviar comentario</string>
     <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Webview</item>
+        <item>WebView</item>
         <item>Direct stream</item>
     </string-array>
 </resources>
