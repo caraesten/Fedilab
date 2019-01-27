@@ -767,6 +767,9 @@
     <string name="add_public_comment">Добавить публичный комментарий</string>
     <string name="send_comment">Отправить комментарий</string>
     <string name="toast_toot_saved_error">Нет подключения к интернету. Ваше сообщение было сохранено в черновиках.</string>
+    <string name="action_plain_text">Простой текст</string>
+    <string name="action_html">HTML</string>
+    <string name="action_markdown">Markdown</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
