@@ -78,8 +78,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private String userId, instance;
     private SharedPreferences sharedpreferences;
     LinearLayoutManager mLayoutManager;
-    private BroadcastReceiver receive_action;
-    private BroadcastReceiver receive_data;
+    private static BroadcastReceiver receive_action;
+    private static BroadcastReceiver receive_data;
 
     public DisplayNotificationsFragment(){
     }
@@ -238,6 +238,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         this.context = context;
     }
 
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if(asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING)
