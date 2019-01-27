@@ -41,6 +41,8 @@ import java.util.List;
 import java.util.Map;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Application;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
@@ -2267,10 +2269,42 @@ public class API {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        //Add custom emoji for Pleroma
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            APIResponse apiResponsePleroma = getCustomPleromaEmoji();
+            if( apiResponsePleroma != null && apiResponsePleroma.getEmojis() != null && apiResponsePleroma.getEmojis().size() > 0)
+                emojis.addAll(apiResponsePleroma.getEmojis());
+        }
         apiResponse.setEmojis(emojis);
         return apiResponse;
     }
 
+    /**
+     * Retrieves Accounts when searching (ie: via @...) *synchronously*
+     *
+     * @return APIResponse
+     */
+    public APIResponse getCustomPleromaEmoji() {
+        List<Emojis> emojis = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(Helper.getLiveInstanceWithProtocol(context)+"/api/pleroma/emoji", 60, null, prefKeyOauthTokenT);
+            emojis = parsePleromaEmojis(new JSONObject(response));
+
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        apiResponse.setEmojis(emojis);
+        return apiResponse;
+    }
 
     /**
      * Get filters for the user
@@ -3584,6 +3618,28 @@ public class API {
         return instance;
     }
 
+    /**
+     * Parse Pleroma emojis
+     * @param jsonObject JSONObject
+     * @return List<Emojis> of emojis
+     */
+    private List<Emojis> parsePleromaEmojis(JSONObject jsonObject){
+        List<Emojis> emojis = new ArrayList<>();
+        Iterator<String> iter = jsonObject.keys();
+        while (iter.hasNext()) {
+            String shortcode = iter.next();
+            try {
+                String url = (String) jsonObject.get(shortcode);
+                Emojis emojisObj = new Emojis();
+                emojisObj.setVisible_in_picker(true);
+                emojisObj.setShortcode(shortcode);
+                emojisObj.setStatic_url(Helper.getLiveInstanceWithProtocol(context) + url);
+                emojisObj.setUrl(Helper.getLiveInstanceWithProtocol(context) + url);
+                emojis.add(emojisObj);
+            } catch (JSONException ignored) { }
+        }
+        return emojis;
+    }
 
 
     /**
