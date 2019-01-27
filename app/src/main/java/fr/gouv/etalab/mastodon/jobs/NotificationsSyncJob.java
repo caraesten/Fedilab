@@ -131,7 +131,7 @@ public class NotificationsSyncJob extends Job {
                 return;
             //Retrieve users in db that owner has.
             for (Account account: accounts) {
-                if( account.getSocial() == null || account.getSocial().equals("MASTODON")) {
+                if( account.getSocial() == null || account.getSocial().equals("MASTODON")|| account.getSocial().equals("PLEROMA")) {
                     API api = new API(getContext(), account.getInstance(), account.getToken());
                     APIResponse apiResponse = api.getNotificationsSince(null, false);
                     onRetrieveNotifications(apiResponse, account);

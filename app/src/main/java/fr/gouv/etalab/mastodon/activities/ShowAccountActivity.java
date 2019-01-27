@@ -311,7 +311,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
 
         //Peertube account watched by a Mastodon account
-        if( peertubeAccount && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if( peertubeAccount && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)) {
             account_type.setVisibility(View.VISIBLE);
         }
         //Bot account
@@ -513,7 +513,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         });
 
 
-        if ( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && account.getFields() != null && account.getFields().size() > 0){
+        if ( (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON  || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) && account.getFields() != null && account.getFields().size() > 0){
             LinkedHashMap<String, String> fields = account.getFields();
             LinkedHashMap<String, Boolean> fieldsVerified = account.getFieldsVerified();
             Iterator it = fields.entrySet().iterator();
@@ -614,7 +614,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         }
         SpannableString spannableString = Helper.clickableElementsDescription(ShowAccountActivity.this, account.getNote());
         account.setNoteSpan(spannableString);
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
             account.makeEmojisAccountProfile(ShowAccountActivity.this, ShowAccountActivity.this, account);
         account_note.setText(account.getNoteSpan(), TextView.BufferType.SPANNABLE);
         account_note.setMovementMethod(LinkMovementMethod.getInstance());
@@ -829,7 +829,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             return;
         account_follow.setEnabled(true);
         account_follow.setBackgroundTintList(ColorStateList.valueOf( ContextCompat.getColor(ShowAccountActivity.this, R.color.mastodonC4)));
-        if( account.getId() != null && account.getId().equals(userId) && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+        if( account.getId() != null && account.getId().equals(userId) && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
             account_follow.hide();
             header_edit_profile.show();
             header_edit_profile.bringToFront();

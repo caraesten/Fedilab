@@ -370,7 +370,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 finish();
                 return true;
             case R.id.action_comment:
-                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                     Toasty.info(PeertubeActivity.this, getString(R.string.retrieve_remote_status), Toast.LENGTH_LONG).show();
                     new AsyncTask<Void, Void, Void>() {
 

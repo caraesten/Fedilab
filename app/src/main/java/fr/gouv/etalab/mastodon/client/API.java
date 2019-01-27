@@ -3862,6 +3862,10 @@ public class API {
             }catch (Exception ignored){
                 account.setSocial("MASTODON");
             }
+            try{
+                if( resobj.has("pleroma") )
+                    account.setSocial("PLEROMA");
+            }catch (Exception ignored){}
             try {
                 JSONArray fields = resobj.getJSONArray("fields");
                 LinkedHashMap<String, String> fieldsMap = new LinkedHashMap<>();

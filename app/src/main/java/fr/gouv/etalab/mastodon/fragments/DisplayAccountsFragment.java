@@ -230,7 +230,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
-        if( type != RetrieveAccountsAsyncTask.Type.BLOCKED && MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+        if( type != RetrieveAccountsAsyncTask.Type.BLOCKED && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA))
             new RetrieveManyRelationshipsAsyncTask(context, accounts,DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 

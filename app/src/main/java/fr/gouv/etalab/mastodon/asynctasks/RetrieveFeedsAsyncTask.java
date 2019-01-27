@@ -210,7 +210,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getFavourites(max_id);
                 break;
             case USER:
-                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                     if (showMediaOnly)
                         apiResponse = api.getStatusWithMedia(targetedID, max_id);
                     else if (showPinned)
@@ -315,7 +315,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             case HASHTAG:
                 break;
         }
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             List<String> bookmarks = new StatusCacheDAO(contextReference.get(), db).getAllStatusId(StatusCacheDAO.BOOKMARK_CACHE);
             if (apiResponse != null && apiResponse.getStatuses() != null && bookmarks != null && apiResponse.getStatuses().size() > 0) {
                 List<fr.gouv.etalab.mastodon.client.Entities.Status> statuses = apiResponse.getStatuses();

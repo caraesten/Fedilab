@@ -56,7 +56,7 @@ public class RetrievePeertubeSingleAsyncTask extends AsyncTask<Void, Void, Void>
 
     @Override
     protected Void doInBackground(Void... params) {
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             API api = new API(this.contextReference.get());
             apiResponse = api.getSinglePeertube(this.instanceName, videoId);
         }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){

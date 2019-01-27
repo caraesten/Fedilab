@@ -132,7 +132,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
         });
 
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
 
             if( receive_action != null)
                 LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);

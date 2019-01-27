@@ -58,7 +58,7 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
         SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account account = null;
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
             account = new API(this.contextReference.get()).getAccount(userId);
         else if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
 
@@ -97,7 +97,7 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
                 new AccountDAO(this.contextReference.get(), db).updateAccount(account);
             }
         }
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             try {
                 APIResponse response = new API(contextReference.get()).getCustomEmoji();
                 if (response != null && response.getEmojis() != null && response.getEmojis().size() > 0) {

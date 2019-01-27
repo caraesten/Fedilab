@@ -88,7 +88,7 @@ public class CrossActions {
                         for(Account account: accountstmp){
                             String mentionAcct = (mention.getAcct().contains("@"))?mention.getAcct():mention.getAcct()+"@"+currentAccount.getInstance();
                             if( (account.getAcct() + "@" + account.getInstance()).equals(mentionAcct) && !addedAccount.contains(account.getId() + "|" + account.getAcct())) {
-                                if( account.getSocial() == null || account.getSocial().equals("MASTODON"))
+                                if( account.getSocial() == null || account.getSocial().equals("MASTODON") || account.getSocial().equals("PLEROMA"))
                                     accounts.add(account);
                             }
                         }
@@ -97,7 +97,7 @@ public class CrossActions {
                         Account tootOwner = status.getAccount();
                         String mentionAcct = (tootOwner.getAcct().contains("@"))?tootOwner.getAcct():tootOwner.getAcct()+"@"+currentAccount.getInstance();
                         if( (account.getAcct() + "@" + account.getInstance()).equals(mentionAcct) && !addedAccount.contains(account.getId() + "|" + account.getAcct())) {
-                            if( account.getSocial() == null || account.getSocial().equals("MASTODON"))
+                            if( account.getSocial() == null || account.getSocial().equals("MASTODON")|| account.getSocial().equals("PLEROMA"))
                                 accounts.add(account);
                         }
                     }

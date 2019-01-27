@@ -50,7 +50,8 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
     public enum SOCIAL{
         MASTODON,
         PEERTUBE,
-        PIXELFED
+        PIXELFED,
+        PLEROMA
     }
     public UpdateAccountInfoAsyncTask(Context context, String token, String client_id, String client_secret, String refresh_token, String instance, SOCIAL social){
         this.contextReference = new WeakReference<>(context);

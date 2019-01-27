@@ -1299,7 +1299,7 @@ public class Helper {
             MenuItem itemPCom = menu.findItem(R.id.nav_peertube_comm);
             if( itemPCom != null)
                 itemPCom.setVisible(false);
-        }else if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+        }else if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
             MenuItem itemCom = menu.findItem(R.id.nav_peertube_comm);
             if( itemCom != null)
                 itemCom.setVisible(false);
@@ -1594,7 +1594,7 @@ public class Helper {
                                 }
                                 @Override
                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
                                         finalIcon.setImageResource(R.drawable.missing);
                                     else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                                         finalIcon.setImageResource(R.drawable.missing_peertube);
@@ -1648,7 +1648,7 @@ public class Helper {
                                 }
                                 @Override
                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-                                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
                                         itemIconAcc.setImageResource(R.drawable.missing);
                                     else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                                         itemIconAcc.setImageResource(R.drawable.missing_peertube);
@@ -2738,7 +2738,7 @@ public class Helper {
             url = Helper.getLiveInstanceWithProtocol(context) + url;
         }
         if( url == null  || url.equals("null") || url.contains("missing.png") || url.contains(".svg")) {
-            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 try {
                     Glide.with(imageView.getContext())
                             .load(R.drawable.missing)

@@ -112,6 +112,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsForReplyAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveEmojiAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateDescriptionAttachmentAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -518,34 +519,35 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             }
         });
 
-        toot_it.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                PopupMenu popup = new PopupMenu(TootActivity.this, toot_it);
-                popup.getMenuInflater()
-                        .inflate(R.menu.main_content_type, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.action_plain_text:
-                                contentType = "text/plain";
-                                break;
-                            case R.id.action_html:
-                                contentType = "text/html";
-                                break;
-                            case R.id.action_markdown:
-                                contentType = "text/markdown";
-                                break;
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+            toot_it.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    PopupMenu popup = new PopupMenu(TootActivity.this, toot_it);
+                    popup.getMenuInflater()
+                            .inflate(R.menu.main_content_type, popup.getMenu());
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()){
+                                case R.id.action_plain_text:
+                                    contentType = "text/plain";
+                                    break;
+                                case R.id.action_html:
+                                    contentType = "text/html";
+                                    break;
+                                case R.id.action_markdown:
+                                    contentType = "text/markdown";
+                                    break;
+                            }
+                            popup.dismiss();
+                            sendToot(null, contentType);
+                            return false;
                         }
-                        popup.dismiss();
-                        sendToot(null, contentType);
-                        return false;
-                    }
-                });
-                popup.show();
-                return false;
-            }
-        });
+                    });
+                    popup.show();
+                    return false;
+                }
+            });
 
         toot_picture.setOnClickListener(new View.OnClickListener() {
             @Override

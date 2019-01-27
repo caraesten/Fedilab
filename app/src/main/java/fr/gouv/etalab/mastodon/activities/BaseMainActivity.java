@@ -55,6 +55,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -246,12 +247,15 @@ public abstract class BaseMainActivity extends BaseActivity
         }
 
         //Update the static variable which manages account type
-        if( account.getSocial() == null || account.getSocial().equals("MASTODON") )
+        Log.v(Helper.TAG,"account.getSocial()= " + account.getSocial() );
+        if( account.getSocial() == null || account.getSocial().equals("MASTODON"))
             social = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
         else if( account.getSocial().equals("PEERTUBE"))
             social = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
         else if( account.getSocial().equals("PIXELFED"))
             social = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
+        else if( account.getSocial().equals("PLEROMA"))
+            social = UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA;
 
         countNewStatus = 0;
         countNewNotifications = 0;
@@ -341,7 +345,7 @@ public abstract class BaseMainActivity extends BaseActivity
         delete_all = findViewById(R.id.delete_all);
         add_new = findViewById(R.id.add_new);
 
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             TabLayout.Tab tabHome = tabLayout.newTab();
             TabLayout.Tab tabNotif = tabLayout.newTab();
             TabLayout.Tab tabDirect = tabLayout.newTab();
@@ -1071,14 +1075,14 @@ public abstract class BaseMainActivity extends BaseActivity
             changeDrawableColor(getApplicationContext(), R.drawable.ic_recently_added,R.color.dark_text);
         }
 
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
             startSreaming();
 
 
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
             Helper.refreshSearchTag(BaseMainActivity.this, tabLayout, adapter);
         int tabCount = tabLayout.getTabCount();
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
             for( int j = countPage ; j < tabCount ; j++){
                 attacheDelete(j);
             }
@@ -1198,7 +1202,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
         tabLayout.getTabAt(0).select();
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             toot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -1471,7 +1475,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         // Asked once for notification opt-in
         boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
-        if(!popupShown && social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+        if(!popupShown && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
             LayoutInflater inflater = getLayoutInflater();
             @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
@@ -1511,7 +1515,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         mamageNewIntent(getIntent());
 
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
 
             // Retrieves instance
             new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -2410,14 +2414,14 @@ public abstract class BaseMainActivity extends BaseActivity
         }
 
         public void removeTabPage() {
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 this.mNumOfTabs--;
                 notifyDataSetChanged();
             }
         }
 
         public void addTabPage(String title) {
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 TabLayout.Tab tab = tabLayout.newTab();
                 tab.setText(title);
                 this.mNumOfTabs++;
@@ -2427,7 +2431,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         @Override
         public Fragment getItem(int position) {
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 //Remove the search bar
                 if (!toolbar_search.isIconified()) {
                     toolbarTitle.setVisibility(View.VISIBLE);
@@ -2540,7 +2544,7 @@ public abstract class BaseMainActivity extends BaseActivity
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
             registeredFragments.put(position, createdFragment);
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
 
                 // save the appropriate reference depending on position
                 if (position == 0) {
@@ -3021,7 +3025,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public void manageFloatingButton(boolean display){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             if (display) {
                 tootShow();
                 if (!displayFollowInstance)
@@ -3038,14 +3042,14 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
     public void tootShow(){
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             toot.show();
         }else{
             toot.hide();
         }
     }
     public void federatedTimelinesShow(){
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             federatedTimelines.show();
         }else{
             federatedTimelines.hide();
@@ -3116,7 +3120,7 @@ public abstract class BaseMainActivity extends BaseActivity
         federatedTimelines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
                     new ManageListsAsyncTask(BaseMainActivity.this, ManageListsAsyncTask.action.GET_LIST, null, null, null, null, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, DB_NAME, null, Sqlite.DB_VERSION).open();
                 new InstancesDAO(BaseMainActivity.this, db).cleanDoublon();
