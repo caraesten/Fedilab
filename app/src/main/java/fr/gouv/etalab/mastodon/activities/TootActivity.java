@@ -213,6 +213,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     private ListView lv_accounts_search;
     private RelativeLayout loader;
     private String contentType;
+    private int max_media_count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -239,6 +241,12 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             style = R.style.DialogBlack;
         }else {
             style = R.style.Dialog;
+        }
+
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+            max_media_count = 9999;
+        }else{
+            max_media_count = 4;
         }
         setContentView(R.layout.activity_toot);
         ActionBar actionBar = getSupportActionBar();
@@ -718,7 +726,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             int count = 0;
             for(Uri fileUri: uri) {
                 if (fileUri != null) {
-                    if (count == 4) {
+                    if (count == max_media_count) {
                         break;
                     }
                     picture_scrollview.setVisibility(View.VISIBLE);
@@ -1616,7 +1624,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             }
             attachments.add(attachment);
             addBorder();
-            if (attachments.size() < 4)
+            if (attachments.size() < max_media_count)
                 toot_picture.setEnabled(true);
             toot_it.setEnabled(true);
             toot_sensitive.setVisibility(View.VISIBLE);
@@ -2182,7 +2190,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     }
                 });
                 addBorder();
-                if( attachments.size() < 4)
+                if( attachments.size() < max_media_count)
                     toot_picture.setEnabled(true);
                 toot_sensitive.setVisibility(View.VISIBLE);
                 i++;
@@ -2324,7 +2332,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     }
                 });
                 addBorder();
-                if( attachments.size() < 4)
+                if( attachments.size() < max_media_count)
                     toot_picture.setEnabled(true);
                 toot_sensitive.setVisibility(View.VISIBLE);
                 i++;
