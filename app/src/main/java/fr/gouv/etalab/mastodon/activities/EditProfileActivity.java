@@ -18,9 +18,6 @@ package fr.gouv.etalab.mastodon.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -563,15 +560,6 @@ public class EditProfileActivity extends BaseActivity implements OnRetrieveAccou
             return;
         }
         Toasty.success(getApplicationContext(), getString(R.string.toast_update_credential_ok), Toast.LENGTH_LONG).show();
-
-        Intent mStartActivity = new Intent(EditProfileActivity.this, BaseMainActivity.class);
-        int mPendingIntentId = 45641;
-        PendingIntent mPendingIntent = PendingIntent.getActivity(EditProfileActivity.this, mPendingIntentId, mStartActivity,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager mgr = (AlarmManager) EditProfileActivity.this.getSystemService(Context.ALARM_SERVICE);
-        assert mgr != null;
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-        System.exit(0);
         finish();
     }
 
