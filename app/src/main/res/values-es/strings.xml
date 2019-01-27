@@ -754,6 +754,9 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="add_public_comment">Agrega un comentario público</string>
     <string name="send_comment">Enviar comentario</string>
     <string name="toast_toot_saved_error">No hay conexión a internet. Su mensaje ha sido almacenado en borradores.</string>
+    <string name="action_plain_text">Plain text</string>
+    <string name="action_html">HTML</string>
+    <string name="action_markdown">Markdown</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>WebView</item>
