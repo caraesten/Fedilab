@@ -142,6 +142,10 @@ public class Notification implements Parcelable {
         if( status.getReblog() == null &&  status.getEmojis() == null)
             return;
         final java.util.List<Emojis> emojis = status.getReblog() != null ? status.getReblog().getEmojis() : status.getEmojis();
+        if( status.getReblog() != null && status.getReblog().getAccount() == null)
+            return;
+        if( status.getReblog() == null && status.getAccount() == null)
+            return;
         final List<Emojis> emojisAccounts = status.getReblog() != null ?status.getReblog().getAccount().getEmojis():status.getAccount().getEmojis();
 
         status.getAccount().makeAccountNameEmoji(context, null, status.getAccount());
