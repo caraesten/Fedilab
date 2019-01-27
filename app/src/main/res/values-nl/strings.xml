@@ -756,6 +756,9 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="add_public_comment">Een openbare reactie toevoegen</string>
     <string name="send_comment">Reactie versturen</string>
     <string name="toast_toot_saved_error">Er is geen internetverbinding. Uw bericht is opgeslagen in de concepten.</string>
+    <string name="action_plain_text">Plain text</string>
+    <string name="action_html">HTML</string>
+    <string name="action_markdown">Markdown</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
