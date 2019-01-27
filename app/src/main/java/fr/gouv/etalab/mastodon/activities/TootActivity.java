@@ -18,6 +18,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -561,7 +562,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             @Override
             public void onClick(View v) {
 
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     if (ContextCompat.checkSelfPermission(TootActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
                             PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(TootActivity.this,
@@ -573,14 +574,18 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 Intent intent;
                 intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     intent.setType("*/*");
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                     String[] mimetypes = {"image/*", "video/*"};
                     intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                     startActivityForResult(intent, PICK_IMAGE);
                 }else {
                     intent.setType("image/* video/*");
-                    Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    }
+                    Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_image));
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
                     startActivityForResult(chooserIntent, PICK_IMAGE);
@@ -791,27 +796,44 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             picture_scrollview.setVisibility(View.VISIBLE);
-            if (data == null || data.getData() == null) {
+            if (data == null){
                 Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 return;
             }
-            try {
-                String filename =  Helper.getFileName(TootActivity.this, data.getData());
-                ContentResolver cr = getContentResolver();
-                String mime = cr.getType(data.getData());
-                if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
-                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    new HttpsConnection(TootActivity.this).upload(inputStream, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
-                } else if(mime != null && mime.toLowerCase().contains("image")) {
-                    new asyncPicture(TootActivity.this, accountReply, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else {
-                    Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
-                }
-            } catch (FileNotFoundException e) {
+
+            ClipData clipData = data.getClipData();
+            if (data.getData() == null && clipData == null) {
                 Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
-                toot_picture.setEnabled(true);
-                toot_it.setEnabled(true);
+                return;
             }
+            if( clipData != null ){
+                ArrayList<Uri> mArrayUri = new ArrayList<>();
+                for (int i = 0; i < clipData.getItemCount(); i++) {
+                    ClipData.Item item = clipData.getItemAt(i);
+                    Uri uri = item.getUri();
+                    mArrayUri.add(uri);
+                }
+                uploadSharedImage(mArrayUri);
+            }else{
+                try {
+                    String filename =  Helper.getFileName(TootActivity.this, data.getData());
+                    ContentResolver cr = getContentResolver();
+                    String mime = cr.getType(data.getData());
+                    if(mime != null && (mime.toLowerCase().contains("video") || mime.toLowerCase().contains("gif")) ) {
+                        InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                        new HttpsConnection(TootActivity.this).upload(inputStream, filename, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+                    } else if(mime != null && mime.toLowerCase().contains("image")) {
+                        new asyncPicture(TootActivity.this, accountReply, data.getData()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }else {
+                        Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
+                    }
+                } catch (FileNotFoundException e) {
+                    Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
+                    toot_picture.setEnabled(true);
+                    toot_it.setEnabled(true);
+                }
+            }
+
         }else if(requestCode == Helper.REQ_CODE_SPEECH_INPUT && resultCode == Activity.RESULT_OK){
             if (null != data) {
                 ArrayList<String> result = data

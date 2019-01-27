@@ -55,7 +55,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -247,7 +246,6 @@ public abstract class BaseMainActivity extends BaseActivity
         }
 
         //Update the static variable which manages account type
-        Log.v(Helper.TAG,"account.getSocial()= " + account.getSocial() );
         if( account.getSocial() == null || account.getSocial().equals("MASTODON"))
             social = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
         else if( account.getSocial().equals("PEERTUBE"))
