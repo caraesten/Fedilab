@@ -815,7 +815,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
 
 
         //The authenticated account is followed by the account
-        if( relationship != null && relationship.isFollowed_by()){
+        if( relationship != null && relationship.isFollowed_by() && !accountId.equals(userId)){
             TextView account_followed_by = findViewById(R.id.account_followed_by);
             account_followed_by.setVisibility(View.VISIBLE);
         }
