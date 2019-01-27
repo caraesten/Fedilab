@@ -2188,21 +2188,26 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
             }
 
-            if (getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS && status.getApplication() != null && status.getApplication().getName() != null && status.getApplication().getName().length() > 0) {
-                Application application = status.getApplication();
-                holder.status_toot_app.setText(application.getName());
-                if (application.getWebsite() != null && !application.getWebsite().trim().equals("null") && application.getWebsite().trim().length() == 0) {
-                    holder.status_toot_app.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Helper.openBrowser(context, application.getWebsite());
-                        }
-                    });
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+                if (getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS && status.getApplication() != null && status.getApplication().getName() != null && status.getApplication().getName().length() > 0) {
+                    Application application = status.getApplication();
+                    holder.status_toot_app.setText(application.getName());
+                    if (application.getWebsite() != null && !application.getWebsite().trim().equals("null") && application.getWebsite().trim().length() == 0) {
+                        holder.status_toot_app.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Helper.openBrowser(context, application.getWebsite());
+                            }
+                        });
+                    }
+                    holder.status_toot_app.setVisibility(View.VISIBLE);
+                } else {
+                    holder.status_toot_app.setVisibility(View.GONE);
                 }
-                holder.status_toot_app.setVisibility(View.VISIBLE);
-            } else {
+            }else{
                 holder.status_toot_app.setVisibility(View.GONE);
             }
+
         }
     }
 
