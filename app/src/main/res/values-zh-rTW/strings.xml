@@ -752,9 +752,9 @@
     <string name="toot_select_import">選取要匯入的檔案</string>
     <string name="toot_select_file_error">選擇備份檔時發生錯誤！</string>
     <string name="data_import_start">請不要在處理時砍除應用程式。這不會太久。</string>
-    <string name="add_public_comment">Add a public comment</string>
-    <string name="send_comment">Send comment</string>
-    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
+    <string name="add_public_comment">新增公開留言</string>
+    <string name="send_comment">傳送留言</string>
+    <string name="toast_toot_saved_error">沒有網路連線。您的訊息已經儲存為草稿。</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

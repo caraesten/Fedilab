@@ -747,7 +747,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="data_import_start">Bitte beenden Sie die App nicht während sie ausgeführt wird. Bitte ein wenig Geduld.</string>
     <string name="add_public_comment">Einen öffentlichen Kommentar verfassen</string>
     <string name="send_comment">Kommentar senden</string>
-    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
+    <string name="toast_toot_saved_error">Internetverbindung fehlgeschlagen. Ihre Nachricht wurde in Entwürfen gespeichert.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
