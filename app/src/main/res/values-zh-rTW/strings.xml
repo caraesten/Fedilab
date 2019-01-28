@@ -755,7 +755,7 @@
     <string name="add_public_comment">新增公開留言</string>
     <string name="send_comment">傳送留言</string>
     <string name="toast_toot_saved_error">沒有網路連線。您的訊息已經儲存為草稿。</string>
-    <string name="action_plain_text">Plain text</string>
+    <string name="action_plain_text">純文字</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <!-- end languages -->

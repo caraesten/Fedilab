@@ -756,7 +756,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="add_public_comment">Ajouter un commentaire public</string>
     <string name="send_comment">Envoyer un commentaire</string>
     <string name="toast_toot_saved_error">Il n’y a pas de connexion Internet. Votre message a été stocké dans les brouillons.</string>
-    <string name="action_plain_text">Plain text</string>
+    <string name="action_plain_text">Texte brut</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <!-- end languages -->
