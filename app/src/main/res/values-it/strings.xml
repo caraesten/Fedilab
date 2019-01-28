@@ -87,7 +87,7 @@
     <string name="make_a_choice">Cosa vuoi fare?</string>
     <string name="delete_account_title">Elimina un account</string>
     <string name="delete_account_message" formatted="false">Eliminare l\'account %1$s dall\'applicazione?</string>
-    <string name="send_email">Invia una email</string>
+    <string name="send_email">Invia un\'email</string>
     <string name="choose_file">Seleziona un file</string>
     <string name="choose_file_error">Nessun gestore file trovato!</string>
     <string name="click_to_change">Fai clic sul percorso per cambiarlo</string>
@@ -759,7 +759,7 @@
     <string name="add_public_comment">Aggiungi un commento pubblico</string>
     <string name="send_comment">Invia commento</string>
     <string name="toast_toot_saved_error">Non c\'è connessione ad Internet. Il tuo messaggio è stato salvato nelle bozze.</string>
-    <string name="action_plain_text">Plain text</string>
+    <string name="action_plain_text">Testo normale</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <!-- end languages -->
