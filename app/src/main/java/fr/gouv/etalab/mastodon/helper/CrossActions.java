@@ -73,7 +73,7 @@ public class CrossActions {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
         List<Account> accounts = new ArrayList<>();
-        if( !limitedToOwner && accountstmp.size() > 1 ){
+        if( accountstmp != null && !limitedToOwner && accountstmp.size() > 1 ){
             //It's for a reply
             if( status != null){
                 //Status is private or direct

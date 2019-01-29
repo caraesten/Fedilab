@@ -1263,7 +1263,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                 finish();
                                 return true;
                             case R.id.action_logout_account:
-                                Helper.logoutCurrentUser(getApplicationContext());
+                                Helper.logoutCurrentUser(BaseMainActivity.this);
                                 return true;
                             case R.id.action_privacy:
                                 Intent intent = new Intent(getApplicationContext(), PrivacyActivity.class);

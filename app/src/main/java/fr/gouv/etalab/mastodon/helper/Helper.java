@@ -547,15 +547,15 @@ public class Helper {
      * Log out the authenticated user by removing its token
      * @param context Context
      */
-    public static void logoutCurrentUser(Context context) {
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+    public static void logoutCurrentUser(Activity activity) {
+        SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         //Current user
         String currentToken = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(context, db).getAccountByToken(currentToken);
+        SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(activity, db).getAccountByToken(currentToken);
         account.setToken("null");
-        new AccountDAO(context, db).updateAccount(account);
-        Account newAccount = new AccountDAO(context, db).getLastUsedAccount();
+        new AccountDAO(activity, db).updateAccount(account);
+        Account newAccount = new AccountDAO(activity, db).getLastUsedAccount();
         SharedPreferences.Editor editor = sharedpreferences.edit();
         if( newAccount == null){
             editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, null);
@@ -574,10 +574,10 @@ public class Helper {
             editor.putBoolean(Helper.PREF_IS_MODERATOR, newAccount.isModerator());
             editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, newAccount.isAdmin());
             editor.commit();
-            Intent changeAccount = new Intent(context, MainActivity.class);
+            Intent changeAccount = new Intent(activity, MainActivity.class);
             changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            ((Activity)context).finish();
-            context.startActivity(changeAccount);
+            activity.finish();
+            activity.startActivity(changeAccount);
         }
 
     }

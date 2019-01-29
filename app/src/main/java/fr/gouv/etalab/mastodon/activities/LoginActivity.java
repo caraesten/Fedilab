@@ -193,11 +193,7 @@ public class LoginActivity extends BaseActivity {
             info_2FA = findViewById(R.id.info_2FA);
             peertube_instance = findViewById(R.id.peertube_instance);
 
-            if( autofilledInstance != null){
-                login_instance.setText(autofilledInstance.trim());
-                retrievesClientId();
-                login_uid.requestFocus();
-            }
+
             peertube_instance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -393,6 +389,11 @@ public class LoginActivity extends BaseActivity {
                     builder.setIcon(android.R.drawable.ic_dialog_alert).show();
                 }
             });
+        }
+        if( autofilledInstance != null){
+            login_instance.setText(autofilledInstance.trim());
+            retrievesClientId();
+            login_uid.requestFocus();
         }
     }
 
