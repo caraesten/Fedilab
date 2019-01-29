@@ -149,6 +149,20 @@ public class AccountDAO {
     }
 
     /**
+     * Returns last used account
+     * @return Account
+     */
+    public Account getLastUsedAccount(){
+
+        try {
+            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_UPDATED_AT + " DESC", "1");
+            return cursorToUser(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
      * Returns an Account by its id and acct
      * @param accountId String
      * @param accountAcct String
@@ -186,6 +200,34 @@ public class AccountDAO {
 
         try {
             Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, null, null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
+            return cursorToListUser(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns all Account in db
+     * @return Account List<Account>
+     */
+    public List<Account> getAllAccountActivated(){
+
+        try {
+            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null,  Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
+            return cursorToListUser(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns all Account in db
+     * @return Account List<Account>
+     */
+    public List<Account> getAllAccountCrossAction(){
+
+        try {
+            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_SOCIAL + " != 'PEERTUBE' AND " + Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
             return cursorToListUser(c);
         } catch (Exception e) {
             return null;
@@ -252,6 +294,7 @@ public class AccountDAO {
         account.setAvatar_static(c.getString(c.getColumnIndex(Sqlite.COL_AVATAR_STATIC)));
         account.setHeader(c.getString(c.getColumnIndex(Sqlite.COL_HEADER)));
         account.setHeader_static(c.getString(c.getColumnIndex(Sqlite.COL_HEADER_STATIC)));
+        account.setUpdated_at(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_UPDATED_AT))));
         account.setCreated_at(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_CREATED_AT))));
         account.setInstance(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
         account.setEmojis(Helper.restoreEmojisFromString(c.getString(c.getColumnIndex(Sqlite.COL_EMOJIS))));
@@ -295,6 +338,7 @@ public class AccountDAO {
             account.setAvatar_static(c.getString(c.getColumnIndex(Sqlite.COL_AVATAR_STATIC)));
             account.setHeader(c.getString(c.getColumnIndex(Sqlite.COL_HEADER)));
             account.setHeader_static(c.getString(c.getColumnIndex(Sqlite.COL_HEADER_STATIC)));
+            account.setUpdated_at(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_UPDATED_AT))));
             account.setCreated_at(Helper.stringToDate(context, c.getString(c.getColumnIndex(Sqlite.COL_CREATED_AT))));
             account.setInstance(c.getString(c.getColumnIndex(Sqlite.COL_INSTANCE)));
             account.setToken(c.getString(c.getColumnIndex(Sqlite.COL_OAUTHTOKEN)));

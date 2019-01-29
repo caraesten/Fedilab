@@ -543,6 +543,45 @@ public class Helper {
         editor.apply();
     }
 
+    /**
+     * Log out the authenticated user by removing its token
+     * @param context Context
+     */
+    public static void logoutCurrentUser(Activity activity) {
+        SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        //Current user
+        String currentToken = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
+        SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(activity, db).getAccountByToken(currentToken);
+        account.setToken("null");
+        new AccountDAO(activity, db).updateAccount(account);
+        Account newAccount = new AccountDAO(activity, db).getLastUsedAccount();
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        if( newAccount == null){
+            editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            editor.putString(Helper.CLIENT_ID, null);
+            editor.putString(Helper.CLIENT_SECRET, null);
+            editor.putString(Helper.PREF_KEY_ID, null);
+            editor.putBoolean(Helper.PREF_IS_MODERATOR, false);
+            editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, false);
+            editor.putString(Helper.PREF_INSTANCE, null);
+            editor.putString(Helper.ID, null);
+            editor.apply();
+        }else{
+            editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, newAccount.getToken());
+            editor.putString(Helper.PREF_KEY_ID, newAccount.getId());
+            editor.putString(Helper.PREF_INSTANCE, newAccount.getInstance().trim());
+            editor.putBoolean(Helper.PREF_IS_MODERATOR, newAccount.isModerator());
+            editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, newAccount.isAdmin());
+            editor.commit();
+            Intent changeAccount = new Intent(activity, MainActivity.class);
+            changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            activity.finish();
+            activity.startActivity(changeAccount);
+        }
+
+    }
+
 
     /**
      * Convert String date from Mastodon
@@ -1681,21 +1720,27 @@ public class Helper {
                         subActionButtonAcc.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, accountChoice.getToken());
-                                editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
-                                editor.putString(Helper.PREF_INSTANCE, accountChoice.getInstance().trim());
-                                editor.putBoolean(Helper.PREF_IS_MODERATOR, accountChoice.isModerator());
-                                editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, accountChoice.isAdmin());
-                                editor.commit();
-                                if(accountChoice.getSocial() != null && accountChoice.getSocial().equals("PEERTUBE"))
-                                    Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct()), Toast.LENGTH_LONG).show();
-                                else
-                                    Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct() + "@" + accountChoice.getInstance()), Toast.LENGTH_LONG).show();
-                                Intent changeAccount = new Intent(activity, MainActivity.class);
-                                changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                activity.finish();
-                                activity.startActivity(changeAccount);
+                                if( !accountChoice.getToken().equals("null")) {
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, accountChoice.getToken());
+                                    editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
+                                    editor.putString(Helper.PREF_INSTANCE, accountChoice.getInstance().trim());
+                                    editor.putBoolean(Helper.PREF_IS_MODERATOR, accountChoice.isModerator());
+                                    editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, accountChoice.isAdmin());
+                                    editor.commit();
+                                    if (accountChoice.getSocial() != null && accountChoice.getSocial().equals("PEERTUBE"))
+                                        Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct()), Toast.LENGTH_LONG).show();
+                                    else
+                                        Toasty.info(activity, activity.getString(R.string.toast_account_changed, "@" + accountChoice.getAcct() + "@" + accountChoice.getInstance()), Toast.LENGTH_LONG).show();
+                                    Intent changeAccount = new Intent(activity, MainActivity.class);
+                                    changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    activity.finish();
+                                    activity.startActivity(changeAccount);
+                                }else{ //The account was logged out
+                                    Intent intent = new Intent(activity, LoginActivity.class);
+                                    intent.putExtra("instance", accountChoice.getInstance());
+                                    activity.startActivity(intent);
+                                }
                             }
                         });
                         actionMenuAccBuilder.addSubActionView(subActionButtonAcc);
@@ -1736,17 +1781,23 @@ public class Helper {
                         public void onClick(View v) {
                             for(final Account accountChoice: accounts) {
                                 if (!currrentUserId.equals(accountChoice.getId())) {
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, accountChoice.getToken());
-                                    editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
-                                    editor.putString(Helper.PREF_INSTANCE, accountChoice.getInstance().trim());
-                                    editor.putBoolean(Helper.PREF_IS_MODERATOR, accountChoice.isModerator());
-                                    editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, accountChoice.isAdmin());
-                                    editor.commit();
-                                    Intent changeAccount = new Intent(activity, MainActivity.class);
-                                    changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    activity.finish();
-                                    activity.startActivity(changeAccount);
+                                    if( !accountChoice.getToken().equals("null")) {
+                                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                                        editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, accountChoice.getToken());
+                                        editor.putString(Helper.PREF_KEY_ID, accountChoice.getId());
+                                        editor.putString(Helper.PREF_INSTANCE, accountChoice.getInstance().trim());
+                                        editor.putBoolean(Helper.PREF_IS_MODERATOR, accountChoice.isModerator());
+                                        editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, accountChoice.isAdmin());
+                                        editor.commit();
+                                        Intent changeAccount = new Intent(activity, MainActivity.class);
+                                        changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        activity.finish();
+                                        activity.startActivity(changeAccount);
+                                    }else{ //The account was logged out
+                                        Intent intent = new Intent(activity, LoginActivity.class);
+                                        intent.putExtra("instance", accountChoice.getInstance());
+                                        activity.startActivity(intent);
+                                    }
                                 }
                             }
                         }

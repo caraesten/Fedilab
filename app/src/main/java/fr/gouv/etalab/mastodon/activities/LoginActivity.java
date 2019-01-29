@@ -97,11 +97,14 @@ public class LoginActivity extends BaseActivity {
     private CheckBox peertube_instance;
     private  Button connectionButton;
     private String actionToken;
-
+    private String autofilledInstance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Bundle b = getIntent().getExtras();
+        if(b != null) {
+            autofilledInstance = b.getString("instance", null);
+        }
         if( getIntent() != null && getIntent().getData() != null && getIntent().getData().toString().contains("mastalab://backtomastalab?code=")){
             String url = getIntent().getData().toString();
             String val[] = url.split("code=");
@@ -189,6 +192,7 @@ public class LoginActivity extends BaseActivity {
             info_pwd = findViewById(R.id.info_pwd);
             info_2FA = findViewById(R.id.info_2FA);
             peertube_instance = findViewById(R.id.peertube_instance);
+
 
             peertube_instance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -385,6 +389,11 @@ public class LoginActivity extends BaseActivity {
                     builder.setIcon(android.R.drawable.ic_dialog_alert).show();
                 }
             });
+        }
+        if( autofilledInstance != null){
+            login_instance.setText(autofilledInstance.trim());
+            retrievesClientId();
+            login_uid.requestFocus();
         }
     }
 

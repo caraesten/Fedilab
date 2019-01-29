@@ -82,6 +82,7 @@ public class Account implements Parcelable {
     private String display_name, stored_displayname;
     private boolean locked;
     private Date created_at;
+    private Date updated_at;
     private int followers_count;
     private int following_count;
     private int statuses_count;
@@ -136,6 +137,7 @@ public class Account implements Parcelable {
         dest.writeString(this.stored_displayname);
         dest.writeByte(this.locked ? (byte) 1 : (byte) 0);
         dest.writeLong(this.created_at != null ? this.created_at.getTime() : -1);
+        dest.writeLong(this.updated_at != null ? this.updated_at.getTime() : -1);
         dest.writeInt(this.followers_count);
         dest.writeInt(this.following_count);
         dest.writeInt(this.statuses_count);
@@ -186,6 +188,8 @@ public class Account implements Parcelable {
         this.locked = in.readByte() != 0;
         long tmpCreated_at = in.readLong();
         this.created_at = tmpCreated_at == -1 ? null : new Date(tmpCreated_at);
+        long tmpUpdated_at = in.readLong();
+        this.updated_at = tmpUpdated_at == -1 ? null : new Date(tmpUpdated_at);
         this.followers_count = in.readInt();
         this.following_count = in.readInt();
         this.statuses_count = in.readInt();
@@ -370,6 +374,14 @@ public class Account implements Parcelable {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public Date getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
     }
 
 
