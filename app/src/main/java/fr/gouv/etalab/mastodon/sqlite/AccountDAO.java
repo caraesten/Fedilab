@@ -206,6 +206,34 @@ public class AccountDAO {
         }
     }
 
+    /**
+     * Returns all Account in db
+     * @return Account List<Account>
+     */
+    public List<Account> getAllAccountActivated(){
+
+        try {
+            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null,  Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
+            return cursorToListUser(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns all Account in db
+     * @return Account List<Account>
+     */
+    public List<Account> getAllAccountCrossAction(){
+
+        try {
+            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_SOCIAL + " != 'PEERTUBE AND " + Sqlite.COL_OAUTHTOKEN + " != 'null'", null, null, null, Sqlite.COL_INSTANCE + " ASC", null);
+            return cursorToListUser(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 
     /**
      * Returns an Account by token

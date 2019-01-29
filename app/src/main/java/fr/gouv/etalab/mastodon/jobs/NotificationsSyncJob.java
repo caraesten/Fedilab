@@ -125,7 +125,7 @@ public class NotificationsSyncJob extends Job {
             return;
         //If WIFI only and on WIFI OR user defined any connections to use the service.
         if(!sharedpreferences.getBoolean(Helper.SET_WIFI_ONLY, false) || Helper.isOnWIFI(getContext())) {
-            List<Account> accounts = new AccountDAO(getContext(),db).getAllAccount();
+            List<Account> accounts = new AccountDAO(getContext(),db).getAllAccountCrossAction();
             //It means there is no user in DB.
             if( accounts == null )
                 return;

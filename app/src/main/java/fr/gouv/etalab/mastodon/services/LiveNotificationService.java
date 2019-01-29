@@ -126,7 +126,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     }
                     it.remove();
                 }
-                List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccount();
+                List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
                 if (accountStreams != null) {
                     for (final Account accountStream : accountStreams) {
                         if( accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON")) {

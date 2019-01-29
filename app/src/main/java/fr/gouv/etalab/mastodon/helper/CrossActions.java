@@ -69,7 +69,7 @@ public class CrossActions {
     private static List<Account> connectedAccounts(Context context, Status status, boolean limitedToOwner){
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        List<Account> accountstmp = new AccountDAO(context, db).getAllAccount();
+        List<Account> accountstmp = new AccountDAO(context, db).getAllAccountCrossAction();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         Account currentAccount = new AccountDAO(context, db).getAccountByID(userId);
         List<Account> accounts = new ArrayList<>();
