@@ -654,13 +654,12 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
         <item>1 día</item>
         <item>1 semana</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">En este campo, debe escribir el nombre de host de su instancia. \ Npor ejemplo, si creó su cuenta en https: //mastodon.social \ nSólo escriba <b> mastodon.social </b> (sin https: //) \norte
+         Puede comenzar a escribir las primeras letras y se sugerirán los nombres. \ N \ n
+         ⚠ El botón Iniciar sesión solo funcionará si el nombre de la instancia es válido y la instancia está activa!    </string>
+    <string name="showcase_uid">        En este campo, escriba el correo electrónico que está conectado a tu cuenta de Mastodon.
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
-    </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        Último paso es introducir su contraseña y haga clic en Inicio de sesión.
     </string>
     <string name="more_information">Más información</string>
     <string name="showcase_2FA">Si utilizas 2FA (autenticación de dos factores), es necesario utilizar este enlace. \nTu también puedes utilizarlo si no deseas ingresar tus credenciales aquí.</string>
@@ -723,7 +722,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="leave_a_comment">Dejar un comentario</string>
     <string name="share">Compartir</string>
     <string name="my_pictures">Mis imágenes</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
+    <string name="choose_schedule">Elija un modo de programación</string>
     <string name="device_schedule">Desde dispositivo</string>
     <string name="server_schedule">Desde servidor</string>
     <string name="toots_server">Toots (Servidor)</string>
@@ -735,7 +734,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="settings_category_label_notification">Servicio de notificaciones</string>
     <string name="settings_category_label_interface">Interfaz</string>
     <string name="settings_category_label_hiddencontent">Contenido oculto</string>
-    <string name="settings_category_label_composing">Composing</string>
+    <string name="settings_category_label_composing">Composición</string>
     <string name="contact">Contactos</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
@@ -743,9 +742,9 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="peertube_video_published"><![CDATA[Your video <b>%1$s</b> has been published]]></string>
     <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
     <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
-    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
+    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> publicó un nuevo video: <b>%2$s</b>]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[Su video <b>%1$s</b> esta en lista negra]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Su video <b>%1$s</b> ha sido unblacklisted]]></string>
     <string name="export_data">Exportar datos</string>
     <string name="import_data">Importar Datos</string>
     <string name="toot_select_import">Selecciona el archivo para importar</string>
@@ -754,7 +753,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="add_public_comment">Agrega un comentario público</string>
     <string name="send_comment">Enviar comentario</string>
     <string name="toast_toot_saved_error">No hay conexión a internet. Su mensaje ha sido almacenado en borradores.</string>
-    <string name="action_plain_text">Plain text</string>
+    <string name="action_plain_text">Texto plano</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <!-- end languages -->
