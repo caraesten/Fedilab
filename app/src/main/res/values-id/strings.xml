@@ -190,7 +190,7 @@
     <string name="about_thekinrar">Contoh pencarian:</string>
     <string name="about_thekinrar_action">contoh.sosial</string>
     <string name="thanks_text_logo">Perancang ikon:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="thanks_text_banner">Desainer banner:</string>
     <!-- Conversation -->
     <string name="conversation">Percakapan</string>
     <!-- Accounts -->
@@ -306,7 +306,7 @@
     <string name="set_nsfw_timeout">Lihat NSFW waktu habis (detik, 0 berarti mati)</string>
     <string name="settings_title_profile">Ubah profil</string>
     <string name="set_profile_description">Biodata…</string>
-    <string name="set_lock_account">Lock account</string>
+    <string name="set_lock_account">Kunci akun</string>
     <string name="set_save_changes">Simpan perubahan</string>
     <string name="set_header_picture_overlay">Pilih gambar header</string>
     <string name="set_fit_preview">Fit preview images</string>
