@@ -290,7 +290,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         ImageView conversation_pp_3;
         ImageView conversation_pp_4;
         LinearLayout conversation_pp;
-        LinearLayout vertical_content;
         RelativeLayout status_prev4_container;
         TextView status_reply;
         ImageView status_pin;
@@ -399,7 +398,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             conversation_pp_4 = itemView.findViewById(R.id.conversation_pp_4);
             conversation_pp_2_container = itemView.findViewById(R.id.conversation_pp_2_container);
             conversation_pp_3_container = itemView.findViewById(R.id.conversation_pp_3_container);
-            vertical_content = itemView.findViewById(R.id.vertical_content);
             left_buttons =  itemView.findViewById(R.id.left_buttons);
             status_show_more_content = itemView.findViewById(R.id.status_show_more_content);
             spark_button_fav =  itemView.findViewById(R.id.spark_button_fav);
@@ -786,24 +784,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_account_displayname.setCompoundDrawables(null, null, null, null);
                 holder.status_account_displayname_owner.setCompoundDrawables(null, null, imgConversation, null);
             }
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            LinearLayout.LayoutParams paramsB = new LinearLayout.LayoutParams((int) Helper.convertDpToPixel(60, context), LinearLayout.LayoutParams.WRAP_CONTENT);
-            if (status.getReblog() == null && !isCompactMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS) {
-                params.setMargins(0, -(int) Helper.convertDpToPixel(10, context), 0, 0);
-                if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0)
-                    paramsB.setMargins(0, (int) Helper.convertDpToPixel(10, context), 0, 0);
-                else
-                    paramsB.setMargins(0, (int) Helper.convertDpToPixel(15, context), 0, 0);
-            } else if (!isCompactMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS) {
-                if (status.getContent() == null || status.getContent().trim().equals("")) {
-                    params.setMargins(0, -(int) Helper.convertDpToPixel(20, context), 0, 0);
-                    paramsB.setMargins(0, (int) Helper.convertDpToPixel(20, context), 0, 0);
-                } else {
-                    params.setMargins(0, 0, 0, 0);
-                    paramsB.setMargins(0, 0, 0, 0);
-                }
-
-            }
             if( expand_media && status.isSensitive() || (status.getReblog() != null && status.getReblog().isSensitive())) {
                 changeDrawableColor(context, holder.hide_preview, R.color.red_1);
                 changeDrawableColor(context, holder.hide_preview_h, R.color.red_1);
@@ -812,8 +792,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, holder.hide_preview_h, R.color.white);
             }
 
-            holder.vertical_content.setLayoutParams(params);
-            holder.left_buttons.setLayoutParams(paramsB);
             if (!status.isClickable())
                 Status.transform(context, status);
             if (!status.isEmojiFound())
