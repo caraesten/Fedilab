@@ -543,6 +543,45 @@ public class Helper {
         editor.apply();
     }
 
+    /**
+     * Log out the authenticated user by removing its token
+     * @param context Context
+     */
+    public static void logoutCurrentUser(Context context) {
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        //Current user
+        String currentToken = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(context, db).getAccountByToken(currentToken);
+        account.setToken("null");
+        new AccountDAO(context, db).updateAccount(account);
+        Account newAccount = new AccountDAO(context, db).getLastUsedAccount();
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        if( newAccount == null){
+            editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            editor.putString(Helper.CLIENT_ID, null);
+            editor.putString(Helper.CLIENT_SECRET, null);
+            editor.putString(Helper.PREF_KEY_ID, null);
+            editor.putBoolean(Helper.PREF_IS_MODERATOR, false);
+            editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, false);
+            editor.putString(Helper.PREF_INSTANCE, null);
+            editor.putString(Helper.ID, null);
+            editor.apply();
+        }else{
+            editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, newAccount.getToken());
+            editor.putString(Helper.PREF_KEY_ID, newAccount.getId());
+            editor.putString(Helper.PREF_INSTANCE, newAccount.getInstance().trim());
+            editor.putBoolean(Helper.PREF_IS_MODERATOR, newAccount.isModerator());
+            editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, newAccount.isAdmin());
+            editor.commit();
+            Intent changeAccount = new Intent(context, MainActivity.class);
+            changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            ((Activity)context).finish();
+            context.startActivity(changeAccount);
+        }
+
+    }
+
 
     /**
      * Convert String date from Mastodon

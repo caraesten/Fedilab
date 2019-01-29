@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 25;
+    public static final int DB_VERSION = 26;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -88,6 +88,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_REFRESH_TOKEN = "REFRESH_TOKEN";
     static final String COL_IS_MODERATOR = "IS_MODERATOR";
     static final String COL_IS_ADMIN = "IS_ADMIN";
+    static final String COL_UPDATED_AT = "UPDATED_AT";
 
     private static final String CREATE_TABLE_USER_ACCOUNT = "CREATE TABLE " + TABLE_USER_ACCOUNT + " ("
             + COL_USER_ID + " TEXT PRIMARY KEY, " + COL_USERNAME + " TEXT NOT NULL, " + COL_ACCT + " TEXT NOT NULL, "
@@ -101,6 +102,7 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_IS_MODERATOR + " INTEGER  DEFAULT 0, "
             + COL_IS_ADMIN + " INTEGER  DEFAULT 0, "
             + COL_CLIENT_ID + " TEXT, " + COL_CLIENT_SECRET + " TEXT, " + COL_REFRESH_TOKEN + " TEXT,"
+            + COL_UPDATED_AT + " TEXT, "
             + COL_INSTANCE + " TEXT NOT NULL, " + COL_OAUTHTOKEN + " TEXT NOT NULL, " + COL_CREATED_AT + " TEXT NOT NULL)";
 
 
@@ -325,6 +327,8 @@ public class Sqlite extends SQLiteOpenHelper {
             case 24:
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " +  COL_IS_MODERATOR + " INTEGER  DEFAULT 0");
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " +  COL_IS_ADMIN + " INTEGER  DEFAULT 0");
+            case 25:
+                db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " +  COL_UPDATED_AT + " TEXT");
             default:
                 break;
         }
