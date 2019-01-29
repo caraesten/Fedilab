@@ -1135,6 +1135,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             /*if (expand_cw)
                 holder.status_spoiler_button.setVisibility(View.GONE);*/
+            String contentCheck = "";
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                contentCheck = Html.fromHtml(status.getReblog() == null?status.getContent():status.getReblog().getContent(), Html.FROM_HTML_MODE_LEGACY).toString();
+            else
+                //noinspection deprecation
+                contentCheck = Html.fromHtml(status.getReblog() == null?status.getContent():status.getReblog().getContent()).toString();
+
             if (status.getReblog() == null) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
@@ -1176,6 +1183,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_content_container.setVisibility(View.VISIBLE);
                 }
             }
+
             if (status.getReblog() == null) {
                 if (status.getMedia_attachments().size() < 1) {
                     holder.status_horizontal_document_container.setVisibility(View.GONE);
@@ -1274,7 +1282,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_content.setVisibility(View.VISIBLE);
                 holder.status_content_translated_container.setVisibility(View.GONE);
             }
-
+            if( contentCheck.trim().length() < 2)
+                holder.status_content.setVisibility(View.GONE);
+            else
+                holder.status_content.setVisibility(View.VISIBLE);
             //TODO:It sounds that sometimes this value is null - need deeper investigation
             if (status.getVisibility() == null)
                 status.setVisibility("public");
