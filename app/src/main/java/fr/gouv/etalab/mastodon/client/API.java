@@ -2279,8 +2279,24 @@ public class API {
         return apiResponse;
     }
 
+    //Pleroma admin calls
     /**
      * Retrieves Accounts when searching (ie: via @...) *synchronously*
+     * @return boolean
+     */
+    public boolean isPleromaAdmin(String nickname) {
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(String.format(Helper.getLiveInstanceWithProtocol(context)+"/api/pleroma/admin/permission_group/%s/admin",nickname), 60, null, prefKeyOauthTokenT);
+            //Call didn't return a 404, so the account is admin
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Retrieves Pleroma emoji *synchronously*
      *
      * @return APIResponse
      */
