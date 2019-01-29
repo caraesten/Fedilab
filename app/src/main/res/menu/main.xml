@@ -34,6 +34,10 @@
         android:title="@string/import_data"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_logout_account"
+        android:title="@string/action_logout_account"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_logout"
         android:title="@string/action_logout"
         app:showAsAction="never" />
