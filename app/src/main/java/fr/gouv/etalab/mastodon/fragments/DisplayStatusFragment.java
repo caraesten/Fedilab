@@ -309,8 +309,10 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         Date bookmarkL = statuses.get(firstVisibleItem).getCreated_at();
                         updatedBookMark = statuses.get(firstVisibleItem).getId();
                         updatedBookMarkDate = statuses.get(firstVisibleItem).getCreated_at();
-                        if( lastReadTootDate == null || bookmarkL.after(lastReadTootDate) ) //Last read toot, only incremented if the id of the toot is greater than the recorded one
+                        if( lastReadTootDate == null || bookmarkL.after(lastReadTootDate)){
+                         //Last read toot, only incremented if the id of the toot is greater than the recorded one
                             lastReadTootDate = bookmarkL;
+                        }
                     }
                 }
             });
@@ -399,8 +401,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 editor.putString(Helper.BOOKMARK_DATE + userId + instance, Helper.dateToString(updatedBookMarkDate));
             if( lastReadToot != null)
                 editor.putString(Helper.LAST_READ_TOOT_ID + userId + instance, lastReadToot);
-            if( lastReadToot != null || updatedBookMark != null)
-                editor.apply();
+            if( lastReadTootDate != null)
+                editor.putString(Helper.LAST_READ_TOOT_DATE + userId + instance, Helper.dateToString(lastReadTootDate));
+            editor.apply();
         }
     }
 
