@@ -256,6 +256,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         nextElementLoader.setVisibility(View.GONE);
         String lastReadNotifications = sharedpreferences.getString(Helper.LAST_NOTIFICATION_MAX_ID + userId + instance, null);
         if( apiResponse.getError() != null){
+
             Toasty.error(context, apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
             flag_loading = false;
             swipeRefreshLayout.setRefreshing(false);
@@ -280,7 +281,6 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
             swiped = false;
         }
-
         if( notifications != null && notifications.size() > 0) {
             for(Notification tmpNotification: notifications){
 
@@ -382,7 +382,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     public void onRetrieveMissingNotifications(List<Notification> notifications) {
         flag_loading = false;
         swipeRefreshLayout.setRefreshing(false);
-        if( this.notifications != null && this.notifications.size() > 0){
+        if( this.notifications != null && this.notifications.size() > 0 && swiped){
+            swiped = false;
             notificationsListAdapter.notifyItemRangeChanged(0,this.notifications.size());
         }
         if( notifications != null && notifications.size() > 0) {
