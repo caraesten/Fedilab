@@ -98,12 +98,15 @@ public class LoginActivity extends BaseActivity {
     private  Button connectionButton;
     private String actionToken;
     private String autofilledInstance;
+    private String social;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
         if(b != null) {
             autofilledInstance = b.getString("instance", null);
+            social = b.getString("social", null);
         }
         if( getIntent() != null && getIntent().getData() != null && getIntent().getData().toString().contains("mastalab://backtomastalab?code=")){
             String url = getIntent().getData().toString();
@@ -394,6 +397,9 @@ public class LoginActivity extends BaseActivity {
             login_instance.setText(autofilledInstance.trim());
             retrievesClientId();
             login_uid.requestFocus();
+        }
+        if( social != null && social.equals("PEERTUBE")){
+            peertube_instance.setChecked(true);
         }
     }
 

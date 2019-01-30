@@ -1215,6 +1215,14 @@ public abstract class BaseMainActivity extends BaseActivity
                     return false;
                 }
             });
+        }else if(social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
+            toot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), PeertubeUploadActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
         //Image loader configuration
 
@@ -3026,7 +3034,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public void manageFloatingButton(boolean display){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE ||social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             if (display) {
                 tootShow();
                 if (!displayFollowInstance)
@@ -3043,7 +3051,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
     public void tootShow(){
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if(  social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE ||social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             toot.show();
         }else{
             toot.hide();

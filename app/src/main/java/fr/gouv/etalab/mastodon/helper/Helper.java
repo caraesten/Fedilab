@@ -1739,6 +1739,7 @@ public class Helper {
                                 }else{ //The account was logged out
                                     Intent intent = new Intent(activity, LoginActivity.class);
                                     intent.putExtra("instance", accountChoice.getInstance());
+                                    intent.putExtra("social", accountChoice.getSocial());
                                     activity.startActivity(intent);
                                 }
                             }
@@ -1796,6 +1797,7 @@ public class Helper {
                                     }else{ //The account was logged out
                                         Intent intent = new Intent(activity, LoginActivity.class);
                                         intent.putExtra("instance", accountChoice.getInstance());
+                                        intent.putExtra("social", accountChoice.getSocial());
                                         activity.startActivity(intent);
                                     }
                                 }
