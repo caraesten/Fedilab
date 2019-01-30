@@ -799,6 +799,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 lv_status.setAdapter(pixelfedListAdapter);
             else if( artListAdapter != null && instanceType.equals("ART"))
                 lv_status.setAdapter(artListAdapter);
+            else if( peertubeAdapater != null && instanceType.equals("PEERTUBE"))
+                lv_status.setAdapter(peertubeAdapater);
         }
     }
 
