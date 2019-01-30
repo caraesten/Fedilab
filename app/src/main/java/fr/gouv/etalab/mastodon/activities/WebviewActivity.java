@@ -99,7 +99,7 @@ public class WebviewActivity extends BaseActivity {
         setTitle("");
         FrameLayout webview_container = findViewById(R.id.webview_container);
         final ViewGroup videoLayout = findViewById(R.id.videoLayout); // Your own view, read class comments
-
+        webView.getSettings().setJavaScriptEnabled(true);
         MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(WebviewActivity.this,  webView, webview_container, videoLayout);
         mastalabWebChromeClient.setOnToggledFullscreen(new MastalabWebChromeClient.ToggledFullscreenCallback() {
             @Override
