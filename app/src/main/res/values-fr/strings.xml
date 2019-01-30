@@ -759,6 +759,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="action_plain_text">Texte brut</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
+    <string name="action_logout_account">Logout account</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
