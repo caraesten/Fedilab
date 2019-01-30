@@ -164,6 +164,17 @@
                     android:src="@drawable/ic_bookmark_border"
                     android:layout_marginTop="5dp"
                     />
+                <ImageView
+                    android:id="@+id/status_remove"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/delete"
+                    android:src="@drawable/ic_clear_toot"
+                    android:layout_marginTop="5dp"
+                    />
             </LinearLayout>
         </LinearLayout>
 

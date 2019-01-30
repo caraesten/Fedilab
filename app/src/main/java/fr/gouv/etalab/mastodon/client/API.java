@@ -260,6 +260,9 @@ public class API {
         try {
             String response = new HttpsConnection(context).get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
+            if( account.getSocial().equals("PLEROMA")){
+                isPleromaAdmin(account.getAcct());
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -286,6 +289,11 @@ public class API {
         try {
             String response = new HttpsConnection(context).get(getAbsoluteUrl(String.format("/accounts/%s",accountId)), 60, null, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
+            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            if( account.getSocial().equals("PLEROMA") && accountId.equals(userId)){
+                isPleromaAdmin(account.getAcct());
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -2281,18 +2289,22 @@ public class API {
 
     //Pleroma admin calls
     /**
-     * Retrieves Accounts when searching (ie: via @...) *synchronously*
-     * @return boolean
+     * Check if it's a Pleroma admin account and change in settings *synchronously*
      */
-    public boolean isPleromaAdmin(String nickname) {
+    private void isPleromaAdmin(String nickname) {
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        boolean isAdmin;
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(String.format(Helper.getLiveInstanceWithProtocol(context)+"/api/pleroma/admin/permission_group/%s/admin",nickname), 60, null, prefKeyOauthTokenT);
             //Call didn't return a 404, so the account is admin
-            return true;
+            isAdmin = true;
         } catch (Exception e) {
-            return false;
+            isAdmin = false;
         }
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, isAdmin);
+        editor.apply();
     }
 
     /**
@@ -2879,52 +2891,49 @@ public class API {
             card.setTitle(resobj.get("title").toString());
             card.setDescription(resobj.get("description").toString());
             card.setImage(resobj.get("image").toString());
-            card.setHtml(resobj.get("html").toString());
+
             card.setType(resobj.get("type").toString());
             try {
                 card.setAuthor_name(resobj.get("author_name").toString());
             }catch (Exception e){
-                e.printStackTrace();
                 card.setAuthor_name(null);
             }
             try {
                 card.setAuthor_url(resobj.get("author_url").toString());
             }catch (Exception e){
-                e.printStackTrace();
                 card.setAuthor_url(null);
+            }
+            try {
+                card.setHtml(resobj.get("html").toString());
+            }catch (Exception e){
+                card.setHtml(null);
             }
             try {
                 card.setEmbed_url(resobj.get("embed_url").toString());
             }catch (Exception e){
-                e.printStackTrace();
                 card.setEmbed_url(null);
             }
             try {
                 card.setProvider_name(resobj.get("provider_name").toString());
             }catch (Exception e){
-                e.printStackTrace();
                 card.setProvider_name(null);
             }
             try {
                 card.setProvider_url(resobj.get("provider_url").toString());
             }catch (Exception e){
-                e.printStackTrace();
                 card.setProvider_url(null);
             }
             try {
                 card.setHeight(Integer.parseInt(resobj.get("height").toString()));
             }catch (Exception e){
-                e.printStackTrace();
                 card.setHeight(0);
             }
             try {
                 card.setWidth(Integer.parseInt(resobj.get("width").toString()));
             }catch (Exception e){
-                e.printStackTrace();
                 card.setWidth(0);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             card = null;
         }
         return card;
@@ -3352,7 +3361,6 @@ public class API {
             }
 
             try {
-
                 status.setCard(parseCardResponse(resobj.getJSONObject("card")));
             }catch (Exception e){status.setCard(null);}
 

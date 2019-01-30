@@ -293,6 +293,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         RelativeLayout status_prev4_container;
         TextView status_reply;
         ImageView status_pin;
+        ImageView status_remove;
         ImageView status_privacy;
         ImageButton status_translate, status_bookmark;
         LinearLayout status_container2;
@@ -344,6 +345,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_favorite_count = itemView.findViewById(R.id.status_favorite_count);
             status_reblog_count = itemView.findViewById(R.id.status_reblog_count);
             status_pin = itemView.findViewById(R.id.status_pin);
+            status_remove = itemView.findViewById(R.id.status_remove);
             status_toot_date = itemView.findViewById(R.id.status_toot_date);
             status_show_more = itemView.findViewById(R.id.status_show_more);
             status_more = itemView.findViewById(R.id.status_more);
@@ -643,6 +645,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             changeDrawableColor(context, R.drawable.video_preview, R.color.white);
             if (theme == Helper.THEME_BLACK) {
+                changeDrawableColor(context, holder.status_remove, R.color.action_dark);
                 changeDrawableColor(context, R.drawable.ic_reply, R.color.action_black);
                 changeDrawableColor(context, holder.status_more, R.color.action_black);
                 changeDrawableColor(context, holder.status_privacy, R.color.action_black);
@@ -669,7 +672,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_translate, R.color.black);
                 holder.status_cardview.setBackgroundResource(R.drawable.card_border_black);
             } else if (theme == Helper.THEME_DARK) {
-
+                changeDrawableColor(context, holder.status_remove, R.color.action_dark);
                 changeDrawableColor(context, R.drawable.ic_reply, R.color.action_dark);
                 changeDrawableColor(context, holder.status_more, R.color.action_dark);
                 changeDrawableColor(context, R.drawable.ic_repeat, R.color.action_dark);
@@ -696,6 +699,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_bookmark_border, R.color.mastodonC1);
                 changeDrawableColor(context, R.drawable.ic_translate, R.color.mastodonC1);
             } else {
+                changeDrawableColor(context, holder.status_remove, R.color.action_light);
                 changeDrawableColor(context, R.drawable.ic_fetch_more, R.color.action_light);
                 changeDrawableColor(context, R.drawable.ic_reply, R.color.action_light);
                 changeDrawableColor(context, R.drawable.ic_conversation, R.color.action_light);
@@ -1410,6 +1414,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_pin.setVisibility(View.GONE);
             }
 
+            if( (isAdmin || isModerator) && !isCompactMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
+                holder.status_remove.setVisibility(View.VISIBLE);
+            }else {
+                holder.status_remove.setVisibility(View.GONE);
+            }
 
             if (status.getWebviewURL() != null) {
                 holder.status_cardview_webview.loadUrl(status.getWebviewURL());
@@ -1536,7 +1545,86 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     CrossActions.doCrossAction(context, type, status, null, (status.isPinned() || (status.getReblog() != null && status.getReblog().isPinned())) ? API.StatusAction.UNPIN : API.StatusAction.PIN, statusListAdapter, StatusListAdapter.this, true);
                 }
             });
+            int style;
+            if (theme == Helper.THEME_DARK) {
+                style = R.style.DialogDark;
+            } else if (theme == Helper.THEME_BLACK) {
+                style = R.style.DialogBlack;
+            } else {
+                style = R.style.Dialog;
+            }
 
+            holder.status_remove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String[] stringArrayConf = context.getResources().getStringArray(R.array.more_action_owner_confirm);
+                    AlertDialog.Builder builderInner = new AlertDialog.Builder(context, style);
+                    builderInner.setTitle(stringArrayConf[0]);
+                    API.StatusAction doAction = API.StatusAction.UNSTATUS;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                        builderInner.setMessage(Html.fromHtml(status.getContent(), Html.FROM_HTML_MODE_LEGACY));
+                    else
+                        //noinspection deprecation
+                        builderInner.setMessage(Html.fromHtml(status.getContent()));
+
+
+                    //Text for report
+                    EditText input = null;
+                    if (doAction == API.StatusAction.REPORT) {
+                        input = new EditText(context);
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT);
+                        input.setLayoutParams(lp);
+                        builderInner.setView(input);
+                    }
+                    builderInner.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    final EditText finalInput = input;
+                    builderInner.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String targetedId = status.getId();
+                            new PostActionAsyncTask(context, doAction, targetedId, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            if (redraft) {
+                                if (status.getIn_reply_to_id() != null && !status.getIn_reply_to_id().trim().equals("null")) {
+                                    toot = new Status();
+                                    toot.setIn_reply_to_id(status.getIn_reply_to_id());
+                                    toot.setSensitive(status.isSensitive());
+                                    toot.setMedia_attachments(status.getMedia_attachments());
+                                    if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
+                                        toot.setSpoiler_text(status.getSpoiler_text().trim());
+                                    toot.setContent(status.getContent());
+                                    toot.setVisibility(status.getVisibility());
+                                    new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, status.getIn_reply_to_id(), null, false, false, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                } else {
+                                    toot = new Status();
+                                    toot.setSensitive(status.isSensitive());
+                                    toot.setMedia_attachments(status.getMedia_attachments());
+                                    if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0)
+                                        toot.setSpoiler_text(status.getSpoiler_text().trim());
+                                    toot.setVisibility(status.getVisibility());
+                                    toot.setContent(status.getContent());
+                                    final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                    long id = new StatusStoredDAO(context, db).insertStatus(toot, null);
+                                    Intent intentToot = new Intent(context, TootActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putLong("restored", id);
+                                    b.putBoolean("removed", true);
+                                    intentToot.putExtras(b);
+                                    context.startActivity(intentToot);
+                                }
+                            }
+                            dialog.dismiss();
+                        }
+                    });
+                    builderInner.show();
+                }
+            });
             if (!status.getVisibility().equals("direct"))
                 holder.spark_button_fav.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -1604,14 +1692,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     }
                 }
             });
-            int style;
-            if (theme == Helper.THEME_DARK) {
-                style = R.style.DialogDark;
-            } else if (theme == Helper.THEME_BLACK) {
-                style = R.style.DialogBlack;
-            } else {
-                style = R.style.Dialog;
-            }
 
             if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE)
                 holder.status_more.setVisibility(View.GONE);
