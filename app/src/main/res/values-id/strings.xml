@@ -136,13 +136,13 @@
     <plurals name="preview_replies">
         <item quantity="other">%d balasan</item>
     </plurals>
-    <string name="set_display_bookmark_button">Display the bookmark button</string>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
-    <string name="bookmarks_empty">No bookmarks to display</string>
-    <string name="status_bookmarked">Status has been added to bookmarks!</string>
-    <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+    <string name="set_display_bookmark_button">Tampilkan tombol bookmark</string>
+    <string name="bookmarks">Bookmark</string>
+    <string name="bookmark_add">Tambahkan ke bookmark</string>
+    <string name="bookmark_remove">Hapus bookmark</string>
+    <string name="bookmarks_empty">Tidak ada bookmark untuk ditampilkan</string>
+    <string name="status_bookmarked">Status telah ditambahkan ke bookmark!</string>
+    <string name="status_unbookmarked">Status telah dihapus dari bookmark!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -190,7 +190,7 @@
     <string name="about_thekinrar">Contoh pencarian:</string>
     <string name="about_thekinrar_action">contoh.sosial</string>
     <string name="thanks_text_logo">Perancang ikon:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="thanks_text_banner">Desainer banner:</string>
     <!-- Conversation -->
     <string name="conversation">Percakapan</string>
     <!-- Accounts -->
@@ -306,7 +306,7 @@
     <string name="set_nsfw_timeout">Lihat NSFW waktu habis (detik, 0 berarti mati)</string>
     <string name="settings_title_profile">Ubah profil</string>
     <string name="set_profile_description">Biodata…</string>
-    <string name="set_lock_account">Lock account</string>
+    <string name="set_lock_account">Kunci akun</string>
     <string name="set_save_changes">Simpan perubahan</string>
     <string name="set_header_picture_overlay">Pilih gambar header</string>
     <string name="set_fit_preview">Fit preview images</string>
