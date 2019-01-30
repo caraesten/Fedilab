@@ -747,10 +747,10 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="add_public_comment">Ny kommentar</string>
     <string name="send_comment">Send kommentar</string>
     <string name="toast_toot_saved_error">Enheten er ikke koblet til internett. Meldingen er lagret som kladd.</string>
-    <string name="action_plain_text">Plain text</string>
+    <string name="action_plain_text">Ren tekst</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
-    <string name="action_logout_account">Logout account</string>
+    <string name="action_logout_account">Logg ut</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
