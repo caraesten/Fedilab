@@ -531,6 +531,39 @@ public class PeertubeAPI {
             peertubes = parsePeertube(jsonArray);
 
         } catch (HttpsConnection.HttpsConnectionException e) {
+            if( e.getStatusCode() == 401){ //Avoid the issue with the refresh token
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                account = new AccountDAO(context, db).getAccountByToken(token);
+                HashMap<String, String> values = new PeertubeAPI(context).refreshToken(account.getClient_id(), account.getClient_secret(), account.getRefresh_token());
+                if( values != null) {
+                    String newtoken = values.get("access_token");
+                    String refresh_token = values.get("refresh_token");
+                    if (newtoken != null)
+                        account.setToken(newtoken);
+                    if (refresh_token != null)
+                        account.setRefresh_token(refresh_token);
+                    new AccountDAO(context, db).updateAccount(account);
+                }
+                HttpsConnection httpsConnection = new HttpsConnection(context);
+                String response;
+                try {
+                    response = httpsConnection.get(getAbsoluteUrl("/users/me/videos"), 60, params, prefKeyOauthTokenT);
+                    JSONArray jsonArray = new JSONObject(response).getJSONArray("data");
+                    peertubes = parsePeertube(jsonArray);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (NoSuchAlgorithmException e1) {
+                    e1.printStackTrace();
+                } catch (KeyManagementException e1) {
+                    e1.printStackTrace();
+                } catch (HttpsConnection.HttpsConnectionException e1) {
+                    e1.printStackTrace();
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+            }
             setError(e.getStatusCode(), e);
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
