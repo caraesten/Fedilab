@@ -120,6 +120,7 @@ public class Status implements Parcelable{
     private String conversationId;
     private boolean isExpanded = false;
     private int numberLines = -1;
+    private boolean showSpoiler = false;
 
     public Status(){}
     private List<String> conversationProfilePicture;
@@ -182,6 +183,7 @@ public class Status implements Parcelable{
         dest.writeByte(this.isFavAnimated ? (byte) 1 : (byte) 0);
         dest.writeString(this.scheduled_at);
         dest.writeString(this.contentType);
+        dest.writeByte(this.showSpoiler ? (byte) 1 : (byte) 0);
     }
 
     protected Status(Parcel in) {
@@ -238,6 +240,7 @@ public class Status implements Parcelable{
         this.isFavAnimated = in.readByte() != 0;
         this.scheduled_at = in.readString();
         this.contentType = in.readString();
+        this.showSpoiler = in.readByte() != 0;
     }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -1290,5 +1293,13 @@ public class Status implements Parcelable{
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public boolean isShowSpoiler() {
+        return showSpoiler;
+    }
+
+    public void setShowSpoiler(boolean showSpoiler) {
+        this.showSpoiler = showSpoiler;
     }
 }

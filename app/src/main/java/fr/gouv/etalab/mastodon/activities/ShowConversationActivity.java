@@ -150,7 +150,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
             ImageView action_expand = getSupportActionBar().getCustomView().findViewById(R.id.action_expand);
             title.setText(R.string.conversation);
             ImageView close_conversation = getSupportActionBar().getCustomView().findViewById(R.id.close_conversation);
-
+            ImageView action_unhide = getSupportActionBar().getCustomView().findViewById(R.id.action_unhide);
             if( expanded)
                 action_expand.setImageResource(R.drawable.ic_expand_less);
             else
@@ -183,6 +183,17 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
                     intent.putExtras(b);
                     finish();
                     startActivity(intent);
+                }
+            });
+            action_unhide.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if( statuses != null && statuses.size() > 0) {
+                        for (Status status : statuses) {
+                            status.setShowSpoiler(!status.isShowSpoiler());
+                        }
+                        statusListAdapter.notifyItemRangeChanged(0, statuses.size());
+                    }
                 }
             });
             action_expand.setOnClickListener(new View.OnClickListener() {

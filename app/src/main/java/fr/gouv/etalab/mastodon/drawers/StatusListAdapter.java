@@ -1149,7 +1149,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             if (status.getReblog() == null) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0) {
                     holder.status_spoiler_container.setVisibility(View.VISIBLE);
-                    if (!status.isSpoilerShown() && !expand_cw) {
+                    if (!status.isSpoilerShown() && !expand_cw && !status.isShowSpoiler()) {
                         holder.status_content_container.setVisibility(View.GONE);
                         if (status.getMentions().size() > 0)
                             holder.status_spoiler_mention_container.setVisibility(View.VISIBLE);

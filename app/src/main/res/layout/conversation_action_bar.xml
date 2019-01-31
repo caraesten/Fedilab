@@ -59,9 +59,21 @@
         android:id="@+id/toolbar_title" />
 
     <ImageView
+        android:id="@+id/action_unhide"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="end"
+        android:src="@drawable/ic_show_hidden"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:contentDescription="@string/expand_cw" />
+    <ImageView
         android:id="@+id/action_refresh"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_gravity="end"
         android:src="@drawable/ic_refresh"
         android:layout_alignParentRight="true"
@@ -72,8 +84,8 @@
         android:contentDescription="@string/refresh" />
     <ImageView
         android:id="@+id/action_expand"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_gravity="end"
         android:src="@drawable/ic_expand_more"
         android:layout_alignParentRight="true"
