@@ -867,10 +867,10 @@ public class Status implements Parcelable{
         }
         SpannableString spannableStringT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString(), Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH));
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>",""), Html.FROM_HTML_MODE_LEGACY));
         else
             //noinspection deprecation
-            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString()));
+            spannableStringT = new SpannableString(Html.fromHtml(spannableString.toString().replaceAll("^<p>","").replaceAll("<p>","<br/><br/>").replaceAll("</p>","")));
 
         URLSpan[] spans = spannableStringT.getSpans(0, spannableStringT.length(), URLSpan.class);
         for (URLSpan span : spans) {
