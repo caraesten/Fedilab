@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1375,8 +1376,13 @@ public class API {
         if( tag == null)
             return null;
         try {
+            String query = tag.trim();
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/tag/%s",tag.trim())), 60, params, prefKeyOauthTokenT);
+            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                try {
+                    query = URLEncoder.encode(query, "UTF-8");
+                } catch (UnsupportedEncodingException ignored) {}
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/tag/%s",query)), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));
@@ -2177,7 +2183,15 @@ public class API {
     public Results search(String query) {
 
         HashMap<String, String> params = new HashMap<>();
-        params.put("q", query);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            params.put("q", query);
+        else
+            try {
+                params.put("q", URLEncoder.encode(query, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                params.put("q", query);
+            }
+        Log.v(Helper.TAG,"q: " + query);
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/search"), 60, params, prefKeyOauthTokenT);
