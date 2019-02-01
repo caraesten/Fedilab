@@ -795,6 +795,24 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, holder.hide_preview, R.color.white);
                 changeDrawableColor(context, holder.hide_preview_h, R.color.white);
             }
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams paramsB = new LinearLayout.LayoutParams((int)Helper.convertDpToPixel(60, context), LinearLayout.LayoutParams.WRAP_CONTENT);
+            if( status.getReblog() == null && !isCompactMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
+                params.setMargins(0,-(int)Helper.convertDpToPixel(10, context),0,0);
+                if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
+                    paramsB.setMargins(0,(int)Helper.convertDpToPixel(10, context),0,0);
+                else
+                    paramsB.setMargins(0,(int)Helper.convertDpToPixel(15, context),0,0);
+            }else if( !isCompactMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
+                if( status.getContent() == null || status.getContent().trim().equals("")) {
+                    params.setMargins(0, -(int) Helper.convertDpToPixel(20, context), 0, 0);
+                    paramsB.setMargins(0,(int) Helper.convertDpToPixel(20, context),0,0);
+                }else {
+                    params.setMargins(0, 0, 0, 0);
+                    paramsB.setMargins(0,0,0,0);
+                }
+
+            }
 
             if (!status.isClickable())
                 Status.transform(context, status);
