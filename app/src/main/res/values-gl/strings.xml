@@ -231,7 +231,7 @@
         <item quantity="other">e %d toots máis a descubrir</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
+        <item quantity="one">%d gústame</item>
         <item quantity="other">%d gústame</item>
     </plurals>
     <string name="delete_notification_ask">Borrar notificación?</string>
@@ -483,9 +483,9 @@
     <string name="data_export_toots">Exportar estados para %1$s</string>
     <string name="data_export_success">%1$s toots de %2$s foron exportados.</string>
     <string name="data_export_error">Algo fallou mentras se exportaban os datos para %1$s</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_export_error_simple">Algo fallou ao exportar os datos!</string>
+    <string name="data_import_success_simple">Importáronse os datos!</string>
+    <string name="data_import_error_simple">Algo fallou ao importar os datos!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Tipo</string>
@@ -752,18 +752,18 @@
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> publicou un novo vídeo: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[O seu vídeo <b>%1$s</b> foi posto nunha lista negra]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[O seu vídeo <b>%1$s</b> sacouse da lista negra]]></string>
-    <string name="export_data">Export data</string>
-    <string name="import_data">Import Data</string>
-    <string name="toot_select_import">Select the file to import</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
-    <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
-    <string name="add_public_comment">Add a public comment</string>
-    <string name="send_comment">Send comment</string>
-    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
-    <string name="action_plain_text">Plain text</string>
+    <string name="export_data">Exportar datos</string>
+    <string name="import_data">Importar datos</string>
+    <string name="toot_select_import">Escoller o ficheiro a importar</string>
+    <string name="toot_select_file_error">Algo fallou ao seleccionar o ficheiro de respaldo!</string>
+    <string name="data_import_start">Por favor, non peche a app mentras se procesa. Pode tomar bastante tempo.</string>
+    <string name="add_public_comment">Engadir un comentario público</string>
+    <string name="send_comment">Enviar comentario</string>
+    <string name="toast_toot_saved_error">Non hai conexión a internet. A súa mensaxe gardouse nos borradores.</string>
+    <string name="action_plain_text">Texto plano</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
-    <string name="action_logout_account">Logout account</string>
+    <string name="action_logout_account">Desconectar conta</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
