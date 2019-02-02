@@ -43,13 +43,12 @@ public class TabLayoutSettingsFragment extends Fragment {
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.settings)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.notifications)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.optimization)));
         final ViewPager viewPager = inflatedView.findViewById(R.id.viewpager);
 
         viewPager.setAdapter(new PagerAdapter
                 (getChildFragmentManager(), tabLayout.getTabCount()));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(2);
          tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -88,8 +87,6 @@ public class TabLayoutSettingsFragment extends Fragment {
                     return new SettingsFragment();
                 case 1:
                     return new SettingsNotificationsFragment();
-                case 2:
-                    return new SettingsOptimizationFragment();
                 default:
                     return new SettingsNotificationsFragment();
             }

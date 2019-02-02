@@ -592,8 +592,9 @@ public abstract class BaseMainActivity extends BaseActivity
                         return manageFilters(tabStrip, sharedpreferences);
                     }
                 });
-
-            viewPager.setOffscreenPageLimit(countPage);
+            boolean optimize_loading = sharedpreferences.getBoolean(Helper.SET_OPTIMIZE_LOADING, false);
+            if( !optimize_loading)
+                viewPager.setOffscreenPageLimit(countPage);
             main_app_container = findViewById(R.id.main_app_container);
             adapter = new PagerAdapter
                     (getSupportFragmentManager(), tabLayout.getTabCount());

@@ -45,6 +45,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -117,6 +118,111 @@ public class SettingsFragment extends Fragment {
         count2 = 0;
         count3 = 0;
         count4 = 0;
+
+
+        final Spinner battery_layout_spinner = rootView.findViewById(R.id.battery_layout_spinner);
+        ArrayAdapter<CharSequence> adapterBattery = ArrayAdapter.createFromResource(getContext(),
+                R.array.battery_profiles, android.R.layout.simple_spinner_item);
+        battery_layout_spinner.setAdapter(adapterBattery);
+        int positionSpinner = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL) -1;
+        battery_layout_spinner.setSelection(positionSpinner);
+        battery_layout_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count2 > 0){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (position){
+                        case 0:
+                            editor.putInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
+                            editor.apply();
+                            break;
+                        case 1:
+                            editor.putInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_MEDIUM);
+                            editor.apply();
+                            break;
+                        case 2:
+                            editor.putInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_LOW);
+                            editor.apply();
+                            break;
+                    }
+                    Helper.changeBatteryProfile(context);
+                    if( position < 2 ){
+                        try {
+                            ((MainActivity) context).startSreaming();
+                        }catch (Exception ignored){ignored.printStackTrace();}
+                    }else{
+                        context.sendBroadcast(new Intent("StopLiveNotificationService"));
+                    }
+                }else {
+                    count2++;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //Manage download of attachments
+        RadioGroup radioGroup = rootView.findViewById(R.id.set_attachment_group);
+        int attachmentAction = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+        switch (attachmentAction){
+            case Helper.ATTACHMENT_ALWAYS:
+                radioGroup.check(R.id.set_attachment_always);
+                break;
+            case Helper.ATTACHMENT_WIFI:
+                radioGroup.check(R.id.set_attachment_wifi);
+                break;
+            case Helper.ATTACHMENT_ASK:
+                radioGroup.check(R.id.set_attachment_ask);
+                break;
+        }
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId) {
+                    case R.id.set_attachment_always:
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+                        editor.apply();
+                        break;
+                    case R.id.set_attachment_wifi:
+                        editor = sharedpreferences.edit();
+                        editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_WIFI);
+                        editor.apply();
+                        break;
+                    case R.id.set_attachment_ask:
+                        editor = sharedpreferences.edit();
+                        editor.putInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ASK);
+                        editor.apply();
+                        break;
+                }
+            }
+        });
+
+
+        boolean optimize_loading = sharedpreferences.getBoolean(Helper.SET_OPTIMIZE_LOADING, false);
+        final CheckBox set_optimize_loading = rootView.findViewById(R.id.set_optimize_loading);
+        set_optimize_loading.setChecked(optimize_loading);
+
+        set_optimize_loading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_OPTIMIZE_LOADING, set_optimize_loading.isChecked());
+                if( set_optimize_loading.isChecked()){
+                    editor.putInt(Helper.SET_ACCOUNTS_PER_PAGE, 10);
+                    editor.putInt(Helper.SET_TOOTS_PER_PAGE, 10);
+                    editor.putInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 10);
+                }else {
+                    editor.putInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
+                    editor.putInt(Helper.SET_TOOTS_PER_PAGE, 40);
+                    editor.putInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
+                }
+                editor.apply();
+            }
+        });
+
 
         boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, false);
 

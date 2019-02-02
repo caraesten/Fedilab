@@ -442,15 +442,18 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
             }
         });
         mPager = findViewById(R.id.account_viewpager);
+        boolean optimize_loading = sharedpreferences.getBoolean(Helper.SET_OPTIMIZE_LOADING, false);
         if( !peertubeAccount) {
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.following)));
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.followers)));
-            mPager.setOffscreenPageLimit(3);
+            if( !optimize_loading)
+                mPager.setOffscreenPageLimit(3);
         }else if( ! ischannel){
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.videos)));
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.channels)));
-            mPager.setOffscreenPageLimit(2);
+            if( !optimize_loading)
+                mPager.setOffscreenPageLimit(2);
         }else{
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.videos)));
             mPager.setOffscreenPageLimit(1);

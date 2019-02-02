@@ -366,7 +366,7 @@ public class Helper {
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";
     public static final String SET_TRUNCATE_TOOTS_SIZE = "set_truncate_toots_size";
     public static final String SET_ART_WITH_NSFW = "set_art_with_nsfw";
-
+    public static final String SET_OPTIMIZE_LOADING = "set_optimize_loading";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
