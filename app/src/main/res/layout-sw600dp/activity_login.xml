@@ -77,11 +77,28 @@
                         android:src="@drawable/ic_info_login"
                         android:layout_width="30dp"
                         android:layout_height="30dp" />
-                    <CheckBox
-                        android:id="@+id/peertube_instance"
-                        android:layout_width="wrap_content"
-                        android:text="@string/peertube_instance"
-                        android:layout_height="wrap_content" />
+                    <RadioGroup
+                        android:id="@+id/set_instance_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <RadioButton android:id="@+id/set_mastodon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="Mastodon"
+                            />
+                        <RadioButton android:id="@+id/set_peertube"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Peertube"
+                            />
+                        <RadioButton android:id="@+id/set_gnu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GNU"
+                            />
+                    </RadioGroup>
                 </LinearLayout>
             </android.support.design.widget.TextInputLayout>
             <LinearLayout

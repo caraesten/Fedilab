@@ -45,9 +45,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,19 +94,33 @@ public class LoginActivity extends BaseActivity {
     boolean isLoadingInstance = false;
     private String oldSearch;
     private ImageView info_uid, info_instance, info_pwd, info_2FA;
-    private CheckBox peertube_instance;
+    private RadioGroup set_instance_type;
     private  Button connectionButton;
     private String actionToken;
     private String autofilledInstance;
     private String social;
-
+    private UpdateAccountInfoAsyncTask.SOCIAL socialNetwork;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
+        socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
         if(b != null) {
             autofilledInstance = b.getString("instance", null);
             social = b.getString("social", null);
+            if( social != null){
+                switch (social){
+                    case "MASTODON":
+                        socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
+                        break;
+                    case "PEERTUBE":
+                        socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
+                        break;
+                    case "GNU":
+                        socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
+                        break;
+                }
+            }
         }
         if( getIntent() != null && getIntent().getData() != null && getIntent().getData().toString().contains("mastalab://backtomastalab?code=")){
             String url = getIntent().getData().toString();
@@ -137,7 +151,7 @@ public class LoginActivity extends BaseActivity {
                             editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
                             editor.apply();
                             //Update the account with the token;
-                            new UpdateAccountInfoAsyncTask(LoginActivity.this, token, client_id, client_secret, refresh_token, instance, peertube_instance.isChecked()?UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE:UpdateAccountInfoAsyncTask.SOCIAL.MASTODON).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            new UpdateAccountInfoAsyncTask(LoginActivity.this, token, client_id, client_secret, refresh_token, instance, socialNetwork).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } catch (JSONException ignored) {}
                     } catch (Exception ignored) {}
                 }}).start();
@@ -194,18 +208,46 @@ public class LoginActivity extends BaseActivity {
             info_instance = findViewById(R.id.info_instance);
             info_pwd = findViewById(R.id.info_pwd);
             info_2FA = findViewById(R.id.info_2FA);
-            peertube_instance = findViewById(R.id.peertube_instance);
+            set_instance_type = findViewById(R.id.set_instance_type);
 
 
-            peertube_instance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            int attachmentAction = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
+            switch (attachmentAction){
+                case 0:
+                    set_instance_type.check(R.id.set_mastodon);
+                    socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
+                    break;
+                case 1:
+                    set_instance_type.check(R.id.set_peertube);
+                    socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
+                    break;
+                case 2:
+                    set_instance_type.check(R.id.set_gnu);
+                    socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
+                    break;
+            }
+            set_instance_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if( isChecked)
-                        login_uid.setHint(R.string.username);
-                    else
-                        login_uid.setHint(R.string.email);
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    switch(checkedId) {
+                        case R.id.set_mastodon:
+                            login_uid.setHint(R.string.email);
+                            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
+                            break;
+                        case R.id.set_peertube:
+                            login_uid.setHint(R.string.username);
+                            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
+                            break;
+                        case R.id.set_gnu:
+                            login_uid.setHint(R.string.email);
+                            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
+                            break;
+                    }
                 }
             });
+
+
             connectionButton = findViewById(R.id.login_button);
 
             info_instance.setOnClickListener(new View.OnClickListener() {
@@ -399,7 +441,7 @@ public class LoginActivity extends BaseActivity {
             login_uid.requestFocus();
         }
         if( social != null && social.equals("PEERTUBE")){
-            peertube_instance.setChecked(true);
+            set_instance_type.check(R.id.set_peertube);
         }
     }
 
@@ -429,14 +471,16 @@ public class LoginActivity extends BaseActivity {
         } catch (UnsupportedEncodingException e) {
             Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
         }
-        if( !peertube_instance.isChecked())
+        if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
             actionToken = "/api/v1/apps";
-        else
+        else if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
             actionToken = "/api/v1/oauth-clients/local";
+        else
+            actionToken = "/api/v1/apps";
         final HashMap<String, String> parameters = new HashMap<>();
         parameters.put(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
         parameters.put(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
-        if( !peertube_instance.isChecked()) {
+        if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
             parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES);
         }else {
             parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES_PEERTUBE);
@@ -448,7 +492,7 @@ public class LoginActivity extends BaseActivity {
             public void run() {
                 try {
                     String response;
-                    if( !peertube_instance.isChecked())
+                    if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                         response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
                     else
                         response = new HttpsConnection(LoginActivity.this).get(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
@@ -461,7 +505,7 @@ public class LoginActivity extends BaseActivity {
                               client_id = resobj.get(Helper.CLIENT_ID).toString();
                               client_secret = resobj.get(Helper.CLIENT_SECRET).toString();
                               String id = null;
-                              if( !peertube_instance.isChecked())
+                              if(  socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                                 id = resobj.get(Helper.ID).toString();
                               SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                               SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -477,7 +521,7 @@ public class LoginActivity extends BaseActivity {
                                   boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
                                   if( embedded_browser) {
                                       Intent i = new Intent(LoginActivity.this, WebviewConnectActivity.class);
-                                      i.putExtra("social", peertube_instance.isChecked()?UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE:UpdateAccountInfoAsyncTask.SOCIAL.MASTODON);
+                                      i.putExtra("social",  socialNetwork);
                                       i.putExtra("instance", instance);
                                       startActivity(i);
                                   }else{
@@ -532,7 +576,7 @@ public class LoginActivity extends BaseActivity {
                     parameters.put("password",login_passwd.getText().toString());
                 }
                 String oauthUrl;
-                if( !peertube_instance.isChecked()) {
+                if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
                     parameters.put("scope", " read write follow");
                     oauthUrl = "/oauth/token";
                 }else {
@@ -558,7 +602,7 @@ public class LoginActivity extends BaseActivity {
                                         editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
                                         editor.apply();
                                         //Update the account with the token;
-                                        new UpdateAccountInfoAsyncTask(LoginActivity.this, token, client_id, client_secret, refresh_token, instance, peertube_instance.isChecked()?UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE:UpdateAccountInfoAsyncTask.SOCIAL.MASTODON).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                        new UpdateAccountInfoAsyncTask(LoginActivity.this, token, client_id, client_secret, refresh_token, instance, socialNetwork).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                     } catch (JSONException ignored) {ignored.printStackTrace();}
                                 }
                             });

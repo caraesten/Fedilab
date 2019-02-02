@@ -34,9 +34,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -143,31 +141,24 @@ public class GNUAPI {
         HashMap<String, String> requestParams = new HashMap<>();
         if( display_name != null)
             try {
-                requestParams.put("display_name",URLEncoder.encode(display_name, "UTF-8"));
+                requestParams.put("name",URLEncoder.encode(display_name, "UTF-8"));
             } catch (UnsupportedEncodingException e) {
-                requestParams.put("display_name",display_name);
+                requestParams.put("name",display_name);
             }
         if( note != null)
             try {
-                requestParams.put("note",URLEncoder.encode(note, "UTF-8"));
+                requestParams.put("description",URLEncoder.encode(note, "UTF-8"));
             } catch (UnsupportedEncodingException e) {
-                requestParams.put("note",note);
+                requestParams.put("description",note);
             }
         if( privacy != null)
             requestParams.put("locked",privacy== accountPrivacy.LOCKED?"true":"false");
-        int i = 0;
-        if( customFields != null && customFields.size() > 0){
-            Iterator it = customFields.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                requestParams.put("fields_attributes["+i+"][name]",(String)pair.getKey());
-                requestParams.put("fields_attributes["+i+"][value]",(String)pair.getValue());
-                it.remove();
-                i++;
-            }
-        }
         try {
-            new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_credentials"), 60, requestParams, avatar, avatarName, header, headerName, prefKeyOauthTokenT);
+            if( requestParams.size() > 0)
+            new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_profile"), 60, requestParams, avatar, null, null, null, prefKeyOauthTokenT);
+            if( avatar!= null && avatarName != null)
+                new HttpsConnection(context).patch(getAbsoluteUrl("/accounts/update_profile_image"), 60, null, avatar, avatarName, null, null, prefKeyOauthTokenT);
+
         } catch (HttpsConnection.HttpsConnectionException e) {
             e.printStackTrace();
             setError(e.getStatusCode(), e);
@@ -280,7 +271,7 @@ public class GNUAPI {
             List<Relationship> relationships = new ArrayList<>();
             try {
                 HttpsConnection httpsConnection = new HttpsConnection(context);
-                String response = httpsConnection.get(getAbsoluteUrl("/accounts/relationships"), 60, params, prefKeyOauthTokenT);
+                String response = httpsConnection.get(getAbsoluteUrl("/friendships/show"), 60, params, prefKeyOauthTokenT);
                 relationships = parseRelationshipResponse(new JSONArray(response));
                 apiResponse.setSince_id(httpsConnection.getSince_id());
                 apiResponse.setMax_id(httpsConnection.getMax_id());
@@ -1280,7 +1271,7 @@ public class GNUAPI {
                 action = String.format("/statuses/%s/unreblog", targetedId);
                 break;
             case FOLLOW:
-                action = String.format("/accounts/%s/follow", targetedId);
+                action = "/friendships/create";
                 break;
             case REMOTE_FOLLOW:
                 action = "/follows";
@@ -1288,7 +1279,7 @@ public class GNUAPI {
                 params.put("uri", targetedId);
                 break;
             case UNFOLLOW:
-                action = String.format("/accounts/%s/unfollow", targetedId);
+                action = "/friendships/destroy";
                 break;
             case BLOCK:
                 action = String.format("/accounts/%s/block", targetedId);
