@@ -1446,7 +1446,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         String tootContent;
         if( toot_cw_content.getText() != null && toot_cw_content.getText().toString().trim().length() > 0 )
             split_toot_size -= toot_cw_content.getText().toString().trim().length();
-        if( !split_toot || (toot_content.getText().toString().trim().length()  < split_toot_size)){
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || !split_toot || (toot_content.getText().toString().trim().length()  < split_toot_size)){
             tootContent = toot_content.getText().toString().trim();
         }else{
             splitToot = Helper.splitToots(toot_content.getText().toString().trim(), split_toot_size);
