@@ -1304,7 +1304,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_content.setVisibility(View.VISIBLE);
                 holder.status_content_translated_container.setVisibility(View.GONE);
             }
-            if( contentCheck.trim().length() < 2)
+            if( contentCheck.trim().length() < 2 && !contentCheck.trim().matches("\\w+"))
                 holder.status_content.setVisibility(View.GONE);
             else
                 holder.status_content.setVisibility(View.VISIBLE);

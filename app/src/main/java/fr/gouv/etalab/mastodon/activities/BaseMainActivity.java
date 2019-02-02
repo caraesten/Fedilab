@@ -3031,8 +3031,10 @@ public abstract class BaseMainActivity extends BaseActivity
                     return;
                 }
             }
-            Intent streamingIntent = new Intent(this, LiveNotificationService.class);
-            startService(streamingIntent);
+            try {
+                Intent streamingIntent = new Intent(this, LiveNotificationService.class);
+                startService(streamingIntent);
+            }catch(Exception ignored){}
         }
 
     }
