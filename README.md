@@ -39,12 +39,6 @@
 
 Developer: [@tom79](https://mastodon.social/@tom79)
 
-## Contributors
-
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
-<a href="graphs/contributors"><img src="https://opencollective.com/mastalab/contributors.svg?width=890&button=false" /></a>
-
-
 ## Backers
 
 Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/mastalab#backer)]
@@ -62,3 +56,4 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/mastalab/sponsor/7/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/7/avatar.svg"></a>
 <a href="https://opencollective.com/mastalab/sponsor/8/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/mastalab/sponsor/9/website" target="_blank"><img src="https://opencollective.com/mastalab/sponsor/9/avatar.svg"></a>
+
