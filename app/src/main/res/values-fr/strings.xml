@@ -760,7 +760,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Déconnexion du compte</string>
-    <string name="set_optimize_loading">Optimize loading time</string>
+    <string name="set_optimize_loading">Optimiser le temps de chargement</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
