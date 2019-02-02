@@ -150,8 +150,10 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("http.keepAlive", "false");
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
-            if (token != null)
+            if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpsURLConnection.setRequestProperty("Authorization", token);
             httpsURLConnection.setRequestMethod("GET");
             String response;
             if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
@@ -199,8 +201,10 @@ public class HttpsConnection {
             httpURLConnection.setConnectTimeout(timeout * 1000);
             httpURLConnection.setRequestProperty("http.keepAlive", "false");
             httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-            if( token != null)
-                httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            if (token != null && !token.startsWith("Basic "))
+                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpsURLConnection.setRequestProperty("Authorization", token);
             httpURLConnection.setRequestMethod("GET");
             String response;
             if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
@@ -1604,8 +1608,10 @@ public class HttpsConnection {
             else
                 httpURLConnection = (HttpURLConnection)url.openConnection();
             httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
-            if( token != null)
-                httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            if (token != null && !token.startsWith("Basic "))
+                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpsURLConnection.setRequestProperty("Authorization", token);
             httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             httpURLConnection.setRequestMethod("DELETE");
             httpURLConnection.setConnectTimeout(timeout * 1000);

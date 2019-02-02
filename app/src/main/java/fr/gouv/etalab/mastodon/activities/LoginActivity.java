@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
@@ -68,8 +69,12 @@ import java.util.HashMap;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
+import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -100,6 +105,8 @@ public class LoginActivity extends BaseActivity {
     private String autofilledInstance;
     private String social;
     private UpdateAccountInfoAsyncTask.SOCIAL socialNetwork;
+    private String basicAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -210,45 +217,33 @@ public class LoginActivity extends BaseActivity {
             info_2FA = findViewById(R.id.info_2FA);
             set_instance_type = findViewById(R.id.set_instance_type);
 
+            connectionButton = findViewById(R.id.login_button);
 
-
-            int attachmentAction = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            switch (attachmentAction){
-                case 0:
-                    set_instance_type.check(R.id.set_mastodon);
-                    socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
-                    break;
-                case 1:
-                    set_instance_type.check(R.id.set_peertube);
-                    socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
-                    break;
-                case 2:
-                    set_instance_type.check(R.id.set_gnu);
-                    socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
-                    break;
-            }
+            set_instance_type.check(R.id.set_mastodon);
+            socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
             set_instance_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     switch(checkedId) {
                         case R.id.set_mastodon:
                             login_uid.setHint(R.string.email);
+                            connectionButton.setEnabled(false);
                             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
                             break;
                         case R.id.set_peertube:
                             login_uid.setHint(R.string.username);
+                            connectionButton.setEnabled(false);
                             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
                             break;
                         case R.id.set_gnu:
-                            login_uid.setHint(R.string.email);
+                            login_uid.setHint(R.string.username);
+                            connectionButton.setEnabled(true);
+                            connectionButton.setClickable(true);
                             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
                             break;
                     }
                 }
             });
-
-
-            connectionButton = findViewById(R.id.login_button);
 
             info_instance.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -358,8 +353,8 @@ public class LoginActivity extends BaseActivity {
                 }
             });
 
-
-            connectionButton.setEnabled(false);
+            if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                connectionButton.setEnabled(false);
             login_two_step = findViewById(R.id.login_two_step);
             login_two_step.setVisibility(View.GONE);
             info_2FA.setVisibility(View.GONE);
@@ -383,7 +378,8 @@ public class LoginActivity extends BaseActivity {
             login_instance.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    connectionButton.setEnabled(false);
+                    if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                        connectionButton.setEnabled(false);
                     login_two_step.setVisibility(View.INVISIBLE);
                     info_2FA.setVisibility(View.INVISIBLE);
                     TextInputLayout login_instance_layout = findViewById(R.id.login_instance_layout);
@@ -450,33 +446,36 @@ public class LoginActivity extends BaseActivity {
         super.onResume();
 
         if (login_instance != null &&login_instance.getText() != null && login_instance.getText().toString().length() > 0 && client_id_for_webview) {
-            connectionButton.setEnabled(false);
-            client_id_for_webview = false;
-            retrievesClientId();
+            if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                connectionButton.setEnabled(false);
+                client_id_for_webview = false;
+                retrievesClientId();
+            }
         }
     }
 
     private void retrievesClientId(){
+        if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            return;
         String instanceFromField = login_instance.getText().toString().trim();
-        String host;
+        final String[] host = new String[1];
+
+
         try {
             URL url = new URL(instanceFromField);
-            host = url.getHost();
+            host[0] = url.getHost();
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            host = instanceFromField;
+            host[0] = instanceFromField;
         }
         try {
-            instance =  URLEncoder.encode(host, "utf-8");
+            instance =  URLEncoder.encode(host[0], "utf-8");
         } catch (UnsupportedEncodingException e) {
             Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
         }
         if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
             actionToken = "/api/v1/apps";
-        else if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
-            actionToken = "/api/v1/oauth-clients/local";
         else
-            actionToken = "/api/v1/apps";
+            actionToken = "/api/v1/oauth-clients/local";
         final HashMap<String, String> parameters = new HashMap<>();
         parameters.put(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
         parameters.put(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
@@ -485,6 +484,7 @@ public class LoginActivity extends BaseActivity {
         }else {
             parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES_PEERTUBE);
         }
+
         parameters.put(Helper.WEBSITE, Helper.WEBSITE_VALUE);
 
         new Thread(new Runnable(){
@@ -492,7 +492,7 @@ public class LoginActivity extends BaseActivity {
             public void run() {
                 try {
                     String response;
-                    if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                    if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
                         response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
                     else
                         response = new HttpsConnection(LoginActivity.this).get(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
@@ -514,9 +514,11 @@ public class LoginActivity extends BaseActivity {
                               editor.putString(Helper.ID, id);
                               editor.apply();
                               connectionButton.setEnabled(true);
-                              login_two_step.setVisibility(View.VISIBLE);
-                              info_2FA.setVisibility(View.VISIBLE);
-                              showCase2FA(true);
+                              if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                                  login_two_step.setVisibility(View.VISIBLE);
+                                  info_2FA.setVisibility(View.VISIBLE);
+                                  showCase2FA(true);
+                              }
                               if( client_id_for_webview){
                                   boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
                                   if( embedded_browser) {
@@ -562,48 +564,110 @@ public class LoginActivity extends BaseActivity {
 
                 final HashMap<String, String> parameters = new HashMap<>();
                 SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                parameters.put(Helper.CLIENT_ID, sharedpreferences.getString(Helper.CLIENT_ID, null));
-                parameters.put(Helper.CLIENT_SECRET, sharedpreferences.getString(Helper.CLIENT_SECRET, null));
+                if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    parameters.put(Helper.CLIENT_ID, sharedpreferences.getString(Helper.CLIENT_ID, null));
+                    parameters.put(Helper.CLIENT_SECRET, sharedpreferences.getString(Helper.CLIENT_SECRET, null));
+                }
                 parameters.put("grant_type", "password");
                 try {
-                    parameters.put("username",URLEncoder.encode(login_uid.getText().toString().trim().toLowerCase(), "UTF-8"));
+                    parameters.put("username", URLEncoder.encode(login_uid.getText().toString().trim().toLowerCase(), "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
-                    parameters.put("username",login_uid.getText().toString().trim().toLowerCase());
+                    parameters.put("username", login_uid.getText().toString().trim().toLowerCase());
                 }
                 try {
-                    parameters.put("password",URLEncoder.encode(login_passwd.getText().toString(), "UTF-8"));
+                    parameters.put("password", URLEncoder.encode(login_passwd.getText().toString(), "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
-                    parameters.put("password",login_passwd.getText().toString());
+                    parameters.put("password", login_passwd.getText().toString());
                 }
-                String oauthUrl;
-                if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                String oauthUrl = null;
+                if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                     parameters.put("scope", " read write follow");
                     oauthUrl = "/oauth/token";
-                }else {
+                }else  if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
                     parameters.put("scope", "user");
                     oauthUrl = "/api/v1/users/token";
+                }else  if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    String instanceFromField = login_instance.getText().toString().trim();
+                    try {
+                        URL url = new URL(instanceFromField);
+                        host[0] = url.getHost();
+                    } catch (MalformedURLException e) {
+                        host[0] = instanceFromField;
+                    }
+                    try {
+                        instance =  URLEncoder.encode(host[0], "utf-8");
+                    } catch (UnsupportedEncodingException e) {
+                    }
+                    String username = login_uid.getText().toString().trim().toLowerCase();
+                    String password = login_passwd.getText().toString();
+                    oauthUrl = "/api/account/verify_credentials.json";
+                    String userpass = username + ":" + password;
+                    basicAuth = "Basic " + new String(android.util.Base64.encode(userpass.getBytes(), android.util.Base64.NO_WRAP));
                 }
+                String finalOauthUrl = oauthUrl;
                 new Thread(new Runnable(){
                     @Override
                     public void run() {
                         try {
-                            final String response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + oauthUrl, 30, parameters, null );
+                            String response;
+                            if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                                response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + finalOauthUrl, 30, parameters, null );
+                            else {
+                                response = new HttpsConnection(LoginActivity.this).get(Helper.instanceWithProtocol(instance) + finalOauthUrl, 30, null, basicAuth);
+                            }
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     JSONObject resobj;
-                                    try {
-                                        resobj = new JSONObject(response);
-                                        String token = resobj.get("access_token").toString();
-                                        String refresh_token = null;
-                                        if( resobj.has("refresh_token"))
-                                            refresh_token = resobj.get("refresh_token").toString();
-                                        SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                                        editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
-                                        editor.apply();
-                                        //Update the account with the token;
-                                        new UpdateAccountInfoAsyncTask(LoginActivity.this, token, client_id, client_secret, refresh_token, instance, socialNetwork).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                                    } catch (JSONException ignored) {ignored.printStackTrace();}
+                                    if (socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                                        try {
+                                            resobj = new JSONObject(response);
+                                            String token = resobj.get("access_token").toString();
+                                            String refresh_token = null;
+                                            if (resobj.has("refresh_token"))
+                                                refresh_token = resobj.get("refresh_token").toString();
+                                            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                            editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
+                                            editor.apply();
+                                            //Update the account with the token;
+                                            new UpdateAccountInfoAsyncTask(LoginActivity.this, token, client_id, client_secret, refresh_token, instance, socialNetwork).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                                        } catch (JSONException ignored) {
+                                            ignored.printStackTrace();
+                                        }
+                                    }else{
+                                        try {
+                                            resobj = new JSONObject(response);
+                                            Account account = GNUAPI.parseAccountResponse(LoginActivity.this, resobj);
+                                            account.setToken(basicAuth);
+                                            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                            editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, basicAuth);
+                                            account.setInstance(instance);
+
+                                            SQLiteDatabase db = Sqlite.getInstance(LoginActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                                            boolean userExists = new AccountDAO(LoginActivity.this, db).userExist(account);
+                                            editor.putString(Helper.PREF_KEY_ID, account.getId());
+                                            editor.putBoolean(Helper.PREF_IS_MODERATOR, account.isModerator());
+                                            editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, account.isAdmin());
+                                            editor.putString(Helper.PREF_INSTANCE, instance);
+                                            editor.apply();
+                                            if( userExists)
+                                                new AccountDAO(LoginActivity.this, db).updateAccount(account);
+                                            else {
+                                                if( account.getUsername() != null && account.getCreated_at() != null)
+                                                    new AccountDAO(LoginActivity.this, db).insertAccount(account);
+                                            }
+                                            editor.apply();
+
+                                            Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
+                                            mainActivity.putExtra(Helper.INTENT_ACTION, Helper.ADD_USER_INTENT);
+                                            startActivity(mainActivity);
+                                            finish();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
                                 }
                             });
                         }catch (final Exception e) {

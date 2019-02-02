@@ -1932,7 +1932,7 @@ public class GNUAPI {
      * @return Account
      */
     @SuppressWarnings("InfiniteRecursion")
-    private static Account parseAccountResponse(Context context, JSONObject resobj){
+    public static Account parseAccountResponse(Context context, JSONObject resobj){
 
         Account account = new Account();
         try {
