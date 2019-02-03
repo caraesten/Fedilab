@@ -1831,7 +1831,6 @@ public class GNUAPI {
             }catch (Exception e){
                 application = new Application();
             }
-            Log.v(Helper.TAG,resobj.toString());
             status.setApplication(application);
             status.setAccount(parseAccountResponse(context, resobj.getJSONObject("user")));
             status.setContent(resobj.get("statusnet_html").toString());
