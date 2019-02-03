@@ -235,7 +235,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
 
         //Manage broadcast receiver for Mastodon timelines
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA|| MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
             if( receive_action != null)
                 LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_action);
             receive_action = new BroadcastReceiver() {

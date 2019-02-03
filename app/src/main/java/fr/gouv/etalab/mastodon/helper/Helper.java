@@ -599,14 +599,18 @@ public class Helper {
             //noinspection deprecation
             userLocale = context.getResources().getConfiguration().locale;
         }
-        final String STRING_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        String STRING_DATE_FORMAT;
+        if( !date.contains("+"))
+            STRING_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        else //GNU date format
+            STRING_DATE_FORMAT = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(STRING_DATE_FORMAT, userLocale);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
         simpleDateFormat.setLenient(true);
         try {
             return simpleDateFormat.parse(date);
         }catch (Exception e){
-            String newdate = date.split("\\+")[0];
+            String newdate = date.split("\\+")[0].trim();
             simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", userLocale);
             simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
             simpleDateFormat.setLenient(true);
@@ -2801,7 +2805,7 @@ public class Helper {
         if( url != null && url.startsWith("/")){
             url = Helper.getLiveInstanceWithProtocol(context) + url;
         }
-        if( url == null  || url.equals("null") || url.contains("missing.png") || url.contains(".svg")) {
+        if( url == null  || url.equals("null")|| url.equals("false") || url.contains("missing.png") || url.contains(".svg")) {
             if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
                 try {
                     Glide.with(imageView.getContext())
@@ -2815,6 +2819,15 @@ public class Helper {
                 try {
                     Glide.with(imageView.getContext())
                             .load(R.drawable.missing_peertube)
+                            .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
+                            .into(imageView);
+                } catch (Exception ignored) {
+                }
+                return;
+            }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+                try {
+                    Glide.with(imageView.getContext())
+                            .load(R.drawable.gnu_default_avatar)
                             .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(10)))
                             .into(imageView);
                 } catch (Exception ignored) {

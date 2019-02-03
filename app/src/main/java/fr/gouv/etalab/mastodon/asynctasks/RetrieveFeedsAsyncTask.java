@@ -27,6 +27,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
+import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.FilterToots;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
@@ -72,13 +73,10 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         ONESTATUS,
         CONTEXT,
         TAG,
-        CACHE_BOOKMARKS,
-        CACHE_BOOKMARKS_PEERTUBE,
-        CACHE_STATUS,
         REMOTE_INSTANCE,
         ART,
         NOTIFICATION,
-        PIXELFED,
+
         PSUBSCRIPTIONS,
         POVERVIEW,
         PTRENDING,
@@ -87,11 +85,27 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         PLOCAL,
         CHANNEL,
         MYVIDEOS,
+
+        PIXELFED,
         PF_HOME,
         PF_LOCAL,
         PF_DISCOVER,
         PF_NOTIFICATION,
-        SCHEDULED_TOOTS
+
+
+        GNU_HOME,
+        GNU_LOCAL,
+        GNU_WHOLE,
+        GNU_NOTIFICATION,
+        GNU_DM,
+        GNU_ART,
+        GNU_TAG,
+
+        SCHEDULED_TOOTS,
+        CACHE_BOOKMARKS,
+        CACHE_BOOKMARKS_PEERTUBE,
+        CACHE_STATUS,
+
     }
 
 
@@ -313,6 +327,23 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getDiscoverTimeline(true,max_id);
                 break;
             case HASHTAG:
+                break;
+
+            case GNU_HOME:
+                GNUAPI gnuAPI = new GNUAPI(this.contextReference.get());
+                apiResponse = gnuAPI.getHomeTimeline(max_id);
+                break;
+            case GNU_LOCAL:
+                gnuAPI = new GNUAPI(this.contextReference.get());
+                break;
+            case GNU_WHOLE:
+                gnuAPI = new GNUAPI(this.contextReference.get());
+                break;
+            case GNU_NOTIFICATION:
+                gnuAPI = new GNUAPI(this.contextReference.get());
+                break;
+            case GNU_DM:
+                gnuAPI = new GNUAPI(this.contextReference.get());
                 break;
         }
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {

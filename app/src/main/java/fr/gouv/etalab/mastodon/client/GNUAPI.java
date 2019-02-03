@@ -53,6 +53,8 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
+import static fr.gouv.etalab.mastodon.helper.Helper.PREF_KEY_OAUTH_TOKEN;
+
 
 /**
  * Created by Thomas on 02/02/2019.
@@ -88,7 +90,7 @@ public class GNUAPI {
         tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
         notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
-        this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+        this.prefKeyOauthTokenT = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
         if( Helper.getLiveInstance(context) != null)
             this.instance = Helper.getLiveInstance(context);
         else {
@@ -124,7 +126,7 @@ public class GNUAPI {
         if( token != null)
             this.prefKeyOauthTokenT = token;
         else
-            this.prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+            this.prefKeyOauthTokenT = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
         apiResponse = new APIResponse();
         APIError = null;
     }
@@ -689,16 +691,18 @@ public class GNUAPI {
             params.put("min_id", min_id);
         if (0 > limit || limit > 80)
             limit = 80;
-        params.put("limit",String.valueOf(limit));
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        //Current user
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/timelines/home"), 60, params, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl("/statuses/home_timeline.json"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -780,10 +784,7 @@ public class GNUAPI {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String url;
-            if( instanceName == null)
-                url = getAbsoluteUrl("/timelines/public");
-            else
-                url = getAbsoluteUrlRemoteInstance(instanceName);
+            url = getAbsoluteUrl("/timelines/public");
             String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
@@ -804,60 +805,6 @@ public class GNUAPI {
     }
 
 
-    /**
-     * Retrieves discover timeline for the account *synchronously*
-     * @param local boolean only local timeline
-     * @param max_id String id max
-     * @return APIResponse
-     */
-    public APIResponse getDiscoverTimeline(boolean local, String max_id){
-        return getDiscoverTimeline(local, max_id, null, tootPerPage);
-    }
-
-
-    /**
-     * Retrieves discover timeline for the account *synchronously*
-     * @param local boolean only local timeline
-     * @param max_id String id max
-     * @param since_id String since the id
-     * @param limit int limit  - max value 40
-     * @return APIResponse
-     */
-    private APIResponse getDiscoverTimeline(boolean local, String max_id, String since_id, int limit){
-
-        HashMap<String, String> params = new HashMap<>();
-        if( local)
-            params.put("local", Boolean.toString(true));
-        if( max_id != null )
-            params.put("max_id", max_id);
-        if( since_id != null )
-            params.put("since_id", since_id);
-        if( 0 > limit || limit > 40)
-            limit = 40;
-        params.put("limit",String.valueOf(limit));
-        statuses = new ArrayList<>();
-        try {
-            HttpsConnection httpsConnection = new HttpsConnection(context);
-            String url;
-            url = getAbsoluteUr2l("/discover/posts");
-            String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
-            statuses = parseStatuses(context, new JSONArray(response));
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        apiResponse.setStatuses(statuses);
-        return apiResponse;
-    }
 
 
 
@@ -1815,15 +1762,18 @@ public class GNUAPI {
             status.setSensitive(false);
             status.setSpoiler_text(null);
             status.setVisibility("public");
-            status.setLanguage(resobj.get("geo").toString());
+            status.setLanguage(resobj.isNull("geo")?null:resobj.getString("geo"));
             status.setUrl(resobj.get("external_url").toString());
             //Retrieves attachments
-            JSONArray arrayAttachement = resobj.getJSONArray("attachments");
 
-            ArrayList<Attachment> attachments = new ArrayList<>(parseAttachmentResponse(arrayAttachement));
+            try {
+                JSONArray arrayAttachement = resobj.getJSONArray("attachments");
+                ArrayList<Attachment> attachments = new ArrayList<>(parseAttachmentResponse(arrayAttachement));
+                status.setMedia_attachments(attachments);
+            }catch (Exception ignored){ status.setMedia_attachments(new ArrayList<>());}
 
             status.setCard(null);
-            status.setMedia_attachments(attachments);
+
             //Retrieves mentions
             List<Mention> mentions = new ArrayList<>();
             JSONArray arrayMention = resobj.getJSONArray("attentions");
@@ -1848,13 +1798,13 @@ public class GNUAPI {
             try {
                 if(resobj.getJSONObject("source") != null){
                     application.setName(resobj.getJSONObject("source").toString());
-                    application.setWebsite(null);
+                    application.setWebsite(resobj.getJSONObject("source_link").toString());
                 }
             }catch (Exception e){
                 application = new Application();
             }
             status.setApplication(application);
-            status.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
+            status.setAccount(parseAccountResponse(context, resobj.getJSONObject("user")));
             status.setContent(resobj.get("statusnet_html").toString());
             status.setFavourites_count(Integer.valueOf(resobj.get("fave_num").toString()));
             status.setReblogs_count(Integer.valueOf(resobj.get("repeat_num").toString()));
@@ -1873,8 +1823,8 @@ public class GNUAPI {
             status.setPinned(false);
             try{
                 status.setReblog(parseStatuses(context, resobj.getJSONObject("retweeted_status")));
-            }catch (Exception ignored){}
-        } catch (JSONException ignored) {} catch (ParseException e) {
+            }catch (Exception ignored){ status.setReblog(null);}
+        } catch (JSONException ignored) {ignored.printStackTrace();} catch (ParseException e) {
             e.printStackTrace();
         }
         return status;
@@ -2176,17 +2126,7 @@ public class GNUAPI {
 
 
     private String getAbsoluteUrl(String action) {
-        return Helper.instanceWithProtocol(this.instance) + "/api/v1" + action;
-    }
-    private String getAbsoluteUr2l(String action) {
-        return Helper.instanceWithProtocol(this.instance) + "/api/v2" + action;
-    }
-    private String getAbsoluteUrlRemote(String remote, String action) {
-        return "https://" + remote + "/api/v1" + action;
-    }
-
-    private String getAbsoluteUrlRemoteInstance(String instanceName) {
-        return "https://" + instanceName + "/api/v1/timelines/public?local=true";
+        return Helper.instanceWithProtocol(this.instance) + "/api" + action;
     }
 
 

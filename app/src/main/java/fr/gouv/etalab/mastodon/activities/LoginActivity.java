@@ -238,7 +238,6 @@ public class LoginActivity extends BaseActivity {
                         case R.id.set_gnu:
                             login_uid.setHint(R.string.username);
                             connectionButton.setEnabled(true);
-                            connectionButton.setClickable(true);
                             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
                             break;
                     }
@@ -446,112 +445,111 @@ public class LoginActivity extends BaseActivity {
         super.onResume();
 
         if (login_instance != null &&login_instance.getText() != null && login_instance.getText().toString().length() > 0 && client_id_for_webview) {
-            if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
-                connectionButton.setEnabled(false);
-                client_id_for_webview = false;
-                retrievesClientId();
-            }
+            connectionButton.setEnabled(false);
+            client_id_for_webview = false;
+            retrievesClientId();
         }
     }
 
     private void retrievesClientId(){
-        if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
-            return;
-        String instanceFromField = login_instance.getText().toString().trim();
-        final String[] host = new String[1];
 
 
-        try {
-            URL url = new URL(instanceFromField);
-            host[0] = url.getHost();
-        } catch (MalformedURLException e) {
-            host[0] = instanceFromField;
-        }
-        try {
-            instance =  URLEncoder.encode(host[0], "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
-        }
-        if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
-            actionToken = "/api/v1/apps";
-        else
-            actionToken = "/api/v1/oauth-clients/local";
-        final HashMap<String, String> parameters = new HashMap<>();
-        parameters.put(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
-        parameters.put(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
-        if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
-            parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES);
-        }else {
-            parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES_PEERTUBE);
-        }
+        if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+            String instanceFromField = login_instance.getText().toString().trim();
+            String host  = instanceFromField;
 
-        parameters.put(Helper.WEBSITE, Helper.WEBSITE_VALUE);
 
-        new Thread(new Runnable(){
-            @Override
-            public void run() {
-                try {
-                    String response;
-                    if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
-                        response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
-                    else
-                        response = new HttpsConnection(LoginActivity.this).get(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
-
-                    runOnUiThread(new Runnable() {
-                      public void run() {
-                          JSONObject resobj;
-                          try {
-                              resobj = new JSONObject(response);
-                              client_id = resobj.get(Helper.CLIENT_ID).toString();
-                              client_secret = resobj.get(Helper.CLIENT_SECRET).toString();
-                              String id = null;
-                              if(  socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
-                                id = resobj.get(Helper.ID).toString();
-                              SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                              SharedPreferences.Editor editor = sharedpreferences.edit();
-                              editor.putString(Helper.CLIENT_ID, client_id);
-                              editor.putString(Helper.CLIENT_SECRET, client_secret);
-                              editor.putString(Helper.ID, id);
-                              editor.apply();
-                              connectionButton.setEnabled(true);
-                              if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-                                  login_two_step.setVisibility(View.VISIBLE);
-                                  info_2FA.setVisibility(View.VISIBLE);
-                                  showCase2FA(true);
-                              }
-                              if( client_id_for_webview){
-                                  boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
-                                  if( embedded_browser) {
-                                      Intent i = new Intent(LoginActivity.this, WebviewConnectActivity.class);
-                                      i.putExtra("social",  socialNetwork);
-                                      i.putExtra("instance", instance);
-                                      startActivity(i);
-                                  }else{
-                                      String url = redirectUserToAuthorizeAndLogin(client_id, instance);
-                                      Helper.openBrowser(LoginActivity.this, url);
-                                  }
-                              }
-                          } catch (JSONException ignored) {ignored.printStackTrace();}
-                      }
-                    });
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            String message;
-                            if( e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
-                                message = e.getLocalizedMessage();
-                            else if (e.getMessage() != null && e.getMessage().trim().length() > 0)
-                                message = e.getMessage();
-                            else
-                                message = getString(R.string.client_error);
-                            Toasty.error(getApplicationContext(), message,Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
+            try {
+                URL url = new URL(instanceFromField);
+                host = url.getHost();
+            } catch (MalformedURLException e) { }
+            try {
+                instance =  URLEncoder.encode(host, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
             }
-        }).start();
+            if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                actionToken = "/api/v1/apps";
+            else
+                actionToken = "/api/v1/oauth-clients/local";
+            final HashMap<String, String> parameters = new HashMap<>();
+            parameters.put(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
+            parameters.put(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
+            if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES);
+            }else {
+                parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES_PEERTUBE);
+            }
 
+            parameters.put(Helper.WEBSITE, Helper.WEBSITE_VALUE);
+
+            new Thread(new Runnable(){
+                @Override
+                public void run() {
+                    try {
+                        String response;
+                        if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                            response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
+                        else
+                            response = new HttpsConnection(LoginActivity.this).get(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
+
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                JSONObject resobj;
+                                try {
+                                    resobj = new JSONObject(response);
+                                    client_id = resobj.get(Helper.CLIENT_ID).toString();
+                                    client_secret = resobj.get(Helper.CLIENT_SECRET).toString();
+                                    String id = null;
+                                    if(  socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                        id = resobj.get(Helper.ID).toString();
+                                    SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString(Helper.CLIENT_ID, client_id);
+                                    editor.putString(Helper.CLIENT_SECRET, client_secret);
+                                    editor.putString(Helper.ID, id);
+                                    editor.apply();
+                                    connectionButton.setEnabled(true);
+                                    if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                                        login_two_step.setVisibility(View.VISIBLE);
+                                        info_2FA.setVisibility(View.VISIBLE);
+                                        showCase2FA(true);
+                                    }
+                                    if( client_id_for_webview){
+                                        boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
+                                        if( embedded_browser) {
+                                            Intent i = new Intent(LoginActivity.this, WebviewConnectActivity.class);
+                                            i.putExtra("social",  socialNetwork);
+                                            i.putExtra("instance", instance);
+                                            startActivity(i);
+                                        }else{
+                                            String url = redirectUserToAuthorizeAndLogin(client_id, instance);
+                                            Helper.openBrowser(LoginActivity.this, url);
+                                        }
+                                    }
+                                } catch (JSONException ignored) {ignored.printStackTrace();}
+                            }
+                        });
+                    } catch (final Exception e) {
+                        e.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                String message;
+                                if( e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
+                                    message = e.getLocalizedMessage();
+                                else if (e.getMessage() != null && e.getMessage().trim().length() > 0)
+                                    message = e.getMessage();
+                                else
+                                    message = getString(R.string.client_error);
+                                Toasty.error(getApplicationContext(), message,Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }
+            }).start();
+        }else{
+            connectionButton.setEnabled(true);
+        }
         connectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -588,14 +586,15 @@ public class LoginActivity extends BaseActivity {
                     oauthUrl = "/api/v1/users/token";
                 }else  if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
                     String instanceFromField = login_instance.getText().toString().trim();
+                    String host;
                     try {
                         URL url = new URL(instanceFromField);
-                        host[0] = url.getHost();
+                        host = url.getHost();
                     } catch (MalformedURLException e) {
-                        host[0] = instanceFromField;
+                        host = instanceFromField;
                     }
                     try {
-                        instance =  URLEncoder.encode(host[0], "utf-8");
+                        instance =  URLEncoder.encode(host, "utf-8");
                     } catch (UnsupportedEncodingException e) {
                     }
                     String username = login_uid.getText().toString().trim().toLowerCase();

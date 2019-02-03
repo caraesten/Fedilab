@@ -254,7 +254,8 @@ public abstract class BaseMainActivity extends BaseActivity
             social = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
         else if( account.getSocial().equals("PLEROMA"))
             social = UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA;
-
+        else if( account.getSocial().equals("GNU"))
+            social = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
         countNewStatus = 0;
         countNewNotifications = 0;
 
@@ -343,7 +344,7 @@ public abstract class BaseMainActivity extends BaseActivity
         delete_all = findViewById(R.id.delete_all);
         add_new = findViewById(R.id.add_new);
 
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
             TabLayout.Tab tabHome = tabLayout.newTab();
             TabLayout.Tab tabNotif = tabLayout.newTab();
             TabLayout.Tab tabDirect = tabLayout.newTab();
@@ -419,47 +420,66 @@ public abstract class BaseMainActivity extends BaseActivity
             tabLayout.addTab(tabHome);
             tabLayout.addTab(tabNotif);
             tabPosition.put("home",0);
-            typePosition.put(0, RetrieveFeedsAsyncTask.Type.HOME);
+            if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+                typePosition.put(0, RetrieveFeedsAsyncTask.Type.HOME);
+            else
+                typePosition.put(0, RetrieveFeedsAsyncTask.Type.GNU_HOME);
             tabPosition.put("notifications",1);
-            typePosition.put(1, RetrieveFeedsAsyncTask.Type.NOTIFICATION);
+            if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+                typePosition.put(1, RetrieveFeedsAsyncTask.Type.NOTIFICATION);
+            else
+                typePosition.put(0, RetrieveFeedsAsyncTask.Type.GNU_NOTIFICATION);
             int i = 2;
             if( display_direct) {
                 tabLayout.addTab(tabDirect);
                 tabPosition.put("direct",i);
 
-                userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-                instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+                if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU ) {
+                    userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                    instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
 
-                String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
-                if (instanceVersion != null) {
-                    Version currentVersion = new Version(instanceVersion);
-                    Version minVersion = new Version("2.6");
-                    if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
-                        typePosition.put(i, RetrieveFeedsAsyncTask.Type.CONVERSATION);
+                    String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+                    if (instanceVersion != null) {
+                        Version currentVersion = new Version(instanceVersion);
+                        Version minVersion = new Version("2.6");
+                        if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                            typePosition.put(i, RetrieveFeedsAsyncTask.Type.CONVERSATION);
+                        } else {
+                            typePosition.put(i, RetrieveFeedsAsyncTask.Type.DIRECT);
+                        }
                     } else {
                         typePosition.put(i, RetrieveFeedsAsyncTask.Type.DIRECT);
                     }
                 }else{
-                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.DIRECT);
+                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.GNU_DM);
                 }
                 i++;
             }
             if( display_local) {
                 tabLayout.addTab(tabLocal);
                 tabPosition.put("local", i);
-                typePosition.put(i, RetrieveFeedsAsyncTask.Type.LOCAL);
+                if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.LOCAL);
+                else
+                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.GNU_LOCAL);
                 i++;
             }
             if( display_global) {
                 tabLayout.addTab(tabPublic);
                 tabPosition.put("global", i);
-                typePosition.put(i, RetrieveFeedsAsyncTask.Type.PUBLIC);
+                if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.PUBLIC);
+                else
+                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.GNU_WHOLE);
                 i++;
             }
             if( display_art) {
                 tabLayout.addTab(tabArt);
                 tabPosition.put("art", i);
-                typePosition.put(i, RetrieveFeedsAsyncTask.Type.ART);
+                if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.ART);
+                else
+                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.GNU_ART);
             }
 
             if( (getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE)
@@ -1084,10 +1104,10 @@ public abstract class BaseMainActivity extends BaseActivity
             startSreaming();
 
 
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
             Helper.refreshSearchTag(BaseMainActivity.this, tabLayout, adapter);
         int tabCount = tabLayout.getTabCount();
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
             for( int j = countPage ; j < tabCount ; j++){
                 attacheDelete(j);
             }
@@ -1207,7 +1227,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
         tabLayout.getTabAt(0).select();
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
             toot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -1491,7 +1511,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         // Asked once for notification opt-in
         boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
-        if(!popupShown && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
+        if(!popupShown && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)){
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
             LayoutInflater inflater = getLayoutInflater();
             @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
@@ -1531,7 +1551,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         mamageNewIntent(getIntent());
 
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
 
             // Retrieves instance
             new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -2430,14 +2450,14 @@ public abstract class BaseMainActivity extends BaseActivity
         }
 
         public void removeTabPage() {
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
                 this.mNumOfTabs--;
                 notifyDataSetChanged();
             }
         }
 
         public void addTabPage(String title) {
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
                 TabLayout.Tab tab = tabLayout.newTab();
                 tab.setText(title);
                 this.mNumOfTabs++;
@@ -2447,7 +2467,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         @Override
         public Fragment getItem(int position) {
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
                 //Remove the search bar
                 if (!toolbar_search.isIconified()) {
                     toolbarTitle.setVisibility(View.VISIBLE);
@@ -2459,7 +2479,10 @@ public abstract class BaseMainActivity extends BaseActivity
                 Bundle bundle = new Bundle();
                 if (position == 0) {
                     homeFragment = new DisplayStatusFragment();
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
+                    if(social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
+                    else
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.GNU_HOME);
                     homeFragment.setArguments(bundle);
                     return homeFragment;
                 } else if (position == 1) {
@@ -2560,7 +2583,7 @@ public abstract class BaseMainActivity extends BaseActivity
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
             registeredFragments.put(position, createdFragment);
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
 
                 // save the appropriate reference depending on position
                 if (position == 0) {
