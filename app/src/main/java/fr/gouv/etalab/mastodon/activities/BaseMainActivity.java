@@ -584,13 +584,13 @@ public abstract class BaseMainActivity extends BaseActivity
             });
 
             countPage = 2;
-            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true))
+            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true) && social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                 countPage++;
             if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true))
                 countPage++;
             if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true))
                 countPage++;
-            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true))
+            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true)&& social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                 countPage++;
 
             if( tabPosition.containsKey("global"))
@@ -1122,9 +1122,17 @@ public abstract class BaseMainActivity extends BaseActivity
                 query= query.replaceAll("^#+", "");
                 //It's not a peertube search
                 if(displayPeertube == null){
-                    Intent intent = new Intent(BaseMainActivity.this, SearchResultActivity.class);
-                    intent.putExtra("search", query);
-                    startActivity(intent);
+                    if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                        Intent intent = new Intent(BaseMainActivity.this, SearchResultActivity.class);
+                        intent.putExtra("search", query);
+                        startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(BaseMainActivity.this, HashTagActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("tag", query.trim());
+                        intent.putExtras(b);
+                        startActivity(intent);
+                    }
                 }else{ //Peertube search
                     DisplayStatusFragment statusFragment;
                     Bundle bundle = new Bundle();
@@ -2490,7 +2498,6 @@ public abstract class BaseMainActivity extends BaseActivity
                     bundle.putSerializable("type", typePosition.get(position));
                     if (typePosition.get(position) == RetrieveFeedsAsyncTask.Type.TAG) {
                         if (tabLayout.getTabAt(position) != null && tabLayout.getTabAt(position).getText() != null) {
-
                             SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, DB_NAME, null, Sqlite.DB_VERSION).open();
 
                             List<TagTimeline> tagTimelines;

@@ -256,16 +256,21 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getStatusbyId(targetedID);
                 break;
             case TAG:
-                List<TagTimeline> tagTimelines = new SearchDAO(contextReference.get(), db).getTimelineInfo(tag);
-                if( tagTimelines != null && tagTimelines.size() > 0){
-                    TagTimeline tagTimeline = tagTimelines.get(0);
-                    boolean isArt = tagTimeline.isART();
-                    if( isArt)
-                        apiResponse = api.getCustomArtTimeline(false, tag, max_id,tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
-                    else
-                        apiResponse = api.getPublicTimelineTag(tag, false, max_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    List<TagTimeline> tagTimelines = new SearchDAO(contextReference.get(), db).getTimelineInfo(tag);
+                    if (tagTimelines != null && tagTimelines.size() > 0) {
+                        TagTimeline tagTimeline = tagTimelines.get(0);
+                        boolean isArt = tagTimeline.isART();
+                        if (isArt)
+                            apiResponse = api.getCustomArtTimeline(false, tag, max_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
+                        else
+                            apiResponse = api.getPublicTimelineTag(tag, false, max_id, tagTimelines.get(0).getAny(), tagTimelines.get(0).getAll(), tagTimelines.get(0).getNone());
+                    } else {
+                        apiResponse = api.getPublicTimelineTag(tag, false, max_id, null, null, null);
+                    }
                 }else{
-                    apiResponse = api.getPublicTimelineTag(tag, false, max_id, null, null, null);
+                    GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
+                    apiResponse = gnuapi.search(tag,max_id);
                 }
 
                 break;

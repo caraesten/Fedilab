@@ -21,11 +21,9 @@ import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
-import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -61,61 +59,32 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
-            API api = new API(this.contextReference.get());
-            if (!tagsOnly)
-                results = api.search(query);
-            else {
-                //search tags only
-                results = api.search(query);
-                SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                List<String> cachedTags = new TagsCacheDAO(contextReference.get(), db).getBy(query);
-                if (results != null && results.getHashtags() != null) {
-                    //If cache contains matching tags
-                    if (cachedTags != null) {
-                        for (String apiTag : results.getHashtags()) {
-                            //Cache doesn't contain the tags coming from the api (case insensitive)
-                            if (!Helper.containsCaseInsensitive(apiTag, cachedTags)) {
-                                cachedTags.add(apiTag); //It's added
-                            }
+        API api = new API(this.contextReference.get());
+        if (!tagsOnly)
+            results = api.search(query);
+        else {
+            //search tags only
+            results = api.search(query);
+            SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            List<String> cachedTags = new TagsCacheDAO(contextReference.get(), db).getBy(query);
+            if (results != null && results.getHashtags() != null) {
+                //If cache contains matching tags
+                if (cachedTags != null) {
+                    for (String apiTag : results.getHashtags()) {
+                        //Cache doesn't contain the tags coming from the api (case insensitive)
+                        if (!Helper.containsCaseInsensitive(apiTag, cachedTags)) {
+                            cachedTags.add(apiTag); //It's added
                         }
-                        results.setHashtags(cachedTags);
                     }
-                } else if (cachedTags != null) {
-                    if (results == null)
-                        results = new Results();
                     results.setHashtags(cachedTags);
                 }
+            } else if (cachedTags != null) {
+                if (results == null)
+                    results = new Results();
+                results.setHashtags(cachedTags);
             }
-            error = api.getError();
-        }else{
-            GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
-            if (!tagsOnly)
-                results = gnuapi.search(query);
-            else {
-                //search tags only
-                results = gnuapi.search(query);
-                SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                List<String> cachedTags = new TagsCacheDAO(contextReference.get(), db).getBy(query);
-                if (results != null && results.getHashtags() != null) {
-                    //If cache contains matching tags
-                    if (cachedTags != null) {
-                        for (String apiTag : results.getHashtags()) {
-                            //Cache doesn't contain the tags coming from the api (case insensitive)
-                            if (!Helper.containsCaseInsensitive(apiTag, cachedTags)) {
-                                cachedTags.add(apiTag); //It's added
-                            }
-                        }
-                        results.setHashtags(cachedTags);
-                    }
-                } else if (cachedTags != null) {
-                    if (results == null)
-                        results = new Results();
-                    results.setHashtags(cachedTags);
-                }
-            }
-            error = gnuapi.getError();
         }
+        error = api.getError();
         return null;
     }
 

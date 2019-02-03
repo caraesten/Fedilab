@@ -1611,20 +1611,23 @@ public class GNUAPI {
      * @param query  String search
      * @return Results
      */
-    public Results search(String query) {
+    public APIResponse search(String query, String max_id) {
 
         HashMap<String, String> params = new HashMap<>();
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
-            params.put("q", query);
-        else
-            try {
-                params.put("q", URLEncoder.encode(query, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                params.put("q", query);
-            }
+        try {
+            query = URLEncoder.encode(query, "UTF-8");
+        } catch (UnsupportedEncodingException ignored) {}
+        if (max_id != null)
+            params.put("max_id", max_id);
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/search.json"), 60, params, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl("/statusnet/tags/timeline/"+query.trim().toLowerCase().replaceAll("\\#","")+".json"), 60, params, null);
+            List<Status> statuses = parseStatuses(context, new JSONArray(response));
+            if( statuses.size() > 0) {
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
+            }
+            apiResponse.setStatuses(statuses);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -1634,8 +1637,10 @@ public class GNUAPI {
             e.printStackTrace();
         } catch (KeyManagementException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        return results;
+        return apiResponse;
     }
 
 
@@ -1852,7 +1857,7 @@ public class GNUAPI {
             try{
                 status.setReblog(parseStatuses(context, resobj.getJSONObject("retweeted_status")));
             }catch (Exception ignored){ status.setReblog(null);}
-        } catch (JSONException ignored) {ignored.printStackTrace(); Log.v(Helper.TAG,"resobj: " + resobj);} catch (ParseException e) {
+        } catch (JSONException ignored) {ignored.printStackTrace();} catch (ParseException e) {
             e.printStackTrace();
 
         }
