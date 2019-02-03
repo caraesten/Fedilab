@@ -63,6 +63,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Schedule;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
+import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -2043,8 +2044,8 @@ public class API {
      * @param since_id String since max
      * @return APIResponse
      */
-    public APIResponse getNotificationsSince(String since_id, boolean display){
-        return getNotifications(null, since_id, notificationPerPage, display);
+    public APIResponse getNotificationsSince(DisplayNotificationsFragment.Type type, String since_id, boolean display){
+        return getNotifications(type, null, since_id, notificationPerPage, display);
     }
 
     /**
@@ -2053,8 +2054,8 @@ public class API {
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    public APIResponse getNotificationsSince(String since_id, int notificationPerPage, boolean display){
-        return getNotifications(null, since_id, notificationPerPage, display);
+    public APIResponse getNotificationsSince(DisplayNotificationsFragment.Type type, String since_id, int notificationPerPage, boolean display){
+        return getNotifications(type, null, since_id, notificationPerPage, display);
     }
 
     /**
@@ -2062,8 +2063,8 @@ public class API {
      * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getNotifications(String max_id, boolean display){
-        return getNotifications(max_id, null, notificationPerPage, display);
+    public APIResponse getNotifications(DisplayNotificationsFragment.Type type, String max_id, boolean display){
+        return getNotifications(type, max_id, null, notificationPerPage, display);
     }
 
 
@@ -2074,7 +2075,7 @@ public class API {
      * @param limit int limit  - max value 40
      * @return APIResponse
      */
-    private APIResponse getNotifications(String max_id, String since_id, int limit, boolean display){
+    private APIResponse getNotifications(DisplayNotificationsFragment.Type type, String max_id, String since_id, int limit, boolean display){
 
         HashMap<String, String> params = new HashMap<>();
         if( max_id != null )
@@ -2087,32 +2088,58 @@ public class API {
 
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_follow, notif_add, notif_mention, notif_share;
-        if( display) {
-            notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
-            notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
-            notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
-            notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
-        }else{
-            notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
-            notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-            notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
-            notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
-        }
         StringBuilder parameters = new StringBuilder();
+        if( type == DisplayNotificationsFragment.Type.ALL){
+            if( display) {
+                notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
+                notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
+                notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
+                notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
+            }else{
+                notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
+                notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
+                notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
+                notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
+            }
 
-        if( !notif_follow )
+
+            if( !notif_follow )
+                parameters.append("exclude_types[]=").append("follow").append("&");
+            if( !notif_add )
+                parameters.append("exclude_types[]=").append("favourite").append("&");
+            if( !notif_share )
+                parameters.append("exclude_types[]=").append("reblog").append("&");
+            if( !notif_mention )
+                parameters.append("exclude_types[]=").append("mention").append("&");
+            if( parameters.length() > 0) {
+                parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
+                params.put("exclude_types[]", parameters.toString());
+            }
+        }else if(type == DisplayNotificationsFragment.Type.MENTION){
+               parameters.append("exclude_types[]=").append("follow").append("&");
+                parameters.append("exclude_types[]=").append("favourite").append("&");
+                parameters.append("exclude_types[]=").append("reblog").append("&");
+                parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
+                params.put("exclude_types[]", parameters.toString());
+        }else if(type == DisplayNotificationsFragment.Type.FAVORITE){
             parameters.append("exclude_types[]=").append("follow").append("&");
-        if( !notif_add )
-            parameters.append("exclude_types[]=").append("favourite").append("&");
-        if( !notif_share )
-            parameters.append("exclude_types[]=").append("reblog").append("&");
-        if( !notif_mention )
             parameters.append("exclude_types[]=").append("mention").append("&");
-        if( parameters.length() > 0) {
+            parameters.append("exclude_types[]=").append("reblog").append("&");
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
+            params.put("exclude_types[]", parameters.toString());
+        }else if(type == DisplayNotificationsFragment.Type.BOOST){
+            parameters.append("exclude_types[]=").append("follow").append("&");
+            parameters.append("exclude_types[]=").append("mention").append("&");
+            parameters.append("exclude_types[]=").append("favourite").append("&");
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
+            params.put("exclude_types[]", parameters.toString());
+        }else if(type == DisplayNotificationsFragment.Type.FOLLOW){
+            parameters.append("exclude_types[]=").append("reblog").append("&");
+            parameters.append("exclude_types[]=").append("mention").append("&");
+            parameters.append("exclude_types[]=").append("favourite").append("&");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
             params.put("exclude_types[]", parameters.toString());
         }
-
 
         List<Notification> notifications = new ArrayList<>();
 

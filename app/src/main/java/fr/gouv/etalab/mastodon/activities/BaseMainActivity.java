@@ -134,6 +134,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayPeertubeNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.fragments.SettingsFragment;
 import fr.gouv.etalab.mastodon.fragments.SettingsPeertubeFragment;
+import fr.gouv.etalab.mastodon.fragments.TabLayoutNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutScheduleFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutSettingsFragment;
 import fr.gouv.etalab.mastodon.fragments.WhoToFollowFragment;
@@ -703,11 +704,8 @@ public abstract class BaseMainActivity extends BaseActivity
                             displayStatusFragment.scrollToTop();
                             displayStatusFragment.updateLastReadToot();
                         } else if( tab.getPosition() == 1) {
-                            DisplayNotificationsFragment notificationsFragment = ((DisplayNotificationsFragment) fragment);
                             countNewNotifications = 0;
                             updateNotifCounter();
-                            notificationsFragment.scrollToTop();
-
                         }else if (tab.getPosition() > 1) {
                             if (typePosition.containsKey(tab.getPosition()))
                                 updateTimeLine(typePosition.get(tab.getPosition()), 0);
@@ -761,8 +759,6 @@ public abstract class BaseMainActivity extends BaseActivity
                                     displayStatusFragment.scrollToTop();
                                     break;
                                 case 1:
-                                    DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
-                                    displayNotificationsFragment.scrollToTop();
                                     break;
                             }
                         }
@@ -2486,8 +2482,8 @@ public abstract class BaseMainActivity extends BaseActivity
                     homeFragment.setArguments(bundle);
                     return homeFragment;
                 } else if (position == 1) {
-                    notificationsFragment = new DisplayNotificationsFragment();
-                    return notificationsFragment;
+                    TabLayoutNotificationsFragment tabLayoutNotificationsFragment = new TabLayoutNotificationsFragment();
+                    return tabLayoutNotificationsFragment;
                 } else {
                     statusFragment = new DisplayStatusFragment();
                     bundle.putSerializable("type", typePosition.get(position));
@@ -2589,7 +2585,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 if (position == 0) {
                     homeFragment = (DisplayStatusFragment) createdFragment;
                 } else if (position == 1) {
-                    notificationsFragment = (DisplayNotificationsFragment) createdFragment;
+                    tabLayoutNotificationsFragment = (TabLayoutNotificationsFragment) createdFragment;
                 } else {
                     if (display_local && position == tabPosition.get("local"))
                         localFragment = (DisplayStatusFragment) createdFragment;

@@ -84,6 +84,16 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     public DisplayNotificationsFragment(){
     }
 
+    public enum Type{
+        ALL,
+        MENTION,
+        FAVORITE,
+        BOOST,
+        FOLLOW
+    }
+
+    Type type;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -96,7 +106,10 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         swiped = false;
         swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
         sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            type = (Type) bundle.get("type");
+        }
 
         lv_notifications = rootView.findViewById(R.id.lv_notifications);
         mainLoader = rootView.findViewById(R.id.loader);
@@ -122,7 +135,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     if (firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            asyncTask = new RetrieveNotificationsAsyncTask(context, true, null,  max_id,   DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            asyncTask = new RetrieveNotificationsAsyncTask(context, type,true, null,  max_id,   DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             nextElementLoader.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -184,7 +197,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 if( notifications != null && notifications.size() > 0 )
                     sinceId = notifications.get(0).getId();
                 if( context != null)
-                    asyncTask = new RetrieveMissingNotificationsAsyncTask(context, sinceId, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    asyncTask = new RetrieveMissingNotificationsAsyncTask(context, type, sinceId, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
@@ -210,13 +223,13 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                 break;
         }
         if( context != null)
-            asyncTask = new RetrieveNotificationsAsyncTask(context, true, null,  max_id,  DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            asyncTask = new RetrieveNotificationsAsyncTask(context, type,true, null,  max_id,  DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     if( context != null)
-                        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null,  max_id,  DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        asyncTask = new RetrieveNotificationsAsyncTask(context, type,true, null,  max_id,  DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }, 500);
         return rootView;
@@ -316,7 +329,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
      * @param sinceId String
      */
     public void retrieveMissingNotifications(String sinceId){
-        asyncTask = new RetrieveMissingNotificationsAsyncTask(context, sinceId, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveMissingNotificationsAsyncTask(context, type, sinceId, DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -348,7 +361,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         flag_loading = true;
         swiped = true;
         MainActivity.countNewNotifications = 0;
-        asyncTask = new RetrieveNotificationsAsyncTask(context, true, null,  null,   DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        asyncTask = new RetrieveNotificationsAsyncTask(context, type,true, null,  null,   DisplayNotificationsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 

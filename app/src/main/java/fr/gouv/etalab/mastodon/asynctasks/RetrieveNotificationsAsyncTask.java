@@ -26,6 +26,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.GNUAPI;
+import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 
@@ -46,14 +47,16 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
     private boolean refreshData;
     private WeakReference<Context> contextReference;
     private boolean display;
+    private DisplayNotificationsFragment.Type type;
 
-    public RetrieveNotificationsAsyncTask(Context context, boolean display, Account account, String max_id, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
+    public RetrieveNotificationsAsyncTask(Context context, DisplayNotificationsFragment.Type type, boolean display, Account account, String max_id, OnRetrieveNotificationsInterface onRetrieveNotificationsInterface){
         this.contextReference = new WeakReference<>(context);
         this.max_id = max_id;
         this.listener = onRetrieveNotificationsInterface;
         this.account = account;
         this.refreshData = true;
         this.display = display;
+        this.type = type;
     }
 
 
@@ -64,27 +67,27 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
             API api;
             if (account == null) {
                 api = new API(this.contextReference.get());
-                apiResponse = api.getNotifications(max_id, display);
+                apiResponse = api.getNotifications(type, max_id, display);
             } else {
                 if (this.contextReference.get() == null) {
                     apiResponse.setError(new Error());
                     return null;
                 }
                 api = new API(this.contextReference.get(), account.getInstance(), account.getToken());
-                apiResponse = api.getNotificationsSince(max_id, display);
+                apiResponse = api.getNotificationsSince(type, max_id, display);
             }
         }else{
             GNUAPI gnuapi;
             if (account == null) {
                 gnuapi = new GNUAPI(this.contextReference.get());
-                apiResponse = gnuapi.getNotifications(max_id, display);
+                apiResponse = gnuapi.getNotifications(type, max_id, display);
             } else {
                 if (this.contextReference.get() == null) {
                     apiResponse.setError(new Error());
                     return null;
                 }
                 gnuapi = new GNUAPI(this.contextReference.get(), account.getInstance(), account.getToken());
-                apiResponse = gnuapi.getNotificationsSince(max_id, display);
+                apiResponse = gnuapi.getNotificationsSince(type, max_id, display);
             }
         }
         return null;

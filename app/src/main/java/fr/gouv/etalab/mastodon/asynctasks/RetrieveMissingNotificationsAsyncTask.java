@@ -24,6 +24,7 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingNotificationsInterface;
 
 
@@ -39,18 +40,20 @@ public class RetrieveMissingNotificationsAsyncTask extends AsyncTask<Void, Void,
     private OnRetrieveMissingNotificationsInterface listener;
     private WeakReference<Context> contextReference;
     private List<Notification> notifications;
+    private DisplayNotificationsFragment.Type type;
 
-    public RetrieveMissingNotificationsAsyncTask(Context context, String since_id, OnRetrieveMissingNotificationsInterface onRetrieveMissingNotifications){
+    public RetrieveMissingNotificationsAsyncTask(Context context, DisplayNotificationsFragment.Type type, String since_id, OnRetrieveMissingNotificationsInterface onRetrieveMissingNotifications){
         this.contextReference = new WeakReference<>(context);
         this.since_id = since_id;
         this.listener = onRetrieveMissingNotifications;
+        this.type = type;
     }
 
 
     @Override
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
-        APIResponse apiResponse = api.getNotificationsSince(since_id, 40, false);
+        APIResponse apiResponse = api.getNotificationsSince(type, since_id, 40, false);
         since_id = apiResponse.getSince_id();
         notifications = apiResponse.getNotifications();
         if( notifications != null && notifications.size() > 0) {

@@ -50,6 +50,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
+import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -1460,8 +1461,8 @@ public class GNUAPI {
      * @param since_id String since max
      * @return APIResponse
      */
-    public APIResponse getNotificationsSince(String since_id, boolean display){
-        return getNotifications(null, since_id, notificationPerPage, display);
+    public APIResponse getNotificationsSince(DisplayNotificationsFragment.Type type, String since_id, boolean display){
+        return getNotifications(type, null, since_id, notificationPerPage, display);
     }
 
     /**
@@ -1470,8 +1471,8 @@ public class GNUAPI {
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    public APIResponse getNotificationsSince(String since_id, int notificationPerPage, boolean display){
-        return getNotifications(null, since_id, notificationPerPage, display);
+    public APIResponse getNotificationsSince(DisplayNotificationsFragment.Type type, String since_id, int notificationPerPage, boolean display){
+        return getNotifications(type, null, since_id, notificationPerPage, display);
     }
 
     /**
@@ -1479,8 +1480,8 @@ public class GNUAPI {
      * @param max_id String id max
      * @return APIResponse
      */
-    public APIResponse getNotifications(String max_id, boolean display){
-        return getNotifications(max_id, null, notificationPerPage, display);
+    public APIResponse getNotifications(DisplayNotificationsFragment.Type type, String max_id, boolean display){
+        return getNotifications(type, max_id, null, notificationPerPage, display);
     }
 
 
@@ -1491,7 +1492,7 @@ public class GNUAPI {
      * @param limit int limit  - max value 40
      * @return APIResponse
      */
-    private APIResponse getNotifications(String max_id, String since_id, int limit, boolean display){
+    private APIResponse getNotifications(DisplayNotificationsFragment.Type type, String max_id, String since_id, int limit, boolean display){
 
         HashMap<String, String> params = new HashMap<>();
         if( max_id != null )

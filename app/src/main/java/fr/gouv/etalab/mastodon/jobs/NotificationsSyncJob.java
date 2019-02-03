@@ -47,6 +47,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -133,7 +134,7 @@ public class NotificationsSyncJob extends Job {
             for (Account account: accounts) {
                 if( account.getSocial() == null || account.getSocial().equals("MASTODON")|| account.getSocial().equals("PLEROMA")) {
                     API api = new API(getContext(), account.getInstance(), account.getToken());
-                    APIResponse apiResponse = api.getNotificationsSince(null, false);
+                    APIResponse apiResponse = api.getNotificationsSince(DisplayNotificationsFragment.Type.ALL, null, false);
                     onRetrieveNotifications(apiResponse, account);
                 }
             }
