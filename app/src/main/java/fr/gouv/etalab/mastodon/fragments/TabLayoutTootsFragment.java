@@ -25,7 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 
 
 /**
@@ -46,8 +48,10 @@ public class TabLayoutTootsFragment extends Fragment {
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.replies)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.media)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.pinned_toots)));
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.media)));
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.pinned_toots)));
+        }
 
         final ViewPager viewPager = inflatedView.findViewById(R.id.viewpager);
         Bundle bundle = this.getArguments();

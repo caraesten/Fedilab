@@ -23,6 +23,7 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountInterface;
 
@@ -57,6 +58,10 @@ public class RetrieveAccountAsyncTask extends AsyncTask<Void, Void, Void> {
             PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
             account = peertubeAPI.getAccount(targetedId);
             error = peertubeAPI.getError();
+        }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+            GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
+            account = gnuapi.getAccount(targetedId);
+            error = gnuapi.getError();
         }
         return null;
     }

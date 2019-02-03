@@ -136,7 +136,6 @@ public class API {
         this.context = context;
         if( context == null) {
             APIError = new Error();
-            APIError.setError(context.getString(R.string.toast_error));
             return;
         }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

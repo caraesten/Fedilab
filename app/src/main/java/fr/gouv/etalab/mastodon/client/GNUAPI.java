@@ -207,11 +207,14 @@ public class GNUAPI {
     public Account getAccount(String accountId) {
 
         account = new Account();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("user_id",accountId);
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl(String.format("/accounts/%s",accountId)), 60, null, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context).get(getAbsoluteUrl("/users/show.json"), 60, params, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -235,9 +238,9 @@ public class GNUAPI {
         List<Relationship> relationships;
         Relationship relationship = null;
         HashMap<String, String> params = new HashMap<>();
-        params.put("id",accountId);
+        params.put("user_id",accountId);
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl("/accounts/relationships"), 60, params, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context).get(getAbsoluteUrl("/friendships/lookup.json"), 60, params, prefKeyOauthTokenT);
             relationships = parseRelationshipResponse(new JSONArray(response));
             if( relationships != null && relationships.size() > 0)
                 relationship = relationships.get(0);
@@ -268,18 +271,19 @@ public class GNUAPI {
         if( accounts != null && accounts.size() > 0 ) {
             StringBuilder parameters = new StringBuilder();
             for(Account account: accounts)
-                parameters.append("id[]=").append(account.getId()).append("&");
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(5));
-            params.put("id[]", parameters.toString());
+                parameters.append("user_id[]=").append(account.getId()).append("&");
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(10));
+            params.put("user_id[]", parameters.toString());
             List<Relationship> relationships = new ArrayList<>();
             try {
                 HttpsConnection httpsConnection = new HttpsConnection(context);
-                String response = httpsConnection.get(getAbsoluteUrl("/friendships/show"), 60, params, prefKeyOauthTokenT);
+                String response = httpsConnection.get(getAbsoluteUrl("/friendships/lookup.json"), 60, params, prefKeyOauthTokenT);
                 relationships = parseRelationshipResponse(new JSONArray(response));
                 apiResponse.setSince_id(httpsConnection.getSince_id());
                 apiResponse.setMax_id(httpsConnection.getMax_id());
             } catch (HttpsConnection.HttpsConnectionException e) {
                 setError(e.getStatusCode(), e);
+                e.printStackTrace();
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -302,7 +306,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     public APIResponse getStatus(String accountId) {
-        return getStatus(accountId, false, false, false, null, null, tootPerPage);
+        return getStatus(accountId, false, null, null, tootPerPage);
     }
 
     /**
@@ -313,7 +317,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     public APIResponse getStatus(String accountId, String max_id) {
-        return getStatus(accountId, false, false, false, max_id, null, tootPerPage);
+        return getStatus(accountId, false, max_id, null, tootPerPage);
     }
 
     /**
@@ -324,7 +328,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     public APIResponse getStatusWithMedia(String accountId, String max_id) {
-        return getStatus(accountId, true, false, false, max_id, null, tootPerPage);
+        return getStatus(accountId, false, max_id, null, tootPerPage);
     }
 
     /**
@@ -335,7 +339,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     public APIResponse getPinnedStatuses(String accountId, String max_id) {
-        return getStatus(accountId, false, true, false, max_id, null, tootPerPage);
+        return getStatus(accountId, false, max_id, null, tootPerPage);
     }
 
     /**
@@ -346,14 +350,13 @@ public class GNUAPI {
      * @return APIResponse
      */
     public APIResponse getAccountTLStatuses(String accountId, String max_id, boolean exclude_replies) {
-        return getStatus(accountId, false, false, exclude_replies, max_id, null, tootPerPage);
+        return getStatus(accountId, exclude_replies, max_id, null, tootPerPage);
     }
 
     /**
      * Retrieves status for the account *synchronously*
      *
      * @param accountId       String Id of the account
-     * @param onlyMedia       boolean only with media
      * @param exclude_replies boolean excludes replies
      * @param max_id          String id max
      * @param since_id        String since the id
@@ -361,8 +364,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getStatus(String accountId, boolean onlyMedia, boolean pinned,
-                                  boolean exclude_replies, String max_id, String since_id, int limit) {
+    private APIResponse getStatus(String accountId,boolean exclude_replies, String max_id, String since_id, int limit) {
 
         HashMap<String, String> params = new HashMap<>();
         if (max_id != null)
@@ -371,16 +373,13 @@ public class GNUAPI {
             params.put("since_id", since_id);
         if (0 < limit || limit > 40)
             limit = 40;
-        if( onlyMedia)
-            params.put("only_media", Boolean.toString(true));
-        if( pinned)
-            params.put("pinned", Boolean.toString(true));
+        params.put("user_id", accountId);
         params.put("exclude_replies", Boolean.toString(exclude_replies));
-        params.put("limit", String.valueOf(limit));
+        params.put("count", String.valueOf(limit));
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/accounts/%s/statuses", accountId)), 60, params, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl("/statuses/user_timeline.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
@@ -965,7 +964,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     public APIResponse getMuted(String max_id){
-        return getAccounts("/mutes", max_id, null, accountPerPage);
+        return getAccounts("/mutes",null, max_id, null, accountPerPage);
     }
 
     /**
@@ -974,7 +973,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     public APIResponse getBlocks(String max_id){
-        return getAccounts("/blocks", max_id, null, accountPerPage);
+        return getAccounts("/blocks",null,  max_id, null, accountPerPage);
     }
 
 
@@ -985,7 +984,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     public APIResponse getFollowing(String targetedId, String max_id){
-        return getAccounts(String.format("/accounts/%s/following",targetedId),max_id, null, accountPerPage);
+        return getAccounts("/statuses/friends.json",targetedId, max_id, null, accountPerPage);
     }
 
     /**
@@ -995,7 +994,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     public APIResponse getFollowers(String targetedId, String max_id){
-        return getAccounts(String.format("/accounts/%s/followers",targetedId),max_id, null, accountPerPage);
+        return getAccounts("/statuses/followers.json",targetedId, max_id, null, accountPerPage);
     }
 
     /**
@@ -1006,7 +1005,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     @SuppressWarnings("SameParameterValue")
-    private APIResponse getAccounts(String action, String max_id, String since_id, int limit){
+    private APIResponse getAccounts(String action, String targetedId, String max_id, String since_id, int limit){
 
         HashMap<String, String> params = new HashMap<>();
         if( max_id != null )
@@ -1016,6 +1015,8 @@ public class GNUAPI {
         if( 0 > limit || limit > 40)
             limit = 40;
         params.put("limit",String.valueOf(limit));
+        if( targetedId != null)
+            params.put("user_id",targetedId);
         accounts = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
@@ -1787,9 +1788,7 @@ public class GNUAPI {
             status.setLanguage(resobj.isNull("geo")?null:resobj.getString("geo"));
             if( resobj.has("external_url"))
                 status.setUrl(resobj.get("external_url").toString());
-
             //Retrieves attachments
-
             try {
                 JSONArray arrayAttachement = resobj.getJSONArray("attachments");
                 ArrayList<Attachment> attachments = new ArrayList<>(parseAttachmentResponse(arrayAttachement));

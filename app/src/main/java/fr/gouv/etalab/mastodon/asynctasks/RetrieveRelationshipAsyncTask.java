@@ -23,6 +23,7 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
+import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRelationshipInterface;
 
@@ -49,10 +50,14 @@ public class RetrieveRelationshipAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
             API api = new API(this.contextReference.get());
             relationship = api.getRelationship(accountId);
             error = api.getError();
+        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+            GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
+            relationship = gnuapi.getRelationship(accountId);
+            error = gnuapi.getError();
         }else {
             PeertubeAPI api = new PeertubeAPI(this.contextReference.get());
             relationship = new Relationship();

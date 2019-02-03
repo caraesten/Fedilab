@@ -19,8 +19,10 @@ import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAccountsInterface;
 
 
@@ -74,28 +76,50 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-
-        API api = new API(this.contextReference.get());
+        API api = null;
+        GNUAPI gnuapi = null;
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            api = new API(this.contextReference.get());
+        else
+            gnuapi = new GNUAPI(this.contextReference.get());
         switch (action){
             case REBLOGGED:
+                assert api != null;
                 apiResponse = api.getRebloggedBy(targetedId, max_id);
                 break;
             case FAVOURITED:
+                assert api != null;
                 apiResponse = api.getFavouritedBy(targetedId, max_id);
                 break;
             case BLOCKED:
+                assert api != null;
                 apiResponse = api.getBlocks(max_id);
                 break;
             case MUTED:
+                assert api != null;
                 apiResponse = api.getMuted(max_id);
                 break;
             case FOLLOWING:
-                apiResponse = api.getFollowing(targetedId, max_id);
+                if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    assert api != null;
+                    apiResponse = api.getFollowing(targetedId, max_id);
+                }
+                else {
+                    assert gnuapi != null;
+                    apiResponse = gnuapi.getFollowing(targetedId, max_id);
+                }
                 break;
             case FOLLOWERS:
-                apiResponse = api.getFollowers(targetedId, max_id);
+                if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    assert api != null;
+                    apiResponse = api.getFollowers(targetedId, max_id);
+                }else {
+                    assert gnuapi != null;
+                    apiResponse = gnuapi.getFollowers(targetedId, max_id);
+                }
                 break;
             case CHANNELS:
+                assert api != null;
                 apiResponse = api.getPeertubeChannel(instance, name);
                 break;
         }

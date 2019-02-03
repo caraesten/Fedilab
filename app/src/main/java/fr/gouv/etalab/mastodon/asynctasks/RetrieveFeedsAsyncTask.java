@@ -231,6 +231,14 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                         apiResponse = api.getPinnedStatuses(targetedID, max_id);
                     else
                         apiResponse = api.getAccountTLStatuses(targetedID, max_id, !showReply);
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+                    GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
+                    if (showMediaOnly)
+                        apiResponse = gnuapi.getStatusWithMedia(targetedID, max_id);
+                    else if (showPinned)
+                        apiResponse = gnuapi.getPinnedStatuses(targetedID, max_id);
+                    else
+                        apiResponse = gnuapi.getAccountTLStatuses(targetedID, max_id, !showReply);
                 }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
                     PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
                     apiResponse = peertubeAPI.getVideos(targetedID, max_id);

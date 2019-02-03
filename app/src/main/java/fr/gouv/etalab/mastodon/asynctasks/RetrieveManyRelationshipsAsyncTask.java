@@ -16,11 +16,15 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
+
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveManyRelationshipsInterface;
 
 /**
@@ -44,7 +48,10 @@ public class RetrieveManyRelationshipsAsyncTask extends AsyncTask<Void, Void, Vo
 
     @Override
     protected Void doInBackground(Void... params) {
-        apiResponse = new API(this.contextReference.get()).getRelationship(accounts);
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            apiResponse = new API(this.contextReference.get()).getRelationship(accounts);
+        else
+            apiResponse = new GNUAPI(this.contextReference.get()).getRelationship(accounts);
         return null;
     }
 
