@@ -431,6 +431,8 @@ public abstract class BaseMainActivity extends BaseActivity
             else
                 typePosition.put(0, RetrieveFeedsAsyncTask.Type.GNU_NOTIFICATION);
             int i = 2;
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+                display_direct = false;
             if( display_direct) {
                 tabLayout.addTab(tabDirect);
                 tabPosition.put("direct",i);
@@ -474,13 +476,12 @@ public abstract class BaseMainActivity extends BaseActivity
                     typePosition.put(i, RetrieveFeedsAsyncTask.Type.GNU_WHOLE);
                 i++;
             }
-            if( display_art) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+                display_art = false;
+            if( display_art ) {
                 tabLayout.addTab(tabArt);
                 tabPosition.put("art", i);
-                if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
-                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.ART);
-                else
-                    typePosition.put(i, RetrieveFeedsAsyncTask.Type.GNU_ART);
+                typePosition.put(i, RetrieveFeedsAsyncTask.Type.ART);
             }
 
             if( (getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE)

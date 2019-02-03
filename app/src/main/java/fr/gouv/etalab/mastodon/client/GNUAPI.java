@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -622,16 +623,19 @@ public class GNUAPI {
             params.put("since_id", since_id);
         if (0 > limit || limit > 80)
             limit = 80;
-        params.put("limit",String.valueOf(limit));
+        params.put("count",String.valueOf(limit));
         statuses = new ArrayList<>();
+        Log.v(Helper.TAG,getAbsoluteUrl("/direct_messages.json"));
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/timelines/direct"), 60, params, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl("/direct_messages.json"), 60, params, prefKeyOauthTokenT);
+            Log.v(Helper.TAG,response);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -774,7 +778,7 @@ public class GNUAPI {
         if( local)
             params.put("local", Boolean.toString(true));
         if( max_id != null )
-            params.put("_", max_id);
+            params.put("max_id", max_id);
         if( since_id != null )
             params.put("since_id", since_id);
         if( 0 > limit || limit > 40)
@@ -1497,7 +1501,7 @@ public class GNUAPI {
         HashMap<String, String> params = new HashMap<>();
         String stringType = null;
         if( max_id != null )
-            params.put("_", max_id);
+            params.put("max_id", max_id);
         if( since_id != null )
             params.put("since_id", since_id);
         if( 0 > limit || limit > 30)
@@ -1533,9 +1537,8 @@ public class GNUAPI {
             String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-            List<Status> statuses = parseStatuses(context, new JSONArray(response));
-            List<Account> accounts = parseAccountResponse(new JSONArray(response));
            if(type == DisplayNotificationsFragment.Type.FOLLOW){
+               List<Account> accounts = parseAccountResponse(new JSONArray(response));
                if( accounts != null)
                    for(Account st: accounts ){
                        Notification notification = new Notification();
@@ -1546,6 +1549,7 @@ public class GNUAPI {
                        notifications.add(notification);
                    }
             }else {
+               List<Status> statuses = parseStatuses(context, new JSONArray(response));
                if( statuses != null)
                    for(Status st: statuses ){
                        Notification notification = new Notification();
@@ -1857,8 +1861,9 @@ public class GNUAPI {
             try{
                 status.setReblog(parseStatuses(context, resobj.getJSONObject("retweeted_status")));
             }catch (Exception ignored){ status.setReblog(null);}
-        } catch (JSONException ignored) {ignored.printStackTrace();} catch (ParseException e) {
+        } catch (JSONException ignored) {ignored.printStackTrace(); Log.v(Helper.TAG,"resobj: " + resobj);} catch (ParseException e) {
             e.printStackTrace();
+
         }
         return status;
     }
