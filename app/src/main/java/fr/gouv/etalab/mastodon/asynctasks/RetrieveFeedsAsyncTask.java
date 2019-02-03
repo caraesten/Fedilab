@@ -335,12 +335,11 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case GNU_LOCAL:
                 gnuAPI = new GNUAPI(this.contextReference.get());
+                apiResponse = gnuAPI.getPublicTimeline(true,max_id);
                 break;
             case GNU_WHOLE:
                 gnuAPI = new GNUAPI(this.contextReference.get());
-                break;
-            case GNU_NOTIFICATION:
-                gnuAPI = new GNUAPI(this.contextReference.get());
+                apiResponse = gnuAPI.getPublicTimeline(false,max_id);
                 break;
             case GNU_DM:
                 gnuAPI = new GNUAPI(this.contextReference.get());

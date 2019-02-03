@@ -16,13 +16,17 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.GNUAPI;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 
 
@@ -55,17 +59,33 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
     @Override
     protected Void doInBackground(Void... params) {
-        API api;
-        if( account == null) {
-            api = new API(this.contextReference.get());
-            apiResponse = api.getNotifications(max_id, display);
-        }else {
-            if( this.contextReference.get() == null) {
-                apiResponse.setError(new Error());
-                return null;
+        Log.v(Helper.TAG,"MainActivity.social : " + MainActivity.social );
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+            API api;
+            if (account == null) {
+                api = new API(this.contextReference.get());
+                apiResponse = api.getNotifications(max_id, display);
+            } else {
+                if (this.contextReference.get() == null) {
+                    apiResponse.setError(new Error());
+                    return null;
+                }
+                api = new API(this.contextReference.get(), account.getInstance(), account.getToken());
+                apiResponse = api.getNotificationsSince(max_id, display);
             }
-            api = new API(this.contextReference.get(), account.getInstance(), account.getToken());
-            apiResponse = api.getNotificationsSince(max_id, display);
+        }else{
+            GNUAPI gnuapi;
+            if (account == null) {
+                gnuapi = new GNUAPI(this.contextReference.get());
+                apiResponse = gnuapi.getNotifications(max_id, display);
+            } else {
+                if (this.contextReference.get() == null) {
+                    apiResponse.setError(new Error());
+                    return null;
+                }
+                gnuapi = new GNUAPI(this.contextReference.get(), account.getInstance(), account.getToken());
+                apiResponse = gnuapi.getNotificationsSince(max_id, display);
+            }
         }
         return null;
     }

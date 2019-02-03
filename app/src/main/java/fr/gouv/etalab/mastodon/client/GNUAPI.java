@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -774,17 +775,20 @@ public class GNUAPI {
         if( local)
             params.put("local", Boolean.toString(true));
         if( max_id != null )
-            params.put("max_id", max_id);
+            params.put("_", max_id);
         if( since_id != null )
             params.put("since_id", since_id);
         if( 0 > limit || limit > 40)
             limit = 40;
-        params.put("limit",String.valueOf(limit));
+        params.put("count",String.valueOf(limit));
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String url;
-            url = getAbsoluteUrl("/timelines/public");
+            if(local)
+                url = getAbsoluteUrl("/statuses/public_timeline.json");
+            else
+                url = getAbsoluteUrl("/statuses/public_and_external_timeline.json");
             String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
@@ -1491,52 +1495,25 @@ public class GNUAPI {
 
         HashMap<String, String> params = new HashMap<>();
         if( max_id != null )
-            params.put("max_id", max_id);
+            params.put("_", max_id);
         if( since_id != null )
             params.put("since_id", since_id);
         if( 0 > limit || limit > 30)
             limit = 30;
-        params.put("limit",String.valueOf(limit));
-
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        boolean notif_follow, notif_add, notif_mention, notif_share;
-        if( display) {
-            notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
-            notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
-            notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
-            notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
-        }else{
-            notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
-            notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD, true);
-            notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
-            notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
-        }
-        StringBuilder parameters = new StringBuilder();
-
-        if( !notif_follow )
-            parameters.append("exclude_types[]=").append("follow").append("&");
-        if( !notif_add )
-            parameters.append("exclude_types[]=").append("favourite").append("&");
-        if( !notif_share )
-            parameters.append("exclude_types[]=").append("reblog").append("&");
-        if( !notif_mention )
-            parameters.append("exclude_types[]=").append("mention").append("&");
-        if( parameters.length() > 0) {
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
-            params.put("exclude_types[]", parameters.toString());
-        }
-
-
+        params.put("count",String.valueOf(limit));
+        params.put("namespace","qvitter");
         List<Notification> notifications = new ArrayList<>();
 
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/notifications"), 60, params, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl("/qvitter/statuses/notifications.json"), 60, params, prefKeyOauthTokenT);
+            Log.v(Helper.TAG,"response= " + response);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             notifications = parseNotificationResponse(new JSONArray(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
+            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -1900,8 +1877,8 @@ public class GNUAPI {
             account.setBot(false);
             account.setMoved_to_account(null);
             account.setUrl(resobj.get("url").toString());
-            account.setAvatar(resobj.get("cover_photo").toString());
-            account.setAvatar_static(resobj.get("cover_photo").toString());
+            account.setAvatar(resobj.get("profile_image_url_https").toString());
+            account.setAvatar_static(resobj.get("profile_image_url_https").toString());
             account.setHeader(resobj.get("background_image").toString());
             account.setHeader_static(resobj.get("background_image").toString());
             account.setSocial("GNU");
@@ -2047,11 +2024,11 @@ public class GNUAPI {
         Notification notification = new Notification();
         try {
             notification.setId(resobj.get("id").toString());
-            notification.setType(resobj.get("type").toString());
+            notification.setType(resobj.get("ntype").toString());
             notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-            notification.setAccount(parseAccountResponse(context, resobj.getJSONObject("account")));
+            notification.setAccount(parseAccountResponse(context, resobj.getJSONObject("from_profile")));
             try{
-                notification.setStatus(parseStatuses(context, resobj.getJSONObject("status")));
+                notification.setStatus(parseStatuses(context, resobj.getJSONObject("notice")));
             }catch (Exception ignored){}
             notification.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
         } catch (JSONException ignored) {} catch (ParseException e) {
