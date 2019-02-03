@@ -1785,7 +1785,9 @@ public class GNUAPI {
             status.setSpoiler_text(null);
             status.setVisibility("public");
             status.setLanguage(resobj.isNull("geo")?null:resobj.getString("geo"));
-            status.setUrl(resobj.get("external_url").toString());
+            if( resobj.has("external_url"))
+                status.setUrl(resobj.get("external_url").toString());
+
             //Retrieves attachments
 
             try {
@@ -1798,19 +1800,23 @@ public class GNUAPI {
 
             //Retrieves mentions
             List<Mention> mentions = new ArrayList<>();
-            JSONArray arrayMention = resobj.getJSONArray("attentions");
-            if( arrayMention != null){
-                for(int j = 0 ; j < arrayMention.length() ; j++){
-                    JSONObject menObj = arrayMention.getJSONObject(j);
-                    Mention mention = new Mention();
-                    mention.setId(menObj.get("id").toString());
-                    mention.setUrl(menObj.get("profileurl").toString());
-                    mention.setAcct(menObj.get("screen_name").toString());
-                    mention.setUsername(menObj.get("fullname").toString());
-                    mentions.add(mention);
+            if( resobj.has("attentions")) {
+                JSONArray arrayMention = resobj.getJSONArray("attentions");
+                if (arrayMention != null) {
+                    for (int j = 0; j < arrayMention.length(); j++) {
+                        JSONObject menObj = arrayMention.getJSONObject(j);
+                        Mention mention = new Mention();
+                        mention.setId(menObj.get("id").toString());
+                        mention.setUrl(menObj.get("profileurl").toString());
+                        mention.setAcct(menObj.get("screen_name").toString());
+                        mention.setUsername(menObj.get("fullname").toString());
+                        mentions.add(mention);
+                    }
                 }
+                status.setMentions(mentions);
+            }else{
+                status.setMentions(new ArrayList<>());
             }
-            status.setMentions(mentions);
             //Retrieves tags
             status.setTags(null);
             //Retrieves emjis
@@ -1825,11 +1831,18 @@ public class GNUAPI {
             }catch (Exception e){
                 application = new Application();
             }
+            Log.v(Helper.TAG,resobj.toString());
             status.setApplication(application);
             status.setAccount(parseAccountResponse(context, resobj.getJSONObject("user")));
             status.setContent(resobj.get("statusnet_html").toString());
-            status.setFavourites_count(Integer.valueOf(resobj.get("fave_num").toString()));
-            status.setReblogs_count(Integer.valueOf(resobj.get("repeat_num").toString()));
+            if(resobj.has("fave_num"))
+                status.setFavourites_count(Integer.valueOf(resobj.get("fave_num").toString()));
+            else
+                status.setFavourites_count(0);
+            if(resobj.has("repeat_num"))
+                status.setReblogs_count(Integer.valueOf(resobj.get("repeat_num").toString()));
+            else
+                status.setReblogs_count(0);
             status.setReplies_count(0);
             try {
                 status.setReblogged(Boolean.valueOf(resobj.get("repeated").toString()));
@@ -2042,7 +2055,8 @@ public class GNUAPI {
 
         Attachment attachment = new Attachment();
         try {
-            attachment.setId(resobj.get("id").toString());
+            if(resobj.has("id") )
+                attachment.setId(resobj.get("id").toString());
             attachment.setType(resobj.get("mimetype").toString());
             attachment.setUrl(resobj.get("url").toString());
             try {
