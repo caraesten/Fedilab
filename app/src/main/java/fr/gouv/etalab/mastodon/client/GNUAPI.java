@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1495,6 +1494,7 @@ public class GNUAPI {
     private APIResponse getNotifications(DisplayNotificationsFragment.Type type, String max_id, String since_id, int limit, boolean display){
 
         HashMap<String, String> params = new HashMap<>();
+        String stringType = null;
         if( max_id != null )
             params.put("_", max_id);
         if( since_id != null )
@@ -1502,16 +1502,60 @@ public class GNUAPI {
         if( 0 > limit || limit > 30)
             limit = 30;
         params.put("count",String.valueOf(limit));
-        params.put("namespace","qvitter");
         List<Notification> notifications = new ArrayList<>();
-
+        String url = null;
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        //Current user
+        String currentToken = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
+        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+        Account account = new AccountDAO(context, db).getAccountByToken(currentToken);
+        if(type == DisplayNotificationsFragment.Type.MENTION){
+            params.put("name",account.getAcct());
+            url = getAbsoluteUrl("/statuses/mentions_timeline.json");
+            stringType = "mention";
+        }else if(type == DisplayNotificationsFragment.Type.BOOST){
+            url = getAbsoluteUrl("/statuses/retweets_of_me.json");
+            stringType = "reblog";
+        }else if(type == DisplayNotificationsFragment.Type.FOLLOW){
+            url = getAbsoluteUrl("/statuses/followers.json");
+            stringType = "follow";
+        }
+        if( url == null){
+            Error error = new Error();
+            error.setStatusCode(500);
+            error.setError(context.getString(R.string.toast_error));
+            apiResponse.setError(error);
+            return apiResponse;
+        }
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/qvitter/statuses/notifications.json"), 60, params, prefKeyOauthTokenT);
-            Log.v(Helper.TAG,"response= " + response);
+            String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
-            notifications = parseNotificationResponse(new JSONArray(response));
+            List<Status> statuses = parseStatuses(context, new JSONArray(response));
+            List<Account> accounts = parseAccountResponse(new JSONArray(response));
+           if(type == DisplayNotificationsFragment.Type.FOLLOW){
+               if( accounts != null)
+                   for(Account st: accounts ){
+                       Notification notification = new Notification();
+                       notification.setType(stringType);
+                       notification.setId(st.getId());
+                       notification.setStatus(null);
+                       notification.setAccount(account);
+                       notifications.add(notification);
+                   }
+            }else {
+               if( statuses != null)
+                   for(Status st: statuses ){
+                       Notification notification = new Notification();
+                       notification.setType(stringType);
+                       notification.setId(st.getId());
+                       notification.setStatus(st);
+                       notification.setAccount(st.getAccount());
+                       notifications.add(notification);
+                   }
+           }
+
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -1865,7 +1909,10 @@ public class GNUAPI {
         Account account = new Account();
         try {
             account.setId(resobj.get("id").toString());
-            account.setUuid(resobj.get("ostatus_uri").toString());
+            if( resobj.has("ostatus_uri"))
+                account.setUuid(resobj.get("ostatus_uri").toString());
+            else
+                account.setUuid(resobj.get("id").toString());
             account.setUsername(resobj.get("name").toString());
             account.setAcct(resobj.get("name").toString());
             account.setDisplay_name(resobj.get("screen_name").toString());
@@ -1880,8 +1927,13 @@ public class GNUAPI {
             account.setUrl(resobj.get("url").toString());
             account.setAvatar(resobj.get("profile_image_url_https").toString());
             account.setAvatar_static(resobj.get("profile_image_url_https").toString());
-            account.setHeader(resobj.get("background_image").toString());
-            account.setHeader_static(resobj.get("background_image").toString());
+            if( !resobj.isNull("background_image")) {
+                account.setHeader(resobj.get("background_image").toString());
+                account.setHeader_static(resobj.get("background_image").toString());
+            }else{
+                account.setHeader("null");
+                account.setHeader_static("null");
+            }
             account.setSocial("GNU");
 
             account.setEmojis(new ArrayList<>());

@@ -134,6 +134,11 @@ public class API {
     }
     public API(Context context) {
         this.context = context;
+        if( context == null) {
+            APIError = new Error();
+            APIError.setError(context.getString(R.string.toast_error));
+            return;
+        }
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         tootPerPage = sharedpreferences.getInt(Helper.SET_TOOTS_PER_PAGE, 40);
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);

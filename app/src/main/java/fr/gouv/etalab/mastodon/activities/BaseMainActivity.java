@@ -196,7 +196,7 @@ public abstract class BaseMainActivity extends BaseActivity
     private Stack<Integer> stackBack = new Stack<>();
     public static List<Filters> filters = new ArrayList<>();
     private DisplayStatusFragment homeFragment, federatedFragment, localFragment, artFragment;
-    private DisplayNotificationsFragment notificationsFragment;
+    private TabLayoutNotificationsFragment tabLayoutNotificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
 
     private boolean display_direct, display_local, display_global, display_art;
@@ -496,7 +496,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 @Override
                 public boolean onLongClick(View v) {
                     //Only shown if the tab has focus
-                    if( notificationsFragment != null && notificationsFragment.getUserVisibleHint()){
+                    if( tabLayoutNotificationsFragment != null && tabLayoutNotificationsFragment.getUserVisibleHint()){
                         PopupMenu popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(1));
                         popup.getMenuInflater()
                                 .inflate(R.menu.option_filter_notifications, popup.getMenu());
@@ -516,8 +516,8 @@ public abstract class BaseMainActivity extends BaseActivity
                         popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
                             @Override
                             public void onDismiss(PopupMenu menu) {
-                                if( notificationsFragment != null)
-                                    notificationsFragment.refreshAll();
+                                if( tabLayoutNotificationsFragment != null)
+                                    tabLayoutNotificationsFragment.refreshAll();
                             }
                         });
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -2042,8 +2042,8 @@ public abstract class BaseMainActivity extends BaseActivity
         if( lastHomeId != null && homeFragment != null){
             homeFragment.retrieveMissingToots(lastHomeId);
         }
-        if( lastNotificationId != null && notificationsFragment != null){
-            notificationsFragment.retrieveMissingNotifications(lastNotificationId);
+        if( lastNotificationId != null && tabLayoutNotificationsFragment != null){
+            tabLayoutNotificationsFragment.retrieveMissingNotifications(lastNotificationId);
         }
     }
 
@@ -2482,7 +2482,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     homeFragment.setArguments(bundle);
                     return homeFragment;
                 } else if (position == 1) {
-                    TabLayoutNotificationsFragment tabLayoutNotificationsFragment = new TabLayoutNotificationsFragment();
+                    tabLayoutNotificationsFragment = new TabLayoutNotificationsFragment();
                     return tabLayoutNotificationsFragment;
                 } else {
                     statusFragment = new DisplayStatusFragment();

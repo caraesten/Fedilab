@@ -13,6 +13,7 @@ package fr.gouv.etalab.mastodon.fragments;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -47,13 +48,14 @@ import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 public class TabLayoutNotificationsFragment extends Fragment {
 
     private Context context;
+    private ViewPager viewPager;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         context = getContext();
-        View inflatedView = inflater.inflate(R.layout.tablayout_settings, container, false);
+        View inflatedView = inflater.inflate(R.layout.tablayout_notifications, container, false);
 
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
 
@@ -66,10 +68,14 @@ public class TabLayoutNotificationsFragment extends Fragment {
         TabLayout.Tab tabFollow = tabLayout.newTab();
 
         tabMention.setCustomView(R.layout.tab_badge);
-        tabFav.setCustomView(R.layout.tab_badge);
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            tabFav.setCustomView(R.layout.tab_badge);
         tabBoost.setCustomView(R.layout.tab_badge);
         tabFollow.setCustomView(R.layout.tab_badge);
-        
+
+
+
+
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
 
@@ -78,17 +84,27 @@ public class TabLayoutNotificationsFragment extends Fragment {
         iconMention.setImageResource(R.drawable.ic_mention_notif_tab);
 
 
-        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconFav = tabMention.getCustomView().findViewById(R.id.tab_icon);
-        iconFav.setImageResource(R.drawable.ic_star_notif_tab);
+        ImageView iconFav =null;
+        if( tabFav.getCustomView() != null) {
+            iconFav = tabFav.getCustomView().findViewById(R.id.tab_icon);
+            iconFav.setImageResource(R.drawable.ic_star_notif_tab);
+        }
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconBoost = tabMention.getCustomView().findViewById(R.id.tab_icon);
+        ImageView iconBoost = tabBoost.getCustomView().findViewById(R.id.tab_icon);
         iconBoost.setImageResource(R.drawable.ic_repeat_notif_tab);
 
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconFollow = tabMention.getCustomView().findViewById(R.id.tab_icon);
+        ImageView iconFollow = tabFollow.getCustomView().findViewById(R.id.tab_icon);
         iconFollow.setImageResource(R.drawable.ic_follow_notif_tab);
+
+
+
+        tabLayout.addTab(tabMention);
+        if( tabFav.getCustomView() != null)
+            tabLayout.addTab(tabFav);
+        tabLayout.addTab(tabBoost);
+        tabLayout.addTab(tabFollow);
 
         if (theme == THEME_BLACK)
             iconMention.setColorFilter(ContextCompat.getColor(context, R.color.dark_icon), PorterDuff.Mode.SRC_IN);
@@ -97,18 +113,19 @@ public class TabLayoutNotificationsFragment extends Fragment {
 
         if (theme == THEME_LIGHT) {
             iconMention.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-            iconFav.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+            if( iconFav != null)
+                iconFav.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             iconBoost.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             iconFollow.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
         } else {
             iconMention.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
-            iconFav.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
+            if( iconFav != null)
+                iconFav.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
             iconBoost.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
             iconFollow.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
         }
 
-
-        final ViewPager viewPager = inflatedView.findViewById(R.id.viewpager);
+        viewPager = inflatedView.findViewById(R.id.viewpager);
 
         viewPager.setAdapter(new PagerAdapter
                 (getChildFragmentManager(), tabLayout.getTabCount()));
@@ -154,30 +171,28 @@ public class TabLayoutNotificationsFragment extends Fragment {
         public Fragment getItem(int position) {
             DisplayNotificationsFragment displayNotificationsFragment = new DisplayNotificationsFragment();
             DisplayNotificationsFragment.Type type = null;
+            String tag = "";
             switch (position) {
                 case 0:
-                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU ) {
                         type = DisplayNotificationsFragment.Type.ALL;
-                    else
+                    }else
                         type = DisplayNotificationsFragment.Type.MENTION;
                     break;
                 case 1:
                     if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
                         type = DisplayNotificationsFragment.Type.MENTION;
                     else
-                        type = DisplayNotificationsFragment.Type.FAVORITE;
+                        type = DisplayNotificationsFragment.Type.BOOST;
                     break;
                 case 2:
                     if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
                         type = DisplayNotificationsFragment.Type.FAVORITE;
                     else
-                        type = DisplayNotificationsFragment.Type.BOOST;
+                        type = DisplayNotificationsFragment.Type.FOLLOW;
                     break;
                 case 3:
-                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
-                        type = DisplayNotificationsFragment.Type.BOOST;
-                    else
-                        type = DisplayNotificationsFragment.Type.FOLLOW;
+                    type = DisplayNotificationsFragment.Type.BOOST;
                     break;
                 case 4:
                     type = DisplayNotificationsFragment.Type.FOLLOW;
@@ -192,9 +207,27 @@ public class TabLayoutNotificationsFragment extends Fragment {
             return displayNotificationsFragment;
         }
 
+
         @Override
         public int getCount() {
             return mNumOfTabs;
+        }
+    }
+
+    public void refreshAll(){
+
+        FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) viewPager.getAdapter();
+        if( a != null) {
+            DisplayNotificationsFragment notifAll = (DisplayNotificationsFragment) a.instantiateItem(viewPager, 0);
+            notifAll.refreshAll();
+        }
+    }
+
+    public void retrieveMissingNotifications(String sinceId){
+        FragmentStatePagerAdapter a = (FragmentStatePagerAdapter) viewPager.getAdapter();
+        if( a != null) {
+            DisplayNotificationsFragment notifAll = (DisplayNotificationsFragment) a.instantiateItem(viewPager, 0);
+            notifAll.retrieveMissingNotifications(sinceId);
         }
     }
 }

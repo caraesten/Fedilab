@@ -16,7 +16,6 @@ package fr.gouv.etalab.mastodon.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
@@ -27,7 +26,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
-import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveNotificationsInterface;
 
 
@@ -62,7 +60,6 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
     @Override
     protected Void doInBackground(Void... params) {
-        Log.v(Helper.TAG,"MainActivity.social : " + MainActivity.social );
         if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
             API api;
             if (account == null) {
