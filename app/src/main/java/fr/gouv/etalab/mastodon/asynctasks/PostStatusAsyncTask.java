@@ -23,10 +23,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostStatusActionInterface;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -57,20 +59,36 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-
-        boolean isconnected = Helper.isConnectedToInternet(contextReference.get(), Helper.getLiveInstance(contextReference.get()));
-        if( isconnected) {
-            if (account == null) {
-                apiResponse = new API(this.contextReference.get()).postStatusAction(status);
-            } else
-                apiResponse = new API(this.contextReference.get(), account.getInstance(), account.getToken()).postStatusAction(status);
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+            boolean isconnected = Helper.isConnectedToInternet(contextReference.get(), Helper.getLiveInstance(contextReference.get()));
+            if( isconnected) {
+                if (account == null) {
+                    apiResponse = new API(this.contextReference.get()).postStatusAction(status);
+                } else
+                    apiResponse = new API(this.contextReference.get(), account.getInstance(), account.getToken()).postStatusAction(status);
+            }else {
+                apiResponse = new APIResponse();
+                Error error = new Error();
+                error.setError(contextReference.get().getString(R.string.no_internet));
+                error.setStatusCode(-33);
+                apiResponse.setError(error);
+            }
         }else {
-            apiResponse = new APIResponse();
-            Error error = new Error();
-            error.setError(contextReference.get().getString(R.string.no_internet));
-            error.setStatusCode(-33);
-            apiResponse.setError(error);
+            boolean isconnected = Helper.isConnectedToInternet(contextReference.get(), Helper.getLiveInstance(contextReference.get()));
+            if( isconnected) {
+                if (account == null) {
+                    apiResponse = new GNUAPI(this.contextReference.get()).postStatusAction(status);
+                } else
+                    apiResponse = new GNUAPI(this.contextReference.get(), account.getInstance(), account.getToken()).postStatusAction(status);
+            }else {
+                apiResponse = new APIResponse();
+                Error error = new Error();
+                error.setError(contextReference.get().getString(R.string.no_internet));
+                error.setStatusCode(-33);
+                apiResponse.setError(error);
+            }
         }
+
 
 
         return null;

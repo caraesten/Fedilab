@@ -56,8 +56,10 @@ import java.util.regex.Pattern;
 import javax.net.ssl.HttpsURLConnection;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
@@ -333,8 +335,10 @@ public class HttpsConnection {
             httpsURLConnection.setDoOutput(true);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
             httpsURLConnection.setRequestMethod("POST");
-            if (token != null)
+            if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpsURLConnection.setRequestProperty("Authorization", token);
             httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
 
 
@@ -389,8 +393,10 @@ public class HttpsConnection {
             httpURLConnection.setConnectTimeout(timeout * 1000);
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setRequestMethod("POST");
-            if (token != null)
+            if (token != null && !token.startsWith("Basic "))
                 httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpURLConnection.setRequestProperty("Authorization", token);
             httpURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
 
             httpURLConnection.getOutputStream().write(postDataBytes);
@@ -433,8 +439,10 @@ public class HttpsConnection {
         httpsURLConnection.setDoOutput(true);
         httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
         httpsURLConnection.setRequestMethod("POST");
-        if (token != null)
+        if (token != null && !token.startsWith("Basic "))
             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+        else if( token != null && token.startsWith("Basic "))
+            httpsURLConnection.setRequestProperty("Authorization", token);
         httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
 
 
@@ -773,8 +781,10 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("Cache-Control", "no-cache");
             httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             httpsURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
-            if (token != null)
+            if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpsURLConnection.setRequestProperty("Authorization", token);
             httpsURLConnection.setFixedLengthStreamingMode(lengthSent);
 
             OutputStream outputStream = httpsURLConnection.getOutputStream();
@@ -883,8 +893,10 @@ public class HttpsConnection {
             httpURLConnection.setRequestProperty("Cache-Control", "no-cache");
             httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ boundary);
-            if (token != null)
+            if (token != null && !token.startsWith("Basic "))
                 httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpURLConnection.setRequestProperty("Authorization", token);
             httpURLConnection.setFixedLengthStreamingMode(lengthSent);
 
             OutputStream outputStream = httpURLConnection.getOutputStream();
@@ -980,8 +992,10 @@ public class HttpsConnection {
                 httpsURLConnection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
                 httpsURLConnection.setRequestMethod("POST");
             }
-            if (token != null)
+            if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpsURLConnection.setRequestProperty("Authorization", token);
             httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
             httpsURLConnection.setDoOutput(true);
@@ -1046,8 +1060,10 @@ public class HttpsConnection {
                 httpURLConnection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
                 httpURLConnection.setRequestMethod("POST");
             }
-            if (token != null)
+            if (token != null && !token.startsWith("Basic "))
                 httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpURLConnection.setRequestProperty("Authorization", token);
             httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             httpURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
             httpURLConnection.setDoOutput(true);
@@ -1109,7 +1125,11 @@ public class HttpsConnection {
                             token = tokenUsed;
                         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                         Account account = new AccountDAO(context, db).getAccountByToken(token);
-                        final URL url = new URL("https://" + account.getInstance() + "/api/v1/media");
+                        URL url;
+                        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                            url = new URL("https://" + account.getInstance() + "/api/v1/media");
+                        else
+                            url = new URL("https://" + account.getInstance() + "/api/media/upload.json");
                         ByteArrayOutputStream ous = null;
                         try {
                             try {
@@ -1132,9 +1152,11 @@ public class HttpsConnection {
                         int lengthSent = pixels.length;
                         lengthSent += (twoHyphens + boundary + lineEnd).getBytes().length;
                         lengthSent += (twoHyphens + boundary + twoHyphens +lineEnd).getBytes().length;
-                        lengthSent += ("Content-Disposition: form-data; name=\"file\"; filename=\""+fileName+"\"" + lineEnd).getBytes().length;
+                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                            lengthSent += ("Content-Disposition: form-data; name=\"file\"; filename=\""+fileName+"\"" + lineEnd).getBytes().length;
+                        else
+                            lengthSent += ("Content-Disposition: form-data; name=\"media\"; filename=\""+fileName+"\"" + lineEnd).getBytes().length;
                         lengthSent += 2 * (lineEnd).getBytes().length;
-
                         if (proxy != null)
                             httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
                         else
@@ -1148,8 +1170,10 @@ public class HttpsConnection {
                         httpsURLConnection.setUseCaches(false);
 
                         httpsURLConnection.setRequestMethod("POST");
-                        if (token != null)
+                        if (token != null && !token.startsWith("Basic "))
                             httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+                        else if( token != null && token.startsWith("Basic "))
+                            httpsURLConnection.setRequestProperty("Authorization", token);
                         httpsURLConnection.setRequestProperty("Connection", "Keep-Alive");
                         httpsURLConnection.setRequestProperty("Cache-Control", "no-cache");
                         httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -1159,7 +1183,10 @@ public class HttpsConnection {
                         DataOutputStream request = new DataOutputStream(httpsURLConnection.getOutputStream());
 
                         request.writeBytes(twoHyphens + boundary  + lineEnd);
-                        request.writeBytes("Content-Disposition: form-data; name=\"file\"; filename=\""+fileName+"\"" + lineEnd);
+                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                            request.writeBytes("Content-Disposition: form-data; name=\"file\"; filename=\""+fileName+"\"" + lineEnd);
+                        else
+                            request.writeBytes("Content-Disposition: form-data; name=\"media\"; filename=\""+fileName+"\"" + lineEnd);
                         request.writeBytes(lineEnd);
 
                         //request.write(pixels);
@@ -1218,8 +1245,11 @@ public class HttpsConnection {
                             }
                         });
 
-
-                        final Attachment attachment = API.parseAttachmentResponse(new JSONObject(response));
+                        Attachment attachment;
+                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                            attachment = API.parseAttachmentResponse(new JSONObject(response));
+                        else
+                            attachment = GNUAPI.parseUploadedAttachmentResponse(new JSONObject(response));
                         responseStreamReader.close();
                         responseStream.close();
                         httpsURLConnection.getInputStream().close();
@@ -1304,8 +1334,10 @@ public class HttpsConnection {
                         httpURLConnection.setUseCaches(false);
 
                         httpURLConnection.setRequestMethod("POST");
-                        if (token != null)
+                        if (token != null && !token.startsWith("Basic "))
                             httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+                        else if( token != null && token.startsWith("Basic "))
+                            httpURLConnection.setRequestProperty("Authorization", token);
                         httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
                         httpURLConnection.setRequestProperty("Cache-Control", "no-cache");
                         httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -1373,7 +1405,11 @@ public class HttpsConnection {
                             }});
 
 
-                        final Attachment attachment = API.parseAttachmentResponse(new JSONObject(response));
+                        Attachment attachment;
+                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                            attachment = API.parseAttachmentResponse(new JSONObject(response));
+                        else
+                            attachment = GNUAPI.parseUploadedAttachmentResponse(new JSONObject(response));
                         responseStreamReader.close();
                         responseStream.close();
                         httpURLConnection.getInputStream().close();
@@ -1432,8 +1468,10 @@ public class HttpsConnection {
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
-            if (token != null)
+            if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpsURLConnection.setRequestProperty("Authorization", token);
             httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
 
             httpsURLConnection.setRequestMethod("PUT");
@@ -1489,8 +1527,10 @@ public class HttpsConnection {
                 httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpURLConnection.setConnectTimeout(timeout * 1000);
-            if (token != null)
+            if (token != null && !token.startsWith("Basic "))
                 httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpURLConnection.setRequestProperty("Authorization", token);
             httpURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
 
             httpURLConnection.setRequestMethod("PUT");
@@ -1556,8 +1596,10 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection) url.openConnection();
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
-            if (token != null)
+            if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpsURLConnection.setRequestProperty("Authorization", token);
             httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             httpsURLConnection.setRequestMethod("DELETE");
             httpsURLConnection.setConnectTimeout(timeout * 1000);

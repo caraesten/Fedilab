@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -625,11 +624,9 @@ public class GNUAPI {
             limit = 80;
         params.put("count",String.valueOf(limit));
         statuses = new ArrayList<>();
-        Log.v(Helper.TAG,getAbsoluteUrl("/direct_messages.json"));
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/direct_messages.json"), 60, params, prefKeyOauthTokenT);
-            Log.v(Helper.TAG,response);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));
@@ -701,9 +698,11 @@ public class GNUAPI {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/statuses/home_timeline.json"), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));
+            if( statuses.size() > 0) {
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -793,9 +792,11 @@ public class GNUAPI {
             else
                 url = getAbsoluteUrl("/statuses/public_and_external_timeline.json");
             String response = httpsConnection.get(url, 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));
+            if( statuses.size() > 0) {
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1386,29 +1387,20 @@ public class GNUAPI {
         if( status.getContentType() != null)
             params.put("content_type", status.getContentType());
         if( status.getIn_reply_to_id() != null)
-            params.put("in_reply_to_id", status.getIn_reply_to_id());
+            params.put("in_reply_to_status_id", status.getIn_reply_to_id());
         if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
             StringBuilder parameters = new StringBuilder();
             for(Attachment attachment: status.getMedia_attachments())
-                parameters.append("media_ids[]=").append(attachment.getId()).append("&");
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(12));
-            params.put("media_ids[]", parameters.toString());
+                parameters.append(attachment.getId()).append(",");
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1));
+            params.put("media_ids", parameters.toString());
         }
-        if( status.getScheduled_at() != null)
-            params.put("scheduled_at", status.getScheduled_at());
         if( status.isSensitive())
-            params.put("sensitive", Boolean.toString(status.isSensitive()));
-        if( status.getSpoiler_text() != null)
-            try {
-                params.put("spoiler_text", URLEncoder.encode(status.getSpoiler_text(), "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                params.put("spoiler_text", status.getSpoiler_text());
-            }
-        params.put("visibility", status.getVisibility());
+            params.put("possibly_sensitive", Boolean.toString(status.isSensitive()));
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.post(getAbsoluteUrl("/statuses"), 60, params, prefKeyOauthTokenT);
+            String response = httpsConnection.post(getAbsoluteUrl("/statuses/update.json"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             Status statusreturned = parseStatuses(context, new JSONObject(response));
@@ -1632,8 +1624,7 @@ public class GNUAPI {
             }
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/search"), 60, params, prefKeyOauthTokenT);
-
+            String response = httpsConnection.get(getAbsoluteUrl("/search.json"), 60, params, prefKeyOauthTokenT);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -2082,7 +2073,43 @@ public class GNUAPI {
         return attachment;
     }
 
+    /**
+     * Parse json response an unique attachment
+     * @param resobj JSONObject
+     * @return Relationship
+     */
+    static Attachment parseUploadedAttachmentResponse(JSONObject resobj){
 
+        Attachment attachment = new Attachment();
+        try {
+            if(resobj.has("media_id") )
+                attachment.setId(resobj.get("media_id").toString());
+            if( resobj.has("image") && resobj.getJSONObject("image").has("image_type"))
+                attachment.setType("Image");
+            else if(resobj.has("image") && resobj.getJSONObject("gif").has("image_type"))
+                attachment.setType("GifV");
+            else
+                attachment.setType("video");
+            attachment.setUrl(resobj.get("media_url").toString());
+            try {
+                attachment.setDescription(resobj.get("description").toString());
+            }catch (JSONException ignore){}
+            try{
+                attachment.setRemote_url(resobj.get("url").toString());
+            }catch (JSONException ignore){}
+            try{
+                attachment.setPreview_url(resobj.get("thumb_url").toString());
+            }catch (JSONException ignore){}
+            try{
+                attachment.setMeta(resobj.get("meta").toString());
+            }catch (JSONException ignore){}
+            try{
+                attachment.setText_url(resobj.get("text_url").toString());
+            }catch (JSONException ignore){}
+
+        } catch (JSONException ignored) {}
+        return attachment;
+    }
 
     /**
      * Parse json response an unique notification

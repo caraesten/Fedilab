@@ -2090,6 +2090,12 @@ public class API {
             limit = 30;
         params.put("limit",String.valueOf(limit));
 
+        if( context == null){
+            apiResponse = new APIResponse();
+            Error error = new Error();
+            apiResponse.setError(error);
+            return apiResponse;
+        }
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean notif_follow, notif_add, notif_mention, notif_share;
         StringBuilder parameters = new StringBuilder();

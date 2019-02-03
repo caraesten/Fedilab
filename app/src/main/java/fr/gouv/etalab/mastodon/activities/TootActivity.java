@@ -288,6 +288,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         Button toot_cw = findViewById(R.id.toot_cw);
         toot_space_left = findViewById(R.id.toot_space_left);
         toot_visibility = findViewById(R.id.toot_visibility);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            toot_visibility.setVisibility(View.GONE);
         toot_picture = findViewById(R.id.toot_picture);
         toot_picture_container = findViewById(R.id.toot_picture_container);
         toot_content = findViewById(R.id.toot_content);

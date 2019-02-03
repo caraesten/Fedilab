@@ -23,6 +23,7 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingNotificationsInterface;
@@ -41,6 +42,7 @@ public class RetrieveMissingNotificationsAsyncTask extends AsyncTask<Void, Void,
     private WeakReference<Context> contextReference;
     private List<Notification> notifications;
     private DisplayNotificationsFragment.Type type;
+    private Error error;
 
     public RetrieveMissingNotificationsAsyncTask(Context context, DisplayNotificationsFragment.Type type, String since_id, OnRetrieveMissingNotificationsInterface onRetrieveMissingNotifications){
         this.contextReference = new WeakReference<>(context);
@@ -54,6 +56,7 @@ public class RetrieveMissingNotificationsAsyncTask extends AsyncTask<Void, Void,
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
         APIResponse apiResponse = api.getNotificationsSince(type, since_id, 40, false);
+        error = apiResponse.getError();
         since_id = apiResponse.getSince_id();
         notifications = apiResponse.getNotifications();
         if( notifications != null && notifications.size() > 0) {
@@ -64,6 +67,7 @@ public class RetrieveMissingNotificationsAsyncTask extends AsyncTask<Void, Void,
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveMissingNotifications(notifications);
+        if( error == null)
+            listener.onRetrieveMissingNotifications(notifications);
     }
 }
