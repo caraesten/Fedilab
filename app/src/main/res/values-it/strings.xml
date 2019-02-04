@@ -763,7 +763,7 @@
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Disconnetti l\'account</string>
-    <string name="set_optimize_loading">Optimize loading time</string>
+    <string name="set_optimize_loading">Ottimizza tempo di caricamento</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
