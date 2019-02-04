@@ -479,9 +479,9 @@
     <string name="data_export_toots">导出 %1$s 的状态</string>
     <string name="data_export_success">%2$s 条嘟文中的 %1$s 条已被导出。</string>
     <string name="data_export_error">导出 %1$s 的数据时出现错误</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_export_error_simple">导出数据时出现错误！</string>
+    <string name="data_import_success_simple">数据已被导入！</string>
+    <string name="data_import_error_simple">导入数据时发生错误！</string>
     <!-- Proxy -->
     <string name="proxy_set">代理</string>
     <string name="proxy_type">类型</string>
@@ -723,14 +723,14 @@
     <string name="add_image_to_favorite">添加媒体到收藏</string>
     <string name="leave_a_comment">发表评论</string>
     <string name="share">分享</string>
-    <string name="my_pictures">My pictures</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
-    <string name="server_schedule">From server</string>
-    <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
-    <string name="modify">Modify</string>
-    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
+    <string name="my_pictures">我的图片</string>
+    <string name="choose_schedule">选择计划模式</string>
+    <string name="device_schedule">来自设备</string>
+    <string name="server_schedule">来自服务器</string>
+    <string name="toots_server">嘟文（服务器）</string>
+    <string name="toots_client">嘟文（设备）</string>
+    <string name="modify">修改</string>
+    <string name="set_display_content_after_fetch_more">在“获取更多”按钮上方显示新嘟文</string>
     <string name="settings_category_label_confirmations">Confirmations</string>
     <string name="settings_category_label_timelines">Timelines</string>
     <string name="settings_category_label_notification">Notification service</string>
