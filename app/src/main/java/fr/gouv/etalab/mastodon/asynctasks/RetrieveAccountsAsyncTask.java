@@ -84,20 +84,40 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
             gnuapi = new GNUAPI(this.contextReference.get());
         switch (action){
             case REBLOGGED:
-                assert api != null;
-                apiResponse = api.getRebloggedBy(targetedId, max_id);
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+                    assert api != null;
+                    apiResponse = api.getRebloggedBy(targetedId, max_id);
+                }else {
+                    assert gnuapi != null;
+                    apiResponse = gnuapi.getRebloggedBy(targetedId, max_id);
+                }
                 break;
             case FAVOURITED:
-                assert api != null;
-                apiResponse = api.getFavouritedBy(targetedId, max_id);
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+                    assert api != null;
+                    apiResponse = api.getFavouritedBy(targetedId, max_id);
+                }else {
+                    assert gnuapi != null;
+                    apiResponse = gnuapi.getFavouritedBy(targetedId, max_id);
+                }
                 break;
             case BLOCKED:
-                assert api != null;
-                apiResponse = api.getBlocks(max_id);
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    assert api != null;
+                    apiResponse = api.getBlocks(max_id);
+                }else {
+                    assert gnuapi != null;
+                    apiResponse = gnuapi.getBlocks(max_id);
+                }
                 break;
             case MUTED:
-                assert api != null;
-                apiResponse = api.getMuted(max_id);
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    assert api != null;
+                    apiResponse = api.getMuted(max_id);
+                }else {
+                    assert gnuapi != null;
+                    apiResponse = gnuapi.getMuted(max_id);
+                }
                 break;
             case FOLLOWING:
                 if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {

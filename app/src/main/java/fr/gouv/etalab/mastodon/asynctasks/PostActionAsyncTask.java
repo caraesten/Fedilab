@@ -26,6 +26,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
+import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
@@ -197,6 +198,21 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
                 statusCode = peertubeAPI.deleteVideo(targetedId);
             }
             error = peertubeAPI.getError();
+        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+            GNUAPI gnuapi;
+            if (account != null)
+                gnuapi = new GNUAPI(contextReference.get(), account.getInstance(), account.getToken());
+            else
+                gnuapi = new GNUAPI(contextReference.get());
+            if (apiAction == API.StatusAction.REPORT)
+                statusCode = gnuapi.reportAction(status, comment);
+            else if (apiAction == API.StatusAction.CREATESTATUS)
+                statusCode = gnuapi.statusAction(status);
+            else if (apiAction == API.StatusAction.MUTE_NOTIFICATIONS)
+                statusCode = gnuapi.muteNotifications(targetedId, muteNotifications);
+            else
+                statusCode = gnuapi.postAction(apiAction, targetedId);
+            error = gnuapi.getError();
         }
         return null;
     }

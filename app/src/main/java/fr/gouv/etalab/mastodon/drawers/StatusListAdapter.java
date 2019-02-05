@@ -636,7 +636,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 changeDrawableColor(context, R.drawable.ic_fiber_new, R.color.dark_icon);
             else
                 changeDrawableColor(context, R.drawable.ic_fiber_new, R.color.mastodonC4);
-
+            changeDrawableColor(context, R.drawable.ic_http, R.color.mastodonC4);
             if (getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS)
                 holder.status_privacy.setVisibility(View.GONE);
             else
@@ -1753,6 +1753,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
                         }
                     }
+                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+                        popup.getMenu().findItem(R.id.action_info).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_report).setVisible(false);
+                        popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
+
+                    }
 
                     MenuItem itemBookmark = popup.getMenu().findItem(R.id.action_bookmark);
                     if (itemBookmark.getActionView() != null)
@@ -2390,6 +2396,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }else if( attachment.getType().toLowerCase().equals("gifv")) {
                             holder.status_prev1_play.setImageResource(R.drawable.ic_gif_preview);
                             holder.status_prev1_play_h.setImageResource(R.drawable.ic_gif_preview);
+                        }else if(attachment.getType().toLowerCase().equals("web")){
+                            holder.status_prev1_play.setImageResource(R.drawable.ic_http);
                         }
                         if (fullAttachement)
                             holder.status_prev1_play_h.setVisibility(View.VISIBLE);
@@ -2410,6 +2418,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }else if( attachment.getType().toLowerCase().equals("gifv")) {
                             holder.status_prev2_play_h.setImageResource(R.drawable.ic_gif_preview);
                             holder.status_prev2_play.setImageResource(R.drawable.ic_gif_preview);
+                        }else if(attachment.getType().toLowerCase().equals("web")){
+                            holder.status_prev1_play.setImageResource(R.drawable.ic_http);
                         }
                         if (fullAttachement)
                             holder.status_prev2_play_h.setVisibility(View.VISIBLE);
@@ -2430,6 +2440,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }else if( attachment.getType().toLowerCase().equals("gifv")) {
                             holder.status_prev3_play_h.setImageResource(R.drawable.ic_gif_preview);
                             holder.status_prev3_play.setImageResource(R.drawable.ic_gif_preview);
+                        }else if(attachment.getType().toLowerCase().equals("web")){
+                            holder.status_prev1_play.setImageResource(R.drawable.ic_http);
                         }
                         if (fullAttachement)
                             holder.status_prev3_play_h.setVisibility(View.VISIBLE);
@@ -2450,6 +2462,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }else if( attachment.getType().toLowerCase().equals("gifv")) {
                             holder.status_prev4_play_h.setImageResource(R.drawable.ic_gif_preview);
                             holder.status_prev4_play.setImageResource(R.drawable.ic_gif_preview);
+                        }else if(attachment.getType().toLowerCase().equals("web")){
+                            holder.status_prev1_play.setImageResource(R.drawable.ic_http);
                         }
                         if (fullAttachement)
                             holder.status_prev4_play_h.setVisibility(View.VISIBLE);

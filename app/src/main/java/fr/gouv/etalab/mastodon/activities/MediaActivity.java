@@ -30,6 +30,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -65,6 +69,8 @@ import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
+import fr.gouv.etalab.mastodon.webview.MastalabWebChromeClient;
+import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
@@ -105,7 +111,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         LEFT_TO_RIGHT,
         POP
     }
-
+    private WebView webview_video;
     private ImageButton media_save,media_share, media_close;
     private boolean scheduleHidden, scheduleHiddenDescription;
     private SimpleExoPlayer player;
@@ -162,11 +168,12 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         media_share = findViewById(R.id.media_share);
         media_close = findViewById(R.id.media_close);
         progress = findViewById(R.id.loader_progress);
+        webview_video = findViewById(R.id.webview_video);
         media_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 isSHaring = false;
-                if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("gifv")) {
+                if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) {
                     if( attachment != null ) {
                         progress.setText("0 %");
                         progress.setVisibility(View.VISIBLE);
@@ -471,6 +478,45 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 loader.setVisibility(View.GONE);
                 player.prepare(videoSource);
                 player.setPlayWhenReady(true);
+                break;
+            case "web":
+                loader.setVisibility(View.GONE);
+                webview_video = Helper.initializeWebview(MediaActivity.this, R.id.webview_video);
+                webview_video.setVisibility(View.VISIBLE);
+                FrameLayout webview_container = findViewById(R.id.main_media_frame);
+                final ViewGroup videoLayout = findViewById(R.id.videoLayout);
+
+                MastalabWebChromeClient mastalabWebChromeClient = new MastalabWebChromeClient(MediaActivity.this, webview_video, webview_container, videoLayout);
+                mastalabWebChromeClient.setOnToggledFullscreen(new MastalabWebChromeClient.ToggledFullscreenCallback() {
+                    @Override
+                    public void toggledFullscreen(boolean fullscreen) {
+
+                        if (fullscreen) {
+                            videoLayout.setVisibility(View.VISIBLE);
+                            WindowManager.LayoutParams attrs = getWindow().getAttributes();
+                            attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                            attrs.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+                            getWindow().setAttributes(attrs);
+                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+                        } else {
+                            WindowManager.LayoutParams attrs = getWindow().getAttributes();
+                            attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                            attrs.flags &= ~WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+                            getWindow().setAttributes(attrs);
+                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                            videoLayout.setVisibility(View.GONE);
+                        }
+                    }
+                });
+                webview_video.getSettings().setAllowFileAccess(true);
+                webview_video.setWebChromeClient(mastalabWebChromeClient);
+                webview_video.getSettings().setDomStorageEnabled(true);
+                webview_video.getSettings().setAppCacheEnabled(true);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    webview_video.getSettings().setMediaPlaybackRequiresUserGesture(false);
+                }
+                webview_video.setWebViewClient(new MastalabWebViewClient(MediaActivity.this));
+                webview_video.loadUrl(attachment.getUrl());
                 break;
         }
     }

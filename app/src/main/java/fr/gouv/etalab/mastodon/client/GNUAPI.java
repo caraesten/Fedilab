@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -240,7 +241,7 @@ public class GNUAPI {
         HashMap<String, String> params = new HashMap<>();
         params.put("user_id",accountId);
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl("/friendships/lookup.json"), 60, params, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context).get(getAbsoluteUrl("/friendships/show.json"), 60, params, prefKeyOauthTokenT);
             relationships = parseRelationshipResponse(new JSONArray(response));
             if( relationships != null && relationships.size() > 0)
                 relationship = relationships.get(0);
@@ -277,7 +278,7 @@ public class GNUAPI {
             List<Relationship> relationships = new ArrayList<>();
             try {
                 HttpsConnection httpsConnection = new HttpsConnection(context);
-                String response = httpsConnection.get(getAbsoluteUrl("/friendships/lookup.json"), 60, params, prefKeyOauthTokenT);
+                String response = httpsConnection.get(getAbsoluteUrl("/friendships/show.json"), 60, params, prefKeyOauthTokenT);
                 relationships = parseRelationshipResponse(new JSONArray(response));
                 apiResponse.setSince_id(httpsConnection.getSince_id());
                 apiResponse.setMax_id(httpsConnection.getMax_id());
@@ -381,8 +382,10 @@ public class GNUAPI {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/statuses/user_timeline.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
+            if( statuses.size() > 0) {
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -627,9 +630,11 @@ public class GNUAPI {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/direct_messages.json"), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));
+            if( statuses.size() > 0) {
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -944,9 +949,11 @@ public class GNUAPI {
                     query = URLEncoder.encode(query, "UTF-8");
                 } catch (UnsupportedEncodingException ignored) {}
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/timelines/tag/%s",query)), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
             statuses = parseStatuses(context, new JSONArray(response));
+            if( statuses.size() > 0) {
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -969,7 +976,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     public APIResponse getMuted(String max_id){
-        return getAccounts("/mutes",null, max_id, null, accountPerPage);
+        return getAccounts("/mutes/users/list.json",null, max_id, null, accountPerPage);
     }
 
     /**
@@ -978,7 +985,7 @@ public class GNUAPI {
      * @return APIResponse
      */
     public APIResponse getBlocks(String max_id){
-        return getAccounts("/blocks",null,  max_id, null, accountPerPage);
+        return getAccounts("/blocks/list.json",null,  max_id, null, accountPerPage);
     }
 
 
@@ -1127,14 +1134,16 @@ public class GNUAPI {
             params.put("since_id", since_id);
         if( 0 > limit || limit > 40)
             limit = 40;
-        params.put("limit",String.valueOf(limit));
+        params.put("count",String.valueOf(limit));
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/favourites"), 60, params, prefKeyOauthTokenT);
-            apiResponse.setSince_id(httpsConnection.getSince_id());
-            apiResponse.setMax_id(httpsConnection.getMax_id());
+            String response = httpsConnection.get(getAbsoluteUrl("/favorites.json"), 60, params, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
+            if( statuses.size() > 0) {
+                apiResponse.setSince_id(statuses.get(0).getId());
+                apiResponse.setMax_id(statuses.get(statuses.size() - 1).getId());
+            }
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1216,19 +1225,25 @@ public class GNUAPI {
         HashMap<String, String> params = null;
         switch (statusAction){
             case FAVOURITE:
-                action = String.format("/statuses/%s/favourite", targetedId);
+                action = "/favorites/create.json";
+                params = new HashMap<>();
+                params.put("id", targetedId);
                 break;
             case UNFAVOURITE:
-                action = String.format("/statuses/%s/unfavourite", targetedId);
+                action = "/favorites/destroy.json";
+                params = new HashMap<>();
+                params.put("id", targetedId);
                 break;
             case REBLOG:
-                action = String.format("/statuses/%s/reblog", targetedId);
+                action = String.format("/statuses/retweet/%s.json", targetedId);
                 break;
             case UNREBLOG:
-                action = String.format("/statuses/%s/unreblog", targetedId);
+                action = String.format("/statuses/unretweet/%s.json", targetedId);
                 break;
             case FOLLOW:
-                action = "/friendships/create";
+                action = "/friendships/create.json";
+                params = new HashMap<>();
+                params.put("user_id", targetedId);
                 break;
             case REMOTE_FOLLOW:
                 action = "/follows";
@@ -1236,134 +1251,83 @@ public class GNUAPI {
                 params.put("uri", targetedId);
                 break;
             case UNFOLLOW:
-                action = "/friendships/destroy";
+                action = "/friendships/destroy.json";
+                params = new HashMap<>();
+                params.put("user_id", targetedId);
                 break;
             case BLOCK:
-                action = String.format("/accounts/%s/block", targetedId);
-                break;
-            case BLOCK_DOMAIN:
-                action = "/domain_blocks";
+                action = "/blocks/create.json";
                 params = new HashMap<>();
-                params.put("domain", targetedId);
+                params.put("user_id", targetedId);
                 break;
             case UNBLOCK:
-                action = String.format("/accounts/%s/unblock", targetedId);
+                action ="/blocks/destroy.json";
+                params = new HashMap<>();
+                params.put("user_id", targetedId);
                 break;
             case MUTE:
-                action = String.format("/accounts/%s/mute", targetedId);
+                action = "/mutes/users/create.json";
+                params = new HashMap<>();
+                params.put("user_id", targetedId);
                 break;
             case UNMUTE:
-                action = String.format("/accounts/%s/unmute", targetedId);
-                break;
-            case PIN:
-                action = String.format("/statuses/%s/pin", targetedId);
-                break;
-            case UNPIN:
-                action = String.format("/statuses/%s/unpin", targetedId);
-                break;
-            case ENDORSE:
-                action = String.format("/accounts/%s/pin", targetedId);
-                break;
-            case UNENDORSE:
-                action = String.format("/accounts/%s/unpin", targetedId);
-                break;
-            case SHOW_BOOST:
+                action = "/mutes/users/destroy.json";
                 params = new HashMap<>();
-                params.put("reblogs","true");
-                action = String.format("/accounts/%s/follow", targetedId);
-                break;
-            case HIDE_BOOST:
-                params = new HashMap<>();
-                params.put("reblogs","false");
-                action = String.format("/accounts/%s/follow", targetedId);
+                params.put("user_id", targetedId);
                 break;
             case UNSTATUS:
-                action = String.format("/statuses/%s", targetedId);
-                break;
-            case AUTHORIZE:
-                action = String.format("/follow_requests/%s/authorize", targetedId);
-                break;
-            case REJECT:
-                action = String.format("/follow_requests/%s/reject", targetedId);
-                break;
-            case REPORT:
-                action = "/reports";
-                params = new HashMap<>();
-                params.put("account_id", status.getAccount().getId());
-                params.put("comment", comment);
-                params.put("status_ids[]", status.getId());
+                action = String.format("/statuses/destroy/%s.json", targetedId);
                 break;
             case CREATESTATUS:
                 params = new HashMap<>();
-                action = "/statuses";
+                action = "/statuses/update.json";
                 try {
                     params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     params.put("status", status.getContent());
                 }
-                if( status.getScheduled_at() != null)
-                    params.put("scheduled_at", status.getScheduled_at());
+                if( status.getContentType() != null)
+                    params.put("content_type", status.getContentType());
                 if( status.getIn_reply_to_id() != null)
-                    params.put("in_reply_to_id", status.getIn_reply_to_id());
+                    params.put("in_reply_to_status_id", status.getIn_reply_to_id());
                 if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
                     StringBuilder parameters = new StringBuilder();
                     for(Attachment attachment: status.getMedia_attachments())
-                        parameters.append("media_ids[]=").append(attachment.getId()).append("&");
-                    parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(12));
-                    params.put("media_ids[]", parameters.toString());
+                        parameters.append(attachment.getId()).append(",");
+                    parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1));
+                    params.put("media_ids", parameters.toString());
                 }
                 if( status.isSensitive())
-                    params.put("sensitive", Boolean.toString(status.isSensitive()));
-                if( status.getSpoiler_text() != null)
-                    try {
-                        params.put("spoiler_text", URLEncoder.encode(status.getSpoiler_text(), "UTF-8"));
-                    } catch (UnsupportedEncodingException e) {
-                        params.put("spoiler_text", status.getSpoiler_text());
-                    }
-                params.put("visibility", status.getVisibility());
+                    params.put("possibly_sensitive", Boolean.toString(status.isSensitive()));
             break;
             default:
                 return -1;
         }
-        if(statusAction != API.StatusAction.UNSTATUS ) {
-            try {
-                HttpsConnection httpsConnection = new HttpsConnection(context);
-                String resp = httpsConnection.post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
-                actionCode = httpsConnection.getActionCode();
-                if( statusAction == API.StatusAction.REBLOG || statusAction == API.StatusAction.UNREBLOG || statusAction == API.StatusAction.FAVOURITE || statusAction == API.StatusAction.UNFAVOURITE) {
-                    Bundle b = new Bundle();
-                    try {
-                        Status status1 = parseStatuses(context, new JSONObject(resp));
-                        b.putParcelable("status", status1);
-                        b.putSerializable("action", statusAction);
-                    } catch (JSONException ignored) {}
-                    Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
-                    intentBC.putExtras(b);
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
-                }
-            } catch (HttpsConnection.HttpsConnectionException e) {
-                setError(e.getStatusCode(), e);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
+
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String resp = httpsConnection.post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
+            actionCode = httpsConnection.getActionCode();
+            if( statusAction == API.StatusAction.REBLOG || statusAction == API.StatusAction.UNREBLOG || statusAction == API.StatusAction.FAVOURITE || statusAction == API.StatusAction.UNFAVOURITE) {
+                Bundle b = new Bundle();
+                try {
+                    Status status1 = parseStatuses(context, new JSONObject(resp));
+                    b.putParcelable("status", status1);
+                    b.putSerializable("action", statusAction);
+                } catch (JSONException ignored) {}
+                Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
+                intentBC.putExtras(b);
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
             }
-        }else{
-            try {
-                HttpsConnection httpsConnection = new HttpsConnection(context);
-                httpsConnection.delete(getAbsoluteUrl(action), 60, null, prefKeyOauthTokenT);
-                actionCode = httpsConnection.getActionCode();
-            } catch (HttpsConnection.HttpsConnectionException e) {
-                setError(e.getStatusCode(), e);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            }
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
         }
         return actionCode;
     }
@@ -1421,35 +1385,6 @@ public class GNUAPI {
         return apiResponse;
     }
 
-
-    /**
-     * Posts a status
-     * @param notificationId String, the current notification id, if null all notifications are deleted
-     * @return APIResponse
-     */
-    public APIResponse postNoticationAction(String notificationId){
-
-        String action;
-        HashMap<String, String> params = new HashMap<>();
-        if( notificationId == null)
-            action = "/notifications/clear";
-        else {
-            params.put("id",notificationId);
-            action = "/notifications/dismiss";
-        }
-        try {
-            new HttpsConnection(context).post(getAbsoluteUrl(action), 60, params, prefKeyOauthTokenT);
-        } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-        return apiResponse;
-    }
 
 
     /**
@@ -1816,6 +1751,7 @@ public class GNUAPI {
             }else{
                 status.setMentions(new ArrayList<>());
             }
+
             //Retrieves tags
             status.setTags(null);
             //Retrieves emjis
@@ -1857,6 +1793,8 @@ public class GNUAPI {
             try{
                 status.setReblog(parseStatuses(context, resobj.getJSONObject("retweeted_status")));
             }catch (Exception ignored){ status.setReblog(null);}
+            if( status.getContent().contains(status.getUri()))
+                status.setNotice(true);
         } catch (JSONException ignored) {ignored.printStackTrace();} catch (ParseException e) {
             e.printStackTrace();
 
@@ -2053,11 +1991,21 @@ public class GNUAPI {
     static Attachment parseAttachmentResponse(JSONObject resobj){
 
         Attachment attachment = new Attachment();
+        Log.v(Helper.TAG,resobj.toString());
         try {
             if(resobj.has("id") )
                 attachment.setId(resobj.get("id").toString());
-            attachment.setType(resobj.get("mimetype").toString());
+
             attachment.setUrl(resobj.get("url").toString());
+            if( attachment.getUrl().endsWith("png") || attachment.getUrl().endsWith("jpg") || attachment.getUrl().endsWith("jpeg")){
+                attachment.setType("image");
+            }else if( attachment.getUrl().endsWith("gif") ||  attachment.getUrl().endsWith("apng") ){
+                attachment.setType("gifv");
+            }else if( attachment.getUrl().endsWith("mp4") ){
+                attachment.setType("video");
+            }else{
+                attachment.setType("web");
+            }
             try {
                 attachment.setDescription(resobj.get("description").toString());
             }catch (JSONException ignore){}

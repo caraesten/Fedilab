@@ -129,6 +129,7 @@ public class Status implements Parcelable{
     private boolean isBoostAnimated = false, isFavAnimated = false;
     private String scheduled_at;
     private String contentType;
+    private boolean isNotice = false;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -184,6 +185,7 @@ public class Status implements Parcelable{
         dest.writeString(this.scheduled_at);
         dest.writeString(this.contentType);
         dest.writeByte(this.showSpoiler ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isNotice ? (byte) 1 : (byte) 0);
     }
 
     protected Status(Parcel in) {
@@ -241,6 +243,7 @@ public class Status implements Parcelable{
         this.scheduled_at = in.readString();
         this.contentType = in.readString();
         this.showSpoiler = in.readByte() != 0;
+        this.isNotice = in.readByte() != 0;
     }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -1301,5 +1304,14 @@ public class Status implements Parcelable{
 
     public void setShowSpoiler(boolean showSpoiler) {
         this.showSpoiler = showSpoiler;
+    }
+
+
+    public boolean isNotice() {
+        return isNotice;
+    }
+
+    public void setNotice(boolean notice) {
+        isNotice = notice;
     }
 }

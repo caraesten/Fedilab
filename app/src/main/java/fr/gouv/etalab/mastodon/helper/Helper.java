@@ -1347,13 +1347,41 @@ public class Helper {
             MenuItem itemPCom = menu.findItem(R.id.nav_peertube_comm);
             if( itemPCom != null)
                 itemPCom.setVisible(false);
-        }else if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+        }else if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
             MenuItem itemCom = menu.findItem(R.id.nav_peertube_comm);
             if( itemCom != null)
                 itemCom.setVisible(false);
             MenuItem itemPFCom = menu.findItem(R.id.nav_pixelfed_comm);
             if( itemPFCom != null)
                 itemPFCom.setVisible(false);
+
+            if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+                MenuItem nav_list = menu.findItem(R.id.nav_list);
+                if( nav_list != null)
+                    nav_list.setVisible(false);
+                MenuItem nav_peertube = menu.findItem(R.id.nav_peertube);
+                if( nav_peertube != null)
+                    nav_peertube.setVisible(false);
+                MenuItem nav_filters = menu.findItem(R.id.nav_filters);
+                if( nav_filters != null)
+                    nav_filters.setVisible(false);
+                MenuItem nav_follow_request = menu.findItem(R.id.nav_follow_request);
+                if( nav_follow_request != null)
+                    nav_follow_request.setVisible(false);
+                MenuItem nav_who_to_follow = menu.findItem(R.id.nav_who_to_follow);
+                if( nav_who_to_follow != null)
+                    nav_who_to_follow.setVisible(false);
+                MenuItem nav_blocked = menu.findItem(R.id.nav_blocked);
+                if( nav_blocked != null)
+                    nav_blocked.setVisible(false);
+                MenuItem nav_muted = menu.findItem(R.id.nav_muted);
+                if( nav_muted != null)
+                    nav_muted.setVisible(false);
+                MenuItem nav_blocked_domains = menu.findItem(R.id.nav_blocked_domains);
+                if( nav_blocked_domains != null)
+                    nav_blocked_domains.setVisible(false);
+
+            }
         }
     }
 
@@ -3254,6 +3282,8 @@ public class Helper {
             }
         }
         if (timedMute != null && timedMute.size() > 0 && timedMute.contains(status.getAccount().getId()))
+            return false;
+        if( status.isNotice())
             return false;
         return true;
     }

@@ -221,7 +221,12 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
                 break;
             case FAVOURITES:
-                apiResponse = api.getFavourites(max_id);
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    apiResponse = api.getFavourites(max_id);
+                }else{
+                    GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
+                    apiResponse = gnuapi.getFavourites(max_id);
+                }
                 break;
             case USER:
                 if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
