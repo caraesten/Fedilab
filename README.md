@@ -14,7 +14,7 @@
 [<img alt='Get it on Google Play' src='https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png' height="80"/>](https://f-droid.org/app/fr.gouv.etalab.mastodon)
 
 
-## Ressources
+## Resources
 
 [WIKI](https://fedilab.app/wiki/home/)
 
