@@ -778,6 +778,7 @@
     <string name="action_markdown">ماركداون</string>
     <string name="action_logout_account">الخروج مِن الحساب</string>
     <string name="set_optimize_loading">تحسين مدة التحميل</string>
+    <string name="all">All</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>تورنت</item>
