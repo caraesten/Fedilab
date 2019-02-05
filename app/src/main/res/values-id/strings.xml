@@ -762,6 +762,7 @@ https://yandex.ru/legal/confidential/?lang=en
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Logout account</string>
     <string name="set_optimize_loading">Optimize loading time</string>
+    <string name="all">All</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
