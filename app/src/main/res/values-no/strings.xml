@@ -751,6 +751,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Logg ut</string>
+    <string name="set_optimize_loading">Optimaliser lastetid</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
