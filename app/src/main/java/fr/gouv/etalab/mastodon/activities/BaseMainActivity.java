@@ -2040,20 +2040,20 @@ public abstract class BaseMainActivity extends BaseActivity
     public void onResume(){
         super.onResume();
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isMainActivityRunning", true).apply();
-        updateNotifCounter();
-        updateHomeCounter();
+      //  updateNotifCounter();
+      //  updateHomeCounter();
 
 
         //Proceeds to update of the authenticated account
         if(Helper.isLoggedIn(getApplicationContext())) {
             new UpdateAccountInfoByIDAsyncTask(getApplicationContext(), social, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
-        if( lastHomeId != null && homeFragment != null){
+        /*if( lastHomeId != null && homeFragment != null){
             homeFragment.retrieveMissingToots(lastHomeId);
         }
         if( lastNotificationId != null && tabLayoutNotificationsFragment != null){
             tabLayoutNotificationsFragment.retrieveMissingNotifications(lastNotificationId);
-        }
+        }*/
     }
 
 

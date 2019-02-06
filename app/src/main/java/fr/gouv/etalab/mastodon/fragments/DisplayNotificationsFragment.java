@@ -78,7 +78,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
     private String userId, instance;
     private SharedPreferences sharedpreferences;
     LinearLayoutManager mLayoutManager;
-    private static BroadcastReceiver receive_action;
+    private BroadcastReceiver receive_action;
     private static BroadcastReceiver receive_data;
 
     public DisplayNotificationsFragment(){
@@ -145,7 +145,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
             }
         });
 
-        if( type == Type.ALL) {
+
             if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
 
                 if (receive_action != null)
@@ -163,25 +163,25 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                     }
                 };
                 LocalBroadcastManager.getInstance(context).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));
-
-                if (receive_data != null)
-                    LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
-                receive_data = new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        Bundle b = intent.getExtras();
-                        assert b != null;
-                        String userIdService = b.getString("userIdService", null);
-                        if (userIdService != null && userIdService.equals(userId)) {
-                            Notification notification = b.getParcelable("data");
-                            refresh(notification);
-                            if (context instanceof MainActivity)
-                                ((MainActivity) context).updateNotifCounter();
+                if( type == Type.ALL) {
+                    if (receive_data != null)
+                        LocalBroadcastManager.getInstance(context).unregisterReceiver(receive_data);
+                    receive_data = new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
+                            Bundle b = intent.getExtras();
+                            assert b != null;
+                            String userIdService = b.getString("userIdService", null);
+                            if (userIdService != null && userIdService.equals(userId)) {
+                                Notification notification = b.getParcelable("data");
+                                refresh(notification);
+                                if (context instanceof MainActivity)
+                                    ((MainActivity) context).updateNotifCounter();
+                            }
                         }
-                    }
-                };
-                LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
-            }
+                    };
+                    LocalBroadcastManager.getInstance(context).registerReceiver(receive_data, new IntentFilter(Helper.RECEIVE_DATA));
+                }
         }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

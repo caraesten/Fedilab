@@ -624,8 +624,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         context.startService(streamingHomeIntent);
                     }catch (Exception ignored){}
                 }
-                if( statuses != null && statuses.size() > 0)
+                if( statuses != null && statuses.size() > 0) {
                     retrieveMissingToots(statuses.get(0).getId());
+                }
             }
         } else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC){
             if( getUserVisibleHint() ){
@@ -704,8 +705,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         int batteryProfile = sharedpreferences.getInt(Helper.SET_BATTERY_PROFILE, Helper.BATTERY_PROFILE_NORMAL);
         //Store last toot id for home timeline to avoid to notify for those that have been already seen
         if (type == RetrieveFeedsAsyncTask.Type.HOME ) {
-
             if (visible) {
+
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SHOULD_CONTINUE_STREAMING_HOME + userId + instance, true);
                 editor.apply();
@@ -715,8 +716,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                         context.startService(streamingHomeIntent);
                     }catch (Exception ignored){}
                 }
-                if( statuses != null && statuses.size() > 0)
+                if( statuses != null && statuses.size() > 0) {
                     retrieveMissingToots(statuses.get(0).getId());
+                }
             }else {
                 if( streamingHomeIntent != null ){
                     SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -915,6 +917,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
 
     @Override
     public void onRetrieveFeedsAfterBookmark(APIResponse apiResponse) {
+        if( statusListAdapter == null)
+            return;
         if( apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
             if( apiResponse == null)
                 Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
