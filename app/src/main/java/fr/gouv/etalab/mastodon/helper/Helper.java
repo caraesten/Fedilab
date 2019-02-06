@@ -194,7 +194,7 @@ public class Helper {
 
     @SuppressWarnings({"unused", "WeakerAccess"})
     public static  final String TAG = "mastodon_etalab";
-    public static final String CLIENT_NAME_VALUE = "Mastalab";
+    public static final String CLIENT_NAME_VALUE = "Fedilab";
     public static final String OAUTH_SCOPES = "read write follow";
     public static final String OAUTH_SCOPES_PEERTUBE = "user";
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
@@ -225,7 +225,7 @@ public class Helper {
     public static final String SCOPE = "scope";
     public static final String SCOPES = "scopes";
     public static final String WEBSITE = "website";
-    public static final String WEBSITE_VALUE = "https://mastalab.app";
+    public static final String WEBSITE_VALUE = "https://fedilab.app";
     public static final String SHOW_BATTERY_SAVER_MESSAGE = "show_battery_saver_message";
     public static final String LAST_NOTIFICATION_MAX_ID = "last_notification_max_id";
     public static final String LAST_HOMETIMELINE_MAX_ID = "last_hometimeline_max_id";

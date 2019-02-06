@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Mastalab</string>
+    <string name="app_name" translatable="false">Fedilab</string>
     <string name="navigation_drawer_open">Open the menu</string>
     <string name="navigation_drawer_close">Close the menu</string>
 
