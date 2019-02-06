@@ -79,6 +79,7 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -544,7 +545,7 @@ public class Helper {
 
     /**
      * Log out the authenticated user by removing its token
-     * @param context Context
+     * @param activity Activity
      */
     public static void logoutCurrentUser(Activity activity) {
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);

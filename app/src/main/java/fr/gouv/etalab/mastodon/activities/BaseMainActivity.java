@@ -1548,7 +1548,11 @@ public abstract class BaseMainActivity extends BaseActivity
                     editor.putBoolean(Helper.SET_POPUP_PUSH, true);
                     editor.apply();
                 }
-            }).show();
+            });
+            try {
+                dialogBuilder.show();
+            }catch (Exception ignored){};
+
         }
         Helper.switchLayout(BaseMainActivity.this);
 
