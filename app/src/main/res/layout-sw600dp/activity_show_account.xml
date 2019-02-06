@@ -157,6 +157,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                             <TextView
+                                android:layout_marginTop="5dp"
+                                android:visibility="gone"
+                                android:textColor="@color/mastodonC4"
+                                android:background="@drawable/blue_border"
+                                android:text="@string/bot"
+                                android:id="@+id/account_bot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
                                 android:id="@+id/temp_mute"
                                 android:visibility="gone"
                                 android:gravity="center"

@@ -2517,12 +2517,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, MediaActivity.class);
-                        Bundle b = new Bundle();
-                        intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
-                        b.putInt("position", finalPosition);
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                        if( attachment.getType().equals("web")){
+                            Helper.openBrowser(context, attachment.getUrl());
+                        }else {
+                            Intent intent = new Intent(context, MediaActivity.class);
+                            Bundle b = new Bundle();
+                            intent.putParcelableArrayListExtra("mediaArray", status.getMedia_attachments());
+                            b.putInt("position", finalPosition);
+                            intent.putExtras(b);
+                            context.startActivity(intent);
+                        }
                     }
                 });
                 i++;

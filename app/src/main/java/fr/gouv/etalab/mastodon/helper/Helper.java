@@ -2938,7 +2938,9 @@ public class Helper {
         try {
             takenImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uriFile);
         } catch (IOException e) {
-            Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
+            try {
+                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
+            }catch (Exception ignored){};
             return null;
         }
         ExifInterface exif = null;
