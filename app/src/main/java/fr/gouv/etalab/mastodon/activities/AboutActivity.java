@@ -249,7 +249,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         new RetrieveRemoteDataAsyncTask(getApplicationContext(), "mmarif", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new RetrieveRemoteDataAsyncTask(getApplicationContext(), "guzzisti", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new RetrieveRemoteDataAsyncTask(getApplicationContext(), "NateLikesSheep", "mastodon.art", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "daycode", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "kasun", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new RetrieveRemoteDataAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new RetrieveRemoteDataAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -292,7 +292,7 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
                     banners.add(account);
                     accountSearchWebAdapterBanners.notifyDataSetChanged();
                     break;
-                case "daycode":
+                case "kasun":
                     designers.add(account);
                     accountSearchWebAdapterDesigner.notifyDataSetChanged();
                     break;
