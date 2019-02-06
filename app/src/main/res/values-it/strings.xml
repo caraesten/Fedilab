@@ -88,7 +88,7 @@
     <string name="delete_account_title">Elimina un account</string>
     <string name="delete_account_message" formatted="false">Eliminare l\'account %1$s dall\'applicazione?</string>
     <string name="send_email">Invia un\'email</string>
-    <string name="choose_file">Seleziona un file</string>
+    <string name="choose_file">Per favore seleziona un file</string>
     <string name="choose_file_error">Nessun gestore file trovato!</string>
     <string name="click_to_change">Fai clic sul percorso per cambiarlo</string>
     <string name="failed">Fallito!</string>
@@ -96,7 +96,7 @@
     <string name="disclaimer_full">Le informazioni qui sotto potrebbero riflettere in modo incompleto il profilo dell\'utente.</string>
     <string name="insert_emoji">Inserisci emoji</string>
     <string name="no_emoji">L\'app non raccoglie emoji personalizzate per il momento.</string>
-    <string name="live_notif">Notifiche live</string>
+    <string name="live_notif">Notifiche in tempo reale</string>
     <!-- Status -->
     <string name="no_status">Nessun toot da mostrare</string>
     <string name="fav_added">Il toot è stato aggiunto ai preferiti</string>
@@ -156,7 +156,7 @@
     <string name="cw">cw</string>
     <string name="toot_title">Scrivi un toot</string>
     <string name="toot_title_reply">Rispondi ad un toot</string>
-    <string name="toot_no_space">Hai raggiunto i 500 caratteri permessi!</string>
+    <string name="toot_no_space">Hai raggiunto i 500 caratteri consentiti!</string>
     <string name="toot_select_image">Seleziona un media</string>
     <string name="toot_select_image_error">Si è verificato un errore durante la selezione del media!</string>
     <string name="toot_delete_media">Eliminare questo media?</string>
@@ -177,17 +177,17 @@
     <string name="choose_accounts">Seleziona un account</string>
     <string name="select_accounts">Seleziona alcuni account</string>
     <string name="remove_draft">Rimuovere bozza?</string>
-    <string name="show_reply">Fai clic sul pulsante per visualizzare il toot originale</string>
-    <string name="upload_form_description">Descrivi per gli utenti con problemi visivi</string>
+    <string name="show_reply">Clicca sul pulsante per visualizzare il toot originale</string>
+    <string name="upload_form_description">Descrivi per ipovedenti</string>
     <!-- Instance -->
     <string name="instance_no_description">Nessuna descrizione disponibile!</string>
     <!-- About -->
-    <string name="about_vesrion">Rilascio %1$s</string>
+    <string name="about_vesrion">Versione %1$s</string>
     <string name="about_developer">Sviluppatore:</string>
     <string name="about_license">Licenza: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Codice sorgente: </string>
-    <string name="about_yandex">Traduzione del toot:</string>
+    <string name="about_yandex">Traduzione dei toot:</string>
     <string name="about_thekinrar">Cerca istanze:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Designer icona:</string>
@@ -764,7 +764,7 @@
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Disconnetti l\'account</string>
     <string name="set_optimize_loading">Ottimizza tempo di caricamento</string>
-    <string name="all">All</string>
+    <string name="all">Tutto</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
