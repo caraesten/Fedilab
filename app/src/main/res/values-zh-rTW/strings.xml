@@ -759,8 +759,8 @@
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">登出帳號</string>
-    <string name="set_optimize_loading">Optimize loading time</string>
-    <string name="all">All</string>
+    <string name="set_optimize_loading">最佳化載入時間</string>
+    <string name="all">全部</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
