@@ -766,6 +766,7 @@
     <string name="action_logout_account">Desconectar conta</string>
     <string name="set_optimize_loading">Optimizar tempo de carga</string>
     <string name="all">Todo</string>
+    <string name="about_opencollective">Support the app</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
