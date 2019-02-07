@@ -618,6 +618,29 @@ public class Helper {
         }
     }
 
+    /**
+     * Convert String date from Mastodon
+     * @param context Context
+     * @param date String
+     * @return Date
+     */
+    public static Date opencollectivetStringToDate(Context context, String date) throws ParseException {
+        Locale userLocale;
+        if (date == null )
+            return null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            userLocale = context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            //noinspection deprecation
+            userLocale = context.getResources().getConfiguration().locale;
+        }
+        String STRING_DATE_FORMAT;
+        STRING_DATE_FORMAT = "yyyy-MM-dd HH:mm";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(STRING_DATE_FORMAT, userLocale);
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
+        simpleDateFormat.setLenient(true);
+        return simpleDateFormat.parse(date);
+    }
 
     /**
      * Convert a date in String -> format yyyy-MM-dd HH:mm:ss

@@ -194,6 +194,11 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             />
+        <activity android:name=".activities.OpencollectiveActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            />
         <activity android:name=".activities.PartnerShipActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"

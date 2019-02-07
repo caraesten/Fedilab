@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +43,7 @@ import java.util.Map;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveOpenCollectiveAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Application;
@@ -1489,6 +1491,35 @@ public class API {
         }
         apiResponse.setAccounts(accounts);
         return apiResponse;
+    }
+
+
+    /**
+     * Retrieves opencollective accounts *synchronously*
+     * @return APIResponse
+     */
+    public Results getOpencollectiveAccounts(RetrieveOpenCollectiveAsyncTask.Type type){
+
+        results = new Results();
+        accounts = new ArrayList<>();
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get("https://opencollective.com/mastalab/members/all.json", 60, null, prefKeyOauthTokenT);
+            accounts = parseOpencollectiveAccountResponse(context, type, new JSONArray(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.v(Helper.TAG,"accounts: " + accounts.size());
+        results.setAccounts(accounts);
+        return results;
     }
 
 
@@ -4044,6 +4075,66 @@ public class API {
         return account;
     }
 
+
+    private List<Account> parseOpencollectiveAccountResponse(Context context, RetrieveOpenCollectiveAsyncTask.Type type, JSONArray jsonArray){
+        List<Account> accounts = new ArrayList<>();
+        try {
+            int i = 0;
+            while (i < jsonArray.length() ) {
+                JSONObject resobj = jsonArray.getJSONObject(i);
+                Account account = parseOpencollectiveAccountResponse(context, type, resobj);
+                if( type == RetrieveOpenCollectiveAsyncTask.Type.BACKERS && account.getSocial() != null && account.getSocial().equals("OPENCOLLECTIVE_BACKER"))
+                    accounts.add(account);
+                else if( type == RetrieveOpenCollectiveAsyncTask.Type.SPONSORS && account.getSocial() != null && account.getSocial().equals("OPENCOLLECTIVE_SPONSOR"))
+                    accounts.add(account);
+                i++;
+            }
+        } catch (JSONException e) {
+            setDefaultError(e);
+        }
+        return accounts;
+    }
+
+    /**
+     * Parse json response an unique account
+     * @param resobj JSONObject
+     * @return Account
+     */
+    @SuppressWarnings("InfiniteRecursion")
+    private static Account parseOpencollectiveAccountResponse(Context context, RetrieveOpenCollectiveAsyncTask.Type type, JSONObject resobj){
+
+        Account account = new Account();
+        try {
+            account.setId(resobj.get("MemberId").toString());
+            account.setUuid(resobj.get("MemberId").toString());
+            account.setUsername(resobj.get("name").toString());
+            account.setAcct(resobj.get("tier").toString());
+            account.setDisplay_name(resobj.get("name").toString());
+            account.setLocked(false);
+            account.setCreated_at(Helper.opencollectivetStringToDate(context, resobj.get("createdAt").toString()));
+            account.setFollowers_count(0);
+            account.setFollowing_count(0);
+            account.setStatuses_count(0);
+            account.setNote(resobj.get("description").toString());
+            account.setBot(false);
+            account.setMoved_to_account(null);
+            account.setUrl(resobj.get("profile").toString());
+            account.setAvatar(resobj.get("image").toString());
+            account.setAvatar_static(resobj.get("image").toString());
+            account.setHeader(null);
+            account.setHeader_static(null);
+            if(resobj.get("role").toString().equals("BACKER"))
+                account.setSocial("OPENCOLLECTIVE_BACKER");
+            else if(resobj.get("role").toString().equals("SPONSOR"))
+                account.setSocial("OPENCOLLECTIVE_SPONSOR");
+            else
+                account.setSocial("OPENCOLLECTIVE");
+
+        } catch (JSONException ignored) {} catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return account;
+    }
 
     /**
      * Parse json response an unique account

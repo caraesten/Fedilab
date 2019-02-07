@@ -160,6 +160,10 @@
             <menu>
                 <group android:checkableBehavior="single">
                     <item
+                        android:id="@+id/nav_opencollective"
+                        android:icon="@drawable/ic_attach_money"
+                        android:title="Open Collective" />
+                    <item
                         android:id="@+id/nav_how_to"
                         android:icon="@drawable/ic_videocam"
                         android:title="@string/how_to_videos" />

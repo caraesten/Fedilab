@@ -110,45 +110,53 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
         }else{
             holder.account_dn.setCompoundDrawables( null, null, null, null);
         }
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            assert account != null;
-            holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
-            holder.account_un.setText(String.format("@%s",account.getAcct()));
-        }else {
-            assert account != null;
-            holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
-            holder.account_un.setText(String.format("@%s",account.getAcct()));
-        }
-        Helper.changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.mastodonC4);
-        //Profile picture
-        Glide.with(holder.account_pp.getContext())
-                .load(account.getAvatar())
-                .into(holder.account_pp);
         if( account.isFollowing()){
             holder.account_follow.hide();
         }else{
             holder.account_follow.show();
         }
 
-        holder.account_follow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.account_follow.setEnabled(false);
-                new PostActionAsyncTask(context, API.StatusAction.FOLLOW, account.getId(), AccountSearchDevAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if( !account.getSocial().contains("OPENCOLLECTIVE")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                assert account != null;
+                holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
+                holder.account_un.setText(String.format("@%s", account.getAcct()));
+            } else {
+                assert account != null;
+                holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
+                holder.account_un.setText(String.format("@%s", account.getAcct()));
             }
-        });
-        holder.acccount_container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ShowAccountActivity.class);
-                Bundle b = new Bundle();
-                b.putParcelable("account", account);
-                intent.putExtras(b);
-                context.startActivity(intent);
-            }
-        });
+        }else{
+            holder.account_un.setText(account.getAcct());
+            holder.account_follow.hide();
+        }
+        Helper.changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.mastodonC4);
+        //Profile picture
+        Glide.with(holder.account_pp.getContext())
+                .load(account.getAvatar())
+                .into(holder.account_pp);
+
+
+        if( !account.getSocial().contains("OPENCOLLECTIVE")) {
+
+            holder.account_follow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.account_follow.setEnabled(false);
+                    new PostActionAsyncTask(context, API.StatusAction.FOLLOW, account.getId(), AccountSearchDevAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }
+            });
+            holder.acccount_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ShowAccountActivity.class);
+                    Bundle b = new Bundle();
+                    b.putParcelable("account", account);
+                    intent.putExtras(b);
+                    context.startActivity(intent);
+                }
+            });
+        }
 
         return convertView;
     }

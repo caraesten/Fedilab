@@ -235,15 +235,13 @@ public class GNUAPI {
      */
     public Relationship getRelationship(String accountId) {
 
-        List<Relationship> relationships;
+
         Relationship relationship = null;
         HashMap<String, String> params = new HashMap<>();
-        params.put("user_id",accountId);
+        params.put("target_id",accountId);
         try {
             String response = new HttpsConnection(context).get(getAbsoluteUrl("/friendships/show.json"), 60, params, prefKeyOauthTokenT);
-            relationships = parseRelationshipResponse(new JSONArray(response));
-            if( relationships != null && relationships.size() > 0)
-                relationship = relationships.get(0);
+            relationship = parseRelationshipResponse(new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -271,9 +269,9 @@ public class GNUAPI {
         if( accounts != null && accounts.size() > 0 ) {
             StringBuilder parameters = new StringBuilder();
             for(Account account: accounts)
-                parameters.append("user_id[]=").append(account.getId()).append("&");
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(10));
-            params.put("user_id[]", parameters.toString());
+                parameters.append("target_id[]=").append(account.getId()).append("&");
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(12));
+            params.put("target_id[]", parameters.toString());
             List<Relationship> relationships = new ArrayList<>();
             try {
                 HttpsConnection httpsConnection = new HttpsConnection(context);
@@ -1895,22 +1893,28 @@ public class GNUAPI {
 
     /**
      * Parse json response an unique relationship
-     * @param resobj JSONObject
+     * @param resobjIni JSONObject
      * @return Relationship
      */
-    private Relationship parseRelationshipResponse(JSONObject resobj){
+    private Relationship parseRelationshipResponse(JSONObject resobjIni){
+
 
         Relationship relationship = new Relationship();
         try {
+            JSONObject resobj = resobjIni.getJSONObject("relationship").getJSONObject("source");
             relationship.setId(resobj.get("id").toString());
             relationship.setFollowing(Boolean.valueOf(resobj.get("following").toString()));
             relationship.setFollowed_by(Boolean.valueOf(resobj.get("followed_by").toString()));
             relationship.setBlocking(Boolean.valueOf(resobj.get("blocking").toString()));
-            relationship.setMuting(Boolean.valueOf(resobj.get("muting").toString()));
+            try {
+                relationship.setMuting(Boolean.valueOf(resobj.get("muting").toString()));
+            }catch (Exception ignored){
+                    relationship.setMuting(false);
+                }
             try {
                 relationship.setMuting_notifications(!Boolean.valueOf(resobj.get("notifications_enabled").toString()));
             }catch (Exception ignored){
-                relationship.setMuting_notifications(true);
+                relationship.setMuting_notifications(false);
             }
             relationship.setEndorsed(false);
             relationship.setShowing_reblogs(true);
