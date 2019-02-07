@@ -766,6 +766,7 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="action_logout_account">Logout account</string>
     <string name="set_optimize_loading">Optimize loading time</string>
     <string name="all">All</string>
+    <string name="about_opencollective">Support the app</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
