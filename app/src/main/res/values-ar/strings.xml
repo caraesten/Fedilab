@@ -778,8 +778,8 @@
     <string name="action_markdown">ماركداون</string>
     <string name="action_logout_account">الخروج مِن الحساب</string>
     <string name="set_optimize_loading">تحسين مدة التحميل</string>
-    <string name="all">All</string>
-    <string name="about_opencollective">Support the app</string>
+    <string name="all">الكل</string>
+    <string name="about_opencollective">ادعم التطبيق</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>تورنت</item>
