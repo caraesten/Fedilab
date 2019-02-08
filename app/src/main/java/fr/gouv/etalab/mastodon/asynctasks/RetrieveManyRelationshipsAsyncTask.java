@@ -48,7 +48,7 @@ public class RetrieveManyRelationshipsAsyncTask extends AsyncTask<Void, Void, Vo
 
     @Override
     protected Void doInBackground(Void... params) {
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             apiResponse = new API(this.contextReference.get()).getRelationship(accounts);
         else
             apiResponse = new GNUAPI(this.contextReference.get()).getRelationship(accounts);

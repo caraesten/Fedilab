@@ -96,7 +96,9 @@ public class GNUAPI {
             this.instance = Helper.getLiveInstance(context);
         else {
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            Account account = new AccountDAO(context, db).getAccountByToken(this.prefKeyOauthTokenT);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+            Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
             if( account == null) {
                 APIError = new Error();
                 APIError.setError(context.getString(R.string.toast_error));
@@ -182,7 +184,7 @@ public class GNUAPI {
     public Account verifyCredentials() {
         account = new Account();
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, prefKeyOauthTokenT);
+            String response = new HttpsConnection(context).get(getAbsoluteUrl("/account/verify_credentials.json"), 60, null, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -238,10 +240,42 @@ public class GNUAPI {
 
         Relationship relationship = null;
         HashMap<String, String> params = new HashMap<>();
-        params.put("target_id",accountId);
+
         try {
-            String response = new HttpsConnection(context).get(getAbsoluteUrl("/friendships/show.json"), 60, params, prefKeyOauthTokenT);
-            relationship = parseRelationshipResponse(new JSONObject(response));
+            String response;
+            if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                params.put("target_id",accountId);
+                response = new HttpsConnection(context).get(getAbsoluteUrl("/friendships/show.json"), 60, params, prefKeyOauthTokenT);
+                relationship = parseRelationshipResponse(new JSONObject(response));
+            }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                params.put("target_id",accountId);
+                response = new HttpsConnection(context).get(getAbsoluteUrl("/users/show.json"), 60, params, prefKeyOauthTokenT);
+                JSONObject resobj = new JSONObject(response);
+                try {
+                    relationship = new Relationship();
+                    relationship.setId(resobj.get("id").toString());
+                    relationship.setFollowing(Boolean.valueOf(resobj.get("following").toString()));
+                    relationship.setFollowed_by(Boolean.valueOf(resobj.get("follow_request_sent").toString()));
+                    relationship.setBlocking(Boolean.valueOf(resobj.get("statusnet_blocking").toString()));
+                    try {
+                        relationship.setMuting(Boolean.valueOf(resobj.get("muting").toString()));
+                    }catch (Exception ignored){
+                        relationship.setMuting(false);
+                    }
+                    try {
+                        relationship.setMuting_notifications(!Boolean.valueOf(resobj.get("notifications_enabled").toString()));
+                    }catch (Exception ignored){
+                        relationship.setMuting_notifications(false);
+                    }
+                    relationship.setEndorsed(false);
+                    relationship.setShowing_reblogs(true);
+                    relationship.setRequested(false);
+                } catch (JSONException e) {
+                    setDefaultError(e);
+                }
+                return relationship;
+            }
+
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
@@ -1435,9 +1469,10 @@ public class GNUAPI {
         String url = null;
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         //Current user
-        String currentToken = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(context, db).getAccountByToken(currentToken);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
         if(type == DisplayNotificationsFragment.Type.MENTION){
             params.put("name",account.getAcct());
             url = getAbsoluteUrl("/statuses/mentions_timeline.json");
@@ -1710,7 +1745,11 @@ public class GNUAPI {
         Status status = new Status();
         try {
             status.setId(resobj.get("id").toString());
-            status.setUri(resobj.get("uri").toString());
+            try {
+                status.setUri(resobj.get("uri").toString());
+            }catch (Exception ignored){
+                status.setUri(resobj.get("id").toString());
+            }
             status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
             status.setIn_reply_to_id(resobj.get("in_reply_to_status_id").toString());
             status.setIn_reply_to_account_id(resobj.get("in_reply_to_user_id").toString());
@@ -1881,8 +1920,11 @@ public class GNUAPI {
                 account.setHeader("null");
                 account.setHeader_static("null");
             }
-            account.setSocial("GNU");
 
+            if( resobj.has("cid"))
+                account.setSocial("FRIENDICA");
+            else
+                account.setSocial("GNU");
             account.setEmojis(new ArrayList<>());
         } catch (JSONException ignored) {} catch (ParseException e) {
             e.printStackTrace();

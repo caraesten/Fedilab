@@ -550,9 +550,11 @@ public class Helper {
     public static void logoutCurrentUser(Activity activity) {
         SharedPreferences sharedpreferences = activity.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         //Current user
-        String currentToken = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
+
         SQLiteDatabase db = Sqlite.getInstance(activity, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(activity, db).getAccountByToken(currentToken);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(activity));
+        Account account = new AccountDAO(activity, db).getUniqAccount(userId, instance);
         account.setToken("null");
         new AccountDAO(activity, db).updateAccount(account);
         Account newAccount = new AccountDAO(activity, db).getLastUsedAccount();
@@ -1370,7 +1372,7 @@ public class Helper {
             MenuItem itemPCom = menu.findItem(R.id.nav_peertube_comm);
             if( itemPCom != null)
                 itemPCom.setVisible(false);
-        }else if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
+        }else if(  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
             MenuItem itemCom = menu.findItem(R.id.nav_peertube_comm);
             if( itemCom != null)
                 itemCom.setVisible(false);
@@ -1378,7 +1380,7 @@ public class Helper {
             if( itemPFCom != null)
                 itemPFCom.setVisible(false);
 
-            if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+            if( BaseMainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
                 MenuItem nav_list = menu.findItem(R.id.nav_list);
                 if( nav_list != null)
                     nav_list.setVisible(false);
@@ -2875,7 +2877,7 @@ public class Helper {
                 } catch (Exception ignored) {
                 }
                 return;
-            }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+            }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
                 try {
                     Glide.with(imageView.getContext())
                             .load(R.drawable.gnu_default_avatar)

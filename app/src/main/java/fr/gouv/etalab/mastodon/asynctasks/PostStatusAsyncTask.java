@@ -59,7 +59,7 @@ public class PostStatusAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
             boolean isconnected = Helper.isConnectedToInternet(contextReference.get(), Helper.getLiveInstance(contextReference.get()));
             if( isconnected) {
                 if (account == null) {

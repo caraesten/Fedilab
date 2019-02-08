@@ -148,7 +148,9 @@ public class API {
             this.instance = Helper.getLiveInstance(context);
         else {
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            Account account = new AccountDAO(context, db).getAccountByToken(this.prefKeyOauthTokenT);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+            Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
             if( account == null) {
                 APIError = new Error();
                 APIError.setError(context.getString(R.string.toast_error));

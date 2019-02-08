@@ -233,11 +233,10 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
         userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
-        String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), DB_NAME, null, Sqlite.DB_VERSION).open();
         boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(token);
+        Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         if( account == null){
             Helper.logout(getApplicationContext());
             Intent myIntent = new Intent(BaseMainActivity.this, LoginActivity.class);
@@ -257,6 +256,9 @@ public abstract class BaseMainActivity extends BaseActivity
             social = UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA;
         else if( account.getSocial().equals("GNU"))
             social = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
+        else if( account.getSocial().equals("FRIENDICA"))
+            social = UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA;
+        Log.v(Helper.TAG,  account.getSocial());
         countNewStatus = 0;
         countNewNotifications = 0;
 
@@ -345,7 +347,7 @@ public abstract class BaseMainActivity extends BaseActivity
         delete_all = findViewById(R.id.delete_all);
         add_new = findViewById(R.id.add_new);
 
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             TabLayout.Tab tabHome = tabLayout.newTab();
             TabLayout.Tab tabNotif = tabLayout.newTab();
             TabLayout.Tab tabDirect = tabLayout.newTab();
@@ -421,23 +423,23 @@ public abstract class BaseMainActivity extends BaseActivity
             tabLayout.addTab(tabHome);
             tabLayout.addTab(tabNotif);
             tabPosition.put("home",0);
-            if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+            if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                 typePosition.put(0, RetrieveFeedsAsyncTask.Type.HOME);
             else
                 typePosition.put(0, RetrieveFeedsAsyncTask.Type.GNU_HOME);
             tabPosition.put("notifications",1);
-            if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+            if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                 typePosition.put(1, RetrieveFeedsAsyncTask.Type.NOTIFICATION);
             else
                 typePosition.put(0, RetrieveFeedsAsyncTask.Type.GNU_NOTIFICATION);
             int i = 2;
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                 display_direct = false;
             if( display_direct) {
                 tabLayout.addTab(tabDirect);
                 tabPosition.put("direct",i);
 
-                if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU ) {
+                if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
                     instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
 
@@ -461,7 +463,7 @@ public abstract class BaseMainActivity extends BaseActivity
             if( display_local) {
                 tabLayout.addTab(tabLocal);
                 tabPosition.put("local", i);
-                if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+                if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                     typePosition.put(i, RetrieveFeedsAsyncTask.Type.LOCAL);
                 else
                     typePosition.put(i, RetrieveFeedsAsyncTask.Type.GNU_LOCAL);
@@ -470,13 +472,13 @@ public abstract class BaseMainActivity extends BaseActivity
             if( display_global) {
                 tabLayout.addTab(tabPublic);
                 tabPosition.put("global", i);
-                if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+                if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA )
                     typePosition.put(i, RetrieveFeedsAsyncTask.Type.PUBLIC);
                 else
                     typePosition.put(i, RetrieveFeedsAsyncTask.Type.GNU_WHOLE);
                 i++;
             }
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                 display_art = false;
             if( display_art ) {
                 tabLayout.addTab(tabArt);
@@ -584,13 +586,13 @@ public abstract class BaseMainActivity extends BaseActivity
             });
 
             countPage = 2;
-            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true) && social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true) && social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                 countPage++;
             if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true))
                 countPage++;
             if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true))
                 countPage++;
-            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true)&& social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true)&& social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                 countPage++;
 
             if( tabPosition.containsKey("global"))
@@ -1101,10 +1103,10 @@ public abstract class BaseMainActivity extends BaseActivity
             startSreaming();
 
 
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             Helper.refreshSearchTag(BaseMainActivity.this, tabLayout, adapter);
         int tabCount = tabLayout.getTabCount();
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             for( int j = countPage ; j < tabCount ; j++){
                 attacheDelete(j);
             }
@@ -1122,7 +1124,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 query= query.replaceAll("^#+", "");
                 //It's not a peertube search
                 if(displayPeertube == null){
-                    if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                         Intent intent = new Intent(BaseMainActivity.this, SearchResultActivity.class);
                         intent.putExtra("search", query);
                         startActivity(intent);
@@ -1232,7 +1234,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
         tabLayout.getTabAt(0).select();
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             toot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -1516,7 +1518,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         // Asked once for notification opt-in
         boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
-        if(!popupShown && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)){
+        if(!popupShown && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)){
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
             LayoutInflater inflater = getLayoutInflater();
             @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
@@ -1560,7 +1562,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         mamageNewIntent(getIntent());
 
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
 
             // Retrieves instance
             new RetrieveInstanceAsyncTask(getApplicationContext(), BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -1844,10 +1846,11 @@ public abstract class BaseMainActivity extends BaseActivity
                 DisplayStatusFragment fragment = new DisplayStatusFragment();
                 bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.MYVIDEOS);
                 bundle.putString("instanceType","PEERTUBE");
-                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
                 SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), DB_NAME, null, Sqlite.DB_VERSION).open();
-                Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(token);
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+                Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
                 bundle.putString("targetedid",account.getUsername());
                 bundle.putBoolean("ownvideos", true);
                 fragment.setArguments(bundle);
@@ -2181,9 +2184,10 @@ public abstract class BaseMainActivity extends BaseActivity
             bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.MYVIDEOS);
             bundle.putString("instanceType","PEERTUBE");
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
             SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), DB_NAME, null, Sqlite.DB_VERSION).open();
-            Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(token);
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+            Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
             bundle.putString("targetedid",account.getUsername());
             bundle.putBoolean("ownvideos", true);
             fragment.setArguments(bundle);
@@ -2463,14 +2467,14 @@ public abstract class BaseMainActivity extends BaseActivity
         }
 
         public void removeTabPage() {
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 this.mNumOfTabs--;
                 notifyDataSetChanged();
             }
         }
 
         public void addTabPage(String title) {
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 TabLayout.Tab tab = tabLayout.newTab();
                 tab.setText(title);
                 this.mNumOfTabs++;
@@ -2480,7 +2484,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         @Override
         public Fragment getItem(int position) {
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                 //Remove the search bar
                 if (!toolbar_search.isIconified()) {
                     toolbarTitle.setVisibility(View.VISIBLE);
@@ -2492,7 +2496,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 Bundle bundle = new Bundle();
                 if (position == 0) {
                     homeFragment = new DisplayStatusFragment();
-                    if(social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                    if(social != UpdateAccountInfoAsyncTask.SOCIAL.GNU &&  social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.HOME);
                     else
                         bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.GNU_HOME);
@@ -2595,7 +2599,7 @@ public abstract class BaseMainActivity extends BaseActivity
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
             registeredFragments.put(position, createdFragment);
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
 
                 // save the appropriate reference depending on position
                 if (position == 0) {
@@ -3078,7 +3082,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public void manageFloatingButton(boolean display){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
-        if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE ||social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA|| social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+        if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE ||social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA|| social == UpdateAccountInfoAsyncTask.SOCIAL.GNU|| social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             if (display) {
                 tootShow();
                 if (!displayFollowInstance)
@@ -3095,7 +3099,7 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
     public void tootShow(){
-        if(  social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE ||social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA|| social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+        if(  social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE ||social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA|| social == UpdateAccountInfoAsyncTask.SOCIAL.GNU|| social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             toot.show();
         }else{
             toot.hide();

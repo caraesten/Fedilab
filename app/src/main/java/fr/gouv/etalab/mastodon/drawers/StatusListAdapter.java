@@ -1753,7 +1753,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
                         }
                     }
-                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+                    if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
                         popup.getMenu().findItem(R.id.action_info).setVisible(false);
                         popup.getMenu().findItem(R.id.action_report).setVisible(false);
                         popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);

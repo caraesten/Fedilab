@@ -1124,9 +1124,11 @@ public class HttpsConnection {
                         else
                             token = tokenUsed;
                         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                        Account account = new AccountDAO(context, db).getAccountByToken(token);
+                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                         URL url;
-                        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                             url = new URL("https://" + account.getInstance() + "/api/v1/media");
                         else
                             url = new URL("https://" + account.getInstance() + "/api/media/upload.json");
@@ -1152,7 +1154,7 @@ public class HttpsConnection {
                         int lengthSent = pixels.length;
                         lengthSent += (twoHyphens + boundary + lineEnd).getBytes().length;
                         lengthSent += (twoHyphens + boundary + twoHyphens +lineEnd).getBytes().length;
-                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                             lengthSent += ("Content-Disposition: form-data; name=\"file\"; filename=\""+fileName+"\"" + lineEnd).getBytes().length;
                         else
                             lengthSent += ("Content-Disposition: form-data; name=\"media\"; filename=\""+fileName+"\"" + lineEnd).getBytes().length;
@@ -1183,7 +1185,7 @@ public class HttpsConnection {
                         DataOutputStream request = new DataOutputStream(httpsURLConnection.getOutputStream());
 
                         request.writeBytes(twoHyphens + boundary  + lineEnd);
-                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                             request.writeBytes("Content-Disposition: form-data; name=\"file\"; filename=\""+fileName+"\"" + lineEnd);
                         else
                             request.writeBytes("Content-Disposition: form-data; name=\"media\"; filename=\""+fileName+"\"" + lineEnd);
@@ -1246,7 +1248,7 @@ public class HttpsConnection {
                         });
 
                         Attachment attachment;
-                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                             attachment = API.parseAttachmentResponse(new JSONObject(response));
                         else
                             attachment = GNUAPI.parseUploadedAttachmentResponse(new JSONObject(response));
@@ -1296,7 +1298,9 @@ public class HttpsConnection {
                         else
                             token = tokenUsed;
                         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                        Account account = new AccountDAO(context, db).getAccountByToken(token);
+                        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                        Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
                         final URL url = new URL("http://" + account.getInstance() + "/api/v1/media");
                         ByteArrayOutputStream ous = null;
                         try {
@@ -1406,7 +1410,7 @@ public class HttpsConnection {
 
 
                         Attachment attachment;
-                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                             attachment = API.parseAttachmentResponse(new JSONObject(response));
                         else
                             attachment = GNUAPI.parseUploadedAttachmentResponse(new JSONObject(response));

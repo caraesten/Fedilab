@@ -208,9 +208,10 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                 }
             }
         });
-        String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        Account account = new AccountDAO(getApplicationContext(), db).getAccountByToken(prefKeyOauthTokenT);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(getApplicationContext()));
+        Account account = new AccountDAO(getApplicationContext(), db).getUniqAccount(userId, instance);
         Helper.loadGiF(getApplicationContext(), account.getAvatar(), my_pp);
         Bundle b = getIntent().getExtras();
         if(b != null) {

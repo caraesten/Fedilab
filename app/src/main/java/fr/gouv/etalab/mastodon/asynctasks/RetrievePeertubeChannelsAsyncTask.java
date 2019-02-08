@@ -56,8 +56,9 @@ public class RetrievePeertubeChannelsAsyncTask extends AsyncTask<Void, Void, Voi
         PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         SharedPreferences sharedpreferences = contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-        Account account = new AccountDAO(contextReference.get(), db).getAccountByToken(token);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(contextReference.get()));
+        Account account = new AccountDAO(contextReference.get(), db).getUniqAccount(userId, instance);
         apiResponse = peertubeAPI.getPeertubeChannel(account.getUsername());
         return null;
     }

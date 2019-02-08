@@ -78,13 +78,13 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         API api = null;
         GNUAPI gnuapi = null;
-        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             api = new API(this.contextReference.get());
         else
             gnuapi = new GNUAPI(this.contextReference.get());
         switch (action){
             case REBLOGGED:
-                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
                     assert api != null;
                     apiResponse = api.getRebloggedBy(targetedId, max_id);
                 }else {
@@ -93,7 +93,7 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
                 break;
             case FAVOURITED:
-                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
                     assert api != null;
                     apiResponse = api.getFavouritedBy(targetedId, max_id);
                 }else {
@@ -102,7 +102,7 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
                 break;
             case BLOCKED:
-                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     assert api != null;
                     apiResponse = api.getBlocks(max_id);
                 }else {
@@ -111,7 +111,7 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
                 break;
             case MUTED:
-                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     assert api != null;
                     apiResponse = api.getMuted(max_id);
                 }else {
@@ -120,7 +120,7 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
                 break;
             case FOLLOWING:
-                if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     assert api != null;
                     apiResponse = api.getFollowing(targetedId, max_id);
                 }
@@ -130,7 +130,7 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
                 break;
             case FOLLOWERS:
-                if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     assert api != null;
                     apiResponse = api.getFollowers(targetedId, max_id);
                 }else {

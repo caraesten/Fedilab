@@ -58,7 +58,7 @@ public class RetrieveAccountAsyncTask extends AsyncTask<Void, Void, Void> {
             PeertubeAPI peertubeAPI = new PeertubeAPI(this.contextReference.get());
             account = peertubeAPI.getAccount(targetedId);
             error = peertubeAPI.getError();
-        }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+        }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU|| MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
             account = gnuapi.getAccount(targetedId);
             error = gnuapi.getError();

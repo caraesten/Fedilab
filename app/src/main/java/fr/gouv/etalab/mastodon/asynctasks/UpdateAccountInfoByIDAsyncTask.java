@@ -26,6 +26,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
+import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -68,8 +69,8 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
             }catch (HttpsConnection.HttpsConnectionException exception){
                 if(exception.getStatusCode() == 401){
                     SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                    String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-                    account = new AccountDAO(this.contextReference.get(), db).getAccountByToken(token);
+                    String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(contextReference.get()));
+                    account = new AccountDAO(contextReference.get(), db).getUniqAccount(userId, instance);
                     HashMap<String, String> values = new PeertubeAPI(this.contextReference.get()).refreshToken(account.getClient_id(), account.getClient_secret(), account.getRefresh_token());
                     if( values != null) {
                         String newtoken = values.get("access_token");
@@ -83,6 +84,8 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
                 }
             }
 
+        }else if ( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+            account = new GNUAPI(this.contextReference.get()).verifyCredentials();
         }
         if( account == null)
             return null;
@@ -91,6 +94,7 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
         boolean userExists = new AccountDAO(this.contextReference.get(), db).userExist(account);
         if( userExists) {
             Account accountDb = new AccountDAO(this.contextReference.get(), db).getAccountByID(userId);
+
             if( accountDb != null){
                 account.setInstance(accountDb.getInstance());
                 account.setToken(accountDb.getToken());

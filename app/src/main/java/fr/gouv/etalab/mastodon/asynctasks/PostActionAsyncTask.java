@@ -198,7 +198,7 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
                 statusCode = peertubeAPI.deleteVideo(targetedId);
             }
             error = peertubeAPI.getError();
-        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+        }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
             GNUAPI gnuapi;
             if (account != null)
                 gnuapi = new GNUAPI(contextReference.get(), account.getInstance(), account.getToken());

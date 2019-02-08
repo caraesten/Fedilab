@@ -221,7 +221,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
                 break;
             case FAVOURITES:
-                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     apiResponse = api.getFavourites(max_id);
                 }else{
                     GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
@@ -236,7 +236,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                         apiResponse = api.getPinnedStatuses(targetedID, max_id);
                     else
                         apiResponse = api.getAccountTLStatuses(targetedID, max_id, !showReply);
-                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+                }else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
                     GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
                     if (showMediaOnly)
                         apiResponse = gnuapi.getStatusWithMedia(targetedID, max_id);
@@ -261,7 +261,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 apiResponse = api.getStatusbyId(targetedID);
                 break;
             case TAG:
-                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     List<TagTimeline> tagTimelines = new SearchDAO(contextReference.get(), db).getTimelineInfo(tag);
                     if (tagTimelines != null && tagTimelines.size() > 0) {
                         TagTimeline tagTimeline = tagTimelines.get(0);

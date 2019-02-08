@@ -59,7 +59,7 @@ public class TabLayoutNotificationsFragment extends Fragment {
 
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
 
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.all)));
 
         TabLayout.Tab tabMention = tabLayout.newTab();
@@ -68,9 +68,10 @@ public class TabLayoutNotificationsFragment extends Fragment {
         TabLayout.Tab tabFollow = tabLayout.newTab();
 
         tabMention.setCustomView(R.layout.tab_badge);
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             tabFav.setCustomView(R.layout.tab_badge);
-        tabBoost.setCustomView(R.layout.tab_badge);
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+            tabBoost.setCustomView(R.layout.tab_badge);
         tabFollow.setCustomView(R.layout.tab_badge);
 
 
@@ -90,10 +91,11 @@ public class TabLayoutNotificationsFragment extends Fragment {
             iconFav.setImageResource(R.drawable.ic_star_notif_tab);
         }
 
-        @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
-        ImageView iconBoost = tabBoost.getCustomView().findViewById(R.id.tab_icon);
-        iconBoost.setImageResource(R.drawable.ic_repeat_notif_tab);
-
+        ImageView iconBoost =null;
+        if( tabBoost.getCustomView() != null) {
+            iconBoost = tabBoost.getCustomView().findViewById(R.id.tab_icon);
+            iconBoost.setImageResource(R.drawable.ic_repeat_notif_tab);
+        }
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconFollow = tabFollow.getCustomView().findViewById(R.id.tab_icon);
         iconFollow.setImageResource(R.drawable.ic_follow_notif_tab);
@@ -103,7 +105,8 @@ public class TabLayoutNotificationsFragment extends Fragment {
         tabLayout.addTab(tabMention);
         if( tabFav.getCustomView() != null)
             tabLayout.addTab(tabFav);
-        tabLayout.addTab(tabBoost);
+        if( tabBoost.getCustomView() != null)
+            tabLayout.addTab(tabBoost);
         tabLayout.addTab(tabFollow);
 
         if (theme == THEME_BLACK)
@@ -115,13 +118,15 @@ public class TabLayoutNotificationsFragment extends Fragment {
             iconMention.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             if( iconFav != null)
                 iconFav.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
-            iconBoost.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+            if( iconBoost != null)
+                iconBoost.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             iconFollow.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
         } else {
             iconMention.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
             if( iconFav != null)
                 iconFav.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
-            iconBoost.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
+            if( iconBoost != null)
+                iconBoost.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
             iconFollow.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
         }
 
@@ -174,16 +179,18 @@ public class TabLayoutNotificationsFragment extends Fragment {
             String tag = "";
             switch (position) {
                 case 0:
-                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU ) {
+                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU  && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                         type = DisplayNotificationsFragment.Type.ALL;
                     }else
                         type = DisplayNotificationsFragment.Type.MENTION;
                     break;
                 case 1:
-                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )
+                    if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU  && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                         type = DisplayNotificationsFragment.Type.MENTION;
-                    else
+                    else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                         type = DisplayNotificationsFragment.Type.BOOST;
+                    else if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+                        type = DisplayNotificationsFragment.Type.FOLLOW;
                     break;
                 case 2:
                     if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU )

@@ -48,7 +48,7 @@ public class TabLayoutTootsFragment extends Fragment {
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.replies)));
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.media)));
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.pinned_toots)));
         }

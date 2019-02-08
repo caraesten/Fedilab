@@ -60,7 +60,7 @@ public class RetrieveNotificationsAsyncTask extends AsyncTask<Void, Void, Void> 
 
     @Override
     protected Void doInBackground(Void... params) {
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             API api;
             if (account == null) {
                 api = new API(this.contextReference.get());

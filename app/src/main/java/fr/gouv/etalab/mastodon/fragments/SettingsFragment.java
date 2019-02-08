@@ -784,9 +784,10 @@ public class SettingsFragment extends Fragment {
 
 
         LinearLayout toot_visibility_container = rootView.findViewById(R.id.toot_visibility_container);
-        String prefKeyOauthTokenT = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        final Account account = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+        final Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
         final ImageView set_toot_visibility = rootView.findViewById(R.id.set_toot_visibility);
         if( theme == Helper.THEME_DARK){
             changeDrawableColor(context, set_toot_visibility, R.color.dark_text);

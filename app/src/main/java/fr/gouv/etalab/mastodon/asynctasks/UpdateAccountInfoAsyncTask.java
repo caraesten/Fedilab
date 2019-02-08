@@ -29,6 +29,7 @@ import java.util.HashMap;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -52,7 +53,8 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         PEERTUBE,
         PIXELFED,
         PLEROMA,
-        GNU
+        GNU,
+        FRIENDICA
     }
     public UpdateAccountInfoAsyncTask(Context context, String token, String client_id, String client_secret, String refresh_token, String instance, SOCIAL social){
         this.contextReference = new WeakReference<>(context);
@@ -69,7 +71,7 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
         Account account = null;
         if( social == SOCIAL.MASTODON) {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
-            account.setSocial("MASTODON");
+            account.setSocial(account.getSocial());
         }else if( social == SOCIAL.PEERTUBE) {
             try {
                 account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
@@ -83,6 +85,9 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
                         this.refresh_token = values.get("refresh_token");
                 }
             }
+        }else{
+            account = new GNUAPI(this.contextReference.get(), instance, null).verifyCredentials();
+            account.setSocial(account.getSocial());
         }
 
         if( account == null)

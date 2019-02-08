@@ -54,7 +54,7 @@ public class RetrieveRelationshipAsyncTask extends AsyncTask<Void, Void, Void> {
             API api = new API(this.contextReference.get());
             relationship = api.getRelationship(accountId);
             error = api.getError();
-        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+        } else if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
             GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
             relationship = gnuapi.getRelationship(accountId);
             error = gnuapi.getError();

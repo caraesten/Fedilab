@@ -249,6 +249,21 @@ public class AccountDAO {
             return null;
         }
     }
+    /**
+     * Returns an Account by token
+     * @param userId String
+     * @param instance String
+     * @return Account
+     */
+    public Account getUniqAccount(String userId, String instance){
+
+        try {
+            Cursor c = db.query(Sqlite.TABLE_USER_ACCOUNT, null, Sqlite.COL_USER_ID + " = \"" + userId + "\" AND " + Sqlite.COL_INSTANCE + " = \"" + instance + "\"", null, null, null, null, "1");
+            return cursorToUser(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     /**
      * Test if the current user is already stored in data base
