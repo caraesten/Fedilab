@@ -114,8 +114,8 @@ public class WebviewConnectActivity extends BaseActivity {
                 Helper.colorizeToolbar(toolbar, R.color.black, WebviewConnectActivity.this);
             }
         }
-        webView.getSettings().setJavaScriptEnabled(true);
         webView = findViewById(R.id.webviewConnect);
+        webView.getSettings().setJavaScriptEnabled(true);
         clearCookies(getApplicationContext());
         final ProgressBar pbar = findViewById(R.id.progress_bar);
         webView.setWebChromeClient(new WebChromeClient() {
