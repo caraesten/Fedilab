@@ -62,6 +62,13 @@
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:divider="@null"/>
+        <TextView
+            android:id="@+id/txt_developers"
+            android:visibility="gone"
+            android:textSize="18sp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/about_support"
@@ -125,6 +132,12 @@
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:divider="@null"/>
+        <TextView
+            android:id="@+id/txt_ux"
+            android:visibility="gone"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <!-- About Help desk -->
         <TextView
@@ -145,6 +158,12 @@
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:divider="@null"/>
+        <TextView
+            android:id="@+id/txt_support"
+            android:visibility="gone"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <!-- About banner designer -->
         <TextView
@@ -165,7 +184,12 @@
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:divider="@null"/>
-
+            <TextView
+                android:id="@+id/txt_banners"
+                android:visibility="gone"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         <!-- About logo designer -->
         <TextView
             android:padding="5dp"
@@ -185,7 +209,12 @@
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:divider="@null"/>
-
+        <TextView
+            android:id="@+id/txt_designers"
+            android:visibility="gone"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <!-- About contributors -->
 
         <TextView
@@ -206,9 +235,18 @@
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:divider="@null"/>
-
-
-
+        <TextView
+            android:id="@+id/txt_thankyou1"
+            android:visibility="gone"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txt_thankyou2"
+            android:visibility="gone"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <!-- About license -->
         <LinearLayout

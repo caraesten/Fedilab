@@ -43,6 +43,7 @@ import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRelationshipAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveRemoteDataAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
@@ -138,6 +139,17 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         Button about_license = findViewById(R.id.about_license);
         Button about_thekinrar = findViewById(R.id.about_thekinrar);
         Button about_trunk = findViewById(R.id.about_trunk);
+
+
+        TextView txt_developers, txt_ux, txt_support, txt_banners, txt_designers, txt_thankyou1, txt_thankyou2;
+        txt_developers = findViewById(R.id.txt_developers);
+        txt_ux = findViewById(R.id.txt_ux);
+        txt_support = findViewById(R.id.txt_support);
+        txt_banners = findViewById(R.id.txt_banners);
+        txt_designers = findViewById(R.id.txt_designers);
+        txt_thankyou1 = findViewById(R.id.txt_thankyou1);
+        txt_thankyou2 = findViewById(R.id.txt_thankyou2);
+
 
         about_code.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -245,13 +257,86 @@ public class AboutActivity extends BaseActivity implements OnRetrieveRemoteAccou
         accountSearchWebAdapterSupport = new AccountSearchDevAdapter(AboutActivity.this, support);
         lv_support.setAdapter(accountSearchWebAdapterSupport);
 
-        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "tom79", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "mmarif", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "guzzisti", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "NateLikesSheep", "mastodon.art", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "kasun", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new RetrieveRemoteDataAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ) {
+            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "tom79", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "mmarif", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "guzzisti", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "NateLikesSheep", "mastodon.art", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "kasun", "mastodon.social", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "PhotonQyv", "mastodon.xyz", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new RetrieveRemoteDataAsyncTask(getApplicationContext(), "angrytux", "social.tchncs.de", AboutActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }else{
+            SpannableString name = new SpannableString("@tom79@mastodon.social");
+            name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
+            txt_developers.setText(name);
+            txt_developers.setVisibility(View.VISIBLE);
+            txt_developers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Helper.openBrowser(AboutActivity.this, "https://mastodon.social/@tom79");
+                }
+            });
+            name = new SpannableString("@mmarif@mastodon.social");
+            name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
+            txt_ux.setText(name);
+            txt_ux.setVisibility(View.VISIBLE);
+            txt_ux.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Helper.openBrowser(AboutActivity.this, "https://mastodon.social/@mmarif");
+                }
+            });
+            name = new SpannableString("@guzzisti@mastodon.social");
+            name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
+            txt_support.setText(name);
+            txt_support.setVisibility(View.VISIBLE);
+            txt_support.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Helper.openBrowser(AboutActivity.this, "https://mastodon.social/@guzzisti");
+                }
+            });
+            name = new SpannableString("@NateLikesSheep@mastodon.art");
+            name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
+            txt_banners.setText(name);
+            txt_banners.setVisibility(View.VISIBLE);
+            txt_banners.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Helper.openBrowser(AboutActivity.this, "https://mastodon.art/@NateLikesSheep");
+                }
+            });
+            name = new SpannableString("@kasun@mastodon.social");
+            name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
+            txt_designers.setText(name);
+            txt_designers.setVisibility(View.VISIBLE);
+            txt_designers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Helper.openBrowser(AboutActivity.this, "https://mastodon.social/@kasun");
+                }
+            });
+            name = new SpannableString("@PhotonQyv@mastodon.xyz");
+            name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
+            txt_thankyou1.setText(name);
+            txt_thankyou1.setVisibility(View.VISIBLE);
+            txt_thankyou1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Helper.openBrowser(AboutActivity.this, "https://mastodon.xyz/@PhotonQyv");
+                }
+            });
+            name = new SpannableString("@angrytux@social.tchncs.de");
+            name.setSpan(new UnderlineSpan(), 0, name.length(), 0);
+            txt_thankyou2.setText(name);
+            txt_thankyou2.setVisibility(View.VISIBLE);
+            txt_thankyou2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Helper.openBrowser(AboutActivity.this, "https://social.tchncs.de/@angrytux");
+                }
+            });
+        }
     }
 
 
