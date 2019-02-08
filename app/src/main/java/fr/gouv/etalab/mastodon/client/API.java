@@ -1359,22 +1359,34 @@ public class API {
 
         if( any != null && any.size() > 0) {
             StringBuilder parameters = new StringBuilder();
-            for (String a : any)
+            for (String a : any) {
+                try {
+                    a = URLEncoder.encode(a, "UTF-8");
+                } catch (UnsupportedEncodingException ignored) {}
                 parameters.append("any[]=").append(a).append("&");
+            }
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(6));
             params.put("any[]", parameters.toString());
         }
         if( all != null && all.size() > 0) {
             StringBuilder parameters = new StringBuilder();
-            for (String a : all)
+            for (String a : all) {
+                try {
+                    a = URLEncoder.encode(a, "UTF-8");
+                } catch (UnsupportedEncodingException ignored) {}
                 parameters.append("all[]=").append(a).append("&");
+            }
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(6));
             params.put("all[]", parameters.toString());
         }
         if( none != null && none.size() > 0) {
             StringBuilder parameters = new StringBuilder();
-            for (String a : none)
+            for (String a : none) {
+                try {
+                    a = URLEncoder.encode(a, "UTF-8");
+                } catch (UnsupportedEncodingException ignored) {}
                 parameters.append("none[]=").append(a).append("&");
+            }
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(7));
             params.put("none[]", parameters.toString());
         }
