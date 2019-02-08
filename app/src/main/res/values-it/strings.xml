@@ -302,7 +302,7 @@
     <string name="set_notif_follow_mention">Notifica quando qualcuno ti menziona</string>
     <string name="set_share_validation">Mostra finestra di dialogo prima della ricondivisione</string>
     <string name="set_share_validation_fav">Mostra finestra di dialogo prima di aggiungere ai preferiti</string>
-    <string name="settings_title_more_options">Impostazioni Avanzate</string>
+    <string name="settings_title_more_options">Impostazioni avanzate</string>
     <string name="set_wifi_only">Notifica solo in WIFI</string>
     <string name="set_notify">Notifica?</string>
     <string name="set_notif_silent">Notifiche silenziose</string>
@@ -318,15 +318,15 @@
     <string name="note_no_space">Hai raggiunto i 160 caratteri permessi!</string>
     <string name="username_no_space">Hai raggiunto i 30 caratteri permessi!</string>
     <string name="settings_title_hour">Slot di tempo per le notifiche:</string>
-    <string name="settings_time_from">Tra</string>
-    <string name="settings_time_to">e</string>
+    <string name="settings_time_from">Tra le</string>
+    <string name="settings_time_to">e le</string>
     <string name="settings_time_greater">Il tempo deve essere maggiore di %1$s</string>
     <string name="settings_time_lower">Il tempo deve essere minore di %1$s</string>
     <string name="settings_hour_init">Tempo di inizio</string>
     <string name="settings_hour_end">Tempo di fine</string>
     <string name="embedded_browser">Usa il browser incluso</string>
     <string name="custom_tabs">Schede personalizzate</string>
-    <string name="use_javascript">Abilita JavaScript</string>
+    <string name="use_javascript">Abilita Javascript</string>
     <string name="expand_cw">Espandi automaticamente cw</string>
     <string name="use_cookies">Permetti cookie di terze-parti</string>
     <string name="settings_ui_layout">Layout per le timeline: </string>
