@@ -761,7 +761,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Déconnexion du compte</string>
     <string name="set_optimize_loading">Optimiser le temps de chargement</string>
-    <string name="all">All</string>
+    <string name="all">Tout</string>
+    <string name="about_opencollective">Soutenir l\'application</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

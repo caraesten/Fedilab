@@ -754,6 +754,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="action_logout_account">Von Konto abmelden</string>
     <string name="set_optimize_loading">Ladezeit optimieren</string>
     <string name="all">Alle</string>
+    <string name="about_opencollective">Die App unterstützen</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

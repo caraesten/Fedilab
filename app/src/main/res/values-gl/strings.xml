@@ -765,7 +765,8 @@
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Desconectar conta</string>
     <string name="set_optimize_loading">Optimizar tempo de carga</string>
-    <string name="all">All</string>
+    <string name="all">Todo</string>
+    <string name="about_opencollective">Axude a app</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

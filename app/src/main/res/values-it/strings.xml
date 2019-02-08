@@ -302,7 +302,7 @@
     <string name="set_notif_follow_mention">Notifica quando qualcuno ti menziona</string>
     <string name="set_share_validation">Mostra finestra di dialogo prima della ricondivisione</string>
     <string name="set_share_validation_fav">Mostra finestra di dialogo prima di aggiungere ai preferiti</string>
-    <string name="settings_title_more_options">Impostazioni Avanzate</string>
+    <string name="settings_title_more_options">Impostazioni avanzate</string>
     <string name="set_wifi_only">Notifica solo in WIFI</string>
     <string name="set_notify">Notifica?</string>
     <string name="set_notif_silent">Notifiche silenziose</string>
@@ -318,15 +318,15 @@
     <string name="note_no_space">Hai raggiunto i 160 caratteri permessi!</string>
     <string name="username_no_space">Hai raggiunto i 30 caratteri permessi!</string>
     <string name="settings_title_hour">Slot di tempo per le notifiche:</string>
-    <string name="settings_time_from">Tra</string>
-    <string name="settings_time_to">e</string>
+    <string name="settings_time_from">Tra le</string>
+    <string name="settings_time_to">e le</string>
     <string name="settings_time_greater">Il tempo deve essere maggiore di %1$s</string>
     <string name="settings_time_lower">Il tempo deve essere minore di %1$s</string>
     <string name="settings_hour_init">Tempo di inizio</string>
     <string name="settings_hour_end">Tempo di fine</string>
     <string name="embedded_browser">Usa il browser incluso</string>
     <string name="custom_tabs">Schede personalizzate</string>
-    <string name="use_javascript">Abilita JavaScript</string>
+    <string name="use_javascript">Abilita Javascript</string>
     <string name="expand_cw">Espandi automaticamente cw</string>
     <string name="use_cookies">Permetti cookie di terze-parti</string>
     <string name="settings_ui_layout">Layout per le timeline: </string>
@@ -454,17 +454,17 @@
     <string name="delete">Elimina</string>
     <string name="fetch_more_toots">Recupera altri toot…</string>
     <!-- About lists -->
-    <string name="action_lists">Elenchi</string>
-    <string name="action_lists_confirm_delete">Sei sicuro di voler eliminare definitivamente questo elenco?</string>
-    <string name="action_lists_empty_content">Non c\'è niente in questo elenco. Quando i membri di questo elenco postano nuovi stati, questi appariranno qui.</string>
-    <string name="action_lists_add_to">Aggiungi all\'elenco</string>
+    <string name="action_lists">Liste</string>
+    <string name="action_lists_confirm_delete">Sei sicuro di voler eliminare definitivamente questa lista?</string>
+    <string name="action_lists_empty_content">Non c\'è ancora niente in questa lista. Quando i membri di questa lista postano nuovi stati, questi appariranno qui.</string>
+    <string name="action_lists_add_to">Aggiungi alla lista</string>
     <string name="action_lists_remove_from">Rimuovi dall\'elenco</string>
-    <string name="action_lists_create">Aggiungi elenco</string>
-    <string name="action_lists_delete">Elimina elenco</string>
-    <string name="action_lists_update">Modifica elenco</string>
-    <string name="action_lists_title_placeholder">Titolo nuovo elenco</string>
+    <string name="action_lists_create">Aggiungi lista</string>
+    <string name="action_lists_delete">Elimina lista</string>
+    <string name="action_lists_update">Modifica lista</string>
+    <string name="action_lists_title_placeholder">Titolo della nuova lista</string>
     <string name="action_lists_search_users">Cerca tra le persone che segui</string>
-    <string name="action_lists_owner">I tuoi elenchi</string>
+    <string name="action_lists_owner">Le tue liste</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s è stato spostato su %2$s</string>
     <string name="show_boost_count">Mostra conteggio ricondivisi/favoriti</string>
@@ -548,10 +548,10 @@
     <string name="select_all">Seleziona tutti</string>
     <string name="unselect_all">Deseleziona tutti</string>
     <string name="follow_trunk">%s è seguito!</string>
-    <string name="create_list_trunk">Creare la lista %s</string>
-    <string name="add_account_list_trunk">Aggiungi account alla lista</string>
+    <string name="create_list_trunk">Creazione della lista %s</string>
+    <string name="add_account_list_trunk">Aggiunta degli account alla lista</string>
     <string name="account_added_list_trunk">Gli account sono stati aggiunti alla lista</string>
-    <string name="adding_account_list_trunk">Aggiungendo account alla lista</string>
+    <string name="adding_account_list_trunk">Aggiunta degli account alla lista</string>
     <string name="action_list_add">Non hai ancora creato nessuna lista. Clicca sul pulsante \"+\" per aggiungerne una nuova.</string>
     <string name="action_remote_instance_add">Non stai seguendo nessuna istanza remota. Clicca sul pulsante \"+\" per aggiungerne una nuova.</string>
     <string name="about_trunk">Chi seguire</string>
@@ -765,9 +765,10 @@
     <string name="action_logout_account">Disconnetti l\'account</string>
     <string name="set_optimize_loading">Ottimizza tempo di caricamento</string>
     <string name="all">Tutto</string>
+    <string name="about_opencollective">Supporta l\'app</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
         <item>Webview</item>
+        <item>Stream diretto</item>
     </string-array>
 </resources>

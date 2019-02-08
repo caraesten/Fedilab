@@ -773,6 +773,7 @@
     <string name="action_logout_account">Выйти из аккаунта</string>
     <string name="set_optimize_loading">Оптимизировать время загрузки</string>
     <string name="all">Все</string>
+    <string name="about_opencollective">Поддержать это приложение</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
