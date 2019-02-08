@@ -258,7 +258,6 @@ public abstract class BaseMainActivity extends BaseActivity
             social = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
         else if( account.getSocial().equals("FRIENDICA"))
             social = UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA;
-        Log.v(Helper.TAG,  account.getSocial());
         countNewStatus = 0;
         countNewNotifications = 0;
 
@@ -469,6 +468,8 @@ public abstract class BaseMainActivity extends BaseActivity
                     typePosition.put(i, RetrieveFeedsAsyncTask.Type.GNU_LOCAL);
                 i++;
             }
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+                display_global = false;
             if( display_global) {
                 tabLayout.addTab(tabPublic);
                 tabPosition.put("global", i);
@@ -590,7 +591,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 countPage++;
             if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true))
                 countPage++;
-            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true))
+            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true) && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA )
                 countPage++;
             if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true)&& social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                 countPage++;
@@ -1124,7 +1125,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 query= query.replaceAll("^#+", "");
                 //It's not a peertube search
                 if(displayPeertube == null){
-                    if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                    if( social != UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
                         Intent intent = new Intent(BaseMainActivity.this, SearchResultActivity.class);
                         intent.putExtra("search", query);
                         startActivity(intent);

@@ -616,77 +616,78 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             }
         });
 
-        toot_content.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-                if( toot_content.getSelectionStart() != 0)
-                    currentCursorPosition = toot_content.getSelectionStart();
-                if( s.toString().length() == 0 )
-                    currentCursorPosition = 0;
-                //Only check last 15 characters before cursor position to avoid lags
-                if( currentCursorPosition < 15 ){ //Less than 15 characters are written before the cursor position
-                    searchLength = currentCursorPosition;
-                }else {
-                    searchLength = 15;
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
+            toot_content.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
-                int totalChar = toot_cw_content.length() + toot_content.length();
-                toot_space_left.setText(String.valueOf(totalChar));
-                if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
-                    return;
-                Matcher m, mt;
-                if( s.toString().charAt(0) == '@')
-                    m = sPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
-                else
-                    m = sPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
-                if(m.matches()) {
-                    String search = m.group(3);
-                    if (pp_progress != null && pp_actionBar != null) {
-                        pp_progress.setVisibility(View.VISIBLE);
-                        pp_actionBar.setVisibility(View.GONE);
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if( toot_content.getSelectionStart() != 0)
+                        currentCursorPosition = toot_content.getSelectionStart();
+                    if( s.toString().length() == 0 )
+                        currentCursorPosition = 0;
+                    //Only check last 15 characters before cursor position to avoid lags
+                    if( currentCursorPosition < 15 ){ //Less than 15 characters are written before the cursor position
+                        searchLength = currentCursorPosition;
+                    }else {
+                        searchLength = 15;
                     }
-                    new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }else{
-                    if( s.toString().charAt(0) == '#')
-                        mt = tPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
+                    int totalChar = toot_cw_content.length() + toot_content.length();
+                    toot_space_left.setText(String.valueOf(totalChar));
+                    if( currentCursorPosition- (searchLength-1) < 0 || currentCursorPosition == 0 || currentCursorPosition > s.toString().length())
+                        return;
+                    Matcher m, mt;
+                    if( s.toString().charAt(0) == '@')
+                        m = sPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
                     else
-                        mt = tPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
-                    if(mt.matches()) {
-                        String search = mt.group(3);
+                        m = sPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
+                    if(m.matches()) {
+                        String search = m.group(3);
                         if (pp_progress != null && pp_actionBar != null) {
                             pp_progress.setVisibility(View.VISIBLE);
                             pp_actionBar.setVisibility(View.GONE);
                         }
-                        new RetrieveSearchAsyncTask(getApplicationContext(),search,true, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        new RetrieveSearchAccountsAsyncTask(getApplicationContext(),search,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }else{
-                        if( s.toString().charAt(0) == ':')
-                            mt = ePattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
+                        if( s.toString().charAt(0) == '#')
+                            mt = tPattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
                         else
-                            mt = ePattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
+                            mt = tPattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
                         if(mt.matches()) {
-                            String shortcode = mt.group(3);
+                            String search = mt.group(3);
                             if (pp_progress != null && pp_actionBar != null) {
                                 pp_progress.setVisibility(View.VISIBLE);
                                 pp_actionBar.setVisibility(View.GONE);
                             }
-                            new RetrieveEmojiAsyncTask(getApplicationContext(),shortcode,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        }else {
-                            toot_content.dismissDropDown();
+                            new RetrieveSearchAsyncTask(getApplicationContext(),search,true, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }else{
+                            if( s.toString().charAt(0) == ':')
+                                mt = ePattern.matcher(s.toString().substring(currentCursorPosition- searchLength, currentCursorPosition));
+                            else
+                                mt = ePattern.matcher(s.toString().substring(currentCursorPosition- (searchLength-1), currentCursorPosition));
+                            if(mt.matches()) {
+                                String shortcode = mt.group(3);
+                                if (pp_progress != null && pp_actionBar != null) {
+                                    pp_progress.setVisibility(View.VISIBLE);
+                                    pp_actionBar.setVisibility(View.GONE);
+                                }
+                                new RetrieveEmojiAsyncTask(getApplicationContext(),shortcode,TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }else {
+                                toot_content.dismissDropDown();
+                            }
                         }
                     }
+
+
+                    totalChar = toot_cw_content.length() + toot_content.length();
+                    toot_space_left.setText(String.valueOf(totalChar));
                 }
-
-
-                totalChar = toot_cw_content.length() + toot_content.length();
-                toot_space_left.setText(String.valueOf(totalChar));
-            }
-        });
+            });
 
         if( scheduledstatus != null)
             restoreServerSchedule(scheduledstatus.getStatus());

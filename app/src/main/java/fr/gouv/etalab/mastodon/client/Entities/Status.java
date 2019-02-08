@@ -59,9 +59,11 @@ import java.util.regex.Pattern;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
@@ -1087,11 +1089,13 @@ public class Status implements Parcelable{
                 spannableStringT.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(@NonNull View textView) {
-                        Intent intent = new Intent(context, HashTagActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("tag", tag.substring(1));
-                        intent.putExtras(b);
-                        context.startActivity(intent);
+                        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                            Intent intent = new Intent(context, HashTagActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("tag", tag.substring(1));
+                            intent.putExtras(b);
+                            context.startActivity(intent);
+                        }
                     }
                     @Override
                     public void updateDrawState(@NonNull TextPaint ds) {

@@ -68,18 +68,15 @@ public class GNUAPI {
 
     private Account account;
     private Context context;
-    private Results results;
     private Attachment attachment;
     private List<Account> accounts;
     private List<Status> statuses;
-    private List<Conversation> conversations;
     private int tootPerPage, accountPerPage, notificationPerPage;
     private int actionCode;
     private String instance;
     private String prefKeyOauthTokenT;
     private APIResponse apiResponse;
     private Error APIError;
-    private List<String> domains;
 
     public enum accountPrivacy {
         PUBLIC,
@@ -248,7 +245,7 @@ public class GNUAPI {
                 response = new HttpsConnection(context).get(getAbsoluteUrl("/friendships/show.json"), 60, params, prefKeyOauthTokenT);
                 relationship = parseRelationshipResponse(new JSONObject(response));
             }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                params.put("target_id",accountId);
+                params.put("user_id",accountId);
                 response = new HttpsConnection(context).get(getAbsoluteUrl("/users/show.json"), 60, params, prefKeyOauthTokenT);
                 JSONObject resobj = new JSONObject(response);
                 try {
@@ -610,7 +607,7 @@ public class GNUAPI {
         if (0 > limit || limit > 80)
             limit = 80;
         params.put("limit",String.valueOf(limit));
-        conversations = new ArrayList<>();
+        List<Conversation> conversations = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/conversations"), 60, params, prefKeyOauthTokenT);
@@ -1570,6 +1567,44 @@ public class GNUAPI {
             e.printStackTrace();
         }
         return attachment;
+    }
+
+
+    /**
+     * Retrieves Accounts and feeds when searching *synchronously*
+     *
+     * @param query  String search
+     * @return Results
+     */
+    public Results search(String query) {
+        Results results = new Results();
+        HashMap<String, String> params = new HashMap<>();
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            params.put("q", query);
+        else
+            try {
+                params.put("q", URLEncoder.encode(query, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                params.put("q", query);
+            }
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUrl("/users/search.json"), 60, params, prefKeyOauthTokenT);
+            List<Account> accounts = parseAccountResponse(new JSONArray(response));
+            results.setAccounts(accounts);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return results;
     }
 
     /**
