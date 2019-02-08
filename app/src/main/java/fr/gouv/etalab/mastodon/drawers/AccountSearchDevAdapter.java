@@ -102,7 +102,7 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
         }
         //Redraws icon for locked accounts
         final float scale = context.getResources().getDisplayMetrics().density;
-        if( account != null && account.isLocked()){
+        if( account.isLocked()){
             Drawable img = ContextCompat.getDrawable(context, R.drawable.ic_lock_outline);
             assert img != null;
             img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
@@ -110,31 +110,38 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
         }else{
             holder.account_dn.setCompoundDrawables( null, null, null, null);
         }
-        if( account.isFollowing()){
-            holder.account_follow.hide();
-        }else{
-            holder.account_follow.show();
-        }
+
 
         if( !account.getSocial().contains("OPENCOLLECTIVE")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                assert account != null;
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
                 holder.account_un.setText(String.format("@%s", account.getAcct()));
             } else {
-                assert account != null;
                 holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
                 holder.account_un.setText(String.format("@%s", account.getAcct()));
             }
+            if( account.isFollowing()){
+                holder.account_follow.hide();
+            }else{
+                holder.account_follow.show();
+            }
         }else{
+            holder.account_dn.setText(Helper.shortnameToUnicode(account.getDisplay_name(), true));
             holder.account_un.setText(account.getAcct());
             holder.account_follow.hide();
         }
         Helper.changeDrawableColor(context, R.drawable.ic_lock_outline,R.color.mastodonC4);
         //Profile picture
-        Glide.with(holder.account_pp.getContext())
-                .load(account.getAvatar())
-                .into(holder.account_pp);
+
+        if( account.getAvatar().startsWith("http")) {
+            Glide.with(holder.account_pp.getContext())
+                    .load(account.getAvatar())
+                    .into(holder.account_pp);
+        }else if(account.getSocial().contains("OPENCOLLECTIVE")){
+            Glide.with(holder.account_pp.getContext())
+                    .load(R.drawable.missing)
+                    .into(holder.account_pp);
+        }
 
 
         if( !account.getSocial().contains("OPENCOLLECTIVE")) {
@@ -154,6 +161,13 @@ public class AccountSearchDevAdapter extends BaseAdapter implements OnPostAction
                     b.putParcelable("account", account);
                     intent.putExtras(b);
                     context.startActivity(intent);
+                }
+            });
+        }else{
+            holder.acccount_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   Helper.openBrowser(context, account.getUrl());
                 }
             });
         }
