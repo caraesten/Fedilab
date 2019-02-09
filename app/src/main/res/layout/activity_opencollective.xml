@@ -24,8 +24,10 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
         android:orientation="vertical"
         >
+
 
         <!-- About OpenCollective -->
         <LinearLayout
@@ -35,6 +37,9 @@
             android:padding="5dp">
 
             <TextView
+                android:drawableStart="@drawable/ic_opencollective"
+                android:drawableLeft="@drawable/ic_opencollective"
+                android:drawablePadding="5dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -52,7 +57,12 @@
                 tools:ignore="HardcodedText" />
         </LinearLayout>
 
-
+        <TextView
+            android:text="@string/more_about_opencollective"
+            android:layout_width="match_parent"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
 
         <!-- About developer -->
         <TextView

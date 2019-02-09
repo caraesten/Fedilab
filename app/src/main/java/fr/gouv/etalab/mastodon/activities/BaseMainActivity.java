@@ -2098,6 +2098,10 @@ public abstract class BaseMainActivity extends BaseActivity
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
             return false;
+        }else if (id == R.id.nav_opencollective) {
+            Intent intent = new Intent(getApplicationContext(), OpencollectiveActivity.class);
+            startActivity(intent);
+            return false;
         } else if( id == R.id.nav_upload) {
             Intent intent = new Intent(getApplicationContext(), PeertubeUploadActivity.class);
             startActivity(intent);
@@ -2217,10 +2221,6 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "HOW_TO_VIDEOS";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, displayHowToFragment, fragmentTag).commit();
-        }else if (id == R.id.nav_opencollective) {
-            Intent intent = new Intent(getApplicationContext(), OpencollectiveActivity.class);
-            startActivity(intent);
-            return false;
         }else if (id == R.id.nav_muted || id == R.id.nav_pixelfed_muted) {
             toot.hide();
             accountsFragment = new DisplayAccountsFragment();
