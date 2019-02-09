@@ -754,6 +754,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="set_optimize_loading">Optimaliser lastetid</string>
     <string name="all">Alle</string>
     <string name="about_opencollective">Støtt applikasjonen</string>
+    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
