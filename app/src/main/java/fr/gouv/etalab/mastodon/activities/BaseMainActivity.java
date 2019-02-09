@@ -1288,12 +1288,14 @@ public abstract class BaseMainActivity extends BaseActivity
                     MenuItem action_about_instance = popup.getMenu().findItem(R.id.action_about_instance);
                     if( action_about_instance != null)
                         action_about_instance.setVisible(false);
-                    MenuItem action_size = popup.getMenu().findItem(R.id.action_size);
-                    if( action_size != null)
-                        action_size.setVisible(false);
                     MenuItem action_export = popup.getMenu().findItem(R.id.action_export);
                     if( action_export != null)
                         action_export.setVisible(false);
+                }
+                if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
+                    MenuItem action_size = popup.getMenu().findItem(R.id.action_size);
+                    if (action_size != null)
+                        action_size.setVisible(false);
                 }
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
