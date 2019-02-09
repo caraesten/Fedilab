@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 240
-        versionName "1.72.1"
+        versionCode 241
+        versionName "1.73.0"
         multiDexEnabled true
     }
     dexOptions {
