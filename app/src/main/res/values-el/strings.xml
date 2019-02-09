@@ -134,23 +134,23 @@
         <item>Delete &amp; re-draft this toot?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="one">%d reply</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="one">%d απάντηση</item>
+        <item quantity="other">%d απάντηση</item>
     </plurals>
-    <string name="set_display_bookmark_button">Display the bookmark button</string>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
-    <string name="bookmarks_empty">No bookmarks to display</string>
+    <string name="set_display_bookmark_button">Εμφάνιση του πλήκτρου των σελιδοδεικτών</string>
+    <string name="bookmarks">Σελιδοδείκτες</string>
+    <string name="bookmark_add">Προσθήκη στους σελιδοδείκτες</string>
+    <string name="bookmark_remove">Απομάκρυνση του σελιδοδείκτη</string>
+    <string name="bookmarks_empty">Δεν υπάρχουν σελιδοδείκτες προς εμφάνιση</string>
     <string name="status_bookmarked">Status has been added to bookmarks!</string>
     <string name="status_unbookmarked">Status was removed from bookmarks!</string>
     <!-- Date -->
-    <string name="date_seconds">%d s</string>
-    <string name="date_minutes">%d m</string>
-    <string name="date_hours">%d h</string>
-    <string name="date_day">%d d</string>
+    <string name="date_seconds">%d δ</string>
+    <string name="date_minutes">%d λ</string>
+    <string name="date_hours">%d ώ</string>
+    <string name="date_day">%d η</string>
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Warning</string>
+    <string name="toot_cw_placeholder">Προειδοποίηση</string>
     <string name="toot_placeholder">What is on your mind?</string>
     <string name="toot_it">TOOT!</string>
     <string name="cw">cw</string>
@@ -180,11 +180,11 @@
     <string name="show_reply">Click on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">Δεν υπάρχει διαθέσιμη περιγραφή.</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
+    <string name="about_vesrion">Έκδοση %1$s</string>
+    <string name="about_developer">Προγραμματιστής:</string>
+    <string name="about_license">Άδεια: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Source code: </string>
     <string name="about_yandex">Translation of toots:</string>
@@ -193,16 +193,16 @@
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
-    <string name="conversation">Conversation</string>
+    <string name="conversation">Συζήτηση</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
+    <string name="no_accounts">Δεν υπάρχει λογαριασμός προς εμφάνιση</string>
     <string name="no_follow_request">No follow request</string>
     <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
-    <string name="followers_cnt">Followers \n %1$s</string>
-    <string name="pins_cnt">Pinned \n %d</string>
-    <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="following_cnt">Παρακολουθεί \n %1$s</string>
+    <string name="followers_cnt">Τον παρακολουθούν \n %1$s</string>
+    <string name="pins_cnt">Καρφιτσωμένα \n %d</string>
+    <string name="authorize">Εξουσιοδότηση</string>
+    <string name="reject">Απόρριψη</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
