@@ -228,7 +228,7 @@
         <item quantity="other">もう一つの発見</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="other">%d likes</item>
+        <item quantity="other">%d いいね</item>
     </plurals>
     <string name="delete_notification_ask">通知を削除しますか？</string>
     <string name="delete_notification_ask_all">すべての通知を削除しますか？</string>
@@ -471,9 +471,9 @@
     <string name="data_export_toots">%1$s のトゥートをエクスポート</string>
     <string name="data_export_success">%2$s 個中 %1$s トゥートがエクスポートされました。</string>
     <string name="data_export_error">%1$s のデータをエクスポート中に問題が発生しました</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_export_error_simple">データのエクスポート中に問題が発生しました！</string>
+    <string name="data_import_success_simple">データがインポートされました！</string>
+    <string name="data_import_error_simple">データのインポート中に問題が発生しました！</string>
     <!-- Proxy -->
     <string name="proxy_set">プロキシ</string>
     <string name="proxy_type">タイプ</string>
