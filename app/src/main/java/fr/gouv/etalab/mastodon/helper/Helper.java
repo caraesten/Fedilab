@@ -991,7 +991,7 @@ public class Helper {
                 channelTitle = context.getString(R.string.channel_notif_boost);
         }
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.drawable.notification_icon)
+                .setSmallIcon(R.drawable.fedilab_notification_icon)
                 .setTicker(message)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
