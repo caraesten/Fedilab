@@ -116,4 +116,6 @@
     <color name="unfollow">#c52404</color>
 
     <color name="pixelfed_like">#dc3545</color>
+
+    <color name="ic_launcher_background">#454b5a</color>
 </resources>
