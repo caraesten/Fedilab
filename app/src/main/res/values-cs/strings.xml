@@ -237,10 +237,10 @@
         <item quantity="other">a %d dalších toots k zobrazení</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="few">%d likes</item>
-        <item quantity="many">%d likes</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d se líbí</item>
+        <item quantity="few">%d se líbí</item>
+        <item quantity="many">%d se líbí</item>
+        <item quantity="other">%d se líbí</item>
     </plurals>
     <string name="delete_notification_ask">Smazat oznámení?</string>
     <string name="delete_notification_ask_all">Smazat všechna oznámení?</string>
@@ -489,8 +489,8 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="data_export_toots">Export statusů %1$s</string>
     <string name="data_export_success">%1$s toots z %2$s bylo exportováno.</string>
     <string name="data_export_error">Něco se pokazilo během exportu dat pro %1$s</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
+    <string name="data_export_error_simple">Něco se pokazilo během exportovaní dat!</string>
+    <string name="data_import_success_simple">Data byla importována!</string>
     <string name="data_import_error_simple">Something went wrong when importing data!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
