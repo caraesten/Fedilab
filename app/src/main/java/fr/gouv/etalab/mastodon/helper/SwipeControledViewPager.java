@@ -17,7 +17,7 @@ package fr.gouv.etalab.mastodon.helper;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
+
 
 public class SwipeControledViewPager extends ViewPager {
     private boolean enableSwipe;
@@ -37,17 +37,16 @@ public class SwipeControledViewPager extends ViewPager {
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-        // Never allow swiping to switch between pages
-        return enableSwipe && super.onInterceptTouchEvent(event);
+    public boolean canScrollHorizontally(int direction) {
+        //Disable horizontal scrolling
+        if (enableSwipe) {
+            return super.canScrollHorizontally(direction);
+        } else {
+            return false;
+        }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        // Never allow swiping to switch between pages
-        return enableSwipe && super.onTouchEvent(event);
 
-    }
 
     public void setEnableSwipe(boolean enableSwipe) {
         this.enableSwipe = enableSwipe;
