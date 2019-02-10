@@ -88,15 +88,15 @@
     <string name="delete_account_title">Διέγραψε έναν λογαριασμό</string>
     <string name="delete_account_message" formatted="false">Διέγραψε τον λογαριασμό %1$s από την εφαρμογή;</string>
     <string name="send_email">Στείλε ένα email</string>
-    <string name="choose_file">Please select a file</string>
+    <string name="choose_file">Παρακαλώ, επιλέξτε ένα αρχείο</string>
     <string name="choose_file_error">Δεν βρέθηκε εφαρμογή περίηγησης αρχείων!</string>
-    <string name="click_to_change">Click on the path to change it</string>
+    <string name="click_to_change">Kλίκαρε στη διαδρομή για να την αλλάξεις</string>
     <string name="failed">Απέτυχε!</string>
     <string name="scheduled_toots">Scheduled toots</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
     <string name="insert_emoji">Insert emoji</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-    <string name="live_notif">Live notifications</string>
+    <string name="live_notif">Απ\' ευθείας ειδοποιήσεις</string>
     <!-- Status -->
     <string name="no_status">No toot to display</string>
     <string name="fav_added">The toot was added to favourites</string>
@@ -110,23 +110,23 @@
     <string name="reblog_remove">Unboost this toot?</string>
     <string name="pin_add">Pin this toot?</string>
     <string name="pin_remove">Unpin this toot?</string>
-    <string name="more_action_1">Mute</string>
-    <string name="more_action_2">Block</string>
-    <string name="more_action_3">Report</string>
-    <string name="more_action_4">Remove</string>
-    <string name="more_action_5">Copy</string>
-    <string name="more_action_6">Share</string>
-    <string name="more_action_7">Mention</string>
+    <string name="more_action_1">Σίγαση</string>
+    <string name="more_action_2">Φραγή</string>
+    <string name="more_action_3">Αναφορά</string>
+    <string name="more_action_4">Απομάκρυνση</string>
+    <string name="more_action_5">Αντιγραφή</string>
+    <string name="more_action_6">Να γυρίζει</string>
+    <string name="more_action_7">Αναφορά</string>
     <string name="more_action_8">Timed mute</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_9">Διαγραφή κ´ επανασχεδίαση</string>
     <string-array name="more_action_confirm">
         <item>Mute this account?</item>
-        <item>Block this account?</item>
+        <item>Φραγή αυτού του λογαριασμού;</item>
         <item>Report this toot?</item>
         <item>Block this domain?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
+        <item>Ειδοποίηση</item>
         <item>Silent</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
@@ -134,23 +134,23 @@
         <item>Delete &amp; re-draft this toot?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="one">%d reply</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="one">%d απάντηση</item>
+        <item quantity="other">%d απάντηση</item>
     </plurals>
-    <string name="set_display_bookmark_button">Display the bookmark button</string>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
-    <string name="bookmarks_empty">No bookmarks to display</string>
+    <string name="set_display_bookmark_button">Εμφάνιση του πλήκτρου των σελιδοδεικτών</string>
+    <string name="bookmarks">Σελιδοδείκτες</string>
+    <string name="bookmark_add">Προσθήκη στους σελιδοδείκτες</string>
+    <string name="bookmark_remove">Απομάκρυνση του σελιδοδείκτη</string>
+    <string name="bookmarks_empty">Δεν υπάρχουν σελιδοδείκτες προς εμφάνιση</string>
     <string name="status_bookmarked">Status has been added to bookmarks!</string>
     <string name="status_unbookmarked">Status was removed from bookmarks!</string>
     <!-- Date -->
-    <string name="date_seconds">%d s</string>
-    <string name="date_minutes">%d m</string>
-    <string name="date_hours">%d h</string>
-    <string name="date_day">%d d</string>
+    <string name="date_seconds">%d δ</string>
+    <string name="date_minutes">%d λ</string>
+    <string name="date_hours">%d ώ</string>
+    <string name="date_day">%d η</string>
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Warning</string>
+    <string name="toot_cw_placeholder">Προειδοποίηση</string>
     <string name="toot_placeholder">What is on your mind?</string>
     <string name="toot_it">TOOT!</string>
     <string name="cw">cw</string>
@@ -180,11 +180,11 @@
     <string name="show_reply">Click on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">Δεν υπάρχει διαθέσιμη περιγραφή.</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
+    <string name="about_vesrion">Έκδοση %1$s</string>
+    <string name="about_developer">Προγραμματιστής:</string>
+    <string name="about_license">Άδεια: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Source code: </string>
     <string name="about_yandex">Translation of toots:</string>
@@ -193,34 +193,34 @@
     <string name="thanks_text_logo">Icon designer:</string>
     <string name="thanks_text_banner">Banner designer:</string>
     <!-- Conversation -->
-    <string name="conversation">Conversation</string>
+    <string name="conversation">Συζήτηση</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
+    <string name="no_accounts">Δεν υπάρχει λογαριασμός προς εμφάνιση</string>
     <string name="no_follow_request">No follow request</string>
     <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
-    <string name="followers_cnt">Followers \n %1$s</string>
-    <string name="pins_cnt">Pinned \n %d</string>
-    <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="following_cnt">Παρακολουθεί \n %1$s</string>
+    <string name="followers_cnt">Τον παρακολουθούν \n %1$s</string>
+    <string name="pins_cnt">Καρφιτσωμένα \n %d</string>
+    <string name="authorize">Εξουσιοδότηση</string>
+    <string name="reject">Απόρριψη</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">No scheduled toots to display!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
     <string name="remove_scheduled">Delete scheduled toot?</string>
-    <string name="media_count">Media: %d</string>
+    <string name="media_count">Πολυμέσα: %d</string>
     <string name="toot_scheduled">The toot has been scheduled!</string>
     <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-    <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+    <string name="warning_battery">Είναι ενεργοποιημένη η εξοικονόμηση της ενέργειας. Ίσως να μη λειτουργήσει, όπως θα ήταν αναμενόμενο.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
     <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
     <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
     <!-- Notifications -->
-    <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned you</string>
+    <string name="no_notifications">Καμία ειδοποίηση προς εμφάνιση</string>
+    <string name="notif_mention">σε ανέφερε</string>
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
-    <string name="notif_follow">followed you</string>
+    <string name="notif_follow">άρχισε να σε παρακολουθεί</string>
     <string name="notif_pouet">New toot from %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
@@ -234,10 +234,10 @@
         <item quantity="one">%d like</item>
         <item quantity="other">%d likes</item>
     </plurals>
-    <string name="delete_notification_ask">Delete a notification?</string>
-    <string name="delete_notification_ask_all">Delete all notifications?</string>
-    <string name="delete_notification">The notification has been deleted!</string>
-    <string name="delete_notification_all">All notifications have been deleted!</string>
+    <string name="delete_notification_ask">Διαγραφή μιας ειδοποίησης;</string>
+    <string name="delete_notification_ask_all">Διαγραφή όλων των ειδοποιήσεων;</string>
+    <string name="delete_notification">Η ειδοποίηση διαγράφηκε.</string>
+    <string name="delete_notification_all">Όλες οι ειδοποιήσεις διαγράφτηκαν.</string>
     <!-- HEADER -->
     <string name="following">Following</string>
     <string name="followers">Followers</string>
@@ -267,9 +267,9 @@
     <string name="toast_error_login">Can not log in!</string>
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
     <string name="nothing_to_do">No action can be taken</string>
-    <string name="toast_saved">The media has been saved!</string>
-    <string name="toast_error_translate">An error occurred while translating!</string>
-    <string name="toast_toot_saved">Draft saved!</string>
+    <string name="toast_saved">Το πολυμέσο αποθηκεύθηκε.</string>
+    <string name="toast_error_translate">Παρουσιάστηκε κάποιο σφάλμα κατά την μετάφραση.</string>
+    <string name="toast_toot_saved">Αποθηκεύτηκε το προσχέδιο.</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
     <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
@@ -766,6 +766,7 @@
     <string name="set_optimize_loading">Optimize loading time</string>
     <string name="all">All</string>
     <string name="about_opencollective">Support the app</string>
+    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>

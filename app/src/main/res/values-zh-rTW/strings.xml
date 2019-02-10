@@ -761,7 +761,8 @@
     <string name="action_logout_account">登出帳號</string>
     <string name="set_optimize_loading">最佳化載入時間</string>
     <string name="all">全部</string>
-    <string name="about_opencollective">Support the app</string>
+    <string name="about_opencollective">支援應用程式</string>
+    <string name="more_about_opencollective">Open Collective 讓群組可以快速設定集合，募集資金並以透明的方式管理。</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
