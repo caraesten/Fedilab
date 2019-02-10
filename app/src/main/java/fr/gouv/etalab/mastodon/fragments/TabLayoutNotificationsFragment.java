@@ -149,7 +149,11 @@ public class TabLayoutNotificationsFragment extends Fragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                if( viewPager.getAdapter() != null) {
+                    Fragment fragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, tab.getPosition());
+                    DisplayNotificationsFragment displayNotificationsFragment = ((DisplayNotificationsFragment) fragment);
+                    displayNotificationsFragment.scrollToTop();
+                }
             }
         });
 
