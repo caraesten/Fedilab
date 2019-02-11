@@ -59,7 +59,7 @@
     <string name="replies">回覆</string>
     <string name="username">使用者名稱</string>
     <string name="drafts">草稿</string>
-    <string name="new_data">有可用的新資料!　是否顯示？</string>
+    <string name="new_data">有可用的新資料！是否顯示？</string>
     <string name="favourite">最愛</string>
     <string name="follow">新的跟隨者</string>
     <string name="mention">提及</string>
@@ -157,7 +157,7 @@
     <string name="toot_title_reply">回覆一則嘟文</string>
     <string name="toot_no_space">您已經到達允許的 500 字元！</string>
     <string name="toot_select_image">選取媒體</string>
-    <string name="toot_select_image_error">選擇媒體時出錯!</string>
+    <string name="toot_select_image_error">選擇媒體時出錯！</string>
     <string name="toot_delete_media">刪除此媒體？</string>
     <string name="toot_error_no_content">您的嘟文是空的！</string>
     <string name="toot_visibility_tilte">嘟文的能見度</string>
