@@ -78,28 +78,11 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp" />
                 </LinearLayout>
-                    <RadioGroup
-                        android:id="@+id/set_instance_type"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <RadioButton android:id="@+id/set_mastodon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:text="Mastodon"
-                            />
-                        <RadioButton android:id="@+id/set_peertube"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Peertube"
-                            />
-                        <RadioButton android:id="@+id/set_gnu"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="GNU"
-                            />
-                    </RadioGroup>
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/set_instance_type"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </android.support.design.widget.TextInputLayout>
             <LinearLayout
                 android:layout_width="300dp"
@@ -112,7 +95,6 @@
                     android:drawablePadding="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
-                    android:visibility="gone"
                     android:layout_gravity="center"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -139,12 +121,6 @@
                     android:inputType="textEmailAddress"
                     android:hint="@string/email"
                     />
-                <ImageView
-                    android:contentDescription="@string/more_information"
-                    android:id="@+id/info_uid"
-                    android:src="@drawable/ic_info_login"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="300dp"
@@ -159,12 +135,6 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     />
-                <ImageView
-                    android:contentDescription="@string/more_information"
-                    android:id="@+id/info_pwd"
-                    android:src="@drawable/ic_info_login"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp" />
             </LinearLayout>
             <TextView
                 android:layout_gravity="center"
