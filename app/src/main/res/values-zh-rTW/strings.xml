@@ -52,7 +52,7 @@
     <string name="next">下一個</string>
     <string name="previous">上一個</string>
     <string name="open_with">選擇開啟工具</string>
-    <string name="validate">驗證</string>
+    <string name="validate">確認</string>
     <string name="media">媒體</string>
     <string name="share_with">分享給</string>
     <string name="shared_via">透過 Mastalab 分享</string>
@@ -90,7 +90,7 @@
     <string name="send_email">傳送電子郵件</string>
     <string name="choose_file">請選擇一個檔案</string>
     <string name="choose_file_error">找不到檔案管理員！</string>
-    <string name="click_to_change">在路徑上點選以變更</string>
+    <string name="click_to_change">點擊路徑更改</string>
     <string name="failed">失敗 ！</string>
     <string name="scheduled_toots">排定的嘟文</string>
     <string name="disclaimer_full">下面的資訊可能不完全反映使用者的個人資料。</string>
@@ -120,14 +120,14 @@
     <string name="more_action_8">定時靜音</string>
     <string name="more_action_9">刪除 &amp; 重新變為草稿</string>
     <string-array name="more_action_confirm">
-        <item>將此帳號設為靜音？</item>
+        <item>靜音此帳號？</item>
         <item>封鎖此帳號？</item>
         <item>回報此嘟文？</item>
         <item>是否封鎖該網域？</item>
     </string-array>
     <string-array name="action_notification">
         <item>通知</item>
-        <item>安靜</item>
+        <item>靜音</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>移除此嘟文？</item>
