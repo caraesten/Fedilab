@@ -225,8 +225,9 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             swiped = false;
         }
         if( accounts != null && accounts.size() > 0) {
+            int currentPosition = this.accounts.size();
             this.accounts.addAll(accounts);
-            accountsListAdapter.notifyDataSetChanged();
+            accountsListAdapter.notifyItemRangeChanged(currentPosition,accounts.size());
         }
         swipeRefreshLayout.setRefreshing(false);
         firstLoad = false;
