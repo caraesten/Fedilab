@@ -250,7 +250,7 @@ public class LoginActivity extends BaseActivity {
                             login_two_step_container.setVisibility(View.GONE);
                             break;
                     }
-                    if (login_instance.getText() == null || login_instance.getText().toString().length() == 0)
+                    if (login_instance.getText() != null && login_instance.getText().toString().length() > 0)
                         retrievesClientId();
                 }
             });
@@ -763,11 +763,11 @@ public class LoginActivity extends BaseActivity {
         BubbleShowCaseBuilder showCaseBuilder = new BubbleShowCaseBuilder(LoginActivity.this)
                 .title(getString(R.string.instance))
                 .description(getString(R.string.showcase_instance))
-                .arrowPosition(BubbleShowCase.ArrowPosition.TOP)
+                .arrowPosition(BubbleShowCase.ArrowPosition.BOTTOM)
                 .backgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4))
                 .textColor(Color.WHITE)
-                .titleTextSize(17)
-                .descriptionTextSize(15);
+                .titleTextSize(14)
+                .descriptionTextSize(12);
             if( loop)
                 showCaseBuilder.showOnce("BUBBLE_SHOW_CASE_INSTANCE_ID");
             showCaseBuilder.listener(new BubbleShowCaseListener (){
@@ -809,11 +809,11 @@ public class LoginActivity extends BaseActivity {
         BubbleShowCaseBuilder showCaseBuilder = new BubbleShowCaseBuilder(LoginActivity.this)
                 .title(getString(R.string.two_factor_authentification))
                 .description(getString(R.string.showcase_2FA))
-                .arrowPosition(BubbleShowCase.ArrowPosition.BOTTOM)
+                .arrowPosition(BubbleShowCase.ArrowPosition.TOP)
                 .backgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4))
                 .textColor(Color.WHITE)
-                .titleTextSize(17)
-                .descriptionTextSize(15);
+                .titleTextSize(14)
+                .descriptionTextSize(12);
             if( loop)
                 showCaseBuilder.showOnce("BUBBLE_SHOW_CASE_2FA_ID");
             showCaseBuilder.listener(new BubbleShowCaseListener (){
