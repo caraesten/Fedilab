@@ -770,6 +770,10 @@
     <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
     <string name="copy_link">Copy link</string>
     <string name="connect_instance">Connect</string>
+    <string name="set_normal">Nomal</string>
+    <string name="set_compact">Compact</string>
+    <string name="set_console">Console</string>
+    <string name="set_mode">Set display mode</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
