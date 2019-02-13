@@ -2048,10 +2048,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 case R.id.action_copy_link:
                                     clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 
-                                    clip = ClipData.newPlainText(Helper.CLIP_BOARD, status.getUrl());
+                                    clip = ClipData.newPlainText(Helper.CLIP_BOARD, status.getReblog()!=null?status.getReblog().getUrl():status.getUrl());
                                     if (clipboard != null) {
                                         clipboard.setPrimaryClip(clip);
-                                        Toasty.info(context, context.getString(R.string.clipboard), Toast.LENGTH_LONG).show();
+                                        Toasty.info(context, context.getString(R.string.clipboard_url), Toast.LENGTH_LONG).show();
                                     }
                                     return true;
                                 case R.id.action_share:
