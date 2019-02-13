@@ -416,6 +416,19 @@ public class Status implements Parcelable{
         return tags;
     }
 
+    public String getTagsString() {
+        //iterate through tags and create comma delimited string of tag names
+        String tag_names = "";
+        for (Tag t : tags) {
+            if (tag_names.equals("")) {
+                tag_names = t.getName();
+            } else {
+                tag_names = tag_names + ", " + t.getName();
+            }
+        }
+        return tag_names;
+    }
+
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
