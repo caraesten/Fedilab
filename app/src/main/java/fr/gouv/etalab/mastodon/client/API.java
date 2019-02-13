@@ -225,11 +225,12 @@ public class API {
             } catch (KeyManagementException e1) {
                 e1.printStackTrace();
             } catch (HttpsConnection.HttpsConnectionException e1) {
-                e1.printStackTrace();
-            } catch (JSONException e1) {
                 instanceNodeInfo.setName("GNU");
                 instanceNodeInfo.setVersion("unknown");
                 instanceNodeInfo.setOpenRegistrations(true);
+                e1.printStackTrace();
+            } catch (JSONException e1) {
+
                 e1.printStackTrace();
             }
             e.printStackTrace();
