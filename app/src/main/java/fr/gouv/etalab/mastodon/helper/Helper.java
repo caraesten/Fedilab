@@ -288,6 +288,7 @@ public class Helper {
     public static final String SET_COMPACT_MODE = "set_compact_mode";
     public static final String SET_SHARE_DETAILS = "set_share_details";
     public static final String SET_CUSTOM_SHARING = "set_custom_sharing";
+    public static final String SET_CUSTOM_SHARING_URL = "set_custom_sharing_url";
     public static final String SET_NOTIF_SOUND = "set_notif_sound";
     public static final String SET_ENABLE_TIME_SLOT = "set_enable_time_slot";
     public static final String SET_KEEP_BACKGROUND_PROCESS = "set_keep_background_process";

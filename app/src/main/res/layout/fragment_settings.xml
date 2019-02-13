@@ -352,6 +352,21 @@
             android:text="@string/set_share_details"
             android:layout_height="wrap_content" />
 
+        <!-- CUSTOM SHARING  -->
+        <CheckBox
+            android:id="@+id/set_custom_sharing"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="Custom sharing"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:hint="Your custom sharing URL..."
+            android:id="@+id/custom_sharing_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
