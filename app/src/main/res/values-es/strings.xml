@@ -36,6 +36,7 @@
     <string name="toast_account_changed" formatted="false">Ahora funciona con la cuenta %1$s</string>
     <string name="add_account">Agregar una cuenta</string>
     <string name="clipboard">El contenido del toot ha sido copiado al portapapeles</string>
+    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
     <string name="change">Cambiar</string>
     <string name="choose_picture">Seleccionar una imagen…</string>
     <string name="clear">Borrar</string>
@@ -761,6 +762,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="all">All</string>
     <string name="about_opencollective">Support the app</string>
     <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
+    <string name="copy_link">Copy link</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>WebView</item>
