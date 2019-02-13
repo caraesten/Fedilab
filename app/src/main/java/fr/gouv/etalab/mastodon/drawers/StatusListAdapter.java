@@ -1340,11 +1340,26 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     holder.status_show_more.setVisibility(View.GONE);
                 } else {
                     //If medias are loaded without any conditions or if device is on wifi
-                    if (expand_media || !status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                        loadAttachments(status, holder);
-                        holder.status_show_more.setVisibility(View.GONE);
-                        status.setAttachmentShown(true);
-                    } else {
+                    if(behaviorWithAttachments != Helper.ATTACHMENT_ASK ) {
+                        if (expand_media || !status.isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                            loadAttachments(status, holder);
+                            holder.status_show_more.setVisibility(View.GONE);
+                            status.setAttachmentShown(true);
+                        } else {
+                            //Text depending if toots is sensitive or not
+                            String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                            holder.status_show_more.setText(textShowMore);
+                            if (!status.isAttachmentShown()) {
+                                holder.status_show_more.setVisibility(View.VISIBLE);
+                                if (fullAttachement)
+                                    holder.status_horizontal_document_container.setVisibility(View.GONE);
+                                else
+                                    holder.status_document_container.setVisibility(View.GONE);
+                            } else {
+                                loadAttachments(status, holder);
+                            }
+                        }
+                    }else {
                         //Text depending if toots is sensitive or not
                         String textShowMore = (status.isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
                         holder.status_show_more.setText(textShowMore);
@@ -1368,12 +1383,27 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         holder.status_document_container.setVisibility(View.GONE);
                     holder.status_show_more.setVisibility(View.GONE);
                 } else {
-                    //If medias are loaded without any conditions or if device is on wifi
-                    if (expand_media || !status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
-                        loadAttachments(status.getReblog(), holder);
-                        holder.status_show_more.setVisibility(View.GONE);
-                        status.setAttachmentShown(true);
-                    } else {
+                    if(behaviorWithAttachments != Helper.ATTACHMENT_ASK ) {
+                        //If medias are loaded without any conditions or if device is on wifi
+                        if (expand_media || !status.getReblog().isSensitive() && (behaviorWithAttachments == Helper.ATTACHMENT_ALWAYS || (behaviorWithAttachments == Helper.ATTACHMENT_WIFI && isOnWifi))) {
+                            loadAttachments(status.getReblog(), holder);
+                            holder.status_show_more.setVisibility(View.GONE);
+                            status.setAttachmentShown(true);
+                        } else {
+                            //Text depending if toots is sensitive or not
+                            String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
+                            holder.status_show_more.setText(textShowMore);
+                            if (!status.isAttachmentShown()) {
+                                holder.status_show_more.setVisibility(View.VISIBLE);
+                                if (fullAttachement)
+                                    holder.status_horizontal_document_container.setVisibility(View.GONE);
+                                else
+                                    holder.status_document_container.setVisibility(View.GONE);
+                            } else {
+                                loadAttachments(status.getReblog(), holder);
+                            }
+                        }
+                    }else{
                         //Text depending if toots is sensitive or not
                         String textShowMore = (status.getReblog().isSensitive()) ? context.getString(R.string.load_sensitive_attachment) : context.getString(R.string.load_attachment);
                         holder.status_show_more.setText(textShowMore);
