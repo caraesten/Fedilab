@@ -36,7 +36,7 @@
     <string name="toast_account_changed" formatted="false">Теперь работает с аккаунтом %1$s</string>
     <string name="add_account">Добавить аккаунт</string>
     <string name="clipboard">Содержимое тута было скопировано в буфер обмена</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">URL тута был скопирован в буфер обмена</string>
     <string name="change">Изменить</string>
     <string name="choose_picture">Выбрать изображение…</string>
     <string name="clear">Очистить</string>
@@ -776,12 +776,12 @@
     <string name="all">Все</string>
     <string name="about_opencollective">Поддержать это приложение</string>
     <string name="more_about_opencollective">Open Collective позволяет группам быстро создавать коллектив, собирать средства и прозрачно управлять ими.</string>
-    <string name="copy_link">Copy link</string>
-    <string name="connect_instance">Connect</string>
-    <string name="set_normal">Nomal</string>
-    <string name="set_compact">Compact</string>
-    <string name="set_console">Console</string>
-    <string name="set_mode">Set display mode</string>
+    <string name="copy_link">Копировать ссылку</string>
+    <string name="connect_instance">Подключить</string>
+    <string name="set_normal">Нормальный</string>
+    <string name="set_compact">Компактный</string>
+    <string name="set_console">Консольный</string>
+    <string name="set_mode">Установить режим отображения</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
