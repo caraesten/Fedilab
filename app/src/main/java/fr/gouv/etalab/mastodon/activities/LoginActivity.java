@@ -36,6 +36,7 @@ import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.UnderlineSpan;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,13 +49,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elconfidencial.bubbleshowcase.BubbleShowCase;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,6 +80,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeMaterialSpinnerColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.convertDpToPixel;
 
 
@@ -98,14 +101,15 @@ public class LoginActivity extends BaseActivity {
     private EditText login_passwd;
     boolean isLoadingInstance = false;
     private String oldSearch;
-    private ImageView info_uid, info_instance, info_pwd, info_2FA;
-    private RadioGroup set_instance_type;
+    private ImageView info_2FA;
+    private MaterialSpinner set_instance_type;
     private  Button connectionButton;
     private String actionToken;
     private String autofilledInstance;
     private String social;
     private UpdateAccountInfoAsyncTask.SOCIAL socialNetwork;
     private String basicAuth;
+    private LinearLayout login_two_step_container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,38 +215,50 @@ public class LoginActivity extends BaseActivity {
             login_instance = findViewById(R.id.login_instance);
             login_uid = findViewById(R.id.login_uid);
             login_passwd = findViewById(R.id.login_passwd);
-            info_uid = findViewById(R.id.info_uid);
-            info_instance = findViewById(R.id.info_instance);
-            info_pwd = findViewById(R.id.info_pwd);
+            ImageView info_instance = findViewById(R.id.info_instance);
             info_2FA = findViewById(R.id.info_2FA);
             set_instance_type = findViewById(R.id.set_instance_type);
 
             connectionButton = findViewById(R.id.login_button);
-
-            set_instance_type.check(R.id.set_mastodon);
+            changeMaterialSpinnerColor(LoginActivity.this, set_instance_type);
+            set_instance_type.setItems("Mastodon", "Pleroma", "Pixelfed", "Peertube", "GNU Social", "Friendica");
             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
-            set_instance_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            //Manage instances
+            set_instance_type.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
                 @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    switch(checkedId) {
-                        case R.id.set_mastodon:
+                public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                    switch(position) {
+                        case 0:
+                        case 1:
+                        case 2:
                             login_uid.setHint(R.string.email);
                             connectionButton.setEnabled(false);
                             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
+                            login_two_step_container.setVisibility(View.VISIBLE);
                             break;
-                        case R.id.set_peertube:
+                        case 3:
                             login_uid.setHint(R.string.username);
                             connectionButton.setEnabled(false);
                             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
+                            login_two_step_container.setVisibility(View.GONE);
                             break;
-                        case R.id.set_gnu:
+                        case 4:
+                        case 5:
                             login_uid.setHint(R.string.username);
                             connectionButton.setEnabled(true);
                             socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
+                            login_two_step_container.setVisibility(View.GONE);
                             break;
                     }
+                    if (login_instance.getText() != null && login_instance.getText().toString().length() > 0)
+                        retrievesClientId();
                 }
             });
+
+            set_instance_type.setEnabled(true);
+
+
+
 
             info_instance.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -251,18 +267,6 @@ public class LoginActivity extends BaseActivity {
                 }
             });
 
-            info_uid.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showCaseLogin(false);
-                }
-            });
-            info_pwd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showCasePassword(false);
-                }
-            });
             info_2FA.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -355,8 +359,7 @@ public class LoginActivity extends BaseActivity {
             if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                 connectionButton.setEnabled(false);
             login_two_step = findViewById(R.id.login_two_step);
-            login_two_step.setVisibility(View.GONE);
-            info_2FA.setVisibility(View.GONE);
+            login_two_step_container = findViewById(R.id.login_two_step_container);
             login_two_step.setPaintFlags(login_two_step.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             login_two_step.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -379,8 +382,6 @@ public class LoginActivity extends BaseActivity {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU)
                         connectionButton.setEnabled(false);
-                    login_two_step.setVisibility(View.INVISIBLE);
-                    info_2FA.setVisibility(View.INVISIBLE);
                     TextInputLayout login_instance_layout = findViewById(R.id.login_instance_layout);
                     if (!hasFocus) {
                         retrievesClientId();
@@ -435,8 +436,27 @@ public class LoginActivity extends BaseActivity {
             retrievesClientId();
             login_uid.requestFocus();
         }
-        if( social != null && social.equals("PEERTUBE")){
-            set_instance_type.check(R.id.set_peertube);
+        if( social != null){
+            switch (social){
+                case "MASTODON":
+                    set_instance_type.setSelectedIndex(0);
+                    break;
+                case "PLEROMA":
+                    set_instance_type.setSelectedIndex(1);
+                    break;
+                case "PIXELFED":
+                    set_instance_type.setSelectedIndex(2);
+                    break;
+                case "PEERTUBE":
+                    set_instance_type.setSelectedIndex(3);
+                    break;
+                case "GNU":
+                    set_instance_type.setSelectedIndex(4);
+                    break;
+                case "FRIENDICA":
+                    set_instance_type.setSelectedIndex(5);
+                    break;
+            }
         }
     }
 
@@ -457,21 +477,19 @@ public class LoginActivity extends BaseActivity {
         if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.GNU){
             String instanceFromField = login_instance.getText().toString().trim();
             String host  = instanceFromField;
-
-
             try {
                 URL url = new URL(instanceFromField);
                 host = url.getHost();
-            } catch (MalformedURLException e) { }
+            } catch (MalformedURLException ignored) { }
             try {
                 instance =  URLEncoder.encode(host, "utf-8");
             } catch (UnsupportedEncodingException e) {
                 Toasty.error(LoginActivity.this,getString(R.string.client_error), Toast.LENGTH_LONG).show();
             }
-            if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
-                actionToken = "/api/v1/apps";
-            else
+            if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                 actionToken = "/api/v1/oauth-clients/local";
+            else
+                actionToken = "/api/v1/apps";
             final HashMap<String, String> parameters = new HashMap<>();
             parameters.put(Helper.CLIENT_NAME, Helper.CLIENT_NAME_VALUE);
             parameters.put(Helper.REDIRECT_URIS, client_id_for_webview?Helper.REDIRECT_CONTENT_WEB:Helper.REDIRECT_CONTENT);
@@ -482,17 +500,16 @@ public class LoginActivity extends BaseActivity {
             }
 
             parameters.put(Helper.WEBSITE, Helper.WEBSITE_VALUE);
-
+            Log.v(Helper.TAG,"Helper.instanceWithProtocol(instance) + actionToken: " + Helper.instanceWithProtocol(instance) + actionToken);
             new Thread(new Runnable(){
                 @Override
                 public void run() {
                     try {
                         String response;
-                        if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
-                            response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
-                        else
+                        if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                             response = new HttpsConnection(LoginActivity.this).get(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
-
+                        else
+                            response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + actionToken, 30, parameters, null );
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 JSONObject resobj;
@@ -510,11 +527,6 @@ public class LoginActivity extends BaseActivity {
                                     editor.putString(Helper.ID, id);
                                     editor.apply();
                                     connectionButton.setEnabled(true);
-                                    if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
-                                        login_two_step.setVisibility(View.VISIBLE);
-                                        info_2FA.setVisibility(View.VISIBLE);
-                                        showCase2FA(true);
-                                    }
                                     if( client_id_for_webview){
                                         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
                                         if( embedded_browser) {
@@ -751,11 +763,11 @@ public class LoginActivity extends BaseActivity {
         BubbleShowCaseBuilder showCaseBuilder = new BubbleShowCaseBuilder(LoginActivity.this)
                 .title(getString(R.string.instance))
                 .description(getString(R.string.showcase_instance))
-                .arrowPosition(BubbleShowCase.ArrowPosition.TOP)
+                .arrowPosition(BubbleShowCase.ArrowPosition.BOTTOM)
                 .backgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4))
                 .textColor(Color.WHITE)
-                .titleTextSize(17)
-                .descriptionTextSize(15);
+                .titleTextSize(14)
+                .descriptionTextSize(12);
             if( loop)
                 showCaseBuilder.showOnce("BUBBLE_SHOW_CASE_INSTANCE_ID");
             showCaseBuilder.listener(new BubbleShowCaseListener (){
@@ -763,14 +775,18 @@ public class LoginActivity extends BaseActivity {
                     public void onTargetClick(BubbleShowCase bubbleShowCase) {
                         if( loop) {
                             bubbleShowCase.finishSequence();
-                            showCaseLogin(true);
+                            if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                                showCase2FA(true);
+                            }
                         }
                     }
                     @Override
                     public void onCloseActionImageClick(BubbleShowCase bubbleShowCase) {
                         if(loop) {
                             bubbleShowCase.finishSequence();
-                            showCaseLogin(true);
+                            if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                                showCase2FA(true);
+                            }
                         }
                     }
 
@@ -788,95 +804,16 @@ public class LoginActivity extends BaseActivity {
             .targetView(login_instance)
             .show();
     }
-    private void showCaseLogin(final boolean loop){
-        BubbleShowCaseBuilder showCaseBuilder = new BubbleShowCaseBuilder(LoginActivity.this) //Activity instance
-                .title(getString(R.string.login))
-                .description(getString(R.string.showcase_uid))
-                .arrowPosition(BubbleShowCase.ArrowPosition.TOP)
-                .backgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4))
-                .textColor(Color.WHITE)
-                .titleTextSize(17)
-                .descriptionTextSize(15);
-            if( loop)
-                showCaseBuilder.showOnce("BUBBLE_SHOW_CASE_UID_ID");
-            showCaseBuilder.listener(new BubbleShowCaseListener (){
-                    @Override
-                    public void onTargetClick(BubbleShowCase bubbleShowCase) {
-                        if( loop) {
-                            bubbleShowCase.finishSequence();
-                            showCasePassword(true);
-                        }
-                    }
-
-                    @Override
-                    public void onCloseActionImageClick(BubbleShowCase bubbleShowCase) {
-                        if( loop) {
-                            bubbleShowCase.finishSequence();
-                            showCasePassword(true);
-                        }
-                    }
-
-                    @Override
-                    public void onBubbleClick(BubbleShowCase bubbleShowCase) {
-
-                    }
-
-                    @Override
-                    public void onBackgroundDimClick(BubbleShowCase bubbleShowCase) {
-                    }
-
-                })
-                .targetView(login_uid)
-                .show();
-    }
-
-    private void showCasePassword(boolean loop){
-        BubbleShowCaseBuilder showCaseBuilder = new BubbleShowCaseBuilder(LoginActivity.this)
-                .title(getString(R.string.password))
-                .description(getString(R.string.showcase_pwd))
-                .arrowPosition(BubbleShowCase.ArrowPosition.BOTTOM)
-                .backgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4))
-                .textColor(Color.WHITE)
-                .titleTextSize(17)
-                .descriptionTextSize(15);
-            if( loop)
-                showCaseBuilder.showOnce("BUBBLE_SHOW_CASE_PASSWORD_ID");
-            showCaseBuilder.listener(new BubbleShowCaseListener (){
-                    @Override
-                    public void onTargetClick(BubbleShowCase bubbleShowCase) {
-
-                    }
-
-                    @Override
-                    public void onCloseActionImageClick(BubbleShowCase bubbleShowCase) {
-
-                    }
-
-                    @Override
-                    public void onBubbleClick(BubbleShowCase bubbleShowCase) {
-
-                    }
-
-                    @Override
-                    public void onBackgroundDimClick(BubbleShowCase bubbleShowCase) {
-
-                    }
-
-                })
-                .targetView(login_passwd)
-                .show();
-    }
-
 
     private void showCase2FA(boolean loop){
         BubbleShowCaseBuilder showCaseBuilder = new BubbleShowCaseBuilder(LoginActivity.this)
                 .title(getString(R.string.two_factor_authentification))
                 .description(getString(R.string.showcase_2FA))
-                .arrowPosition(BubbleShowCase.ArrowPosition.BOTTOM)
+                .arrowPosition(BubbleShowCase.ArrowPosition.TOP)
                 .backgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.mastodonC4))
                 .textColor(Color.WHITE)
-                .titleTextSize(17)
-                .descriptionTextSize(15);
+                .titleTextSize(14)
+                .descriptionTextSize(12);
             if( loop)
                 showCaseBuilder.showOnce("BUBBLE_SHOW_CASE_2FA_ID");
             showCaseBuilder.listener(new BubbleShowCaseListener (){

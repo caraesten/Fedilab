@@ -49,6 +49,7 @@ public class MainApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        //System.setProperty("java.net.preferIPv4Stack" , "true");
         JobManager.create(this).addJobCreator(new ApplicationJob());
         NotificationsSyncJob.schedule(false);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();

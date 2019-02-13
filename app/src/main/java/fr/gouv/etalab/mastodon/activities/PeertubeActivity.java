@@ -689,7 +689,8 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     @Override
     public void onDestroy() {
         super.onDestroy();
-        player.release();
+        if( player != null)
+            player.release();
     }
 
     @Override
