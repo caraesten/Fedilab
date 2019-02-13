@@ -175,8 +175,8 @@
     </string-array>
     <string name="no_draft">Καθόλου προσχέδια.</string>
     <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
+    <string name="choose_accounts">Επέλεξε ένα λογαριασμό</string>
+    <string name="select_accounts">Επέλεξε μερικούς λογαριασμούς</string>
     <string name="remove_draft">Remove draft?</string>
     <string name="show_reply">Click on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
@@ -197,7 +197,7 @@
     <string name="conversation">Συζήτηση</string>
     <!-- Accounts -->
     <string name="no_accounts">Δεν υπάρχει λογαριασμός προς εμφάνιση</string>
-    <string name="no_follow_request">No follow request</string>
+    <string name="no_follow_request">Κανένα αίτημα παρακολούθησης</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Παρακολουθεί \n %1$s</string>
     <string name="followers_cnt">Τον παρακολουθούν \n %1$s</string>
