@@ -1750,9 +1750,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         if (status.getAccount().getAcct().split("@").length < 2)
                             popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
                         stringArrayConf = context.getResources().getStringArray(R.array.more_action_confirm);
-                        if (type != RetrieveFeedsAsyncTask.Type.HOME) {
-                            popup.getMenu().findItem(R.id.action_timed_mute).setVisible(false);
-                        }
                     }
                     if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
                         popup.getMenu().findItem(R.id.action_info).setVisible(false);
