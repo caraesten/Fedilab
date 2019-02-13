@@ -41,7 +41,7 @@
     <string name="choose_picture">Επιλογή φωτογραφίας…</string>
     <string name="clear">Καθαρισμός</string>
     <string name="microphone">Μικρόφωνο</string>
-    <string name="camera">Camera</string>
+    <string name="camera">Φωτογραφική μηχανή</string>
     <string name="speech_prompt">Σε παρακαλώ πες κάτι</string>
     <string name="speech_not_supported">Λυπάμαι, η συσκευή σου δεν υποστηρίζει φωνητική εισαγωγή!</string>
     <string name="delete_all">Σβήσε τα όλα</string>
@@ -157,26 +157,26 @@
     <string name="cw">cw</string>
     <string name="toot_title">Write a toot</string>
     <string name="toot_title_reply">Reply to a toot</string>
-    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-    <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
+    <string name="toot_no_space">Έχεις χρησιμοποιήσει το πλήθος των 500 επιτρεπόμενων χαρακτήρων.</string>
+    <string name="toot_select_image">Επιλογή ενός πολυμέσου</string>
+    <string name="toot_select_image_error">Παρουσιάστηκε κάποιο σφάλμα κατά την επιλογή του πολυμέσου.</string>
+    <string name="toot_delete_media">Διαγραφή αυτού του πολυμέσου;</string>
     <string name="toot_error_no_content">Your toot is empty!</string>
     <string name="toot_visibility_tilte">Visibility of the toot</string>
     <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
     <string name="toot_sent">The toot has been sent!</string>
     <string name="toot_reply_content_title">You are replying to this toot:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="toot_sensitive">Ευαίσθητο περιεχόμενο;</string>
     <string-array name="toot_visibility">
         <item>Post to public timelines</item>
         <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
+        <item>Δημοσίευση μόνο προς όσους σε παρακολουθούν</item>
         <item>Post to mentioned users only</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
+    <string name="no_draft">Καθόλου προσχέδια.</string>
     <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
+    <string name="choose_accounts">Επέλεξε ένα λογαριασμό</string>
+    <string name="select_accounts">Επέλεξε μερικούς λογαριασμούς</string>
     <string name="remove_draft">Remove draft?</string>
     <string name="show_reply">Click on the button to display the original toot</string>
     <string name="upload_form_description">Describe for the visually impaired</string>
@@ -197,7 +197,7 @@
     <string name="conversation">Συζήτηση</string>
     <!-- Accounts -->
     <string name="no_accounts">Δεν υπάρχει λογαριασμός προς εμφάνιση</string>
-    <string name="no_follow_request">No follow request</string>
+    <string name="no_follow_request">Κανένα αίτημα παρακολούθησης</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Παρακολουθεί \n %1$s</string>
     <string name="followers_cnt">Τον παρακολουθούν \n %1$s</string>
@@ -210,7 +210,7 @@
     <string name="remove_scheduled">Delete scheduled toot?</string>
     <string name="media_count">Πολυμέσα: %d</string>
     <string name="toot_scheduled">The toot has been scheduled!</string>
-    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
+    <string name="toot_scheduled_date">Η προγραμματισμένη ημερομηνία θα πρέπει να είναι αργότερα από την τωρινή ώρα.</string>
     <string name="warning_battery">Είναι ενεργοποιημένη η εξοικονόμηση της ενέργειας. Ίσως να μη λειτουργήσει, όπως θα ήταν αναμενόμενο.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
@@ -225,7 +225,7 @@
     <string name="notif_pouet">New toot from %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
-        <item quantity="other">and %d other notifications</item>
+        <item quantity="other">και %d άλλες ειδοποιήσεις</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">and another toot to discover</item>
@@ -240,12 +240,12 @@
     <string name="delete_notification">Η ειδοποίηση διαγράφηκε.</string>
     <string name="delete_notification_all">Όλες οι ειδοποιήσεις διαγράφτηκαν.</string>
     <!-- HEADER -->
-    <string name="following">Following</string>
-    <string name="followers">Followers</string>
-    <string name="pinned_toots">Pinned</string>
+    <string name="following">Παρακολουθείς</string>
+    <string name="followers">Σε παρακολουθούν</string>
+    <string name="pinned_toots">Καρφιτσωμένα</string>
     <!-- TOAST -->
-    <string name="client_error">Unable to get client id!</string>
-    <string name="no_internet">No Internet connection!</string>
+    <string name="client_error">Αδυναμία λήψης του αριθμού ταυτότητας (id) του πελάτη.</string>
+    <string name="no_internet">Καμία σύνδεση στο διαδίκτυο.</string>
     <string name="toast_block">The account was blocked!</string>
     <string name="toast_unblock">The account is no longer blocked!</string>
     <string name="toast_mute">The account was muted!</string>
@@ -260,14 +260,14 @@
     <string name="toast_unstatus">The toot was deleted!</string>
     <string name="toast_pin">The toot was pinned!</string>
     <string name="toast_unpin">The toot was unpinned!</string>
-    <string name="toast_error">Oops ! An error occurred!</string>
+    <string name="toast_error">Ώπα... Παρουσιάστηκε κάποιο σφάλμα.</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
     <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
-    <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-    <string name="toast_error_search">An error occurred while searching!</string>
-    <string name="toast_error_login">Can not log in!</string>
+    <string name="toast_error_loading_account">Παρουσιάστηκε κάποιο σφάλμα, κατά την εναλλαγή μεταξύ των λογαριασμών.</string>
+    <string name="toast_error_search">Παρουσιάστηκε κάποιο σφάλμα κατά την αναζήτηση.</string>
+    <string name="toast_error_login">Αδυναμία σύνδεσης.</string>
     <string name="toast_update_credential_ok">The profile data have been saved!</string>
-    <string name="nothing_to_do">No action can be taken</string>
+    <string name="nothing_to_do">Δεν μπορεί να εκτελεστεί καμία ενέργεια</string>
     <string name="toast_saved">Το πολυμέσο αποθηκεύθηκε.</string>
     <string name="toast_error_translate">Παρουσιάστηκε κάποιο σφάλμα κατά την μετάφραση.</string>
     <string name="toast_toot_saved">Αποθηκεύτηκε το προσχέδιο.</string>
@@ -275,10 +275,10 @@
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
     <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">Optimisation of loading</string>
+    <string name="settings_title_optimisation">Βελτιστοποίηση του φορτώματος</string>
     <string name="set_toots_page">Number of toots per load</string>
-    <string name="set_accounts_page">Number of accounts per load</string>
-    <string name="set_notifications_page">Number of notifications per load</string>
+    <string name="set_accounts_page">Πλήθος λογαριασμών ανά φόρτωμα</string>
+    <string name="set_notifications_page">Πλήθος ειδοποιήσεων ανά φόρτωμα</string>
     <string name="set_attachment_always">Always</string>
     <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Ask</string>
@@ -295,26 +295,26 @@
     <string name="set_auto_store_toot">Save drafts automatically</string>
     <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
-    <string name="settings_title_notifications">Manage notifications</string>
-    <string name="set_notif_follow">Notify when someone follows you</string>
-    <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
+    <string name="settings_title_notifications">Διαχείριση των ειδοποιήσεων</string>
+    <string name="set_notif_follow">Ειδοποίηση όταν κάποιος σε παρακολουθεί</string>
+    <string name="set_notif_follow_ask">Ειδοποίηση όταν κάποιος ζητήσει να σε παρακολουθεί</string>
     <string name="set_notif_follow_share">Notify when someone boosts your status</string>
     <string name="set_notif_follow_add">Notify when someone favourites your status</string>
-    <string name="set_notif_follow_mention">Notify when someone mentions you</string>
+    <string name="set_notif_follow_mention">Ειδοποίηση όταν κάποιος σε αναφέρει</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
-    <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">Advanced settings</string>
-    <string name="set_wifi_only">Notify in WIFI only</string>
-    <string name="set_notify">Notify?</string>
-    <string name="set_notif_silent">Silent Notifications</string>
-    <string name="set_night_mode">Night mode</string>
+    <string name="set_share_validation_fav">Προβολή του διαλόγου επιβεβαίωσης, πριν να γίνει προσθήκη στα Αγαπημένα</string>
+    <string name="settings_title_more_options">Προχωρημένες ρυθμίσεις</string>
+    <string name="set_wifi_only">Ειδοποίηση μόνο όταν σε Γουάι-Φάι</string>
+    <string name="set_notify">Ειδοποιήσεις;</string>
+    <string name="set_notif_silent">Άηχες Ειδοποιήσεις</string>
+    <string name="set_night_mode">Κατάσταση λειτουργίας νύχτας</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Edit profile</string>
-    <string name="set_profile_description">Bio…</string>
-    <string name="set_lock_account">Lock account</string>
-    <string name="set_save_changes">Save changes</string>
-    <string name="set_header_picture_overlay">Choose a header picture</string>
-    <string name="set_fit_preview">Fit preview images</string>
+    <string name="set_profile_description">Βιογραφικό…</string>
+    <string name="set_lock_account">Κλείδωμα του λογαριασμού</string>
+    <string name="set_save_changes">Αποθήκευση των αλλαγών</string>
+    <string name="set_header_picture_overlay">Επέλεξε μία εικόνα κεφαλίδας</string>
+    <string name="set_fit_preview">Ταίριασμα των εικόνων προεπισκόπησης</string>
     <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
@@ -770,6 +770,10 @@
     <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
     <string name="copy_link">Copy link</string>
     <string name="connect_instance">Connect</string>
+    <string name="set_normal">Nomal</string>
+    <string name="set_compact">Compact</string>
+    <string name="set_console">Console</string>
+    <string name="set_mode">Set display mode</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
