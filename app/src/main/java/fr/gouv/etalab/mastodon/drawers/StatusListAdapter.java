@@ -40,8 +40,12 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.URLSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -152,6 +156,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     private static final int DISPLAYED_STATUS = 1;
     static final int FOCUSED_STATUS = 2;
     private static final int COMPACT_STATUS = 3;
+    private static final int CONSOLE_STATUS = 4;
     private int conversationPosition;
     private List<String> timedMute;
     private boolean redraft;
@@ -235,7 +240,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
     @Override
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        if( type != RetrieveFeedsAsyncTask.Type.ART && type != RetrieveFeedsAsyncTask.Type.PIXELFED && (tagTimeline == null || !tagTimeline.isART()) && (holder.getItemViewType() == DISPLAYED_STATUS || holder.getItemViewType() == COMPACT_STATUS)) {
+        if( type != RetrieveFeedsAsyncTask.Type.ART && type != RetrieveFeedsAsyncTask.Type.PIXELFED && (tagTimeline == null || !tagTimeline.isART()) && (holder.getItemViewType() == DISPLAYED_STATUS || holder.getItemViewType() == COMPACT_STATUS|| holder.getItemViewType() == CONSOLE_STATUS)) {
             final ViewHolder viewHolder = (ViewHolder) holder;
             // Bug workaround for losing text selection ability, see:
             // https://code.google.com/p/android/issues/detail?id=208169
@@ -424,12 +429,19 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
-        if( type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
+        boolean isConsoleMode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
+        if( !isConsoleMode && type == RetrieveFeedsAsyncTask.Type.CONTEXT && position == conversationPosition)
             return FOCUSED_STATUS;
         else if( type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !Helper.filterToots(context, statuses.get(position), timedMute, type))
             return HIDDEN_STATUS;
-        else
-            return isCompactMode?COMPACT_STATUS:DISPLAYED_STATUS;
+        else {
+            if( isCompactMode)
+                return COMPACT_STATUS;
+            else if( isConsoleMode)
+                return  CONSOLE_STATUS;
+            else
+                return DISPLAYED_STATUS;
+        }
     }
 
     @NonNull
@@ -439,6 +451,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status, parent, false));
         else if(viewType == COMPACT_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status_compact, parent, false));
+       else if(viewType == CONSOLE_STATUS)
+           return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status_console, parent, false));
         else if(viewType == FOCUSED_STATUS)
             return new ViewHolder(layoutInflater.inflate(R.layout.drawer_status_focused, parent, false));
         else
@@ -464,6 +478,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             boolean displayBookmarkButton = sharedpreferences.getBoolean(Helper.SET_SHOW_BOOKMARK, false);
             boolean fullAttachement = sharedpreferences.getBoolean(Helper.SET_FULL_PREVIEW, false);
             boolean isCompactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+            boolean isConsoleMode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
             int iconSizePercent = sharedpreferences.getInt(Helper.SET_ICON_SIZE, 130);
             int textSizePercent = sharedpreferences.getInt(Helper.SET_TEXT_SIZE, 110);
             final boolean trans_forced = sharedpreferences.getBoolean(Helper.SET_TRANS_FORCED, false);
@@ -483,7 +498,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             int translator = sharedpreferences.getInt(Helper.SET_TRANSLATOR, Helper.TRANS_YANDEX);
             int behaviorWithAttachments = sharedpreferences.getInt(Helper.SET_ATTACHMENT_ACTION, Helper.ATTACHMENT_ALWAYS);
-            if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && displayBookmarkButton)
+            if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE && !isCompactMode && !isConsoleMode && displayBookmarkButton)
                 holder.status_bookmark.setVisibility(View.VISIBLE);
             else
                 holder.status_bookmark.setVisibility(View.GONE);
@@ -584,14 +599,14 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             holder.status_privacy.getLayoutParams().width = (int) Helper.convertDpToPixel((20 * iconSizePercent / 100), context);
 
 
-            if (isCompactMode && type == RetrieveFeedsAsyncTask.Type.CONTEXT && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS && viewHolder.getAdapterPosition() != 0) {
+            if ((isCompactMode || isConsoleMode) && type == RetrieveFeedsAsyncTask.Type.CONTEXT && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS && viewHolder.getAdapterPosition() != 0) {
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
                 params.setMargins((int) Helper.convertDpToPixel(25, context), 0, 0, 0);
                 holder.main_container.setLayoutParams(params);
-            } else if (isCompactMode && type == RetrieveFeedsAsyncTask.Type.CONTEXT && getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS && viewHolder.getAdapterPosition() != 0) {
+            } else if ((isCompactMode || isConsoleMode)  && type == RetrieveFeedsAsyncTask.Type.CONTEXT && getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS && viewHolder.getAdapterPosition() != 0) {
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
@@ -637,7 +652,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             else
                 changeDrawableColor(context, R.drawable.ic_fiber_new, R.color.mastodonC4);
             changeDrawableColor(context, R.drawable.ic_http, R.color.mastodonC4);
-            if (getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS)
+            if (getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS )
                 holder.status_privacy.setVisibility(View.GONE);
             else
                 holder.status_privacy.setVisibility(View.VISIBLE);
@@ -797,13 +812,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             LinearLayout.LayoutParams paramsB = new LinearLayout.LayoutParams((int)Helper.convertDpToPixel(60, context), LinearLayout.LayoutParams.WRAP_CONTENT);
-            if( status.getReblog() == null && !isCompactMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
+            if( status.getReblog() == null && !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
                 params.setMargins(0,-(int)Helper.convertDpToPixel(10, context),0,0);
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().trim().length() > 0 )
                     paramsB.setMargins(0,(int)Helper.convertDpToPixel(10, context),0,0);
                 else
                     paramsB.setMargins(0,(int)Helper.convertDpToPixel(15, context),0,0);
-            }else if( !isCompactMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
+            }else if( !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
                 if( status.getContent() == null || status.getContent().trim().equals("")) {
                     params.setMargins(0, -(int) Helper.convertDpToPixel(20, context), 0, 0);
                     paramsB.setMargins(0,(int) Helper.convertDpToPixel(20, context),0,0);
@@ -832,7 +847,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
             //Click on a conversation
             if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
-                if ((getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS)) {
+                if ((getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS )) {
                     holder.status_content.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -874,7 +889,128 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }
                     });
                 }
-            holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
+
+
+
+
+            holder.status_translate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    translateToot(status);
+                }
+            });
+            if( isConsoleMode){
+                String starting = "";
+                String acct = status.getAccount().getAcct();
+                String acctReblog = null;
+                if( !acct.contains("@"))
+                    acct += "@" + Helper.getLiveInstance(context);
+                if( status.getReblog() != null){
+                    acctReblog = status.getReblog().getAccount().getAcct();
+                    if( !acctReblog.contains("@"))
+                        acctReblog += "@" + Helper.getLiveInstance(context);
+                }
+                SpannableString acctSpan = new SpannableString(acct+":~$");
+                SpannableString acctReblogSpan = null;
+                if( acctReblog != null)
+                    acctReblogSpan = new SpannableString( " <" + acctReblog + ">");
+
+                if (theme == THEME_LIGHT)
+                    acctSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.console_marker)), (acctSpan.length()-3), acctSpan.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                else if (theme == THEME_DARK)
+                    acctSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.console_marker)), (acctSpan.length()-3), acctSpan.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                else if (theme == THEME_BLACK)
+                    acctSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.console_marker)), (acctSpan.length()-3), acctSpan.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+                URLSpan[] urls = acctSpan.getSpans(0, (acctSpan.length()-3), URLSpan.class);
+                for(URLSpan span : urls)
+                    acctSpan.removeSpan(span);
+                acctSpan.setSpan(new ClickableSpan() {
+                             @Override
+                             public void onClick(@NonNull View textView) {
+                                 Intent intent = new Intent(context, ShowAccountActivity.class);
+                                 Bundle b = new Bundle();
+                                 b.putParcelable("account", status.getAccount());
+                                 intent.putExtras(b);
+                                 context.startActivity(intent);
+                             }
+                             @Override
+                             public void updateDrawState(@NonNull TextPaint ds) {
+                                 super.updateDrawState(ds);
+                                 ds.setUnderlineText(false);
+                                 if (theme == THEME_DARK)
+                                     ds.setColor(ContextCompat.getColor(context, R.color.console_name));
+                                 else if (theme == THEME_BLACK)
+                                     ds.setColor(ContextCompat.getColor(context, R.color.console_name));
+                                 else if (theme == THEME_LIGHT)
+                                     ds.setColor(ContextCompat.getColor(context, R.color.console_name));
+                             }
+                         },
+                        0, (acctSpan.length()-3),
+                        Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                SpannableString startingSpan = new SpannableString(starting);
+                if( acctReblogSpan != null) {
+
+
+                    for(URLSpan span : urls)
+                        acctReblogSpan.removeSpan(span);
+                    acctReblogSpan.setSpan(new ClickableSpan() {
+                             @Override
+                             public void onClick(@NonNull View textView) {
+                                 Intent intent = new Intent(context, ShowAccountActivity.class);
+                                 Bundle b = new Bundle();
+                                 b.putParcelable("account", status.getReblog().getAccount());
+                                 intent.putExtras(b);
+                                 context.startActivity(intent);
+                             }
+                             @Override
+                             public void updateDrawState(@NonNull TextPaint ds) {
+                                 super.updateDrawState(ds);
+                                 ds.setUnderlineText(false);
+                                 if (theme == THEME_DARK)
+                                     ds.setColor(ContextCompat.getColor(context, R.color.console_reblog_name));
+                                 else if (theme == THEME_BLACK)
+                                     ds.setColor(ContextCompat.getColor(context, R.color.console_reblog_name));
+                                 else if (theme == THEME_LIGHT)
+                                     ds.setColor(ContextCompat.getColor(context, R.color.console_reblog_name));
+                             }
+                         },
+                            2, acctReblogSpan.length()-1,
+                            Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    if (theme == THEME_LIGHT)
+                        acctReblogSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.console_marker)), 1, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    else if (theme == THEME_DARK)
+                        acctReblogSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.console_marker)),  1, 2,Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    else if (theme == THEME_BLACK)
+                        acctReblogSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.console_marker)),  1, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    if (theme == THEME_LIGHT)
+                        acctReblogSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.console_marker)), acctReblogSpan.length()-1, acctReblogSpan.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    else if (theme == THEME_DARK)
+                        acctReblogSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.console_marker)),  acctReblogSpan.length()-1, acctReblogSpan.length(),Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    else if (theme == THEME_BLACK)
+                        acctReblogSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.console_marker)),  acctReblogSpan.length()-1, acctReblogSpan.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+                    startingSpan = new SpannableString(TextUtils.concat(acctSpan, " ", acctReblogSpan));
+                }else
+                    startingSpan = acctSpan;
+
+                if( status.getReblog() == null && status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
+                    holder.status_spoiler.setText(TextUtils.concat(startingSpan, " ", status.getContentSpanCW()), TextView.BufferType.SPANNABLE);
+                    holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
+                }else if( status.getReblog() != null && status.getReblog().getSpoiler_text() != null && status.getReblog().getSpoiler_text().length() > 0) {
+                    holder.status_spoiler.setText(TextUtils.concat(startingSpan, " ", status.getContentSpanCW()), TextView.BufferType.SPANNABLE);
+                    holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
+                } else {
+                    holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
+                    holder.status_content.setText(TextUtils.concat(startingSpan, " ", status.getContentSpan()!=null?status.getContentSpan():""), TextView.BufferType.SPANNABLE);
+                }
+
+            }else {
+                holder.status_content.setText(status.getContentSpan(), TextView.BufferType.SPANNABLE);
+                holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
+            }
+            holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
+            holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
             if (truncate_toots_size > 0) {
                 holder.status_content.setMaxLines(truncate_toots_size);
                 if (status.getNumberLines() == -1) {
@@ -909,17 +1045,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                     notifyStatusChanged(status);
                 }
             });
-            holder.status_spoiler.setText(status.getContentSpanCW(), TextView.BufferType.SPANNABLE);
 
-            holder.status_content.setMovementMethod(LinkMovementMethod.getInstance());
-            holder.status_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
-
-            holder.status_translate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    translateToot(status);
-                }
-            });
 
             holder.status_bookmark.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1050,7 +1176,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_mention_spoiler.setText(Helper.makeMentionsClick(context, status.getMentions()), TextView.BufferType.SPANNABLE);
             holder.status_mention_spoiler.setMovementMethod(LinkMovementMethod.getInstance());
 
-            if (getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS) {
+            if (getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS &&  getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS) {
                 if (status.getReblog() == null)
                     holder.status_favorite_count.setText(String.valueOf(status.getFavourites_count()));
                 else
@@ -1137,7 +1263,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             else
                 differentLanguage = status.getReblog().getLanguage() != null && !status.getReblog().getLanguage().trim().equals(currentLocale);
 
-            if ((getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS) && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && differentLanguage))) {
+            if ((getItemViewType(viewHolder.getAdapterPosition()) != COMPACT_STATUS) &&  getItemViewType(viewHolder.getAdapterPosition()) != CONSOLE_STATUS && (trans_forced || (translator != Helper.TRANS_NONE && currentLocale != null && differentLanguage))) {
                 if (status.getSpoiler_text() != null && status.getSpoiler_text().length() > 0) {
                     if (status.isSpoilerShown() || getItemViewType(viewHolder.getAdapterPosition()) == FOCUSED_STATUS) {
                         holder.status_translate.setVisibility(View.VISIBLE);
@@ -1305,7 +1431,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_content.setVisibility(View.VISIBLE);
                 holder.status_content_translated_container.setVisibility(View.GONE);
             }
-            if( contentCheck.trim().length() < 2 && !contentCheck.trim().matches("\\w+"))
+            if( !isConsoleMode && contentCheck.trim().length() < 2 && !contentCheck.trim().matches("\\w+"))
                 holder.status_content.setVisibility(View.GONE);
             else
                 holder.status_content.setVisibility(View.VISIBLE);
@@ -1393,13 +1519,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             imgReply.setBounds(0, 0, (int) (20 * iconSizePercent / 100 * scale + 0.5f), (int) (20 * iconSizePercent / 100 * scale + 0.5f));
 
 
-            if (isCompactMode && ((status.getReblog() == null && status.getReplies_count() > 1) || (status.getReblog() != null && status.getReblog().getReplies_count() > 1))) {
+            if ((isCompactMode || isConsoleMode)  && ((status.getReblog() == null && status.getReplies_count() > 1) || (status.getReblog() != null && status.getReblog().getReplies_count() > 1))) {
                 Drawable img = context.getResources().getDrawable(R.drawable.ic_plus_one);
                 holder.status_reply.setCompoundDrawablesWithIntrinsicBounds(imgReply, null, img, null);
             } else {
                 holder.status_reply.setCompoundDrawablesWithIntrinsicBounds(imgReply, null, null, null);
             }
-            if (isCompactMode) {
+            if ((isCompactMode || isConsoleMode) ) {
                 if (((status.getReblog() == null && status.getReplies_count() == 1) || (status.getReblog() != null && status.getReblog().getReplies_count() == 1)))
                     holder.status_reply.setText(String.valueOf(status.getReblog() != null ? status.getReblog().getReplies_count() : status.getReplies_count()));
             } else {
@@ -1433,7 +1559,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.status_pin.setVisibility(View.GONE);
             }
 
-            if( (isAdmin || isModerator) && !isCompactMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
+            if( (isAdmin || isModerator) && !isCompactMode && !isConsoleMode && getItemViewType(viewHolder.getAdapterPosition()) != FOCUSED_STATUS){
                 holder.status_remove.setVisibility(View.VISIBLE);
             }else {
                 holder.status_remove.setVisibility(View.GONE);
