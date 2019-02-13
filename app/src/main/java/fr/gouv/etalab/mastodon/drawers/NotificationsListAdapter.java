@@ -745,6 +745,15 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 clipboard.setPrimaryClip(clip);
                                 Toasty.info(context,context.getString(R.string.clipboard),Toast.LENGTH_LONG).show();
                                 return true;
+                            case R.id.action_copy_link:
+                                clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+
+                                clip = ClipData.newPlainText(Helper.CLIP_BOARD, status.getUrl());
+                                if (clipboard != null) {
+                                    clipboard.setPrimaryClip(clip);
+                                    Toasty.info(context, context.getString(R.string.clipboard), Toast.LENGTH_LONG).show();
+                                }
+                                return true;
                             case R.id.action_share:
                                 Intent sendIntent = new Intent(Intent.ACTION_SEND);
                                 sendIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.shared_via));
