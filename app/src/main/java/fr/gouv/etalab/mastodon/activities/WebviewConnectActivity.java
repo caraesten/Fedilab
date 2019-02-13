@@ -138,7 +138,6 @@ public class WebviewConnectActivity extends BaseActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url){
                 super.shouldOverrideUrlLoading(view,url);
                 if( url.contains(Helper.REDIRECT_CONTENT_WEB)){
-
                     String val[] = url.split("code=");
                     if (val.length< 2){
                         Toasty.error(getApplicationContext(), getString(R.string.toast_code_error), Toast.LENGTH_LONG).show();
@@ -156,7 +155,6 @@ public class WebviewConnectActivity extends BaseActivity {
                     parameters.put(Helper.REDIRECT_URI,Helper.REDIRECT_CONTENT_WEB);
                     parameters.put("grant_type", "authorization_code");
                     parameters.put("code",code);
-
                     new Thread(new Runnable(){
                         @Override
                         public void run() {

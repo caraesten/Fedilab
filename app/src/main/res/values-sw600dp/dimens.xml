@@ -4,7 +4,7 @@
     <dimen name="toot_padding">20dp</dimen>
     <dimen name="fab_margin">20dp</dimen>
     <dimen name="activity_vertical_margin">30dp</dimen>
-    <dimen name="activity_padding_top_header">16dp</dimen>
+    <dimen name="activity_vertical_margin_login">100dp</dimen>
     <bool name="isTablet">true</bool>
     <dimen name="layout_height_header">220dp</dimen>
     <dimen name="fab_margin_floating">24dp</dimen>

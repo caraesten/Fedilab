@@ -193,9 +193,6 @@ public class API {
                             case "PEERTUBE":
                                 name = "PEERTUBE";
                                 break;
-                            case "PLEROMA":
-                                name = "PLEROMA";
-                                break;
                             case "FRIENDICA":
                                 name = "GNU";
                                 break;

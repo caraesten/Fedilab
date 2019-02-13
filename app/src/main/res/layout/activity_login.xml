@@ -34,10 +34,10 @@
             android:contentDescription="@string/app_logo" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginLeft="50dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginEnd="50dp"
+            android:layout_marginLeft="@dimen/activity_vertical_margin_login"
+            android:layout_marginStart="@dimen/activity_vertical_margin_login"
+            android:layout_marginRight="@dimen/activity_vertical_margin_login"
+            android:layout_marginEnd="@dimen/activity_vertical_margin_login"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
@@ -45,129 +45,136 @@
             android:orientation="vertical"
             android:layout_height="wrap_content"
             >
-            <TextView
-                android:id="@+id/instances_social"
-                android:textAllCaps="false"
-                android:gravity="center"
-                android:drawablePadding="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center"
+            <LinearLayout
+                android:id="@+id/step_instance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorAccent"
-                android:text="@string/no_account_yet" />
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/login_instance_layout"
+                android:orientation="vertical">
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/login_instance_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <AutoCompleteTextView
+                            android:id="@+id/login_instance"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="textWebEmailAddress"
+                            android:maxLines="1"
+                            android:hint="@string/instance_example"
+                            />
+                        <ImageView
+                            android:contentDescription="@string/more_information"
+                            android:id="@+id/info_instance"
+                            android:src="@drawable/ic_info_login"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp" />
+                    </LinearLayout>
+                    <com.jaredrummler.materialspinner.MaterialSpinner
+                        android:id="@+id/set_instance_type"
+                        android:textSize="16sp"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/connect_button"
+                    android:textAllCaps="false"
+                    android:drawableLeft="@drawable/ic_check_circle"
+                    android:drawableStart="@drawable/ic_check_circle"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:drawablePadding="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingRight="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:maxLines="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="@string/connect_instance" />
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/step_login_credential"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true">
+                android:orientation="vertical">
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:textSize="16sp"
+                    android:textColor="?colorAccent"
+                    android:id="@+id/instance_chosen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <AutoCompleteTextView
-                        android:id="@+id/login_instance"
+                    <EditText
+                        android:id="@+id/login_uid"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textWebEmailAddress"
                         android:maxLines="1"
-                        android:hint="@string/instance_example"
+                        android:inputType="textEmailAddress"
+                        android:hint="@string/email"
                         />
-                    <ImageView
-                        android:contentDescription="@string/more_information"
-                        android:id="@+id/info_instance"
-                        android:src="@drawable/ic_info_login"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
                 </LinearLayout>
-                <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/set_instance_type"
-                    android:textSize="16sp"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </android.support.design.widget.TextInputLayout>
-            <LinearLayout
-                android:id="@+id/login_two_step_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id = "@+id/login_passwd"
+                        android:inputType="textPassword"
+                        android:hint="@string/password"
+                        android:maxLines="1"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
                 <TextView
-                    android:id="@+id/login_two_step"
-                    android:textAllCaps="false"
-                    android:gravity="center"
-                    android:drawablePadding="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
                     android:layout_gravity="center"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:textColor="?attr/colorAccent"
-                    android:text="@string/two_factor_authentification" />
-                <ImageView
-                    android:contentDescription="@string/more_information"
-                    android:id="@+id/info_2FA"
-                    android:src="@drawable/ic_info_login"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <EditText
-                    android:id="@+id/login_uid"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/login_issue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/login_button"
+                    android:textAllCaps="false"
+                    android:drawableLeft="@drawable/mastodon_icon"
+                    android:drawableStart="@drawable/mastodon_icon"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:drawablePadding="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingStart="15dp"
+                    android:paddingRight="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
                     android:maxLines="1"
-                    android:inputType="textEmailAddress"
-                    android:hint="@string/email"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <EditText
-                    android:id = "@+id/login_passwd"
-                    android:inputType="textPassword"
-                    android:hint="@string/password"
-                    android:maxLines="1"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    />
+                    android:textSize="20sp"
+                    android:text="@string/login" />
             </LinearLayout>
-            <TextView
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:id="@+id/login_issue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <Button
-                android:id="@+id/login_button"
-                android:textAllCaps="false"
-                android:drawableLeft="@drawable/mastodon_icon"
-                android:drawableStart="@drawable/mastodon_icon"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:drawablePadding="10dp"
-                android:paddingLeft="15dp"
-                android:paddingStart="15dp"
-                android:paddingRight="20dp"
-                android:paddingEnd="20dp"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
-                android:maxLines="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="@string/login" />
-
 
         </LinearLayout>
     </LinearLayout>
