@@ -36,6 +36,7 @@
     <string name="toast_account_changed" formatted="false">Fonctionne maintenant avec le compte %1$s</string>
     <string name="add_account">Ajouter un compte</string>
     <string name="clipboard">Le contenu du pouet a été copié dans le presse-papier</string>
+    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
     <string name="change">Changer</string>
     <string name="choose_picture">Sélectionnez une photo…</string>
     <string name="clear">Nettoyer</string>
@@ -764,6 +765,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="all">Tout</string>
     <string name="about_opencollective">Soutenir l\'application</string>
     <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
+    <string name="copy_link">Copy link</string>
+    <string name="connect_instance">Connect</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
