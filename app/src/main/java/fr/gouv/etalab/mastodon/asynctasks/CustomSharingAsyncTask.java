@@ -18,16 +18,10 @@ package fr.gouv.etalab.mastodon.asynctasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import java.io.ByteArrayInputStream;
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
-
-import fr.gouv.etalab.mastodon.client.API;
-import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.CustomSharing;
 import fr.gouv.etalab.mastodon.client.CustomSharingResponse;
 import fr.gouv.etalab.mastodon.interfaces.OnCustomSharingInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnUpdateCredentialInterface;
 
 /**
  * Created by Curtis on 13/02/2019.

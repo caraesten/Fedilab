@@ -1,5 +1,5 @@
 package fr.gouv.etalab.mastodon.client;
-/* Copyright 2017 Thomas Schneider
+/* Copyright 2019 Curtis Rock
  *
  * This file is a part of Mastalab
  *
@@ -15,61 +15,14 @@ package fr.gouv.etalab.mastodon.client;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import fr.gouv.etalab.mastodon.R;
-import fr.gouv.etalab.mastodon.activities.MainActivity;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveOpenCollectiveAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
-import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Application;
-import fr.gouv.etalab.mastodon.client.Entities.Attachment;
-import fr.gouv.etalab.mastodon.client.Entities.Card;
-import fr.gouv.etalab.mastodon.client.Entities.Conversation;
-import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.Entities.Filters;
-import fr.gouv.etalab.mastodon.client.Entities.HowToVideo;
-import fr.gouv.etalab.mastodon.client.Entities.Instance;
-import fr.gouv.etalab.mastodon.client.Entities.InstanceNodeInfo;
-import fr.gouv.etalab.mastodon.client.Entities.InstanceSocial;
-import fr.gouv.etalab.mastodon.client.Entities.Mention;
-import fr.gouv.etalab.mastodon.client.Entities.NodeInfo;
-import fr.gouv.etalab.mastodon.client.Entities.Notification;
-import fr.gouv.etalab.mastodon.client.Entities.Peertube;
-import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
-import fr.gouv.etalab.mastodon.client.Entities.Schedule;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
-import fr.gouv.etalab.mastodon.client.Entities.Tag;
-import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
-import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
-import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 
 /**
@@ -112,6 +65,7 @@ public class CustomSharing {
         } catch (KeyManagementException e) {
             e.printStackTrace();
         }
+        customSharingResponse.setResponse(HTTPResponse);
         return customSharingResponse;
     }
 

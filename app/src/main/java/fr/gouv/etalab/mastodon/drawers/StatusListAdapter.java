@@ -2102,13 +2102,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         bCustomSharing.putString("source", status.getReblog().getAccount().getDisplay_name());
                                         bCustomSharing.putString("id", status.getReblog().getId());
                                         bCustomSharing.putString("tags", status.getReblog().getTagsString());
-                                        bCustomSharing.putString("content", status.getReblog().getContent());
+                                        bCustomSharing.putString("content", status.getReblog().getContentSpan().toString());
                                     } else {
                                         bCustomSharing.putString("url", status.getUrl());
                                         bCustomSharing.putString("source", status.getAccount().getDisplay_name());
                                         bCustomSharing.putString("id", status.getId());
                                         bCustomSharing.putString("tags", status.getTagsString());
-                                        bCustomSharing.putString("content", status.getContent());
+                                        bCustomSharing.putString("content", status.getContentSpan().toString());
                                     }
                                     intentCustomSharing.putExtras(bCustomSharing);
                                     context.startActivity(intentCustomSharing);
