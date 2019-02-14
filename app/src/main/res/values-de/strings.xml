@@ -763,6 +763,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="set_compact">Kompakt</string>
     <string name="set_console">Konsole</string>
     <string name="set_mode">Anzeigemodus festlegen</string>
+    <string name="set_security_provider">Patch the Security Provider</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
