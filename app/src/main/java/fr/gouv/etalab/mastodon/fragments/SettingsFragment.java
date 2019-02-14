@@ -223,6 +223,19 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean patch_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
+        final CheckBox set_security_provider = rootView.findViewById(R.id.set_security_provider);
+        set_security_provider.setChecked(patch_provider);
+
+        set_security_provider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_SECURITY_PROVIDER, set_security_provider.isChecked());
+                editor.apply();
+            }
+        });
+
 
         boolean display_card = sharedpreferences.getBoolean(Helper.SET_DISPLAY_CARD, false);
 

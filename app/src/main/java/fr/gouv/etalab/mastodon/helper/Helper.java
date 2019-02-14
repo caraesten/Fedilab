@@ -158,6 +158,7 @@ import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.activities.MainApplication;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
@@ -368,6 +369,7 @@ public class Helper {
     public static final String SET_TRUNCATE_TOOTS_SIZE = "set_truncate_toots_size";
     public static final String SET_ART_WITH_NSFW = "set_art_with_nsfw";
     public static final String SET_OPTIMIZE_LOADING = "set_optimize_loading";
+    public static final String SET_SECURITY_PROVIDER = "set_security_provider";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -2944,9 +2946,17 @@ public class Helper {
 
 
     public static void installProvider(){
+
+        boolean patch_provider = true;
         try {
-            Security.insertProviderAt(Conscrypt.newProvider(),1);
+            Context ctx = MainApplication.getApp();
+            SharedPreferences sharedpreferences = ctx.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            patch_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
         }catch (Exception ignored){}
+        if( patch_provider)
+            try {
+                Security.insertProviderAt(Conscrypt.newProvider(),1);
+            }catch (Exception ignored){}
     }
 
 
