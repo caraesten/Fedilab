@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Sqlite extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 26;
+    public static final int DB_VERSION = 27;
     public static final String DB_NAME = "mastodon_etalab_db";
     public static SQLiteDatabase db;
     private static Sqlite sInstance;
@@ -63,6 +63,9 @@ public class Sqlite extends SQLiteOpenHelper {
 
     //Table for scheduling boosts
     static final String TABLE_BOOST_SCHEDULE = "BOOST_SCHEDULE";
+
+    //Table for blocking tracking domains
+    static final String TABLE_TRACKING_BLOCK = "TRACKING_BLOCK";
 
     static final String COL_USER_ID = "USER_ID";
     static final String COL_USERNAME = "USERNAME";
@@ -226,6 +229,13 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_STATUS_SERIALIZED + " TEXT NOT NULL, "+ COL_DATE_SCHEDULED + " TEXT, "
             + COL_IS_SCHEDULED + " INTEGER NOT NULL, " + COL_SENT + " INTEGER NOT NULL, " + COL_DATE_SENT + " TEXT)";
 
+
+    static final String COL_DOMAIN = "DOMAIN";
+    private static final String CREATE_TABLE_TRACKING_BLOCK = "CREATE TABLE " + TABLE_TRACKING_BLOCK + " ("
+            + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COL_DOMAIN + " TEXT NOT NULL)";
+
+
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
@@ -252,6 +262,7 @@ public class Sqlite extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_PEERTUBE_FAVOURITES);
         db.execSQL(CREATE_TABLE_CACHE_TAGS);
         db.execSQL(CREATE_TABLE_BOOST_SCHEDULE);
+        db.execSQL(CREATE_TABLE_TRACKING_BLOCK);
     }
 
     @Override
@@ -329,6 +340,8 @@ public class Sqlite extends SQLiteOpenHelper {
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " +  COL_IS_ADMIN + " INTEGER  DEFAULT 0");
             case 25:
                 db.execSQL("ALTER TABLE " + TABLE_USER_ACCOUNT + " ADD COLUMN " +  COL_UPDATED_AT + " TEXT");
+            case 26:
+                db.execSQL(CREATE_TABLE_TRACKING_BLOCK);
             default:
                 break;
         }
