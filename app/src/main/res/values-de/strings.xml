@@ -763,7 +763,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="set_console">Konsole</string>
     <string name="set_mode">Anzeigemodus festlegen</string>
     <string name="set_security_provider">Patch des Sicherheitsanbieters</string>
-    <string name="update_tracking_domains">Update tracking domains</string>
+    <string name="update_tracking_domains">Tracking-Domains aktualisieren</string>
     <string name="tracking_db_updated">The tracking data base has been updated!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
