@@ -32,30 +32,45 @@
         android:orientation="vertical"
         tools:ignore="UselessParent">
 
-        <!-- Profile SETTINGS -->
+        <!-- Custom Sharing SETTINGS -->
         <TextView
-            android:text="Custom Sharing"
             style="?attr/shapeBorder"
-            android:paddingBottom="10dp"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_height="wrap_content" />
+            android:paddingBottom="10dp"
+            android:text="Custom Sharing"
+            android:textSize="18sp" />
 
 
         <!-- Title -->
+        <TextView
+            style="?attr/shapeBorder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingTop="10dp"
+            android:text="Title" />
         <EditText
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/set_custom_sharing_title"
-            android:minLines="4"
-            android:lines="4"
-            android:maxLines="5"
+            android:minLines="1"
+            android:lines="1"
+            android:maxLines="2"
             android:hint="Title..."
             />
 
 
         <!-- Description -->
+        <TextView
+            style="?attr/shapeBorder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingTop="10dp"
+            android:text="Description" />
         <EditText
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
@@ -69,14 +84,21 @@
 
 
         <!-- Keywords -->
+        <TextView
+            style="?attr/shapeBorder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingTop="10dp"
+            android:text="Keywords" />
         <EditText
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/set_custom_sharing_keywords"
-            android:minLines="4"
-            android:lines="4"
-            android:maxLines="5"
+            android:minLines="1"
+            android:lines="1"
+            android:maxLines="1"
             android:hint="Keywords..."
             />
 
