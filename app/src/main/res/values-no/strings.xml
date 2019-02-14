@@ -762,6 +762,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="set_compact">Kompakt</string>
     <string name="set_console">Konsoll</string>
     <string name="set_mode">Angi visningsmodus</string>
+    <string name="set_security_provider">Patch the Security Provider</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
