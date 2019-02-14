@@ -763,6 +763,8 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="set_console">Konsoll</string>
     <string name="set_mode">Angi visningsmodus</string>
     <string name="set_security_provider">Patch the Security Provider</string>
+    <string name="update_tracking_domains">Update tracking domains</string>
+    <string name="tracking_db_updated">The tracking data base has been updated!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
