@@ -36,7 +36,7 @@
     <string name="toast_account_changed" formatted="false">A funcionar coa conta %1$s</string>
     <string name="add_account">Engadir unha conta</string>
     <string name="clipboard">Copiouse ao portapapeis o contido do toot</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">Copiouse o URL do toot ao portapapéis</string>
     <string name="change">Cambiar</string>
     <string name="choose_picture">Escoller imaxe…</string>
     <string name="clear">Limpar</string>
@@ -769,12 +769,12 @@
     <string name="all">Todo</string>
     <string name="about_opencollective">Axude a app</string>
     <string name="more_about_opencollective">Open Collective crea grupos para establecer rápidamente un colectivo, colleitar fondos e xestionalos de xeito transparente.</string>
-    <string name="copy_link">Copy link</string>
-    <string name="connect_instance">Connect</string>
-    <string name="set_normal">Nomal</string>
-    <string name="set_compact">Compact</string>
-    <string name="set_console">Console</string>
-    <string name="set_mode">Set display mode</string>
+    <string name="copy_link">Copiar ligazón</string>
+    <string name="connect_instance">Conectar</string>
+    <string name="set_normal">Normal</string>
+    <string name="set_compact">Compacta</string>
+    <string name="set_console">Consola</string>
+    <string name="set_mode">Establecer modo de visualización</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
