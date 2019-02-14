@@ -442,18 +442,40 @@ public class SettingsFragment extends Fragment {
         });
 
         boolean compact_mode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
-        final CheckBox set_compact_mode = rootView.findViewById(R.id.set_compact_mode);
-        set_compact_mode.setChecked(compact_mode);
-
-        set_compact_mode.setOnClickListener(new View.OnClickListener() {
+        boolean console_mode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
+        RadioGroup set_mode = rootView.findViewById(R.id.set_mode);
+        if( compact_mode){
+            set_mode.check(R.id.set_compact_mode);
+        }else if(console_mode){
+            set_mode.check(R.id.set_console_mode);
+        }else {
+            set_mode.check(R.id.set_normal_mode);
+        }
+        set_mode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(Helper.SET_COMPACT_MODE, set_compact_mode.isChecked());
-                editor.apply();
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId) {
+                    case R.id.set_compact_mode:
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putBoolean(Helper.SET_COMPACT_MODE, true);
+                        editor.putBoolean(Helper.SET_CONSOLE_MODE, false);
+                        editor.apply();
+                        break;
+                    case R.id.set_console_mode:
+                        editor = sharedpreferences.edit();
+                        editor.putBoolean(Helper.SET_COMPACT_MODE, false);
+                        editor.putBoolean(Helper.SET_CONSOLE_MODE, true);
+                        editor.apply();
+                        break;
+                    case R.id.set_normal_mode:
+                        editor = sharedpreferences.edit();
+                        editor.putBoolean(Helper.SET_COMPACT_MODE, false);
+                        editor.putBoolean(Helper.SET_CONSOLE_MODE, false);
+                        editor.apply();
+                        break;
+                }
             }
         });
-
 
         boolean share_details = sharedpreferences.getBoolean(Helper.SET_SHARE_DETAILS, true);
         final CheckBox set_share_details = rootView.findViewById(R.id.set_share_details);

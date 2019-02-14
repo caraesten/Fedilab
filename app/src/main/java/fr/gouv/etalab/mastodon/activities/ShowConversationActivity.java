@@ -244,8 +244,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
         final LinearLayoutManager mLayoutManager;
         mLayoutManager = new LinearLayoutManager(this);
         lv_status.setLayoutManager(mLayoutManager);
-        boolean compactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
-        lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme, compactMode));
+        lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme));
         lv_status.setAdapter(statusListAdapter);
         String statusIdToFetch = null;
         if( initialStatus != null)

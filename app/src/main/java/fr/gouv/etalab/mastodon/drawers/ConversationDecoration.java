@@ -38,9 +38,9 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
 
     private Drawable divider;
     private Context context;
-    private boolean compactMode;
+    private boolean compactMode, consoleMode;
 
-    public ConversationDecoration(Context context, int theme, boolean compactMode){
+    public ConversationDecoration(Context context, int theme){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         if( theme == Helper.THEME_BLACK)
             divider = ContextCompat.getDrawable(context,R.drawable.line_divider_black);
@@ -48,15 +48,20 @@ public class ConversationDecoration extends RecyclerView.ItemDecoration{
             divider = ContextCompat.getDrawable(context,R.drawable.line_divider_dark);
         else if(theme == Helper.THEME_LIGHT)
             divider = ContextCompat.getDrawable(context,R.drawable.line_divider_light);
-        this.compactMode = compactMode;
         this.context = context;
+
+        this.compactMode = sharedpreferences.getBoolean(Helper.SET_COMPACT_MODE, false);
+        this.consoleMode = sharedpreferences.getBoolean(Helper.SET_CONSOLE_MODE, false);
     }
 
     @Override
     public void onDraw(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
 
         int leftSide;
-        if( compactMode)
+
+        if( consoleMode)
+            leftSide = (int) Helper.convertDpToPixel(6, context);
+        else if( compactMode)
             leftSide = (int) Helper.convertDpToPixel(12, context);
         else
             leftSide = (int) Helper.convertDpToPixel(28, context);
