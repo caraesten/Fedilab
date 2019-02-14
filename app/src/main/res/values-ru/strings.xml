@@ -782,7 +782,7 @@
     <string name="set_compact">Компактный</string>
     <string name="set_console">Консольный</string>
     <string name="set_mode">Установить режим отображения</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
+    <string name="set_security_provider">Патч провайдера безопасности</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
