@@ -770,6 +770,7 @@
     <string name="set_compact">緊湊</string>
     <string name="set_console">主控臺</string>
     <string name="set_mode">設定顯示模式</string>
+    <string name="set_security_provider">Patch the Security Provider</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
