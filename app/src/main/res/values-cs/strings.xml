@@ -36,7 +36,7 @@
     <string name="toast_account_changed" formatted="false">Nyní používáte účet %1$s</string>
     <string name="add_account">Přidat účet</string>
     <string name="clipboard">Obsah zprávy byl zkopírován do schránky</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">Adresa tootu byla zkopírován do schránky</string>
     <string name="change">Změnit</string>
     <string name="choose_picture">Vybrat obrázek…</string>
     <string name="clear">Vyčistit</string>
@@ -492,7 +492,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="data_export_error">Něco se pokazilo během exportu dat pro %1$s</string>
     <string name="data_export_error_simple">Něco se pokazilo během exportovaní dat!</string>
     <string name="data_import_success_simple">Data byla importována!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_import_error_simple">Něco se pokazilo během nahrávaní dat!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Typ</string>
@@ -778,6 +778,9 @@ Začněte psát první znaky pro návrh.\n\n
     <string name="set_compact">Compact</string>
     <string name="set_console">Console</string>
     <string name="set_mode">Set display mode</string>
+    <string name="set_security_provider">Patch the Security Provider</string>
+    <string name="update_tracking_domains">Update tracking domains</string>
+    <string name="tracking_db_updated">The tracking data base has been updated!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
