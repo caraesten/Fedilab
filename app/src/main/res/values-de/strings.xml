@@ -650,10 +650,9 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
         <item>1 Tag</item>
         <item>1 Woche</item>
     </string-array>
-    <string name="showcase_instance">In dieses Feld solltest du den Hostnamen deiner Instanz eintragen\nSolltest du also zum Beispiel einen Account auf https://mastodon.social erstellt haben,\nschreibe einfach <b>mastodon.social</b>(ohne https://) in das Feld.\n
-        Sobald du die ersten Buchstaben eintippst erhälst du Namensvorschläge.\n\n
-        ⚠ Der Login-Button wird nur funktionieren, wenn der Instanzname korrekt und die Instanz erreichbar ist!
-    </string>
+    <string name="showcase_instance">In diesem Feld müssen Sie Ihren Instanz-Hostnamen eingeben.\nWenn Sie zum Beispiel ein Konto auf https://mastodon.social erstellt haben\nschreiben Sie einfach <b>mastodon.social</b> (ohne https://)\n
+Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n\n
+⚠ Die Schaltfläche „Anmelden” funktioniert nur, wenn der Instanzname gültig und die Instanz erreuchbar ist!</string>
     <string name="showcase_uid">Tragen Sie hier die eMail-Adresse ein, die mit ihrem Mastodon-Account verbunden ist.</string>
     <string name="showcase_pwd">Als letzten Schritt gib bitte dein Passwort ein und klicke auf Anmelden.
     </string>
@@ -763,7 +762,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="set_compact">Kompakt</string>
     <string name="set_console">Konsole</string>
     <string name="set_mode">Anzeigemodus festlegen</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
+    <string name="set_security_provider">Patch des Sicherheitsanbieters</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
