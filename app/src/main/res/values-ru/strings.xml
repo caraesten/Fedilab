@@ -783,8 +783,8 @@
     <string name="set_console">Консольный</string>
     <string name="set_mode">Установить режим отображения</string>
     <string name="set_security_provider">Патч провайдера безопасности</string>
-    <string name="update_tracking_domains">Update tracking domains</string>
-    <string name="tracking_db_updated">The tracking data base has been updated!</string>
+    <string name="update_tracking_domains">Обновить отслеживаемые домены</string>
+    <string name="tracking_db_updated">База данных отслеживания была обновлена!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
