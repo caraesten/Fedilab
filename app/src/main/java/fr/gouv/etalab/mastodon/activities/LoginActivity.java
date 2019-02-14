@@ -44,7 +44,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -736,11 +735,12 @@ public class LoginActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_login, menu);
-        CheckBox checkBox= (CheckBox) menu.findItem(R.id.action_custom_tabs).getActionView();
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
-        checkBox.setChecked(!embedded_browser);
-        return true;
+        menu.findItem(R.id.action_custom_tabs).setChecked(!embedded_browser);
+        boolean security_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
+        menu.findItem(R.id.action_provider).setChecked(security_provider);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -765,6 +765,13 @@ public class LoginActivity extends BaseActivity {
             SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putBoolean(Helper.SET_EMBEDDED_BROWSER, !item.isChecked());
+            editor.apply();
+            return false;
+        }else if(id == R.id.action_provider){
+            item.setChecked(!item.isChecked());
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(Helper.SET_SECURITY_PROVIDER, item.isChecked());
             editor.apply();
             return false;
         }

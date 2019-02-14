@@ -17,4 +17,8 @@
         android:title="@string/custom_tabs"
         app:actionViewClass="android.widget.CheckBox"
         android:checkable="true"/>
+    <item android:id="@+id/action_provider"
+        android:title="@string/set_security_provider"
+        app:actionViewClass="android.widget.CheckBox"
+        android:checkable="true"/>
 </menu>

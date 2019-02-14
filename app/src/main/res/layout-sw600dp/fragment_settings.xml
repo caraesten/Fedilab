@@ -479,7 +479,13 @@
             android:text="@string/set_optimize_loading"
             android:layout_height="wrap_content" />
 
-
+        <CheckBox
+            android:id="@+id/set_security_provider"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_security_provider"
+            android:layout_height="wrap_content" />
 
 
 
