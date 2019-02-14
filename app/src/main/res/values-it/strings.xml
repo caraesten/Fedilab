@@ -775,6 +775,8 @@
     <string name="set_console">Terminale</string>
     <string name="set_mode">Imposta modalità di visualizzazione</string>
     <string name="set_security_provider">Sistema il Fornitore di Sicurezza</string>
+    <string name="update_tracking_domains">Update tracking domains</string>
+    <string name="tracking_db_updated">The tracking data base has been updated!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
