@@ -593,28 +593,25 @@ public class Helper {
      * @return Date
      */
     public static Date mstStringToDate(Context context, String date) throws ParseException {
-        Locale userLocale;
-        if (date == null )
+        if (date == null)
             return null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            userLocale = context.getResources().getConfiguration().getLocales().get(0);
-        } else {
-            //noinspection deprecation
-            userLocale = context.getResources().getConfiguration().locale;
-        }
+
         String STRING_DATE_FORMAT;
-        if( !date.contains("+"))
+        Locale local = Locale.getDefault();
+        if (!date.contains("+")) {
             STRING_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        else //GNU date format
+        } else{ //GNU date format
             STRING_DATE_FORMAT = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(STRING_DATE_FORMAT, userLocale);
+            local = Locale.ENGLISH;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(STRING_DATE_FORMAT, local);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
         simpleDateFormat.setLenient(true);
         try {
             return simpleDateFormat.parse(date);
         }catch (Exception e){
             String newdate = date.split("\\+")[0].trim();
-            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", userLocale);
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", local);
             simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
             simpleDateFormat.setLenient(true);
             return simpleDateFormat.parse(newdate);

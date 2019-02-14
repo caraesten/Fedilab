@@ -20,6 +20,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -51,7 +52,10 @@ public class AccountDAO {
     public boolean insertAccount(Account account)
     {
         ContentValues values = new ContentValues();
-
+        if( account.getCreated_at() == null)
+            account.setCreated_at(new Date());
+        if( account.getNote() == null)
+            account.setNote("");
         values.put(Sqlite.COL_USER_ID, account.getId());
         values.put(Sqlite.COL_USERNAME, account.getUsername());
         values.put(Sqlite.COL_ACCT, account.getAcct());
@@ -97,7 +101,10 @@ public class AccountDAO {
     public int updateAccount(Account account)
     {
         ContentValues values = new ContentValues();
-
+        if( account.getNote() == null)
+            account.setNote("");
+        if( account.getCreated_at() == null)
+            account.setCreated_at(new Date());
         values.put(Sqlite.COL_ACCT, account.getAcct());
         values.put(Sqlite.COL_DISPLAYED_NAME, account.getDisplay_name());
         values.put(Sqlite.COL_LOCKED,account.isLocked());
