@@ -24,7 +24,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_custom_sharing"
-        android:title="Custom Sharing"
+        android:title="@string/settings_title_custom_sharing"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_copy_link"

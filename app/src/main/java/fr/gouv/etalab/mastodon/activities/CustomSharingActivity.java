@@ -92,7 +92,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             TextView title = actionBar.getCustomView().findViewById(R.id.toolbar_title);
             pp_actionBar = actionBar.getCustomView().findViewById(R.id.pp_actionBar);
-            title.setText(R.string.settings_title_profile);
+            title.setText(R.string.settings_title_custom_sharing);
             ImageView close_conversation = actionBar.getCustomView().findViewById(R.id.close_conversation);
             if( close_conversation != null){
                 close_conversation.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +107,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                 Helper.colorizeToolbar(toolbar, R.color.black, CustomSharingActivity.this);
             }
         }else{
-            setTitle(R.string.settings_title_profile);
+            setTitle(R.string.settings_title_custom_sharing);
         }
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);

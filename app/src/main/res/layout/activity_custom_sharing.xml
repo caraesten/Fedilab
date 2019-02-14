@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:paddingBottom="10dp"
-            android:text="Custom Sharing"
+            android:text="@string/settings_title_custom_sharing"
             android:textSize="18sp" />
 
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
-            android:text="Title" />
+            android:text="@string/title_header_custom_sharing" />
         <EditText
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
             android:minLines="1"
             android:lines="1"
             android:maxLines="2"
-            android:hint="Title..."
+            android:hint="@string/title_hint_custom_sharing"
             />
 
 
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
-            android:text="Description" />
+            android:text="@string/description_header_custom_sharing" />
         <EditText
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
@@ -79,7 +79,7 @@
             android:minLines="4"
             android:lines="4"
             android:maxLines="5"
-            android:hint="Description..."
+            android:hint="@string/description_hint_custom_sharing"
              />
 
 
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
-            android:text="Keywords" />
+            android:text="@string/keywords_header_custom_sharing" />
         <EditText
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
@@ -99,7 +99,7 @@
             android:minLines="1"
             android:lines="1"
             android:maxLines="1"
-            android:hint="Keywords..."
+            android:hint="@string/keywords_hint_custom_sharing"
             />
 
 
