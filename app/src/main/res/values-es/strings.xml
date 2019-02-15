@@ -310,6 +310,8 @@
     <string name="set_night_mode">Modo nocturno</string>
     <string name="set_nsfw_timeout">Tiempo de vista de contenido sensible (segundos, 0 significa terminado)</string>
     <string name="settings_title_profile">Editar perfil</string>
+    <string name="settings_title_custom_sharing">Custom sharing</string>
+    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Bloquear cuenta</string>
     <string name="set_save_changes">Guardar cambios</string>
@@ -393,6 +395,13 @@ Tú puede activar o desactivar esas notificaciones después en configuración (p
     <string name="cache_message">Hay %1$s de data en caché.\n\n ¿Quieres eliminarlos?</string>
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">¡Fue borrando el cache! %1$s liberados</string>
+    <!-- ACTIVITY CUSTOM SHARING -->
+    <string name="title_header_custom_sharing">Title</string>
+    <string name="title_hint_custom_sharing">Title&#8230;</string>
+    <string name="description_header_custom_sharing">Description</string>
+    <string name="description_hint_custom_sharing">Description&#8230;</string>
+    <string name="keywords_header_custom_sharing">Keywords</string>
+    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sincronizar</string>
     <string name="action_filter">Filtrar</string>
