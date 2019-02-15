@@ -310,8 +310,8 @@
     <string name="set_night_mode">Modalità notturna</string>
     <string name="set_nsfw_timeout">Timeout visualizzazione NSFW (secondi, 0 significa spento)</string>
     <string name="settings_title_profile">Modifica profilo</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Condivisione personalizzata</string>
+    <string name="settings_custom_sharing_url">L\'URL della tua condivisione personalizzata&#8230;</string>
     <string name="set_profile_description">Biografia…</string>
     <string name="set_lock_account">Blocca account</string>
     <string name="set_save_changes">Salva modifiche</string>
@@ -397,12 +397,12 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">La cache è stata pulita! %1$s sono stati liberati</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Titolo</string>
+    <string name="title_hint_custom_sharing">Titolo&#8230;</string>
+    <string name="description_header_custom_sharing">Descrizione</string>
+    <string name="description_hint_custom_sharing">Descrizione&#8230;</string>
+    <string name="keywords_header_custom_sharing">Parole chiave</string>
+    <string name="keywords_hint_custom_sharing">Parole chiave&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sincronizza</string>
     <string name="action_filter">Filtro</string>
