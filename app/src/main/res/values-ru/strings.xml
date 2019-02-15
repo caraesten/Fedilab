@@ -318,6 +318,8 @@
     <string name="set_night_mode">Ночной режим</string>
     <string name="set_nsfw_timeout">Время просмотра NSFW (в секундах, 0 означает выключено)</string>
     <string name="settings_title_profile">Изменить профиль</string>
+    <string name="settings_title_custom_sharing">Custom sharing</string>
+    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">О…</string>
     <string name="set_lock_account">Заблокировать аккаунт</string>
     <string name="set_save_changes">Сохранить изменения</string>
@@ -402,6 +404,13 @@
     <string name="cache_message">Данными кэша занято %1$s.\n\nВы хотите их удалить?</string>
     <string name="cache_units">МБ</string>
     <string name="toast_cache_clear">Кэш очишен! Освобождено %1$s</string>
+    <!-- ACTIVITY CUSTOM SHARING -->
+    <string name="title_header_custom_sharing">Title</string>
+    <string name="title_hint_custom_sharing">Title&#8230;</string>
+    <string name="description_header_custom_sharing">Description</string>
+    <string name="description_hint_custom_sharing">Description&#8230;</string>
+    <string name="keywords_header_custom_sharing">Keywords</string>
+    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Синхронизировать</string>
     <string name="action_filter">Фильтр</string>
