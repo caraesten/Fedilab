@@ -787,6 +787,8 @@
     <string name="set_security_provider">Patch the Security Provider</string>
     <string name="update_tracking_domains">Update tracking domains</string>
     <string name="tracking_db_updated">The tracking data base has been updated!</string>
+    <string name="calls_blocked">http calls blocked by the application</string>
+    <string name="list_of_blocked_domains">List of blocked calls</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
