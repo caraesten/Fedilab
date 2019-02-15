@@ -636,6 +636,47 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        // Custom Sharing
+        boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, true);
+        final CheckBox set_custom_sharing = rootView.findViewById(R.id.set_custom_sharing);
+        set_custom_sharing.setChecked(custom_sharing);
+
+        set_custom_sharing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_CUSTOM_SHARING, set_custom_sharing.isChecked());
+                editor.apply();
+            }
+        });
+
+        String custom_sharing_url = sharedpreferences.getString(Helper.SET_CUSTOM_SHARING_URL,"");
+        final EditText edit_custom_sharing_url = rootView.findViewById(R.id.custom_sharing_url);
+        if (custom_sharing_url.equals("")) {
+            custom_sharing_url = "http://my.site/add?user=fedilab&url=${url}&title=${title}&source=${source}&id=${id}&description=${description}&keywords=${keywords}";
+        }
+        edit_custom_sharing_url.setText(custom_sharing_url);
+
+
+        edit_custom_sharing_url.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Helper.SET_CUSTOM_SHARING_URL, s.toString().trim());
+                editor.apply();
+            }
+        });
+
         boolean display_direct = sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true);
         final CheckBox set_display_direct = rootView.findViewById(R.id.set_display_direct);
         set_display_direct.setChecked(display_direct);

@@ -93,6 +93,7 @@ import java.util.regex.Pattern;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
+import fr.gouv.etalab.mastodon.activities.CustomSharingActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.PeertubeActivity;
@@ -2248,6 +2249,25 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     sendIntent.putExtra(Intent.EXTRA_TEXT, extra_text);
                                     sendIntent.setType("text/plain");
                                     context.startActivity(Intent.createChooser(sendIntent, context.getString(R.string.share_with)));
+                                    return true;
+                                case R.id.action_custom_sharing:
+                                    Intent intentCustomSharing = new Intent(context, CustomSharingActivity.class);
+                                    Bundle bCustomSharing = new Bundle();
+                                    if (status.getReblog() != null) {
+                                        bCustomSharing.putString("url", status.getReblog().getUrl());
+                                        bCustomSharing.putString("source", status.getReblog().getAccount().getDisplay_name());
+                                        bCustomSharing.putString("id", status.getReblog().getId());
+                                        bCustomSharing.putString("tags", status.getReblog().getTagsString());
+                                        bCustomSharing.putString("content", status.getReblog().getContentSpan().toString());
+                                    } else {
+                                        bCustomSharing.putString("url", status.getUrl());
+                                        bCustomSharing.putString("source", status.getAccount().getDisplay_name());
+                                        bCustomSharing.putString("id", status.getId());
+                                        bCustomSharing.putString("tags", status.getTagsString());
+                                        bCustomSharing.putString("content", status.getContentSpan().toString());
+                                    }
+                                    intentCustomSharing.putExtras(bCustomSharing);
+                                    context.startActivity(intentCustomSharing);
                                     return true;
                                 case R.id.action_mention:
                                     // Get a handler that can be used to post to the main thread
