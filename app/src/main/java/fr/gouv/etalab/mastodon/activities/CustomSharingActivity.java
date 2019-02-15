@@ -30,7 +30,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -161,7 +160,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                 keywords = keywords.replace(double_space,space_only);
                 // Create encodedCustomSharingURL
                 custom_sharing_url = sharedpreferences.getString(Helper.SET_CUSTOM_SHARING_URL,
-                        "http://my.site/add?user=fedilab&url=${url}&title=${title}&source=${source}&id=${id}&description=${description}&keywords=${keywords}");
+                        "http://example.net/add?user=fedilab&url=${url}&title=${title}&source=${source}&id=${id}&description=${description}&keywords=${keywords}");
                 encodedCustomSharingURL = encodeCustomSharingURL(custom_sharing_url, bundle_url, bundle_id, bundle_source, title, description, keywords);
                 new CustomSharingAsyncTask(getApplicationContext(), encodedCustomSharingURL, CustomSharingActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
