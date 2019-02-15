@@ -786,6 +786,8 @@
     <string name="set_security_provider">Sistema il Fornitore di Sicurezza</string>
     <string name="update_tracking_domains">Aggiorna domini traccianti</string>
     <string name="tracking_db_updated">La base dati dei domini traccianti è stata aggiornata!</string>
+    <string name="calls_blocked">http calls blocked by the application</string>
+    <string name="list_of_blocked_domains">List of blocked calls</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
