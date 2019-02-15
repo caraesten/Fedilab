@@ -770,9 +770,9 @@
     <string name="set_compact">緊湊</string>
     <string name="set_console">主控臺</string>
     <string name="set_mode">設定顯示模式</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
-    <string name="update_tracking_domains">Update tracking domains</string>
-    <string name="tracking_db_updated">The tracking data base has been updated!</string>
+    <string name="set_security_provider">修補程式安全提供者</string>
+    <string name="update_tracking_domains">更新追蹤網域</string>
+    <string name="tracking_db_updated">追蹤資料庫已更新！</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
