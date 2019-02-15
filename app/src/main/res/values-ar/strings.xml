@@ -800,6 +800,8 @@
     <string name="set_security_provider">Patch the Security Provider</string>
     <string name="update_tracking_domains">تحديث نطاقات التعقب</string>
     <string name="tracking_db_updated">تم تحديث قاعدة بيانات التعقب!</string>
+    <string name="calls_blocked">http calls blocked by the application</string>
+    <string name="list_of_blocked_domains">List of blocked calls</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>تورنت</item>
