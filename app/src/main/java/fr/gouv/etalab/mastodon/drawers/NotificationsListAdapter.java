@@ -59,13 +59,16 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
+import fr.gouv.etalab.mastodon.activities.TootInfoActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.PostNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
@@ -694,6 +697,16 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     popup.getMenu().findItem(R.id.action_remove).setVisible(false);
                     stringArrayConf =  context.getResources().getStringArray(R.array.more_action_confirm);
                 }
+                if (status.getAccount().getAcct().split("@").length < 2)
+                    popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
+
+                if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ||  MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+                    popup.getMenu().findItem(R.id.action_info).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_report).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
+
+                }
+
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         AlertDialog.Builder builderInner;
@@ -717,6 +730,28 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                             case R.id.action_open_browser:
                                 Helper.openBrowser(context, status.getUrl());
                                 return true;
+                            case R.id.action_info:
+                                Intent intent = new Intent(context, TootInfoActivity.class);
+                                Bundle b = new Bundle();
+                                if (status.getReblog() != null) {
+                                    b.putString("toot_id", status.getReblog().getId());
+                                    b.putInt("toot_reblogs_count", status.getReblog().getReblogs_count());
+                                    b.putInt("toot_favorites_count", status.getReblog().getFavourites_count());
+                                } else {
+                                    b.putString("toot_id", status.getId());
+                                    b.putInt("toot_reblogs_count", status.getReblogs_count());
+                                    b.putInt("toot_favorites_count", status.getFavourites_count());
+                                }
+                                intent.putExtras(b);
+                                context.startActivity(intent);
+                                return true;
+                            case R.id.action_block_domain:
+                                builderInner = new AlertDialog.Builder(context, style);
+                                builderInner.setTitle(stringArrayConf[3]);
+                                doAction = API.StatusAction.BLOCK_DOMAIN;
+                                String domain = status.getAccount().getAcct().split("@")[1];
+                                builderInner.setMessage(context.getString(R.string.block_domain_confirm_message, domain));
+                                break;
                             case R.id.action_block:
                                 builderInner = new AlertDialog.Builder(context, style);
                                 builderInner.setTitle(stringArrayConf[1]);
