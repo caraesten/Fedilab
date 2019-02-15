@@ -310,6 +310,8 @@
     <string name="set_night_mode">Gece modu</string>
     <string name="set_nsfw_timeout">NSFW görünümü zaman aşımı (saniye, kapatmak için sıfır girin)</string>
     <string name="settings_title_profile">Profil düzenle</string>
+    <string name="settings_title_custom_sharing">Custom sharing</string>
+    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">Özgeçmiş…</string>
     <string name="set_lock_account">Hesabı Kilitle</string>
     <string name="set_save_changes">Değişiklikleri kaydet</string>
@@ -393,6 +395,13 @@
     <string name="cache_message">Önbellekte bazı öğeler %1$s var.\n\n Onlar da silinsin mi?</string>
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Önbelleği temizlendi! %1$s serbest bırakıldı</string>
+    <!-- ACTIVITY CUSTOM SHARING -->
+    <string name="title_header_custom_sharing">Title</string>
+    <string name="title_hint_custom_sharing">Title&#8230;</string>
+    <string name="description_header_custom_sharing">Description</string>
+    <string name="description_hint_custom_sharing">Description&#8230;</string>
+    <string name="keywords_header_custom_sharing">Keywords</string>
+    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Eşitle</string>
     <string name="action_filter">Filtrele</string>
