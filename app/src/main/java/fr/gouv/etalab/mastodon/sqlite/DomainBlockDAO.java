@@ -62,6 +62,14 @@ public class DomainBlockDAO {
             insert(domain);
 
     }
+
+    public int getTotalCount(){
+        Cursor mCount= db.rawQuery("SELECT Count(*) FROM " + Sqlite.TABLE_TRACKING_BLOCK, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
     /***
      * Remove all domains
      */

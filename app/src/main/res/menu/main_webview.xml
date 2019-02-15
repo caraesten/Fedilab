@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_block"
+        android:icon="@drawable/browser_calls_blocked"
+        android:title="@string/calls_blocked"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_go"
         android:title="@string/open_with"
         android:icon="@drawable/ic_open_with"

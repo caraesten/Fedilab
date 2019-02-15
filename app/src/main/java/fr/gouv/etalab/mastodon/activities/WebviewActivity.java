@@ -17,10 +17,13 @@ package fr.gouv.etalab.mastodon.activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -28,6 +31,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +39,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.WebView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -46,6 +51,7 @@ import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
+import fr.gouv.etalab.mastodon.helper.CountDrawable;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.DomainBlockDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -69,6 +75,8 @@ public class WebviewActivity extends BaseActivity {
     private boolean peertubeLink;
     private WebView webView;
     public static List<String> trackingDomains;
+    private Menu defaultMenu;
+    private MastalabWebViewClient mastalabWebViewClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +138,8 @@ public class WebviewActivity extends BaseActivity {
             }
         });
         webView.setWebChromeClient(mastalabWebChromeClient);
-        webView.setWebViewClient(new MastalabWebViewClient(WebviewActivity.this));
+        mastalabWebViewClient = new MastalabWebViewClient(WebviewActivity.this);
+        webView.setWebViewClient(mastalabWebViewClient);
         webView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
@@ -172,11 +181,42 @@ public class WebviewActivity extends BaseActivity {
             webView.loadUrl(url);
     }
 
+
+    public void setCount(Context context, String count) {
+        if( defaultMenu != null) {
+            MenuItem menuItem = defaultMenu.findItem(R.id.action_block);
+            LayerDrawable icon = (LayerDrawable) menuItem.getIcon();
+
+            CountDrawable badge;
+
+            // Reuse drawable if possible
+            Drawable reuse = icon.findDrawableByLayerId(R.id.ic_block_count);
+            if (reuse instanceof CountDrawable) {
+                badge = (CountDrawable) reuse;
+            } else {
+                badge = new CountDrawable(context);
+            }
+
+            badge.setCount(count);
+            icon.mutate();
+            icon.setDrawableByLayerId(R.id.ic_block_count, badge);
+        }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        setCount(this, "0");
+        defaultMenu = menu;
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_webview, menu);
+        defaultMenu = menu;
         if( peertubeLink ){
             menu.findItem(R.id.action_go).setVisible(false);
+            menu.findItem(R.id.action_block).setVisible(false);
             menu.findItem(R.id.action_comment).setVisible(true);
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
@@ -190,6 +230,44 @@ public class WebviewActivity extends BaseActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.action_block:
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
+                List<String> domains = mastalabWebViewClient.getDomains();
+
+                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(WebviewActivity.this, R.layout.domains_blocked);
+                for (String domain: domains)
+                    arrayAdapter.add(domain);
+                int style;
+                if (theme == Helper.THEME_DARK) {
+                    style = R.style.DialogDark;
+                } else if (theme == Helper.THEME_BLACK){
+                    style = R.style.DialogBlack;
+                }else {
+                    style = R.style.Dialog;
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivity.this, style);
+                builder.setTitle(R.string.list_of_blocked_domains);
+
+                builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String strName = arrayAdapter.getItem(which);
+                        assert strName != null;
+                        Toasty.info(WebviewActivity.this, strName, Toast.LENGTH_LONG).show();
+                    }
+                });
+                builder.show();
+
                 return true;
             case R.id.action_go:
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));

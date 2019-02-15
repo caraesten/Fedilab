@@ -28,6 +28,8 @@ import android.widget.TextView;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
@@ -40,11 +42,12 @@ import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 public class MastalabWebViewClient extends WebViewClient {
 
     private Activity activity;
+    private int count = 0;
 
     public MastalabWebViewClient(Activity activity){
         this.activity = activity;
     }
-
+    public List<String> domains = new ArrayList<>();
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
@@ -57,8 +60,15 @@ public class MastalabWebViewClient extends WebViewClient {
         try {
             uri = new URI(url);
             String domain = uri.getHost();
-            domain = domain.startsWith("www.") ? domain.substring(4) : domain;
-            if (WebviewActivity.trackingDomains.contains(domain)) {
+            if( domain != null) {
+                domain = domain.startsWith("www.") ? domain.substring(4) : domain;
+            }
+            if (domain != null && WebviewActivity.trackingDomains.contains(domain)) {
+                if( activity instanceof WebviewActivity){
+                    count++;
+                    domains.add(url);
+                    ((WebviewActivity)activity).setCount(activity, String.valueOf(count));
+                }
                 return null;
             }
         } catch (URISyntaxException e) {
@@ -67,9 +77,16 @@ public class MastalabWebViewClient extends WebViewClient {
         return super.shouldInterceptRequest(view, url);
     }
 
+    public List<String> getDomains(){
+        return this.domains;
+    }
+
     @Override
     public void onPageStarted (WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
+        count = 0;
+        domains = new ArrayList<>();
+        domains.clear();
         ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
         LayoutInflater mInflater = LayoutInflater.from(activity);
         if( actionBar != null){
