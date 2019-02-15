@@ -183,7 +183,7 @@ public class WebviewActivity extends BaseActivity {
 
 
     public void setCount(Context context, String count) {
-        if( defaultMenu != null) {
+        if( defaultMenu != null && !peertubeLink) {
             MenuItem menuItem = defaultMenu.findItem(R.id.action_block);
             LayerDrawable icon = (LayerDrawable) menuItem.getIcon();
 
@@ -205,7 +205,8 @@ public class WebviewActivity extends BaseActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        setCount(this, "0");
+        if(!peertubeLink)
+            setCount(this, "0");
         defaultMenu = menu;
         return super.onPrepareOptionsMenu(menu);
     }

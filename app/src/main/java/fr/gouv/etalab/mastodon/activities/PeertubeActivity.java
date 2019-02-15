@@ -352,6 +352,7 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_webview, menu);
         menu.findItem(R.id.action_go).setVisible(false);
+        menu.findItem(R.id.action_block).setVisible(false);
         menu.findItem(R.id.action_comment).setVisible(true);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
