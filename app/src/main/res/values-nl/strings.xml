@@ -771,6 +771,9 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="set_compact">Compact</string>
     <string name="set_console">Console</string>
     <string name="set_mode">Set display mode</string>
+    <string name="set_security_provider">Patch the Security Provider</string>
+    <string name="update_tracking_domains">Update tracking domains</string>
+    <string name="tracking_db_updated">The tracking data base has been updated!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

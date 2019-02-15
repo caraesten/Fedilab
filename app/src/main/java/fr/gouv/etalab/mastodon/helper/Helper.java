@@ -158,6 +158,7 @@ import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
 import fr.gouv.etalab.mastodon.activities.HashTagActivity;
 import fr.gouv.etalab.mastodon.activities.LoginActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.activities.MainApplication;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RemoveAccountAsyncTask;
@@ -370,6 +371,7 @@ public class Helper {
     public static final String SET_TRUNCATE_TOOTS_SIZE = "set_truncate_toots_size";
     public static final String SET_ART_WITH_NSFW = "set_art_with_nsfw";
     public static final String SET_OPTIMIZE_LOADING = "set_optimize_loading";
+    public static final String SET_SECURITY_PROVIDER = "set_security_provider";
     //End points
     public static final String EP_AUTHORIZE = "/oauth/authorize";
 
@@ -595,28 +597,25 @@ public class Helper {
      * @return Date
      */
     public static Date mstStringToDate(Context context, String date) throws ParseException {
-        Locale userLocale;
-        if (date == null )
+        if (date == null)
             return null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            userLocale = context.getResources().getConfiguration().getLocales().get(0);
-        } else {
-            //noinspection deprecation
-            userLocale = context.getResources().getConfiguration().locale;
-        }
+
         String STRING_DATE_FORMAT;
-        if( !date.contains("+"))
+        Locale local = Locale.getDefault();
+        if (!date.contains("+")) {
             STRING_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        else //GNU date format
+        } else{ //GNU date format
             STRING_DATE_FORMAT = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(STRING_DATE_FORMAT, userLocale);
+            local = Locale.ENGLISH;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(STRING_DATE_FORMAT, local);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
         simpleDateFormat.setLenient(true);
         try {
             return simpleDateFormat.parse(date);
         }catch (Exception e){
             String newdate = date.split("\\+")[0].trim();
-            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", userLocale);
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", local);
             simpleDateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
             simpleDateFormat.setLenient(true);
             return simpleDateFormat.parse(newdate);
@@ -2949,9 +2948,17 @@ public class Helper {
 
 
     public static void installProvider(){
+
+        boolean patch_provider = true;
         try {
-            Security.insertProviderAt(Conscrypt.newProvider(),1);
+            Context ctx = MainApplication.getApp();
+            SharedPreferences sharedpreferences = ctx.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+            patch_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
         }catch (Exception ignored){}
+        if( patch_provider)
+            try {
+                Security.insertProviderAt(Conscrypt.newProvider(),1);
+            }catch (Exception ignored){}
     }
 
 

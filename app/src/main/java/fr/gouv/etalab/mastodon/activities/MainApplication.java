@@ -46,9 +46,12 @@ import fr.gouv.etalab.mastodon.jobs.NotificationsSyncJob;
 public class MainApplication extends MultiDexApplication {
 
 
+    private static MainApplication app;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        app = this;
         //System.setProperty("java.net.preferIPv4Stack" , "true");
         JobManager.create(this).addJobCreator(new ApplicationJob());
         NotificationsSyncJob.schedule(false);
@@ -71,7 +74,7 @@ public class MainApplication extends MultiDexApplication {
                 SUPPORTED_LOCALES.add(Locale.getDefault());
             }
             LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
-        }catch (Exception ignored){ignored.printStackTrace();}
+        }catch (Exception ignored){}
         //Initialize upload service
         UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
         Toasty.Config.getInstance()
@@ -85,10 +88,15 @@ public class MainApplication extends MultiDexApplication {
                 }
 
 
+
     @Override
     protected void attachBaseContext(Context base)
     {
         super.attachBaseContext(base);
         MultiDex.install(MainApplication.this);
+    }
+
+    public static MainApplication getApp(){
+        return app;
     }
 }

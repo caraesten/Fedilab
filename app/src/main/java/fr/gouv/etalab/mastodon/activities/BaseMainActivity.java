@@ -1233,7 +1233,10 @@ public abstract class BaseMainActivity extends BaseActivity
         //Defines the current locale of the device in a static variable
         currentLocale = Helper.currentLocale(getApplicationContext());
 
-
+        if( tabLayout.getTabAt(0) == null) {
+            Helper.logout(BaseMainActivity.this);
+            return;
+        }
         tabLayout.getTabAt(0).select();
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             toot.setOnClickListener(new View.OnClickListener() {

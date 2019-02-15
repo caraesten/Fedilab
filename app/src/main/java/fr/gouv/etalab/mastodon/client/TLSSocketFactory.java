@@ -1,6 +1,8 @@
 package fr.gouv.etalab.mastodon.client;
 
 
+import android.content.SharedPreferences;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -11,6 +13,9 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+
+import fr.gouv.etalab.mastodon.activities.MainApplication;
+import fr.gouv.etalab.mastodon.helper.Helper;
 
 /**
  * Created by Thomas on 29/08/2017.
@@ -78,8 +83,16 @@ public class TLSSocketFactory extends SSLSocketFactory {
     }
 
     private Socket enableTLSOnSocket(Socket socket) {
-        if(socket != null && (socket instanceof SSLSocket)) {
-            ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2"});
+        if((socket instanceof SSLSocket)) {
+            boolean security_provider = false;
+            try {
+                SharedPreferences sharedpreferences = MainApplication.getApp().getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                security_provider = sharedpreferences.getBoolean(Helper.SET_SECURITY_PROVIDER, true);
+            }catch (Exception ignored){}
+            if( security_provider)
+                ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2", "TLSv1.3"});
+            else
+                ((SSLSocket)socket).setEnabledProtocols(new String[] {"TLSv1.1", "TLSv1.2"});
         }
         return socket;
     }

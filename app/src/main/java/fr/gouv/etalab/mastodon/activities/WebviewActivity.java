@@ -20,10 +20,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.Menu;
@@ -37,6 +39,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
@@ -44,6 +47,8 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.sqlite.DomainBlockDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.webview.MastalabWebChromeClient;
 import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
 
@@ -63,6 +68,7 @@ public class WebviewActivity extends BaseActivity {
     private String peertubeLinkToFetch;
     private boolean peertubeLink;
     private WebView webView;
+    public static List<String> trackingDomains;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,7 @@ public class WebviewActivity extends BaseActivity {
             default:
                 setTheme(R.style.AppThemeDark);
         }
+
 
         setContentView(R.layout.activity_webview);
         Bundle b = getIntent().getExtras();
@@ -141,7 +148,28 @@ public class WebviewActivity extends BaseActivity {
         });
         if( !url.startsWith("http://") && !url.startsWith("https://"))
             url = "http://" + url;
-        webView.loadUrl(url);
+        if( trackingDomains == null){
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    SQLiteDatabase db = Sqlite.getInstance(WebviewActivity.this, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    trackingDomains = new DomainBlockDAO(WebviewActivity.this, db).getAll();
+                    if( trackingDomains == null)
+                        trackingDomains = new ArrayList<>();
+                    // Get a handler that can be used to post to the main thread
+                    Handler mainHandler = new Handler(getMainLooper());
+                    Runnable myRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            webView.loadUrl(url);
+                        }
+                    };
+                    mainHandler.post(myRunnable);
+
+                }
+            });
+        }else
+            webView.loadUrl(url);
     }
 
     @Override

@@ -13,6 +13,7 @@ package fr.gouv.etalab.mastodon.webview;
  *
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -20,12 +21,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import fr.gouv.etalab.mastodon.activities.WebviewActivity;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.WebviewActivity;
 
 /**
  * Created by Thomas on 25/06/2017.
@@ -45,6 +50,22 @@ public class MastalabWebViewClient extends WebViewClient {
         super.onPageFinished(view, url);
     }
 
+
+    @Override
+    public WebResourceResponse shouldInterceptRequest (final WebView view, String url) {
+        URI uri = null;
+        try {
+            uri = new URI(url);
+            String domain = uri.getHost();
+            domain = domain.startsWith("www.") ? domain.substring(4) : domain;
+            if (WebviewActivity.trackingDomains.contains(domain)) {
+                return null;
+            }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return super.shouldInterceptRequest(view, url);
+    }
 
     @Override
     public void onPageStarted (WebView view, String url, Bitmap favicon) {

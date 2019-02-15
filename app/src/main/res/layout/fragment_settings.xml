@@ -499,6 +499,13 @@
             android:layout_height="wrap_content" />
 
 
+        <CheckBox
+            android:id="@+id/set_security_provider"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_security_provider"
+            android:layout_height="wrap_content" />
         <!-- TRUNCATE LONG TOOTS -->
         <TextView
             android:layout_marginTop="10dp"
@@ -625,7 +632,15 @@
             android:text="@string/embedded_browser"
             android:layout_height="wrap_content" />
 
-
+        <Button
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/update_tracking_domains"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:text="@string/update_tracking_domains" />
         <CheckBox
             android:visibility="gone"
             android:layout_marginTop="10dp"
