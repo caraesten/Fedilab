@@ -59,8 +59,8 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
-import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.CustomSharingActivity;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.activities.MediaActivity;
 import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
@@ -707,6 +707,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                     popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
 
                 }
+                boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, false);
+                if( custom_sharing && status.getVisibility().equals("public"))
+                    popup.getMenu().findItem(R.id.action_custom_sharing).setVisible(true);
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {

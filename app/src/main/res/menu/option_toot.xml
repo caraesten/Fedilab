@@ -23,6 +23,7 @@
         android:title="@string/more_action_6"
         app:showAsAction="never" />
     <item
+        android:visible="false"
         android:id="@+id/action_custom_sharing"
         android:title="@string/settings_title_custom_sharing"
         app:showAsAction="never" />

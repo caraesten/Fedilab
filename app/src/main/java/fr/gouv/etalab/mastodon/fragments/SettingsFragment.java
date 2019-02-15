@@ -637,23 +637,30 @@ public class SettingsFragment extends Fragment {
         });
 
         // Custom Sharing
-        boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, true);
+        final EditText edit_custom_sharing_url = rootView.findViewById(R.id.custom_sharing_url);
+        boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, false);
         final CheckBox set_custom_sharing = rootView.findViewById(R.id.set_custom_sharing);
         set_custom_sharing.setChecked(custom_sharing);
-
+        if( custom_sharing)
+            edit_custom_sharing_url.setVisibility(View.VISIBLE);
+        else
+            edit_custom_sharing_url.setVisibility(View.GONE);
         set_custom_sharing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_CUSTOM_SHARING, set_custom_sharing.isChecked());
                 editor.apply();
+                if( set_custom_sharing.isChecked())
+                    edit_custom_sharing_url.setVisibility(View.VISIBLE);
+                else
+                    edit_custom_sharing_url.setVisibility(View.GONE);
             }
         });
 
         String custom_sharing_url = sharedpreferences.getString(Helper.SET_CUSTOM_SHARING_URL,"");
-        final EditText edit_custom_sharing_url = rootView.findViewById(R.id.custom_sharing_url);
         if (custom_sharing_url.equals("")) {
-            custom_sharing_url = "http://my.site/add?user=fedilab&url=${url}&title=${title}&source=${source}&id=${id}&description=${description}&keywords=${keywords}";
+            custom_sharing_url = "http://example.net/add?user=fedilab&url=${url}&title=${title}&source=${source}&id=${id}&description=${description}&keywords=${keywords}";
         }
         edit_custom_sharing_url.setText(custom_sharing_url);
 
@@ -676,6 +683,7 @@ public class SettingsFragment extends Fragment {
                 editor.apply();
             }
         });
+
 
         boolean display_direct = sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true);
         final CheckBox set_display_direct = rootView.findViewById(R.id.set_display_direct);

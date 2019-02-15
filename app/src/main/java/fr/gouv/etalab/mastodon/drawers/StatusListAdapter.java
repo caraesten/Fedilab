@@ -1914,7 +1914,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         popup.getMenu().findItem(R.id.action_block_domain).setVisible(false);
 
                     }
-
+                    boolean custom_sharing = sharedpreferences.getBoolean(Helper.SET_CUSTOM_SHARING, false);
+                    if( custom_sharing && status.getVisibility().equals("public"))
+                        popup.getMenu().findItem(R.id.action_custom_sharing).setVisible(true);
                     MenuItem itemBookmark = popup.getMenu().findItem(R.id.action_bookmark);
                     if (itemBookmark.getActionView() != null)
                         itemBookmark.getActionView().setOnLongClickListener(new View.OnLongClickListener() {
