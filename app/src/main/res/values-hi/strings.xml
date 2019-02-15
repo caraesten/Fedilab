@@ -310,6 +310,8 @@
     <string name="set_night_mode">रात्रि मोड</string>
     <string name="set_nsfw_timeout">NSFW दृश्य विराम (सेकेंड, ० मतलब बंद)</string>
     <string name="settings_title_profile">प्रोफ़ाइल संपादित करें</string>
+    <string name="settings_title_custom_sharing">Custom sharing</string>
+    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">बायो...</string>
     <string name="set_lock_account">खाता लाॅक करें</string>
     <string name="set_save_changes">बदलाव सहेजें</string>
@@ -394,6 +396,13 @@
     <string name="cache_message">कैश में %1$s डेटा है। \n\nक्या आप उन्हें मिटाना चाहेंगे?</string>
     <string name="cache_units">एमबी</string>
     <string name="toast_cache_clear">कैश को साफ़ कर दिया! %1$s मुक्त</string>
+    <!-- ACTIVITY CUSTOM SHARING -->
+    <string name="title_header_custom_sharing">Title</string>
+    <string name="title_hint_custom_sharing">Title&#8230;</string>
+    <string name="description_header_custom_sharing">Description</string>
+    <string name="description_hint_custom_sharing">Description&#8230;</string>
+    <string name="keywords_header_custom_sharing">Keywords</string>
+    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">समक्रमण करें</string>
     <string name="action_filter">छांटे</string>
