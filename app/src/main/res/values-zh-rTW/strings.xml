@@ -782,6 +782,8 @@
     <string name="set_security_provider">修補程式安全提供者</string>
     <string name="update_tracking_domains">更新追蹤網域</string>
     <string name="tracking_db_updated">追蹤資料庫已更新！</string>
+    <string name="calls_blocked">http calls blocked by the application</string>
+    <string name="list_of_blocked_domains">List of blocked calls</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
