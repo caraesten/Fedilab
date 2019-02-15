@@ -314,6 +314,8 @@
     <string name="set_night_mode">Ноћни режим</string>
     <string name="set_nsfw_timeout">NSFW временско ограничење приказа (у секундама, 0 значи искључено)</string>
     <string name="settings_title_profile">Измени профил</string>
+    <string name="settings_title_custom_sharing">Custom sharing</string>
+    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">Биографија…</string>
     <string name="set_lock_account">Закључај налог</string>
     <string name="set_save_changes">Сачувај промене</string>
@@ -398,6 +400,13 @@
     <string name="cache_message">Тренутно има %1$s података у кешу.\n\nДа ли желите да их обришете?</string>
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Кеш очишћен! %1$s ослобођено</string>
+    <!-- ACTIVITY CUSTOM SHARING -->
+    <string name="title_header_custom_sharing">Title</string>
+    <string name="title_hint_custom_sharing">Title&#8230;</string>
+    <string name="description_header_custom_sharing">Description</string>
+    <string name="description_hint_custom_sharing">Description&#8230;</string>
+    <string name="keywords_header_custom_sharing">Keywords</string>
+    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Синхронизуј</string>
     <string name="action_filter">Филтрирај</string>
