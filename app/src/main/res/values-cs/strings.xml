@@ -405,12 +405,12 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cache byla vyprázdněna! %1$s bylo uvolněno</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Název</string>
+    <string name="title_hint_custom_sharing">Název&#8230;</string>
+    <string name="description_header_custom_sharing">Popis</string>
+    <string name="description_hint_custom_sharing">Popis&#8230;</string>
+    <string name="keywords_header_custom_sharing">Klíčová slova</string>
+    <string name="keywords_hint_custom_sharing">Klíčová slova&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Synchronizovat</string>
     <string name="action_filter">Filtrovat</string>
@@ -713,9 +713,9 @@ Začněte psát první znaky pro návrh.\n\n
     <string name="upload_video">Nahrát</string>
     <string name="reply">Odpověděť</string>
     <string name="delete_comment">Odstranit komentář</string>
-    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
-    <string name="fullscreen">Full screen video</string>
-    <string name="set_video_mode">Mode for videos</string>
+    <string name="delete_comment_confirm">Jste si jisti, že chcete smazat tento komentář?</string>
+    <string name="fullscreen">Video přes celou obrazovku</string>
+    <string name="set_video_mode">Režim pro videa</string>
     <string name="file_to_upload">Vybrat soubor pro nahrání</string>
     <string name="my_videos">Moje videa</string>
     <string name="title">Název</string>
@@ -732,8 +732,8 @@ Začněte psát první znaky pro návrh.\n\n
     <string name="upload_video_success">Video bylo nahráno!</string>
     <string name="uploading">Nahrávám, prosím čekejte…</string>
     <string name="video_uploaded_action">Klepněte zde pro editaci video dat.</string>
-    <string name="delete_video">Delete video</string>
-    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
+    <string name="delete_video">Odstranit video</string>
+    <string name="delete_video_confirmation">Jste si jistý/á, že chcete smazat toto video?</string>
     <string name="no_video_uploaded">No videos uploaded yet!</string>
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
