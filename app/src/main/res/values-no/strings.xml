@@ -310,8 +310,8 @@
     <string name="set_night_mode">Nattmodus</string>
     <string name="set_nsfw_timeout">NSFW visningspause i sekunder (0 betyr ingen visningspause)</string>
     <string name="settings_title_profile">Rediger profil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Tilpasset deling</string>
+    <string name="settings_custom_sharing_url">Din URL for tilpasset deling&#8230;</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Lås konto</string>
     <string name="set_save_changes">Lagre endringer</string>
@@ -396,12 +396,12 @@ Du kan aktivere eller deaktivere disse meldingene senere i innstillingene (Meldi
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cachen ble ryddet! %1$s ble utgitt</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Tittel</string>
+    <string name="title_hint_custom_sharing">Tittel&#8230;</string>
+    <string name="description_header_custom_sharing">Beskrivelse</string>
+    <string name="description_hint_custom_sharing">Beskrivelse&#8230;</string>
+    <string name="keywords_header_custom_sharing">Nøkkelord</string>
+    <string name="keywords_hint_custom_sharing">Nøkkelord&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Synkroniser</string>
     <string name="action_filter">Filter</string>
@@ -774,8 +774,8 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="set_security_provider">Oppdater sikkerhetstilbyder</string>
     <string name="update_tracking_domains">Oppdater sporingsdomener</string>
     <string name="tracking_db_updated">Sporingsdata er oppdatert!</string>
-    <string name="calls_blocked">http calls blocked by the application</string>
-    <string name="list_of_blocked_domains">List of blocked calls</string>
+    <string name="calls_blocked">HTTP-kall blokkert av applikasjonen</string>
+    <string name="list_of_blocked_domains">Liste over blokkerte kall</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
