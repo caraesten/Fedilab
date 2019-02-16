@@ -847,8 +847,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
             //Click on a conversation
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
-                if ((getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS )) {
+            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                if ((getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS)) {
                     holder.status_content.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -864,7 +864,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     ((Activity) context).finish();
                                 context.startActivity(intent);
                             } else {
-                                if( social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                if (social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                                     CrossActions.doCrossConversation(context, status);
                             }
                         }
@@ -884,14 +884,13 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     ((Activity) context).finish();
                                 context.startActivity(intent);
                             } else {
-                                if( social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                if (social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                                     CrossActions.doCrossConversation(context, status);
                             }
                         }
                     });
                 }
-
-
+            }
 
 
             holder.status_translate.setOnClickListener(new View.OnClickListener() {
