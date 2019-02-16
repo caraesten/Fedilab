@@ -239,8 +239,7 @@ public class WebviewActivity extends BaseActivity {
                 List<String> domains = mastalabWebViewClient.getDomains();
 
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(WebviewActivity.this, R.layout.domains_blocked);
-                for (String domain: domains)
-                    arrayAdapter.add(domain);
+                arrayAdapter.addAll(domains);
                 int style;
                 if (theme == Helper.THEME_DARK) {
                     style = R.style.DialogDark;
