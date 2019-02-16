@@ -36,7 +36,7 @@
     <string name="toast_account_changed" formatted="false">Fonctionne maintenant avec le compte %1$s</string>
     <string name="add_account">Ajouter un compte</string>
     <string name="clipboard">Le contenu du pouet a été copié dans le presse-papier</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">L\'URL du toot a été copiée dans le presse-papiers</string>
     <string name="change">Changer</string>
     <string name="choose_picture">Sélectionnez une photo…</string>
     <string name="clear">Nettoyer</string>
@@ -310,8 +310,8 @@
     <string name="set_night_mode">Mode nuit</string>
     <string name="set_nsfw_timeout">Délai d’affichage NSFW (en secondes, 0 signifie aucun délai)</string>
     <string name="settings_title_profile">Modifier le profil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Partage personnalisé</string>
+    <string name="settings_custom_sharing_url">Votre URL de partage personnalisé&#8230;</string>
     <string name="set_profile_description">Présentation…</string>
     <string name="set_lock_account">Verrouiller le compte</string>
     <string name="set_save_changes">Enregistrer les modifications</string>
@@ -397,12 +397,12 @@
     <string name="cache_units">Mo</string>
     <string name="toast_cache_clear">Le cache a été nettoyé ! %1$s ont été libérés</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
+    <string name="title_header_custom_sharing">Titre</string>
+    <string name="title_hint_custom_sharing">Titre&#8230;</string>
     <string name="description_header_custom_sharing">Description</string>
     <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="keywords_header_custom_sharing">Mots clés</string>
+    <string name="keywords_hint_custom_sharing">Mots clés&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Synchroniser</string>
     <string name="action_filter">Filtrer</string>
@@ -773,16 +773,18 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_optimize_loading">Optimiser le temps de chargement</string>
     <string name="all">Tout</string>
     <string name="about_opencollective">Soutenir l\'application</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
+    <string name="more_about_opencollective">Open Collective permet aux groupes de créer rapidement un collectif, de collecter des fonds et de les gérer de manière transparente.</string>
     <string name="copy_link">Copier le lien</string>
-    <string name="connect_instance">Connect</string>
+    <string name="connect_instance">Connecter</string>
     <string name="set_normal">Nomal</string>
     <string name="set_compact">Compact</string>
-    <string name="set_console">Console</string>
-    <string name="set_mode">Set display mode</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
-    <string name="update_tracking_domains">Update tracking domains</string>
-    <string name="tracking_db_updated">The tracking data base has been updated!</string>
+    <string name="set_console">Terminal</string>
+    <string name="set_mode">Définir le mode d\'affichage</string>
+    <string name="set_security_provider">Patch le fournisseur de sécurité</string>
+    <string name="update_tracking_domains">Mettre à jour les domaines de suivi</string>
+    <string name="tracking_db_updated">La base de données de suivi a été mise à jour !</string>
+    <string name="calls_blocked">Appels http bloqués par l\'application</string>
+    <string name="list_of_blocked_domains">Liste des appels bloqués</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

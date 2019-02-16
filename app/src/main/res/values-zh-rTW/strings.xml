@@ -306,8 +306,8 @@
     <string name="set_night_mode">夜間模式</string>
     <string name="set_nsfw_timeout">NSFW 檢視逾時（秒，0 代表關閉）</string>
     <string name="settings_title_profile">編輯個人資料</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">自訂分享</string>
+    <string name="settings_custom_sharing_url">您的自訂分享 URL&#8230;</string>
     <string name="set_profile_description">簡介……</string>
     <string name="set_lock_account">鎖定帳號</string>
     <string name="set_save_changes">儲存變更</string>
@@ -393,12 +393,12 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">快取已清除！%1$s 被釋放</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">標題</string>
+    <string name="title_hint_custom_sharing">標題&#8230;</string>
+    <string name="description_header_custom_sharing">描述</string>
+    <string name="description_hint_custom_sharing">描述&#8230;</string>
+    <string name="keywords_header_custom_sharing">關鍵字</string>
+    <string name="keywords_hint_custom_sharing">關鍵字&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">同步</string>
     <string name="action_filter">過濾</string>
@@ -782,6 +782,8 @@
     <string name="set_security_provider">修補程式安全提供者</string>
     <string name="update_tracking_domains">更新追蹤網域</string>
     <string name="tracking_db_updated">追蹤資料庫已更新！</string>
+    <string name="calls_blocked">應用程式阻擋了 http 呼叫</string>
+    <string name="list_of_blocked_domains">阻擋呼叫清單</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

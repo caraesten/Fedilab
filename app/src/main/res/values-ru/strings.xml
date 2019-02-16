@@ -794,6 +794,8 @@
     <string name="set_security_provider">Патч провайдера безопасности</string>
     <string name="update_tracking_domains">Обновить отслеживаемые домены</string>
     <string name="tracking_db_updated">База данных отслеживания была обновлена!</string>
+    <string name="calls_blocked">http-вызовы, заблокированные приложением</string>
+    <string name="list_of_blocked_domains">Список заблокированных вызовов</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
