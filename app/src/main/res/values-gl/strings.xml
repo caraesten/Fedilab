@@ -310,8 +310,8 @@
     <string name="set_night_mode">Modo nocturno</string>
     <string name="set_nsfw_timeout">Caducidade da vista NSFW (en segundos, 0 é apagado)</string>
     <string name="settings_title_profile">Editar perfil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Compartición personalizada</string>
+    <string name="settings_custom_sharing_url">O URL da súa compartición&#8230;</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Bloquear conta</string>
     <string name="set_save_changes">Gardar cambios</string>
@@ -397,12 +397,12 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Limpouse a caché! Liberáronse %1$s</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Título</string>
+    <string name="title_hint_custom_sharing">Título&#8230;</string>
+    <string name="description_header_custom_sharing">Descrición</string>
+    <string name="description_hint_custom_sharing">Descrición&#8230;</string>
+    <string name="keywords_header_custom_sharing">Palabras chave</string>
+    <string name="keywords_hint_custom_sharing">Palabras chave&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sincronizar</string>
     <string name="action_filter">Filtrar</string>
@@ -784,11 +784,11 @@
     <string name="set_compact">Compacta</string>
     <string name="set_console">Consola</string>
     <string name="set_mode">Establecer modo de visualización</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
-    <string name="update_tracking_domains">Update tracking domains</string>
-    <string name="tracking_db_updated">The tracking data base has been updated!</string>
-    <string name="calls_blocked">http calls blocked by the application</string>
-    <string name="list_of_blocked_domains">List of blocked calls</string>
+    <string name="set_security_provider">Provedor de Seguridade</string>
+    <string name="update_tracking_domains">Actualizar dominios de rastrexo</string>
+    <string name="tracking_db_updated">Actualizouse a base de datos de rastrexo!</string>
+    <string name="calls_blocked">peticións http bloqueadas pola aplicación</string>
+    <string name="list_of_blocked_domains">Lista de peticións bloquedas</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
