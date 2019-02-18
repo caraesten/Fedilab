@@ -779,8 +779,8 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="set_normal">Nomal</string>
     <string name="set_compact">Compact</string>
     <string name="set_console">Terminal</string>
-    <string name="set_mode">Définir le mode d\'affichage</string>
-    <string name="set_security_provider">Patch le fournisseur de sécurité</string>
+    <string name="set_mode">Définir le mode d’affichage</string>
+    <string name="set_security_provider">Patcher le fournisseur de sécurité</string>
     <string name="update_tracking_domains">Mettre à jour les domaines de suivi</string>
     <string name="tracking_db_updated">La base de données de suivi a été mise à jour !</string>
     <string name="calls_blocked">Appels http bloqués par l\'application</string>

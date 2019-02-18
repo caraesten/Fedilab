@@ -36,7 +36,7 @@
     <string name="toast_account_changed" formatted="false">Orain %1$s kontuarekin dabil</string>
     <string name="add_account">Gehitu kontu bat</string>
     <string name="clipboard">Toot-aren edukia arbelera kopiatu da</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">Toot-aren URL-a arbelera kopiatu da</string>
     <string name="change">Aldatu</string>
     <string name="choose_picture">Hautatu irudi bat…</string>
     <string name="clear">Garbitu</string>
@@ -310,8 +310,8 @@
     <string name="set_night_mode">Gau modua</string>
     <string name="set_nsfw_timeout">NSFW ikusteko denbora-muga (segundoak, 0 itzalita)</string>
     <string name="settings_title_profile">Editatu profila</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Partekatze pertsonalizatua</string>
+    <string name="settings_custom_sharing_url">Zure partekatze pertsonalizaturako URL-a&#8230;</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Blokeatu kontua</string>
     <string name="set_save_changes">Gorde aldaketak</string>
@@ -397,12 +397,12 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cache-a garbitu da! %1$s askatu dira</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Izenburua</string>
+    <string name="title_hint_custom_sharing">Izenburua&#8230;</string>
+    <string name="description_header_custom_sharing">Deskripzioa</string>
+    <string name="description_hint_custom_sharing">Deskripzioa&#8230;</string>
+    <string name="keywords_header_custom_sharing">Hitz gakoak</string>
+    <string name="keywords_hint_custom_sharing">Hitz gakoak&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sinkronizatu</string>
     <string name="action_filter">Iragazi</string>
@@ -774,18 +774,18 @@
     <string name="set_optimize_loading">Optimizatu kargatze denbora</string>
     <string name="all">Denak</string>
     <string name="about_opencollective">Babestu aplikazioa</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
-    <string name="copy_link">Copy link</string>
-    <string name="connect_instance">Connect</string>
-    <string name="set_normal">Nomal</string>
-    <string name="set_compact">Compact</string>
-    <string name="set_console">Console</string>
-    <string name="set_mode">Set display mode</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
-    <string name="update_tracking_domains">Update tracking domains</string>
-    <string name="tracking_db_updated">The tracking data base has been updated!</string>
-    <string name="calls_blocked">http calls blocked by the application</string>
-    <string name="list_of_blocked_domains">List of blocked calls</string>
+    <string name="more_about_opencollective">Open Collective-k talde bat erraz sortzea, finantziazioa eskuratzea, eta gardenki kudeatzea errazten du.</string>
+    <string name="copy_link">Kopiatu esteka</string>
+    <string name="connect_instance">Konektatu</string>
+    <string name="set_normal">Arrunta</string>
+    <string name="set_compact">Trinkoa</string>
+    <string name="set_console">Kontsola</string>
+    <string name="set_mode">Ezarri pantaila-modua</string>
+    <string name="set_security_provider">Ezarri segurtasun hornitzailea</string>
+    <string name="update_tracking_domains">Eguneratu jarraipen-domeinuak</string>
+    <string name="tracking_db_updated">Jarraipen datu-basea eguneratu da!</string>
+    <string name="calls_blocked">http deiak aplikazioak blokeatuta</string>
+    <string name="list_of_blocked_domains">Blokeatutako deien zerrenda</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
