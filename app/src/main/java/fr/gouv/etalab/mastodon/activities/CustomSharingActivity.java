@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -128,22 +129,18 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         set_custom_sharing_title = findViewById(R.id.set_custom_sharing_title);
         set_custom_sharing_description = findViewById(R.id.set_custom_sharing_description);
         set_custom_sharing_keywords = findViewById(R.id.set_custom_sharing_keywords);
-
+        set_custom_sharing_title.setEllipsize(TextUtils.TruncateAt.END);
         //set text on title, description, and keywords
         System.out.println("Content: " + bundle_content);
         String[] lines = bundle_content.split("\n");
-        set_custom_sharing_title.setText(lines[0]);
-        if (lines.length >= 2) {
-            String newDescription = "";
-            int i = 0;
-            for (String line: lines) {
-                i += 1;
-                if (i > 1) {
-                    newDescription = newDescription + line;
-                }
-            }
-            set_custom_sharing_description.setText(newDescription);
+        String newTitle = "";
+        if (lines[0].length() > 60) {
+            newTitle = lines[0].substring(0, 60) + "...";;
+        } else {
+            newTitle = lines[0];
         }
+        set_custom_sharing_title.setText(newTitle);
+        set_custom_sharing_description.setText(bundle_content);
         set_custom_sharing_keywords.setText(bundle_tags);
         set_custom_sharing_save = findViewById(R.id.set_custom_sharing_save);
         set_custom_sharing_save.setOnClickListener(new View.OnClickListener() {

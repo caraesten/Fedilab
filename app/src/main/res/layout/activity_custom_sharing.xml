@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/set_custom_sharing_title"
             android:minLines="1"
-            android:lines="1"
+            android:lines="2"
             android:maxLines="2"
             android:hint="@string/title_hint_custom_sharing"
             />
@@ -77,8 +77,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/set_custom_sharing_description"
             android:minLines="4"
-            android:lines="4"
-            android:maxLines="5"
+            android:lines="7"
+            android:inputType="textMultiLine"
+            android:maxLines="7"
             android:hint="@string/description_hint_custom_sharing"
              />
 
@@ -97,8 +98,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/set_custom_sharing_keywords"
             android:minLines="1"
-            android:lines="1"
-            android:maxLines="1"
+            android:lines="2"
+            android:maxLines="2"
             android:hint="@string/keywords_hint_custom_sharing"
             />
 
