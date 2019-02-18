@@ -367,7 +367,6 @@
 
         <!-- CUSTOM SHARING  -->
         <CheckBox
-            android:visibility="gone"
             android:id="@+id/set_custom_sharing"
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/settings_checkbox_margin"
