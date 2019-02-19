@@ -233,7 +233,7 @@
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d vind-ik-leuk</item>
-        <item quantity="other">%d vind-ik-leuks</item>
+        <item quantity="other">%d vinden dit leuk</item>
     </plurals>
     <string name="delete_notification_ask">Deze melding verwijderen?</string>
     <string name="delete_notification_ask_all">Alle meldingen verwijderen?</string>
@@ -749,24 +749,24 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="settings_category_label_hiddencontent">Verborgen inhoud</string>
     <string name="settings_category_label_composing">Samenstellen</string>
     <string name="contact">Contacten</string>
-    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> heeft gereageerd op je video<b>%2$s</b>]]></string>
+    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> heeft op je video gereageerd<b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> volgt nu je kanaal <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> volgt nu je account]]></string>
     <string name="peertube_video_published"><![CDATA[Je video <b>%1$s</b> is gepubliceerd]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Het importeren van je video <b>%1$s</b> is gelukt]]></string>
+    <string name="peertube_video_import_success"><![CDATA[Het importeren van je video <b>%1$s</b> is geslaagd]]></string>
     <string name="peertube_video_import_error"><![CDATA[Het importeren van je video <b>%1$s</b> is mislukt]]></string>
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> heeft een nieuwe video gepubliceerd: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Je video <b>%1$s</b> is op de zwarte lijst gezet]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Je video <b>%1$s</b> is van de zwarte lijst verwijderd]]></string>
     <string name="export_data">Gegevens exporteren</string>
     <string name="import_data">Gegevens importeren</string>
-    <string name="toot_select_import">Selecteer het bestand om te importeren</string>
-    <string name="toot_select_file_error">Er is een fout opgetreden tijdens het selecteren van het back-up bestand!</string>
-    <string name="data_import_start">Sluit de applicatie niet af tijdens het verwerken. Het kan niet lang duren.</string>
+    <string name="toot_select_import">Kies het bestand om te importeren</string>
+    <string name="toot_select_file_error">Er is een fout opgetreden tijdens het kiezen van het back-upbestand!</string>
+    <string name="data_import_start">De app tijdens het verwerken niet afsluiten. Het duurt niet lang.</string>
     <string name="add_public_comment">Een openbare reactie toevoegen</string>
     <string name="send_comment">Reactie versturen</string>
     <string name="toast_toot_saved_error">Er is geen internetverbinding. Uw bericht is opgeslagen in de concepten.</string>
-    <string name="action_plain_text">Onopgemaakte tekst</string>
+    <string name="action_plain_text">Platte tekst</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Account uitloggen</string>
