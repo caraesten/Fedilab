@@ -741,13 +741,13 @@ Začněte psát první znaky pro návrh.\n\n
     <string name="add_image_to_favorite">Add media to favorites</string>
     <string name="leave_a_comment">Zanechat komentář</string>
     <string name="share">Sdílet</string>
-    <string name="my_pictures">My pictures</string>
+    <string name="my_pictures">Moje obrázky</string>
     <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
-    <string name="server_schedule">From server</string>
+    <string name="device_schedule">Ze zařízení</string>
+    <string name="server_schedule">Ze serveru</string>
     <string name="toots_server">Toots (Server)</string>
     <string name="toots_client">Toots (Device)</string>
-    <string name="modify">Modify</string>
+    <string name="modify">Upravit</string>
     <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
     <string name="settings_category_label_confirmations">Confirmations</string>
     <string name="settings_category_label_timelines">Timelines</string>
