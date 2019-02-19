@@ -772,8 +772,8 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="action_logout_account">Account uitloggen</string>
     <string name="set_optimize_loading">Laadtijd optimaliseren</string>
     <string name="all">Alle</string>
-    <string name="about_opencollective">Steun de app</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
+    <string name="about_opencollective">Ondersteun deze app</string>
+    <string name="more_about_opencollective">Met Open Collective kunnen groepen snel een collectief opzetten, geld inzamelen en dit transparant beheren.</string>
     <string name="copy_link">Link kopiëren</string>
     <string name="connect_instance">Verbinden</string>
     <string name="set_normal">Normaal</string>
