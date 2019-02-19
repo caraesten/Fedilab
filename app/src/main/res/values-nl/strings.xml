@@ -787,7 +787,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="list_of_blocked_domains">Lijst met geblokkeerde aanvragen</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
-        <item>Rechtstreeks</item>
+        <item>Via WebTorrent</item>
+        <item>Rechtstreeks via http</item>
     </string-array>
 </resources>
