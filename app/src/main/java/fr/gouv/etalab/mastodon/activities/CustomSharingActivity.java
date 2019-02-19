@@ -135,7 +135,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         String[] lines = bundle_content.split("\n");
         String newTitle = "";
         if (lines[0].length() > 60) {
-            newTitle = lines[0].substring(0, 60) + "...";;
+            newTitle = lines[0].substring(0, 60) + '…';;
         } else {
             newTitle = lines[0];
         }
