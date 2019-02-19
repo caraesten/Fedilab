@@ -261,8 +261,8 @@
     <string name="toast_pin">Toot is vastgezet!</string>
     <string name="toast_unpin">Toot is losgemaakt!</string>
     <string name="toast_error">Oeps! Er ging wat mis!</string>
-    <string name="toast_code_error">Er ging wat mis! De Mastodonserver gaf geen autorisatiecode terug!</string>
-    <string name="toast_error_instance">De domeinnaam van de Mastodonserver is onjuist!</string>
+    <string name="toast_code_error">Er ging wat mis! De server gaf geen autorisatiecode terug!</string>
+    <string name="toast_error_instance">De domeinnaam van de server is onjuist!</string>
     <string name="toast_error_loading_account">Er ging wat mis tijdens het omschakelen van accounts!</string>
     <string name="toast_error_search">Er ging wat mis tijdens het zoeken!</string>
     <string name="toast_error_login">Kan niet aanmelden!</string>
@@ -271,7 +271,7 @@
     <string name="toast_saved">Media is opgeslagen!</string>
     <string name="toast_error_translate">Er ging wat mis tijdens het vertalen!</string>
     <string name="toast_toot_saved">Concept opgeslagen!</string>
-    <string name="toast_error_char_limit">Weet je zeker dat je op deze Mastodonserver zoveel karakters mag gebruiken? Standaard is er een limiet van 500 karakters.</string>
+    <string name="toast_error_char_limit">Weet je zeker dat je op deze server zoveel tekens mag gebruiken? Standaard is er een limiet van 500 karakters.</string>
     <string name="toast_visibility_changed">Zichtbaarheid toots van account %1$s is veranderd</string>
     <string name="toast_empty_search">Server- en gebruikersnaam kunnen niet leeg blijven!</string>
     <!-- Settings -->
@@ -480,8 +480,8 @@
     <string name="show_boost_count">Aantal boosts/favorieten tonen</string>
     <string name="issue_login_title">Problemen met aanmelden?</string>
     <string name="issue_login_message">        <b>Hier zijn enkele suggesties die wellicht helpen:</b>\n\n
-        - Controleer of er geen spelfout in de domeinnaam van de Mastodonserver zit\n\n
-        - Controleer of er de Mastodonserver niet offline is\n\n
+        - Controleer of er geen spelfout in de domeinnaam van de server zit\n\n
+        - Controleer of er de server niet offline is\n\n
         - Wanneer je tweestapsverificatie gebruikt, gebruik dan (nadat je de domeinnaam van de server hebt ingevuld) de link daaronder.\n\n
         - Je kan deze link ook gebruiken zonder dat je van tweestapsverificatie gebruikt maakt (wanneer het op dit aanmeldscherm niet lukt).\n\n
         - Wanneer het nu nog steeds niet lukt, maak dan een nieuwe issue aan op Github via https://github.com/stom79/mastalab/issues
@@ -608,7 +608,7 @@
     <string name="channel">Kanaal</string>
     <string name="no_peertube_channels">Geen PeerTube-kanalen</string>
     <string name="no_peertube_instances">Geen PeerTube-servers</string>
-    <string name="no_mastodon_instances">Geen Mastodonservers</string>
+    <string name="no_mastodon_instances">Geen servers</string>
     <string name="no_lists">Geen lijsten</string>
     <string name="videos">Video\'s</string>
     <string name="channels">Kanalen</string>
@@ -686,7 +686,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="about_crowdin">Over Crowdin</string>
     <string name="bot">Bot</string>
     <string name="pixelfed_instance">Pixelfedserver</string>
-    <string name="mastodon_instance">Mastodonserver</string>
+    <string name="mastodon_instance">Server</string>
     <string name="no_pixelfed_instance">Geen Pixelfedservers</string>
     <string name="any_tags">Eén van deze</string>
     <string name="all_tags">Al deze</string>
