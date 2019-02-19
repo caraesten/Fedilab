@@ -67,17 +67,17 @@
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Boosts tonen</string>
     <string name="show_replies">Reacties tonen</string>
-    <string name="action_open_in_web">Open in browser</string>
+    <string name="action_open_in_web">In webbrowser openen</string>
     <string name="translate">Vertalen</string>
-    <string name="please_wait">Wacht hier alstublieft een paar seconden mee.</string>
+    <string name="please_wait">Wacht hier een paar seconden mee.</string>
     <!--- Menu -->
-    <string name="home_menu">Home</string>
+    <string name="home_menu">Start</string>
     <string name="local_menu">Lokale tijdlijn</string>
     <string name="global_menu">Globale tijdlijn</string>
     <string name="neutral_menu_title">Opties</string>
     <string name="favorites_menu">Favorieten</string>
     <string name="communication_menu_title">Communicatie</string>
-    <string name="muted_menu">Gedempte gebruikers</string>
+    <string name="muted_menu">Genegeerde gebruikers</string>
     <string name="blocked_menu">Geblokkeerde gebruikers</string>
     <string name="remote_follow_menu">Extern volgen</string>
     <string name="notifications">Meldingen</string>
@@ -94,7 +94,7 @@
     <string name="click_to_change">Op het pad klikken om het te veranderen</string>
     <string name="failed">Mislukt!</string>
     <string name="scheduled_toots">Ingeplande toots</string>
-    <string name="disclaimer_full">De informatie hieronder kan mogelijk een incompleet beeld geven van dit gebruikersprofiel.</string>
+    <string name="disclaimer_full">De informatie hieronder kan een incompleet beeld geven van dit gebruikersprofiel.</string>
     <string name="insert_emoji">Emoji toevoegen</string>
     <string name="no_emoji">De app heeft nog geen lokale emojis verzameld.</string>
     <string name="live_notif">Livemeldingen</string>
