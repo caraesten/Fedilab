@@ -745,9 +745,9 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="settings_category_label_confirmations">Bevestigingen</string>
     <string name="settings_category_label_timelines">Tijdlijnen</string>
     <string name="settings_category_label_notification">Notificatieservice</string>
-    <string name="settings_category_label_interface">Uiterlijk</string>
+    <string name="settings_category_label_interface">Gebruikersomgeving</string>
     <string name="settings_category_label_hiddencontent">Verborgen inhoud</string>
-    <string name="settings_category_label_composing">Samenstellen</string>
+    <string name="settings_category_label_composing">Schrijven</string>
     <string name="contact">Contacten</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> heeft op je video gereageerd<b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> volgt nu je kanaal <b>%2$s</b>]]></string>
@@ -765,7 +765,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="data_import_start">De app tijdens het verwerken niet afsluiten. Het duurt niet lang.</string>
     <string name="add_public_comment">Een openbare reactie toevoegen</string>
     <string name="send_comment">Reactie versturen</string>
-    <string name="toast_toot_saved_error">Er is geen internetverbinding. Uw bericht is opgeslagen in de concepten.</string>
+    <string name="toast_toot_saved_error">Er is geen internetverbinding. Jouw bericht is als concept opgeslagen.</string>
     <string name="action_plain_text">Platte tekst</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
