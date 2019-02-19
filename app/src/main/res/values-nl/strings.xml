@@ -36,7 +36,7 @@
     <string name="toast_account_changed" formatted="false">Werkt nu met account %1$s</string>
     <string name="add_account">Account toevoegen</string>
     <string name="clipboard">De inhoud van deze toot is naar het klembord gekopieerd</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">De link van de toot is naar het klembord gekopieerd</string>
     <string name="change">Veranderen</string>
     <string name="choose_picture">Kies een afbeelding…</string>
     <string name="clear">Leegmaken</string>
@@ -780,7 +780,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="set_compact">Compact</string>
     <string name="set_console">Console</string>
     <string name="set_mode">Weergavemodus</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
+    <string name="set_security_provider">Veiligheid verbeteren (Conscrypt)</string>
     <string name="update_tracking_domains">Trackingdomeinen bijwerken</string>
     <string name="tracking_db_updated">De trackingdatabase is bijgewerkt!</string>
     <string name="calls_blocked">door de applicatie geblokkeerde http-aanvragen</string>
