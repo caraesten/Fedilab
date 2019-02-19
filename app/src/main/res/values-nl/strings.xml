@@ -29,10 +29,10 @@
     <string name="save">Opslaan</string>
     <string name="restore">Herstellen</string>
     <string name="two_factor_authentification">Tweestapsverificatie?</string>
-    <string name="other_instance">Andere instantie dan mastodon.etalab.gouv.fr?</string>
+    <string name="other_instance">Andere server dan mastodon.social?</string>
     <string name="no_result">Geen resultaten!</string>
     <string name="instance">Mastodonserver</string>
-    <string name="instance_example">Instantie: mastodon.social</string>
+    <string name="instance_example">Server: bv. mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Werkt nu met account %1$s</string>
     <string name="add_account">Account toevoegen</string>
     <string name="clipboard">De inhoud van deze toot is naar het klembord gekopieerd</string>
@@ -42,10 +42,10 @@
     <string name="clear">Leegmaken</string>
     <string name="microphone">Microfoon</string>
     <string name="camera">Camera</string>
-    <string name="speech_prompt">Zeg naar iets</string>
+    <string name="speech_prompt">Zeg maar iets</string>
     <string name="speech_not_supported">Sorry! Uw apparaat ondersteunt de spraakinvoer niet!</string>
     <string name="delete_all">Alles verwijderen</string>
-    <string name="translate_toot">Vertaal deze toot.</string>
+    <string name="translate_toot">Deze toot vertalen.</string>
     <string name="schedule">Inplannen</string>
     <string name="text_size">Tekst- en pictogramgrootte</string>
     <string name="text_size_change">De huidige tekstgrootte veranderen:</string>
