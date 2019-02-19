@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Menu openen</string>
     <string name="navigation_drawer_close">Menu sluiten</string>
     <string name="action_about">Over</string>
-    <string name="action_about_instance">Over deze instantie</string>
+    <string name="action_about_instance">Over deze server</string>
     <string name="action_privacy">Privacy</string>
     <string name="action_cache">Buffer</string>
     <string name="action_logout">Uitloggen</string>
