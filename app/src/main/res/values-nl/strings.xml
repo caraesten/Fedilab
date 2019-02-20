@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Menu openen</string>
     <string name="navigation_drawer_close">Menu sluiten</string>
     <string name="action_about">Over</string>
-    <string name="action_about_instance">Over deze instantie</string>
+    <string name="action_about_instance">Over deze server</string>
     <string name="action_privacy">Privacy</string>
     <string name="action_cache">Buffer</string>
     <string name="action_logout">Uitloggen</string>
@@ -29,10 +29,10 @@
     <string name="save">Opslaan</string>
     <string name="restore">Herstellen</string>
     <string name="two_factor_authentification">Tweestapsverificatie?</string>
-    <string name="other_instance">Andere instantie dan mastodon.etalab.gouv.fr?</string>
+    <string name="other_instance">Andere server dan mastodon.social?</string>
     <string name="no_result">Geen resultaten!</string>
-    <string name="instance">Mastodonserver</string>
-    <string name="instance_example">Instantie: mastodon.social</string>
+    <string name="instance">Server</string>
+    <string name="instance_example">Server: bv. mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Werkt nu met account %1$s</string>
     <string name="add_account">Account toevoegen</string>
     <string name="clipboard">De inhoud van deze toot is naar het klembord gekopieerd</string>
@@ -42,10 +42,10 @@
     <string name="clear">Leegmaken</string>
     <string name="microphone">Microfoon</string>
     <string name="camera">Camera</string>
-    <string name="speech_prompt">Zeg naar iets</string>
+    <string name="speech_prompt">Zeg maar iets</string>
     <string name="speech_not_supported">Sorry! Uw apparaat ondersteunt de spraakinvoer niet!</string>
     <string name="delete_all">Alles verwijderen</string>
-    <string name="translate_toot">Vertaal deze toot.</string>
+    <string name="translate_toot">Deze toot vertalen.</string>
     <string name="schedule">Inplannen</string>
     <string name="text_size">Tekst- en pictogramgrootte</string>
     <string name="text_size_change">De huidige tekstgrootte veranderen:</string>
@@ -67,17 +67,17 @@
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Boosts tonen</string>
     <string name="show_replies">Reacties tonen</string>
-    <string name="action_open_in_web">Open in browser</string>
+    <string name="action_open_in_web">In webbrowser openen</string>
     <string name="translate">Vertalen</string>
-    <string name="please_wait">Wacht hier alstublieft een paar seconden mee.</string>
+    <string name="please_wait">Wacht hier een paar seconden mee.</string>
     <!--- Menu -->
-    <string name="home_menu">Home</string>
+    <string name="home_menu">Start</string>
     <string name="local_menu">Lokale tijdlijn</string>
     <string name="global_menu">Globale tijdlijn</string>
     <string name="neutral_menu_title">Opties</string>
     <string name="favorites_menu">Favorieten</string>
     <string name="communication_menu_title">Communicatie</string>
-    <string name="muted_menu">Gedempte gebruikers</string>
+    <string name="muted_menu">Genegeerde gebruikers</string>
     <string name="blocked_menu">Geblokkeerde gebruikers</string>
     <string name="remote_follow_menu">Extern volgen</string>
     <string name="notifications">Meldingen</string>
@@ -94,7 +94,7 @@
     <string name="click_to_change">Op het pad klikken om het te veranderen</string>
     <string name="failed">Mislukt!</string>
     <string name="scheduled_toots">Ingeplande toots</string>
-    <string name="disclaimer_full">De informatie hieronder kan mogelijk een incompleet beeld geven van dit gebruikersprofiel.</string>
+    <string name="disclaimer_full">De informatie hieronder kan een incompleet beeld geven van dit gebruikersprofiel.</string>
     <string name="insert_emoji">Emoji toevoegen</string>
     <string name="no_emoji">De app heeft nog geen lokale emojis verzameld.</string>
     <string name="live_notif">Livemeldingen</string>
@@ -127,7 +127,7 @@
         <item>Dit domein blokkeren?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Meld</item>
+        <item>Melden</item>
         <item>Stil</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
@@ -233,7 +233,7 @@
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d vind-ik-leuk</item>
-        <item quantity="other">%d vind-ik-leuks</item>
+        <item quantity="other">%d vinden dit leuk</item>
     </plurals>
     <string name="delete_notification_ask">Deze melding verwijderen?</string>
     <string name="delete_notification_ask_all">Alle meldingen verwijderen?</string>
@@ -261,8 +261,8 @@
     <string name="toast_pin">Toot is vastgezet!</string>
     <string name="toast_unpin">Toot is losgemaakt!</string>
     <string name="toast_error">Oeps! Er ging wat mis!</string>
-    <string name="toast_code_error">Er ging wat mis! De Mastodonserver gaf geen autorisatiecode terug!</string>
-    <string name="toast_error_instance">De domeinnaam van de Mastodonserver is onjuist!</string>
+    <string name="toast_code_error">Er ging wat mis! De server gaf geen autorisatiecode terug!</string>
+    <string name="toast_error_instance">De domeinnaam van de server is onjuist!</string>
     <string name="toast_error_loading_account">Er ging wat mis tijdens het omschakelen van accounts!</string>
     <string name="toast_error_search">Er ging wat mis tijdens het zoeken!</string>
     <string name="toast_error_login">Kan niet aanmelden!</string>
@@ -271,7 +271,7 @@
     <string name="toast_saved">Media is opgeslagen!</string>
     <string name="toast_error_translate">Er ging wat mis tijdens het vertalen!</string>
     <string name="toast_toot_saved">Concept opgeslagen!</string>
-    <string name="toast_error_char_limit">Weet je zeker dat je op deze Mastodonserver zoveel karakters mag gebruiken? Standaard is er een limiet van 500 karakters.</string>
+    <string name="toast_error_char_limit">Weet je zeker dat je op deze server zoveel tekens mag gebruiken? Standaard is er een limiet van 500 karakters.</string>
     <string name="toast_visibility_changed">Zichtbaarheid toots van account %1$s is veranderd</string>
     <string name="toast_empty_search">Server- en gebruikersnaam kunnen niet leeg blijven!</string>
     <!-- Settings -->
@@ -480,8 +480,8 @@
     <string name="show_boost_count">Aantal boosts/favorieten tonen</string>
     <string name="issue_login_title">Problemen met aanmelden?</string>
     <string name="issue_login_message">        <b>Hier zijn enkele suggesties die wellicht helpen:</b>\n\n
-        - Controleer of er geen spelfout in de domeinnaam van de Mastodonserver zit\n\n
-        - Controleer of er de Mastodonserver niet offline is\n\n
+        - Controleer of er geen spelfout in de domeinnaam van de server zit\n\n
+        - Controleer of er de server niet offline is\n\n
         - Wanneer je tweestapsverificatie gebruikt, gebruik dan (nadat je de domeinnaam van de server hebt ingevuld) de link daaronder.\n\n
         - Je kan deze link ook gebruiken zonder dat je van tweestapsverificatie gebruikt maakt (wanneer het op dit aanmeldscherm niet lukt).\n\n
         - Wanneer het nu nog steeds niet lukt, maak dan een nieuwe issue aan op Github via https://github.com/stom79/mastalab/issues
@@ -608,7 +608,7 @@
     <string name="channel">Kanaal</string>
     <string name="no_peertube_channels">Geen PeerTube-kanalen</string>
     <string name="no_peertube_instances">Geen PeerTube-servers</string>
-    <string name="no_mastodon_instances">Geen Mastodonservers</string>
+    <string name="no_mastodon_instances">Geen servers</string>
     <string name="no_lists">Geen lijsten</string>
     <string name="videos">Video\'s</string>
     <string name="channels">Kanalen</string>
@@ -686,7 +686,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="about_crowdin">Over Crowdin</string>
     <string name="bot">Bot</string>
     <string name="pixelfed_instance">Pixelfedserver</string>
-    <string name="mastodon_instance">Mastodonserver</string>
+    <string name="mastodon_instance">Server</string>
     <string name="no_pixelfed_instance">Geen Pixelfedservers</string>
     <string name="any_tags">Eén van deze</string>
     <string name="all_tags">Al deze</string>
@@ -697,80 +697,80 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="change_tag_column">Kolomnaam wijzigen</string>
     <string name="no_misskey_instance">Geen Misskeyservers</string>
     <string name="misskey_instance">Misskeyserver</string>
-    <string name="toast_no_apps">Er is geen app op je apparaat geïnstalleerd om dit linktype te openen.</string>
+    <string name="toast_no_apps">Er is geen app op je apparaat geïnstalleerd om deze link mee te openen.</string>
     <string name="subscriptions">Abonnementen</string>
     <string name="overview">Overzicht</string>
     <string name="trending">Trending</string>
     <string name="recently_added">Onlangs toegevoegd</string>
     <string name="local">Lokaal</string>
     <string name="upload_video">Uploaden</string>
-    <string name="reply">Beantwoorden</string>
-    <string name="delete_comment">Een opmerking verwijderen</string>
-    <string name="delete_comment_confirm">Weet u zeker dat deze opmerking verwijderen?</string>
-    <string name="fullscreen">Video op volledig scherm</string>
-    <string name="set_video_mode">Modus voor video\'s</string>
-    <string name="file_to_upload">Selecteer het bestand om te uploaden</string>
+    <string name="reply">Reageren</string>
+    <string name="delete_comment">Opmerking verwijderen</string>
+    <string name="delete_comment_confirm">Weet je zeker dat je deze opmerking wilt verwijderen?</string>
+    <string name="fullscreen">Volledig scherm</string>
+    <string name="set_video_mode">Manier om video\'s te bekijken</string>
+    <string name="file_to_upload">Kies een bestand om te uploaden</string>
     <string name="my_videos">Mijn video\'s</string>
     <string name="title">Titel</string>
     <string name="categories">Categorieën</string>
     <string name="license">Licentie</string>
     <string name="category">Categorie</string>
     <string name="language">Taal</string>
-    <string name="peertube_nsfw">Deze video bevat volwassen of gevoelige inhoud</string>
-    <string name="peertube_enable_comments">Video-opmerkingen toestaan</string>
-    <string name="update_video">Video updaten</string>
-    <string name="description">Beschrijving</string>
-    <string name="toast_peertube_video_updated">De video is geüpdatet!</string>
+    <string name="peertube_nsfw">Deze video bevat inhoud voor volwassen of gevoelige inhoud</string>
+    <string name="peertube_enable_comments">Reacties op de video toestaan</string>
+    <string name="update_video">Video bijwerken</string>
+    <string name="description">Omschrijving</string>
+    <string name="toast_peertube_video_updated">De video is bijgewerkt!</string>
     <string name="toast_cancelled">Uploaden geannuleerd!</string>
     <string name="upload_video_success">De video is geüpload!</string>
     <string name="uploading">Aan het uploaden, een ogenblik geduld…</string>
-    <string name="video_uploaded_action">Klik hier om de videodata te bewerken.</string>
+    <string name="video_uploaded_action">Klik hier om de videogegevens te bewerken.</string>
     <string name="delete_video">Video verwijderen</string>
     <string name="delete_video_confirmation">Weet je zeker dat je deze video wilt verwijderen?</string>
     <string name="no_video_uploaded">Nog geen video\'s geüpload!</string>
     <string name="display_nsfw_videos">NSFW video\'s weergeven</string>
-    <string name="default_channel_of">Standaard %s kanaal</string>
+    <string name="default_channel_of">Standaardkanaal %s</string>
     <string name="no_video_to_display">Geen video\'s om weer te geven!</string>
-    <string name="add_image_to_favorite">Toevoegen aan favorieten</string>
-    <string name="leave_a_comment">Reageer</string>
+    <string name="add_image_to_favorite">Aan favorieten toevoegen</string>
+    <string name="leave_a_comment">Reageren</string>
     <string name="share">Delen</string>
     <string name="my_pictures">Mijn foto\'s</string>
-    <string name="choose_schedule">Kies een planmodus</string>
+    <string name="choose_schedule">Kies een manier van inplannen</string>
     <string name="device_schedule">Vanaf apparaat</string>
     <string name="server_schedule">Vanaf server</string>
-    <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Apparaat)</string>
+    <string name="toots_server">Toots (server)</string>
+    <string name="toots_client">Toots (apparaat)</string>
     <string name="modify">Aanpassen</string>
     <string name="set_display_content_after_fetch_more">Nieuwe toots boven de \'Meer ophalen\' knop weergeven</string>
     <string name="settings_category_label_confirmations">Bevestigingen</string>
     <string name="settings_category_label_timelines">Tijdlijnen</string>
-    <string name="settings_category_label_notification">Notificatieservice</string>
-    <string name="settings_category_label_interface">Uiterlijk</string>
+    <string name="settings_category_label_notification">Meldingsservice</string>
+    <string name="settings_category_label_interface">Gebruikersomgeving</string>
     <string name="settings_category_label_hiddencontent">Verborgen inhoud</string>
-    <string name="settings_category_label_composing">Samenstellen</string>
+    <string name="settings_category_label_composing">Schrijven</string>
     <string name="contact">Contacten</string>
-    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> heeft gereageerd op je video<b>%2$s</b>]]></string>
+    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> heeft op je video gereageerd<b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> volgt nu je kanaal <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> volgt nu je account]]></string>
     <string name="peertube_video_published"><![CDATA[Je video <b>%1$s</b> is gepubliceerd]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Het importeren van je video <b>%1$s</b> is gelukt]]></string>
+    <string name="peertube_video_import_success"><![CDATA[Het importeren van je video <b>%1$s</b> is geslaagd]]></string>
     <string name="peertube_video_import_error"><![CDATA[Het importeren van je video <b>%1$s</b> is mislukt]]></string>
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> heeft een nieuwe video gepubliceerd: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Je video <b>%1$s</b> is op de zwarte lijst gezet]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Je video <b>%1$s</b> is van de zwarte lijst verwijderd]]></string>
     <string name="export_data">Gegevens exporteren</string>
     <string name="import_data">Gegevens importeren</string>
-    <string name="toot_select_import">Selecteer het bestand om te importeren</string>
-    <string name="toot_select_file_error">Er is een fout opgetreden tijdens het selecteren van het back-up bestand!</string>
-    <string name="data_import_start">Sluit de applicatie niet af tijdens het verwerken. Het kan niet lang duren.</string>
+    <string name="toot_select_import">Kies het bestand om te importeren</string>
+    <string name="toot_select_file_error">Er is een fout opgetreden tijdens het kiezen van het back-upbestand!</string>
+    <string name="data_import_start">De app tijdens het verwerken niet afsluiten. Het duurt niet lang.</string>
     <string name="add_public_comment">Een openbare reactie toevoegen</string>
     <string name="send_comment">Reactie versturen</string>
-    <string name="toast_toot_saved_error">Er is geen internetverbinding. Uw bericht is opgeslagen in de concepten.</string>
-    <string name="action_plain_text">Onopgemaakte tekst</string>
+    <string name="toast_toot_saved_error">Er is geen internetverbinding. Jouw bericht is als concept opgeslagen.</string>
+    <string name="action_plain_text">Platte tekst</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Account uitloggen</string>
-    <string name="set_optimize_loading">Laadtijd optimaliseren</string>
+    <string name="set_optimize_loading">Laadtijd verbeteren</string>
     <string name="all">Alle</string>
     <string name="about_opencollective">Ondersteun deze app</string>
     <string name="more_about_opencollective">Met Open Collective kunnen groepen snel een collectief opzetten, geld inzamelen en dit transparant beheren.</string>
@@ -787,7 +787,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="list_of_blocked_domains">Lijst met geblokkeerde aanvragen</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Torrent</item>
-        <item>Webview</item>
+        <item>Via WebTorrent</item>
+        <item>Rechtstreeks via http</item>
     </string-array>
 </resources>
