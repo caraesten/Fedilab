@@ -15,14 +15,18 @@ package fr.gouv.etalab.mastodon.client;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
+import fr.gouv.etalab.mastodon.helper.Helper;
 
 
 /**
@@ -53,6 +57,7 @@ public class CustomSharing {
      */
     public CustomSharingResponse customShare(String encodedCustomSharingURL) {
         String HTTPResponse = "";
+        Log.v(Helper.TAG,"encodedCustomSharingURL: " + encodedCustomSharingURL);
         try {
             HTTPResponse = new HttpsConnection(context).get(encodedCustomSharingURL);
         } catch (HttpsConnection.HttpsConnectionException e) {

@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +42,7 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.CustomSharingAsyncTask;
 import fr.gouv.etalab.mastodon.client.CustomSharingResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnCustomSharingInterface;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -119,19 +121,25 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
 
         Helper.loadGiF(getApplicationContext(), url, pp_actionBar);
         Bundle b = getIntent().getExtras();
+        Status status = null;
         if(b != null) {
-            bundle_url = b.getString("url");
-            bundle_id = b.getString("id");
-            bundle_source = b.getString("source");
-            bundle_tags = b.getString("tags");
-            bundle_content = b.getString("content");
+            status = b.getParcelable("status");
         }
+        if( status == null){
+            finish();
+            return;
+        }
+        bundle_url = status.getUrl();
+        bundle_id = status.getUri();
+        bundle_source = status.getAccount().getAcct();
+        bundle_tags = status.getTagsString();
+        bundle_content = status.getContentSpan().toString();
+
         set_custom_sharing_title = findViewById(R.id.set_custom_sharing_title);
         set_custom_sharing_description = findViewById(R.id.set_custom_sharing_description);
         set_custom_sharing_keywords = findViewById(R.id.set_custom_sharing_keywords);
         set_custom_sharing_title.setEllipsize(TextUtils.TruncateAt.END);
         //set text on title, description, and keywords
-        System.out.println("Content: " + bundle_content);
         String[] lines = bundle_content.split("\n");
         String newTitle = "";
         if (lines[0].length() > 60) {
@@ -183,12 +191,14 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
             return;
         }
         String response = customSharingResponse.getResponse();
+        Log.v(Helper.TAG,"response: " + response);
         Toasty.success(getApplicationContext(), response, Toast.LENGTH_LONG).show();
         finish();
     }
 
     public String encodeCustomSharingURL(String custom_sharing_url, String bundle_url, String bundle_id, String bundle_source, String title, String description, String keywords) {
         String url_user = "";
+        String url_token = "";
         String url_param_url = "";
         String url_param_title = "";
         String url_param_source = "";
@@ -206,6 +216,9 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         for (String param_name : args) {
             if (param_name.equals("user")) {
                 url_user = uri.getQueryParameter("user");
+            }
+            if (param_name.equals("token")) {
+                url_token = uri.getQueryParameter("token");
             }
             String param_value = uri.getQueryParameter(param_name);
             switch(param_value) {
@@ -233,8 +246,11 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         builder.scheme(protocol)
                 .authority(server)
                 .appendPath(path);
-        if (!url_user.equals("")) {
+        if (!url_user.equals("") ) {
             builder.appendQueryParameter("user", url_user);
+        }
+        if (!url_token.equals("") ) {
+            builder.appendQueryParameter("token", url_token);
         }
         if (!url_param_url.equals("")) {
             builder.appendQueryParameter(url_param_url, bundle_url);

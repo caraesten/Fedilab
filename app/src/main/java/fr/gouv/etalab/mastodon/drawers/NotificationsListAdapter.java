@@ -804,17 +804,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                 Intent intentCustomSharing = new Intent(context, CustomSharingActivity.class);
                                 Bundle bCustomSharing = new Bundle();
                                 if (status.getReblog() != null) {
-                                    bCustomSharing.putString("url", status.getReblog().getUrl());
-                                    bCustomSharing.putString("source", status.getReblog().getAccount().getDisplay_name());
-                                    bCustomSharing.putString("id", status.getReblog().getId());
-                                    bCustomSharing.putString("tags", status.getReblog().getTagsString());
-                                    bCustomSharing.putString("content", status.getReblog().getContent());
+                                    bCustomSharing.putParcelable("status", status.getReblog());
                                 } else {
-                                    bCustomSharing.putString("url", status.getUrl());
-                                    bCustomSharing.putString("source", status.getAccount().getDisplay_name());
-                                    bCustomSharing.putString("id", status.getId());
-                                    bCustomSharing.putString("tags", status.getTagsString());
-                                    bCustomSharing.putString("content", status.getContent());
+                                    bCustomSharing.putParcelable("status", status);
+
                                 }
                                 intentCustomSharing.putExtras(bCustomSharing);
                                 context.startActivity(intentCustomSharing);
