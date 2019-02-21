@@ -78,6 +78,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
     private StatusListAdapter statusListAdapter;
     private boolean expanded;
     private BroadcastReceiver receive_action;
+    private String conversationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +113,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
             detailsStatus = b.getParcelable("status");
             expanded  = b.getBoolean("expanded", false);
             initialStatus = b.getParcelable("initialStatus");
+            conversationId =  b.getString("conversationId", null);
         }
         if( detailsStatus == null || detailsStatus.getId() == null)
             finish();
@@ -253,6 +255,8 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
             statusIdToFetch = detailsStatus.getId();
         if( statusIdToFetch == null)
             finish();
+        if( conversationId != null)
+            statusIdToFetch = conversationId;
         new RetrieveContextAsyncTask(getApplicationContext(), expanded, statusIdToFetch, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         switch (theme){
             case Helper.THEME_LIGHT:
@@ -322,33 +326,74 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
         if( context.getAncestors() == null ){
             return;
         }
-
-        statusListAdapter.setConversationPosition( context.getAncestors().size());
-        if(!expanded) {
-            if (context.getAncestors() != null && context.getAncestors().size() > 0) {
-                statuses.addAll(0, context.getAncestors());
-                statusListAdapter.notifyItemRangeInserted(0, context.getAncestors().size());
-            }
-            if (context.getDescendants() != null && context.getDescendants().size() > 0) {
-                statuses.addAll(context.getAncestors().size() + 1, context.getDescendants());
-                statusListAdapter.notifyItemRangeChanged(context.getAncestors().size()+1, context.getDescendants().size());
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+            statusListAdapter.setConversationPosition( context.getAncestors().size());
+            if(!expanded) {
+                if (context.getAncestors() != null && context.getAncestors().size() > 0) {
+                    statuses.addAll(0, context.getAncestors());
+                    statusListAdapter.notifyItemRangeInserted(0, context.getAncestors().size());
+                }
+                if (context.getDescendants() != null && context.getDescendants().size() > 0) {
+                    statuses.addAll(context.getAncestors().size() + 1, context.getDescendants());
+                    statusListAdapter.notifyItemRangeChanged(context.getAncestors().size()+1, context.getDescendants().size());
+                }
+            }else{
+                List<Status> statusesTemp = context.getDescendants();
+                int i = 1;
+                int position = 0;
+                for(Status status: statusesTemp){
+                    statuses.add(status);
+                    if( status.getId().equals(detailsStatus.getId())) {
+                        statusListAdapter.setConversationPosition(i);
+                        detailsStatus = status;
+                        position = i;
+                    }
+                    i++;
+                }
+                statusListAdapter.notifyItemRangeChanged(1,context.getDescendants().size());
+                lv_status.scrollToPosition(position);
             }
         }else{
-            List<Status> statusesTemp = context.getDescendants();
-            int i = 1;
-            int position = 0;
-            for(Status status: statusesTemp){
-                statuses.add(status);
-                if( status.getId().equals(detailsStatus.getId())) {
-                    statusListAdapter.setConversationPosition(i);
-                    detailsStatus = status;
-                    position = i;
+            int i = 0;
+            if( context.getAncestors() != null && context.getAncestors().size() > 1){
+                statuses = new ArrayList<>();
+                statuses.clear();
+                for(Status status: context.getAncestors()){
+                    if(detailsStatus.equals(status)) {
+                        break;
+                    }
+                    i++;
                 }
-                i++;
+                boolean isOnWifi = Helper.isOnWIFI(getApplicationContext());
+                for(Status status: context.getAncestors()){
+                    statuses.add(0,status);
+                }
+                statusListAdapter = new StatusListAdapter(ShowConversationActivity.this, (statuses.size()-1-i), null, isOnWifi, statuses);
+                statusListAdapter.setConversationPosition((statuses.size()-1-i));
+                final LinearLayoutManager mLayoutManager;
+                mLayoutManager = new LinearLayoutManager(this);
+                lv_status.setLayoutManager(mLayoutManager);
+                SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+                int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+                switch (theme){
+                    case Helper.THEME_LIGHT:
+                        setTheme(R.style.AppTheme_NoActionBar);
+                        break;
+                    case Helper.THEME_DARK:
+                        setTheme(R.style.AppThemeDark_NoActionBar);
+                        break;
+                    case Helper.THEME_BLACK:
+                        setTheme(R.style.AppThemeBlack_NoActionBar);
+                        break;
+                    default:
+                        setTheme(R.style.AppThemeDark_NoActionBar);
+                }
+
+                lv_status.addItemDecoration(new ConversationDecoration(ShowConversationActivity.this, theme));
+                lv_status.setAdapter(statusListAdapter);
             }
-            statusListAdapter.notifyItemRangeChanged(1,context.getDescendants().size());
-            lv_status.scrollToPosition(position);
         }
+
     }
 
 }

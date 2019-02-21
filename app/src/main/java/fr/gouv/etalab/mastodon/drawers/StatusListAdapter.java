@@ -855,6 +855,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             Bundle b = new Bundle();
+                            if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+                                b.putString("conversationId", status.getConversationId());
                             if (status.getReblog() == null)
                                 b.putParcelable("status", status);
                             else
@@ -875,6 +877,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
                             Intent intent = new Intent(context, ShowConversationActivity.class);
                             Bundle b = new Bundle();
+                            if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+                                b.putString("conversationId", status.getConversationId());
                             if (status.getReblog() == null)
                                 b.putParcelable("status", status);
                             else

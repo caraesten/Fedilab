@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -548,19 +547,11 @@ public class GNUAPI {
         fr.gouv.etalab.mastodon.client.Entities.Context statusContext = new fr.gouv.etalab.mastodon.client.Entities.Context();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            Log.v(Helper.TAG,"url: " + getAbsoluteUrl(String.format("/statusnet/conversation/%s.json", statusId)));
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/statusnet/conversation/%s.json", statusId)), 60, null, prefKeyOauthTokenT);
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses != null && statuses.size() > 0){
-                ArrayList<Status> ancestors = new ArrayList<>();
                 ArrayList<Status> descendants = new ArrayList<>();
-                for(Status status: statuses){
-                    if( Long.parseLong(status.getId()) > Long.parseLong(statusId) +1)
-                        descendants.add(status);
-                    else if( Long.parseLong(status.getId()) < Long.parseLong(statusId))
-                        ancestors.add(status);
-                }
-                statusContext.setAncestors(ancestors);
+                statusContext.setAncestors(statuses);
                 statusContext.setDescendants(descendants);
             }
 
@@ -1818,7 +1809,11 @@ public class GNUAPI {
             }catch (Exception ignored){ status.setMedia_attachments(new ArrayList<>());}
 
             status.setCard(null);
-
+            try {
+                status.setConversationId(resobj.get("statusnet_conversation_id").toString());
+            }catch (Exception ignored){
+                status.setConversationId(resobj.get("id").toString());
+            }
             //Retrieves mentions
             List<Mention> mentions = new ArrayList<>();
             if( resobj.has("attentions")) {
