@@ -1596,7 +1596,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             }
 
             if (status.getWebviewURL() != null) {
-                holder.status_cardview_webview.loadUrl(status.getWebviewURL());
+                String  url = status.getWebviewURL().replaceAll("&amp;","&");
+                holder.status_cardview_webview.loadUrl(url);
                 holder.status_cardview_webview.setVisibility(View.VISIBLE);
                 holder.status_cardview_video.setVisibility(View.VISIBLE);
                 holder.webview_preview.setVisibility(View.GONE);
