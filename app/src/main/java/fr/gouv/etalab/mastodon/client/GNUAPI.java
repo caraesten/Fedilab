@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -547,10 +548,25 @@ public class GNUAPI {
         fr.gouv.etalab.mastodon.client.Entities.Context statusContext = new fr.gouv.etalab.mastodon.client.Entities.Context();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/statuses/%s/context", statusId)), 60, null, prefKeyOauthTokenT);
-            statusContext = parseContext(new JSONObject(response));
+            Log.v(Helper.TAG,"url: " + getAbsoluteUrl(String.format("/statusnet/conversation/%s.json", statusId)));
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/statusnet/conversation/%s.json", statusId)), 60, null, prefKeyOauthTokenT);
+            statuses = parseStatuses(context, new JSONArray(response));
+            if( statuses != null && statuses.size() > 0){
+                ArrayList<Status> ancestors = new ArrayList<>();
+                ArrayList<Status> descendants = new ArrayList<>();
+                for(Status status: statuses){
+                    if( Long.parseLong(status.getId()) > Long.parseLong(statusId) +1)
+                        descendants.add(status);
+                    else if( Long.parseLong(status.getId()) < Long.parseLong(statusId))
+                        ancestors.add(status);
+                }
+                statusContext.setAncestors(ancestors);
+                statusContext.setDescendants(descendants);
+            }
+
         } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
+            if(e.getStatusCode() != 404)
+                setError(e.getStatusCode(), e);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {

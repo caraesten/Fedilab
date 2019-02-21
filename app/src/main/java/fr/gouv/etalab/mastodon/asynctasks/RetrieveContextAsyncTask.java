@@ -19,7 +19,10 @@ import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
 
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveContextInterface;
 
 
@@ -33,7 +36,7 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
     private String statusId;
     private fr.gouv.etalab.mastodon.client.Entities.Context statusContext;
     private OnRetrieveContextInterface listener;
-    private API api;
+    private Error error;
     private WeakReference<Context> contextReference;
     private boolean expanded;
 
@@ -46,18 +49,29 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        api = new API(this.contextReference.get());
-        statusContext = api.getStatusContext(statusId);
-        //Retrieves the first toot
-        if( expanded && statusContext != null && statusContext.getAncestors() != null && statusContext.getAncestors().size() > 0 ) {
-            statusContext = api.getStatusContext(statusContext.getAncestors().get(0).getId());
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+            API api = new API(this.contextReference.get());
+            statusContext = api.getStatusContext(statusId);
+            //Retrieves the first toot
+            if (expanded && statusContext != null && statusContext.getAncestors() != null && statusContext.getAncestors().size() > 0) {
+                statusContext = api.getStatusContext(statusContext.getAncestors().get(0).getId());
+            }
+            error = api.getError();
+        }else{
+            GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
+            statusContext = gnuapi.getStatusContext(statusId);
+            //Retrieves the first toot
+            if (expanded && statusContext != null && statusContext.getAncestors() != null && statusContext.getAncestors().size() > 0) {
+                statusContext = gnuapi.getStatusContext(statusContext.getAncestors().get(0).getId());
+            }
+            error = gnuapi.getError();
         }
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveContext(statusContext, api.getError());
+        listener.onRetrieveContext(statusContext, error);
     }
 
 }

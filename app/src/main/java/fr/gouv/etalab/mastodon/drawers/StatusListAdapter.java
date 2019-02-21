@@ -847,50 +847,50 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
             //Click on a conversation
-            if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                if ((getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS)) {
-                    holder.status_content.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
-                                Intent intent = new Intent(context, ShowConversationActivity.class);
-                                Bundle b = new Bundle();
-                                if (status.getReblog() == null)
-                                    b.putParcelable("status", status);
-                                else
-                                    b.putParcelable("status", status.getReblog());
-                                intent.putExtras(b);
-                                if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                                    ((Activity) context).finish();
-                                context.startActivity(intent);
-                            } else {
-                                if (social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
-                                    CrossActions.doCrossConversation(context, status);
-                            }
+
+            if ((getItemViewType(viewHolder.getAdapterPosition()) == DISPLAYED_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == COMPACT_STATUS || getItemViewType(viewHolder.getAdapterPosition()) == CONSOLE_STATUS)) {
+                holder.status_content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                            Intent intent = new Intent(context, ShowConversationActivity.class);
+                            Bundle b = new Bundle();
+                            if (status.getReblog() == null)
+                                b.putParcelable("status", status);
+                            else
+                                b.putParcelable("status", status.getReblog());
+                            intent.putExtras(b);
+                            if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                                ((Activity) context).finish();
+                            context.startActivity(intent);
+                        } else {
+                            if (social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                CrossActions.doCrossConversation(context, status);
                         }
-                    });
-                    holder.main_container.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
-                                Intent intent = new Intent(context, ShowConversationActivity.class);
-                                Bundle b = new Bundle();
-                                if (status.getReblog() == null)
-                                    b.putParcelable("status", status);
-                                else
-                                    b.putParcelable("status", status.getReblog());
-                                intent.putExtras(b);
-                                if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
-                                    ((Activity) context).finish();
-                                context.startActivity(intent);
-                            } else {
-                                if (social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
-                                    CrossActions.doCrossConversation(context, status);
-                            }
+                    }
+                });
+                holder.main_container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (type != RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+                            Intent intent = new Intent(context, ShowConversationActivity.class);
+                            Bundle b = new Bundle();
+                            if (status.getReblog() == null)
+                                b.putParcelable("status", status);
+                            else
+                                b.putParcelable("status", status.getReblog());
+                            intent.putExtras(b);
+                            if (type == RetrieveFeedsAsyncTask.Type.CONTEXT)
+                                ((Activity) context).finish();
+                            context.startActivity(intent);
+                        } else {
+                            if (social != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+                                CrossActions.doCrossConversation(context, status);
                         }
-                    });
-                }
+                    }
+                });
             }
+
 
 
             holder.status_translate.setOnClickListener(new View.OnClickListener() {
