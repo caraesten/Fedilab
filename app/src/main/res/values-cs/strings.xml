@@ -751,7 +751,7 @@ Začněte psát první znaky pro návrh.\n\n
     <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
     <string name="settings_category_label_confirmations">Potvrzení</string>
     <string name="settings_category_label_timelines">Časové osi</string>
-    <string name="settings_category_label_notification">Notification service</string>
+    <string name="settings_category_label_notification">Oznamovací služba</string>
     <string name="settings_category_label_interface">Rozhraní</string>
     <string name="settings_category_label_hiddencontent">Skrytý obsah</string>
     <string name="settings_category_label_composing">Psaní</string>
