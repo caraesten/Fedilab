@@ -1934,9 +1934,9 @@ public class GNUAPI {
                 account.setUuid(resobj.get("ostatus_uri").toString());
             else
                 account.setUuid(resobj.get("id").toString());
-            account.setUsername(resobj.get("name").toString());
-            account.setAcct(resobj.get("name").toString());
-            account.setDisplay_name(resobj.get("screen_name").toString());
+            account.setUsername(resobj.get("screen_name").toString());
+            account.setAcct(resobj.get("screen_name").toString());
+            account.setDisplay_name(resobj.get("name").toString());
             account.setLocked(Boolean.parseBoolean(resobj.get("protected").toString()));
             account.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
             account.setFollowers_count(Integer.valueOf(resobj.get("followers_count").toString()));
