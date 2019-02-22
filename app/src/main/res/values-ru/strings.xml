@@ -156,9 +156,12 @@
     <string name="toot_cw_placeholder">Предупреждение</string>
     <string name="toot_placeholder">О чем вы думаете?</string>
     <string name="toot_it">ТРУБИТЬ!</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Написать тут</string>
     <string name="toot_title_reply">Ответ на тут</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">Вы достигли предела 500 символов!</string>
     <string name="toot_select_image">Выбрать медиафайл</string>
     <string name="toot_select_image_error">При выборе медиафайла произошла ошибка!</string>
