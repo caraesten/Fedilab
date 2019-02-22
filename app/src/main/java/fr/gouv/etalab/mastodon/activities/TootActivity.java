@@ -314,10 +314,19 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             toot_emoji.setVisibility(View.GONE);
         }
 
-        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ) {
-            toot_it.setText(getText(R.string.queet_it));
+        switch (MainActivity.social){
+            case GNU:
+                toot_it.setText(getText(R.string.queet_it));
+                break;
+            case PLEROMA:
+                toot_it.setText(getText(R.string.submit));
+                break;
+            case FRIENDICA:
+                toot_it.setText(getText(R.string.share));
+                break;
+            default:
+                toot_it.setText(getText(R.string.toot_it));
         }
-
 
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -421,15 +430,20 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if( tootMention != null && urlMention != null && fileMention != null) {
             Bitmap pictureMention = BitmapFactory.decodeFile(getCacheDir() + "/" + fileMention);
             if (pictureMention != null) {
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
-                byte[] bitmapdata = bos.toByteArray();
-                ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-                toot_picture_container.setVisibility(View.VISIBLE);
-                picture_scrollview.setVisibility(View.VISIBLE);
-                toot_picture.setEnabled(false);
-                toot_it.setEnabled(false);
-                new HttpsConnection(TootActivity.this).upload(bs, fileMention, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                        byte[] bitmapdata = bos.toByteArray();
+                        ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+                        toot_picture_container.setVisibility(View.VISIBLE);
+                        picture_scrollview.setVisibility(View.VISIBLE);
+                        toot_picture.setEnabled(false);
+                        toot_it.setEnabled(false);
+                        new HttpsConnection(TootActivity.this).upload(bs, fileMention, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+                    }
+                });
             }
             toot_content.setText(String.format("\n\nvia @%s\n\n%s\n\n", tootMention, urlMention));
             toot_space_left.setText(String.valueOf(toot_content.length()));
