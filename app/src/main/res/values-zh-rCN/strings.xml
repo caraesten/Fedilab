@@ -153,9 +153,12 @@
     <string name="toot_cw_placeholder">警告</string>
     <string name="toot_placeholder">你在想什么？</string>
     <string name="toot_it">嘟嘟！</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">内容警告</string>
     <string name="toot_title">编写嘟文</string>
     <string name="toot_title_reply">回复嘟文</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">您已达到允许的 500 字符上限！</string>
     <string name="toot_select_image">选择媒体</string>
     <string name="toot_select_image_error">选择媒体时出现了错误！</string>
