@@ -154,9 +154,12 @@
     <string name="toot_cw_placeholder">Aviso</string>
     <string name="toot_placeholder">Que contas?</string>
     <string name="toot_it">TOOT!</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Escriba un toot</string>
     <string name="toot_title_reply">Resposte a un toot</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">Acadou os 500 caracteres permitidos!</string>
     <string name="toot_select_image">Escolla medios</string>
     <string name="toot_select_image_error">Algo fallou ao engadir os medios!</string>
