@@ -158,9 +158,12 @@
     <string name="toot_cw_placeholder">تحذير</string>
     <string name="toot_placeholder">فيم تفكر؟</string>
     <string name="toot_it">بوِّق!</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">ت.م</string>
     <string name="toot_title">تحرير تبويق</string>
     <string name="toot_title_reply">الرد على تبويق</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">لقد بلغت حد الـ 500 حرف المسموح به!</string>
     <string name="toot_select_image">تحديد وسائط</string>
     <string name="toot_select_image_error">طرأ هناك خطأ أثناء اختيار الوسائط!</string>
