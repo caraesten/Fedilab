@@ -779,7 +779,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="tracking_db_updated">Die Tracking-Datenbank wurde aktualisiert!</string>
     <string name="calls_blocked">Von der Anwendung blockierte HTTP-Aufrufe</string>
     <string name="list_of_blocked_domains">Liste der blockierten Aufrufe</string>
-    <string name="submit">Submit</string>
+    <string name="submit">Senden</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
