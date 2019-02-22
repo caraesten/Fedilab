@@ -158,8 +158,8 @@
     <string name="cw">cw</string>
     <string name="toot_title">Schrijf een toot</string>
     <string name="toot_title_reply">Reageer op een toot</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
+    <string name="queet_title">Schrijf een queet</string>
+    <string name="queet_title_reply">Op een queet reageren</string>
     <string name="toot_no_space">Je hebt de limiet van 500 tekens bereikt!</string>
     <string name="toot_select_image">Kies een afbeelding of video</string>
     <string name="toot_select_image_error">Tijdens het kiezen van een afbeelding of video heeft zich een fout voorgedaan!</string>
@@ -788,7 +788,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="tracking_db_updated">De trackingdatabase is bijgewerkt!</string>
     <string name="calls_blocked">door de applicatie geblokkeerde http-aanvragen</string>
     <string name="list_of_blocked_domains">Lijst met geblokkeerde aanvragen</string>
-    <string name="submit">Submit</string>
+    <string name="submit">Verzenden</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Via WebTorrent</item>
