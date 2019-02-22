@@ -787,6 +787,7 @@
     <string name="tracking_db_updated">追蹤資料庫已更新！</string>
     <string name="calls_blocked">應用程式阻擋了 http 呼叫</string>
     <string name="list_of_blocked_domains">阻擋呼叫清單</string>
+    <string name="submit">Submit</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
