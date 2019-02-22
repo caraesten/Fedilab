@@ -160,8 +160,8 @@
     <string name="cw">cw</string>
     <string name="toot_title">Napsat toot</string>
     <string name="toot_title_reply">Odpovědět na toot</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
+    <string name="queet_title">Napište queet</string>
+    <string name="queet_title_reply">Odpovědět na queet</string>
     <string name="toot_no_space">Byl dosažen povolený limit 500 znaků!</string>
     <string name="toot_select_image">Vybrat média</string>
     <string name="toot_select_image_error">Nastala chyba při výběru média!</string>
@@ -322,7 +322,7 @@
     <string name="set_nsfw_timeout">NSFW prodleva (vteřiny, 0 znamená vypnuto)</string>
     <string name="settings_title_profile">Upravit profil</string>
     <string name="settings_title_custom_sharing">Vlastní sdílení</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_custom_sharing_url">Vaše vlastní sdílecí URL&#8230;</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Zamknout účet</string>
     <string name="set_save_changes">Uložit změny</string>
@@ -748,7 +748,7 @@ Začněte psát první znaky pro návrh.\n\n
     <string name="choose_schedule">Zvolte plánovací režim</string>
     <string name="device_schedule">Ze zařízení</string>
     <string name="server_schedule">Ze serveru</string>
-    <string name="toots_server">Toots (Server)</string>
+    <string name="toots_server">Tooty (Server)</string>
     <string name="toots_client">Toots (Device)</string>
     <string name="modify">Upravit</string>
     <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
