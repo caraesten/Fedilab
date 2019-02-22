@@ -154,9 +154,12 @@
     <string name="toot_cw_placeholder">Avertissement</string>
     <string name="toot_placeholder">Qu’avez-vous en tête ?</string>
     <string name="toot_it">POUET !</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Écrire un pouet</string>
     <string name="toot_title_reply">Répondre à un pouet</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">Vous avez atteint les 500 caractères autorisés !</string>
     <string name="toot_select_image">Sélectionnez un média</string>
     <string name="toot_select_image_error">Une erreur s’est produite lors de la sélection du média !</string>
