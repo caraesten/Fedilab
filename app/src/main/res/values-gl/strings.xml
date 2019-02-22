@@ -792,6 +792,7 @@
     <string name="tracking_db_updated">Actualizouse a base de datos de rastrexo!</string>
     <string name="calls_blocked">peticións http bloqueadas pola aplicación</string>
     <string name="list_of_blocked_domains">Lista de peticións bloquedas</string>
+    <string name="submit">Submit</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
