@@ -779,6 +779,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="tracking_db_updated">Sporingsdata er oppdatert!</string>
     <string name="calls_blocked">HTTP-kall blokkert av applikasjonen</string>
     <string name="list_of_blocked_domains">Liste over blokkerte kall</string>
+    <string name="submit">Submit</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
