@@ -2259,11 +2259,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 case R.id.action_custom_sharing:
                                     Intent intentCustomSharing = new Intent(context, CustomSharingActivity.class);
                                     Bundle bCustomSharing = new Bundle();
-                                    if (status.getReblog() != null) {
-                                        bCustomSharing.putParcelable("status", status.getReblog());
-                                    } else {
-                                        bCustomSharing.putParcelable("status", status);
-                                    }
+                                    bCustomSharing.putParcelable("status", status);
                                     intentCustomSharing.putExtras(bCustomSharing);
                                     context.startActivity(intentCustomSharing);
                                     return true;
