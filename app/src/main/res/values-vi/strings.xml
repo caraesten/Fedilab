@@ -153,9 +153,12 @@
     <string name="toot_cw_placeholder">Cảnh báo</string>
     <string name="toot_placeholder">Bạn đang nghĩ cái gì thế?</string>
     <string name="toot_it">Thổi còi!</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Viết một cái còi</string>
     <string name="toot_title_reply">Trả lời thổi còi</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">Bạn đã đạt đến 500 ký tự cho phép!</string>
     <string name="toot_select_image">Chọn phương tiện</string>
     <string name="toot_select_image_error">Đã xảy ra lỗi khi chọn phương tiện!</string>
