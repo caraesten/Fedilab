@@ -153,9 +153,12 @@
     <string name="toot_cw_placeholder">警告</string>
     <string name="toot_placeholder">今なにしてる？</string>
     <string name="toot_it">トゥート！</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">トゥートを書く</string>
     <string name="toot_title_reply">トゥートに返信</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">500文字の制限に達しました！</string>
     <string name="toot_select_image">メディアを選択</string>
     <string name="toot_select_image_error">メディアの選択中にエラーが発生しました。</string>
