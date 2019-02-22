@@ -314,6 +314,9 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             toot_emoji.setVisibility(View.GONE);
         }
 
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU ) {
+            toot_it.setText(getText(R.string.queet_it));
+        }
 
 
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -394,10 +397,19 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if( tootReply != null) {
             tootReply();
         }else {
-            if( title != null)
-                title.setText(getString(R.string.toot_title));
-            else
-                setTitle(R.string.toot_title);
+            if( title != null) {
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                    title.setText(getString(R.string.queet_title));
+                else
+                    title.setText(getString(R.string.toot_title));
+
+            }
+            else {
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                    setTitle(R.string.queet_title);
+                else
+                    setTitle(R.string.toot_title);
+            }
         }
 
 
@@ -2262,10 +2274,18 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             tootReply();
 
         }else {
-            if( title != null)
-                title.setText(getString(R.string.toot_title));
-            else
-                setTitle(R.string.toot_title);
+            if( title != null){
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                    title.setText(getString(R.string.queet_title));
+                else
+                    title.setText(getString(R.string.toot_title));
+            }
+            else {
+                if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                    setTitle(R.string.queet_title);
+                else
+                    setTitle(R.string.toot_title);
+            }
         }
         invalidateOptionsMenu();
         initialContent = toot_content.getText().toString();
@@ -2397,10 +2417,18 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 break;
         }
 
-        if( title != null)
-            title.setText(getString(R.string.toot_title));
-        else
-            setTitle(R.string.toot_title);
+        if( title != null) {
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                title.setText(getString(R.string.queet_title));
+            else
+                title.setText(getString(R.string.toot_title));
+        }
+        else {
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                setTitle(R.string.queet_title);
+            else
+                setTitle(R.string.toot_title);
+        }
         invalidateOptionsMenu();
         initialContent = toot_content.getText().toString();
         toot_space_left.setText(String.valueOf(toot_content.getText().length() + toot_cw_content.getText().length()));
@@ -2408,10 +2436,18 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
 
     private void tootReply(){
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        if( title != null)
-            title.setText(getString(R.string.toot_title_reply));
-        else
-            setTitle(R.string.toot_title_reply);
+        if( title != null) {
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                title.setText(getString(R.string.queet_title_reply));
+            else
+                title.setText(getString(R.string.toot_title_reply));
+        }
+        else {
+            if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU)
+                setTitle(R.string.queet_title_reply);
+            else
+                setTitle(R.string.toot_title_reply);
+        }
         String userIdReply;
         if( accountReply == null)
             userIdReply = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
