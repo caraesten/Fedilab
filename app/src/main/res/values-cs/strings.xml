@@ -156,9 +156,12 @@
     <string name="toot_cw_placeholder">Varování</string>
     <string name="toot_placeholder">Co se vám honí hlavou?</string>
     <string name="toot_it">TOOT!</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Napsat toot</string>
     <string name="toot_title_reply">Odpovědět na toot</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">Byl dosažen povolený limit 500 znaků!</string>
     <string name="toot_select_image">Vybrat média</string>
     <string name="toot_select_image_error">Nastala chyba při výběru média!</string>
