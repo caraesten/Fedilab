@@ -154,9 +154,12 @@
     <string name="toot_cw_placeholder">Uyarı</string>
     <string name="toot_placeholder">Aklınızda ki nedir?</string>
     <string name="toot_it">MODÜL!</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cv</string>
     <string name="toot_title">Bir hikaye yaz</string>
     <string name="toot_title_reply">Toot\'a yanıt ver</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">500 karakter sınırına ulaştınız!</string>
     <string name="toot_select_image">Ortam dosyası seçin</string>
     <string name="toot_select_image_error">Medya dosyasını seçerken bir hata oluştu!</string>
