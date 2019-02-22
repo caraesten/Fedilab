@@ -155,9 +155,12 @@
     <string name="toot_cw_placeholder">Atenționare</string>
     <string name="toot_placeholder">La ce te gândești?</string>
     <string name="toot_it">Notiță!</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Scrie o notiță</string>
     <string name="toot_title_reply">Răspunde la această notiță</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">Ai atins 500 de caractere permise!</string>
     <string name="toot_select_image">Selectați media</string>
     <string name="toot_select_image_error">A aparut o eroare în timp ce selectați media!</string>
