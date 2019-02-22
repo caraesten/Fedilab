@@ -154,9 +154,12 @@
     <string name="toot_cw_placeholder">Waarschuwing</string>
     <string name="toot_placeholder">Wat wil je kwijt?</string>
     <string name="toot_it">TOOT!</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Schrijf een toot</string>
     <string name="toot_title_reply">Reageer op een toot</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">Je hebt de limiet van 500 tekens bereikt!</string>
     <string name="toot_select_image">Kies een afbeelding of video</string>
     <string name="toot_select_image_error">Tijdens het kiezen van een afbeelding of video heeft zich een fout voorgedaan!</string>
