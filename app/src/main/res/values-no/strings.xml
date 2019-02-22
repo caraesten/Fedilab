@@ -154,9 +154,12 @@
     <string name="toot_cw_placeholder">Innholdsadvarsel</string>
     <string name="toot_placeholder">Hva tenker du på?</string>
     <string name="toot_it">TOOT!</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Skriv et toot</string>
     <string name="toot_title_reply">Svar på et toot</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">Du har nådd de 500 tegnene som er tillatt!</string>
     <string name="toot_select_image">Velg et medie</string>
     <string name="toot_select_image_error">Det oppsto en feil under valg av media!</string>
