@@ -1,0 +1,26 @@
+## 1.74.1
+
+
+### Added
+- Custom sharing feature. More: https://fedilab.app/wiki/features/custom-sharing/
+
+### Fixed
+- Pleroma pagination issue
+
+
+## 1.74.0
+
+### Added
+- ad/tracking blocker for the built-in browser (Sync the list in settings)
+- New simplified login page with auto-detection of the Network from the domain name
+- Console mode layout (Settings-> first tab -> console)
+- Copy URL of toots
+
+### Changed
+- Add 'Timed mute' to all menus which already have 'Mute'
+
+### Fixed
+- Login issue with Friendica & GNU Social
+- Hide all media not honored
+- Information not working from notifications
+
