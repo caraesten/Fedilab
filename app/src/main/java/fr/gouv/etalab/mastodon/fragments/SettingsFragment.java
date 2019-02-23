@@ -101,7 +101,7 @@ public class SettingsFragment extends Fragment {
     private static final int ACTIVITY_CHOOSE_FILE = 411;
     private TextView set_folder;
     private EditText your_api_key;
-    private int count1, count2, count3, count4;
+    private int count1, count2, count3, count4, count5;
 
 
     @Override
@@ -142,7 +142,7 @@ public class SettingsFragment extends Fragment {
         count2 = 0;
         count3 = 0;
         count4 = 0;
-
+        count5 = 0;
 
         final Spinner battery_layout_spinner = rootView.findViewById(R.id.battery_layout_spinner);
         ArrayAdapter<CharSequence> adapterBattery = ArrayAdapter.createFromResource(getContext(),
@@ -353,6 +353,49 @@ public class SettingsFragment extends Fragment {
                     editor.putInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
                 }
                 editor.apply();
+            }
+        });
+
+
+        int videoMode = sharedpreferences.getInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_DIRECT);
+
+
+        //Video mode
+        final Spinner video_mode_spinner = rootView.findViewById(R.id.set_video_mode);
+        ArrayAdapter<CharSequence> video_mode_spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.settings_video_mode, android.R.layout.simple_spinner_item);
+        video_mode_spinner.setAdapter(video_mode_spinnerAdapter);
+        if (videoMode == Helper.VIDEO_MODE_TORRENT)
+            videoMode = Helper.VIDEO_MODE_DIRECT;
+        int positionVideoMode = 0;
+        if( videoMode == Helper.VIDEO_MODE_DIRECT)
+            positionVideoMode = 1;
+        video_mode_spinner.setSelection(positionVideoMode);
+        video_mode_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if( count5 > 0 ) {
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (position) {
+                        /*case 0:
+                            editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_TORRENT);
+                            editor.apply();
+                            break;*/
+                        case 0:
+                            editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_WEBVIEW);
+                            editor.apply();
+                            break;
+                        case 1:
+                            editor.putInt(Helper.SET_VIDEO_MODE, Helper.VIDEO_MODE_DIRECT);
+                            editor.apply();
+                            break;
+                    }
+                }
+                count5++;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 

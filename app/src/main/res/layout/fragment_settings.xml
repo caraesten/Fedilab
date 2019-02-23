@@ -497,8 +497,6 @@
             android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_optimize_loading"
             android:layout_height="wrap_content" />
-
-
         <CheckBox
             android:id="@+id/set_security_provider"
             android:layout_width="wrap_content"
@@ -506,6 +504,26 @@
             android:layout_marginBottom="@dimen/settings_checkbox_margin"
             android:text="@string/set_security_provider"
             android:layout_height="wrap_content" />
+
+
+        <!-- Choose stream -->
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_video_mode"/>
+            <Spinner
+                android:id="@+id/set_video_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
         <!-- TRUNCATE LONG TOOTS -->
         <TextView
             android:layout_marginTop="10dp"
