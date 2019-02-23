@@ -154,9 +154,12 @@
     <string name="toot_cw_placeholder">चेतावनी</string>
     <string name="toot_placeholder">आपके मन में क्या है?</string>
     <string name="toot_it">भेजें!</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">संदेश लिखे</string>
     <string name="toot_title_reply">संदेश का जवाब दे</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">आप अनुमत ५०० अक्षरों की सीमा तक पहुंच चुके हैं!</string>
     <string name="toot_select_image">मीडिया को चुनें</string>
     <string name="toot_select_image_error">मीडिया चुनते वक्त कुछ गड़बड़ी हो गई!</string>
@@ -777,6 +780,8 @@
     <string name="tracking_db_updated">The tracking data base has been updated!</string>
     <string name="calls_blocked">http calls blocked by the application</string>
     <string name="list_of_blocked_domains">List of blocked calls</string>
+    <string name="submit">Submit</string>
+    <string name="data_base_exported">The data base has been exported!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>

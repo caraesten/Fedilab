@@ -154,9 +154,12 @@
     <string name="toot_cw_placeholder">Attenzione</string>
     <string name="toot_placeholder">Cosa ti passa per la mente?</string>
     <string name="toot_it">TOOT!</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Scrivi un toot</string>
     <string name="toot_title_reply">Rispondi ad un toot</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">Hai raggiunto i 500 caratteri consentiti!</string>
     <string name="toot_select_image">Seleziona un media</string>
     <string name="toot_select_image_error">Si è verificato un errore durante la selezione del media!</string>
@@ -788,6 +791,8 @@
     <string name="tracking_db_updated">La base dati dei domini traccianti è stata aggiornata!</string>
     <string name="calls_blocked">chiamate http bloccate dall\'applicazione</string>
     <string name="list_of_blocked_domains">Lista di chiamate bloccate</string>
+    <string name="submit">Submit</string>
+    <string name="data_base_exported">The data base has been exported!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>

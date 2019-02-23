@@ -158,9 +158,12 @@
     <string name="toot_cw_placeholder">Rhybudd</string>
     <string name="toot_placeholder">Beth sydd ar eich meddwl?</string>
     <string name="toot_it">Tŵt!</string>
+    <string name="queet_it">QUEET!</string>
     <string name="cw">cs</string>
     <string name="toot_title">Cyfansoddi tŵt</string>
     <string name="toot_title_reply">Ymateb i dŵt</string>
+    <string name="queet_title">Write a queet</string>
+    <string name="queet_title_reply">Reply to a queet</string>
     <string name="toot_no_space">Yr ydych wedi cyrraedd yr uchafswm o 500 nod!</string>
     <string name="toot_select_image">Dewis cyfryngau</string>
     <string name="toot_select_image_error">Roedd gwall!</string>
@@ -803,6 +806,8 @@
     <string name="tracking_db_updated">The tracking data base has been updated!</string>
     <string name="calls_blocked">http calls blocked by the application</string>
     <string name="list_of_blocked_domains">List of blocked calls</string>
+    <string name="submit">Submit</string>
+    <string name="data_base_exported">The data base has been exported!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
