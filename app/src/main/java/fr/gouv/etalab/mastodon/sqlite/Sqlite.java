@@ -65,7 +65,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String TABLE_BOOST_SCHEDULE = "BOOST_SCHEDULE";
 
     //Table for blocking tracking domains
-    static final String TABLE_TRACKING_BLOCK = "TRACKING_BLOCK";
+    public static final String TABLE_TRACKING_BLOCK = "TRACKING_BLOCK";
 
     static final String COL_USER_ID = "USER_ID";
     static final String COL_USERNAME = "USERNAME";
