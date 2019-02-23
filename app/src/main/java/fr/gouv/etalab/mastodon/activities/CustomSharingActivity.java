@@ -132,19 +132,11 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         }
 
 
-        if (status.getReblog() != null) {
-            bundle_url = status.getReblog().getUrl();
-            bundle_id = status.getReblog().getUri();
-            bundle_source = status.getReblog().getAccount().getAcct();
-            bundle_tags = status.getReblog().getTagsString();
-            bundle_content = formatedContent(status.getReblog().getContent(), status.getReblog().getEmojis());
-        } else {
-            bundle_url = status.getUrl();
-            bundle_id = status.getUri();
-            bundle_source = status.getAccount().getAcct();
-            bundle_tags = status.getTagsString();
-            bundle_content = formatedContent(status.getContent(), status.getEmojis());
-        }
+        bundle_url = status.getUrl();
+        bundle_id = status.getUri();
+        bundle_source = status.getAccount().getAcct();
+        bundle_tags = status.getTagsString();
+        bundle_content = formatedContent(status.getContent(), status.getEmojis());
 
         if (!bundle_source.contains("@")) {
             bundle_source = bundle_source + "@" + account.getInstance();
@@ -252,6 +244,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                         paramFound = true;
                         builder.appendQueryParameter(param_name, keywords);
                         break;
+
                 }
             if (!paramFound) {
                 builder.appendQueryParameter(param_name, param_value);
