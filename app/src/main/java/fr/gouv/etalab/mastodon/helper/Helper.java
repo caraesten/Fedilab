@@ -76,6 +76,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
 import android.util.DisplayMetrics;
@@ -180,6 +181,7 @@ import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
+import static com.koushikdutta.async.util.StreamUtility.copyStream;
 import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.filters;
 
 
@@ -560,8 +562,10 @@ public class Helper {
         String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(activity));
         Account account = new AccountDAO(activity, db).getUniqAccount(userId, instance);
-        account.setToken("null");
-        new AccountDAO(activity, db).updateAccount(account);
+        if( account != null) {
+            account.setToken("null");
+            new AccountDAO(activity, db).updateAccount(account);
+        }
         Account newAccount = new AccountDAO(activity, db).getLastUsedAccount();
         SharedPreferences.Editor editor = sharedpreferences.edit();
         if( newAccount == null){
@@ -3685,6 +3689,43 @@ public class Helper {
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
+        }
+    }
+
+
+
+    public static String getFilePathFromURI(Context context, Uri contentUri) {
+        //copy file and send new file path
+        String fileName = getFileName(contentUri);
+        if (!TextUtils.isEmpty(fileName)) {
+            File copyFile = new File(context.getCacheDir() + File.separator + fileName);
+            copy(context, contentUri, copyFile);
+            return copyFile.getAbsolutePath();
+        }
+        return null;
+    }
+
+    public static String getFileName(Uri uri) {
+        if (uri == null) return null;
+        String fileName = null;
+        String path = uri.getPath();
+        int cut = path.lastIndexOf('/');
+        if (cut != -1) {
+            fileName = path.substring(cut + 1);
+        }
+        return fileName;
+    }
+
+    public static void copy(Context context, Uri srcUri, File dstFile) {
+        try {
+            InputStream inputStream = context.getContentResolver().openInputStream(srcUri);
+            if (inputStream == null) return;
+            OutputStream outputStream = new FileOutputStream(dstFile);
+            copyStream(inputStream, outputStream);
+            inputStream.close();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

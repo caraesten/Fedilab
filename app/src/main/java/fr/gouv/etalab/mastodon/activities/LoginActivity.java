@@ -822,7 +822,7 @@ public class LoginActivity extends BaseActivity {
                 return;
             }
             ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DB_NAME, true);
-            String filename = SettingsFragment.getPath(getApplicationContext(), data.getData());
+            String filename = Helper.getFilePathFromURI(getApplicationContext(), data.getData());
             assert filename != null;
             excelToSQLite.importFromFile(filename, new ExcelToSQLite.ImportListener() {
                 @Override
