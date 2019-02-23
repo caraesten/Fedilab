@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.Set;
 
 import es.dmoral.toasty.Toasty;
@@ -41,6 +42,7 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.CustomSharingAsyncTask;
 import fr.gouv.etalab.mastodon.client.CustomSharingResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnCustomSharingInterface;
@@ -128,18 +130,20 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
             finish();
             return;
         }
-        bundle_content = status.getContentSpan().toString();
+
 
         if (status.getReblog() != null) {
             bundle_url = status.getReblog().getUrl();
             bundle_id = status.getReblog().getUri();
             bundle_source = status.getReblog().getAccount().getAcct();
             bundle_tags = status.getReblog().getTagsString();
+            bundle_content = formatedContent(status.getReblog().getContent(), status.getReblog().getEmojis());
         } else {
             bundle_url = status.getUrl();
             bundle_id = status.getUri();
             bundle_source = status.getAccount().getAcct();
             bundle_tags = status.getTagsString();
+            bundle_content = formatedContent(status.getContent(), status.getEmojis());
         }
 
         if (!bundle_source.contains("@")) {
@@ -218,40 +222,55 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                 .authority(server)
                 .appendPath(path);
         Set<String> args = uri.getQueryParameterNames();
-        Boolean paramFound = false;
+        boolean paramFound;
         for (String param_name : args) {
             paramFound = false;
             String param_value = uri.getQueryParameter(param_name);
-            switch(param_value) {
-                case "${url}":
-                    paramFound = true;
-                    builder.appendQueryParameter(param_name, bundle_url);
-                    break;
-                case "${title}":
-                    paramFound = true;
-                    builder.appendQueryParameter(param_name, title);
-                    break;
-                case "${source}":
-                    paramFound = true;
-                    builder.appendQueryParameter(param_name, bundle_source);
-                    break;
-                case "${id}":
-                    paramFound = true;
-                    builder.appendQueryParameter(param_name, bundle_id);
-                    break;
-                case "${description}":
-                    paramFound = true;
-                    builder.appendQueryParameter(param_name, description);
-                    break;
-                case "${keywords}":
-                    paramFound = true;
-                    builder.appendQueryParameter(param_name, keywords);
-                    break;
-            }
+            if(param_value != null)
+                switch(param_value) {
+                    case "${url}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, bundle_url);
+                        break;
+                    case "${title}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, title);
+                        break;
+                    case "${source}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, bundle_source);
+                        break;
+                    case "${id}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, bundle_id);
+                        break;
+                    case "${description}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, description);
+                        break;
+                    case "${keywords}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, keywords);
+                        break;
+                }
             if (!paramFound) {
                 builder.appendQueryParameter(param_name, param_value);
             }
         }
         return builder.build().toString();
+    }
+
+
+    private String formatedContent(String content, List<Emojis> emojis){
+        //Avoid null content
+        if( content == null)
+            return "";
+        if( emojis == null || emojis.size() == 0)
+            return content;
+        final int[] i = {0};
+        for (Emojis emoji : emojis) {
+            content = content.replaceAll(":"+emoji.getShortcode()+":","<img src='"+emoji.getUrl()+"' width=30/>");
+        }
+        return content;
     }
 }
