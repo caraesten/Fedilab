@@ -1437,6 +1437,9 @@ public abstract class BaseMainActivity extends BaseActivity
                                 SQLiteToExcel sqliteToExcel = new SQLiteToExcel(BaseMainActivity.this, DB_NAME);
                                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
                                 final String fileName = "Mastalab_export_"+timeStamp+".xls";
+                                List<String> excludedValues = new ArrayList<>();
+                                excludedValues.add(Sqlite.TABLE_TRACKING_BLOCK);
+                                sqliteToExcel.setExcludeValuesFromTables(excludedValues);
                                 sqliteToExcel.exportAllTables(fileName, new SQLiteToExcel.ExportListener() {
                                     @Override
                                     public void onStart() {
@@ -1453,10 +1456,11 @@ public abstract class BaseMainActivity extends BaseActivity
                                         intent.setDataAndType(uri, "application/vnd.ms-excel");
                                         Helper.notify_user(getApplicationContext(), intent, notificationIdTmp, BitmapFactory.decodeResource(getResources(),
                                                 R.mipmap.ic_launcher),  Helper.NotifType.STORE, getString(R.string.save_over), getString(R.string.download_from, fileName));
-                                        Toasty.success(getApplicationContext(), getString(R.string.toast_saved),Toast.LENGTH_LONG).show();
+                                        Toasty.success(getApplicationContext(), getString(R.string.data_base_exported),Toast.LENGTH_LONG).show();
                                     }
                                     @Override
                                     public void onError(Exception e) {
+                                        e.printStackTrace();
                                         Toasty.error(getApplicationContext(), getString(R.string.data_export_error_simple),Toast.LENGTH_LONG).show();
                                     }
                                 });
@@ -2347,10 +2351,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 @Override
                 public void onCompleted(String dbName) {
                     Toasty.success(getApplicationContext(),getString(R.string.data_import_success_simple),Toast.LENGTH_LONG).show();
-                    Intent changeAccount = new Intent(activity, MainActivity.class);
-                    changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    activity.finish();
-                    activity.startActivity(changeAccount);
+                    Helper.logoutCurrentUser(BaseMainActivity.this);
                 }
 
                 @Override

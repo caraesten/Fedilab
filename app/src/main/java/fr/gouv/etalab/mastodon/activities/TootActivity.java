@@ -1593,6 +1593,11 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             if( itemStore != null)
                 itemStore.setVisible(false);
         }
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+            MenuItem itemContacts = menu.findItem(R.id.action_contacts);
+            if( itemContacts != null)
+                itemContacts.setVisible(false);
+        }
         return true;
     }
 
