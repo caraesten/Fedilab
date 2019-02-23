@@ -20,9 +20,11 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -63,7 +65,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
     private Button set_custom_sharing_save;
     private ImageView pp_actionBar;
     private String title, description, keywords, custom_sharing_url, encodedCustomSharingURL;
-    private String bundle_url, bundle_source, bundle_id, bundle_tags, bundle_content, bundle_thumbnailurl;
+    private String bundle_url, bundle_source, bundle_id, bundle_tags, bundle_content, bundle_thumbnailurl, bundle_creator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +133,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
             return;
         }
 
-
+        bundle_creator = status.getAccount().getAcct();
         bundle_url = status.getUrl();
         bundle_id = status.getUri();
         bundle_source = status.getAccount().getAcct();
@@ -139,6 +141,8 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         bundle_content = formatedContent(status.getContent(), status.getEmojis());
         if( status.getCard() != null && status.getCard().getImage() != null)
             bundle_thumbnailurl = status.getCard().getImage();
+        else
+            bundle_thumbnailurl = status.getAccount().getAvatar();
         if (!bundle_source.contains("@")) {
             bundle_source = bundle_source + "@" + account.getInstance();
         }
@@ -148,6 +152,12 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         set_custom_sharing_title.setEllipsize(TextUtils.TruncateAt.END);
         //set text on title, description, and keywords
         String[] lines = bundle_content.split("\n");
+        //Remove tags in title
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            lines[0] = Html.fromHtml( lines[0], Html.FROM_HTML_MODE_LEGACY).toString();
+        else
+            //noinspection deprecation
+            lines[0] = Html.fromHtml(lines[0]).toString();
         String newTitle = "";
         if (lines[0].length() > 60) {
             newTitle = lines[0].substring(0, 60) + '…';
@@ -249,6 +259,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                 }
             if (bundle_thumbnailurl != null)
                 builder.appendQueryParameter("thumbnailurl", bundle_thumbnailurl);
+            builder.appendQueryParameter("creator", bundle_creator);
             if (!paramFound) {
                 builder.appendQueryParameter(param_name, param_value);
             }
