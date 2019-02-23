@@ -7,7 +7,7 @@
 
 [![Backers on Open Collective](https://opencollective.com/mastalab/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/mastalab/sponsors/badge.svg)](#sponsors)
 
-[<img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"/>](https://liberapay.com/tom79/donate)
+[<img alt="Donate using Liberapay" src="http://img.shields.io/liberapay/patrons/tom79.svg?logo=liberapay"/>](https://liberapay.com/tom79/donate)
 
 ## Download
 
