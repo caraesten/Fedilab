@@ -128,12 +128,23 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
             finish();
             return;
         }
-        bundle_url = status.getUrl();
-        bundle_id = status.getUri();
-        bundle_source = status.getAccount().getAcct();
-        bundle_tags = status.getTagsString();
         bundle_content = status.getContentSpan().toString();
 
+        if (status.getReblog() != null) {
+            bundle_url = status.getReblog().getUrl();
+            bundle_id = status.getReblog().getUri();
+            bundle_source = status.getReblog().getAccount().getAcct();
+            bundle_tags = status.getReblog().getTagsString();
+        } else {
+            bundle_url = status.getUrl();
+            bundle_id = status.getUri();
+            bundle_source = status.getAccount().getAcct();
+            bundle_tags = status.getTagsString();
+        }
+
+        if (!bundle_source.contains("@")) {
+            bundle_source = bundle_source + "@" + account.getInstance();
+        }
         set_custom_sharing_title = findViewById(R.id.set_custom_sharing_title);
         set_custom_sharing_description = findViewById(R.id.set_custom_sharing_description);
         set_custom_sharing_keywords = findViewById(R.id.set_custom_sharing_keywords);
@@ -142,7 +153,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         String[] lines = bundle_content.split("\n");
         String newTitle = "";
         if (lines[0].length() > 60) {
-            newTitle = lines[0].substring(0, 60) + '…';;
+            newTitle = lines[0].substring(0, 60) + '…';
         } else {
             newTitle = lines[0];
         }
@@ -195,14 +206,6 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
     }
 
     public String encodeCustomSharingURL(String custom_sharing_url, String bundle_url, String bundle_id, String bundle_source, String title, String description, String keywords) {
-        String url_user = "";
-        String url_token = "";
-        String url_param_url = "";
-        String url_param_title = "";
-        String url_param_source = "";
-        String url_param_id = "";
-        String url_param_description = "";
-        String url_param_keywords = "";
         Uri uri = Uri.parse(custom_sharing_url);
         String protocol = uri.getScheme();
         String server = uri.getAuthority();
@@ -210,63 +213,44 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         if (path != null) {
             path = path.replaceAll("/", "");
         }
-        Set<String> args = uri.getQueryParameterNames();
-        for (String param_name : args) {
-            if (param_name.equals("user")) {
-                url_user = uri.getQueryParameter("user");
-            }
-            if (param_name.equals("token")) {
-                url_token = uri.getQueryParameter("token");
-            }
-            String param_value = uri.getQueryParameter(param_name);
-            switch(param_value) {
-                case "${url}":
-                    url_param_url = param_name;
-                    break;
-                case "${title}":
-                    url_param_title = param_name;
-                    break;
-                case "${source}":
-                    url_param_source = param_name;
-                    break;
-                case "${id}":
-                    url_param_id = param_name;
-                    break;
-                case "${description}":
-                    url_param_description = param_name;
-                    break;
-                case "${keywords}":
-                    url_param_keywords = param_name;
-                    break;
-            }
-        }
         Uri.Builder builder = new Uri.Builder();
         builder.scheme(protocol)
                 .authority(server)
                 .appendPath(path);
-        if (!url_user.equals("") ) {
-            builder.appendQueryParameter("user", url_user);
-        }
-        if (!url_token.equals("") ) {
-            builder.appendQueryParameter("token", url_token);
-        }
-        if (!url_param_url.equals("")) {
-            builder.appendQueryParameter(url_param_url, bundle_url);
-        }
-        if (!url_param_title.equals("")) {
-            builder.appendQueryParameter(url_param_title, title);
-        }
-        if (!url_param_source.equals("")) {
-            builder.appendQueryParameter(url_param_source, bundle_source);
-        }
-        if (!url_param_id.equals("")) {
-            builder.appendQueryParameter(url_param_id, bundle_id);
-        }
-        if (!url_param_description.equals("")) {
-            builder.appendQueryParameter(url_param_description, description);
-        }
-        if (!url_param_keywords.equals("")) {
-            builder.appendQueryParameter(url_param_keywords, keywords);
+        Set<String> args = uri.getQueryParameterNames();
+        Boolean paramFound = false;
+        for (String param_name : args) {
+            paramFound = false;
+            String param_value = uri.getQueryParameter(param_name);
+            switch(param_value) {
+                case "${url}":
+                    paramFound = true;
+                    builder.appendQueryParameter(param_name, bundle_url);
+                    break;
+                case "${title}":
+                    paramFound = true;
+                    builder.appendQueryParameter(param_name, title);
+                    break;
+                case "${source}":
+                    paramFound = true;
+                    builder.appendQueryParameter(param_name, bundle_source);
+                    break;
+                case "${id}":
+                    paramFound = true;
+                    builder.appendQueryParameter(param_name, bundle_id);
+                    break;
+                case "${description}":
+                    paramFound = true;
+                    builder.appendQueryParameter(param_name, description);
+                    break;
+                case "${keywords}":
+                    paramFound = true;
+                    builder.appendQueryParameter(param_name, keywords);
+                    break;
+            }
+            if (!paramFound) {
+                builder.appendQueryParameter(param_name, param_value);
+            }
         }
         return builder.build().toString();
     }
