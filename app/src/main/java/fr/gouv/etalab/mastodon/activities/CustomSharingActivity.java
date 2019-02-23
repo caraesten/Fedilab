@@ -267,9 +267,8 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
             return "";
         if( emojis == null || emojis.size() == 0)
             return content;
-        final int[] i = {0};
         for (Emojis emoji : emojis) {
-            content = content.replaceAll(":"+emoji.getShortcode()+":","<img src='"+emoji.getUrl()+"' width=30/>");
+            content = content.replaceAll(":"+emoji.getShortcode()+":","<img src='"+emoji.getUrl()+"' width=30 alt='"+emoji.getShortcode()+"'/>");
         }
         return content;
     }
