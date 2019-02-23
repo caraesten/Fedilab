@@ -160,7 +160,7 @@
     <string name="cw">cw</string>
     <string name="toot_title">Napsat toot</string>
     <string name="toot_title_reply">Odpovědět na toot</string>
-    <string name="queet_title">Napište queet</string>
+    <string name="queet_title">Napsat queet</string>
     <string name="queet_title_reply">Odpovědět na queet</string>
     <string name="toot_no_space">Byl dosažen povolený limit 500 znaků!</string>
     <string name="toot_select_image">Vybrat média</string>
@@ -795,10 +795,10 @@ Začněte psát první znaky pro návrh.\n\n
     <string name="tracking_db_updated">The tracking data base has been updated!</string>
     <string name="calls_blocked">http calls blocked by the application</string>
     <string name="list_of_blocked_domains">List of blocked calls</string>
-    <string name="submit">Submit</string>
+    <string name="submit">Odeslat</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
-        <item>Direct stream</item>
+        <item>Přímé streamovaní</item>
     </string-array>
 </resources>
