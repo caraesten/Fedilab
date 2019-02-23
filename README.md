@@ -1,5 +1,5 @@
 [![pipeline status](https://gitlab.com/tom79/mastalab/badges/develop/pipeline.svg)](https://gitlab.com/tom79/mastalab/commits/develop)
-
+&nbsp;&nbsp;&nbsp;[![Crowdin](https://d322cqt584bo4o.cloudfront.net/mastalab/localized.svg)](https://crowdin.com/project/mastalab)
 # Mastalab is a multi-accounts client for Mastodon, Pleroma, Peertube and Pixelfed [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## Donate
@@ -11,7 +11,7 @@
 ## Download
 
 [<img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height="80"/>](https://play.google.com/store/apps/details?id=fr.gouv.etalab.mastodon)
-[<img alt='Get it on Google Play' src='https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png' height="80"/>](https://f-droid.org/app/fr.gouv.etalab.mastodon)
+&nbsp;&nbsp;[<img alt='Get it on Google Play' src='https://gitlab.com/fdroid/artwork/raw/master/badge/get-it-on.png' height="80"/>](https://f-droid.org/app/fr.gouv.etalab.mastodon)
 
 
 ## Resources
