@@ -1,7 +1,7 @@
 [![pipeline status](https://gitlab.com/tom79/mastalab/badges/develop/pipeline.svg)](https://gitlab.com/tom79/mastalab/commits/develop)
 &nbsp;&nbsp;&nbsp;[![Crowdin](https://d322cqt584bo4o.cloudfront.net/mastalab/localized.svg)](https://crowdin.com/project/mastalab)
 &nbsp;&nbsp;&nbsp;[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-# Mastalab is a multi-accounts client for Mastodon, Pleroma, Peertube and Pixelfed 
+# Mastalab is a multi-accounts client for Mastodon, Pleroma, Peertube, GNU Social, Friendica and Pixelfed 
 
 ## Donate
 
