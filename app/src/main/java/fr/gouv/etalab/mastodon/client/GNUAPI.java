@@ -2085,8 +2085,12 @@ public class GNUAPI {
         try {
             if(resobj.has("id") )
                 attachment.setId(resobj.get("id").toString());
+            if( resobj.has("url") ){
+                attachment.setUrl(resobj.getString("url"));
+                attachment.setPreview_url(resobj.getString("url"));
+                attachment.setRemote_url(resobj.getString("url"));
+            }
 
-            attachment.setUrl(resobj.get("url").toString());
             if( attachment.getUrl().endsWith("png") || attachment.getUrl().endsWith("jpg") || attachment.getUrl().endsWith("jpeg")){
                 attachment.setType("image");
             }else if( attachment.getUrl().endsWith("gif") ||  attachment.getUrl().endsWith("apng") ){
@@ -2096,6 +2100,7 @@ public class GNUAPI {
             }else{
                 attachment.setType("web");
             }
+
             try {
                 attachment.setDescription(resobj.get("description").toString());
             }catch (JSONException ignore){}
@@ -2133,16 +2138,25 @@ public class GNUAPI {
                 attachment.setType("GifV");
             else
                 attachment.setType("video");
-            attachment.setUrl(resobj.get("media_url").toString());
-            try {
-                attachment.setDescription(resobj.get("description").toString());
-            }catch (JSONException ignore){}
+
             try{
                 attachment.setRemote_url(resobj.get("url").toString());
             }catch (JSONException ignore){}
             try{
                 attachment.setPreview_url(resobj.get("thumb_url").toString());
             }catch (JSONException ignore){}
+
+            if( resobj.has("image") && resobj.getJSONObject("image").has("friendica_preview_url")){
+                attachment.setUrl(resobj.getJSONObject("image").getString("friendica_preview_url"));
+                attachment.setPreview_url(resobj.getJSONObject("image").getString("friendica_preview_url"));
+                attachment.setRemote_url(resobj.getJSONObject("image").getString("friendica_preview_url"));
+            }
+            if( resobj.has("media_url"))
+                attachment.setUrl(resobj.get("media_url").toString());
+            try {
+                attachment.setDescription(resobj.get("description").toString());
+            }catch (JSONException ignore){}
+
             try{
                 attachment.setMeta(resobj.get("meta").toString());
             }catch (JSONException ignore){}
@@ -2150,7 +2164,7 @@ public class GNUAPI {
                 attachment.setText_url(resobj.get("text_url").toString());
             }catch (JSONException ignore){}
 
-        } catch (JSONException ignored) {}
+        } catch (JSONException ignored) {ignored.printStackTrace();}
         return attachment;
     }
 

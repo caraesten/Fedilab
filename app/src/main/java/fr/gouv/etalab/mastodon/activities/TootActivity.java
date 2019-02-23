@@ -1614,6 +1614,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             toot_it.setEnabled(true);
             return;
         }
+
         boolean alreadyAdded = false;
         int index = 0;
         for(Attachment attach_: this.attachments){
@@ -1628,7 +1629,6 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             String url = attachment.getPreview_url();
             if (url == null || url.trim().equals(""))
                 url = attachment.getUrl();
-
             final ImageView imageView = new ImageView(getApplicationContext());
             imageView.setId(Integer.parseInt(attachment.getId()));
 
