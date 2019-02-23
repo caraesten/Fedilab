@@ -789,7 +789,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="calls_blocked">door de applicatie geblokkeerde http-aanvragen</string>
     <string name="list_of_blocked_domains">Lijst met geblokkeerde aanvragen</string>
     <string name="submit">Verzenden</string>
-    <string name="data_base_exported">The data base has been exported!</string>
+    <string name="data_base_exported">De database is geëxporteerd!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Via WebTorrent</item>
