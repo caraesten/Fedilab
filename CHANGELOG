@@ -1,5 +1,21 @@
-# 1.74.1
+# 1.75.0
 
+### Added
+- Groups for GNU Social
+- Conversation thread for Friendica & GNU Social
+- Change Peertube video format from other social networks
+
+### Changed
+- Counters are clickable for reblog/fav to handle the click easily
+- Toot button changed for Pleroma/GNU/Pleroma
+- Improvement of the custom share feature
+
+### Fixed
+- Media not working with GNU and Friendica
+- Usernames & names reversed for GNU & Friendica
+
+
+# 1.74.1
 
 ### Added
 - Custom sharing feature. More: https://fedilab.app/wiki/features/custom-sharing/
