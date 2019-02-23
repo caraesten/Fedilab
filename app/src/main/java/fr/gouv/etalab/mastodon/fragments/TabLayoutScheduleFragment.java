@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 
 
 /**
@@ -43,7 +45,8 @@ public class TabLayoutScheduleFragment extends Fragment {
         View inflatedView = inflater.inflate(R.layout.tablayout_toots, container, false);
 
         TabLayout tabLayout = inflatedView.findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots_server)));
+        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots_server)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots_client)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.reblog)));
         final ViewPager viewPager = inflatedView.findViewById(R.id.viewpager);
@@ -86,17 +89,35 @@ public class TabLayoutScheduleFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    DisplayScheduledTootsFragment displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.SERVER);
-                    displayScheduledTootsFragment.setArguments(bundle);
-                    return displayScheduledTootsFragment;
+                    DisplayScheduledTootsFragment displayScheduledTootsFragment;
+                    Bundle bundle;
+                    if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                        displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
+                        bundle = new Bundle();
+                        bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.SERVER);
+                        displayScheduledTootsFragment.setArguments(bundle);
+                        return displayScheduledTootsFragment;
+                    }else {
+                        displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
+                        bundle = new Bundle();
+                        bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.TOOT);
+                        displayScheduledTootsFragment.setArguments(bundle);
+                        return displayScheduledTootsFragment;
+                    }
                 case 1:
-                    displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
-                    bundle = new Bundle();
-                    bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.TOOT);
-                    displayScheduledTootsFragment.setArguments(bundle);
-                    return displayScheduledTootsFragment;
+                    if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                        displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
+                        bundle = new Bundle();
+                        bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.TOOT);
+                        displayScheduledTootsFragment.setArguments(bundle);
+                        return displayScheduledTootsFragment;
+                    }else {
+                        displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
+                        bundle = new Bundle();
+                        bundle.putSerializable("type", DisplayScheduledTootsFragment.typeOfSchedule.BOOST);
+                        displayScheduledTootsFragment.setArguments(bundle);
+                        return displayScheduledTootsFragment;
+                    }
                 case 2:
                     displayScheduledTootsFragment = new DisplayScheduledTootsFragment();
                     bundle = new Bundle();
