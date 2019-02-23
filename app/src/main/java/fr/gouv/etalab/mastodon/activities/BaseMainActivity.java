@@ -2351,10 +2351,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 @Override
                 public void onCompleted(String dbName) {
                     Toasty.success(getApplicationContext(),getString(R.string.data_import_success_simple),Toast.LENGTH_LONG).show();
-                    Intent changeAccount = new Intent(activity, MainActivity.class);
-                    changeAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    activity.finish();
-                    activity.startActivity(changeAccount);
+                    Helper.logoutCurrentUser(BaseMainActivity.this);
                 }
 
                 @Override

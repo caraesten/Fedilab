@@ -14,17 +14,22 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -50,6 +55,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ajts.androidmads.library.ExcelToSQLite;
 import com.elconfidencial.bubbleshowcase.BubbleShowCase;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener;
@@ -73,6 +79,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.InstanceNodeInfo;
 import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
+import fr.gouv.etalab.mastodon.fragments.SettingsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -81,6 +88,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeMaterialSpinnerColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.convertDpToPixel;
+import static fr.gouv.etalab.mastodon.sqlite.Sqlite.DB_NAME;
 
 
 /**
@@ -109,6 +117,7 @@ public class LoginActivity extends BaseActivity {
     private LinearLayout step_login_credential, step_instance;
     private TextView instance_chosen;
     private ImageView info_instance;
+    private final int PICK_IMPORT = 5557;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -774,8 +783,65 @@ public class LoginActivity extends BaseActivity {
             editor.putBoolean(Helper.SET_SECURITY_PROVIDER, item.isChecked());
             editor.apply();
             return false;
+        }else if(id == R.id.action_import_data){
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                if (ContextCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(LoginActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            TootActivity.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    return true;
+                }
+            }
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                    intent.setType("application/vnd.ms-excel");
+                    String[] mimetypes = {"application/vnd.ms-excel"};
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                    startActivityForResult(intent, PICK_IMPORT);
+                }else {
+                    intent.setType("application/vnd.ms-excel");
+                    Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_import));
+                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+                    startActivityForResult(chooserIntent, PICK_IMPORT);
+                }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMPORT && resultCode == Activity.RESULT_OK) {
+            if (data == null || data.getData() == null) {
+                Toasty.error(getApplicationContext(),getString(R.string.toot_select_file_error),Toast.LENGTH_LONG).show();
+                return;
+            }
+            ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DB_NAME, true);
+            String filename = SettingsFragment.getPath(getApplicationContext(), data.getData());
+            assert filename != null;
+            excelToSQLite.importFromFile(filename, new ExcelToSQLite.ImportListener() {
+                @Override
+                public void onStart() {
+                    Toasty.success(getApplicationContext(),getString(R.string.data_import_start),Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onCompleted(String dbName) {
+                    Toasty.success(getApplicationContext(),getString(R.string.data_import_success_simple),Toast.LENGTH_LONG).show();
+                    Helper.logoutCurrentUser(LoginActivity.this);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Toasty.error(getApplicationContext(),getString(R.string.data_import_error_simple),Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
 
