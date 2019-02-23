@@ -20,9 +20,11 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -34,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.Set;
 
 import es.dmoral.toasty.Toasty;
@@ -41,6 +44,7 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.CustomSharingAsyncTask;
 import fr.gouv.etalab.mastodon.client.CustomSharingResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnCustomSharingInterface;
@@ -61,7 +65,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
     private Button set_custom_sharing_save;
     private ImageView pp_actionBar;
     private String title, description, keywords, custom_sharing_url, encodedCustomSharingURL;
-    private String bundle_url, bundle_source, bundle_id, bundle_tags, bundle_content;
+    private String bundle_url, bundle_source, bundle_id, bundle_tags, bundle_content, bundle_thumbnailurl, bundle_creator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,20 +132,17 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
             finish();
             return;
         }
-        bundle_content = status.getContentSpan().toString();
 
-        if (status.getReblog() != null) {
-            bundle_url = status.getReblog().getUrl();
-            bundle_id = status.getReblog().getUri();
-            bundle_source = status.getReblog().getAccount().getAcct();
-            bundle_tags = status.getReblog().getTagsString();
-        } else {
-            bundle_url = status.getUrl();
-            bundle_id = status.getUri();
-            bundle_source = status.getAccount().getAcct();
-            bundle_tags = status.getTagsString();
-        }
-
+        bundle_creator = status.getAccount().getAcct();
+        bundle_url = status.getUrl();
+        bundle_id = status.getUri();
+        bundle_source = status.getAccount().getAcct();
+        bundle_tags = status.getTagsString();
+        bundle_content = formatedContent(status.getContent(), status.getEmojis());
+        if( status.getCard() != null && status.getCard().getImage() != null)
+            bundle_thumbnailurl = status.getCard().getImage();
+        else
+            bundle_thumbnailurl = status.getAccount().getAvatar();
         if (!bundle_source.contains("@")) {
             bundle_source = bundle_source + "@" + account.getInstance();
         }
@@ -151,6 +152,12 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         set_custom_sharing_title.setEllipsize(TextUtils.TruncateAt.END);
         //set text on title, description, and keywords
         String[] lines = bundle_content.split("\n");
+        //Remove tags in title
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            lines[0] = Html.fromHtml( lines[0], Html.FROM_HTML_MODE_LEGACY).toString();
+        else
+            //noinspection deprecation
+            lines[0] = Html.fromHtml(lines[0]).toString();
         String newTitle = "";
         if (lines[0].length() > 60) {
             newTitle = lines[0].substring(0, 60) + '…';
@@ -218,40 +225,58 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                 .authority(server)
                 .appendPath(path);
         Set<String> args = uri.getQueryParameterNames();
-        Boolean paramFound = false;
+        boolean paramFound;
         for (String param_name : args) {
             paramFound = false;
             String param_value = uri.getQueryParameter(param_name);
-            switch(param_value) {
-                case "${url}":
-                    paramFound = true;
-                    builder.appendQueryParameter(param_name, bundle_url);
-                    break;
-                case "${title}":
-                    paramFound = true;
-                    builder.appendQueryParameter(param_name, title);
-                    break;
-                case "${source}":
-                    paramFound = true;
-                    builder.appendQueryParameter(param_name, bundle_source);
-                    break;
-                case "${id}":
-                    paramFound = true;
-                    builder.appendQueryParameter(param_name, bundle_id);
-                    break;
-                case "${description}":
-                    paramFound = true;
-                    builder.appendQueryParameter(param_name, description);
-                    break;
-                case "${keywords}":
-                    paramFound = true;
-                    builder.appendQueryParameter(param_name, keywords);
-                    break;
-            }
+            if(param_value != null)
+                switch(param_value) {
+                    case "${url}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, bundle_url);
+                        break;
+                    case "${title}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, title);
+                        break;
+                    case "${source}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, bundle_source);
+                        break;
+                    case "${id}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, bundle_id);
+                        break;
+                    case "${description}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, description);
+                        break;
+                    case "${keywords}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, keywords);
+                        break;
+
+                }
+            if (bundle_thumbnailurl != null)
+                builder.appendQueryParameter("thumbnailurl", bundle_thumbnailurl);
+            builder.appendQueryParameter("creator", bundle_creator);
             if (!paramFound) {
                 builder.appendQueryParameter(param_name, param_value);
             }
         }
         return builder.build().toString();
+    }
+
+
+    private String formatedContent(String content, List<Emojis> emojis){
+        //Avoid null content
+        if( content == null)
+            return "";
+        if( emojis == null || emojis.size() == 0)
+            return content;
+        for (Emojis emoji : emojis) {
+            content = content.replaceAll(":"+emoji.getShortcode()+":","<img src='"+emoji.getUrl()+"' width=20 alt='"+emoji.getShortcode()+"'/>");
+        }
+        return content;
     }
 }
