@@ -2491,21 +2491,23 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                     initialTootVisibility = 1;
                     break;
             }
-            switch (settingsVisibility){
-                case "public":
-                    ownerTootVisibility = 4;
-                    break;
-                case "unlisted":
-                    ownerTootVisibility  = 3;
-                    break;
-                case "private":
-                    visibility = "private";
-                    ownerTootVisibility = 2;
-                    break;
-                case "direct":
-                    visibility = "direct";
-                    ownerTootVisibility = 1;
-                    break;
+            if (settingsVisibility != null) {
+                switch (settingsVisibility){
+                    case "public":
+                        ownerTootVisibility = 4;
+                        break;
+                    case "unlisted":
+                        ownerTootVisibility  = 3;
+                        break;
+                    case "private":
+                        visibility = "private";
+                        ownerTootVisibility = 2;
+                        break;
+                    case "direct":
+                        visibility = "direct";
+                        ownerTootVisibility = 1;
+                        break;
+                }
             }
             int tootVisibility;
             if( ownerTootVisibility >= initialTootVisibility){
