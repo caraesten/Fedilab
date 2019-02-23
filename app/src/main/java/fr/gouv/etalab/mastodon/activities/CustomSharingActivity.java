@@ -63,7 +63,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
     private Button set_custom_sharing_save;
     private ImageView pp_actionBar;
     private String title, description, keywords, custom_sharing_url, encodedCustomSharingURL;
-    private String bundle_url, bundle_source, bundle_id, bundle_tags, bundle_content;
+    private String bundle_url, bundle_source, bundle_id, bundle_tags, bundle_content, bundle_thumbnailurl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +137,8 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         bundle_source = status.getAccount().getAcct();
         bundle_tags = status.getTagsString();
         bundle_content = formatedContent(status.getContent(), status.getEmojis());
-
+        if( status.getCard() != null && status.getCard().getImage() != null)
+            bundle_thumbnailurl = status.getCard().getImage();
         if (!bundle_source.contains("@")) {
             bundle_source = bundle_source + "@" + account.getInstance();
         }
@@ -246,6 +247,8 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                         break;
 
                 }
+            if (bundle_thumbnailurl != null)
+                builder.appendQueryParameter("thumbnailurl", bundle_thumbnailurl);
             if (!paramFound) {
                 builder.appendQueryParameter(param_name, param_value);
             }
