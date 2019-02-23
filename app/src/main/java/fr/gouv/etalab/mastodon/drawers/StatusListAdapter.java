@@ -1694,6 +1694,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             });
 
 
+            holder.status_favorite_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!status.isFavourited() && confirmFav)
+                        status.setFavAnimated(true);
+                    if (!status.isFavourited() && !confirmFav) {
+                        status.setFavAnimated(true);
+                        notifyStatusChanged(status);
+                    }
+                    CrossActions.doCrossAction(context, type, status, null, (status.isFavourited() || (status.getReblog() != null && status.getReblog().isFavourited())) ? API.StatusAction.UNFAVOURITE : API.StatusAction.FAVOURITE, statusListAdapter, StatusListAdapter.this, true);
+                }
+            });
             holder.spark_button_fav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1707,6 +1719,18 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 }
             });
 
+            holder.status_reblog_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!status.isReblogged() && confirmBoost)
+                        status.setBoostAnimated(true);
+                    if (!status.isReblogged() && !confirmBoost) {
+                        status.setBoostAnimated(true);
+                        notifyStatusChanged(status);
+                    }
+                    CrossActions.doCrossAction(context, type, status, null, (status.isReblogged() || (status.getReblog() != null && status.getReblog().isReblogged())) ? API.StatusAction.UNREBLOG : API.StatusAction.REBLOG, statusListAdapter, StatusListAdapter.this, true);
+                }
+            });
             holder.spark_button_reblog.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
