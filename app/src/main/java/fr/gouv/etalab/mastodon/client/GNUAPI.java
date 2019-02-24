@@ -21,6 +21,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.google.gson.JsonObject;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,6 +79,7 @@ public class GNUAPI {
     private String prefKeyOauthTokenT;
     private APIResponse apiResponse;
     private Error APIError;
+    private String userId;
 
     public enum accountPrivacy {
         PUBLIC,
@@ -89,11 +92,11 @@ public class GNUAPI {
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
         notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
         this.prefKeyOauthTokenT = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
+        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         if( Helper.getLiveInstance(context) != null)
             this.instance = Helper.getLiveInstance(context);
         else {
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
             Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
             if( account == null) {
@@ -1770,7 +1773,7 @@ public class GNUAPI {
      * @param jsonArray JSONArray
      * @return List<Status>
      */
-    private static List<Status> parseStatuses(Context context, JSONArray jsonArray){
+    private List<Status> parseStatuses(Context context, JSONArray jsonArray){
 
         List<Status> statuses = new ArrayList<>();
         try {
@@ -1795,7 +1798,7 @@ public class GNUAPI {
      * @return Status
      */
     @SuppressWarnings("InfiniteRecursion")
-    public static Status parseStatuses(Context context, JSONObject resobj){
+    private Status parseStatuses(Context context, JSONObject resobj){
         Status status = new Status();
         try {
             status.setId(resobj.get("id").toString());
@@ -1883,7 +1886,16 @@ public class GNUAPI {
                 status.setFavourited(false);
             }
             if( resobj.has("friendica_activities") && resobj.getJSONObject("friendica_activities").has("like")){
-                status.setFavourited(resobj.getJSONObject("friendica_activities").getJSONArray("like").length() !=0);
+                status.setFavourited(false);
+                JSONArray jsonArray = resobj.getJSONObject("friendica_activities").getJSONArray("like");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject like = jsonArray.getJSONObject(i);
+                    if( like.getString("id").equals(userId)) {
+                        status.setFavourited(true);
+                        break;
+                    }
+                }
+
             }
             status.setMuted(false);
             status.setPinned(false);
@@ -2188,7 +2200,7 @@ public class GNUAPI {
      * @param resobj JSONObject
      * @return Account
      */
-    public static Notification parseNotificationResponse(Context context, JSONObject resobj){
+    private Notification parseNotificationResponse(Context context, JSONObject resobj){
 
         Notification notification = new Notification();
         try {
