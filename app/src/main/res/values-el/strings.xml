@@ -398,36 +398,36 @@
     <string name="cache_title">Καθάρισμα της μικραποθήκευσης</string>
     <string name="cache_message">Υπάρχουν %1$s δεδομένων στην μικραποθήκευση.\n\nΘα ήθελες να διαγραφούν;</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="toast_cache_clear">Η μικραποθήκευση καθαρίστηκε. Απελευθερώθηκαν %1$s</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Τίτλος</string>
+    <string name="title_hint_custom_sharing">Τίτλος&#8230;</string>
+    <string name="description_header_custom_sharing">Περιγραφή</string>
+    <string name="description_hint_custom_sharing">Περιγραφή&#8230;</string>
+    <string name="keywords_header_custom_sharing">Λέξεις-κλειδιά</string>
+    <string name="keywords_hint_custom_sharing">Λέξεις-κλειδιά&#8230;</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_sync">Συγχρονισμός</string>
+    <string name="action_filter">Κόσκινο</string>
     <string name="owner_cached_toots">Your toots</string>
-    <string name="v_public">Public</string>
-    <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
-    <string name="v_direct">Direct</string>
-    <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
-    <string name="filter_no_result">No matching result found!</string>
+    <string name="v_public">Δημόσια</string>
+    <string name="v_unlisted">Αταξινόμητα</string>
+    <string name="v_private">Ιδιωτικά</string>
+    <string name="v_direct">Απευθείας</string>
+    <string name="v_keywords">Μερικές λέξει-κλειδιά…</string>
+    <string name="show_media">Εμφάνιση των πολυμέσων</string>
+    <string name="show_pinned">Εμφάνιση των καρφιτσωμένων</string>
+    <string name="filter_no_result">Δεν βρέθηκαν αποτελέσματα που να ταιριάζουν.</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
-        <item>No</item>
-        <item>Only</item>
-        <item>Both</item>
+        <item>Καθόλου</item>
+        <item>Μόνο</item>
+        <item>Καί</item>
     </string-array>
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Recorded data</string>
+    <string name="privacy_data_title">Αρχειοθετημένα δεδομένα</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
         These data are strictly confidential and can only be used by the application.
         Deleting the application immediately removes these data.\n
