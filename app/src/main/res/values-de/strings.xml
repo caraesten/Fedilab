@@ -665,7 +665,7 @@ Durch das Löschen der Anwendung werden diese Daten sofort entfernt.\n
     <string name="showcase_instance">In diesem Feld müssen Sie Ihren Instanz-Hostnamen eingeben.\nWenn Sie zum Beispiel ein Konto auf https://mastodon.social erstellt haben\nschreiben Sie einfach <b>mastodon.social</b> (ohne https://)\n
 Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n\n
 ⚠ Die Schaltfläche „Anmelden” funktioniert nur, wenn der Instanzname gültig und die Instanz erreuchbar ist!</string>
-    <string name="showcase_uid">Tragen Sie hier die eMail-Adresse ein, die mit ihrem Mastodon-Account verbunden ist.</string>
+    <string name="showcase_uid">Tragen Sie hier die E-Mail-Adresse ein, die mit ihrem Mastodon-Account verbunden ist.    </string>
     <string name="showcase_pwd">Als letzten Schritt gib bitte dein Passwort ein und klicke auf Anmelden.
     </string>
     <string name="more_information">Mehr Informationen</string>
