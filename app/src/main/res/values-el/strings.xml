@@ -349,23 +349,23 @@
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
-        <item>No</item>
+        <item>Καθόλου</item>
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>Black</item>
+        <item>Σκοτεινό</item>
+        <item>Φωτεινό</item>
+        <item>Μαύρο</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
-        <item>512 Kb</item>
-        <item>1 Mb</item>
-        <item>2 Mb</item>
+        <item>Όχι</item>
+        <item>512 Χιλιομπάιτια</item>
+        <item>1 Μεγαμπάιτιο</item>
+        <item>2 Μεγαμπάιτια</item>
     </string-array>
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">Ορισμός του χρώματος του λεντιού:</string>
     <string-array name="led_colours">
-        <item>Blue</item>
+        <item>Μπλε</item>
         <item>Cyan</item>
         <item>Magenta</item>
         <item>Green</item>
