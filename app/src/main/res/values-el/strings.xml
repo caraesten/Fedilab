@@ -366,12 +366,12 @@
     <string name="set_led_colour">Ορισμός του χρώματος του λεντιού:</string>
     <string-array name="led_colours">
         <item>Μπλε</item>
-        <item>Cyan</item>
-        <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>Γαλάζιο</item>
+        <item>Μελιτζανί Ανοιχτό</item>
+        <item>Πράσινο</item>
+        <item>Κόκκινο</item>
+        <item>Κίτρινο</item>
+        <item>Λευκό</item>
     </string-array>
     <string name="set_title_news">News</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
