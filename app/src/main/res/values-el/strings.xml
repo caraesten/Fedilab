@@ -373,12 +373,12 @@
         <item>Κίτρινο</item>
         <item>Λευκό</item>
     </string-array>
-    <string name="set_title_news">News</string>
+    <string name="set_title_news">Νέα</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
-    <string name="action_follow">Follow</string>
-    <string name="action_unfollow">Unfollow</string>
-    <string name="action_block">Block</string>
-    <string name="action_unblock">Unblock</string>
+    <string name="action_follow">Παρακολούθηση</string>
+    <string name="action_unfollow">Διακοπή παρακολούθησης</string>
+    <string name="action_block">Φραγή</string>
+    <string name="action_unblock">Απόφραξη</string>
     <string name="action_mute">Mute</string>
     <string name="action_no_action">No action</string>
     <string name="action_unmute">Unmute</string>
