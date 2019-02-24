@@ -1882,6 +1882,9 @@ public class GNUAPI {
             }catch (Exception e){
                 status.setFavourited(false);
             }
+            if( resobj.has("friendica_activities") && resobj.getJSONObject("friendica_activities").has("like")){
+                status.setFavourited(resobj.getJSONObject("friendica_activities").getJSONArray("like").length() !=0);
+            }
             status.setMuted(false);
             status.setPinned(false);
             try{
