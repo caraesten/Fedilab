@@ -428,12 +428,12 @@
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Αρχειοθετημένα δεδομένα</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+    <string name="privacy_data">        Στη συσκευή, αποθηκεύονται μόνο βασικές πληροφορίες των λογαριασμών.
+        Αυτά τα δεδομένα είναι αυστηρώς εμπιστευτικά, και μπορούν να χρησιμοποιηθούν μόνο από την εφαρμογή.
+        Η διαγραφή της εφαρμογής άμεσα απομακρύνει και αυτά τα δεδομένα.\n
+        &#9888; Ποτέ δεν αποθηκεύονται η σύνδεση και το συνθηματικό. Χρησιμοποιούνται μόνο κατά την ασφαλή ταυτοποίηση (SSL), με μία υπόσταση.
     </string>
-    <string name="privacy_authorizations_title">Permissions:</string>
+    <string name="privacy_authorizations_title">Δικαιώματα:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
@@ -463,12 +463,12 @@
     <string name="thanks_text_dev">        Thank you to:
     </string>
     <string name="filter_regex">Filter out by regular expressions</string>
-    <string name="search">Search</string>
-    <string name="delete">Delete</string>
+    <string name="search">Αναζήτηση</string>
+    <string name="delete">Διαγραφή</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
     <!-- About lists -->
-    <string name="action_lists">Lists</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+    <string name="action_lists">Κατάστιχα</string>
+    <string name="action_lists_confirm_delete">Σίγουρα, να διαγραφεί αυτό το κατάστιχο, αμετάκλητα;</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
     <string name="action_lists_add_to">Add to list</string>
     <string name="action_lists_remove_from">Remove from list</string>
