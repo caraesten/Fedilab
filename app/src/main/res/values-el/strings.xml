@@ -332,17 +332,17 @@
     <string name="settings_hour_end">Ώρα λήξης</string>
     <string name="embedded_browser">Χρήση του ενσωματωμένου πλοηγού διαδικτύου</string>
     <string name="custom_tabs">Προσαρμοσμένες καρτέλες</string>
-    <string name="use_javascript">Enable Javascript</string>
-    <string name="expand_cw">Automatically expand cw</string>
-    <string name="use_cookies">Allow third-party cookies</string>
+    <string name="use_javascript">Ενεργοποίηση των Σεναρίων της Τζάβα</string>
+    <string name="expand_cw">Αυτόματη επέκταση της προειδοποίησης περιεχομένου</string>
+    <string name="use_cookies">Να επιτρέπονται τα κουλουράκια τρίτων</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Κανονική κατανάλωση της μπαταρίας</item>
+        <item>Μεσαία κατανάλωση της μπαταρίας</item>
+        <item>Χαμηλή κατανάλωση της μπαταρίας</item>
     </string-array>
     <string-array name="settings_menu_tabs">
-        <item>Tabs</item>
+        <item>Καρτέλες</item>
         <item>Menu</item>
         <item>Tabs and menu</item>
     </string-array>
