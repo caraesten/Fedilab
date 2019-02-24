@@ -1260,14 +1260,26 @@ public class GNUAPI {
         HashMap<String, String> params = null;
         switch (statusAction){
             case FAVOURITE:
-                action = "/favorites/create.json";
-                params = new HashMap<>();
-                params.put("id", targetedId);
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    action = "/favorites/create.json";
+                    params = new HashMap<>();
+                    params.put("id", targetedId);
+                }else {
+                    action = "/friendica/activity/like.json";
+                    params = new HashMap<>();
+                    params.put("id", targetedId);
+                }
                 break;
             case UNFAVOURITE:
-                action = "/favorites/destroy.json";
-                params = new HashMap<>();
-                params.put("id", targetedId);
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    action = "/favorites/destroy.json";
+                    params = new HashMap<>();
+                    params.put("id", targetedId);
+                }else {
+                    action = "/friendica/activity/unlike.json";
+                    params = new HashMap<>();
+                    params.put("id", targetedId);
+                }
                 break;
             case REBLOG:
                 action = String.format("/statuses/retweet/%s.json", targetedId);
