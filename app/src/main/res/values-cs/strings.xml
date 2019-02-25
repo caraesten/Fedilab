@@ -739,7 +739,7 @@ Začněte psát první znaky pro návrh.\n\n
     <string name="delete_video_confirmation">Jste si jistý/á, že chcete smazat toto video?</string>
     <string name="no_video_uploaded">Žádné videa ještě nebyli nahrávaly!</string>
     <string name="display_nsfw_videos">Zobrazit NSFW (18+) videa</string>
-    <string name="default_channel_of">Default %s channel</string>
+    <string name="default_channel_of">Výchozí %s kanál</string>
     <string name="no_video_to_display">Žádné videa k zobrazení!</string>
     <string name="add_image_to_favorite">Přidat média k oblíbeným</string>
     <string name="leave_a_comment">Zanechat komentář</string>
@@ -771,7 +771,7 @@ Začněte psát první znaky pro návrh.\n\n
     <string name="export_data">Exportovat data</string>
     <string name="import_data">Importovat data</string>
     <string name="toot_select_import">Vyberte soubor, který chcete importovat</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
+    <string name="toot_select_file_error">Při výběru zálohového souboru nastala chyba!</string>
     <string name="data_import_start">Prosím neukončujte aplikaci počas zpracování. Nemůže to trvat dlouho.</string>
     <string name="add_public_comment">Přidat veřejný komentář</string>
     <string name="send_comment">Odeslat komentář</string>
