@@ -136,15 +136,15 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         bundle_creator = status.getAccount().getAcct();
         bundle_url = status.getUrl();
         bundle_id = status.getUri();
-        bundle_source = status.getAccount().getAcct();
+        bundle_source = status.getAccount().getUrl();
         bundle_tags = status.getTagsString();
         bundle_content = formatedContent(status.getContent(), status.getEmojis());
         if( status.getCard() != null && status.getCard().getImage() != null)
             bundle_thumbnailurl = status.getCard().getImage();
         else
             bundle_thumbnailurl = status.getAccount().getAvatar();
-        if (!bundle_source.contains("@")) {
-            bundle_source = bundle_source + "@" + account.getInstance();
+        if (!bundle_creator.contains("@")) {
+            bundle_creator = bundle_creator + "@" + account.getInstance();
         }
         set_custom_sharing_title = findViewById(R.id.set_custom_sharing_title);
         set_custom_sharing_description = findViewById(R.id.set_custom_sharing_description);
@@ -165,7 +165,14 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
             newTitle = lines[0];
         }
         set_custom_sharing_title.setText(newTitle);
-        set_custom_sharing_description.setText(bundle_content);
+        String newDescription = "";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            newDescription = Html.fromHtml( bundle_content, Html.FROM_HTML_MODE_LEGACY).toString();
+        else
+            //noinspection deprecation
+            newDescription = Html.fromHtml(bundle_content).toString();
+
+        set_custom_sharing_description.setText(newDescription);
         set_custom_sharing_keywords.setText(bundle_tags);
         set_custom_sharing_save = findViewById(R.id.set_custom_sharing_save);
         set_custom_sharing_save.setOnClickListener(new View.OnClickListener() {
@@ -182,8 +189,9 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                 keywords = keywords.replace(double_space,space_only);
                 // Create encodedCustomSharingURL
                 custom_sharing_url = sharedpreferences.getString(Helper.SET_CUSTOM_SHARING_URL,
-                        "http://example.net/add?user=fedilab&url=${url}&title=${title}&source=${source}&id=${id}&description=${description}&keywords=${keywords}");
-                encodedCustomSharingURL = encodeCustomSharingURL(custom_sharing_url, bundle_url, bundle_id, bundle_source, title, description, keywords);
+                        "http://cs.example.net/add?token=Al8skeisle_0Occlkajsdfi&url=${url}&title=${title}" +
+                                "&source=${source}&id=${id}&description=${description}&keywords=${keywords}&creator=${creator}&thumbnailurl=${thumbnailurl}");
+                encodedCustomSharingURL = encodeCustomSharingURL();
                 new CustomSharingAsyncTask(getApplicationContext(), encodedCustomSharingURL, CustomSharingActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
@@ -212,7 +220,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         finish();
     }
 
-    public String encodeCustomSharingURL(String custom_sharing_url, String bundle_url, String bundle_id, String bundle_source, String title, String description, String keywords) {
+    public String encodeCustomSharingURL() {
         Uri uri = Uri.parse(custom_sharing_url);
         String protocol = uri.getScheme();
         String server = uri.getAuthority();
@@ -255,11 +263,15 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                         paramFound = true;
                         builder.appendQueryParameter(param_name, keywords);
                         break;
-
+                    case "${creator}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, bundle_creator);
+                        break;
+                    case "${thumbnailurl}":
+                        paramFound = true;
+                        builder.appendQueryParameter(param_name, bundle_thumbnailurl);
+                        break;
                 }
-            if (bundle_thumbnailurl != null)
-                builder.appendQueryParameter("thumbnailurl", bundle_thumbnailurl);
-            builder.appendQueryParameter("creator", bundle_creator);
             if (!paramFound) {
                 builder.appendQueryParameter(param_name, param_value);
             }

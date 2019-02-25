@@ -2287,7 +2287,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         bCustomSharing.putParcelable("status", status.getReblog());
                                     } else {
                                         bCustomSharing.putParcelable("status", status);
-
                                     }
                                     intentCustomSharing.putExtras(bCustomSharing);
                                     context.startActivity(intentCustomSharing);
