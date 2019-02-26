@@ -18,7 +18,7 @@
     <string name="download_file">%1$s 다운로드</string>
     <string name="download_over">다운로드 완료</string>
     <string name="save_file">Save %1$s</string>
-    <string name="save_over">Media saved</string>
+    <string name="save_over">미디어 저장 완료</string>
     <string name="download_from" formatted="false">File: %1$s</string>
     <string name="password">비밀번호</string>
     <string name="email">이메일</string>
