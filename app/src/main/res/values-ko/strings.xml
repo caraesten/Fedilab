@@ -78,7 +78,7 @@
     <string name="favorites_menu">즐겨찾기</string>
     <string name="communication_menu_title">커뮤니케이션</string>
     <string name="muted_menu">뮤트한 사용자</string>
-    <string name="blocked_menu">블록한 사용자</string>
+    <string name="blocked_menu">차단한 사용자</string>
     <string name="remote_follow_menu">원격 팔로우</string>
     <string name="notifications">알림</string>
     <string name="follow_request">팔로우 요청</string>
@@ -95,47 +95,47 @@
     <string name="failed">실패!</string>
     <string name="scheduled_toots">예약된 툿</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
-    <string name="insert_emoji">Insert emoji</string>
+    <string name="insert_emoji">이모티콘 삽입</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
-    <string name="live_notif">Live notifications</string>
+    <string name="live_notif">실시간 알림</string>
     <!-- Status -->
-    <string name="no_status">No toot to display</string>
-    <string name="fav_added">The toot was added to favourites</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
-    <string name="favourite_add">Add this toot to your favourites?</string>
-    <string name="favourite_remove">Remove this toot from your favourites?</string>
-    <string name="reblog_add">Boost this toot?</string>
-    <string name="reblog_remove">Unboost this toot?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
-    <string name="more_action_1">Mute</string>
-    <string name="more_action_2">Block</string>
-    <string name="more_action_3">Report</string>
-    <string name="more_action_4">Remove</string>
-    <string name="more_action_5">Copy</string>
-    <string name="more_action_6">Share</string>
-    <string name="more_action_7">Mention</string>
-    <string name="more_action_8">Timed mute</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="no_status">표시할 툿이 없습니다</string>
+    <string name="fav_added">툿이 즐겨찾기에 추가되었습니다</string>
+    <string name="fav_removed">툿이 즐겨찾기에서 삭제되었습니다!</string>
+    <string name="reblog_added">툿이 부스트되었습니다!</string>
+    <string name="reblog_removed">툿이 더 이상 부스트되지 않습니다!</string>
+    <string name="reblog_by">%1$s에 의해 부스트되었습니다</string>
+    <string name="favourite_add">이 툿을 즐겨찾기에 추가하시겠습니까?</string>
+    <string name="favourite_remove">이 툿을 즐겨찾기에서 삭제하시겠습니까?</string>
+    <string name="reblog_add">이 툿을 부스트하시겠습니까?</string>
+    <string name="reblog_remove">이 툿의 부스트를 해제하시겠습니까?</string>
+    <string name="pin_add">이 툿을 고정하시겠습니까?</string>
+    <string name="pin_remove">이 툿의 고정을 해제하시겠습니까?</string>
+    <string name="more_action_1">뮤트</string>
+    <string name="more_action_2">차단</string>
+    <string name="more_action_3">신고</string>
+    <string name="more_action_4">삭제</string>
+    <string name="more_action_5">복사</string>
+    <string name="more_action_6">공유</string>
+    <string name="more_action_7">멘션</string>
+    <string name="more_action_8">시한 뮤트</string>
+    <string name="more_action_9">삭제하고 다시 쓰기</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
-        <item>Block this account?</item>
-        <item>Report this toot?</item>
-        <item>Block this domain?</item>
+        <item>이 계정을 뮤트하시겠습니까?</item>
+        <item>이 계정을 차단하시겠습니까?</item>
+        <item>이 툿을 신고하시겠습니까?</item>
+        <item>이 도메인을 차단하시겠습니까?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
+        <item>알림</item>
         <item>Silent</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>이 툿을 삭제하시겠습니까?</item>
+        <item>이 툿을 삭제하고 다시 쓰시겠습니까?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="other">%d replies</item>
+        <item quantity="other">답글 %d개</item>
     </plurals>
     <string name="set_display_bookmark_button">Display the bookmark button</string>
     <string name="bookmarks">Bookmarks</string>
