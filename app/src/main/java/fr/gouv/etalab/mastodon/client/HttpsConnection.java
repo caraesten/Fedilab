@@ -1258,7 +1258,7 @@ public class HttpsConnection {
 
                         ((TootActivity) context).runOnUiThread(new Runnable() {
                             public void run() {
-                                listener.onRetrieveAttachment(attachment, null);
+                                listener.onRetrieveAttachment(attachment, fileName,null);
                             }
                         });
                     } catch (Exception e) {
@@ -1276,7 +1276,7 @@ public class HttpsConnection {
                             } catch (Exception ignored) { }
                         ((TootActivity) context).runOnUiThread(new Runnable() {
                             public void run() {
-                                listener.onRetrieveAttachment(null, error);
+                                listener.onRetrieveAttachment(null, fileName, error);
                             }
                         });
 
@@ -1420,7 +1420,7 @@ public class HttpsConnection {
 
                         ((TootActivity)context).runOnUiThread(new Runnable() {
                             public void run() {
-                                listener.onRetrieveAttachment(attachment, null);
+                                listener.onRetrieveAttachment(attachment, fileName,null);
                             }});
                     }catch (Exception e) {
                         ((TootActivity)context).runOnUiThread(new Runnable() {
@@ -1435,7 +1435,7 @@ public class HttpsConnection {
                             } catch (Exception ignored) { }
                         ((TootActivity)context).runOnUiThread(new Runnable() {
                             public void run() {
-                                listener.onRetrieveAttachment(null, error);
+                                listener.onRetrieveAttachment(null, fileName,error);
                             }});
 
                     }
