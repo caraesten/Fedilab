@@ -82,18 +82,18 @@
     <string name="remote_follow_menu">원격 팔로우</string>
     <string name="notifications">알림</string>
     <string name="follow_request">팔로우 요청</string>
-    <string name="optimization">Optimization</string>
+    <string name="optimization">최적화</string>
     <string name="settings">설정</string>
-    <string name="profile">Profile</string>
-    <string name="make_a_choice">What do you want to do?</string>
-    <string name="delete_account_title">Delete an account</string>
-    <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
-    <string name="send_email">Send an email</string>
-    <string name="choose_file">Please select a file</string>
-    <string name="choose_file_error">No file explorer found!</string>
-    <string name="click_to_change">Click on the path to change it</string>
-    <string name="failed">Failed!</string>
-    <string name="scheduled_toots">Scheduled toots</string>
+    <string name="profile">프로필</string>
+    <string name="make_a_choice">무엇을 하겠습니까?</string>
+    <string name="delete_account_title">계정 삭제</string>
+    <string name="delete_account_message" formatted="false">응용 프로그램에서 계정 %1$s를 삭제하시겠습니까?</string>
+    <string name="send_email">이메일 보내기</string>
+    <string name="choose_file">파일을 선택해주세요</string>
+    <string name="choose_file_error">파일 탐색기를 찾을 수 없습니다!</string>
+    <string name="click_to_change">경로를 바꾸려면 누르세요</string>
+    <string name="failed">실패!</string>
+    <string name="scheduled_toots">예약된 툿</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
     <string name="insert_emoji">Insert emoji</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
