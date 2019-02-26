@@ -15,17 +15,17 @@
     <string name="no">아니</string>
     <string name="cancel">취소</string>
     <string name="download">다운로드</string>
-    <string name="download_file">%1$s 다운로드</string>
+    <string name="download_file">다운로드 %1$s</string>
     <string name="download_over">다운로드 완료</string>
     <string name="save_file">Save %1$s</string>
     <string name="save_over">미디어 저장 완료</string>
     <string name="download_from" formatted="false">File: %1$s</string>
     <string name="password">비밀번호</string>
     <string name="email">이메일</string>
-    <string name="accounts">Accounts</string>
-    <string name="toots">Toots</string>
-    <string name="tags">Tags</string>
-    <string name="token">Token</string>
+    <string name="accounts">계정</string>
+    <string name="toots">툿</string>
+    <string name="tags">태그</string>
+    <string name="token">토큰</string>
     <string name="save">Save</string>
     <string name="restore">Restore</string>
     <string name="two_factor_authentification">Two-step authentication?</string>
@@ -44,8 +44,8 @@
     <string name="camera">Camera</string>
     <string name="speech_prompt">Please, say something</string>
     <string name="speech_not_supported">Sorry! Your device does not support the voice input!</string>
-    <string name="delete_all">Delete all</string>
-    <string name="translate_toot">Translate this toot.</string>
+    <string name="delete_all">일괄 삭제</string>
+    <string name="translate_toot">이 툿을 번역합니다.</string>
     <string name="schedule">Schedule</string>
     <string name="text_size">Text and icon sizes</string>
     <string name="text_size_change">Change the current text size:</string>
