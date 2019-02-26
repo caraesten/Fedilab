@@ -183,7 +183,7 @@ public class API {
                     nodeInfos.add(nodeInfo);
                 }
                 if( nodeInfos.size() > 0){
-                    NodeInfo nodeInfo = nodeInfos.get(nodeInfos.size()-1);
+                    NodeInfo nodeInfo = nodeInfos.get(0);
                     response = new HttpsConnection(context).get(nodeInfo.getHref(), 30, null, null);
                     JSONObject resobj = new JSONObject(response);
                     JSONObject jsonObject = resobj.getJSONObject("software");
