@@ -703,7 +703,7 @@ public class SettingsFragment extends Fragment {
 
         String custom_sharing_url = sharedpreferences.getString(Helper.SET_CUSTOM_SHARING_URL,"");
         if (custom_sharing_url.equals("")) {
-            custom_sharing_url = "http://cs.example.net/add?token=umVe1zurZk47ihElSOQcBG05KUSA2v-GSet4_fFnJ4M&url=${url}&title=${title}&source=${source}&id=${id}&description=${description}&keywords=${keywords}";
+            custom_sharing_url = "http://cs.example.net/add?token=umVe1zurZk47ihElSOQcBG05KUSA2v-GSet4_fFnJ4M&url=${url}&title=${title}&source=${source}&id=${id}&description=${description}&keywords=${keywords}&creator=${creator}&thumbnailurl=${thumbnailurl}";
         }
         edit_custom_sharing_url.setText(custom_sharing_url);
 

@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -44,6 +45,7 @@ import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.CustomSharingAsyncTask;
 import fr.gouv.etalab.mastodon.client.CustomSharingResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
+import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -139,10 +141,15 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         bundle_source = status.getAccount().getUrl();
         bundle_tags = status.getTagsString();
         bundle_content = formatedContent(status.getContent(), status.getEmojis());
-        if( status.getCard() != null && status.getCard().getImage() != null)
+        if( status.getCard() != null && status.getCard().getImage() != null) {
             bundle_thumbnailurl = status.getCard().getImage();
-        else
+        } else if (status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0) {
+            ArrayList<Attachment> mediaAttachments = status.getMedia_attachments();
+            Attachment firstAttachment = mediaAttachments.get(0);
+            bundle_thumbnailurl = firstAttachment.getPreview_url();
+        } else {
             bundle_thumbnailurl = status.getAccount().getAvatar();
+        }
         if (!bundle_creator.contains("@")) {
             bundle_creator = bundle_creator + "@" + account.getInstance();
         }
