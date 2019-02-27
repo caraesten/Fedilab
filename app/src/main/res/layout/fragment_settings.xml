@@ -15,9 +15,9 @@
     You should have received a copy of the GNU General Public License along with Mastalab; if not,
     see <http://www.gnu.org/licenses>.
 -->
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:TagsEditText="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipeContainer"
     android:paddingLeft="@dimen/drawer_padding"
     android:paddingRight="@dimen/drawer_padding"
@@ -523,6 +523,30 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+
+        <!-- Featured tags -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:labelFor="@+id/set_featured_tags"
+                android:text="@string/featured_hashtags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <mabbas007.tagsedittext.TagsEditText
+                android:id="@+id/set_featured_tags"
+                android:layout_width="match_parent"
+                android:minLines="3"
+                android:lines="3"
+                android:layout_height="wrap_content"
+                TagsEditText:allowSpaceInTag="true"
+                TagsEditText:tagsCloseImageRight="@drawable/tag_close"
+                TagsEditText:tagsTextColor="?colorAccent"
+                TagsEditText:tagsTextSize="@dimen/defaultTagsTextSize"
+                TagsEditText:tagsCloseImagePadding="@dimen/defaultTagsCloseImagePadding"
+                android:inputType="textMultiLine" />
+        </LinearLayout>
 
         <!-- TRUNCATE LONG TOOTS -->
         <TextView

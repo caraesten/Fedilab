@@ -54,6 +54,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.collect.ImmutableSet;
 import com.tonyodev.fetch2.Download;
 import com.tonyodev.fetch2.Error;
 import com.tonyodev.fetch2.Fetch;
@@ -72,16 +73,20 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.DomainBlockDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import mabbas007.tagsedittext.TagsEditText;
 
 import static android.app.Activity.RESULT_OK;
 import static fr.gouv.etalab.mastodon.helper.Helper.BACK_TO_SETTINGS;
@@ -186,6 +191,39 @@ public class SettingsFragment extends Fragment {
 
             }
         });
+
+        TagsEditText set_featured_tags = rootView.findViewById(R.id.set_featured_tags);
+        if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+            Set<String> featuredTagsSet = sharedpreferences.getStringSet(Helper.SET_FEATURED_TAGS, null);
+
+
+            List<String> tags = new ArrayList<>();
+            if( featuredTagsSet != null){
+                tags = new ArrayList<>(featuredTagsSet);
+            }
+            String[] tagsString = tags.toArray(new String[tags.size()]);
+            set_featured_tags.setTags(tagsString);
+
+            set_featured_tags.setTagsListener(new TagsEditText.TagsEditListener() {
+                @Override
+                public void onTagsChanged(Collection<String> collection) {
+                    Set<String> set = ImmutableSet.copyOf(collection);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putStringSet(Helper.SET_FEATURED_TAGS, set);
+                    editor.apply();
+                }
+
+                @Override
+                public void onEditingFinished() {
+
+                }
+            });
+        }else{
+            set_featured_tags.setVisibility(View.GONE);
+        }
+
+
+
 
         Button update_tracking_domains = rootView.findViewById(R.id.update_tracking_domains);
         update_tracking_domains.setOnClickListener(new View.OnClickListener() {
