@@ -71,16 +71,11 @@
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
             android:text="@string/description_header_custom_sharing" />
-        <EditText
+        <TextView
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/set_custom_sharing_description"
-            android:minLines="4"
-            android:lines="7"
-            android:inputType="textMultiLine"
-            android:maxLines="7"
-            android:hint="@string/description_hint_custom_sharing"
              />
 
 

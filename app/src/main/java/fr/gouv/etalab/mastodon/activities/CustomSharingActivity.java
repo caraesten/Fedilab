@@ -63,11 +63,16 @@ import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
 public class CustomSharingActivity extends BaseActivity implements OnCustomSharingInterface {
 
-    private EditText set_custom_sharing_title, set_custom_sharing_description, set_custom_sharing_keywords;
+    private EditText set_custom_sharing_title, set_custom_sharing_keywords;
     private Button set_custom_sharing_save;
     private ImageView pp_actionBar;
-    private String title, description, keywords, custom_sharing_url, encodedCustomSharingURL;
-    private String bundle_url, bundle_source, bundle_id, bundle_tags, bundle_content, bundle_thumbnailurl, bundle_creator;
+    private String title, keywords, custom_sharing_url, encodedCustomSharingURL;
+    private String bundle_url;
+    private String bundle_source;
+    private String bundle_id;
+    private String bundle_content;
+    private String bundle_thumbnailurl;
+    private String bundle_creator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,7 +144,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
         bundle_url = status.getUrl();
         bundle_id = status.getUri();
         bundle_source = status.getAccount().getUrl();
-        bundle_tags = status.getTagsString();
+        String bundle_tags = status.getTagsString();
         bundle_content = formatedContent(status.getContent(), status.getEmojis());
         if( status.getCard() != null && status.getCard().getImage() != null) {
             bundle_thumbnailurl = status.getCard().getImage();
@@ -154,7 +159,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
             bundle_creator = bundle_creator + "@" + account.getInstance();
         }
         set_custom_sharing_title = findViewById(R.id.set_custom_sharing_title);
-        set_custom_sharing_description = findViewById(R.id.set_custom_sharing_description);
+        TextView set_custom_sharing_description = findViewById(R.id.set_custom_sharing_description);
         set_custom_sharing_keywords = findViewById(R.id.set_custom_sharing_keywords);
         set_custom_sharing_title.setEllipsize(TextUtils.TruncateAt.END);
         //set text on title, description, and keywords
@@ -187,7 +192,6 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
             public void onClick(View v) {
                 // obtain title, description, keywords
                 title = set_custom_sharing_title.getText().toString();
-                description = set_custom_sharing_description.getText().toString();
                 keywords = set_custom_sharing_keywords.getText().toString();
                 CharSequence comma_only = ",";
                 CharSequence space_only = " ";
@@ -264,7 +268,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                         break;
                     case "${description}":
                         paramFound = true;
-                        builder.appendQueryParameter(param_name, description);
+                        builder.appendQueryParameter(param_name, bundle_content);
                         break;
                     case "${keywords}":
                         paramFound = true;
