@@ -397,8 +397,8 @@
     <string name="set_resize_picture">Změnit velikost obrázků</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push oznámení</string>
-    <string name="settings_popup_message">Prosím potvrďte push oznámení, která chcete dostávat.
-Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
+    <string name="settings_popup_message">        Prosím potvrďte push oznámení, která chcete dostávat.
+        Toto nastavení můžete změnit později v Nastavení (záložka Oznámení).
     </string>
     <string name="settings_popup_timeline">Pro nepřečtené tooty v domovské časové ose?</string>
     <string name="settings_popup_notification">Pro nepřečtená oznámení?</string>
