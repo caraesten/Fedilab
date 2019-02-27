@@ -212,8 +212,8 @@
     <string name="remove_scheduled">刪除排定的嘟文？</string>
     <string name="media_count">媒體：%d</string>
     <string name="toot_scheduled">嘟文已經安排好了！</string>
-    <string name="toot_scheduled_date">嘟文排定的時間必須大於目前的小時！</string>
-    <string name="warning_battery">已啟用電池保護程式！它可能無法正常運作。</string>
+    <string name="toot_scheduled_date">嘟文排定的時間必須大於目前的時間！</string>
+    <string name="warning_battery">已啟用電池保護！它可能無法正常運作。</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">靜音時間應該大於一分鐘。</string>
     <string name="timed_mute_date">%1$s 已經靜音到 %2$s。\n 您可以從他／她的個人資料頁面解除靜音該帳號。</string>
@@ -296,10 +296,10 @@
     <string name="set_auto_add_media_url">在嘟文中新增媒體的 URL</string>
     <string name="settings_title_notifications">管理通知</string>
     <string name="set_notif_follow">當有人關注您時通知您</string>
-    <string name="set_notif_follow_ask">當某人請求關注您時通知</string>
-    <string name="set_notif_follow_share">當某人加速您的狀態時通知</string>
+    <string name="set_notif_follow_ask">當有人請求關注您時通知</string>
+    <string name="set_notif_follow_share">當有人加速您的狀態時通知</string>
     <string name="set_notif_follow_add">當有人收藏您的狀態時通知您</string>
-    <string name="set_notif_follow_mention">當某人提及您時通知</string>
+    <string name="set_notif_follow_mention">當有人提及您時通知</string>
     <string name="set_share_validation">在加速前顯示確認對話框</string>
     <string name="set_share_validation_fav">在新增至最愛前顯示確認對話框</string>
     <string name="settings_title_more_options">進階設定</string>
