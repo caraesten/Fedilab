@@ -35,8 +35,8 @@
     <string name="instance_example">Instance: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Nyní používáte účet %1$s</string>
     <string name="add_account">Přidat účet</string>
-    <string name="clipboard">Obsah zprávy byl zkopírován do schránky</string>
-    <string name="clipboard_url">Adresa tootu byla zkopírován do schránky</string>
+    <string name="clipboard">Obsah tootu byl zkopírován do schránky</string>
+    <string name="clipboard_url">Adresa tootu byla zkopírována do schránky</string>
     <string name="change">Změnit</string>
     <string name="choose_picture">Vybrat obrázek…</string>
     <string name="clear">Vyčistit</string>
@@ -45,7 +45,7 @@
     <string name="speech_prompt">Řekněte něco, prosím</string>
     <string name="speech_not_supported">Litujeme! Vaše zařízení nepodporuje hlasový vstup!</string>
     <string name="delete_all">Smazat všechno</string>
-    <string name="translate_toot">Přeložit tuto zprávu.</string>
+    <string name="translate_toot">Přeložit tento toot.</string>
     <string name="schedule">Naplánovat</string>
     <string name="text_size">Velikost textu a ikony</string>
     <string name="text_size_change">Změnit aktualní velikost textu:</string>
@@ -97,9 +97,9 @@
     <string name="disclaimer_full">Níže uvedené informace mohou popisovat uživatelský profil neúplně.</string>
     <string name="insert_emoji">Vložit smajlík</string>
     <string name="no_emoji">Aplikace prozatím nenačetla uživatelské smajlíky.</string>
-    <string name="live_notif">Živé notifikace</string>
+    <string name="live_notif">Živá oznámení</string>
     <!-- Status -->
-    <string name="no_status">Žádné toots k zobrazení</string>
+    <string name="no_status">Žádné tooty k zobrazení</string>
     <string name="fav_added">Toot byl přidán k oblíbeným</string>
     <string name="fav_removed">Toot byl odstraněn z oblíbených!</string>
     <string name="reblog_added">Toot byl boostnut!</string>
@@ -123,7 +123,7 @@
     <string-array name="more_action_confirm">
         <item>Ztlumit tento účet?</item>
         <item>Blokovat tento účet?</item>
-        <item>Nahlásit tento účet?</item>
+        <item>Nahlásit tento toot?</item>
         <item>Blokovat tuto doménu?</item>
     </string-array>
     <string-array name="action_notification">
@@ -145,8 +145,8 @@
     <string name="bookmark_add">Přidat do záložek</string>
     <string name="bookmark_remove">Odstranit záložku</string>
     <string name="bookmarks_empty">Záložky jsou prázdné</string>
-    <string name="status_bookmarked">Status byl přidán do záložek!</string>
-    <string name="status_unbookmarked">Status byl odstraněn ze záložek!</string>
+    <string name="status_bookmarked">Toot byl přidán do záložek!</string>
+    <string name="status_unbookmarked">Toot byl odstraněn ze záložek!</string>
     <!-- Date -->
     <string name="date_seconds">%d s</string>
     <string name="date_minutes">%d m</string>
@@ -168,12 +168,12 @@
     <string name="toot_delete_media">Smazat médium?</string>
     <string name="toot_error_no_content">Váš toot je prázdný!</string>
     <string name="toot_visibility_tilte">Viditelnost tootu</string>
-    <string name="toots_visibility_tilte">Defaultní viditelnost tootu: </string>
+    <string name="toots_visibility_tilte">Defaultní viditelnost tootů: </string>
     <string name="toot_sent">Toot byl odeslán!</string>
     <string name="toot_reply_content_title">Odpovídáte na tento toot:</string>
     <string name="toot_sensitive">Citlivý obsah?</string>
     <string-array name="toot_visibility">
-        <item>Posílat na veřejnou časovou osu</item>
+        <item>Posílat na veřejné časové osy</item>
         <item>Neposílat na veřejnou časovou osu</item>
         <item>Posílat pouze sledujícím</item>
         <item>Posílat pouze zmíněným uživatelům</item>
@@ -193,7 +193,7 @@
     <string name="about_license">Licence: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Zdrojový kód: </string>
-    <string name="about_yandex">Přeložit toots:</string>
+    <string name="about_yandex">Překládat tooty:</string>
     <string name="about_thekinrar">Prohledat instance:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Návrh ikon:</string>
@@ -203,14 +203,14 @@
     <!-- Accounts -->
     <string name="no_accounts">Žádný účet k zobrazení</string>
     <string name="no_follow_request">Není požadavek ke sledování</string>
-    <string name="status_cnt">Toots \n %1$s</string>
+    <string name="status_cnt">Tooty \n %1$s</string>
     <string name="following_cnt">Sleduji \n %1$s</string>
     <string name="followers_cnt">Sledující \n %1$s</string>
     <string name="pins_cnt">Připnuto \n %d</string>
     <string name="authorize">Povolit</string>
     <string name="reject">Odmítnout</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">Žádné naplánované toots k zobrazení!</string>
+    <string name="no_scheduled_toots">Žádné naplánované tooty k zobrazení!</string>
     <string name="no_scheduled_toots_indications">Napište toot a zvolte <b>Plánovat</b> z horního menu.</string>
     <string name="remove_scheduled">Odstranit naplánovaný toot?</string>
     <string name="media_count">Média: %d</string>
@@ -224,21 +224,21 @@
     <!-- Notifications -->
     <string name="no_notifications">Žádné upozornění k zobrazení</string>
     <string name="notif_mention">vás zmínil</string>
-    <string name="notif_reblog">boostnul/a váš příspěvek</string>
-    <string name="notif_favourite">se líbí váš status</string>
+    <string name="notif_reblog">boostnul/a váš toot</string>
+    <string name="notif_favourite">si oblíbil/a váš toot</string>
     <string name="notif_follow">vás sleduje</string>
     <string name="notif_pouet">Nový toot od %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and další upozornění</item>
         <item quantity="few">and %d další upozornění</item>
         <item quantity="many">and %d dalších upozornění</item>
-        <item quantity="other">and %d dalších upozornění</item>
+        <item quantity="other">and %d dalších oznámení</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">a další toot k zobrazení</item>
         <item quantity="few">a %d další toots k zobrazení</item>
         <item quantity="many">a %d dalších toots k zobrazení</item>
-        <item quantity="other">a %d dalších toots k zobrazení</item>
+        <item quantity="other">a %d dalších tootů k zobrazení</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d se líbí</item>
@@ -283,11 +283,11 @@
     <string name="toast_error_translate">Při překladu došlo k chybě!</string>
     <string name="toast_toot_saved">Koncept uložen!</string>
     <string name="toast_error_char_limit">Jste si jisti, že tato instance dovoluje tento počet znaků? Obvyklá hodnota je 500 znaků.</string>
-    <string name="toast_visibility_changed">Viditelnost toots byla změněna pro účet %1$s</string>
+    <string name="toast_visibility_changed">Viditelnost tootů byla změněna pro účet %1$s</string>
     <string name="toast_empty_search">Jméno instance a zobrazené jméno nemohou být prázdné!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimalizace nahrávání dat</string>
-    <string name="set_toots_page">Počet toots pro jedno nahrání</string>
+    <string name="set_toots_page">Počet tootů pro jedno nahrání</string>
     <string name="set_accounts_page">Počet účtů pro jedno nahrání</string>
     <string name="set_notifications_page">Počet upozronění pro jedno nahrání</string>
     <string name="set_attachment_always">Vždy</string>
@@ -305,15 +305,15 @@
     <string name="set_folder_title">Cesta: </string>
     <string name="set_auto_store_toot">Ukládat koncepty automaticky</string>
     <string name="set_bubble_counter">Zobrazit počítadla</string>
-    <string name="set_auto_add_media_url">Přidat URL média v tootu</string>
+    <string name="set_auto_add_media_url">Přidat URL médií v tootu</string>
     <string name="settings_title_notifications">Spravovat upozornění</string>
     <string name="set_notif_follow">Oznámení v případě sledování</string>
     <string name="set_notif_follow_ask">Oznámení v případě žádosti o sledování</string>
     <string name="set_notif_follow_share">Oznámení v případě boostnutí vašeho tootu</string>
-    <string name="set_notif_follow_add">Oznámení v případě uložení vašeho tootu mezi oblíbené</string>
+    <string name="set_notif_follow_add">Oznámení v případě oblíbení vašeho tootu</string>
     <string name="set_notif_follow_mention">Oznámení v případě, že vás někdo zmíní</string>
     <string name="set_share_validation">Zobrazit potvrzení před boostnutí</string>
-    <string name="set_share_validation_fav">Zobrazit potvrzení před uložením mezi oblíbené</string>
+    <string name="set_share_validation_fav">Zobrazit potvrzení před oblíbením</string>
     <string name="settings_title_more_options">Rozšířené nastavení</string>
     <string name="set_wifi_only">Oznámení pouze na WIFI</string>
     <string name="set_notify">Oznámení?</string>
@@ -328,7 +328,7 @@
     <string name="set_save_changes">Uložit změny</string>
     <string name="set_header_picture_overlay">Vyberte obrázek do hlavičky</string>
     <string name="set_fit_preview">Přizpůsobit náhled obrázků</string>
-    <string name="set_automatically_split_toot">Automaticky rozdělit toots nad 500 znaků do odpovědí</string>
+    <string name="set_automatically_split_toot">Automaticky rozdělit tooty nad 500 znaků do odpovědí</string>
     <string name="note_no_space">Bylo dosaženo 160ti znakového limitu!</string>
     <string name="username_no_space">Bylo dosaženo 30ti znakového limitu!</string>
     <string name="settings_title_hour">Časové okno pro oznámení:</string>
@@ -382,7 +382,7 @@
         <item>Bílá</item>
     </string-array>
     <string name="set_title_news">Novinky</string>
-    <string name="set_notification_news">Upozorňovat na nové toots na domácí časové ose</string>
+    <string name="set_notification_news">Upozorňovat na nové tooty v domovské časové ose</string>
     <string name="action_follow">Následovat</string>
     <string name="action_unfollow">Přestat sledovat</string>
     <string name="action_block">Blokovat</string>
@@ -400,7 +400,7 @@
     <string name="settings_popup_message">Prosím potvrďte push oznámení, která chcete dostávat.
 Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     </string>
-    <string name="settings_popup_timeline">Pro nepřečtené toots na domací časové ose?</string>
+    <string name="settings_popup_timeline">Pro nepřečtené tooty v domovské časové ose?</string>
     <string name="settings_popup_notification">Pro nepřečtená upozornění?</string>
     <!-- CACHE -->
     <string name="cache_title">Vyprázdnit cache</string>
@@ -417,7 +417,7 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Synchronizovat</string>
     <string name="action_filter">Filtrovat</string>
-    <string name="owner_cached_toots">Vaše toots</string>
+    <string name="owner_cached_toots">Vaše tooty</string>
     <string name="v_public">Veřejné</string>
     <string name="v_unlisted">Skryté</string>
     <string name="v_private">Soukromé</string>
@@ -426,14 +426,14 @@ Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     <string name="show_media">Zobrazit média</string>
     <string name="show_pinned">Zobrazit připnuté</string>
     <string name="filter_no_result">Nebyly nalezeny odpovídající výsledky!</string>
-    <string name="data_backup_toots">Načíst toots pro %1$s</string>
-    <string name="data_backup_success">%1$s nové toots byly importovány</string>
+    <string name="data_backup_toots">Zálohovat tooty pro uživatele %1$s</string>
+    <string name="data_backup_success">%1$s nových tootů bylo importováno</string>
     <string-array name="filter_select">
         <item>Ne</item>
         <item>Pouze</item>
         <item>Oba</item>
     </string-array>
-    <string name="owner_cached_toots_empty">V databázi nebyly nalezeny žádné toots. Prosím použijte synchronizační tlačítko v menu pro obnovení.</string>
+    <string name="owner_cached_toots_empty">V databázi nebyly nalezeny žádné tooty. Prosím použijte synchronizační tlačítko v menu pro obnovení.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Zaznamenaná data</string>
     <string name="privacy_data">V zařízení jsou uloženy pouze základní informace o účtech.
@@ -450,7 +450,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     </string>
     <string name="privacy_API_authorizations_title">API oprávnění:</string>
     <string name="privacy_API_authorizations">        - <b>Čtení</b>: Čtení dat.\n
-        - <b>Zápis</b>: Zveřejňování statusů a nahrávání médií ke statusům.\n
+        - <b>Zápis</b>: Zveřejňování tootů a nahrávání médií k tootům.\n
         - <b>Sledování</b>: Sledování, zrušení sledování, blokování, odblokování.\n\n
         <b>&#9888; Tyto akce jsou vykonány pouze na vyžádání uživatele.</b>
     </string>
@@ -461,21 +461,21 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
         - <b>Android-Job</b>: Správa služeb\n
         - <b>PhotoView</b>: Správa obrázků\n
     </string>
-    <string name="privacy_API_yandex_title">Překlad toots</string>
+    <string name="privacy_API_yandex_title">Překlad tootů</string>
     <string name="privacy_API_yandex_authorizations">        Aplikace umožňuje překlad tootů do jazyka zařízení s použitím služby Yandex API.\n
         Yandex má svá vlastní pravidla pro soukromí uživatelských dat zde: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text">        Poděkování Stéphane za logo.
+    <string name="thanks_text">        Děkujeme Stéphane za logo.
     </string>
     <string name="thanks_text_dev">Poděkování:    </string>
     <string name="filter_regex">Filtrování regulárními výrazy</string>
     <string name="search">Hledat</string>
     <string name="delete">Odstranit</string>
-    <string name="fetch_more_toots">Nahrát více toots…</string>
+    <string name="fetch_more_toots">Nahrát více tootů…</string>
     <!-- About lists -->
     <string name="action_lists">Seznamy</string>
     <string name="action_lists_confirm_delete">Jsi si jist/a, že chceš trvale odstranit tento seznam?</string>
-    <string name="action_lists_empty_content">Tento seznam je zatím prázdný. Jakmile členové seznamu zvěřejní nové statusy, objeví se zde.</string>
+    <string name="action_lists_empty_content">Tento seznam je zatím prázdný. Jakmile členové seznamu zvěřejní nové tooty, objeví se zde.</string>
     <string name="action_lists_add_to">Přidat do seznamu</string>
     <string name="action_lists_remove_from">Odebrat ze seznamu</string>
     <string name="action_lists_create">Přidat seznam</string>
@@ -498,10 +498,10 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="media_ready">Média byla nahrána. Klikněte pro zobrazení.</string>
     <string name="data_export_start">Tato akce může trvat dlouho. Po dokončení obdržíte oznámení.</string>
     <string name="data_export_running">Zpracovávám, prosím čekejte…</string>
-    <string name="data_export">Export statusů</string>
-    <string name="data_export_toots">Export statusů %1$s</string>
-    <string name="data_export_success">%1$s toots z %2$s bylo exportováno.</string>
-    <string name="data_export_error">Něco se pokazilo během exportu dat pro %1$s</string>
+    <string name="data_export">Exportovat tooty</string>
+    <string name="data_export_toots">Exportovat tooty pro uživatele %1$s</string>
+    <string name="data_export_success">%1$s tootů z %2$s bylo exportováno.</string>
+    <string name="data_export_error">Něco se pokazilo během exportu dat pro uživatele %1$s</string>
     <string name="data_export_error_simple">Něco se pokazilo během exportovaní dat!</string>
     <string name="data_import_success_simple">Data byla importována!</string>
     <string name="data_import_error_simple">Něco se pokazilo během nahrávaní dat!</string>
@@ -549,9 +549,9 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="context_public">Veřejná časová osa</string>
     <string name="context_notification">Oznámení</string>
     <string name="context_conversation">Konverzace</string>
-    <string name="filter_keyword_explanations">Velikost písmen ani varování ohledně obsahu nebudou brána v potaz</string>
+    <string name="filter_keyword_explanations">Velikost písmen ani varování o obsahu nebudou brána v potaz</string>
     <string name="context_drop">Zahodit místo skrytí</string>
-    <string name="context_drop_explanations">Filtrované toots zmizí nezvratně i v případě, že filtr je později odstraněn</string>
+    <string name="context_drop_explanations">Filtrované tooty zmizí nezvratně i v případě, že je filtr později odstraněn</string>
     <string name="context_whole_word_explanations">V případě, že klíčové slovo nebo fráze je pouze alfanumerické, filtr se uplatní pouze pokud odpovídá celému slovu</string>
     <string name="context_whole_word">Celé slovo</string>
     <string name="filter_context">Kontext filtru</string>
@@ -581,10 +581,10 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="set_display_follow_instance">Zobrazit tlačítko pro sledování instancí</string>
     <string name="channel_notif_follow">Nový sledující</string>
     <string name="channel_notif_boost">Nový boost</string>
-    <string name="channel_notif_fav">Nový oblíbený</string>
+    <string name="channel_notif_fav">Nové oblíbení</string>
     <string name="channel_notif_mention">Nová zmínka</string>
     <string name="channel_notif_toot">Nový toot</string>
-    <string name="channel_notif_backup">Záloha toots</string>
+    <string name="channel_notif_backup">Záloha tootů</string>
     <string name="channel_notif_media">Stahování médií</string>
     <string name="set_notif_sound">Výchozí zvuk oznámení</string>
     <string name="select_sound">Vybrat tón</string>
@@ -599,7 +599,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="block_domain">Zablokovat doménu</string>
     <string name="toast_block_domain">Doména je blokována</string>
     <string name="toast_unblock_domain">Doména není nadále blokována!</string>
-    <string name="retrieve_remote_status">Načítám vzdálený status</string>
+    <string name="retrieve_remote_status">Načítám vzdálený toot</string>
     <string name="comment">Komentovat</string>
     <string name="peertube_instance">Peertube instance</string>
     <string name="set_display_direct">Zobrazit časovou osu se soukromými zprávami</string>
@@ -610,20 +610,20 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="add_remote_instance">Přidat instanci</string>
     <string name="comment_no_allowed_peertube">Pro toto vide nejsou povoleny komentáře!</string>
     <string name="pickup_resolution">Vyberte rozlišení</string>
-    <string name="peertube_favorites">Peertube oblíbené</string>
+    <string name="peertube_favorites">Oblíbené na PeerTube</string>
     <string name="bookmark_add_peertube">Video bylo přidáno do záložek!</string>
     <string name="bookmark_remove_peertube">Video bylo odstraněno ze záložek!</string>
-    <string name="bookmark_peertube_empty">V oblíbených nemíte žádná Peertube videa!</string>
+    <string name="bookmark_peertube_empty">V oblíbených nemíte žádná videa na PeerTube!</string>
     <string name="channel">Kanál</string>
     <string name="no_peertube_channels">Žádný Peertube kanál</string>
     <string name="no_peertube_instances">Žádná Peertube instance</string>
-    <string name="no_mastodon_instances">Žádné Mastodon instance</string>
+    <string name="no_mastodon_instances">Žádné instance Mastodonu</string>
     <string name="no_lists">Žádné seznamy</string>
     <string name="videos">Videa</string>
     <string name="channels">Kanály</string>
     <string name="set_display_emoji">Použít Emoji One</string>
     <string name="information">Informace</string>
-    <string name="set_display_card">Zobrazit náhled ve všech toots</string>
+    <string name="set_display_card">Zobrazit náhled ve všech tootech</string>
     <string name="thanks_text_ux">Nový UX/UI návrhář</string>
     <string name="set_old_direct_timeline">Použít přímou časovou osu před verzí Mastodon 2.6</string>
     <string name="set_display_video_preview">Zobrazit náhled videa</string>
@@ -635,8 +635,8 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="settings_title_battery">Optimalizace spotřeby energie</string>
     <string name="set_change_locale">Změna jazyka</string>
     <string name="default_language">Základní jazyk</string>
-    <string name="truncate_long_toots">Ořezat dlouhé toots</string>
-    <string name="set_truncate_toot">Ořezat toots delší než \'x\' řádků. 0 znamená vypnuto.</string>
+    <string name="truncate_long_toots">Ořezat dlouhé tooty</string>
+    <string name="set_truncate_toot">Ořezat tooty delší než \'x\' řádků. 0 znamená vypnuto.</string>
     <string name="display_toot_truncate">Zobrazit více</string>
     <string name="hide_toot_truncate">Zobrazit méně</string>
     <string name="manage_tags">Spravovat štítky</string>
@@ -678,10 +678,11 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
         <item>1 den</item>
         <item>1 týden</item>
     </string-array>
-    <string name="showcase_instance">V tomto políčku vyplňte jméno vaší instance.\nPokud jste například vytvořili váš účet na https://mastodon.social\nvyplňte pouze <b>mastodon.social</b>  (bez https://)\n
-Začněte psát první znaky pro návrh.\n\n
-⚠ Login tlačítko bude fungovat pouze v případě, že jméno instance je platné a instance běží!    </string>
-    <string name="showcase_uid">        V tomto poli vyplňte email, který je svázaný s vaším Mastodon účtem.
+    <string name="showcase_instance">        V tomto políčku vyplňte jméno vaší instance.\nPokud jste například vytvořili váš účet na https://mastodon.social\nvyplňte pouze <b>mastodon.social</b>  (bez https://)\n
+        Začněte psát první znaky pro návrh.\n\n
+        ⚠ Tlačítko přihlášení bude fungovat pouze v případě, že je jméno instance platné a instance běží!
+    </string>
+    <string name="showcase_uid">        V tomto poli vyplňte email, který je svázaný s vaším účtem Mastodon.
     </string>
     <string name="showcase_pwd">Jako poslední krok vložte své heslo a klepňete na Login.    </string>
     <string name="more_information">Více informací</string>
@@ -696,7 +697,7 @@ Začněte psát první znaky pro návrh.\n\n
     <string name="about_crowdin">O Crowdin</string>
     <string name="bot">Bot</string>
     <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
+    <string name="mastodon_instance">Instance Mastodon</string>
     <string name="no_pixelfed_instance">Žádné Pixelfed instance</string>
     <string name="any_tags">Kterýkoliv</string>
     <string name="all_tags">Všechny</string>
