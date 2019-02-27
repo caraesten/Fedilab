@@ -361,7 +361,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
                 break;
             case GNU_DM:
                 gnuAPI = new GNUAPI(this.contextReference.get());
-                gnuAPI.getDirectTimeline(max_id);
+                apiResponse = gnuAPI.getDirectTimeline(max_id);
                 break;
         }
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {

@@ -432,8 +432,6 @@ public abstract class BaseMainActivity extends BaseActivity
             else
                 typePosition.put(0, RetrieveFeedsAsyncTask.Type.GNU_NOTIFICATION);
             int i = 2;
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
-                display_direct = false;
             if( display_direct) {
                 tabLayout.addTab(tabDirect);
                 tabPosition.put("direct",i);
@@ -588,7 +586,7 @@ public abstract class BaseMainActivity extends BaseActivity
             });
 
             countPage = 2;
-            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true) && social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_DIRECT, true))
                 countPage++;
             if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true))
                 countPage++;

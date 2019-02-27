@@ -438,6 +438,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         //hide loaders
         mainLoader.setVisibility(View.GONE);
         nextElementLoader.setVisibility(View.GONE);
+
         //handle other API error but discards 404 - error which can often happen due to toots which have been deleted
         if( this.peertubes == null ||  this.statuses == null || apiResponse == null || (apiResponse.getError() != null && apiResponse.getError().getStatusCode() != 404) ){
             if( apiResponse == null)
@@ -448,6 +449,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             flag_loading = false;
             return;
         }
+
         //For remote Peertube remote instances
         if(instanceType.equals("PEERTUBE")){
             int previousPosition = this.peertubes.size();
@@ -588,7 +590,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     statusListAdapter.notifyItemInserted(0);
                 }
 
-            } else if (type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL|| type == RetrieveFeedsAsyncTask.Type.DIRECT) {
+            } else if (type == RetrieveFeedsAsyncTask.Type.PUBLIC || type == RetrieveFeedsAsyncTask.Type.LOCAL|| type == RetrieveFeedsAsyncTask.Type.DIRECT|| type == RetrieveFeedsAsyncTask.Type.GNU_DM) {
 
                 status.setNew(false);
                 statuses.add(0, status);
@@ -657,7 +659,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());
             }
-        }else if (type == RetrieveFeedsAsyncTask.Type.DIRECT){
+        }else if (type == RetrieveFeedsAsyncTask.Type.DIRECT|| type == RetrieveFeedsAsyncTask.Type.GNU_DM){
             if( getUserVisibleHint() ){
                 if( statuses != null && statuses.size() > 0)
                     retrieveMissingToots(statuses.get(0).getId());

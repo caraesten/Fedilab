@@ -21,8 +21,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.google.gson.JsonObject;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -620,7 +618,7 @@ public class GNUAPI {
         List<Conversation> conversations = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/conversations"), 60, params, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl("/direct_messages.json"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             conversations = parseConversations(new JSONArray(response));
@@ -1808,12 +1806,18 @@ public class GNUAPI {
                 status.setUri(resobj.get("id").toString());
             }
             status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-            status.setIn_reply_to_id(resobj.get("in_reply_to_status_id").toString());
-            status.setIn_reply_to_account_id(resobj.get("in_reply_to_user_id").toString());
+            if( resobj.has("in_reply_to_status_id"))
+             status.setIn_reply_to_id(resobj.get("in_reply_to_status_id").toString());
+            if( resobj.has("in_reply_to_user_id"))
+                status.setIn_reply_to_account_id(resobj.get("in_reply_to_user_id").toString());
             status.setSensitive(false);
             status.setSpoiler_text(null);
-            status.setVisibility("public");
-            status.setLanguage(resobj.isNull("geo")?null:resobj.getString("geo"));
+            if( !resobj.has("sender"))
+                status.setVisibility("public");
+            else
+                status.setVisibility("direct");
+            if( resobj.has("geo"))
+                status.setLanguage(resobj.isNull("geo")?null:resobj.getString("geo"));
             if( resobj.has("external_url"))
                 status.setUrl(resobj.get("external_url").toString());
             //Retrieves attachments
@@ -1864,8 +1868,14 @@ public class GNUAPI {
                 application = new Application();
             }
             status.setApplication(application);
-            status.setAccount(parseAccountResponse(context, resobj.getJSONObject("user")));
-            status.setContent(resobj.get("statusnet_html").toString());
+            if( resobj.has("user"))
+                status.setAccount(parseAccountResponse(context, resobj.getJSONObject("user")));
+            else if( resobj.has("sender"))
+                status.setAccount(parseAccountResponse(context, resobj.getJSONObject("sender")));
+            if( resobj.has("statusnet_html"))
+                status.setContent(resobj.get("statusnet_html").toString());
+            else if( resobj.has("text"))
+                status.setContent(resobj.get("text").toString());
             if(resobj.has("fave_num"))
                 status.setFavourites_count(Integer.valueOf(resobj.get("fave_num").toString()));
             else
