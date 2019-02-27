@@ -319,7 +319,7 @@
     <string name="set_automatically_split_toot">自動分離超過 500 個字元的嘟文到回覆中</string>
     <string name="note_no_space">您已經到達允許的 160 個字元！</string>
     <string name="username_no_space">您已經到達允許的 30 個字元！</string>
-    <string name="settings_title_hour">通知的時間帶：</string>
+    <string name="settings_title_hour">啟用通知的時間帶：</string>
     <string name="settings_time_from">介於</string>
     <string name="settings_time_to">以及</string>
     <string name="settings_time_greater">時間必須大於 %1$s</string>
