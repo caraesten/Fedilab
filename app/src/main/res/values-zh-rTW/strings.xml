@@ -132,7 +132,7 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>移除此嘟文？</item>
-        <item>刪除 &amp; 將此嘟文重新變為草稿</item>
+        <item>刪除 &amp; 將此嘟文重新變為草稿？</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="other">%d 回覆</item>
@@ -190,7 +190,7 @@
     <string name="about_license">授權條款：</string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">原始碼：</string>
-    <string name="about_yandex">嘟文的翻譯：</string>
+    <string name="about_yandex">嘟文的翻譯引擎：</string>
     <string name="about_thekinrar">搜尋實體：</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">圖示設計者：</string>
@@ -221,7 +221,7 @@
     <!-- Notifications -->
     <string name="no_notifications">沒有要顯示的通知</string>
     <string name="notif_mention">提及您</string>
-    <string name="notif_reblog">更新您的狀態</string>
+    <string name="notif_reblog">加速了您的狀態</string>
     <string name="notif_favourite">收藏您的狀態</string>
     <string name="notif_follow">關注了您</string>
     <string name="notif_pouet">來自 %1$s 的新嘟文</string>
@@ -279,7 +279,7 @@
     <string name="set_accounts_page">每次載入的帳號數量</string>
     <string name="set_notifications_page">每次載入的通知數量</string>
     <string name="set_attachment_always">總是</string>
-    <string name="set_attachment_wifi">WIFI</string>
+    <string name="set_attachment_wifi">Wi-Fi</string>
     <string name="set_attachment_ask">詢問</string>
     <string name="set_attachment_action">載入媒體</string>
     <string name="load_attachment">載入圖片</string>
@@ -295,15 +295,15 @@
     <string name="set_bubble_counter">顯示計數器</string>
     <string name="set_auto_add_media_url">在嘟文中新增媒體的 URL</string>
     <string name="settings_title_notifications">管理通知</string>
-    <string name="set_notif_follow">當有人關注您時通知</string>
+    <string name="set_notif_follow">當有人關注您時通知您</string>
     <string name="set_notif_follow_ask">當某人請求關注您時通知</string>
     <string name="set_notif_follow_share">當某人加速您的狀態時通知</string>
-    <string name="set_notif_follow_add">當某人收藏您的狀態時通知您</string>
+    <string name="set_notif_follow_add">當有人收藏您的狀態時通知您</string>
     <string name="set_notif_follow_mention">當某人提及您時通知</string>
     <string name="set_share_validation">在加速前顯示確認對話框</string>
     <string name="set_share_validation_fav">在新增至最愛前顯示確認對話框</string>
     <string name="settings_title_more_options">進階設定</string>
-    <string name="set_wifi_only">僅在 WIFI 中通知</string>
+    <string name="set_wifi_only">僅在使用 Wi-Fi 時才啟用通知</string>
     <string name="set_notify">通知？</string>
     <string name="set_notif_silent">靜音通知</string>
     <string name="set_night_mode">夜間模式</string>
