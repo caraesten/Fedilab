@@ -99,7 +99,7 @@
     <string name="no_emoji">應用程式目前不能收集自訂表情符號。</string>
     <string name="live_notif">即時通知</string>
     <!-- Status -->
-    <string name="no_status">沒有嘟文可以顯示</string>
+    <string name="no_status">沒有嘟文</string>
     <string name="fav_added">嘟文被加入最愛</string>
     <string name="fav_removed">嘟文已從最愛中移除！</string>
     <string name="reblog_added">嘟文被加速！</string>
@@ -141,7 +141,7 @@
     <string name="bookmarks">書籤</string>
     <string name="bookmark_add">新增至書籤</string>
     <string name="bookmark_remove">移除書籤</string>
-    <string name="bookmarks_empty">沒有書籤可以顯示</string>
+    <string name="bookmarks_empty">沒有書籤</string>
     <string name="status_bookmarked">已將狀態加入書籤中！</string>
     <string name="status_unbookmarked">狀態已從書籤中移除！</string>
     <!-- Date -->
@@ -198,7 +198,7 @@
     <!-- Conversation -->
     <string name="conversation">對話</string>
     <!-- Accounts -->
-    <string name="no_accounts">沒有要顯示的帳號</string>
+    <string name="no_accounts">沒有帳號</string>
     <string name="no_follow_request">無關注請求</string>
     <string name="status_cnt">嘟文\n%1$s</string>
     <string name="following_cnt">正在關注\n %1$s</string>
@@ -207,7 +207,7 @@
     <string name="authorize">授權</string>
     <string name="reject">拒絕</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">沒有已排定的嘟文可供顯示！</string>
+    <string name="no_scheduled_toots">沒有已排定的嘟文！</string>
     <string name="no_scheduled_toots_indications">編寫嘟文，然後在頂端的選單中選擇<b>排程</b>。</string>
     <string name="remove_scheduled">刪除排定的嘟文？</string>
     <string name="media_count">媒體：%d</string>
@@ -219,7 +219,7 @@
     <string name="timed_mute_date">%1$s 已經靜音到 %2$s。\n 您可以從他／她的個人資料頁面解除靜音該帳號。</string>
     <string name="timed_mute_profile">%1$s 被靜音到 %2$s。\n 點選這裡以取消靜音此帳號。</string>
     <!-- Notifications -->
-    <string name="no_notifications">沒有要顯示的通知</string>
+    <string name="no_notifications">沒有通知</string>
     <string name="notif_mention">提及您</string>
     <string name="notif_reblog">加速了您的狀態</string>
     <string name="notif_favourite">收藏您的狀態</string>
@@ -424,18 +424,18 @@
     <string name="owner_cached_toots_empty">在資料庫中找不到嘟文。請從選單中使用同步按鈕以擷取它們。</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">已記錄的資料</string>
-    <string name="privacy_data">        只有帳號中的基本資訊才會儲存在裝置上。
-        這些資料嚴格保密，僅能由應用程式使用。
-        刪除應用程式將會立即移除這些資料。\n
-        &#9888; 不會儲存密碼與登入資訊。它們僅會在有安全驗證 (SSL) 的實體上使用。
+    <string name="privacy_data">        只有帳號中的基本資訊才會儲存在裝置上。\n
+這些資料嚴格保密，僅能由應用程式使用。\n
+刪除應用程式將會立即移除這些資料。\n
+&#9888; 不會儲存密碼與登入資訊。它們僅會在有安全驗證 (SSL) 的實體上使用。
     </string>
     <string name="privacy_authorizations_title">權限：</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>：用於偵測裝置是否連線至 WIFI 網路。\n
-        - <b>INTERNET</b>：用於查詢實體。\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>：用於儲存媒體或將應用程式移動到記憶卡上。\n
-        - <b>READ_EXTERNAL_STORAGE</b>：用於將媒體新增到嘟文中。\n
-        - <b>BOOT_COMPLETED</b>：用於啟動通知服務。\n
-        - <b>WAKE_LOCK</b>：在通知服務期間使用。
+- <b>INTERNET</b>：用於查詢實體。\n
+- <b>WRITE_EXTERNAL_STORAGE</b>：用於儲存媒體或將應用程式移動到記憶卡上。\n
+- <b>READ_EXTERNAL_STORAGE</b>：用於將媒體新增到嘟文中。\n
+- <b>BOOT_COMPLETED</b>：用於啟動通知服務。\n
+- <b>WAKE_LOCK</b>：在通知服務期間使用。
     </string>
     <string name="privacy_API_authorizations_title">API 權限：</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>：讀取資料。\n
@@ -501,7 +501,7 @@
     <string name="proxy_enable">啟用代理伺服器？</string>
     <string name="poxy_host">主機</string>
     <string name="poxy_port">埠</string>
-    <string name="poxy_login">登入</string>
+    <string name="poxy_login">使用者名稱</string>
     <string name="poxy_password">密碼</string>
     <string name="set_theme">主題：</string>
     <string name="set_compact_mode">精簡模式</string>
@@ -635,10 +635,10 @@
     <string name="tags_renamed">標籤已變更！</string>
     <string name="tags_deleted">標籤已刪除！</string>
     <string name="set_display_art">顯示 MastoArt 時間軸</string>
-    <string name="schedule_boost">排定加速</string>
+    <string name="schedule_boost">排程加速</string>
     <string name="boost_scheduled">加速已排定！</string>
-    <string name="no_scheduled_boosts">沒有排定的加速可以顯示！</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[開啟嘟文選單然後選擇<b>排定加速</b>。]]></string>
+    <string name="no_scheduled_boosts">沒有排定的加速！</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[開啟嘟文選單然後選擇<b>排程加速</b>。]]></string>
     <string name="art_menu">藝術時間軸</string>
     <string name="open_menu">開啟選單</string>
     <string name="app_logo">應用程式圖示</string>
@@ -732,7 +732,7 @@
     <string name="no_video_uploaded">未有已上傳的影片！</string>
     <string name="display_nsfw_videos">顯示 NSFW 影片</string>
     <string name="default_channel_of">預設的 %s 頻道</string>
-    <string name="no_video_to_display">沒有可以顯示的影片</string>
+    <string name="no_video_to_display">沒有影片</string>
     <string name="add_image_to_favorite">新增媒體到收藏</string>
     <string name="leave_a_comment">留下評論</string>
     <string name="share">分享</string>
@@ -774,7 +774,7 @@
     <string name="action_logout_account">登出帳號</string>
     <string name="set_optimize_loading">最佳化載入時間</string>
     <string name="all">全部</string>
-    <string name="about_opencollective">支援應用程式</string>
+    <string name="about_opencollective">幫助改進應用程式</string>
     <string name="more_about_opencollective">Open Collective 讓群組可以快速設定集合，募集資金並以透明的方式管理。</string>
     <string name="copy_link">複製連結</string>
     <string name="connect_instance">連線</string>
