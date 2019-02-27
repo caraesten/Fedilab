@@ -289,7 +289,7 @@
     <string name="settings_title_optimisation">Optimalizace nahrávání dat</string>
     <string name="set_toots_page">Počet tootů pro jedno nahrání</string>
     <string name="set_accounts_page">Počet účtů pro jedno nahrání</string>
-    <string name="set_notifications_page">Počet upozronění pro jedno nahrání</string>
+    <string name="set_notifications_page">Počet oznámení pro jedno nahrání</string>
     <string name="set_attachment_always">Vždy</string>
     <string name="set_attachment_wifi">WIFI</string>
     <string name="set_attachment_ask">Zeptat se</string>
@@ -306,7 +306,7 @@
     <string name="set_auto_store_toot">Ukládat koncepty automaticky</string>
     <string name="set_bubble_counter">Zobrazit počítadla</string>
     <string name="set_auto_add_media_url">Přidat URL médií v tootu</string>
-    <string name="settings_title_notifications">Spravovat upozornění</string>
+    <string name="settings_title_notifications">Spravovat oznámení</string>
     <string name="set_notif_follow">Oznámení v případě sledování</string>
     <string name="set_notif_follow_ask">Oznámení v případě žádosti o sledování</string>
     <string name="set_notif_follow_share">Oznámení v případě boostnutí vašeho tootu</string>
@@ -401,7 +401,7 @@
 Toto nastavení můžete změnit později v Nastavení (záložka Upozornění).
     </string>
     <string name="settings_popup_timeline">Pro nepřečtené tooty v domovské časové ose?</string>
-    <string name="settings_popup_notification">Pro nepřečtená upozornění?</string>
+    <string name="settings_popup_notification">Pro nepřečtená oznámení?</string>
     <!-- CACHE -->
     <string name="cache_title">Vyprázdnit cache</string>
     <string name="cache_message">V cache je %1$s dat.\n\nChcete je odstranit?</string>
@@ -444,9 +444,9 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Použito k detekci WiFi připojení.\n
         - <b>INTERNET</b>: Použito ke komunikaci s instancí.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Použito k ukládání médií nebo k přesunu aplikace na SD kartu.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Použito pro přidání medií k toot.\n
-        - <b>BOOT_COMPLETED</b>: Použito k aktivaci notifikační služby.\n
-        - <b>WAKE_LOCK</b>: Použito během notifikační služby.
+        - <b>READ_EXTERNAL_STORAGE</b>: Použito pro přidání medií k tootům.\n
+        - <b>BOOT_COMPLETED</b>: Použito k aktivaci oznamovací služby.\n
+        - <b>WAKE_LOCK</b>: Použito během oznamovací služby.
     </string>
     <string name="privacy_API_authorizations_title">API oprávnění:</string>
     <string name="privacy_API_authorizations">        - <b>Čtení</b>: Čtení dat.\n
