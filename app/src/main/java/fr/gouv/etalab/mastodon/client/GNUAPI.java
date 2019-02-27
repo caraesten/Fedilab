@@ -544,11 +544,18 @@ public class GNUAPI {
      * @param statusId  Id of the status
      * @return List<Status>
      */
-    public fr.gouv.etalab.mastodon.client.Entities.Context getStatusContext(String statusId) {
+    public fr.gouv.etalab.mastodon.client.Entities.Context getStatusContext(String statusId, boolean directtimeline) {
         fr.gouv.etalab.mastodon.client.Entities.Context statusContext = new fr.gouv.etalab.mastodon.client.Entities.Context();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/statusnet/conversation/%s.json", statusId)), 60, null, prefKeyOauthTokenT);
+            String response;
+            if( !directtimeline)
+                response = httpsConnection.get(getAbsoluteUrl(String.format("/statusnet/conversation/%s.json", statusId)), 60, null, prefKeyOauthTokenT);
+            else {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("uri", statusId);
+                response = httpsConnection.get(getAbsoluteUrl("/direct_messages/conversation.json"), 60, params, prefKeyOauthTokenT);
+            }
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses != null && statuses.size() > 0){
                 ArrayList<Status> descendants = new ArrayList<>();
@@ -1831,7 +1838,10 @@ public class GNUAPI {
             try {
                 status.setConversationId(resobj.get("statusnet_conversation_id").toString());
             }catch (Exception ignored){
-                status.setConversationId(resobj.get("id").toString());
+                if( resobj.has("friendica_parent_uri"))
+                    status.setConversationId(resobj.get("friendica_parent_uri").toString());
+                else
+                    status.setConversationId(resobj.get("id").toString());
             }
             //Retrieves mentions
             List<Mention> mentions = new ArrayList<>();

@@ -257,7 +257,8 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
             finish();
         if( conversationId != null)
             statusIdToFetch = conversationId;
-        new RetrieveContextAsyncTask(getApplicationContext(), expanded, statusIdToFetch, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        new RetrieveContextAsyncTask(getApplicationContext(),expanded, detailsStatus.getVisibility().equals("direct"), statusIdToFetch, ShowConversationActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         switch (theme){
             case Helper.THEME_LIGHT:
                 swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
