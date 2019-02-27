@@ -196,7 +196,7 @@ public class CustomSharingActivity extends BaseActivity implements OnCustomShari
                 keywords = keywords.replace(double_space,space_only);
                 // Create encodedCustomSharingURL
                 custom_sharing_url = sharedpreferences.getString(Helper.SET_CUSTOM_SHARING_URL,
-                        "http://cs.example.net/add?token=Al8skeisle_0Occlkajsdfi&url=${url}&title=${title}" +
+                        "http://example.net/add?token=YOUR_TOKEN&url=${url}&title=${title}" +
                                 "&source=${source}&id=${id}&description=${description}&keywords=${keywords}&creator=${creator}&thumbnailurl=${thumbnailurl}");
                 encodedCustomSharingURL = encodeCustomSharingURL();
                 new CustomSharingAsyncTask(getApplicationContext(), encodedCustomSharingURL, CustomSharingActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
