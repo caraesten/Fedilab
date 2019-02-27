@@ -156,7 +156,7 @@
     <string name="toot_cw_placeholder">Varování</string>
     <string name="toot_placeholder">Co se vám honí hlavou?</string>
     <string name="toot_it">TOOTNOUT!</string>
-    <string name="queet_it">QUEET!</string>
+    <string name="queet_it">QUEETNOUT!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Napsat toot</string>
     <string name="toot_title_reply">Odpovědět na toot</string>
@@ -223,11 +223,11 @@
     <string name="timed_mute_profile">%1$s je ztlumen do %2$s. \n Klikněte zde pro zrušení ztišení.</string>
     <!-- Notifications -->
     <string name="no_notifications">Žádné upozornění k zobrazení</string>
-    <string name="notif_mention">vás zmínil</string>
+    <string name="notif_mention">vás zmínil/a</string>
     <string name="notif_reblog">boostnul/a váš toot</string>
     <string name="notif_favourite">si oblíbil/a váš toot</string>
     <string name="notif_follow">vás sleduje</string>
-    <string name="notif_pouet">Nový toot od %1$s</string>
+    <string name="notif_pouet">Nový toot od uživatele %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and další upozornění</item>
         <item quantity="few">and %d další upozornění</item>
@@ -450,7 +450,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     </string>
     <string name="privacy_API_authorizations_title">API oprávnění:</string>
     <string name="privacy_API_authorizations">        - <b>Čtení</b>: Čtení dat.\n
-        - <b>Zápis</b>: Zveřejňování tootů a nahrávání médií k tootům.\n
+        - <b>Zápis</b>: Zveřejňování příspěvků a nahrávání médií k příspěvkům.\n
         - <b>Sledování</b>: Sledování, zrušení sledování, blokování, odblokování.\n\n
         <b>&#9888; Tyto akce jsou vykonány pouze na vyžádání uživatele.</b>
     </string>
@@ -471,7 +471,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="filter_regex">Filtrování regulárními výrazy</string>
     <string name="search">Hledat</string>
     <string name="delete">Odstranit</string>
-    <string name="fetch_more_toots">Nahrát více tootů…</string>
+    <string name="fetch_more_toots">Načíst více tootů…</string>
     <!-- About lists -->
     <string name="action_lists">Seznamy</string>
     <string name="action_lists_confirm_delete">Jsi si jist/a, že chceš trvale odstranit tento seznam?</string>
@@ -545,7 +545,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="filters">Filtry</string>
     <string name="action_filters_empty_content">Žádné filtry k zobrazení. Můžete vytvořit nový filtr klepnutím na tlačítko \"+\".</string>
     <string name="filter_keyword">Klíčové slovo nebo fráze</string>
-    <string name="context_home">Lokální časová osa</string>
+    <string name="context_home">Domovská časová osa</string>
     <string name="context_public">Veřejná časová osa</string>
     <string name="context_notification">Oznámení</string>
     <string name="context_conversation">Konverzace</string>
@@ -594,7 +594,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="no_blocked_domain">Žádné blokované domény!</string>
     <string name="unblock_domain_confirm">Odblokovat doménu</string>
     <string name="unblock_domain_confirm_message">Určitě chcete odblokovat %s?</string>
-    <string name="block_domain_confirm_message">Určitě chcete zablokovat %s?</string>
+    <string name="block_domain_confirm_message">Určitě chcete zablokovat %s?\n\nJiž z této domény neuvidíte ve všech veřejných časových osách ani v oznámeních žádný obsah. Vaši sledující z této domény budou odstraněni.</string>
     <string name="blocked_domains">Blokované domény</string>
     <string name="block_domain">Zablokovat doménu</string>
     <string name="toast_block_domain">Doména je blokována</string>
@@ -750,9 +750,9 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="device_schedule">Ze zařízení</string>
     <string name="server_schedule">Ze serveru</string>
     <string name="toots_server">Tooty (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
+    <string name="toots_client">Tooty (zařízení)</string>
     <string name="modify">Upravit</string>
-    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
+    <string name="set_display_content_after_fetch_more">Zobrazit nové tooty nad tlačítkem „Načíst více“</string>
     <string name="settings_category_label_confirmations">Potvrzení</string>
     <string name="settings_category_label_timelines">Časové osi</string>
     <string name="settings_category_label_notification">Oznamovací služba</string>
@@ -760,15 +760,15 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="settings_category_label_hiddencontent">Skrytý obsah</string>
     <string name="settings_category_label_composing">Psaní</string>
     <string name="contact">Kontakty</string>
-    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
-    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
-    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
-    <string name="peertube_video_published"><![CDATA[Your video <b>%1$s</b> has been published]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
-    <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
-    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
+    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> okomentoval/a vaše video <b>%2$s</b>]]></string>
+    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> sleduje váš kanál <b>%2$s</b>]]></string>
+    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> sleduje váš účet]]></string>
+    <string name="peertube_video_published"><![CDATA[Vaše video <b>%1$s</b> bylo publikováno]]></string>
+    <string name="peertube_video_import_success"><![CDATA[Import vašeho videa <b>%1$s</b> uspěl]]></string>
+    <string name="peertube_video_import_error"><![CDATA[Import vašeho videa <b>%1$s</b> selhal]]></string>
+    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> publikoval/a nové video: <b>%2$s</b>]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[Vaše video <b>%1$s</b> bylo přidáno na černou listinu]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Vaše video <b>%1$s</b> bylo odstraněno z černé listiny]]></string>
     <string name="export_data">Exportovat data</string>
     <string name="import_data">Importovat data</string>
     <string name="toot_select_import">Vyberte soubor, který chcete importovat</string>
@@ -784,23 +784,23 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="set_optimize_loading">Optimalizovat čas načítání</string>
     <string name="all">Vše</string>
     <string name="about_opencollective">Podpoř aplikaci</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
+    <string name="more_about_opencollective">Open Collective umožňuje skupinám rychle založit kolektiv, získávat finanční prostředky a spravovat je transparentně.</string>
     <string name="copy_link">Kopírovat odkaz</string>
     <string name="connect_instance">Připojit k</string>
-    <string name="set_normal">Nomal</string>
-    <string name="set_compact">Compact</string>
+    <string name="set_normal">Normální</string>
+    <string name="set_compact">Kompaktní</string>
     <string name="set_console">Konzola</string>
     <string name="set_mode">Nastavit režim zobrazení</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
+    <string name="set_security_provider">Spravit poskytovatele bezpečnosti</string>
     <string name="update_tracking_domains">Aktualizovat sledování domén</string>
     <string name="tracking_db_updated">Základ sledovaných dat byl aktualizován!</string>
     <string name="calls_blocked">volání http je blokováné aplikací</string>
-    <string name="list_of_blocked_domains">List of blocked calls</string>
+    <string name="list_of_blocked_domains">Seznam blokovaných domén</string>
     <string name="submit">Odeslat</string>
-    <string name="data_base_exported">The data base has been exported!</string>
+    <string name="data_base_exported">Databáze byla exportována!</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Webview</item>
+        <item>Webové zobrazení</item>
         <item>Přímé streamovaní</item>
     </string-array>
 </resources>
