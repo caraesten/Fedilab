@@ -23,7 +23,7 @@
     <string name="password">Heslo</string>
     <string name="email">Email</string>
     <string name="accounts">Účty</string>
-    <string name="toots">Toots</string>
+    <string name="toots">Tooty</string>
     <string name="tags">Štítky</string>
     <string name="token">Token</string>
     <string name="save">Uložit</string>
@@ -64,15 +64,15 @@
     <string name="favourite">Oblíbené</string>
     <string name="follow">Noví sledující</string>
     <string name="mention">Zmínky</string>
-    <string name="reblog">Posílení</string>
-    <string name="show_boosts">Ukázat posílení</string>
+    <string name="reblog">Boosty</string>
+    <string name="show_boosts">Zobrazit boosty</string>
     <string name="show_replies">Zobrazit odpovědi</string>
     <string name="action_open_in_web">Otevřít v prohlížeči</string>
     <string name="translate">Přeložit</string>
     <string name="please_wait">Prosím počkejte několik sekund před provedením této akce.</string>
     <!--- Menu -->
     <string name="home_menu">Domů</string>
-    <string name="local_menu">Lokální časová osa</string>
+    <string name="local_menu">Místní časová osa</string>
     <string name="global_menu">Federovaná časová osa</string>
     <string name="neutral_menu_title">Nastavení</string>
     <string name="favorites_menu">Oblíbené</string>
@@ -93,7 +93,7 @@
     <string name="choose_file_error">Nenalezen průzkumník souborů!</string>
     <string name="click_to_change">Klikněte na cestu pro změnu</string>
     <string name="failed">Neúspěšné!</string>
-    <string name="scheduled_toots">Naplánované toots</string>
+    <string name="scheduled_toots">Naplánované tooty</string>
     <string name="disclaimer_full">Níže uvedené informace mohou popisovat uživatelský profil neúplně.</string>
     <string name="insert_emoji">Vložit smajlík</string>
     <string name="no_emoji">Aplikace prozatím nenačetla uživatelské smajlíky.</string>
@@ -102,13 +102,13 @@
     <string name="no_status">Žádné toots k zobrazení</string>
     <string name="fav_added">Toot byl přidán k oblíbeným</string>
     <string name="fav_removed">Toot byl odstraněn z oblíbených!</string>
-    <string name="reblog_added">Toot byl posílen!</string>
-    <string name="reblog_removed">Toot není nadále posílen!</string>
-    <string name="reblog_by">Posíleno %1$s</string>
+    <string name="reblog_added">Toot byl boostnut!</string>
+    <string name="reblog_removed">Toot již není boostnut!</string>
+    <string name="reblog_by">Boostnuto uživatelem %1$s</string>
     <string name="favourite_add">Přidat tento toot k oblíbeným?</string>
     <string name="favourite_remove">Odstranit tento toot z oblíbených?</string>
-    <string name="reblog_add">Posílit tento toot?</string>
-    <string name="reblog_remove">Odstranit posílení?</string>
+    <string name="reblog_add">Boostnout tento toot?</string>
+    <string name="reblog_remove">Zrušit boost?</string>
     <string name="pin_add">Připnout tento toot?</string>
     <string name="pin_remove">Odepnout tento toot?</string>
     <string name="more_action_1">Ztlumit</string>
@@ -155,7 +155,7 @@
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Varování</string>
     <string name="toot_placeholder">Co se vám honí hlavou?</string>
-    <string name="toot_it">TOOT!</string>
+    <string name="toot_it">TOOTNOUT!</string>
     <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
     <string name="toot_title">Napsat toot</string>
@@ -224,7 +224,7 @@
     <!-- Notifications -->
     <string name="no_notifications">Žádné upozornění k zobrazení</string>
     <string name="notif_mention">vás zmínil</string>
-    <string name="notif_reblog">posílil váš status</string>
+    <string name="notif_reblog">boostnul/a váš příspěvek</string>
     <string name="notif_favourite">se líbí váš status</string>
     <string name="notif_follow">vás sleduje</string>
     <string name="notif_pouet">Nový toot od %1$s</string>
@@ -263,8 +263,8 @@
     <string name="toast_unmute">Účet není nadále ztlumen!</string>
     <string name="toast_follow">Účet je sledován!</string>
     <string name="toast_unfollow">Účet není nadále sledován!</string>
-    <string name="toast_reblog">Toot byl posílen!</string>
-    <string name="toast_unreblog">Toot není nadále posílen!</string>
+    <string name="toast_reblog">Toot byl boostnut!</string>
+    <string name="toast_unreblog">Toot již není boostnut!</string>
     <string name="toast_favourite">Toot byl přidán k oblíbeným!</string>
     <string name="toast_unfavourite">Toot byl odstraněn z oblíbených!</string>
     <string name="toast_report">Toot byl nahlášen!</string>
@@ -309,10 +309,10 @@
     <string name="settings_title_notifications">Spravovat upozornění</string>
     <string name="set_notif_follow">Oznámení v případě sledování</string>
     <string name="set_notif_follow_ask">Oznámení v případě žádosti o sledování</string>
-    <string name="set_notif_follow_share">Oznámení v případě posílení vašeho tootu</string>
+    <string name="set_notif_follow_share">Oznámení v případě boostnutí vašeho tootu</string>
     <string name="set_notif_follow_add">Oznámení v případě uložení vašeho tootu mezi oblíbené</string>
     <string name="set_notif_follow_mention">Oznámení v případě, že vás někdo zmíní</string>
-    <string name="set_share_validation">Zobrazit potvrzení před odesláním posílení</string>
+    <string name="set_share_validation">Zobrazit potvrzení před boostnutí</string>
     <string name="set_share_validation_fav">Zobrazit potvrzení před uložením mezi oblíbené</string>
     <string name="settings_title_more_options">Rozšířené nastavení</string>
     <string name="set_wifi_only">Oznámení pouze na WIFI</string>
@@ -462,9 +462,9 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
         - <b>PhotoView</b>: Správa obrázků\n
     </string>
     <string name="privacy_API_yandex_title">Překlad toots</string>
-    <string name="privacy_API_yandex_authorizations">Aplikace umožňuje překlad toots do jazyka zařízení s použitím služby Yandex API.\n
-Yandex má svá vlastní pravidla pro soukromí uživatelských dat zde:
-https://yandex.ru/legal/confidential/?lang=en    </string>
+    <string name="privacy_API_yandex_authorizations">        Aplikace umožňuje překlad tootů do jazyka zařízení s použitím služby Yandex API.\n
+        Yandex má svá vlastní pravidla pro soukromí uživatelských dat zde: https://yandex.ru/legal/confidential/?lang=en
+    </string>
     <string name="thanks_text">        Poděkování Stéphane za logo.
     </string>
     <string name="thanks_text_dev">Poděkování:    </string>
@@ -486,7 +486,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="action_lists_owner">Vaše seznamy</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s se přesunul do %2$s</string>
-    <string name="show_boost_count">Zobrazit počet posílení/oblíbených</string>
+    <string name="show_boost_count">Zobrazit počet boostů/oblíbení</string>
     <string name="issue_login_title">Přihlášení nefunguje?</string>
     <string name="issue_login_message">        <b>Zde jsou kontroly, které by vám mohly pomoct:</b>\n\n
         - Zkontrolujte, že ve jmménu instance není překlep\n\n
@@ -531,16 +531,16 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="toast_instance_followed">Instance je sledována!</string>
     <string name="action_partnership">Partnerství</string>
     <string name="neutral_menu_information">Informace</string>
-    <string name="hide_boost">Skrýt posílení od %s</string>
+    <string name="hide_boost">Skrýt boosty od %s</string>
     <string name="endorse">Zmínit v profilu</string>
     <string name="hide_everything">Skrýt vše od %s</string>
-    <string name="show_boost">Ukázat posílení od %s</string>
+    <string name="show_boost">Zobrazit boosty od %s</string>
     <string name="unendorse">Neuvádět v profilu</string>
     <string name="show_everything">Ukázat vše od %s</string>
     <string name="toast_endorse">Účet je nyní zmíněn v profilu</string>
     <string name="toast_unendorse">Účet není nadále zmíněn v profilu</string>
-    <string name="toast_show_boost">Posílení jsou zobrazena!</string>
-    <string name="toast_hide_boost">Posílení jsou skryta!</string>
+    <string name="toast_show_boost">Boosty jsou nyní zobrazeny!</string>
+    <string name="toast_hide_boost">Boosty jsou nyní skryty!</string>
     <string name="direct_message">Přímá zpráva</string>
     <string name="filters">Filtry</string>
     <string name="action_filters_empty_content">Žádné filtry k zobrazení. Můžete vytvořit nový filtr klepnutím na tlačítko \"+\".</string>
@@ -580,7 +580,7 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="expand_image">Automaticky zobrazovat skrytá média</string>
     <string name="set_display_follow_instance">Zobrazit tlačítko pro sledování instancí</string>
     <string name="channel_notif_follow">Nový sledující</string>
-    <string name="channel_notif_boost">Nové posílení</string>
+    <string name="channel_notif_boost">Nový boost</string>
     <string name="channel_notif_fav">Nový oblíbený</string>
     <string name="channel_notif_mention">Nová zmínka</string>
     <string name="channel_notif_toot">Nový toot</string>
@@ -645,10 +645,10 @@ https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="tags_renamed">Štítek byl změněn!</string>
     <string name="tags_deleted">Štítek byl smazán!</string>
     <string name="set_display_art">Zobrazit Art časovou osu</string>
-    <string name="schedule_boost">Naplánovat posílení</string>
-    <string name="boost_scheduled">Posílení je naplánováno!</string>
-    <string name="no_scheduled_boosts">Žádná plánovaná posílení!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Otevřete menu tootu a vyberte <b>Naplánovat posílení</b>.]]></string>
+    <string name="schedule_boost">Naplánovat boost</string>
+    <string name="boost_scheduled">Boost je naplánováo!</string>
+    <string name="no_scheduled_boosts">Žádný naplánovaý boost k zobrazení!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Otevřete menu tootu a vyberte <b>Naplánovat boost</b>.]]></string>
     <string name="art_menu">Art časová osa</string>
     <string name="open_menu">Otevřete nabídku</string>
     <string name="app_logo">Logo aplikace</string>
