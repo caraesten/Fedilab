@@ -452,7 +452,7 @@
     </string>
     <string name="privacy_API_yandex_title">嘟文翻譯</string>
     <string name="privacy_API_yandex_authorizations">        該應用程式提供了使用裝置的語系設定與 Yandex API 進行翻譯的功能。\n
-        Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/legal/confidential/?lang=en
+Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/legal/confidential/?lang=en
     </string>
     <string name="thanks_text">        謝謝 Stéphane 的圖示設計。
     </string>
