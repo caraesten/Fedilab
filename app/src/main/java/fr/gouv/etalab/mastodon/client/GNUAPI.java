@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1331,20 +1332,41 @@ public class GNUAPI {
                 params.put("user_id", targetedId);
                 break;
             case UNSTATUS:
-                action = String.format("/statuses/destroy/%s.json", targetedId);
+                if( !status.getVisibility().equals("direct"))
+                    action = String.format("/statuses/destroy/%s.json", targetedId);
+                else {
+                    action = "/direct_messages/destroy.json";
+                    params = new HashMap<>();
+                    params.put("id", targetedId);
+                }
                 break;
             case CREATESTATUS:
                 params = new HashMap<>();
-                action = "/statuses/update.json";
-                try {
-                    params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    params.put("status", status.getContent());
+                if(! status.getVisibility().equals("direct"))
+                    action = "/statuses/update.json";
+                else
+                    action = "/direct_messages/new.json";
+                if( !status.getVisibility().equals("direct")) {
+                    try {
+                        params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        params.put("status", status.getContent());
+                    }
+                }else{
+                    try {
+                        params.put("text", URLEncoder.encode(status.getContent(), "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        params.put("text", status.getContent());
+                    }
                 }
                 if( status.getContentType() != null)
                     params.put("content_type", status.getContentType());
-                if( status.getIn_reply_to_id() != null)
-                    params.put("in_reply_to_status_id", status.getIn_reply_to_id());
+                if( status.getIn_reply_to_id() != null) {
+                    if( !status.getVisibility().equals("direct"))
+                        params.put("in_reply_to_status_id", status.getIn_reply_to_id());
+                    else
+                        params.put("replyto", status.getConversationId());
+                }
                 if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
                     StringBuilder parameters = new StringBuilder();
                     for(Attachment attachment: status.getMedia_attachments())
@@ -1398,15 +1420,26 @@ public class GNUAPI {
     public APIResponse postStatusAction(Status status){
 
         HashMap<String, String> params = new HashMap<>();
-        try {
-            params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            params.put("status", status.getContent());
-        }
         if( status.getContentType() != null)
             params.put("content_type", status.getContentType());
+        if( !status.getVisibility().equals("direct")) {
+            try {
+                params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                params.put("status", status.getContent());
+            }
+        }else{
+            try {
+                params.put("text", URLEncoder.encode(status.getContent(), "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                params.put("text", status.getContent());
+            }
+        }
         if( status.getIn_reply_to_id() != null)
-            params.put("in_reply_to_status_id", status.getIn_reply_to_id());
+            if( !status.getVisibility().equals("direct"))
+                params.put("in_reply_to_status_id", status.getIn_reply_to_id());
+            else
+                params.put("replyto", status.getConversationId());
         if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
             StringBuilder parameters = new StringBuilder();
             for(Attachment attachment: status.getMedia_attachments())
@@ -1419,7 +1452,12 @@ public class GNUAPI {
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.post(getAbsoluteUrl("/statuses/update.json"), 60, params, prefKeyOauthTokenT);
+            String response;
+            if( !status.getVisibility().equals("direct"))
+                response = httpsConnection.post(getAbsoluteUrl("/statuses/update.json"), 60, params, prefKeyOauthTokenT);
+            else
+                response = httpsConnection.post(getAbsoluteUrl("/direct_messages/new.json"), 60, params, prefKeyOauthTokenT);
+            Log.v(Helper.TAG,"response: " + response);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             Status statusreturned = parseStatuses(context, new JSONObject(response));
