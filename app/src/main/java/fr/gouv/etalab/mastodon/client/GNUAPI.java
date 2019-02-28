@@ -77,6 +77,7 @@ public class GNUAPI {
     private String prefKeyOauthTokenT;
     private APIResponse apiResponse;
     private Error APIError;
+    private String userId;
 
     public enum accountPrivacy {
         PUBLIC,
@@ -89,11 +90,11 @@ public class GNUAPI {
         accountPerPage = sharedpreferences.getInt(Helper.SET_ACCOUNTS_PER_PAGE, 40);
         notificationPerPage = sharedpreferences.getInt(Helper.SET_NOTIFICATIONS_PER_PAGE, 15);
         this.prefKeyOauthTokenT = sharedpreferences.getString(PREF_KEY_OAUTH_TOKEN, null);
+        userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
         if( Helper.getLiveInstance(context) != null)
             this.instance = Helper.getLiveInstance(context);
         else {
             SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
             String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
             Account account = new AccountDAO(context, db).getUniqAccount(userId, instance);
             if( account == null) {
@@ -543,11 +544,18 @@ public class GNUAPI {
      * @param statusId  Id of the status
      * @return List<Status>
      */
-    public fr.gouv.etalab.mastodon.client.Entities.Context getStatusContext(String statusId) {
+    public fr.gouv.etalab.mastodon.client.Entities.Context getStatusContext(String statusId, boolean directtimeline) {
         fr.gouv.etalab.mastodon.client.Entities.Context statusContext = new fr.gouv.etalab.mastodon.client.Entities.Context();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/statusnet/conversation/%s.json", statusId)), 60, null, prefKeyOauthTokenT);
+            String response;
+            if( !directtimeline)
+                response = httpsConnection.get(getAbsoluteUrl(String.format("/statusnet/conversation/%s.json", statusId)), 60, null, prefKeyOauthTokenT);
+            else {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("uri", statusId);
+                response = httpsConnection.get(getAbsoluteUrl("/direct_messages/conversation.json"), 60, params, prefKeyOauthTokenT);
+            }
             statuses = parseStatuses(context, new JSONArray(response));
             if( statuses != null && statuses.size() > 0){
                 ArrayList<Status> descendants = new ArrayList<>();
@@ -617,7 +625,7 @@ public class GNUAPI {
         List<Conversation> conversations = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl("/conversations"), 60, params, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl("/direct_messages.json"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             conversations = parseConversations(new JSONArray(response));
@@ -1260,14 +1268,26 @@ public class GNUAPI {
         HashMap<String, String> params = null;
         switch (statusAction){
             case FAVOURITE:
-                action = "/favorites/create.json";
-                params = new HashMap<>();
-                params.put("id", targetedId);
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    action = "/favorites/create.json";
+                    params = new HashMap<>();
+                    params.put("id", targetedId);
+                }else {
+                    action = "/friendica/activity/like.json";
+                    params = new HashMap<>();
+                    params.put("id", targetedId);
+                }
                 break;
             case UNFAVOURITE:
-                action = "/favorites/destroy.json";
-                params = new HashMap<>();
-                params.put("id", targetedId);
+                if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU) {
+                    action = "/favorites/destroy.json";
+                    params = new HashMap<>();
+                    params.put("id", targetedId);
+                }else {
+                    action = "/friendica/activity/unlike.json";
+                    params = new HashMap<>();
+                    params.put("id", targetedId);
+                }
                 break;
             case REBLOG:
                 action = String.format("/statuses/retweet/%s.json", targetedId);
@@ -1311,20 +1331,41 @@ public class GNUAPI {
                 params.put("user_id", targetedId);
                 break;
             case UNSTATUS:
-                action = String.format("/statuses/destroy/%s.json", targetedId);
+                if( !status.getVisibility().equals("direct"))
+                    action = String.format("/statuses/destroy/%s.json", targetedId);
+                else {
+                    action = "/direct_messages/destroy.json";
+                    params = new HashMap<>();
+                    params.put("id", targetedId);
+                }
                 break;
             case CREATESTATUS:
                 params = new HashMap<>();
-                action = "/statuses/update.json";
-                try {
-                    params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    params.put("status", status.getContent());
+                if(! status.getVisibility().equals("direct"))
+                    action = "/statuses/update.json";
+                else
+                    action = "/direct_messages/new.json";
+                if( !status.getVisibility().equals("direct")) {
+                    try {
+                        params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        params.put("status", status.getContent());
+                    }
+                }else{
+                    try {
+                        params.put("text", URLEncoder.encode(status.getContent(), "UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        params.put("text", status.getContent());
+                    }
                 }
                 if( status.getContentType() != null)
                     params.put("content_type", status.getContentType());
-                if( status.getIn_reply_to_id() != null)
-                    params.put("in_reply_to_status_id", status.getIn_reply_to_id());
+                if( status.getIn_reply_to_id() != null) {
+                    if( !status.getVisibility().equals("direct"))
+                        params.put("in_reply_to_status_id", status.getIn_reply_to_id());
+                    else
+                        params.put("replyto", status.getConversationId());
+                }
                 if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
                     StringBuilder parameters = new StringBuilder();
                     for(Attachment attachment: status.getMedia_attachments())
@@ -1378,15 +1419,34 @@ public class GNUAPI {
     public APIResponse postStatusAction(Status status){
 
         HashMap<String, String> params = new HashMap<>();
-        try {
-            params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            params.put("status", status.getContent());
-        }
         if( status.getContentType() != null)
             params.put("content_type", status.getContentType());
+        if( !status.getVisibility().equals("direct")) {
+            try {
+                params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                params.put("status", status.getContent());
+            }
+        }else{
+            try {
+                params.put("text", URLEncoder.encode(status.getContent(), "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                params.put("text", status.getContent());
+            }
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            //Current user
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account currentAccount = new AccountDAO(context, db).getAccountByUserIDInstance(userId, Helper.getLiveInstance(context));
+            params.put("user_id", currentAccount.getId());
+            params.put("screen_name", currentAccount.getAcct());
+
+        }
         if( status.getIn_reply_to_id() != null)
-            params.put("in_reply_to_status_id", status.getIn_reply_to_id());
+            if( !status.getVisibility().equals("direct"))
+                params.put("in_reply_to_status_id", status.getIn_reply_to_id());
+            else
+                params.put("replyto", status.getIn_reply_to_id());
         if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
             StringBuilder parameters = new StringBuilder();
             for(Attachment attachment: status.getMedia_attachments())
@@ -1399,7 +1459,11 @@ public class GNUAPI {
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.post(getAbsoluteUrl("/statuses/update.json"), 60, params, prefKeyOauthTokenT);
+            String response;
+            if( !status.getVisibility().equals("direct"))
+                response = httpsConnection.post(getAbsoluteUrl("/statuses/update.json"), 60, params, prefKeyOauthTokenT);
+            else
+                response = httpsConnection.post(getAbsoluteUrl("/direct_messages/new.json"), 60, params, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             Status statusreturned = parseStatuses(context, new JSONObject(response));
@@ -1758,7 +1822,7 @@ public class GNUAPI {
      * @param jsonArray JSONArray
      * @return List<Status>
      */
-    private static List<Status> parseStatuses(Context context, JSONArray jsonArray){
+    private List<Status> parseStatuses(Context context, JSONArray jsonArray){
 
         List<Status> statuses = new ArrayList<>();
         try {
@@ -1783,7 +1847,7 @@ public class GNUAPI {
      * @return Status
      */
     @SuppressWarnings("InfiniteRecursion")
-    public static Status parseStatuses(Context context, JSONObject resobj){
+    private Status parseStatuses(Context context, JSONObject resobj){
         Status status = new Status();
         try {
             status.setId(resobj.get("id").toString());
@@ -1793,12 +1857,18 @@ public class GNUAPI {
                 status.setUri(resobj.get("id").toString());
             }
             status.setCreated_at(Helper.mstStringToDate(context, resobj.get("created_at").toString()));
-            status.setIn_reply_to_id(resobj.get("in_reply_to_status_id").toString());
-            status.setIn_reply_to_account_id(resobj.get("in_reply_to_user_id").toString());
+            if( resobj.has("in_reply_to_status_id"))
+             status.setIn_reply_to_id(resobj.get("in_reply_to_status_id").toString());
+            if( resobj.has("in_reply_to_user_id"))
+                status.setIn_reply_to_account_id(resobj.get("in_reply_to_user_id").toString());
             status.setSensitive(false);
             status.setSpoiler_text(null);
-            status.setVisibility("public");
-            status.setLanguage(resobj.isNull("geo")?null:resobj.getString("geo"));
+            if( !resobj.has("sender"))
+                status.setVisibility("public");
+            else
+                status.setVisibility("direct");
+            if( resobj.has("geo"))
+                status.setLanguage(resobj.isNull("geo")?null:resobj.getString("geo"));
             if( resobj.has("external_url"))
                 status.setUrl(resobj.get("external_url").toString());
             //Retrieves attachments
@@ -1812,7 +1882,10 @@ public class GNUAPI {
             try {
                 status.setConversationId(resobj.get("statusnet_conversation_id").toString());
             }catch (Exception ignored){
-                status.setConversationId(resobj.get("id").toString());
+                if( resobj.has("friendica_parent_uri"))
+                    status.setConversationId(resobj.get("friendica_parent_uri").toString());
+                else
+                    status.setConversationId(resobj.get("id").toString());
             }
             //Retrieves mentions
             List<Mention> mentions = new ArrayList<>();
@@ -1849,8 +1922,14 @@ public class GNUAPI {
                 application = new Application();
             }
             status.setApplication(application);
-            status.setAccount(parseAccountResponse(context, resobj.getJSONObject("user")));
-            status.setContent(resobj.get("statusnet_html").toString());
+            if( resobj.has("user"))
+                status.setAccount(parseAccountResponse(context, resobj.getJSONObject("user")));
+            else if( resobj.has("sender"))
+                status.setAccount(parseAccountResponse(context, resobj.getJSONObject("sender")));
+            if( resobj.has("statusnet_html"))
+                status.setContent(resobj.get("statusnet_html").toString());
+            else if( resobj.has("text"))
+                status.setContent(resobj.get("text").toString());
             if(resobj.has("fave_num"))
                 status.setFavourites_count(Integer.valueOf(resobj.get("fave_num").toString()));
             else
@@ -1869,6 +1948,18 @@ public class GNUAPI {
                 status.setFavourited(Boolean.valueOf(resobj.get("favorited").toString()));
             }catch (Exception e){
                 status.setFavourited(false);
+            }
+            if( resobj.has("friendica_activities") && resobj.getJSONObject("friendica_activities").has("like")){
+                status.setFavourited(false);
+                JSONArray jsonArray = resobj.getJSONObject("friendica_activities").getJSONArray("like");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject like = jsonArray.getJSONObject(i);
+                    if( like.getString("id").equals(userId)) {
+                        status.setFavourited(true);
+                        break;
+                    }
+                }
+
             }
             status.setMuted(false);
             status.setPinned(false);
@@ -2173,7 +2264,7 @@ public class GNUAPI {
      * @param resobj JSONObject
      * @return Account
      */
-    public static Notification parseNotificationResponse(Context context, JSONObject resobj){
+    private Notification parseNotificationResponse(Context context, JSONObject resobj){
 
         Notification notification = new Notification();
         try {

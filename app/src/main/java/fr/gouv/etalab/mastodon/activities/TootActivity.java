@@ -98,6 +98,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -215,6 +216,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     private RelativeLayout loader;
     private String contentType;
     private int max_media_count;
+    public static HashMap<String, Uri> filesMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,7 +245,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         }else {
             style = R.style.Dialog;
         }
-
+        filesMap = new HashMap<>();
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA){
             max_media_count = 9999;
         }else{
@@ -934,6 +936,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 toot_picture.setEnabled(false);
                 toot_it.setEnabled(false);
                 String filename = Helper.getFileName(this.activityWeakReference.get(), uriFile);
+                filesMap.put(filename, uriFile);
                 new HttpsConnection(this.activityWeakReference.get()).upload(bs, filename, accountReply != null ? accountReply.getToken() : null, (TootActivity) this.activityWeakReference.get());
             }
         }
@@ -1602,7 +1605,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     }
 
     @Override
-    public void onRetrieveAttachment(final Attachment attachment, Error error) {
+    public void onRetrieveAttachment(final Attachment attachment, String fileName, Error error) {
         if( error != null || attachment == null){
             if( error != null)
                 Toasty.error(getApplicationContext(), error.getError(), Toast.LENGTH_LONG).show();
@@ -1629,18 +1632,39 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             String url = attachment.getPreview_url();
             if (url == null || url.trim().equals(""))
                 url = attachment.getUrl();
+
+
             final ImageView imageView = new ImageView(getApplicationContext());
             imageView.setId(Integer.parseInt(attachment.getId()));
 
-            Glide.with(imageView.getContext())
-                    .asBitmap()
-                    .load(url)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
-                            imageView.setImageBitmap(resource);
-                        }
-                    });
+            if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+                if( fileName != null && filesMap.containsKey(fileName)){
+                    Uri uri = filesMap.get(fileName);
+                    Glide.with(imageView.getContext())
+                            .asBitmap()
+                            .load(uri)
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                    imageView.setImageBitmap(resource);
+                                }
+                            });
+                }
+
+            }else {
+                Glide.with(imageView.getContext())
+                        .asBitmap()
+                        .load(url)
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
+                                imageView.setImageBitmap(resource);
+                            }
+                        });
+            }
+
+
+
             LinearLayout.LayoutParams imParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
             imParams.setMargins(20, 5, 20, 5);
             imParams.height = (int) Helper.convertDpToPixel(100, getApplicationContext());

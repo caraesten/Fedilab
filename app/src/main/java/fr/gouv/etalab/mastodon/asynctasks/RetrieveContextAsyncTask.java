@@ -39,12 +39,15 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
     private Error error;
     private WeakReference<Context> contextReference;
     private boolean expanded;
+    private boolean directtimeline;
 
-    public RetrieveContextAsyncTask(Context context, boolean expanded, String statusId, OnRetrieveContextInterface onRetrieveContextInterface){
+
+    public RetrieveContextAsyncTask(Context context, boolean expanded,  boolean directtimeline, String statusId, OnRetrieveContextInterface onRetrieveContextInterface){
         this.contextReference = new WeakReference<>(context);
         this.statusId = statusId;
         this.listener = onRetrieveContextInterface;
         this.expanded = expanded;
+        this.directtimeline = directtimeline;
     }
 
     @Override
@@ -59,10 +62,10 @@ public class RetrieveContextAsyncTask extends AsyncTask<Void, Void, Void> {
             error = api.getError();
         }else{
             GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
-            statusContext = gnuapi.getStatusContext(statusId);
+            statusContext = gnuapi.getStatusContext(statusId, directtimeline);
             //Retrieves the first toot
             if (expanded && statusContext != null && statusContext.getAncestors() != null && statusContext.getAncestors().size() > 0) {
-                statusContext = gnuapi.getStatusContext(statusContext.getAncestors().get(0).getId());
+                statusContext = gnuapi.getStatusContext(statusContext.getAncestors().get(0).getId(), directtimeline);
             }
             error = gnuapi.getError();
         }

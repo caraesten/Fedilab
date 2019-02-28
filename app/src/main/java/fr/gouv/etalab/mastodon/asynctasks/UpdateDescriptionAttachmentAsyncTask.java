@@ -59,7 +59,7 @@ public class UpdateDescriptionAttachmentAsyncTask extends AsyncTask<Void, Void, 
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveAttachment(attachment, api.getError());
+        listener.onRetrieveAttachment(attachment, null, api.getError());
     }
 
 }
