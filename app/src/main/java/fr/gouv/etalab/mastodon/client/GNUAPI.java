@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1434,12 +1433,20 @@ public class GNUAPI {
             } catch (UnsupportedEncodingException e) {
                 params.put("text", status.getContent());
             }
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            //Current user
+            String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account currentAccount = new AccountDAO(context, db).getAccountByUserIDInstance(userId, Helper.getLiveInstance(context));
+            params.put("user_id", currentAccount.getId());
+            params.put("screen_name", currentAccount.getAcct());
+
         }
         if( status.getIn_reply_to_id() != null)
             if( !status.getVisibility().equals("direct"))
                 params.put("in_reply_to_status_id", status.getIn_reply_to_id());
             else
-                params.put("replyto", status.getConversationId());
+                params.put("replyto", status.getIn_reply_to_id());
         if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
             StringBuilder parameters = new StringBuilder();
             for(Attachment attachment: status.getMedia_attachments())
@@ -1457,7 +1464,6 @@ public class GNUAPI {
                 response = httpsConnection.post(getAbsoluteUrl("/statuses/update.json"), 60, params, prefKeyOauthTokenT);
             else
                 response = httpsConnection.post(getAbsoluteUrl("/direct_messages/new.json"), 60, params, prefKeyOauthTokenT);
-            Log.v(Helper.TAG,"response: " + response);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             Status statusreturned = parseStatuses(context, new JSONObject(response));
