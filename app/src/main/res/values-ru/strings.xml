@@ -802,8 +802,8 @@
     <string name="submit">Подтвердить</string>
     <string name="data_base_exported">База данных была экспортирована!</string>
     <string name="featured_hashtags">Рекомендуемые хэштеги</string>
-    <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
-    <string name="no_tags">No tags</string>
+    <string name="filter_timeline_with_a_tag">Фильтровать ленту тегами</string>
+    <string name="no_tags">Нет тегов</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
