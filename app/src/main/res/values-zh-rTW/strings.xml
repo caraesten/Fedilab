@@ -99,7 +99,7 @@
     <string name="no_emoji">應用程式目前不能收集自訂表情符號。</string>
     <string name="live_notif">即時通知</string>
     <!-- Status -->
-    <string name="no_status">沒有嘟文可以顯示</string>
+    <string name="no_status">沒有嘟文</string>
     <string name="fav_added">嘟文被加入最愛</string>
     <string name="fav_removed">嘟文已從最愛中移除！</string>
     <string name="reblog_added">嘟文被加速！</string>
@@ -132,7 +132,7 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>移除此嘟文？</item>
-        <item>刪除 &amp; 將此嘟文重新變為草稿</item>
+        <item>刪除 &amp; 將此嘟文重新變為草稿？</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="other">%d 回覆</item>
@@ -141,7 +141,7 @@
     <string name="bookmarks">書籤</string>
     <string name="bookmark_add">新增至書籤</string>
     <string name="bookmark_remove">移除書籤</string>
-    <string name="bookmarks_empty">沒有書籤可以顯示</string>
+    <string name="bookmarks_empty">沒有書籤</string>
     <string name="status_bookmarked">已將狀態加入書籤中！</string>
     <string name="status_unbookmarked">狀態已從書籤中移除！</string>
     <!-- Date -->
@@ -190,7 +190,7 @@
     <string name="about_license">授權條款：</string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">原始碼：</string>
-    <string name="about_yandex">嘟文的翻譯：</string>
+    <string name="about_yandex">嘟文的翻譯引擎：</string>
     <string name="about_thekinrar">搜尋實體：</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">圖示設計者：</string>
@@ -198,7 +198,7 @@
     <!-- Conversation -->
     <string name="conversation">對話</string>
     <!-- Accounts -->
-    <string name="no_accounts">沒有要顯示的帳號</string>
+    <string name="no_accounts">沒有帳號</string>
     <string name="no_follow_request">無關注請求</string>
     <string name="status_cnt">嘟文\n%1$s</string>
     <string name="following_cnt">正在關注\n %1$s</string>
@@ -207,21 +207,21 @@
     <string name="authorize">授權</string>
     <string name="reject">拒絕</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">沒有已排定的嘟文可供顯示！</string>
+    <string name="no_scheduled_toots">沒有已排定的嘟文！</string>
     <string name="no_scheduled_toots_indications">編寫嘟文，然後在頂端的選單中選擇<b>排程</b>。</string>
     <string name="remove_scheduled">刪除排定的嘟文？</string>
     <string name="media_count">媒體：%d</string>
     <string name="toot_scheduled">嘟文已經安排好了！</string>
-    <string name="toot_scheduled_date">嘟文排定的時間必須大於目前的小時！</string>
-    <string name="warning_battery">已啟用電池保護程式！它可能無法正常運作。</string>
+    <string name="toot_scheduled_date">嘟文排定的時間必須大於目前的時間！</string>
+    <string name="warning_battery">已啟用電池保護！它可能無法正常運作。</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">靜音時間應該大於一分鐘。</string>
     <string name="timed_mute_date">%1$s 已經靜音到 %2$s。\n 您可以從他／她的個人資料頁面解除靜音該帳號。</string>
     <string name="timed_mute_profile">%1$s 被靜音到 %2$s。\n 點選這裡以取消靜音此帳號。</string>
     <!-- Notifications -->
-    <string name="no_notifications">沒有要顯示的通知</string>
+    <string name="no_notifications">沒有通知</string>
     <string name="notif_mention">提及您</string>
-    <string name="notif_reblog">更新您的狀態</string>
+    <string name="notif_reblog">加速了您的狀態</string>
     <string name="notif_favourite">收藏您的狀態</string>
     <string name="notif_follow">關注了您</string>
     <string name="notif_pouet">來自 %1$s 的新嘟文</string>
@@ -279,7 +279,7 @@
     <string name="set_accounts_page">每次載入的帳號數量</string>
     <string name="set_notifications_page">每次載入的通知數量</string>
     <string name="set_attachment_always">總是</string>
-    <string name="set_attachment_wifi">WIFI</string>
+    <string name="set_attachment_wifi">Wi-Fi</string>
     <string name="set_attachment_ask">詢問</string>
     <string name="set_attachment_action">載入媒體</string>
     <string name="load_attachment">載入圖片</string>
@@ -295,15 +295,15 @@
     <string name="set_bubble_counter">顯示計數器</string>
     <string name="set_auto_add_media_url">在嘟文中新增媒體的 URL</string>
     <string name="settings_title_notifications">管理通知</string>
-    <string name="set_notif_follow">當有人關注您時通知</string>
-    <string name="set_notif_follow_ask">當某人請求關注您時通知</string>
-    <string name="set_notif_follow_share">當某人加速您的狀態時通知</string>
-    <string name="set_notif_follow_add">當某人收藏您的狀態時通知您</string>
-    <string name="set_notif_follow_mention">當某人提及您時通知</string>
+    <string name="set_notif_follow">當有人關注您時通知您</string>
+    <string name="set_notif_follow_ask">當有人請求關注您時通知</string>
+    <string name="set_notif_follow_share">當有人加速您的狀態時通知</string>
+    <string name="set_notif_follow_add">當有人收藏您的狀態時通知您</string>
+    <string name="set_notif_follow_mention">當有人提及您時通知</string>
     <string name="set_share_validation">在加速前顯示確認對話框</string>
     <string name="set_share_validation_fav">在新增至最愛前顯示確認對話框</string>
     <string name="settings_title_more_options">進階設定</string>
-    <string name="set_wifi_only">僅在 WIFI 中通知</string>
+    <string name="set_wifi_only">僅在使用 Wi-Fi 時才啟用通知</string>
     <string name="set_notify">通知？</string>
     <string name="set_notif_silent">靜音通知</string>
     <string name="set_night_mode">夜間模式</string>
@@ -319,7 +319,7 @@
     <string name="set_automatically_split_toot">自動分離超過 500 個字元的嘟文到回覆中</string>
     <string name="note_no_space">您已經到達允許的 160 個字元！</string>
     <string name="username_no_space">您已經到達允許的 30 個字元！</string>
-    <string name="settings_title_hour">通知的時間帶：</string>
+    <string name="settings_title_hour">啟用通知的時間帶：</string>
     <string name="settings_time_from">介於</string>
     <string name="settings_time_to">以及</string>
     <string name="settings_time_greater">時間必須大於 %1$s</string>
@@ -327,9 +327,9 @@
     <string name="settings_hour_init">開始時間</string>
     <string name="settings_hour_end">結束時間</string>
     <string name="embedded_browser">使用內建瀏覽器</string>
-    <string name="custom_tabs">自訂分頁</string>
+    <string name="custom_tabs">內嵌分頁</string>
     <string name="use_javascript">啟用 Javascript</string>
-    <string name="expand_cw">自動延伸 cw</string>
+    <string name="expand_cw">自動展開 cw</string>
     <string name="use_cookies">允許第三方 cookies</string>
     <string name="settings_ui_layout">時間軸佈局：</string>
     <string-array name="battery_profiles">
@@ -424,18 +424,18 @@
     <string name="owner_cached_toots_empty">在資料庫中找不到嘟文。請從選單中使用同步按鈕以擷取它們。</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">已記錄的資料</string>
-    <string name="privacy_data">        只有帳號中的基本資訊才會儲存在裝置上。
-        這些資料嚴格保密，僅能由應用程式使用。
-        刪除應用程式將會立即移除這些資料。\n
-        &#9888; 不會儲存密碼與登入資訊。它們僅會在有安全驗證 (SSL) 的實體上使用。
+    <string name="privacy_data">        只有帳號中的基本資訊才會儲存在裝置上。\n
+這些資料嚴格保密，僅能由應用程式使用。\n
+刪除應用程式將會立即移除這些資料。\n
+&#9888; 不會儲存密碼與登入資訊。它們僅會在有安全驗證 (SSL) 的實體上使用。
     </string>
     <string name="privacy_authorizations_title">權限：</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>：用於偵測裝置是否連線至 WIFI 網路。\n
-        - <b>INTERNET</b>：用於查詢實體。\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>：用於儲存媒體或將應用程式移動到記憶卡上。\n
-        - <b>READ_EXTERNAL_STORAGE</b>：用於將媒體新增到嘟文中。\n
-        - <b>BOOT_COMPLETED</b>：用於啟動通知服務。\n
-        - <b>WAKE_LOCK</b>：在通知服務期間使用。
+- <b>INTERNET</b>：用於查詢實體。\n
+- <b>WRITE_EXTERNAL_STORAGE</b>：用於儲存媒體或將應用程式移動到記憶卡上。\n
+- <b>READ_EXTERNAL_STORAGE</b>：用於將媒體新增到嘟文中。\n
+- <b>BOOT_COMPLETED</b>：用於啟動通知服務。\n
+- <b>WAKE_LOCK</b>：在通知服務期間使用。
     </string>
     <string name="privacy_API_authorizations_title">API 權限：</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>：讀取資料。\n
@@ -452,7 +452,7 @@
     </string>
     <string name="privacy_API_yandex_title">嘟文翻譯</string>
     <string name="privacy_API_yandex_authorizations">        該應用程式提供了使用裝置的語系設定與 Yandex API 進行翻譯的功能。\n
-        Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/legal/confidential/?lang=en
+Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/legal/confidential/?lang=en
     </string>
     <string name="thanks_text">        謝謝 Stéphane 的圖示設計。
     </string>
@@ -465,7 +465,7 @@
     <!-- About lists -->
     <string name="action_lists">列表</string>
     <string name="action_lists_confirm_delete">您確定您想要永久刪除此列表嗎？</string>
-    <string name="action_lists_empty_content">這份清單裡沒有東西。當此清單的成員張貼新的狀態時，它們將會出現在這裡。</string>
+    <string name="action_lists_empty_content">這份列表裡沒有東西。當此列表的成員張貼新的狀態時，它們將會出現在這裡。</string>
     <string name="action_lists_add_to">新增到列表</string>
     <string name="action_lists_remove_from">從列表中移除</string>
     <string name="action_lists_create">新增列表</string>
@@ -501,7 +501,7 @@
     <string name="proxy_enable">啟用代理伺服器？</string>
     <string name="poxy_host">主機</string>
     <string name="poxy_port">埠</string>
-    <string name="poxy_login">登入</string>
+    <string name="poxy_login">使用者名稱</string>
     <string name="poxy_password">密碼</string>
     <string name="set_theme">主題：</string>
     <string name="set_compact_mode">精簡模式</string>
@@ -521,33 +521,33 @@
     <string name="toast_instance_followed">實體已被追蹤！</string>
     <string name="action_partnership">夥伴</string>
     <string name="neutral_menu_information">資訊</string>
-    <string name="hide_boost">從 %s 隱藏嘟文</string>
-    <string name="endorse">在個人資料頁面上的特色</string>
-    <string name="hide_everything">隱藏 %s 中的所有內容</string>
-    <string name="show_boost">顯示 %s 中的嘟文</string>
-    <string name="unendorse">不要在個人資料頁面上顯示特色</string>
+    <string name="hide_boost">隱藏 %s 加速的嘟文</string>
+    <string name="endorse">在個人資料頁面上推薦</string>
+    <string name="hide_everything">隱藏 %s 的所有內容</string>
+    <string name="show_boost">顯示 %s 加速的嘟文</string>
+    <string name="unendorse">不要在個人資料頁面上推薦</string>
     <string name="show_everything">顯示 %s 中的所有內容</string>
-    <string name="toast_endorse">帳號已在個人資料頁面上顯示為特色</string>
-    <string name="toast_unendorse">帳號不再於個人資料頁面上顯示為特色</string>
-    <string name="toast_show_boost">現在顯示 Boosts 了！</string>
-    <string name="toast_hide_boost">現在已隱藏 Boosts！</string>
+    <string name="toast_endorse">帳號已在個人資料頁面上推薦</string>
+    <string name="toast_unendorse">帳號不再於個人資料頁面上推薦</string>
+    <string name="toast_show_boost">現在會顯示加速的嘟文了！</string>
+    <string name="toast_hide_boost">現在隱藏加速的嘟文！</string>
     <string name="direct_message">直接訊息</string>
     <string name="filters">過濾器</string>
-    <string name="action_filters_empty_content">沒有過濾器可以顯示。您可以透過點選 \"+\" 按鈕來建立一個。</string>
+    <string name="action_filters_empty_content">沒有過濾器。您可以透過點選 \"+\" 按鈕來建立一個。</string>
     <string name="filter_keyword">關鍵字或詞組</string>
     <string name="context_home">本地時間軸</string>
     <string name="context_public">公開時間軸</string>
     <string name="context_notification">通知</string>
     <string name="context_conversation">對話</string>
-    <string name="filter_keyword_explanations">不論是文字框中或在嘟文中的內容警告都將會符合</string>
+    <string name="filter_keyword_explanations">不論是文字框中或在嘟文中的內容警告都將會符合。</string>
     <string name="context_drop">丟棄而非隱藏</string>
     <string name="context_drop_explanations">已過濾的嘟文將會不可逆地消失，即便過濾移除後也一樣</string>
     <string name="context_whole_word_explanations">當關鍵字與詞組僅包含字母與數字時，它只會在整個單字都符合時才會套用</string>
     <string name="context_whole_word">整個單字</string>
-    <string name="filter_context">過濾上下文</string>
-    <string name="filter_context_explanations">過濾器應該套用的一個或多個上下文</string>
+    <string name="filter_context">過濾內容</string>
+    <string name="filter_context_explanations">過濾器應該套用的一個或多個內容</string>
     <string name="filter_expire">多久後過期</string>
-    <string name="add_new_filter">新增新的過濾器</string>
+    <string name="add_new_filter">新增過濾器</string>
     <string name="action_filter_delete">刪除過濾器？</string>
     <string name="action_update_filter">更新過濾器</string>
     <string name="action_filter_create">建立過濾器</string>
@@ -579,16 +579,16 @@
     <string name="set_notif_sound">變更通知音效</string>
     <string name="select_sound">選取鈴聲</string>
     <string name="set_enable_time_slot">啟用時間帶</string>
-    <string name="how_to_videos">操作方法影片</string>
+    <string name="how_to_videos">操作方法的影片</string>
     <string name="retrieve_remote_conversation">正在擷取遠端嘟文串！</string>
     <string name="no_blocked_domain">沒有封鎖的網域！</string>
     <string name="unblock_domain_confirm">解除封鎖網域</string>
     <string name="unblock_domain_confirm_message">您確定要解除封鎖 %s？</string>
     <string name="block_domain_confirm_message">您確定要封鎖 %s？</string>
-    <string name="blocked_domains">已阻擋的網域</string>
+    <string name="blocked_domains">已封鎖的網域</string>
     <string name="block_domain">封鎖網域</string>
     <string name="toast_block_domain">網域已被封鎖</string>
-    <string name="toast_unblock_domain">網域不再被阻擋！</string>
+    <string name="toast_unblock_domain">網域不再被封鎖！</string>
     <string name="retrieve_remote_status">正在擷取遠端狀態</string>
     <string name="comment">評論</string>
     <string name="peertube_instance">PeerTube 實體</string>
@@ -599,7 +599,7 @@
     <string name="duration_video">長度：%s</string>
     <string name="add_remote_instance">新增實體</string>
     <string name="comment_no_allowed_peertube">此影片未啟用評論！</string>
-    <string name="pickup_resolution">挑選解析度</string>
+    <string name="pickup_resolution">選擇解析度</string>
     <string name="peertube_favorites">Peertube 最愛</string>
     <string name="bookmark_add_peertube">影片已加入到書籤中！</string>
     <string name="bookmark_remove_peertube">影片已從書籤中移除！</string>
@@ -635,10 +635,10 @@
     <string name="tags_renamed">標籤已變更！</string>
     <string name="tags_deleted">標籤已刪除！</string>
     <string name="set_display_art">顯示 MastoArt 時間軸</string>
-    <string name="schedule_boost">排定加速</string>
+    <string name="schedule_boost">排程加速</string>
     <string name="boost_scheduled">加速已排定！</string>
-    <string name="no_scheduled_boosts">沒有排定的加速可以顯示！</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[開啟嘟文選單然後選擇<b>排定加速</b>。]]></string>
+    <string name="no_scheduled_boosts">沒有排定的加速！</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[開啟嘟文選單然後選擇<b>排程加速</b>。]]></string>
     <string name="art_menu">藝術時間軸</string>
     <string name="open_menu">開啟選單</string>
     <string name="app_logo">應用程式圖示</string>
@@ -732,7 +732,7 @@
     <string name="no_video_uploaded">未有已上傳的影片！</string>
     <string name="display_nsfw_videos">顯示 NSFW 影片</string>
     <string name="default_channel_of">預設的 %s 頻道</string>
-    <string name="no_video_to_display">沒有可以顯示的影片</string>
+    <string name="no_video_to_display">沒有影片</string>
     <string name="add_image_to_favorite">新增媒體到收藏</string>
     <string name="leave_a_comment">留下評論</string>
     <string name="share">分享</string>
@@ -774,7 +774,7 @@
     <string name="action_logout_account">登出帳號</string>
     <string name="set_optimize_loading">最佳化載入時間</string>
     <string name="all">全部</string>
-    <string name="about_opencollective">支援應用程式</string>
+    <string name="about_opencollective">幫助改進應用程式</string>
     <string name="more_about_opencollective">Open Collective 讓群組可以快速設定集合，募集資金並以透明的方式管理。</string>
     <string name="copy_link">複製連結</string>
     <string name="connect_instance">連線</string>
@@ -788,7 +788,10 @@
     <string name="calls_blocked">應用程式阻擋了 http 呼叫</string>
     <string name="list_of_blocked_domains">阻擋呼叫清單</string>
     <string name="submit">遞交</string>
-    <string name="data_base_exported">The data base has been exported!</string>
+    <string name="data_base_exported">資料庫已匯出！</string>
+    <string name="featured_hashtags">Featured hashtags</string>
+    <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
+    <string name="no_tags">No tags</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>

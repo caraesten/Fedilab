@@ -282,19 +282,19 @@
     <string name="set_toots_page">Number of toots per load</string>
     <string name="set_accounts_page">Πλήθος λογαριασμών ανά φόρτωμα</string>
     <string name="set_notifications_page">Πλήθος ειδοποιήσεων ανά φόρτωμα</string>
-    <string name="set_attachment_always">Always</string>
-    <string name="set_attachment_wifi">WIFI</string>
-    <string name="set_attachment_ask">Ask</string>
-    <string name="set_attachment_action">Load the media</string>
-    <string name="load_attachment">Load the pictures</string>
-    <string name="load_attachment_spoiler">Show more…</string>
-    <string name="load_attachment_spoiler_less">Show less…</string>
+    <string name="set_attachment_always">Πάντα</string>
+    <string name="set_attachment_wifi">Γουάι-Φάι</string>
+    <string name="set_attachment_ask">Ερώτηση</string>
+    <string name="set_attachment_action">Φόρτωση των πολυμέσων</string>
+    <string name="load_attachment">Φόρτωση των εικόνων</string>
+    <string name="load_attachment_spoiler">Εμφάνιση περισσότερων…</string>
+    <string name="load_attachment_spoiler_less">Εμφάνιση λιγότερων…</string>
     <string name="load_sensitive_attachment">Sensitive content</string>
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_display_local">Display local timeline</string>
     <string name="set_display_global">Display federated timeline</string>
     <string name="set_disable_gif">Disable GIF avatars</string>
-    <string name="set_folder_title">Path: </string>
+    <string name="set_folder_title">Διαδρομή: </string>
     <string name="set_auto_store_toot">Save drafts automatically</string>
     <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
@@ -321,119 +321,119 @@
     <string name="set_header_picture_overlay">Επέλεξε μία εικόνα κεφαλίδας</string>
     <string name="set_fit_preview">Ταίριασμα των εικόνων προεπισκόπησης</string>
     <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
-    <string name="note_no_space">You have reached the 160 characters allowed!</string>
-    <string name="username_no_space">You have reached the 30 characters allowed!</string>
+    <string name="note_no_space">Έχεις χρησιμοποιήσει το πλήθος των 160 επιτρεπόμενων χαρακτήρων.</string>
+    <string name="username_no_space">Έχεις χρησιμοποιήσει το πλήθος των 30 επιτρεπόμενων χαρακτήρων.</string>
     <string name="settings_title_hour">Time slot for notifications:</string>
-    <string name="settings_time_from">Between</string>
-    <string name="settings_time_to">and</string>
-    <string name="settings_time_greater">The time must be greater than %1$s</string>
-    <string name="settings_time_lower">The time must be lower than %1$s</string>
-    <string name="settings_hour_init">Start time</string>
-    <string name="settings_hour_end">End time</string>
-    <string name="embedded_browser">Use the built-in browser</string>
-    <string name="custom_tabs">Custom tabs</string>
-    <string name="use_javascript">Enable Javascript</string>
-    <string name="expand_cw">Automatically expand cw</string>
-    <string name="use_cookies">Allow third-party cookies</string>
+    <string name="settings_time_from">Μεταξύ</string>
+    <string name="settings_time_to">και</string>
+    <string name="settings_time_greater">Η ώρα θα πρέπει να είναι αργότερα από τις %1$s</string>
+    <string name="settings_time_lower">Η ώρα θα πρέπει να είναι νωρίτερα από τις %1$s</string>
+    <string name="settings_hour_init">Ώρα έναρξης</string>
+    <string name="settings_hour_end">Ώρα λήξης</string>
+    <string name="embedded_browser">Χρήση του ενσωματωμένου πλοηγού διαδικτύου</string>
+    <string name="custom_tabs">Προσαρμοσμένες καρτέλες</string>
+    <string name="use_javascript">Ενεργοποίηση των Σεναρίων της Τζάβα</string>
+    <string name="expand_cw">Αυτόματη επέκταση της προειδοποίησης περιεχομένου</string>
+    <string name="use_cookies">Να επιτρέπονται τα κουλουράκια τρίτων</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Κανονική κατανάλωση της μπαταρίας</item>
+        <item>Μεσαία κατανάλωση της μπαταρίας</item>
+        <item>Χαμηλή κατανάλωση της μπαταρίας</item>
     </string-array>
     <string-array name="settings_menu_tabs">
-        <item>Tabs</item>
+        <item>Καρτέλες</item>
         <item>Menu</item>
         <item>Tabs and menu</item>
     </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
-        <item>No</item>
+        <item>Καθόλου</item>
     </string-array>
     <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>Black</item>
+        <item>Σκοτεινό</item>
+        <item>Φωτεινό</item>
+        <item>Μαύρο</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
-        <item>512 Kb</item>
-        <item>1 Mb</item>
-        <item>2 Mb</item>
+        <item>Όχι</item>
+        <item>512 Χιλιομπάιτια</item>
+        <item>1 Μεγαμπάιτιο</item>
+        <item>2 Μεγαμπάιτια</item>
     </string-array>
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">Ορισμός του χρώματος του λεντιού:</string>
     <string-array name="led_colours">
-        <item>Blue</item>
-        <item>Cyan</item>
-        <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>Μπλε</item>
+        <item>Γαλάζιο</item>
+        <item>Μελιτζανί Ανοιχτό</item>
+        <item>Πράσινο</item>
+        <item>Κόκκινο</item>
+        <item>Κίτρινο</item>
+        <item>Λευκό</item>
     </string-array>
-    <string name="set_title_news">News</string>
+    <string name="set_title_news">Νέα</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
-    <string name="action_follow">Follow</string>
-    <string name="action_unfollow">Unfollow</string>
-    <string name="action_block">Block</string>
-    <string name="action_unblock">Unblock</string>
+    <string name="action_follow">Παρακολούθηση</string>
+    <string name="action_unfollow">Διακοπή παρακολούθησης</string>
+    <string name="action_block">Φραγή</string>
+    <string name="action_unblock">Απόφραξη</string>
     <string name="action_mute">Mute</string>
     <string name="action_no_action">No action</string>
     <string name="action_unmute">Unmute</string>
-    <string name="request_sent">Request sent</string>
-    <string name="followed_by">Follows you</string>
-    <string name="action_search">Search</string>
-    <string name="set_capitalize">First letter in capital for replies</string>
-    <string name="set_resize_picture">Resize pictures</string>
+    <string name="request_sent">Η αίτηση στάλθηκε</string>
+    <string name="followed_by">Σε παρακολουθεί</string>
+    <string name="action_search">Αναζήτηση</string>
+    <string name="set_capitalize">Το πρώτο γράμμα κεφαλαίο, στις απαντήσεις</string>
+    <string name="set_resize_picture">Προσαρμογή του μεγέθους των εικόνων</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push notifications</string>
-    <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+    <string name="settings_popup_title">Ειδοποιήσεις προωθήσεων</string>
+    <string name="settings_popup_message">        Παρακαλώ, επιβεβαίωσε τις ειδοποιήσεις προωθήσεων, που θα ήθελες να λαμβάνεις.
+        Μπορείς να ενεργοποιήσεις ή να απενεργοποιήσεις αυτές τις ειδοποιήσεις, αργότερα, στις ρυθμίσεις (στην καρτέλα Ειδοποιήσεων).
     </string>
     <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-    <string name="settings_popup_notification">For unread notifications?</string>
+    <string name="settings_popup_notification">Για τις μη διαβασμένες ειδοποιήσεις;</string>
     <!-- CACHE -->
-    <string name="cache_title">Clear cache</string>
-    <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+    <string name="cache_title">Καθάρισμα της μικραποθήκευσης</string>
+    <string name="cache_message">Υπάρχουν %1$s δεδομένων στην μικραποθήκευση.\n\nΘα ήθελες να διαγραφούν;</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="toast_cache_clear">Η μικραποθήκευση καθαρίστηκε. Απελευθερώθηκαν %1$s</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Τίτλος</string>
+    <string name="title_hint_custom_sharing">Τίτλος&#8230;</string>
+    <string name="description_header_custom_sharing">Περιγραφή</string>
+    <string name="description_hint_custom_sharing">Περιγραφή&#8230;</string>
+    <string name="keywords_header_custom_sharing">Λέξεις-κλειδιά</string>
+    <string name="keywords_hint_custom_sharing">Λέξεις-κλειδιά&#8230;</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
-    <string name="action_filter">Filter</string>
+    <string name="action_sync">Συγχρονισμός</string>
+    <string name="action_filter">Κόσκινο</string>
     <string name="owner_cached_toots">Your toots</string>
-    <string name="v_public">Public</string>
-    <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
-    <string name="v_direct">Direct</string>
-    <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
-    <string name="filter_no_result">No matching result found!</string>
+    <string name="v_public">Δημόσια</string>
+    <string name="v_unlisted">Αταξινόμητα</string>
+    <string name="v_private">Ιδιωτικά</string>
+    <string name="v_direct">Απευθείας</string>
+    <string name="v_keywords">Μερικές λέξει-κλειδιά…</string>
+    <string name="show_media">Εμφάνιση των πολυμέσων</string>
+    <string name="show_pinned">Εμφάνιση των καρφιτσωμένων</string>
+    <string name="filter_no_result">Δεν βρέθηκαν αποτελέσματα που να ταιριάζουν.</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
-        <item>No</item>
-        <item>Only</item>
-        <item>Both</item>
+        <item>Καθόλου</item>
+        <item>Μόνο</item>
+        <item>Καί</item>
     </string-array>
     <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Recorded data</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+    <string name="privacy_data_title">Αρχειοθετημένα δεδομένα</string>
+    <string name="privacy_data">        Στη συσκευή, αποθηκεύονται μόνο βασικές πληροφορίες των λογαριασμών.
+        Αυτά τα δεδομένα είναι αυστηρώς εμπιστευτικά, και μπορούν να χρησιμοποιηθούν μόνο από την εφαρμογή.
+        Η διαγραφή της εφαρμογής άμεσα απομακρύνει και αυτά τα δεδομένα.\n
+        &#9888; Ποτέ δεν αποθηκεύονται η σύνδεση και το συνθηματικό. Χρησιμοποιούνται μόνο κατά την ασφαλή ταυτοποίηση (SSL), με μία υπόσταση.
     </string>
-    <string name="privacy_authorizations_title">Permissions:</string>
+    <string name="privacy_authorizations_title">Δικαιώματα:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
         - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
@@ -463,12 +463,12 @@
     <string name="thanks_text_dev">        Thank you to:
     </string>
     <string name="filter_regex">Filter out by regular expressions</string>
-    <string name="search">Search</string>
-    <string name="delete">Delete</string>
+    <string name="search">Αναζήτηση</string>
+    <string name="delete">Διαγραφή</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
     <!-- About lists -->
-    <string name="action_lists">Lists</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+    <string name="action_lists">Κατάστιχα</string>
+    <string name="action_lists_confirm_delete">Σίγουρα, να διαγραφεί αυτό το κατάστιχο, αμετάκλητα;</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
     <string name="action_lists_add_to">Add to list</string>
     <string name="action_lists_remove_from">Remove from list</string>
@@ -793,6 +793,9 @@
     <string name="list_of_blocked_domains">List of blocked calls</string>
     <string name="submit">Submit</string>
     <string name="data_base_exported">The data base has been exported!</string>
+    <string name="featured_hashtags">Featured hashtags</string>
+    <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
+    <string name="no_tags">No tags</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
