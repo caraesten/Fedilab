@@ -552,7 +552,7 @@ public class API {
         final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         String tag = sharedpreferences.getString(Helper.SET_FEATURED_TAG_ACTION, null);
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && tag != null){
-            params.put("tagged", tag);
+            params.put("tagged", tag.toLowerCase());
         }
         statuses = new ArrayList<>();
         try {
