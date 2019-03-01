@@ -14,6 +14,7 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.activities;
 
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -50,9 +51,12 @@ import android.text.style.UnderlineSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +71,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
@@ -1011,6 +1016,8 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         final boolean isOwner = account.getId().equals(userId);
         String[] splitAcct = account.getAcct().split("@");
 
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+            popup.getMenu().findItem(R.id.action_filter).setVisible(true);
         if( splitAcct.length <= 1) {
             popup.getMenu().findItem(R.id.action_follow_instance).setVisible(false);
             popup.getMenu().findItem(R.id.action_block_instance).setVisible(false);
@@ -1129,6 +1136,41 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
                                 }
                             }
                         }).start();
+                        return true;
+                    case R.id.action_filter:
+                        AlertDialog.Builder filterTagDialog = new AlertDialog.Builder(ShowAccountActivity.this, style);
+                        Set<String> featuredTagsSet = sharedpreferences.getStringSet(Helper.SET_FEATURED_TAGS, null);
+                        List<String> tags = new ArrayList<>();
+                        if( featuredTagsSet != null){
+                            tags = new ArrayList<>(featuredTagsSet);
+                        }
+                        tags.add(0,getString(R.string.no_tags));
+                        String[] tagsString = tags.toArray(new String[tags.size()]);
+                        List<String> finalTags = tags;
+                        String tag = sharedpreferences.getString(Helper.SET_FEATURED_TAG_ACTION, null);
+                        int checkedposition = 0;
+                        int i = 0;
+                        for(String _t: tags){
+                            if( tag != null && _t.equals(tag))
+                                checkedposition = i;
+                            i++;
+                        }
+                        filterTagDialog.setSingleChoiceItems(tagsString, checkedposition, new DialogInterface
+                                .OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                String tag;
+                                if( item == 0){
+                                    tag = null;
+                                }else {
+                                    tag = finalTags.get(item);
+                                }
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString(Helper.SET_FEATURED_TAG_ACTION, tag);
+                                editor.apply();
+                                dialog.dismiss();
+                            }
+                        });
+                        filterTagDialog.show();
                         return true;
                     case R.id.action_endorse:
                         if( relationship != null)

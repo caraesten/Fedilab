@@ -549,17 +549,10 @@ public class API {
             params.put("pinned", Boolean.toString(true));
         params.put("exclude_replies", Boolean.toString(exclude_replies));
         params.put("limit", String.valueOf(limit));
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
-            final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            Set<String> featuredTagsSet = sharedpreferences.getStringSet(Helper.SET_FEATURED_TAGS, null);
-            if( featuredTagsSet != null && featuredTagsSet.size() > 0){
-                List<String> tags = new ArrayList<>(featuredTagsSet);
-                StringBuilder parameters = new StringBuilder();
-                for(String tag: tags)
-                    parameters.append("tagged[]=").append(tag).append("&");
-                parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(9));
-                params.put("tagged[]", parameters.toString());
-            }
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String tag = sharedpreferences.getString(Helper.SET_FEATURED_TAG_ACTION, null);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && tag != null){
+            params.put("tagged", tag);
         }
         statuses = new ArrayList<>();
         try {
