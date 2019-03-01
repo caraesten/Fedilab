@@ -27,6 +27,11 @@
         android:icon="@drawable/ic_chat_bubble_outline"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/action_filter"
+        android:visible="false"
+        android:title="@string/filter_timeline_with_a_tag"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_hide_boost"
         android:title="@string/hide_boost"
         app:showAsAction="ifRoom" />

@@ -39,6 +39,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -550,6 +551,11 @@ public class API {
             params.put("pinned", Boolean.toString(true));
         params.put("exclude_replies", Boolean.toString(exclude_replies));
         params.put("limit", String.valueOf(limit));
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String tag = sharedpreferences.getString(Helper.SET_FEATURED_TAG_ACTION, null);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && tag != null){
+            params.put("tagged", tag.toLowerCase());
+        }
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
