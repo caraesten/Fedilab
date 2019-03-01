@@ -439,11 +439,17 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                         pictureMention.compress(Bitmap.CompressFormat.PNG, 0, bos);
                         byte[] bitmapdata = bos.toByteArray();
                         ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-                        toot_picture_container.setVisibility(View.VISIBLE);
-                        picture_scrollview.setVisibility(View.VISIBLE);
-                        toot_picture.setEnabled(false);
-                        toot_it.setEnabled(false);
-                        new HttpsConnection(TootActivity.this).upload(bs, fileMention, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                toot_picture_container.setVisibility(View.VISIBLE);
+                                picture_scrollview.setVisibility(View.VISIBLE);
+                                toot_picture.setEnabled(false);
+                                toot_it.setEnabled(false);
+                                new HttpsConnection(TootActivity.this).upload(bs, fileMention, accountReply!=null?accountReply.getToken():null, TootActivity.this);
+                            }
+                        });
+
                     }
                 });
             }
