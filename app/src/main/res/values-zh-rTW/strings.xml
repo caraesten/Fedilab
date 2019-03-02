@@ -789,9 +789,9 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="list_of_blocked_domains">阻擋呼叫清單</string>
     <string name="submit">遞交</string>
     <string name="data_base_exported">資料庫已匯出！</string>
-    <string name="featured_hashtags">Featured hashtags</string>
-    <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
-    <string name="no_tags">No tags</string>
+    <string name="featured_hashtags">特色主題標籤</string>
+    <string name="filter_timeline_with_a_tag">以標籤過濾時間軸</string>
+    <string name="no_tags">沒有標籤</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
