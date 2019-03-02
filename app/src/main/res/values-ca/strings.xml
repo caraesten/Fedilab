@@ -29,14 +29,14 @@
     <string name="save">Desa</string>
     <string name="restore">Restaura</string>
     <string name="two_factor_authentification">Autenticació de dos factors?</string>
-    <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
+    <string name="other_instance">Altre instància que mastodon.etalab.gouv.fr?</string>
     <string name="no_result">No hi ha cap resultat!</string>
     <string name="instance">Instància</string>
     <string name="instance_example">Intància: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Ara funciona amb el compte %1$s</string>
     <string name="add_account">Afegeix un compte</string>
     <string name="clipboard">El contingut del toot s\'ha copiat al porta-retalls</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">La direcció web del toot ha sigut copiat al porta-retalls</string>
     <string name="change">Canvia</string>
     <string name="choose_picture">Seleccioneu una imatge...</string>
     <string name="clear">Neteja</string>
@@ -60,26 +60,26 @@
     <string name="replies">Respostes</string>
     <string name="username">Nom d\'usuari</string>
     <string name="drafts">Esborranys</string>
-    <string name="new_data">New data are available! Do you want to display them?</string>
+    <string name="new_data">Noves dades estan disponibles! Voleu visualitzar-les?</string>
     <string name="favourite">Preferits</string>
     <string name="follow">Seguidors nous</string>
     <string name="mention">Mencions</string>
     <string name="reblog">Boosts</string>
-    <string name="show_boosts">Show boosts</string>
+    <string name="show_boosts">Mostrar boosts</string>
     <string name="show_replies">Mostra les respostes</string>
     <string name="action_open_in_web">Obre al navegador</string>
     <string name="translate">Tradueix</string>
-    <string name="please_wait">Please, wait few seconds before making this action.</string>
+    <string name="please_wait">Si us plau, espereu uns segons abans de fer aquesta acció.</string>
     <!--- Menu -->
     <string name="home_menu">Inici</string>
-    <string name="local_menu">Local timeline</string>
-    <string name="global_menu">Federated timeline</string>
+    <string name="local_menu">Cronologia local</string>
+    <string name="global_menu">Cronologia federada</string>
     <string name="neutral_menu_title">Opcions</string>
     <string name="favorites_menu">Preferits</string>
     <string name="communication_menu_title">Comunicació</string>
     <string name="muted_menu">Usuaris silenciats</string>
     <string name="blocked_menu">Usuaris blocats</string>
-    <string name="remote_follow_menu">Remote follow</string>
+    <string name="remote_follow_menu">Seguiment remot</string>
     <string name="notifications">Notificacions</string>
     <string name="follow_request">Peticions de seguiment</string>
     <string name="optimization">Optimització</string>
@@ -87,26 +87,26 @@
     <string name="profile">Perfil</string>
     <string name="make_a_choice">Què vols fer?</string>
     <string name="delete_account_title">Suprimeix un compte</string>
-    <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
+    <string name="delete_account_message" formatted="false">Voleu suprimir el compte %1$s de l\'aplicació?</string>
     <string name="send_email">Envia un correu electrònic</string>
     <string name="choose_file">Selecciona un fitxer</string>
-    <string name="choose_file_error">No file explorer found!</string>
-    <string name="click_to_change">Click on the path to change it</string>
+    <string name="choose_file_error">Cap Explorador d\'arxiu trobat!</string>
+    <string name="click_to_change">Feu clic en a la ruta per canviar-la</string>
     <string name="failed">Ha fallat!</string>
     <string name="scheduled_toots">Toots planificats</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+    <string name="disclaimer_full">La següent informació pot reflectir el perfil de l\'usuari incomplet.</string>
     <string name="insert_emoji">Insereix un emoji</string>
-    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+    <string name="no_emoji">L\'app no ha recollit emojis personalitzats de moment.</string>
     <string name="live_notif">Notificacions en directe</string>
     <!-- Status -->
-    <string name="no_status">No toot to display</string>
+    <string name="no_status">Cap toot per mostrar</string>
     <string name="fav_added">El toot s\'ha afegit als preferits</string>
     <string name="fav_removed">El toot s\'ha suprimit dels preferits!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
-    <string name="favourite_add">Add this toot to your favourites?</string>
-    <string name="favourite_remove">Remove this toot from your favourites?</string>
+    <string name="reblog_added">S\'ha fet boost del toot!</string>
+    <string name="reblog_removed">S\'ha eliminat el boost!</string>
+    <string name="reblog_by">Boosted per %1$s</string>
+    <string name="favourite_add">Afegir aquesta toot als seus favorits?</string>
+    <string name="favourite_remove">Esborrar aquest toot dels teus favorits?</string>
     <string name="reblog_add">Boost this toot?</string>
     <string name="reblog_remove">Unboost this toot?</string>
     <string name="pin_add">Vols fixar aquest toot?</string>
