@@ -314,7 +314,7 @@
     <string name="set_nsfw_timeout">Tempo até visualização de NSFW expirar (segundos, 0 significa desligado)</string>
     <string name="settings_title_profile">Editar perfil</string>
     <string name="settings_title_custom_sharing">Compartilhamento personalizado</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_custom_sharing_url">Seu URL de compartilhamento personalizado&#8230;</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Bloquear conta</string>
     <string name="set_save_changes">Salvar mudanças</string>
@@ -337,9 +337,9 @@
     <string name="use_cookies">Habilitar cookies de terceiros</string>
     <string name="settings_ui_layout">Modelo das timelines: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Alto consumo de bateria</item>
+        <item>Consumo médio de bateria</item>
+        <item>Baixo consumo de bateria</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Abas</item>
@@ -651,7 +651,7 @@
     <string name="contact_instance_admin">Contact admin of the instance</string>
     <string name="add_new">Add new</string>
     <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
+    <string name="emoji_picker">Seletor de emoticons</string>
     <string name="refresh">Refresh</string>
     <string name="expand_conversation">Expand the conversation</string>
     <string name="remove_account">Remove an account</string>
@@ -719,9 +719,9 @@
     <string name="my_videos">My videos</string>
     <string name="title">Title</string>
     <string name="categories">Categories</string>
-    <string name="license">License</string>
-    <string name="category">Category</string>
-    <string name="language">Language</string>
+    <string name="license">Licença</string>
+    <string name="category">Categoria</string>
+    <string name="language">Idioma</string>
     <string name="peertube_nsfw">This video contains mature or explicit content</string>
     <string name="peertube_enable_comments">Enable video comments</string>
     <string name="update_video">Update video</string>
