@@ -224,6 +224,7 @@ public abstract class BaseMainActivity extends BaseActivity
     public static UpdateAccountInfoAsyncTask.SOCIAL social;
     SparseArray<Fragment> registeredFragments = new SparseArray<>();
     private final int PICK_IMPORT = 5556;
+    private AlertDialog.Builder dialogBuilderOptin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1432,6 +1433,12 @@ public abstract class BaseMainActivity extends BaseActivity
                                 }
                                 return true;
                             case R.id.action_export_data:
+                                if(Build.VERSION.SDK_INT >= 23 ){
+                                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+                                        ActivityCompat.requestPermissions(BaseMainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_REQUEST_CODE);
+                                        return true;
+                                    }
+                                }
                                 SQLiteToExcel sqliteToExcel = new SQLiteToExcel(BaseMainActivity.this, DB_NAME);
                                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
                                 final String fileName = "Mastalab_export_"+timeStamp+".xls";
@@ -1527,13 +1534,13 @@ public abstract class BaseMainActivity extends BaseActivity
 
         // Asked once for notification opt-in
         boolean popupShown = sharedpreferences.getBoolean(Helper.SET_POPUP_PUSH, false);
-        if(!popupShown && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)){
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
+        if(dialogBuilderOptin == null && !popupShown && (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
+            dialogBuilderOptin = new AlertDialog.Builder(BaseMainActivity.this, style);
             LayoutInflater inflater = getLayoutInflater();
             @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.popup_quick_settings, null);
-            dialogBuilder.setView(dialogView);
+            dialogBuilderOptin.setView(dialogView);
 
-            final SwitchCompat set_push_hometimeline = dialogView.findViewById(R.id.set_push_hometimeline);
+            //final SwitchCompat set_push_hometimeline = dialogView.findViewById(R.id.set_push_hometimeline);
             final SwitchCompat set_push_notification = dialogView.findViewById(R.id.set_push_notification);
             boolean notif_hometimeline = sharedpreferences.getBoolean(Helper.SET_NOTIF_HOMETIMELINE, false);
             boolean notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW, true);
@@ -1542,12 +1549,12 @@ public abstract class BaseMainActivity extends BaseActivity
             boolean notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION, true);
             boolean notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE, true);
             boolean notifif_notifications = !( !notif_follow &&  !notif_add && !notif_ask && !notif_mention && !notif_share);
-            set_push_hometimeline.setChecked(notif_hometimeline);
+            //set_push_hometimeline.setChecked(notif_hometimeline);
             set_push_notification.setChecked(notifif_notifications);
 
-            dialogBuilder.setTitle(R.string.settings_popup_title);
-            dialogBuilder.setCancelable(false);
-            dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+            dialogBuilderOptin.setTitle(R.string.settings_popup_title);
+            dialogBuilderOptin.setCancelable(false);
+            dialogBuilderOptin.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putBoolean(Helper.SET_NOTIF_FOLLOW, set_push_notification.isChecked());
@@ -1555,13 +1562,13 @@ public abstract class BaseMainActivity extends BaseActivity
                     editor.putBoolean(Helper.SET_NOTIF_ASK, set_push_notification.isChecked());
                     editor.putBoolean(Helper.SET_NOTIF_MENTION, set_push_notification.isChecked());
                     editor.putBoolean(Helper.SET_NOTIF_SHARE, set_push_notification.isChecked());
-                    editor.putBoolean(Helper.SET_NOTIF_HOMETIMELINE, set_push_hometimeline.isChecked());
+                   // editor.putBoolean(Helper.SET_NOTIF_HOMETIMELINE, set_push_hometimeline.isChecked());
                     editor.putBoolean(Helper.SET_POPUP_PUSH, true);
                     editor.apply();
                 }
             });
             try {
-                dialogBuilder.show();
+                dialogBuilderOptin.show();
             }catch (Exception ignored){};
 
         }
