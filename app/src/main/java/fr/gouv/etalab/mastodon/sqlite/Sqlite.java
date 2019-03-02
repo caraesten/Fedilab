@@ -15,9 +15,29 @@
 
 package fr.gouv.etalab.mastodon.sqlite;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Random;
+
+import es.dmoral.toasty.Toasty;
+import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.LoginActivity;
+import fr.gouv.etalab.mastodon.helper.Helper;
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -357,6 +377,58 @@ public class Sqlite extends SQLiteOpenHelper {
         //Close the db
         if( db != null && db.isOpen() ) {
             db.close();
+        }
+    }
+
+
+
+
+
+    public static void importDB(Activity activity, String backupDBPath) {
+        try {
+            db.close();
+            File dbDest = activity.getDatabasePath(DB_NAME);
+            File dbSource = new File(backupDBPath);
+            FileChannel src = new FileInputStream(dbSource).getChannel();
+            FileChannel dst = new FileOutputStream(dbDest).getChannel();
+            dst.transferFrom(src, 0, src.size());
+            src.close();
+            dst.close();
+            Helper.logoutCurrentUser(activity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toasty.error(activity, activity.getString(R.string.data_import_error_simple),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public static void exportDB(Context context) {
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+
+            if (sd.canWrite()) {
+
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+                String backupDBPath = "Fedilab_export_"+timeStamp+".fedilab";
+                File dbSource = context.getDatabasePath(DB_NAME);
+                File dbDest = new File(sd,backupDBPath);
+                FileChannel src = new FileInputStream(dbSource).getChannel();
+                FileChannel dst = new FileOutputStream(dbDest).getChannel();
+                dst.transferFrom(src, 0, src.size());
+                src.close();
+                dst.close();
+                final Intent intent = new Intent();
+                Random r = new Random();
+                final int notificationIdTmp = r.nextInt(10000);
+                intent.setAction(android.content.Intent.ACTION_VIEW);
+                Uri uri = Uri.fromFile(dbDest);
+                intent.setDataAndType(uri, "*/*");
+                Helper.notify_user(context, intent, notificationIdTmp, BitmapFactory.decodeResource(context.getResources(),
+                        R.mipmap.ic_launcher),  Helper.NotifType.STORE, context.getString(R.string.save_over), context.getString(R.string.download_from, backupDBPath));
+                Toasty.success(context, context.getString(R.string.data_base_exported),Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toasty.error(context, context.getString(R.string.data_export_error_simple), Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -78,8 +78,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ajts.androidmads.library.ExcelToSQLite;
-import com.ajts.androidmads.library.SQLiteToExcel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -154,6 +152,7 @@ import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 
 import static fr.gouv.etalab.mastodon.asynctasks.ManageFiltersAsyncTask.action.GET_ALL_FILTER;
 import static fr.gouv.etalab.mastodon.helper.Helper.ADD_USER_INTENT;
@@ -178,6 +177,8 @@ import static fr.gouv.etalab.mastodon.helper.Helper.menuAccounts;
 import static fr.gouv.etalab.mastodon.helper.Helper.unCheckAllMenuItems;
 import static fr.gouv.etalab.mastodon.helper.Helper.updateHeaderAccountInfo;
 import static fr.gouv.etalab.mastodon.sqlite.Sqlite.DB_NAME;
+import static fr.gouv.etalab.mastodon.sqlite.Sqlite.exportDB;
+import static fr.gouv.etalab.mastodon.sqlite.Sqlite.importDB;
 
 
 public abstract class BaseMainActivity extends BaseActivity
@@ -1407,7 +1408,6 @@ public abstract class BaseMainActivity extends BaseActivity
                                 return true;
 
                             case R.id.action_import_data:
-
                                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                     if (ContextCompat.checkSelfPermission(BaseMainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
                                             PackageManager.PERMISSION_GRANTED) {
@@ -1420,12 +1420,12 @@ public abstract class BaseMainActivity extends BaseActivity
                                 intent = new Intent(Intent.ACTION_GET_CONTENT);
                                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                                    intent.setType("application/vnd.ms-excel");
-                                    String[] mimetypes = {"application/vnd.ms-excel"};
+                                    intent.setType("*/*");
+                                    String[] mimetypes = {"*/*"};
                                     intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                                     startActivityForResult(intent, PICK_IMPORT);
                                 }else {
-                                    intent.setType("application/vnd.ms-excel");
+                                    intent.setType("*/*");
                                     Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                     Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_import));
                                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
@@ -1439,40 +1439,7 @@ public abstract class BaseMainActivity extends BaseActivity
                                         return true;
                                     }
                                 }
-                                SQLiteToExcel sqliteToExcel = new SQLiteToExcel(BaseMainActivity.this, DB_NAME);
-                                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-                                final String fileName = "Mastalab_export_"+timeStamp+".xls";
-                                List<String> excludedValues = new ArrayList<>();
-                                excludedValues.add(Sqlite.TABLE_TRACKING_BLOCK);
-                                excludedValues.add(Sqlite.TABLE_STATUSES_CACHE);
-                                excludedValues.add(Sqlite.TABLE_CUSTOM_EMOJI);
-                                excludedValues.add(Sqlite.TABLE_BOOST_SCHEDULE);
-
-                                sqliteToExcel.setExcludeValuesFromTables(excludedValues);
-                                sqliteToExcel.exportAllTables(fileName, new SQLiteToExcel.ExportListener() {
-                                    @Override
-                                    public void onStart() {
-
-                                    }
-                                    @Override
-                                    public void onCompleted(String filePath) {
-                                        final Intent intent = new Intent();
-                                        Random r = new Random();
-                                        final int notificationIdTmp = r.nextInt(10000);
-                                        File file = new File(filePath);
-                                        intent.setAction(android.content.Intent.ACTION_VIEW);
-                                        Uri uri = Uri.fromFile(file);
-                                        intent.setDataAndType(uri, "application/vnd.ms-excel");
-                                        Helper.notify_user(getApplicationContext(), intent, notificationIdTmp, BitmapFactory.decodeResource(getResources(),
-                                                R.mipmap.ic_launcher),  Helper.NotifType.STORE, getString(R.string.save_over), getString(R.string.download_from, fileName));
-                                        Toasty.success(getApplicationContext(), getString(R.string.data_base_exported),Toast.LENGTH_LONG).show();
-                                    }
-                                    @Override
-                                    public void onError(Exception e) {
-                                        e.printStackTrace();
-                                        Toasty.error(getApplicationContext(), getString(R.string.data_export_error_simple),Toast.LENGTH_LONG).show();
-                                    }
-                                });
+                                exportDB(BaseMainActivity.this);
                                 return true;
                             default:
                                 return true;
@@ -2348,26 +2315,11 @@ public abstract class BaseMainActivity extends BaseActivity
                 Toasty.error(getApplicationContext(),getString(R.string.toot_select_file_error),Toast.LENGTH_LONG).show();
                 return;
             }
-            ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DB_NAME, true);
             String filename = Helper.getFilePathFromURI(getApplicationContext(), data.getData());
-            assert filename != null;
-            excelToSQLite.importFromFile(filename, new ExcelToSQLite.ImportListener() {
-                @Override
-                public void onStart() {
-                    Toasty.success(getApplicationContext(),getString(R.string.data_import_start),Toast.LENGTH_LONG).show();
-                }
+            importDB(BaseMainActivity.this, filename);
 
-                @Override
-                public void onCompleted(String dbName) {
-                    Toasty.success(getApplicationContext(),getString(R.string.data_import_success_simple),Toast.LENGTH_LONG).show();
-                    Helper.logoutCurrentUser(BaseMainActivity.this);
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    Toasty.error(getApplicationContext(),getString(R.string.data_import_error_simple),Toast.LENGTH_LONG).show();
-                }
-            });
+        }else{
+            Toasty.error(getApplicationContext(),getString(R.string.toot_select_file_error),Toast.LENGTH_LONG).show();
         }
     }
 

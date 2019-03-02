@@ -919,6 +919,8 @@ public class API {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        if( apiResponse == null)
+            apiResponse = new APIResponse();
         apiResponse.setStatuses(statuses);
         return apiResponse;
     }

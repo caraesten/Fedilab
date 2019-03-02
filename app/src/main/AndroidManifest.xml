@@ -112,6 +112,15 @@
                     android:pathPrefix="/@"
                     />
             </intent-filter>
+            <intent-filter
+                >
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="file" />
+                <data android:mimeType="*/*" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.fedilab" />
+            </intent-filter>
         </activity>
         <activity android:name=".activities.LoginActivity"
             android:windowSoftInputMode="stateAlwaysHidden"

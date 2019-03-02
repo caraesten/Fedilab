@@ -55,7 +55,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ajts.androidmads.library.ExcelToSQLite;
 import com.elconfidencial.bubbleshowcase.BubbleShowCase;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener;
@@ -89,6 +88,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeMaterialSpinnerColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.convertDpToPixel;
 import static fr.gouv.etalab.mastodon.sqlite.Sqlite.DB_NAME;
+import static fr.gouv.etalab.mastodon.sqlite.Sqlite.importDB;
 
 
 /**
@@ -821,26 +821,10 @@ public class LoginActivity extends BaseActivity {
                 Toasty.error(getApplicationContext(),getString(R.string.toot_select_file_error),Toast.LENGTH_LONG).show();
                 return;
             }
-            ExcelToSQLite excelToSQLite = new ExcelToSQLite(getApplicationContext(), DB_NAME, true);
             String filename = Helper.getFilePathFromURI(getApplicationContext(), data.getData());
-            assert filename != null;
-            excelToSQLite.importFromFile(filename, new ExcelToSQLite.ImportListener() {
-                @Override
-                public void onStart() {
-                    Toasty.success(getApplicationContext(),getString(R.string.data_import_start),Toast.LENGTH_LONG).show();
-                }
-
-                @Override
-                public void onCompleted(String dbName) {
-                    Toasty.success(getApplicationContext(),getString(R.string.data_import_success_simple),Toast.LENGTH_LONG).show();
-                    Helper.logoutCurrentUser(LoginActivity.this);
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    Toasty.error(getApplicationContext(),getString(R.string.data_import_error_simple),Toast.LENGTH_LONG).show();
-                }
-            });
+            importDB(LoginActivity.this, filename);
+        }else{
+            Toasty.error(getApplicationContext(),getString(R.string.toot_select_file_error),Toast.LENGTH_LONG).show();
         }
     }
 
