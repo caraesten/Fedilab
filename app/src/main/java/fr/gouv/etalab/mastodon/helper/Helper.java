@@ -2791,7 +2791,7 @@ public class Helper {
         paint.setStrokeWidth(12);
         paint.setTextSize((int)Helper.convertDpToPixel(14, context));
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-        canvas.drawText(name +" - #Mastalab", 0, view.getHeight() +(int)Helper.convertDpToPixel(15, context), paint);
+        canvas.drawText(name +" - #Fedilab", 0, view.getHeight() +(int)Helper.convertDpToPixel(15, context), paint);
 
         return returnedBitmap;
     }
