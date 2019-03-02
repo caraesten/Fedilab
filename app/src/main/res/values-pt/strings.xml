@@ -127,8 +127,8 @@
         <item>Bloquear este domínio?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Notificar</item>
+        <item>Silencioso</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Excluir este toot?</item>
@@ -627,7 +627,7 @@
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
+    <string name="set_change_locale">Mudar o idioma</string>
     <string name="default_language">Default language</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
