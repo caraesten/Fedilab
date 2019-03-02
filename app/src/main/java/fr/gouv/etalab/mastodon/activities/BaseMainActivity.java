@@ -1444,6 +1444,10 @@ public abstract class BaseMainActivity extends BaseActivity
                                 final String fileName = "Mastalab_export_"+timeStamp+".xls";
                                 List<String> excludedValues = new ArrayList<>();
                                 excludedValues.add(Sqlite.TABLE_TRACKING_BLOCK);
+                                excludedValues.add(Sqlite.TABLE_STATUSES_CACHE);
+                                excludedValues.add(Sqlite.TABLE_CUSTOM_EMOJI);
+                                excludedValues.add(Sqlite.TABLE_BOOST_SCHEDULE);
+
                                 sqliteToExcel.setExcludeValuesFromTables(excludedValues);
                                 sqliteToExcel.exportAllTables(fileName, new SQLiteToExcel.ExportListener() {
                                     @Override

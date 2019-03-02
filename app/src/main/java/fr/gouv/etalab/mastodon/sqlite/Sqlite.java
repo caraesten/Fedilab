@@ -39,7 +39,7 @@ public class Sqlite extends SQLiteOpenHelper {
     //Table of stored status
     static final String TABLE_STATUSES_STORED = "STATUSES_STORED";
     //Table for custom emoji
-    static final String TABLE_CUSTOM_EMOJI = "CUSTOM_EMOJI";
+    public static final String TABLE_CUSTOM_EMOJI = "CUSTOM_EMOJI";
     //Table for search
     static final String TABLE_SEARCH = "SEARCH";
 
@@ -47,7 +47,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String TABLE_TEMP_MUTE = "TEMP_MUTE";
 
     //Table for cached statuses
-    static final String TABLE_STATUSES_CACHE = "STATUSES_CACHE";
+    public static final String TABLE_STATUSES_CACHE = "STATUSES_CACHE";
 
     //Table for instance names
     static final String TABLE_INSTANCES = "INSTANCES";
@@ -62,7 +62,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String TABLE_CACHE_TAGS = "CACHE_TAGS";
 
     //Table for scheduling boosts
-    static final String TABLE_BOOST_SCHEDULE = "BOOST_SCHEDULE";
+    public static final String TABLE_BOOST_SCHEDULE = "BOOST_SCHEDULE";
 
     //Table for blocking tracking domains
     public static final String TABLE_TRACKING_BLOCK = "TRACKING_BLOCK";
