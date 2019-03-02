@@ -348,6 +348,10 @@ public class API {
     public Account verifyCredentials() {
         account = new Account();
         try {
+            if( context == null) {
+                setError(500, new Throwable("An error occured!"));
+                return null;
+            }
             String response = new HttpsConnection(context).get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, prefKeyOauthTokenT);
             account = parseAccountResponse(context, new JSONObject(response));
             if( account.getSocial().equals("PLEROMA")){

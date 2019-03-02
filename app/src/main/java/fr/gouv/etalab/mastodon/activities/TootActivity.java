@@ -316,19 +316,6 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             toot_emoji.setVisibility(View.GONE);
         }
 
-        switch (MainActivity.social){
-            case GNU:
-                toot_it.setText(getText(R.string.queet_it));
-                break;
-            case PLEROMA:
-                toot_it.setText(getText(R.string.submit));
-                break;
-            case FRIENDICA:
-                toot_it.setText(getText(R.string.share));
-                break;
-            default:
-                toot_it.setText(getText(R.string.toot_it));
-        }
 
         drawer_layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -404,6 +391,38 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             account = new AccountDAO(getApplicationContext(),db).getAccountByID(userIdReply);
         else
             account = accountReply;
+
+
+        if( MainActivity.social == null){
+
+            //Update the static variable which manages account type
+            if( account.getSocial() == null || account.getSocial().equals("MASTODON"))
+                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
+            else if( account.getSocial().equals("PEERTUBE"))
+                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
+            else if( account.getSocial().equals("PIXELFED"))
+                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
+            else if( account.getSocial().equals("PLEROMA"))
+                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA;
+            else if( account.getSocial().equals("GNU"))
+                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
+            else if( account.getSocial().equals("FRIENDICA"))
+                MainActivity.social = UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA;
+        }
+
+        switch (MainActivity.social){
+            case GNU:
+                toot_it.setText(getText(R.string.queet_it));
+                break;
+            case PLEROMA:
+                toot_it.setText(getText(R.string.submit));
+                break;
+            case FRIENDICA:
+                toot_it.setText(getText(R.string.share));
+                break;
+            default:
+                toot_it.setText(getText(R.string.toot_it));
+        }
 
         if( tootReply != null) {
             tootReply();
