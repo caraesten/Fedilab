@@ -621,8 +621,8 @@
     <string name="thanks_text_ux">Novo UX/UI designer</string>
     <string name="set_old_direct_timeline">Usar a linha do tempo direta anterior ao Mastodon 2.6</string>
     <string name="set_display_video_preview">Mostrar visualizações do vídeo</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
+    <string name="thanks_text_support">Suporte do Gitlab</string>
+    <string name="action_bug_report">Relatório de erro</string>
     <string name="no_mail_client">There are no email clients installed.</string>
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
