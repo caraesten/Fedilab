@@ -330,7 +330,7 @@
     <string name="set_nsfw_timeout">مهلة عرض الـ NSFW (بالثواني، 0 يعني مُعطَّل)</string>
     <string name="settings_title_profile">تعديل الملف الشخصي</string>
     <string name="settings_title_custom_sharing">المشاركة المخصصة</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_custom_sharing_url">رابط المشاركة المعدل&#8230;</string>
     <string name="set_profile_description">السيرة الذاتية…</string>
     <string name="set_lock_account">تأمين الحساب</string>
     <string name="set_save_changes">حفظ التغييرات</string>
@@ -417,11 +417,11 @@
     <string name="toast_cache_clear">تم تنظيف ذاكرة التخزين المؤقتة و تفريغ %1$s</string>
     <!-- ACTIVITY CUSTOM SHARING -->
     <string name="title_header_custom_sharing">العنوان</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
+    <string name="title_hint_custom_sharing">العنوان&#8230;</string>
     <string name="description_header_custom_sharing">الوصف</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
+    <string name="description_hint_custom_sharing">الوصف&#8230;</string>
     <string name="keywords_header_custom_sharing">الكلمات المفتاحية</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="keywords_hint_custom_sharing">الكلمات المفتاحية&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">مزامنة</string>
     <string name="action_filter">عامل التصفية</string>
