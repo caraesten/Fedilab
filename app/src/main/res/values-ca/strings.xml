@@ -337,9 +337,9 @@
     <string name="use_cookies">Permetre galetes de tercers</string>
     <string name="settings_ui_layout">Disposició de les pissarres: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Consum normal de la pila</item>
+        <item>Consum mitjà de la pila</item>
+        <item>Comsum baix de la pila</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Pestanyes</item>
@@ -351,7 +351,7 @@
         <item>DeepL</item>
         <item>No</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">Per a Yandex, pots deixar en blanc la clau de l\'API</string>
     <string-array name="settings_theme">
         <item>Fosc</item>
         <item>Clar</item>
@@ -374,7 +374,7 @@
         <item>Blanc</item>
     </string-array>
     <string name="set_title_news">Notícies</string>
-    <string name="set_notification_news">Notify for new toots on the home timeline</string>
+    <string name="set_notification_news">Avisa dels toots nous a la pissarra pròpia</string>
     <string name="action_follow">Segueix</string>
     <string name="action_unfollow">Deixa de seguir</string>
     <string name="action_block">Bloca</string>
@@ -385,39 +385,38 @@
     <string name="request_sent">S\'ha enviat la petició</string>
     <string name="followed_by">Et segueix</string>
     <string name="action_search">Cerca</string>
-    <string name="set_capitalize">First letter in capital for replies</string>
-    <string name="set_resize_picture">Resize pictures</string>
+    <string name="set_capitalize">Primera lletra en majúscula a les respostes</string>
+    <string name="set_resize_picture">Redimensiona les fotos</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push notifications</string>
-    <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
-    </string>
-    <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-    <string name="settings_popup_notification">For unread notifications?</string>
+    <string name="settings_popup_title">Notificacions emergents</string>
+    <string name="settings_popup_message">Sisplau, confirma les notificacions emergents que vols rebre.
+Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (Pestanya de notificacions).    </string>
+    <string name="settings_popup_timeline">Per als toots no llegits a la pissarra pròpia?</string>
+    <string name="settings_popup_notification">Per a notificacions no llegides?</string>
     <!-- CACHE -->
-    <string name="cache_title">Clear cache</string>
-    <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+    <string name="cache_title">Netejar la memòria cau</string>
+    <string name="cache_message">Hi ha %1$s de dades a la memòria cau.\n\nVoldries eliminar-les?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="toast_cache_clear">S\'ha netejat la memòria cau! S\'han alliberat %1$s</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Títol</string>
+    <string name="title_hint_custom_sharing">Títol&#8230;</string>
+    <string name="description_header_custom_sharing">Descripció</string>
+    <string name="description_hint_custom_sharing">Descripció&#8230;</string>
+    <string name="keywords_header_custom_sharing">Paraules clau</string>
+    <string name="keywords_hint_custom_sharing">Paraules clau&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sincronitza</string>
     <string name="action_filter">Filtre</string>
-    <string name="owner_cached_toots">Your toots</string>
+    <string name="owner_cached_toots">Els teus toots</string>
     <string name="v_public">Públic</string>
-    <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
-    <string name="v_direct">Direct</string>
-    <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
-    <string name="filter_no_result">No matching result found!</string>
+    <string name="v_unlisted">No llistats</string>
+    <string name="v_private">Privat</string>
+    <string name="v_direct">Directe</string>
+    <string name="v_keywords">Algunes paraules clau…</string>
+    <string name="show_media">Mostra els mèdia</string>
+    <string name="show_pinned">Mostra els fixats</string>
+    <string name="filter_no_result">No s`han trobat textos coincidents!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
