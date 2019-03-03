@@ -479,7 +479,7 @@
     <string name="action_lists_owner">Les teves llistes</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s s\'ha traslladat a %2$s</string>
-    <string name="show_boost_count">Mostre el recompte de difusions/preferits</string>
+    <string name="show_boost_count">Mostra el recompte de difusions/preferits</string>
     <string name="issue_login_title">L\'autenticació falla?</string>
     <string name="issue_login_message">        <b>Aquí hi ha algunes comprovacions potencialment útils:</b>\n\n         
 - Comprova que no hi hagi errors de picatge en el nom de la instància\n\n         - Comprova que no tinguis la instància inactiva\n\n         - Si tens l\'autenticació de dos factors (2FA), prova l\'enllaç de la part inferior  (després d\'entrar el nom de la instància)\n\n         - L\'enllaç el pots fer servir encara que no tinguis la 2FA\n\n         - Si encara no rutlla, sisplau obre fil del GitLab a https://gitlab.com/tom79/mastalab/issues    </string>
@@ -503,7 +503,7 @@
     <string name="poxy_password">Contrasenya</string>
     <string name="set_theme">Tema:</string>
     <string name="set_compact_mode">Mode Compacte</string>
-    <string name="set_share_details">Inclou detalls del tot en compartir-lo</string>
+    <string name="set_share_details">Inclou detalls del toot en compartir-lo</string>
     <string name="support_the_app_on_liberapay">Dona suport a l\'App al Liberapay</string>
     <string name="alert_regex">Hi ha un error en l\'expressió regular!</string>
     <string name="no_account_yet">No tens compte encara?</string>
@@ -517,11 +517,11 @@
     <string name="follow_instance">Segueix la instància</string>
     <string name="toast_instance_already_added">Ja estàs seguint aquesta instància!</string>
     <string name="toast_instance_followed">La instància ja té seguidors!</string>
-    <string name="action_partnership">Associacions</string>
+    <string name="action_partnership">Socis</string>
     <string name="neutral_menu_information">Informació</string>
     <string name="hide_boost">Amaga les difusions de %s</string>
     <string name="endorse">Incloure al perfil</string>
-    <string name="hide_everything">Amaga-ho tot a %s</string>
+    <string name="hide_everything">Amaga-ho tot de %s</string>
     <string name="show_boost">Mostra difusions de %s</string>
     <string name="unendorse">No incloure al perfil</string>
     <string name="show_everything">Mostra tot el de %s</string>
@@ -587,11 +587,11 @@
     <string name="block_domain">Bloca el domini</string>
     <string name="toast_block_domain">El domini està blocat</string>
     <string name="toast_unblock_domain">El domini ja no està blocat!</string>
-    <string name="retrieve_remote_status">Arreplegant el estatus remot</string>
+    <string name="retrieve_remote_status">Arreplegant l\'estatus remot</string>
     <string name="comment">Comentari</string>
     <string name="peertube_instance">Instància de Peertube</string>
     <string name="set_display_direct">Mostra la pissarra de missatges privats</string>
-    <string name="set_keep_background_process">Mantén el procés en segon pla quan les tanca l\'app</string>
+    <string name="set_keep_background_process">Mantén el procés en segon pla quan es tanca l\'app</string>
     <string name="no_comments">Estrena els comentaris a aquest vídeo amb el botó de dalt a la dreta!</string>
     <string name="number_view_video">%s visites</string>
     <string name="duration_video">Durada: %s</string>
@@ -619,7 +619,7 @@
     <string name="action_bug_report">Informe d\'errors</string>
     <string name="no_mail_client">No hi ha clients de correu electrònic instal·lats.</string>
     <string name="bug_report_mail">Envia un informe d\'errors</string>
-    <string name="account_id_clipbloard">S\'ha copiat l\'id del compte al portapapers!</string>
+    <string name="account_id_clipbloard">S\'ha copiat la id del compte al portapapers!</string>
     <string name="settings_title_battery">Optimització de la bateria</string>
     <string name="set_change_locale">Canvi d\'idioma</string>
     <string name="default_language">Idioma per defecte</string>
