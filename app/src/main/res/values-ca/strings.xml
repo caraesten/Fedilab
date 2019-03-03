@@ -90,11 +90,11 @@
     <string name="delete_account_message" formatted="false">Voleu suprimir el compte %1$s de l\'aplicació?</string>
     <string name="send_email">Envia un correu electrònic</string>
     <string name="choose_file">Selecciona un document</string>
-    <string name="choose_file_error">Cap Explorador d\'arxiu trobat!</string>
+    <string name="choose_file_error">No es troba un explorador de documents!</string>
     <string name="click_to_change">Feu clic en a la ruta per canviar-la</string>
     <string name="failed">Ha fallat!</string>
-    <string name="scheduled_toots">Toots planificats</string>
-    <string name="disclaimer_full">La següent informació pot reflectir el perfil de l\'usuari incomplet.</string>
+    <string name="scheduled_toots">Toots temporalitzats</string>
+    <string name="disclaimer_full">Aquesta informació d\'usuari pot estar incompleta.</string>
     <string name="insert_emoji">Insereix un emoji</string>
     <string name="no_emoji">L\'app no ha recollit emojis personalitzats de moment.</string>
     <string name="live_notif">Notificacions en directe</string>
@@ -102,15 +102,15 @@
     <string name="no_status">Cap toot per mostrar</string>
     <string name="fav_added">El toot s\'ha afegit als preferits</string>
     <string name="fav_removed">El toot s\'ha suprimit dels preferits!</string>
-    <string name="reblog_added">S\'ha fet boost del toot!</string>
-    <string name="reblog_removed">S\'ha eliminat el boost!</string>
-    <string name="reblog_by">Boosted per %1$s</string>
-    <string name="favourite_add">Afegir aquesta toot als seus favorits?</string>
-    <string name="favourite_remove">Esborrar aquest toot dels teus favorits?</string>
-    <string name="reblog_add">Impulsar aquest toot?</string>
-    <string name="reblog_remove">Desclavar aquest toot?</string>
+    <string name="reblog_added">S\'ha difós el toot!</string>
+    <string name="reblog_removed">El toot ja no està difós!</string>
+    <string name="reblog_by">Difós per %1$s</string>
+    <string name="favourite_add">Afegir aquest toot als favorits?</string>
+    <string name="favourite_remove">Esborrar aquest toot dels favorits?</string>
+    <string name="reblog_add">Vols difondre aquest toot?</string>
+    <string name="reblog_remove">Desdifondre el toot?</string>
     <string name="pin_add">Vols fixar aquest toot?</string>
-    <string name="pin_remove">Vols deixar de fixar aquest toot?</string>
+    <string name="pin_remove">Desfixar aquest toot?</string>
     <string name="more_action_1">Silencia</string>
     <string name="more_action_2">Bloca</string>
     <string name="more_action_3">Denuncia</string>
@@ -124,7 +124,7 @@
         <item>Vols silenciar aquest compte?</item>
         <item>Vols blocar aquest compte?</item>
         <item>Vols denunciar aquest toot?</item>
-        <item>Bloquejar aquest domini?</item>
+        <item>Vols blocar el domini?</item>
     </string-array>
     <string-array name="action_notification">
         <item>Notificar</item>
@@ -151,13 +151,13 @@
     <string name="date_hours">%d h</string>
     <string name="date_day">%d d.</string>
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Atenció</string>
-    <string name="toot_placeholder">En què estàs pensant?</string>
+    <string name="toot_cw_placeholder">Alerta</string>
+    <string name="toot_placeholder">Què et passa pel cap?</string>
     <string name="toot_it">TOOT!</string>
     <string name="queet_it">Quita!</string>
     <string name="cw">ac</string>
     <string name="toot_title">Escriu un toot</string>
-    <string name="toot_title_reply">Respon un toot</string>
+    <string name="toot_title_reply">Respon a un toot</string>
     <string name="queet_title">Escriu un quit</string>
     <string name="queet_title_reply">Respon a un quit</string>
     <string name="toot_no_space">Heu assolit els 500 caràcters permesos!</string>
