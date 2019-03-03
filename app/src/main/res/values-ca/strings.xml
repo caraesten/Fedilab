@@ -442,33 +442,32 @@
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
     <string name="privacy_API_authorizations_title">Permisos d\'API:</string>
-    <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+    <string name="privacy_API_authorizations">        - <b>Lectura</b>: Lectura de dades.\n
+        - <b>Escriptura</b>: Defineix els estatus i carrega mèdia per a estatus.\n
+        - <b>Seguiments</b>: segueix, desegueix, bloca, desbloca.\n\n
+        <b>&#9888; Aquestes accions es realitzen només a petició de l\'usuari.</b>
     </string>
-    <string name="privacy_API_title">Tracking and Libraries</string>
-    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+    <string name="privacy_API_title">Rastreig i llibreries</string>
+    <string name="privacy_API">        L\' aplicació <b>no fa ús d\'eines de rastreig</b> (mesures d\'audiència, informes d\'errors, etc.) i no conté publicitat.\n\n
+        es minimitza l\'ús de les biblioteques: \n
+        - <b>Lliscar</b>: Per gestionar els mèdia\n
+        - <b>Tasques-Android</b>: Per gestionar serveis\n
+        - <b>FotoVista</b>: Per gestionar imatges\n
     </string>
-    <string name="privacy_API_yandex_title">Translation of toots</string>
-    <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+    <string name="privacy_API_yandex_title">Traducció dels toots</string>
+    <string name="privacy_API_yandex_authorizations">        L\'aplicació permet la traducció de toots a través de la configuració regional del dispositiu i l\'API Yandex.\n
+        Yandex té la seva pròpia política de privacitat, disponible aquí: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text">        Thank you to Stéphane for the logo.
-    </string>
+    <string name="thanks_text">Moltes gràcies a Stéphane pel logo.    </string>
     <string name="thanks_text_dev">        Agraïments:
     </string>
-    <string name="filter_regex">Filter out by regular expressions</string>
+    <string name="filter_regex">Filtratge mitjançant expressions regulars</string>
     <string name="search">Cerca</string>
     <string name="delete">Suprimeix</string>
-    <string name="fetch_more_toots">Fetch more toots…</string>
+    <string name="fetch_more_toots">Recull més toots…</string>
     <!-- About lists -->
     <string name="action_lists">Llistes</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+    <string name="action_lists_confirm_delete">Segur que vols suprimir permanentment la llista?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
     <string name="action_lists_add_to">Afegeix a una llista</string>
     <string name="action_lists_remove_from">Suprimeix de la llista</string>
