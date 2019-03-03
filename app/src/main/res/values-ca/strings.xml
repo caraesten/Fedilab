@@ -468,32 +468,27 @@
     <!-- About lists -->
     <string name="action_lists">Llistes</string>
     <string name="action_lists_confirm_delete">Segur que vols suprimir permanentment la llista?</string>
-    <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+    <string name="action_lists_empty_content">No hi ha encara res a la llista. Quan els membres de la llista pengin nous estatus, apareixeran aquí.</string>
     <string name="action_lists_add_to">Afegeix a una llista</string>
     <string name="action_lists_remove_from">Suprimeix de la llista</string>
     <string name="action_lists_create">Afegeix una llista</string>
     <string name="action_lists_delete">Suprimeix la llista</string>
     <string name="action_lists_update">Edita la llista</string>
     <string name="action_lists_title_placeholder">Títol de llista nou</string>
-    <string name="action_lists_search_users">Search among people you follow</string>
-    <string name="action_lists_owner">Your lists</string>
+    <string name="action_lists_search_users">Cerca entre la gent a qui segueixes</string>
+    <string name="action_lists_owner">Les teves llistes</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s has moved to %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
-    <string name="issue_login_title">Authentication does not work?</string>
-    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
-    </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
-    <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-    <string name="data_export_running">Still running, please wait…</string>
-    <string name="data_export">Export statuses</string>
-    <string name="data_export_toots">Export statuses for %1$s</string>
-    <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
+    <string name="account_moved_to">%1$s s\'ha traslladat a %2$s</string>
+    <string name="show_boost_count">Mostre el recompte de difusions/preferits</string>
+    <string name="issue_login_title">L\'autenticació falla?</string>
+    <string name="issue_login_message">        <b>Aquí hi ha algunes comprovacions potencialment útils:</b>\n\n         
+- Comprova que no hi hagi errors de picatge en el nom de la instància\n\n         - Comprova que no tinguis la instància inactiva\n\n         - Si tens l\'autenticació de dos factors (2FA), prova l\'enllaç de la part inferior  (després d\'entrar el nom de la instància)\n\n         - L\'enllaç el pots fer servir encara que no tinguis la 2FA\n\n         - Si encara no rutlla, sisplau obre fil del GitLab a https://gitlab.com/tom79/mastalab/issues    </string>
+    <string name="media_ready">S\'ha carregat el mèdia. Clica aquí per mostrar-lo.</string>
+    <string name="data_export_start">Aquesta acció pot durar temps. Rebràs un avís quan estigui enllestida.</string>
+    <string name="data_export_running">Segueix processant, espereu sisplau…</string>
+    <string name="data_export">Exporta els estatus</string>
+    <string name="data_export_toots">Exporta els estatus de %1$s</string>
+    <string name="data_export_success">S\'han exportat %1$s toots d\'un total de %2$s.</string>
     <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
     <string name="data_export_error_simple">Something went wrong when exporting data!</string>
     <string name="data_import_success_simple">Data have been imported!</string>
