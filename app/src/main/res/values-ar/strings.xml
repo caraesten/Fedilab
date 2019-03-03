@@ -560,7 +560,7 @@
     <string name="filter_keyword_explanations">سوف يتم العثور عليه مهما كانت حالة الأحرف في النص أو حتى و إن كان داخل الويب و فيه تحذير عن المحتوى</string>
     <string name="context_drop">حذف بدلًا مِن الإخفاء</string>
     <string name="context_drop_explanations">سوف تختفي التبويقات المُصفّاة إلى الأبد، حتى و إن تم حذف عامل التصفية لاحقًا</string>
-    <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
+    <string name="context_whole_word_explanations">إذا كانت الكلمة أو الجملة مكونة من الأرقام والخروف فقط سوف يتم تطبيقها فقط عند مطابقة الكلمة ككل</string>
     <string name="context_whole_word">الكلمة كلها</string>
     <string name="filter_context">سياق عامل التصفية</string>
     <string name="filter_context_explanations">مجالات تطبيق عامل التصفية</string>
