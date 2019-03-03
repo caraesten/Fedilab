@@ -432,13 +432,12 @@ Aquestes dades són estrictament confidencials i només les pot usar l\'aplicaci
 Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
 &#9888; Els noms d\'usuari i contrasenyes no s\'emmagatzemen mai. Només s\'utilitzen durant una autentificació segura (SSL) en una instància.    </string>
     <string name="privacy_authorizations_title">Permisos:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
-    </string>
+    <string name="privacy_authorizations">- <b>ESTAT_ACCES_XARXA</b>: Usat per detectar si el dispositiu està connectat a una xarxa WIFI.\n
+         - <b>INTERNET</b>: Usat per a requeriments a una instància.\n
+         - <b>ESCRIURE_MAGATZEM_EXTERN</b>: Usat per emmagatzemar mèdia o moure l\'app a una tarja SD.\n
+         - <b>LLEGIR_MAGATZEM_EXTERN</b>: Usat per afegir mèdia als toots.\n
+         - <b>BOOT_COMPLET</b>: Usat per iniciar el servei de notificació.\n
+         - <b>DESPERTA_BLOCATGE</b>: Usat durant el servei de notificació.    </string>
     <string name="privacy_API_authorizations_title">Permisos d\'API:</string>
     <string name="privacy_API_authorizations">        - <b>Lectura</b>: Lectura de dades.\n
         - <b>Escriptura</b>: Defineix els estatus i carrega mèdia per a estatus.\n
@@ -525,11 +524,11 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="show_everything">Mostra tot el de %s</string>
     <string name="toast_endorse">El compte ara s\'inclou al perfil</string>
     <string name="toast_unendorse">El compte ja no s\'inclou al perfil</string>
-    <string name="toast_show_boost">Boosts are now shown!</string>
-    <string name="toast_hide_boost">Boosts are now hidden!</string>
-    <string name="direct_message">Direct message</string>
-    <string name="filters">Filters</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
+    <string name="toast_show_boost">Les difusions estan visibles!</string>
+    <string name="toast_hide_boost">Les difusions estan amagades!</string>
+    <string name="direct_message">Missatge directe</string>
+    <string name="filters">Filtres</string>
+    <string name="action_filters_empty_content">No hi ha filtres per mostrar. En podeu crear fent clic al botó \"+\".</string>
     <string name="filter_keyword">Keyword or phrase</string>
     <string name="context_home">Home timeline</string>
     <string name="context_public">Public timelines</string>
@@ -640,20 +639,20 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="app_logo">Logo of the application</string>
     <string name="profile_picture">Profile picture</string>
     <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
+    <string name="contact_instance_admin">Contacteu l\'administrador de la instància</string>
     <string name="add_new">Afegir nou</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
-    <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
-    <string name="favicon">Favicon</string>
+    <string name="mastohost_logo">Logo del MastoServidor</string>
+    <string name="emoji_picker">Tria d\'emojis</string>
+    <string name="refresh">Refresca</string>
+    <string name="expand_conversation">Mostra tota la conversa</string>
+    <string name="remove_account">Suprimeix el compte</string>
+    <string name="delete_domain">Esborra el domini blocat</string>
+    <string name="custom_emoji_picker">Personalització de la tria d\'emojis</string>
+    <string name="play_video">Reproduir vídeo</string>
+    <string name="new_toot">Toot nou</string>
+    <string name="card_view_image">Imatge de la targeta</string>
+    <string name="hide_media">Amaga els mèdia</string>
+    <string name="favicon">Icona de preferits</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
         <item>Mai</item>
