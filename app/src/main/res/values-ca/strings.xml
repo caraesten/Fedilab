@@ -285,7 +285,7 @@
     <string name="set_attachment_always">Sempre</string>
     <string name="set_attachment_wifi">Wi-Fi</string>
     <string name="set_attachment_ask">Demana</string>
-    <string name="set_attachment_action">Carrega el vídeo/àudio/text</string>
+    <string name="set_attachment_action">Carrega el mèdia</string>
     <string name="load_attachment">Carrega les imatges</string>
     <string name="load_attachment_spoiler">Mostra\'n més...</string>
     <string name="load_attachment_spoiler_less">Mostra\'n menys...</string>
@@ -297,13 +297,13 @@
     <string name="set_folder_title">Camí: </string>
     <string name="set_auto_store_toot">Desa els esborrany automàticament</string>
     <string name="set_bubble_counter">Mostra els comptadors</string>
-    <string name="set_auto_add_media_url">Afegeix als toots els URL d\'imatges/vídeos/àudios</string>
+    <string name="set_auto_add_media_url">Afegeix als toots els URL dels mèdia</string>
     <string name="settings_title_notifications">Gestiona les notificacions</string>
-    <string name="set_notif_follow">Avisa quan algú et comença a seguir</string>
-    <string name="set_notif_follow_ask">Avisa quan algú demana per seguir-te</string>
-    <string name="set_notif_follow_share">Avisa quan algú difon el teu estatus</string>
-    <string name="set_notif_follow_add">Avisa quan algú marca el teu estatus com a preferit</string>
-    <string name="set_notif_follow_mention">Avisa quan algú et menciona</string>
+    <string name="set_notif_follow">Avisa quan algú et comenci a seguir</string>
+    <string name="set_notif_follow_ask">Avisa quan algú demani per seguir-te</string>
+    <string name="set_notif_follow_share">Avisa quan algú difongui el teu estatus</string>
+    <string name="set_notif_follow_add">Avisa quan algú marqui el teu estatus com a preferit</string>
+    <string name="set_notif_follow_mention">Avisa quan algú et mencioni</string>
     <string name="set_share_validation">Demana confirmació abans de difondre</string>
     <string name="set_share_validation_fav">Demana confirmació abans d\'afegir a preferits</string>
     <string name="settings_title_more_options">Configuració avançada</string>
@@ -464,7 +464,7 @@
     <string name="filter_regex">Filtratge mitjançant expressions regulars</string>
     <string name="search">Cerca</string>
     <string name="delete">Suprimeix</string>
-    <string name="fetch_more_toots">Recull més toots…</string>
+    <string name="fetch_more_toots">Arreplega més toots…</string>
     <!-- About lists -->
     <string name="action_lists">Llistes</string>
     <string name="action_lists_confirm_delete">Segur que vols suprimir permanentment la llista?</string>
