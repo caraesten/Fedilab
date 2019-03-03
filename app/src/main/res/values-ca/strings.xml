@@ -417,21 +417,20 @@ Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (P
     <string name="show_media">Mostra els mèdia</string>
     <string name="show_pinned">Mostra els fixats</string>
     <string name="filter_no_result">No s`han trobat textos coincidents!</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="data_backup_toots">Còpia de seguretat dels toots per %1$s</string>
+    <string name="data_backup_success">S\'han importat %1$s toots nous</string>
     <string-array name="filter_select">
         <item>No</item>
         <item>Només</item>
         <item>Tots dos</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">No s\'han trobat toots a la base de dades. Sisplau, feu ús del botó de sincronitzar del menú per recobrar-los.</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Recorded data</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
-    </string>
+    <string name="privacy_data_title">Dades gravades</string>
+    <string name="privacy_data">Només es guarda al dispositiu la informació bàsica dels comptes.
+Aquestes dades són estrictament confidencials i només les pot usar l\'aplicació.
+Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
+&#9888; Els noms d\'usuari i contrasenyes no s\'emmagatzemen mai. Només s\'utilitzen durant una autentificació segura (SSL) en una instància.    </string>
     <string name="privacy_authorizations_title">Permisos:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
         - <b>INTERNET</b>: Used for queries to an instance.\n
