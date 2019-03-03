@@ -223,20 +223,20 @@
     <string name="no_notifications">No hi ha cap notificació per mostrar</string>
     <string name="notif_mention">et menciona</string>
     <string name="notif_reblog">ha difós el teu estatus</string>
-    <string name="notif_favourite">favourited your status</string>
+    <string name="notif_favourite">ha marcat com a preferit el teu estatus</string>
     <string name="notif_follow">et segueix</string>
-    <string name="notif_pouet">New toot from %1$s</string>
+    <string name="notif_pouet">Nou toot provinent de %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
-        <item quantity="other">and %d other notifications</item>
+        <item quantity="other">i %d altres notificacions</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">and another toot to discover</item>
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="other">i %d altres toots per descobrir</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="other">%d agradaments</item>
     </plurals>
     <string name="delete_notification_ask">Vols suprimir la notificació?</string>
     <string name="delete_notification_ask_all">Vols suprimir totes les notificacions?</string>
@@ -250,15 +250,15 @@
     <string name="client_error">No s\'ha pogut obtenir la id del client!</string>
     <string name="no_internet">No hi ha connexió a internet!</string>
     <string name="toast_block">El compte s\'ha blocat!</string>
-    <string name="toast_unblock">The account is no longer blocked!</string>
+    <string name="toast_unblock">El compte ja no està blocat!</string>
     <string name="toast_mute">El compte s\'ha silenciat!</string>
     <string name="toast_unmute">El compte ja no està silenciat!</string>
-    <string name="toast_follow">The account was followed!</string>
-    <string name="toast_unfollow">The account is no longer followed!</string>
-    <string name="toast_reblog">The toot was boosted!</string>
-    <string name="toast_unreblog">The toot is no longer boosted!</string>
-    <string name="toast_favourite">The toot was added to your favourites!</string>
-    <string name="toast_unfavourite">The toot was removed from your favourites!</string>
+    <string name="toast_follow">El compte tenia seguidors!</string>
+    <string name="toast_unfollow">El compte ja no té seguidors!</string>
+    <string name="toast_reblog">El toot ha estat difós!</string>
+    <string name="toast_unreblog">El toot ja no està difós!</string>
+    <string name="toast_favourite">S\'ha afegit el toot als teus preferits!</string>
+    <string name="toast_unfavourite">S\'ha eliminat el toot dels teus preferits!</string>
     <string name="toast_report">S\'ha denunciat el toot!</string>
     <string name="toast_unstatus">S\'ha suprimit el toot!</string>
     <string name="toast_pin">S\'ha fixat el toot!</string>
