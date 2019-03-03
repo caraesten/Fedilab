@@ -108,7 +108,7 @@
     <string name="favourite_add">Afegir aquesta toot als seus favorits?</string>
     <string name="favourite_remove">Esborrar aquest toot dels teus favorits?</string>
     <string name="reblog_add">Impulsar aquest toot?</string>
-    <string name="reblog_remove">Unboost this toot?</string>
+    <string name="reblog_remove">Desclavar aquest toot?</string>
     <string name="pin_add">Vols fixar aquest toot?</string>
     <string name="pin_remove">Vols deixar de fixar aquest toot?</string>
     <string name="more_action_1">Silencia</string>
