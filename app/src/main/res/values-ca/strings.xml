@@ -195,20 +195,20 @@
     <string name="about_thekinrar">Registres de cerques:</string>
     <string name="about_thekinrar_action">registres.social</string>
     <string name="thanks_text_logo">Disseny de la icona:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="thanks_text_banner">Dissenyador de bànners:</string>
     <!-- Conversation -->
     <string name="conversation">Conversa</string>
     <!-- Accounts -->
     <string name="no_accounts">No hi ha cap compte per mostrar</string>
     <string name="no_follow_request">No hi ha cap petició de seguiment</string>
     <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
-    <string name="followers_cnt">Followers \n %1$s</string>
-    <string name="pins_cnt">Pinned \n %d</string>
+    <string name="following_cnt">A qui segueixo \n %1$s</string>
+    <string name="followers_cnt">Seguidors \n %1$s</string>
+    <string name="pins_cnt">Clavat \n %d</string>
     <string name="authorize">Autoritza</string>
     <string name="reject">Rebutja</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
+    <string name="no_scheduled_toots">No hi ha toots programats per mostrar!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
     <string name="remove_scheduled">Delete scheduled toot?</string>
     <string name="media_count">Media: %d</string>
