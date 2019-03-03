@@ -307,14 +307,14 @@
     <string name="set_share_validation">Demana confirmació abans de difondre</string>
     <string name="set_share_validation_fav">Demana confirmació abans d\'afegir a preferits</string>
     <string name="settings_title_more_options">Configuració avançada</string>
-    <string name="set_wifi_only">Notify in WIFI only</string>
-    <string name="set_notify">Notify?</string>
+    <string name="set_wifi_only">Enviar avisos només per WIFI</string>
+    <string name="set_notify">Avisar?</string>
     <string name="set_notif_silent">Notificacions silencioses</string>
     <string name="set_night_mode">Mode nocturn</string>
-    <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+    <string name="set_nsfw_timeout">Límit per mostrar material ofensiu (en segons, 0 és desactivat)</string>
     <string name="settings_title_profile">Edita el perfil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Personalitza el compartir</string>
+    <string name="settings_custom_sharing_url">Personalització del que comparteixo a URL&#8230;</string>
     <string name="set_profile_description">Biografia...</string>
     <string name="set_lock_account">Lock account</string>
     <string name="set_save_changes">Desa els canvis</string>
@@ -441,7 +441,7 @@
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
-    <string name="privacy_API_authorizations_title">API permissions:</string>
+    <string name="privacy_API_authorizations_title">Permisos d\'API:</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
