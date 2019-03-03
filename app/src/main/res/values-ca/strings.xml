@@ -653,7 +653,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="card_view_image">Imatge de la targeta</string>
     <string name="hide_media">Amaga els mèdia</string>
     <string name="favicon">Icona de preferits</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Mèdia per afegir una descripció</string>
     <string-array name="filter_expire">
         <item>Mai</item>
         <item>30 minuts</item>
@@ -663,26 +663,26 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
         <item>1 dia</item>
         <item>1 setmana</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        En aquest camp, cal que hi escriguis el nom del servidor de la teva instància.\nPer exemple, si has creat el compte a https://mastodon.social\n Només cal escriure <b>mastodon.social</b> (sense https://)\n
+        Pots començar amb les primeres lletres i ja se suggeriran noms.\n\n
+        ⚠ El botó d\'inici de sessió només funcionarà si el nom d\'instància és vàlid i la instància està activa!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        En aquest camp, hi escrius el correu electrònic associat al teu compte de mastodont.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        L\'últim pas consisteix en introduir la contrasenya i clicar a \"Inici de sessió\".
     </string>
-    <string name="more_information">More information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="more_information">Més informació</string>
+    <string name="showcase_2FA">Si fas ús del 2FA (autenticació de dos factors), et cal emprar aquest enllaç.\nTambé pots utilitzar-lo si no vols introduir les credencials aquí.</string>
     <!-- languages not translated -->
     <string name="languages">Idiomes</string>
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
+    <string name="show_media_only">Només mèdia</string>
+    <string name="show_media_nsfw">Mostra contingut sensible</string>
+    <string name="crowdin_translations">Traduccions crowdin</string>
+    <string name="crowdin_manager">Director de crowdin</string>
+    <string name="translation_app">Traducció de l\'aplicació</string>
+    <string name="about_crowdin">Sobre Crowdin</string>
     <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
+    <string name="pixelfed_instance">Instància Pixelfed</string>
     <string name="mastodon_instance">Mastodon instance</string>
     <string name="no_pixelfed_instance">No Pixelfed instances</string>
     <string name="any_tags">Any of these</string>
