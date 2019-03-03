@@ -107,7 +107,7 @@
     <string name="reblog_by">Boosted per %1$s</string>
     <string name="favourite_add">Afegir aquesta toot als seus favorits?</string>
     <string name="favourite_remove">Esborrar aquest toot dels teus favorits?</string>
-    <string name="reblog_add">Boost this toot?</string>
+    <string name="reblog_add">Impulsar aquest toot?</string>
     <string name="reblog_remove">Unboost this toot?</string>
     <string name="pin_add">Vols fixar aquest toot?</string>
     <string name="pin_remove">Vols deixar de fixar aquest toot?</string>
@@ -119,29 +119,29 @@
     <string name="more_action_6">Comparteix</string>
     <string name="more_action_7">Menciona</string>
     <string name="more_action_8">Silencia temporalment</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_9">Suprimir &amp; tornar a redactar</string>
     <string-array name="more_action_confirm">
         <item>Vols silenciar aquest compte?</item>
         <item>Vols blocar aquest compte?</item>
         <item>Vols denunciar aquest toot?</item>
-        <item>Block this domain?</item>
+        <item>Bloquejar aquest domini?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Notificar</item>
+        <item>Silenciar</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Vols suprimir aquest toot?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>Suprimir &amp; tornar a redactar aquest toot?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="one">%d reply</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="one">%d respondre</item>
+        <item quantity="other">%d respostes</item>
     </plurals>
-    <string name="set_display_bookmark_button">Display the bookmark button</string>
+    <string name="set_display_bookmark_button">Mostrar el botó de marcador</string>
     <string name="bookmarks">Marcadors</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
+    <string name="bookmark_add">Afegeix als marcadors</string>
+    <string name="bookmark_remove">Suprimeix el marcador</string>
     <string name="bookmarks_empty">No hi ha cap marcador per a mostrar</string>
     <string name="status_bookmarked">L\'estat s\'ha afegit als marcadors!</string>
     <string name="status_unbookmarked">L\'estat s\'ha suprimit dels marcadors!</string>
@@ -155,14 +155,14 @@
     <string name="toot_placeholder">En què estàs pensant?</string>
     <string name="toot_it">TOOT!</string>
     <string name="queet_it">QUEET!</string>
-    <string name="cw">cw</string>
+    <string name="cw">ac</string>
     <string name="toot_title">Escriu un toot</string>
     <string name="toot_title_reply">Respon un toot</string>
     <string name="queet_title">Write a queet</string>
     <string name="queet_title_reply">Reply to a queet</string>
-    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-    <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
+    <string name="toot_no_space">Heu assolit els 500 caràcters permesos!</string>
+    <string name="toot_select_image">Escull un recurs multimèdia</string>
+    <string name="toot_select_image_error">S\'ha produït un error en seleccionar el recurs multimèdia!</string>
     <string name="toot_delete_media">Vols suprimir aquest element multimèdia?</string>
     <string name="toot_error_no_content">El toot és buit!</string>
     <string name="toot_visibility_tilte">Visibilitat del toot</string>
