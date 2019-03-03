@@ -199,7 +199,7 @@
     <!-- Conversation -->
     <string name="conversation">Conversa</string>
     <!-- Accounts -->
-    <string name="no_accounts">No hi ha cap compte per mostrar</string>
+    <string name="no_accounts">No hi ha comptes per mostrar</string>
     <string name="no_follow_request">No hi ha cap petició de seguiment</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">A qui segueixo \n %1$s</string>
@@ -211,20 +211,20 @@
     <string name="no_scheduled_toots">No hi ha toots programats per mostrar!</string>
     <string name="no_scheduled_toots_indications">Escriu un tot i seleccionar <b>Temporització</b> al menú de dalt.</string>
     <string name="remove_scheduled">Suprimir tot programat?</string>
-    <string name="media_count">Multimèdia: %d</string>
+    <string name="media_count">Mèdia: %d</string>
     <string name="toot_scheduled">S\'ha guardat la temporització d\'un toot!</string>
     <string name="toot_scheduled_date">La data programada ha de ser posterior al moment actual!</string>
     <string name="warning_battery">L\'estalvi de bateria està activat! Això pot no rutllar com està previst.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">El silenciament ha de durar més d\'un minut.</string>
-    <string name="timed_mute_date">%1$s ha estat silenciat fins a %2$s.\n vostè pot inatenuar aquest compte des de la seva pàgina de perfil.</string>
+    <string name="timed_mute_date">%1$s s\'ha silenciat fins a %2$s.\n Pots desilenciar el compte des de la seva pàgina de perfil.</string>
     <string name="timed_mute_profile">%1$s està silenciat fins a %2$s.\n Feu clic aquí per desactivar el silenciament.</string>
     <!-- Notifications -->
     <string name="no_notifications">No hi ha cap notificació per mostrar</string>
     <string name="notif_mention">et menciona</string>
     <string name="notif_reblog">ha difós el teu estatus</string>
     <string name="notif_favourite">ha marcat com a preferit el teu estatus</string>
-    <string name="notif_follow">et segueix</string>
+    <string name="notif_follow">t\'ha començat a seguir</string>
     <string name="notif_pouet">Nou toot provinent de %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
@@ -240,7 +240,7 @@
     </plurals>
     <string name="delete_notification_ask">Vols suprimir la notificació?</string>
     <string name="delete_notification_ask_all">Vols suprimir totes les notificacions?</string>
-    <string name="delete_notification">S\'ha suprimit la notificació!</string>
+    <string name="delete_notification">La notificació s\'ha suprimit!</string>
     <string name="delete_notification_all">S\'han suprimit totes les notificacions!</string>
     <!-- HEADER -->
     <string name="following">Seguits</string>
@@ -262,21 +262,21 @@
     <string name="toast_report">S\'ha denunciat el toot!</string>
     <string name="toast_unstatus">S\'ha suprimit el toot!</string>
     <string name="toast_pin">S\'ha fixat el toot!</string>
-    <string name="toast_unpin">S\'ha deixat de fixar el toot!</string>
+    <string name="toast_unpin">S\'ha desfixat el toot!</string>
     <string name="toast_error">Ep! S\'ha produït un error!</string>
     <string name="toast_code_error">Hi ha un error! La instància no ha generat cap codi d\'autorització!</string>
     <string name="toast_error_instance">El domini de la instància no sembla vàlid!</string>
-    <string name="toast_error_loading_account">Hi ha hagut un error en el trasllat entre comptes!</string>
+    <string name="toast_error_loading_account">Hi ha hagut un error en passar d\'un compte a l\'altre!</string>
     <string name="toast_error_search">Hi ha hagut un error durant la cerca!</string>
     <string name="toast_error_login">No es pot iniciar la sessió!</string>
     <string name="toast_update_credential_ok">S\'han guardat les dades del perfil!</string>
     <string name="nothing_to_do">No es pot endegar cap acció</string>
-    <string name="toast_saved">L\'àudio, vídeo o text s\'ha guardat!</string>
+    <string name="toast_saved">El mèdia s\'ha guardat!</string>
     <string name="toast_error_translate">Hi ha hagut un error durant la traducció!</string>
     <string name="toast_toot_saved">S\'ha desat l\'esborrany!</string>
     <string name="toast_error_char_limit">Estàs segur que aquesta instància permet tants caràcters? El valor usual s\'aproxima a 500 caràcters.</string>
     <string name="toast_visibility_changed">S\'ha canviat la visibilitat dels toots d\'aquest compte %1$s</string>
-    <string name="toast_empty_search">El noms de la instància i de la pantalla no poden estar en blanc!</string>
+    <string name="toast_empty_search">El noms de la instància i de la pantalla no poden quedar en blanc!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimització de la càrrega</string>
     <string name="set_toots_page">Nombre de toots per càrrega</string>
