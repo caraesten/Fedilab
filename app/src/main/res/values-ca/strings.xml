@@ -36,31 +36,31 @@
     <string name="toast_account_changed" formatted="false">Ara funciona amb el compte %1$s</string>
     <string name="add_account">Afegeix un compte</string>
     <string name="clipboard">El contingut del toot s\'ha copiat al porta-retalls</string>
-    <string name="clipboard_url">La direcció web del toot ha sigut copiat al porta-retalls</string>
+    <string name="clipboard_url">L\'adreça web del toot s\'ha copiat al porta-retalls</string>
     <string name="change">Canvia</string>
     <string name="choose_picture">Seleccioneu una imatge...</string>
     <string name="clear">Neteja</string>
     <string name="microphone">Micròfon</string>
     <string name="camera">Càmera</string>
-    <string name="speech_prompt">Digueu quelcom</string>
+    <string name="speech_prompt">Digues alguna cosa</string>
     <string name="speech_not_supported">El vostre aparell sembla que no permet la introducció de veu!</string>
     <string name="delete_all">Suprimeix-ho tot</string>
     <string name="translate_toot">Tradueix aquest toot.</string>
-    <string name="schedule">Planifica</string>
-    <string name="text_size">Mides del text i la icona</string>
+    <string name="schedule">Temporalitza</string>
+    <string name="text_size">Mides de text i icones</string>
     <string name="text_size_change">Canvia la mida del text actual:</string>
     <string name="icon_size_change">Canvia la mida de la icona actual:</string>
-    <string name="next">Endavant</string>
-    <string name="previous">Enrere</string>
+    <string name="next">Següent</string>
+    <string name="previous">Anterior</string>
     <string name="open_with">Obre amb</string>
     <string name="validate">Valida</string>
-    <string name="media">Multimèdia</string>
+    <string name="media">Mèdia</string>
     <string name="share_with">Comparteix amb</string>
-    <string name="shared_via">Comparteix via Mastalab</string>
+    <string name="shared_via">Compartit via Mastalab</string>
     <string name="replies">Respostes</string>
     <string name="username">Nom d\'usuari</string>
     <string name="drafts">Esborranys</string>
-    <string name="new_data">Noves dades estan disponibles! Voleu visualitzar-les?</string>
+    <string name="new_data">Hi ha noves dades disponibles! Les voleu visualitzar?</string>
     <string name="favourite">Preferits</string>
     <string name="follow">Seguidors nous</string>
     <string name="mention">Mencions</string>
@@ -73,7 +73,7 @@
     <!--- Menu -->
     <string name="home_menu">Inici</string>
     <string name="local_menu">Cronologia local</string>
-    <string name="global_menu">Cronologia federada</string>
+    <string name="global_menu">Pissarra federada</string>
     <string name="neutral_menu_title">Opcions</string>
     <string name="favorites_menu">Preferits</string>
     <string name="communication_menu_title">Comunicació</string>
@@ -89,7 +89,7 @@
     <string name="delete_account_title">Suprimeix un compte</string>
     <string name="delete_account_message" formatted="false">Voleu suprimir el compte %1$s de l\'aplicació?</string>
     <string name="send_email">Envia un correu electrònic</string>
-    <string name="choose_file">Selecciona un fitxer</string>
+    <string name="choose_file">Selecciona un document</string>
     <string name="choose_file_error">Cap Explorador d\'arxiu trobat!</string>
     <string name="click_to_change">Feu clic en a la ruta per canviar-la</string>
     <string name="failed">Ha fallat!</string>
