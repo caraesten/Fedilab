@@ -19,7 +19,7 @@
     <string name="download_over">La baixada ha finalitzat</string>
     <string name="save_file">Desa %1$s</string>
     <string name="save_over">S\'ha desat l\'element multimèdia</string>
-    <string name="download_from" formatted="false">Fitxer: %1$s</string>
+    <string name="download_from" formatted="false">Document: %1$s</string>
     <string name="password">Contrasenya</string>
     <string name="email">Adreça electrònica</string>
     <string name="accounts">Comptes</string>
@@ -38,7 +38,7 @@
     <string name="clipboard">El contingut del toot s\'ha copiat al porta-retalls</string>
     <string name="clipboard_url">L\'adreça web del toot s\'ha copiat al porta-retalls</string>
     <string name="change">Canvia</string>
-    <string name="choose_picture">Seleccioneu una imatge...</string>
+    <string name="choose_picture">Seleccioneu una imatge…</string>
     <string name="clear">Neteja</string>
     <string name="microphone">Micròfon</string>
     <string name="camera">Càmera</string>
@@ -64,8 +64,8 @@
     <string name="favourite">Preferits</string>
     <string name="follow">Seguidors nous</string>
     <string name="mention">Mencions</string>
-    <string name="reblog">Boosts</string>
-    <string name="show_boosts">Mostrar boosts</string>
+    <string name="reblog">Difusions</string>
+    <string name="show_boosts">Mostrar difusions</string>
     <string name="show_replies">Mostra les respostes</string>
     <string name="action_open_in_web">Obre al navegador</string>
     <string name="translate">Tradueix</string>
@@ -195,7 +195,7 @@
     <string name="about_thekinrar">Cerca instàncies:</string>
     <string name="about_thekinrar_action">instancies.social</string>
     <string name="thanks_text_logo">Disseny d\'icones:</string>
-    <string name="thanks_text_banner">Disseny de bànners:</string>
+    <string name="thanks_text_banner">Disseny de banderoles:</string>
     <!-- Conversation -->
     <string name="conversation">Conversa</string>
     <!-- Accounts -->
@@ -204,7 +204,7 @@
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">A qui segueixo \n %1$s</string>
     <string name="followers_cnt">Seguidors \n %1$s</string>
-    <string name="pins_cnt">Clavat \n %d</string>
+    <string name="pins_cnt">Fixat \n %d</string>
     <string name="authorize">Autoritza</string>
     <string name="reject">Rebutja</string>
     <!-- Scheduled toots -->
@@ -227,16 +227,16 @@
     <string name="notif_follow">t\'ha començat a seguir</string>
     <string name="notif_pouet">Nou toot provinent de %1$s</string>
     <plurals name="other_notifications">
-        <item quantity="one">and another notification</item>
+        <item quantity="one">i un altra notificació</item>
         <item quantity="other">i %d altres notificacions</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
-        <item quantity="other">i %d altres toots per descobrir</item>
+        <item quantity="one">i un altre toot per descobrir</item>
+        <item quantity="other">i %d toots més per descobrir</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d agradaments</item>
+        <item quantity="one">%d agradament</item>
+        <item quantity="other">%d agradament</item>
     </plurals>
     <string name="delete_notification_ask">Vols suprimir la notificació?</string>
     <string name="delete_notification_ask_all">Vols suprimir totes les notificacions?</string>
@@ -790,6 +790,6 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Visualització web</item>
-        <item>Direct stream</item>
+        <item>Stream directe</item>
     </string-array>
 </resources>
