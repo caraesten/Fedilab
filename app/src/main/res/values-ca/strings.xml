@@ -326,16 +326,16 @@
     <string name="settings_title_hour">Intèrval de temps per a notificacions:</string>
     <string name="settings_time_from">Entre</string>
     <string name="settings_time_to">i</string>
-    <string name="settings_time_greater">The time must be greater than %1$s</string>
-    <string name="settings_time_lower">The time must be lower than %1$s</string>
-    <string name="settings_hour_init">Start time</string>
-    <string name="settings_hour_end">End time</string>
-    <string name="embedded_browser">Use the built-in browser</string>
+    <string name="settings_time_greater">Ha d\'haver passat més de %1$s</string>
+    <string name="settings_time_lower">Ha d\'haver passat menys de %1$s</string>
+    <string name="settings_hour_init">Hora d\'inici</string>
+    <string name="settings_hour_end">Hora d\'acabament</string>
+    <string name="embedded_browser">Utilitzar el navegador predefinit</string>
     <string name="custom_tabs">Pestanyes personalitzades</string>
     <string name="use_javascript">Habilita el Javascript</string>
-    <string name="expand_cw">Automatically expand cw</string>
-    <string name="use_cookies">Allow third-party cookies</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="expand_cw">Expandir automàticament el ca</string>
+    <string name="use_cookies">Permetre galetes de tercers</string>
+    <string name="settings_ui_layout">Disposició de les pissarres: </string>
     <string-array name="battery_profiles">
         <item>Normal battery drain</item>
         <item>Medium battery drain</item>
