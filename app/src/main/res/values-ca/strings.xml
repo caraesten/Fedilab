@@ -163,24 +163,24 @@
     <string name="toot_no_space">Heu assolit els 500 caràcters permesos!</string>
     <string name="toot_select_image">Escull un recurs multimèdia</string>
     <string name="toot_select_image_error">S\'ha produït un error en seleccionar el recurs multimèdia!</string>
-    <string name="toot_delete_media">Vols suprimir aquest element multimèdia?</string>
+    <string name="toot_delete_media">Vols suprimir aquest mèdia?</string>
     <string name="toot_error_no_content">El toot és buit!</string>
     <string name="toot_visibility_tilte">Visibilitat del toot</string>
     <string name="toots_visibility_tilte">Visibilitat predeterminada dels toots: </string>
     <string name="toot_sent">S\'ha enviat el toot!</string>
-    <string name="toot_reply_content_title">Estàs responent aquest toot:</string>
+    <string name="toot_reply_content_title">Estàs responent a aquest toot:</string>
     <string name="toot_sensitive">Això és contingut sensible?</string>
     <string-array name="toot_visibility">
-        <item>Penja\'l als taulers públics</item>
-        <item>No el pengis als taulers públics</item>
-        <item>Penja\' només per als seguidors</item>
-        <item>Penja\'l només a usuaris amb mencions</item>
+        <item>Penja\'l a les pissarres públiques</item>
+        <item>No el pengis en pissarres públiques</item>
+        <item>Penja\'l només per als seguidors</item>
+        <item>Penja\'l només per a usuaris amb mencions</item>
     </string-array>
     <string name="no_draft">No hi ha esborranys!</string>
     <string name="choose_toot">Escull un toot</string>
     <string name="choose_accounts">Escull un compte</string>
     <string name="select_accounts">Seleccionar comptes</string>
-    <string name="remove_draft">Suprimeixes l\'esborrany?</string>
+    <string name="remove_draft">Vols suprimir l\'esborrany?</string>
     <string name="show_reply">Fes clic al botó per mostrar el toot original</string>
     <string name="upload_form_description">Descriu-ho per a disminuïts visuals</string>
     <!-- Instance -->
@@ -192,10 +192,10 @@
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Codi font: </string>
     <string name="about_yandex">Traducció dels toots:</string>
-    <string name="about_thekinrar">Registres de cerques:</string>
-    <string name="about_thekinrar_action">registres.social</string>
-    <string name="thanks_text_logo">Disseny de la icona:</string>
-    <string name="thanks_text_banner">Dissenyador de bànners:</string>
+    <string name="about_thekinrar">Cerca instàncies:</string>
+    <string name="about_thekinrar_action">instancies.social</string>
+    <string name="thanks_text_logo">Disseny d\'icones:</string>
+    <string name="thanks_text_banner">Disseny de bànners:</string>
     <!-- Conversation -->
     <string name="conversation">Conversa</string>
     <!-- Accounts -->
