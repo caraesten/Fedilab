@@ -335,11 +335,11 @@
     <string name="use_javascript">Javascript සක්‍රිය කරන්න</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="settings_ui_layout">කාල රේඛා සඳහා සැලැස්ම: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>සාමාන්‍ය බැටරි භාවිතය</item>
+        <item>මධ්‍යස්ථ බැටරි භාවිතය</item>
+        <item>අවම බැටරි භාවිතය</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Tabs</item>
