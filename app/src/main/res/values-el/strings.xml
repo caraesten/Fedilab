@@ -289,14 +289,14 @@
     <string name="load_attachment">Φόρτωση των εικόνων</string>
     <string name="load_attachment_spoiler">Εμφάνιση περισσότερων…</string>
     <string name="load_attachment_spoiler_less">Εμφάνιση λιγότερων…</string>
-    <string name="load_sensitive_attachment">Sensitive content</string>
-    <string name="set_display_reply">Display previous message in responses</string>
-    <string name="set_display_local">Display local timeline</string>
+    <string name="load_sensitive_attachment">Ευαίσθητο περιεχόμενο</string>
+    <string name="set_display_reply">Προβολή του προπορευόμενου μηνύματος στις αποκρίσεις</string>
+    <string name="set_display_local">Προβολή της τοπικής χρονογραμμής</string>
     <string name="set_display_global">Display federated timeline</string>
     <string name="set_disable_gif">Disable GIF avatars</string>
     <string name="set_folder_title">Διαδρομή: </string>
-    <string name="set_auto_store_toot">Save drafts automatically</string>
-    <string name="set_bubble_counter">Display counters</string>
+    <string name="set_auto_store_toot">Αυτόματη αποθήκευση των προσχεδίων</string>
+    <string name="set_bubble_counter">Προβολή των μετρητών</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
     <string name="settings_title_notifications">Διαχείριση των ειδοποιήσεων</string>
     <string name="set_notif_follow">Ειδοποίηση όταν κάποιος σε παρακολουθεί</string>
@@ -313,8 +313,8 @@
     <string name="set_night_mode">Κατάσταση λειτουργίας νύχτας</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
     <string name="settings_title_profile">Edit profile</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Προσαρμοσμένη μοιρασιά</string>
+    <string name="settings_custom_sharing_url">Η διεύθυνση URL&#8230; τς προσαρμοσμένης μοιρασιάς</string>
     <string name="set_profile_description">Βιογραφικό…</string>
     <string name="set_lock_account">Κλείδωμα του λογαριασμού</string>
     <string name="set_save_changes">Αποθήκευση των αλλαγών</string>
@@ -379,9 +379,9 @@
     <string name="action_unfollow">Διακοπή παρακολούθησης</string>
     <string name="action_block">Φραγή</string>
     <string name="action_unblock">Απόφραξη</string>
-    <string name="action_mute">Mute</string>
-    <string name="action_no_action">No action</string>
-    <string name="action_unmute">Unmute</string>
+    <string name="action_mute">Σίγαση</string>
+    <string name="action_no_action">Καμία κίνηση</string>
+    <string name="action_unmute">Ακύρωση της σίγασης</string>
     <string name="request_sent">Η αίτηση στάλθηκε</string>
     <string name="followed_by">Σε παρακολουθεί</string>
     <string name="action_search">Αναζήτηση</string>
@@ -447,7 +447,7 @@
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
     </string>
-    <string name="privacy_API_title">Tracking and Libraries</string>
+    <string name="privacy_API_title">Παρακολούθηση και Βιβλιοθήκες</string>
     <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
         - <b>Glide</b>: To manage media\n
@@ -460,9 +460,9 @@
     </string>
     <string name="thanks_text">        Thank you to Stéphane for the logo.
     </string>
-    <string name="thanks_text_dev">        Thank you to:
+    <string name="thanks_text_dev">        Ευχαριστίες στους:
     </string>
-    <string name="filter_regex">Filter out by regular expressions</string>
+    <string name="filter_regex">Απομάκρυνση σύμφωνα με τις κανονικές εκφράσεις</string>
     <string name="search">Αναζήτηση</string>
     <string name="delete">Διαγραφή</string>
     <string name="fetch_more_toots">Fetch more toots…</string>
@@ -470,9 +470,9 @@
     <string name="action_lists">Κατάστιχα</string>
     <string name="action_lists_confirm_delete">Σίγουρα, να διαγραφεί αυτό το κατάστιχο, αμετάκλητα;</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-    <string name="action_lists_add_to">Add to list</string>
-    <string name="action_lists_remove_from">Remove from list</string>
-    <string name="action_lists_create">Add list</string>
+    <string name="action_lists_add_to">Προσθήκη στο κατάστιχο</string>
+    <string name="action_lists_remove_from">Απομάκρυνση από το κατάστιχο</string>
+    <string name="action_lists_create">Προσθήκη κατάστιχου</string>
     <string name="action_lists_delete">Delete list</string>
     <string name="action_lists_update">Edit list</string>
     <string name="action_lists_title_placeholder">New list title</string>
