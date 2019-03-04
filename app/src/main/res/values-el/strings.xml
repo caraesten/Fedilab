@@ -473,15 +473,15 @@
     <string name="action_lists_add_to">Προσθήκη στο κατάστιχο</string>
     <string name="action_lists_remove_from">Απομάκρυνση από το κατάστιχο</string>
     <string name="action_lists_create">Προσθήκη κατάστιχου</string>
-    <string name="action_lists_delete">Delete list</string>
-    <string name="action_lists_update">Edit list</string>
-    <string name="action_lists_title_placeholder">New list title</string>
+    <string name="action_lists_delete">Διαγραφή κατάστιχου</string>
+    <string name="action_lists_update">Επεξεργασία κατάστιχου</string>
+    <string name="action_lists_title_placeholder">Το όνομα του νέου κατάστιχου</string>
     <string name="action_lists_search_users">Search among people you follow</string>
-    <string name="action_lists_owner">Your lists</string>
+    <string name="action_lists_owner">Τα δικά σου κατάστιχα</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s has moved to %2$s</string>
+    <string name="account_moved_to">Το %1$s έχει πάει στο %2$s</string>
     <string name="show_boost_count">Show boosts/favourites count</string>
-    <string name="issue_login_title">Authentication does not work?</string>
+    <string name="issue_login_title">Μήπως δεν δουλεύει η έλεγχος ταυτότητας;</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
@@ -489,16 +489,16 @@
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
-    <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-    <string name="data_export_running">Still running, please wait…</string>
+    <string name="media_ready">Φορτώθηκε το πολυμέσο. Κλίκαρε εδώ για να προβληθεί.</string>
+    <string name="data_export_start">Αυτή η ενέργεια μπορεί να είναι χρονοβόρα. Θα ειδοποιηθείς, όταν θα ολοκληρωθεί.</string>
+    <string name="data_export_running">Ακόμη τρέχει· παρακαλώ, περίμενε…</string>
     <string name="data_export">Export statuses</string>
     <string name="data_export_toots">Export statuses for %1$s</string>
     <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_export_error">Παρουσιάστηκε κάποιο σφάλμα, κατά την εξαγωγή δεδομένων για το %1$s</string>
+    <string name="data_export_error_simple">Παρουσιάστηκε κάποιο σφάλμα, κατά την εξαγωγή δεδομένων.</string>
+    <string name="data_import_success_simple">Έγινε εισαγωγή των δεδομένων.</string>
+    <string name="data_import_error_simple">Παρουσιάστηκε κάποιο σφάλμα, κατά την εισαγωγή δεδομένων.</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Type</string>
