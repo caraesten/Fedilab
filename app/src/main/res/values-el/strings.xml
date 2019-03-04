@@ -136,7 +136,7 @@
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d απάντηση</item>
-        <item quantity="other">%d απάντηση</item>
+        <item quantity="other">%d απαντήσεις</item>
     </plurals>
     <string name="set_display_bookmark_button">Εμφάνιση του πλήκτρου των σελιδοδεικτών</string>
     <string name="bookmarks">Σελιδοδείκτες</string>
@@ -146,10 +146,10 @@
     <string name="status_bookmarked">Status has been added to bookmarks!</string>
     <string name="status_unbookmarked">Status was removed from bookmarks!</string>
     <!-- Date -->
-    <string name="date_seconds">%d δ</string>
-    <string name="date_minutes">%d λ</string>
-    <string name="date_hours">%d ώ</string>
-    <string name="date_day">%d η</string>
+    <string name="date_seconds">%d δευτ.</string>
+    <string name="date_minutes">%d λεπ.</string>
+    <string name="date_hours">%d ώρ.</string>
+    <string name="date_day">%d ημ.</string>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Προειδοποίηση</string>
     <string name="toot_placeholder">What is on your mind?</string>
@@ -204,7 +204,7 @@
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Παρακολουθεί \n %1$s</string>
     <string name="followers_cnt">Τον παρακολουθούν \n %1$s</string>
-    <string name="pins_cnt">Καρφιτσωμένα \n %d</string>
+    <string name="pins_cnt">Πινέζες \n %d</string>
     <string name="authorize">Εξουσιοδότηση</string>
     <string name="reject">Απόρριψη</string>
     <!-- Scheduled toots -->
@@ -511,20 +511,20 @@
     <string name="set_compact_mode">Συμπαγής Κατάσταση Λειτουργίας</string>
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-    <string name="alert_regex">There is an error in the regular expression!</string>
-    <string name="no_account_yet">No account yet?</string>
+    <string name="alert_regex">Υπάρχει κάποιο σφάλμα στην κανονική έκφραση.</string>
+    <string name="no_account_yet">Ακόμη χωρίς λογαριασμό;</string>
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-    <string name="which_language">Translate in</string>
+    <string name="which_language">Μετάφραση στο</string>
     <string name="crash_title">Mastalab has stopped :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Follow instance</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
-    <string name="action_partnership">Partnerships</string>
-    <string name="neutral_menu_information">Information</string>
+    <string name="action_partnership">Συνεργασίες</string>
+    <string name="neutral_menu_information">Πληροφορίες</string>
     <string name="hide_boost">Hide boosts from %s</string>
     <string name="endorse">Feature on profile</string>
     <string name="hide_everything">Απόκρυψη όλων από %s</string>
@@ -579,9 +579,9 @@
     <string name="channel_notif_mention">New Mention</string>
     <string name="channel_notif_toot">New Toot</string>
     <string name="channel_notif_backup">Toots Backup</string>
-    <string name="channel_notif_media">Media Download</string>
-    <string name="set_notif_sound">Change notification sound</string>
-    <string name="select_sound">Select Tone</string>
+    <string name="channel_notif_media">Κατέβασμα Πολυμέσων</string>
+    <string name="set_notif_sound">Αλλαγή του ήχου των ειδοποιήσεων</string>
+    <string name="select_sound">Επιλογή Τόνου</string>
     <string name="set_enable_time_slot">Enable time slot</string>
     <string name="how_to_videos">How To Videos</string>
     <string name="retrieve_remote_conversation">Fetching remote thread!</string>
@@ -594,13 +594,13 @@
     <string name="toast_block_domain">The domain is blocked</string>
     <string name="toast_unblock_domain">The domain is no longer blocked!</string>
     <string name="retrieve_remote_status">Fetching remote status</string>
-    <string name="comment">Comment</string>
+    <string name="comment">Σχολιασμός</string>
     <string name="peertube_instance">Peertube instance</string>
-    <string name="set_display_direct">Display private messages timeline</string>
-    <string name="set_keep_background_process">Keep background process when app is closed</string>
-    <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-    <string name="number_view_video">%s views</string>
-    <string name="duration_video">Duration: %s</string>
+    <string name="set_display_direct">Προβολή της χρονογραμμής των προσωπικών μηνυμάτων</string>
+    <string name="set_keep_background_process">Διατήρηση της διεργασίας στο παρασκήνιο, αφού κλειστεί η εφαρμογή</string>
+    <string name="no_comments">Μπορείς να προλάβεις να σχολιάσεις πρώτος αυτό το βίντεο, χρησιμοποιώντας το πλήκτρο, εκεί, πάνω δεξιά.</string>
+    <string name="number_view_video">%s προβολές</string>
+    <string name="duration_video">Διάρκεια: %s</string>
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Τα σχόλια δεν είναι ενεργοποιημένα σε αυτό το βίντεο.</string>
     <string name="pickup_resolution">Pick up a resolution</string>
@@ -635,9 +635,9 @@
     <string name="hide_toot_truncate">Display less</string>
     <string name="manage_tags">Manage tags</string>
     <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
+    <string name="tags_stored">Η ετικέτα έχει αποθηκευθεί.</string>
+    <string name="tags_renamed">Η ετικέτα έχει αλλαχτεί.</string>
+    <string name="tags_deleted">Η ετικέτα έχει διαγραφεί.</string>
     <string name="set_display_art">Display Art timeline</string>
     <string name="schedule_boost">Schedule boost</string>
     <string name="boost_scheduled">The boost is scheduled!</string>
@@ -649,28 +649,28 @@
     <string name="profile_picture">Profile picture</string>
     <string name="profile_banner">Profile banner</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
+    <string name="add_new">Προθήκη νέου</string>
     <string name="mastohost_logo">MastoHost logo</string>
     <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
+    <string name="refresh">Ανανέωση</string>
+    <string name="expand_conversation">Επέκταση της συνομιλίας</string>
+    <string name="remove_account">Απομάκρυνση ενός λογαριασμού</string>
     <string name="delete_domain">Delete the blocked domain</string>
     <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
+    <string name="play_video">Αναπαραγωγή βίντεου</string>
     <string name="new_toot">New toot</string>
     <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
+    <string name="hide_media">Απόκρυψη πολυμέσων</string>
     <string name="favicon">Favicon</string>
     <string name="media_description">Media for adding a description</string>
     <string-array name="filter_expire">
-        <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>Ποτέ</item>
+        <item>30 λεπτά</item>
+        <item>1 ώρα</item>
+        <item>6 ώρες</item>
+        <item>12 ώρες</item>
+        <item>1 ημέρα</item>
+        <item>1 εβδομάδα</item>
     </string-array>
     <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
