@@ -69,7 +69,7 @@
     <string name="show_replies">Válaszok megjelenítése</string>
     <string name="action_open_in_web">Megnyitás böngészőben</string>
     <string name="translate">Fordítás</string>
-    <string name="please_wait">Please, wait few seconds before making this action.</string>
+    <string name="please_wait">Kérlek várj néhány másodpercet, mielőtt ezt tennéd.</string>
     <!--- Menu -->
     <string name="home_menu">Főoldal</string>
     <string name="local_menu">Helyi idővonal</string>
@@ -85,7 +85,7 @@
     <string name="optimization">Optimalizálás</string>
     <string name="settings">Beállítások</string>
     <string name="profile">Profil</string>
-    <string name="make_a_choice">What do you want to do?</string>
+    <string name="make_a_choice">Mit akarsz tenni?</string>
     <string name="delete_account_title">Fiók törlése</string>
     <string name="delete_account_message" formatted="false">Valóban törölni szeretnéd a %1$s fiókot az alkalmazásból?</string>
     <string name="send_email">E-mail küldése</string>
