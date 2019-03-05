@@ -33,10 +33,10 @@
     <string name="no_result">Nincs találat!</string>
     <string name="instance">Instancia</string>
     <string name="instance_example">Instancia: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
+    <string name="toast_account_changed" formatted="false">Aktív fiók: %1$s</string>
     <string name="add_account">Fiók hozzáadása</string>
     <string name="clipboard">A tülk tartalma a vágólapra lett másolva</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">A tülk URL-je a vágólapra lett másolva</string>
     <string name="change">Változtat</string>
     <string name="choose_picture">Kép kiválasztása</string>
     <string name="clear">Tisztítás</string>
@@ -48,8 +48,8 @@
     <string name="translate_toot">Tülk fordítása</string>
     <string name="schedule">Időzítés</string>
     <string name="text_size">Szöveg és ikon méret</string>
-    <string name="text_size_change">Change the current text size:</string>
-    <string name="icon_size_change">Change the current icon size:</string>
+    <string name="text_size_change">Szöveg méretének megváltoztatása:</string>
+    <string name="icon_size_change">Ikonok méretének megváltoztatása:</string>
     <string name="next">Tovább</string>
     <string name="previous">Vissza</string>
     <string name="open_with">Megnyitás a következővel:</string>
@@ -60,7 +60,7 @@
     <string name="replies">Válaszok</string>
     <string name="username">Felhasználónév</string>
     <string name="drafts">Piszkozatok</string>
-    <string name="new_data">New data are available! Do you want to display them?</string>
+    <string name="new_data">Új adatok állnak rendelkezésre! Szeretnéd megjeleníteni őket?</string>
     <string name="favourite">Kedvencek</string>
     <string name="follow">Új követők</string>
     <string name="mention">Megemlítések</string>
