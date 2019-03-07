@@ -91,7 +91,7 @@
     <string name="send_email">E-mail küldése</string>
     <string name="choose_file">Válassz egy fájlt</string>
     <string name="choose_file_error">Fájlkezelő nem található!</string>
-    <string name="click_to_change">Click on the path to change it</string>
+    <string name="click_to_change">Változtatáshoz kattints az elérési útra</string>
     <string name="failed">Sikertelen!</string>
     <string name="scheduled_toots">Időzített tülkök</string>
     <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
