@@ -136,13 +136,13 @@
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d válasz</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="other">%d válasz</item>
     </plurals>
-    <string name="set_display_bookmark_button">Display the bookmark button</string>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
-    <string name="bookmarks_empty">No bookmarks to display</string>
+    <string name="set_display_bookmark_button">Könyvjelző gomb megjelenítése</string>
+    <string name="bookmarks">Könyvjelzők</string>
+    <string name="bookmark_add">Hozzáadás a könyvjelzőkhöz</string>
+    <string name="bookmark_remove">Könyvjelző eltávolítása</string>
+    <string name="bookmarks_empty">Nincs megjeleníthető könyvjelző</string>
     <string name="status_bookmarked">Status has been added to bookmarks!</string>
     <string name="status_unbookmarked">Status was removed from bookmarks!</string>
     <!-- Date -->
