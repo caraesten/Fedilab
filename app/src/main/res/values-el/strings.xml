@@ -36,7 +36,7 @@
     <string name="toast_account_changed" formatted="false">Τώρα λειτουργεί με τον λογαριασμό %1$s</string>
     <string name="add_account">Προσθήκη λογαριασμού</string>
     <string name="clipboard">Το περιεχόμενο του toot αντιγράφηκε ως απόκομμα</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">Η διεύθυνση URL του τουτ αντιγράφηκε στο πρόχειρο</string>
     <string name="change">Αλλαγή</string>
     <string name="choose_picture">Επιλογή φωτογραφίας…</string>
     <string name="clear">Καθαρισμός</string>
@@ -194,8 +194,8 @@
     <string name="about_yandex">Translation of toots:</string>
     <string name="about_thekinrar">Αναζήτηση για υποστάσεις:</string>
     <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Icon designer:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="thanks_text_logo">Σχεδιαστής εικονιδίου:</string>
+    <string name="thanks_text_banner">Σχεδιαστής σημαίας:</string>
     <!-- Conversation -->
     <string name="conversation">Συζήτηση</string>
     <!-- Accounts -->
@@ -759,14 +759,14 @@
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> παρακολουθεί το κανάλι σου <b>%2$s</b>]]></string>
     <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> παρακολουθεί το λογαριασμό σου]]></string>
     <string name="peertube_video_published"><![CDATA[Έχει δημοσιευθεί το βίντεό σου <b>%1$s</b>]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
-    <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
-    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
-    <string name="export_data">Export data</string>
-    <string name="import_data">Import Data</string>
-    <string name="toot_select_import">Select the file to import</string>
+    <string name="peertube_video_import_success"><![CDATA[Επιτυχής εισαγωγή του βίντεού σου <b>%1$s</b>]]></string>
+    <string name="peertube_video_import_error"><![CDATA[Αποτυχία εισαγωγής του βίντεού σου <b>%1$s</b>]]></string>
+    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> Δημοσίευσε ένα νέο βίντεο: <b>%2$s</b>]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[Το βίντεό σου <b>%1$s</b> έχει μπει στη μαύρη λίστα]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Το βίντεό σου <b>%1$s</b> έχει βγει στη μαύρη λίστα]]></string>
+    <string name="export_data">Εξαγωγή δεδομένων</string>
+    <string name="import_data">Εισαγωγή δεδομένων</string>
+    <string name="toot_select_import">Επέλεξε το αρχείο προς εισαγωγή</string>
     <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
     <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
     <string name="add_public_comment">Add a public comment</string>
