@@ -205,26 +205,26 @@
     <string name="following_cnt">Following \n %1$s</string>
     <string name="followers_cnt">Followers \n %1$s</string>
     <string name="pins_cnt">Rögzített \n %d</string>
-    <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="authorize">Engedélyez</string>
+    <string name="reject">Elutasít</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
+    <string name="no_scheduled_toots">Nincs megjelenítendő időzített toot!</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Delete scheduled toot?</string>
-    <string name="media_count">Media: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
-    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
+    <string name="remove_scheduled">Törlöd az időzített tootot?</string>
+    <string name="media_count">Média: %d</string>
+    <string name="toot_scheduled">A tootot időzítettük!</string>
+    <string name="toot_scheduled_date">Az időzítés dátuma az aktuális óra után kell legyen!</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
+    <string name="timed_mute_date_error">Az elnémítás ideje több mint egy perc kell legyen.</string>
+    <string name="timed_mute_date">%1$s el lett némítva %2$s időpontig.\n Az elnémítást a fiók profiloldalán lehet megszüntetni.</string>
     <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
     <!-- Notifications -->
-    <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned you</string>
+    <string name="no_notifications">Nincs megjelenítendő értesítés</string>
+    <string name="notif_mention">megemlített téged</string>
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
-    <string name="notif_follow">followed you</string>
+    <string name="notif_follow">követ téged</string>
     <string name="notif_pouet">New toot from %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
@@ -243,19 +243,19 @@
     <string name="delete_notification">The notification has been deleted!</string>
     <string name="delete_notification_all">All notifications have been deleted!</string>
     <!-- HEADER -->
-    <string name="following">Following</string>
-    <string name="followers">Followers</string>
+    <string name="following">Követik</string>
+    <string name="followers">Követők</string>
     <string name="pinned_toots">Rögzített</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
-    <string name="no_internet">No Internet connection!</string>
+    <string name="no_internet">Nincs internetkapcsolat!</string>
     <string name="toast_block">The account was blocked!</string>
     <string name="toast_unblock">The account is no longer blocked!</string>
-    <string name="toast_mute">The account was muted!</string>
-    <string name="toast_unmute">The account is no longer muted!</string>
-    <string name="toast_follow">The account was followed!</string>
-    <string name="toast_unfollow">The account is no longer followed!</string>
-    <string name="toast_reblog">The toot was boosted!</string>
+    <string name="toast_mute">A fiók el lett némítva!</string>
+    <string name="toast_unmute">A fiók nincs többé némítva!</string>
+    <string name="toast_follow">A fiókot követted!</string>
+    <string name="toast_unfollow">A fiókot már nem követed!</string>
+    <string name="toast_reblog">A fiók ki lett emelve!</string>
     <string name="toast_unreblog">The toot is no longer boosted!</string>
     <string name="toast_favourite">The toot was added to your favourites!</string>
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
