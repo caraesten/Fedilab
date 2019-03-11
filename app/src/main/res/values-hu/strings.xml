@@ -107,11 +107,11 @@
     <string name="reblog_by">Kiemeltük %1$s egységgel</string>
     <string name="favourite_add">Hozzáadjuk ezt a tootot a kedvencekhez?</string>
     <string name="favourite_remove">Eltávolítsuk ezt a tootot a kedvencek közül?</string>
-    <string name="reblog_add">Boost this toot?</string>
-    <string name="reblog_remove">Unboost this toot?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
-    <string name="more_action_1">Mute</string>
+    <string name="reblog_add">Emeljük ki ezt a tootot?</string>
+    <string name="reblog_remove">Szüntessük meg a tootot kiemelését?</string>
+    <string name="pin_add">Rögzítsük ezt a tootot?</string>
+    <string name="pin_remove">Szüntessük meg a toot rögzítését?</string>
+    <string name="more_action_1">Elnémít</string>
     <string name="more_action_2">Block</string>
     <string name="more_action_3">Report</string>
     <string name="more_action_4">Remove</string>
