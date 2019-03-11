@@ -755,10 +755,10 @@
     <string name="settings_category_label_hiddencontent">Κρυφό περιεχόμενο</string>
     <string name="settings_category_label_composing">Συνθέτει</string>
     <string name="contact">Επαφές</string>
-    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
-    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
-    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
-    <string name="peertube_video_published"><![CDATA[Your video <b>%1$s</b> has been published]]></string>
+    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> σχολίασε το βίντεό σου <b>%2$s</b>]]></string>
+    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> παρακολουθεί το κανάλι σου <b>%2$s</b>]]></string>
+    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> παρακολουθεί το λογαριασμό σου]]></string>
+    <string name="peertube_video_published"><![CDATA[Έχει δημοσιευθεί το βίντεό σου <b>%1$s</b>]]></string>
     <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
     <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
