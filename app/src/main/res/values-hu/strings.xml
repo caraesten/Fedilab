@@ -218,12 +218,12 @@
     <!-- timed mute -->
     <string name="timed_mute_date_error">Az elnémítás ideje több mint egy perc kell legyen.</string>
     <string name="timed_mute_date">%1$s el lett némítva %2$s időpontig.\n Az elnémítást a fiók profiloldalán lehet megszüntetni.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_profile">%1$s el lett némítva %2$s időpontig.\n Klikkelj ide a fiók némításának megszűntetéséhez.</string>
     <!-- Notifications -->
     <string name="no_notifications">Nincs megjelenítendő értesítés</string>
     <string name="notif_mention">megemlített téged</string>
-    <string name="notif_reblog">boosted your status</string>
-    <string name="notif_favourite">favourited your status</string>
+    <string name="notif_reblog">kiemelte posztodat</string>
+    <string name="notif_favourite">lájkolta a posztodat</string>
     <string name="notif_follow">követ téged</string>
     <string name="notif_pouet">New toot from %1$s</string>
     <plurals name="other_notifications">
