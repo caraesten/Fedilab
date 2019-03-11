@@ -225,23 +225,23 @@
     <string name="notif_reblog">kiemelte posztodat</string>
     <string name="notif_favourite">lájkolta a posztodat</string>
     <string name="notif_follow">követ téged</string>
-    <string name="notif_pouet">New toot from %1$s</string>
+    <string name="notif_pouet">Új toot %1$s felhasználótól</string>
     <plurals name="other_notifications">
-        <item quantity="one">and another notification</item>
-        <item quantity="other">and %d other notifications</item>
+        <item quantity="one">és még egy értesítés</item>
+        <item quantity="other">és még %d értesítés</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">and another toot to discover</item>
         <item quantity="other">and %d other toots to discover</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d lájkolás</item>
+        <item quantity="other">%d lájkolás</item>
     </plurals>
-    <string name="delete_notification_ask">Delete a notification?</string>
-    <string name="delete_notification_ask_all">Delete all notifications?</string>
-    <string name="delete_notification">The notification has been deleted!</string>
-    <string name="delete_notification_all">All notifications have been deleted!</string>
+    <string name="delete_notification_ask">Törlöd az értesítést?</string>
+    <string name="delete_notification_ask_all">Törlöd az értesítéseket?</string>
+    <string name="delete_notification">Az értesítést töröltük!</string>
+    <string name="delete_notification_all">Minden értesítést töröltünk!</string>
     <!-- HEADER -->
     <string name="following">Követik</string>
     <string name="followers">Követők</string>
@@ -257,8 +257,8 @@
     <string name="toast_unfollow">A fiókot már nem követed!</string>
     <string name="toast_reblog">A fiók ki lett emelve!</string>
     <string name="toast_unreblog">The toot is no longer boosted!</string>
-    <string name="toast_favourite">The toot was added to your favourites!</string>
-    <string name="toast_unfavourite">The toot was removed from your favourites!</string>
+    <string name="toast_favourite">A tootot hozzáadtuk a kedvencekhez!</string>
+    <string name="toast_unfavourite">A tootot eltávolítottuk a kedvencek közül!</string>
     <string name="toast_report">The toot was reported!</string>
     <string name="toast_unstatus">The toot was deleted!</string>
     <string name="toast_pin">A tootot rögzítettük!</string>
@@ -302,10 +302,10 @@
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
     <string name="set_notif_follow_share">Notify when someone boosts your status</string>
-    <string name="set_notif_follow_add">Notify when someone favourites your status</string>
+    <string name="set_notif_follow_add">Értesíts, ha valaki lájkolja a posztodat</string>
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
-    <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
+    <string name="set_share_validation_fav">Kérdezz vissza, mielőtt hozzáadsz valamit a kedvenceidhez</string>
     <string name="settings_title_more_options">Advanced settings</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
@@ -480,7 +480,7 @@
     <string name="action_lists_owner">Your lists</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
+    <string name="show_boost_count">Mutasd meg a kiemelt/lájkolt posztok számát</string>
     <string name="issue_login_title">Authentication does not work?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
@@ -575,7 +575,7 @@
     <string name="set_display_follow_instance">Display follow instances button</string>
     <string name="channel_notif_follow">New follow</string>
     <string name="channel_notif_boost">New Boost</string>
-    <string name="channel_notif_fav">New Favourite</string>
+    <string name="channel_notif_fav">Új kedvenc</string>
     <string name="channel_notif_mention">New Mention</string>
     <string name="channel_notif_toot">New Toot</string>
     <string name="channel_notif_backup">Toots Backup</string>
@@ -604,10 +604,10 @@
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube favourites</string>
+    <string name="peertube_favorites">Peertube kedvencek</string>
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-    <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+    <string name="bookmark_peertube_empty">Nincs Peertube videó a kedvenceid között!</string>
     <string name="channel">Channel</string>
     <string name="no_peertube_channels">No Peertube channels</string>
     <string name="no_peertube_instances">No Peertube instances</string>
