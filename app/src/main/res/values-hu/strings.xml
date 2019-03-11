@@ -143,68 +143,68 @@
     <string name="bookmark_add">Hozzáadás a könyvjelzőkhöz</string>
     <string name="bookmark_remove">Könyvjelző eltávolítása</string>
     <string name="bookmarks_empty">Nincs megjeleníthető könyvjelző</string>
-    <string name="status_bookmarked">Status has been added to bookmarks!</string>
-    <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+    <string name="status_bookmarked">Hozzáadtuk a tootot a könyvjelzőkhöz!</string>
+    <string name="status_unbookmarked">Eltávolítottuk a tootot a könyvjelzők közül!</string>
     <!-- Date -->
-    <string name="date_seconds">%d s</string>
-    <string name="date_minutes">%d m</string>
-    <string name="date_hours">%d h</string>
-    <string name="date_day">%d d</string>
+    <string name="date_seconds">%d m</string>
+    <string name="date_minutes">%d p</string>
+    <string name="date_hours">%d ó</string>
+    <string name="date_day">%d nap</string>
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Warning</string>
-    <string name="toot_placeholder">What is on your mind?</string>
-    <string name="toot_it">TOOT!</string>
+    <string name="toot_cw_placeholder">Figyelmeztetés</string>
+    <string name="toot_placeholder">Mi foglalkoztat épp most?</string>
+    <string name="toot_it">Toot!</string>
     <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
-    <string name="toot_title">Write a toot</string>
-    <string name="toot_title_reply">Reply to a toot</string>
+    <string name="toot_title">Írj egy tootot!</string>
+    <string name="toot_title_reply">Válaszolj egy tootra</string>
     <string name="queet_title">Write a queet</string>
     <string name="queet_title_reply">Reply to a queet</string>
-    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-    <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
-    <string name="toot_error_no_content">Your toot is empty!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
-    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="toot_no_space">Elérted az 500 karakteres limitet!</string>
+    <string name="toot_select_image">Média kiválasztása</string>
+    <string name="toot_select_image_error">Hiba történt a média kiválasztásakor!</string>
+    <string name="toot_delete_media">Törli ezt a médiát?</string>
+    <string name="toot_error_no_content">Ez a tootod üres!</string>
+    <string name="toot_visibility_tilte">A toot láthatósága</string>
+    <string name="toots_visibility_tilte">A tootok alapértelmezett láthatósága: </string>
+    <string name="toot_sent">A tootot elküldtük!</string>
+    <string name="toot_reply_content_title">Erre a tootra válaszolsz:</string>
+    <string name="toot_sensitive">Bizalmas tartalom?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
-        <item>Post to mentioned users only</item>
+        <item>Posztolj a nyilvános hírfolyamba</item>
+        <item>Ne posztolj nyilvános hírfolyamba</item>
+        <item>Csak követőid részére posztolj</item>
+        <item>Csak a megemlített felhasználók részére posztolj</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
-    <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="no_draft">Nincs piszkozat!</string>
+    <string name="choose_toot">Válassz egy tootot</string>
+    <string name="choose_accounts">Válassz egy fiókot</string>
+    <string name="select_accounts">Válassz néhány fiókot</string>
+    <string name="remove_draft">Eltávolítsuk a piszkozatot?</string>
+    <string name="show_reply">Klikkelj a gombra az eredeti toot megjelenítéséhez</string>
+    <string name="upload_form_description">Írd le a látássérültek számára</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">Nincs elérhető leírás!</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
+    <string name="about_vesrion">Verzió %1$s</string>
+    <string name="about_developer">Fejlesztő:</string>
+    <string name="about_license">Licensz: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Source code: </string>
-    <string name="about_yandex">Translation of toots:</string>
-    <string name="about_thekinrar">Search instances:</string>
+    <string name="about_code">Forráskód: </string>
+    <string name="about_yandex">Tootok fordítása:</string>
+    <string name="about_thekinrar">Szerver keresése:</string>
     <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Icon designer:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="thanks_text_logo">Ikontervező:</string>
+    <string name="thanks_text_banner">Bannertervező:</string>
     <!-- Conversation -->
-    <string name="conversation">Conversation</string>
+    <string name="conversation">Beszélgetés</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
-    <string name="no_follow_request">No follow request</string>
+    <string name="no_accounts">Nincs megjelenítető fiók</string>
+    <string name="no_follow_request">Nincs követési kérés</string>
     <string name="status_cnt">Toots \n %1$s</string>
     <string name="following_cnt">Following \n %1$s</string>
     <string name="followers_cnt">Followers \n %1$s</string>
-    <string name="pins_cnt">Pinned \n %d</string>
+    <string name="pins_cnt">Rögzített \n %d</string>
     <string name="authorize">Authorize</string>
     <string name="reject">Reject</string>
     <!-- Scheduled toots -->
@@ -245,7 +245,7 @@
     <!-- HEADER -->
     <string name="following">Following</string>
     <string name="followers">Followers</string>
-    <string name="pinned_toots">Pinned</string>
+    <string name="pinned_toots">Rögzített</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
     <string name="no_internet">No Internet connection!</string>
@@ -261,8 +261,8 @@
     <string name="toast_unfavourite">The toot was removed from your favourites!</string>
     <string name="toast_report">The toot was reported!</string>
     <string name="toast_unstatus">The toot was deleted!</string>
-    <string name="toast_pin">The toot was pinned!</string>
-    <string name="toast_unpin">The toot was unpinned!</string>
+    <string name="toast_pin">A tootot rögzítettük!</string>
+    <string name="toast_unpin">A toot rögzítését megszüntettük!</string>
     <string name="toast_error">Oops ! An error occurred!</string>
     <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
     <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
@@ -416,7 +416,7 @@
     <string name="v_direct">Direct</string>
     <string name="v_keywords">Some keywords…</string>
     <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
+    <string name="show_pinned">Rögzített tootok megjelenítése</string>
     <string name="filter_no_result">No matching result found!</string>
     <string name="data_backup_toots">Backup toots for %1$s</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
