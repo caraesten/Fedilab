@@ -235,7 +235,7 @@
         <item quantity="other">e outros %d toots para descobrir</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
+        <item quantity="one">%d gostos</item>
         <item quantity="other">%d likes</item>
     </plurals>
     <string name="delete_notification_ask">Excluir notificação?</string>
@@ -401,9 +401,9 @@
     <string name="toast_cache_clear">Cache limpo! %1$s foram liberados</string>
     <!-- ACTIVITY CUSTOM SHARING -->
     <string name="title_header_custom_sharing">Título</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
+    <string name="title_hint_custom_sharing">Título&#8230;</string>
     <string name="description_header_custom_sharing">Descrição</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
+    <string name="description_hint_custom_sharing">Descrição&#8230;</string>
     <string name="keywords_header_custom_sharing">Palavras-chave</string>
     <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
     <!-- ACTIVITY CACHE -->
