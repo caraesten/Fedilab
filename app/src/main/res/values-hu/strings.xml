@@ -135,7 +135,7 @@
         <item>Törli és újrafogalmazza ezt a tootot?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="one">%d reply</item>
+        <item quantity="one">%d válasz</item>
         <item quantity="other">%d replies</item>
     </plurals>
     <string name="set_display_bookmark_button">Display the bookmark button</string>
