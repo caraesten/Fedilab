@@ -676,7 +676,7 @@
         You can start writing first letters and names will be suggested.\n\n
         ⚠ The Login button will only work if the instance name is valid and the instance is up!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        Στο αυτό πεδίο, εισήγαγε το λογαριασμό του ηλεκτρονικού ταχυδρομείου, ο οποίος είναι συνδεμένος με το λογαριασμό σου στο Μαστόδοντο.
     </string>
     <string name="showcase_pwd">        Τα τελευταία βήματα, είναι η εισαγωγή του συνθηματικού, και το κλικάρισμα στη Σύνδεση.
     </string>
@@ -685,12 +685,12 @@
     <!-- languages not translated -->
     <string name="languages">Γλώσσες</string>
     <string name="show_media_only">Μόνο πολυμέσα</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_nsfw">Εμφάνιση των ακατάλληλων</string>
     <string name="crowdin_translations">Μεταφράσεις Crowdin</string>
     <string name="crowdin_manager">Διαχειριστής Crowdin</string>
     <string name="translation_app">Μετάφραση της εφαρμογής</string>
     <string name="about_crowdin">Σχετικά με το Crowdin</string>
-    <string name="bot">Bot</string>
+    <string name="bot">Αυτόματος Εργάτης</string>
     <string name="pixelfed_instance">Υπόσταση Pixelfed</string>
     <string name="mastodon_instance">Υπόσταση Mastodon</string>
     <string name="no_pixelfed_instance">Καμία υπόσταση Pixelfed</string>
@@ -725,25 +725,25 @@
     <string name="peertube_nsfw">Αυτό το βίντεο έχει περιεχόμενο ωμό ή ενηλίκων</string>
     <string name="peertube_enable_comments">Να επιτρέπονται τα σχόλια στο βίντεο</string>
     <string name="update_video">Ενημέρωση του βίντεου</string>
-    <string name="description">Description</string>
-    <string name="toast_peertube_video_updated">The video has been updated!</string>
-    <string name="toast_cancelled">Upload cancelled!</string>
-    <string name="upload_video_success">The video has been uploaded!</string>
-    <string name="uploading">Uploading, please wait…</string>
-    <string name="video_uploaded_action">Click here to edit the video data.</string>
-    <string name="delete_video">Delete video</string>
-    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
-    <string name="no_video_uploaded">No videos uploaded yet!</string>
-    <string name="display_nsfw_videos">Display NSFW videos</string>
-    <string name="default_channel_of">Default %s channel</string>
-    <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
-    <string name="leave_a_comment">Leave a comment</string>
-    <string name="share">Share</string>
-    <string name="my_pictures">My pictures</string>
+    <string name="description">Περιγραφή</string>
+    <string name="toast_peertube_video_updated">Αυτό το βίντεο έχει ενημερωθεί.</string>
+    <string name="toast_cancelled">Ακυρώθηκε η αποστολή.</string>
+    <string name="upload_video_success">Το βίντεο έχει ανεβεί.</string>
+    <string name="uploading">Αποστέλνεται· υπομονή…</string>
+    <string name="video_uploaded_action">Κλίκαρε εδώ, για να επεξεργαστείς τα δεδομένα του βίντεου.</string>
+    <string name="delete_video">Διαγραφή του βίντεου</string>
+    <string name="delete_video_confirmation">Να διαγραφεί το βίντεο, στα σίγουρα;</string>
+    <string name="no_video_uploaded">Ακόμη δεν έχει ανέβει κάποιο βίντεο.</string>
+    <string name="display_nsfw_videos">Προβολή των Ακατάλληλων βίντεων</string>
+    <string name="default_channel_of">Προεπιλεγμένο κανάλι %s</string>
+    <string name="no_video_to_display">Δεν υπάρχουν βίντεα για προβολή.</string>
+    <string name="add_image_to_favorite">Προσθήκη πολυμέσου στα αγαπημένα</string>
+    <string name="leave_a_comment">Γράψε ένα σχόλιο</string>
+    <string name="share">Να γυρίζει</string>
+    <string name="my_pictures">Οι εικόνες μου</string>
     <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
-    <string name="server_schedule">From server</string>
+    <string name="device_schedule">Από συσκευή</string>
+    <string name="server_schedule">Από διακομιστή</string>
     <string name="toots_server">Toots (Server)</string>
     <string name="toots_client">Toots (Device)</string>
     <string name="modify">Modify</string>
