@@ -119,20 +119,20 @@
     <string name="more_action_6">Megoszt</string>
     <string name="more_action_7">Megemlít</string>
     <string name="more_action_8">Időzített elnémítás</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_9">Töröl &amp; Újrafogalmaz</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
-        <item>Block this account?</item>
-        <item>Report this toot?</item>
-        <item>Block this domain?</item>
+        <item>Elnémítja ezt a fiókot?</item>
+        <item>Letiltja ezt a fiókot?</item>
+        <item>Jelenti ezt a tootot?</item>
+        <item>Letiltja ezt a domaint?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Értesít</item>
+        <item>Csendes</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>El akarja távolítani ezt a tootot?</item>
+        <item>Törli és újrafogalmazza ezt a tootot?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d reply</item>
