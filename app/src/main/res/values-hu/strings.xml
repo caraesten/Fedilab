@@ -73,7 +73,7 @@
     <!--- Menu -->
     <string name="home_menu">Főoldal</string>
     <string name="local_menu">Helyi idővonal</string>
-    <string name="global_menu">Összevont idővonal</string>
+    <string name="global_menu">Globális idővonal</string>
     <string name="neutral_menu_title">Beállítások</string>
     <string name="favorites_menu">Kedvencek</string>
     <string name="communication_menu_title">Kommunikáció</string>
@@ -171,8 +171,8 @@
     <string name="toot_reply_content_title">Erre a tootra válaszolsz:</string>
     <string name="toot_sensitive">Bizalmas tartalom?</string>
     <string-array name="toot_visibility">
-        <item>Posztolj a nyilvános hírfolyamba</item>
-        <item>Ne posztolj nyilvános hírfolyamba</item>
+        <item>Posztolj a nyilvános idővonalra</item>
+        <item>Ne posztolj nyilvános idővonalra</item>
         <item>Csak követőid részére posztolj</item>
         <item>Csak a megemlített felhasználók részére posztolj</item>
     </string-array>
@@ -283,20 +283,20 @@
     <string name="set_accounts_page">Number of accounts per load</string>
     <string name="set_notifications_page">Number of notifications per load</string>
     <string name="set_attachment_always">Always</string>
-    <string name="set_attachment_wifi">WIFI</string>
+    <string name="set_attachment_wifi">WiFi</string>
     <string name="set_attachment_ask">Ask</string>
-    <string name="set_attachment_action">Load the media</string>
-    <string name="load_attachment">Load the pictures</string>
-    <string name="load_attachment_spoiler">Show more…</string>
-    <string name="load_attachment_spoiler_less">Show less…</string>
-    <string name="load_sensitive_attachment">Sensitive content</string>
+    <string name="set_attachment_action">Média betöltése</string>
+    <string name="load_attachment">Képek betöltése</string>
+    <string name="load_attachment_spoiler">Mutasson többet…</string>
+    <string name="load_attachment_spoiler_less">Mutasson kevesebbet…</string>
+    <string name="load_sensitive_attachment">Bizalmas tartalom</string>
     <string name="set_display_reply">Display previous message in responses</string>
-    <string name="set_display_local">Display local timeline</string>
-    <string name="set_display_global">Display federated timeline</string>
+    <string name="set_display_local">Mutassa a helyi idővonalat</string>
+    <string name="set_display_global">Globális idővonal megjelenítése</string>
     <string name="set_disable_gif">Disable GIF avatars</string>
-    <string name="set_folder_title">Path: </string>
+    <string name="set_folder_title">Útvonal: </string>
     <string name="set_auto_store_toot">Save drafts automatically</string>
-    <string name="set_bubble_counter">Display counters</string>
+    <string name="set_bubble_counter">Számlálók megjelenítése</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
     <string name="settings_title_notifications">Manage notifications</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
@@ -335,7 +335,7 @@
     <string name="use_javascript">Enable Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="settings_ui_layout">Idővonalak elrendezése: </string>
     <string-array name="battery_profiles">
         <item>Normal battery drain</item>
         <item>Medium battery drain</item>
@@ -374,7 +374,7 @@
         <item>White</item>
     </string-array>
     <string name="set_title_news">News</string>
-    <string name="set_notification_news">Notify for new toots on the home timeline</string>
+    <string name="set_notification_news">Értesíts, mikor a saját szerver idővonalán új toot jelenik meg</string>
     <string name="action_follow">Follow</string>
     <string name="action_unfollow">Unfollow</string>
     <string name="action_block">Block</string>
@@ -513,7 +513,7 @@
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
     <string name="no_account_yet">No account yet?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+    <string name="toast_instance_unavailable">Ezen a szerveren nem találtunk idővonalat!</string>
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
     <string name="which_language">Translate in</string>
@@ -539,8 +539,8 @@
     <string name="filters">Filters</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
     <string name="filter_keyword">Keyword or phrase</string>
-    <string name="context_home">Home timeline</string>
-    <string name="context_public">Public timelines</string>
+    <string name="context_home">Saját szerver idővonala</string>
+    <string name="context_public">Nyilvános idővonalak</string>
     <string name="context_notification">Notifications</string>
     <string name="context_conversation">Conversations</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
@@ -749,7 +749,7 @@
     <string name="modify">Modify</string>
     <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
     <string name="settings_category_label_confirmations">Confirmations</string>
-    <string name="settings_category_label_timelines">Timelines</string>
+    <string name="settings_category_label_timelines">Idővonalak</string>
     <string name="settings_category_label_notification">Notification service</string>
     <string name="settings_category_label_interface">Interface</string>
     <string name="settings_category_label_hiddencontent">Hidden content</string>
@@ -794,7 +794,7 @@
     <string name="submit">Submit</string>
     <string name="data_base_exported">The data base has been exported!</string>
     <string name="featured_hashtags">Featured hashtags</string>
-    <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
+    <string name="filter_timeline_with_a_tag">Idővonal szűrése címkékkel</string>
     <string name="no_tags">No tags</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
