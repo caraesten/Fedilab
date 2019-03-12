@@ -293,26 +293,26 @@
     <string name="set_display_reply">Előző üzenet megjelenítése a válaszokban</string>
     <string name="set_display_local">Mutassa a helyi idővonalat</string>
     <string name="set_display_global">Globális idővonal megjelenítése</string>
-    <string name="set_disable_gif">Disable GIF avatars</string>
+    <string name="set_disable_gif">GIF avatarok kikapcsolása</string>
     <string name="set_folder_title">Útvonal: </string>
-    <string name="set_auto_store_toot">Save drafts automatically</string>
+    <string name="set_auto_store_toot">Piszkozatok automatikus mentése</string>
     <string name="set_bubble_counter">Számlálók megjelenítése</string>
-    <string name="set_auto_add_media_url">Add URL of media in toots</string>
-    <string name="settings_title_notifications">Manage notifications</string>
-    <string name="set_notif_follow">Notify when someone follows you</string>
-    <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
-    <string name="set_notif_follow_share">Notify when someone boosts your status</string>
+    <string name="set_auto_add_media_url">Média URL-jének hozzáadása a tootokhoz</string>
+    <string name="settings_title_notifications">Értesítések kezelése</string>
+    <string name="set_notif_follow">Értesítsen, amikor valaki követ</string>
+    <string name="set_notif_follow_ask">Értesítsen, amikor valaki követni szeretne téged</string>
+    <string name="set_notif_follow_share">Értesítsen, amikor valaki kiemeli a posztodat</string>
     <string name="set_notif_follow_add">Értesíts, ha valaki lájkolja a posztodat</string>
-    <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-    <string name="set_share_validation">Show confirmation dialog before boosting</string>
+    <string name="set_notif_follow_mention">Értesítsen, amikor valaki megemlít téged</string>
+    <string name="set_share_validation">Kérdezz vissza kiemelés előtt</string>
     <string name="set_share_validation_fav">Kérdezz vissza, mielőtt hozzáadsz valamit a kedvenceidhez</string>
-    <string name="settings_title_more_options">Advanced settings</string>
-    <string name="set_wifi_only">Notify in WIFI only</string>
-    <string name="set_notify">Notify?</string>
-    <string name="set_notif_silent">Silent Notifications</string>
-    <string name="set_night_mode">Night mode</string>
-    <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-    <string name="settings_title_profile">Edit profile</string>
+    <string name="settings_title_more_options">Haladó beállítások</string>
+    <string name="set_wifi_only">Csak WiFi esetén értesíts</string>
+    <string name="set_notify">Kér értesítést?</string>
+    <string name="set_notif_silent">Csendes értesítések</string>
+    <string name="set_night_mode">Éjszakai mód</string>
+    <string name="set_nsfw_timeout">Érzékeny tartalom megjelenítésének ideje (mp, 0 érték kikapcsolja)</string>
+    <string name="settings_title_profile">Profil szerkesztése</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">Bio…</string>
@@ -368,23 +368,23 @@
         <item>Blue</item>
         <item>Cyan</item>
         <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>Zöld</item>
+        <item>Piros</item>
+        <item>Sárga</item>
+        <item>Fehér</item>
     </string-array>
-    <string name="set_title_news">News</string>
+    <string name="set_title_news">Hírek</string>
     <string name="set_notification_news">Értesíts, mikor a saját szerver idővonalán új toot jelenik meg</string>
-    <string name="action_follow">Follow</string>
-    <string name="action_unfollow">Unfollow</string>
-    <string name="action_block">Block</string>
-    <string name="action_unblock">Unblock</string>
-    <string name="action_mute">Mute</string>
+    <string name="action_follow">Követ</string>
+    <string name="action_unfollow">Többé nem követ</string>
+    <string name="action_block">Letilt</string>
+    <string name="action_unblock">Letiltás feloldása</string>
+    <string name="action_mute">Elnémít</string>
     <string name="action_no_action">No action</string>
-    <string name="action_unmute">Unmute</string>
-    <string name="request_sent">Request sent</string>
-    <string name="followed_by">Follows you</string>
-    <string name="action_search">Search</string>
+    <string name="action_unmute">Némítás feloldása</string>
+    <string name="request_sent">Kérés elküldve</string>
+    <string name="followed_by">Követ téged</string>
+    <string name="action_search">Keresés</string>
     <string name="set_capitalize">First letter in capital for replies</string>
     <string name="set_resize_picture">Resize pictures</string>
     <!-- Quick settings for notifications -->
