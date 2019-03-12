@@ -201,15 +201,15 @@
     <!-- Accounts -->
     <string name="no_accounts">Nincs megjelenítető fiók</string>
     <string name="no_follow_request">Nincs követési kérés</string>
-    <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
-    <string name="followers_cnt">Followers \n %1$s</string>
+    <string name="status_cnt">Tootok \n %1$s</string>
+    <string name="following_cnt">Követ \n %1$s</string>
+    <string name="followers_cnt">Követők \n %1$s</string>
     <string name="pins_cnt">Rögzített \n %d</string>
     <string name="authorize">Engedélyez</string>
     <string name="reject">Elutasít</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Nincs megjelenítendő időzített toot!</string>
-    <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
+    <string name="no_scheduled_toots_indications">Írj egy tootot, és a felső menüből válaszd ki az <b>Időzít</b> elemet.</string>
     <string name="remove_scheduled">Törlöd az időzített tootot?</string>
     <string name="media_count">Média: %d</string>
     <string name="toot_scheduled">A tootot időzítettük!</string>
@@ -231,8 +231,8 @@
         <item quantity="other">és még %d értesítés</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="one">és még egy felfedezhető toot</item>
+        <item quantity="other">és még %d felfedezhető toot</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d lájkolás</item>
@@ -249,14 +249,14 @@
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
     <string name="no_internet">Nincs internetkapcsolat!</string>
-    <string name="toast_block">The account was blocked!</string>
-    <string name="toast_unblock">The account is no longer blocked!</string>
+    <string name="toast_block">Letiltottuk a fiókot!</string>
+    <string name="toast_unblock">A fiók letiltását megszűntettük!</string>
     <string name="toast_mute">A fiók el lett némítva!</string>
     <string name="toast_unmute">A fiók nincs többé némítva!</string>
     <string name="toast_follow">A fiókot követted!</string>
     <string name="toast_unfollow">A fiókot már nem követed!</string>
     <string name="toast_reblog">A fiók ki lett emelve!</string>
-    <string name="toast_unreblog">The toot is no longer boosted!</string>
+    <string name="toast_unreblog">A toot nincs többé kiemelve!</string>
     <string name="toast_favourite">A tootot hozzáadtuk a kedvencekhez!</string>
     <string name="toast_unfavourite">A tootot eltávolítottuk a kedvencek közül!</string>
     <string name="toast_report">The toot was reported!</string>
