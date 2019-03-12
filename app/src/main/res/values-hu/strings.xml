@@ -315,8 +315,8 @@
     <string name="settings_title_profile">Profil szerkesztése</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
-    <string name="set_profile_description">Bio…</string>
-    <string name="set_lock_account">Lock account</string>
+    <string name="set_profile_description">Rövid bemutatkozás…</string>
+    <string name="set_lock_account">Fiók zárolása</string>
     <string name="set_save_changes">Save changes</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
     <string name="set_fit_preview">Fit preview images</string>
@@ -427,11 +427,11 @@
     </string-array>
     <string name="owner_cached_toots_empty">Nem találtunk tootokat az adatbázisban. Kérjük, letöltésükhöz használd a szinkronizálás gombot.</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Recorded data</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+    <string name="privacy_data_title">Rögzített adatok</string>
+    <string name="privacy_data">        A készüléken csak a fiókok alapadatait tároljuk.
+        Ezek az adatok szigorúan bizalmasak és csak az alkalmazás fér hozzá.
+        Az alkalmazás eltávolítása azonnal törli ezeket az adatokat.\n
+        &#9888; Felhasználónevet és jelszavakat sohasem tárolunk. Csak a szerverre való biztonságos (SSL) bejentkezés során használjuk.
     </string>
     <string name="privacy_authorizations_title">Permissions:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
