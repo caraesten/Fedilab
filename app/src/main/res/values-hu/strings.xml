@@ -385,18 +385,18 @@
     <string name="request_sent">Kérés elküldve</string>
     <string name="followed_by">Követ téged</string>
     <string name="action_search">Keresés</string>
-    <string name="set_capitalize">First letter in capital for replies</string>
-    <string name="set_resize_picture">Resize pictures</string>
+    <string name="set_capitalize">Első betű kiemelése a válaszokban</string>
+    <string name="set_resize_picture">Képek átméretezése</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push notifications</string>
-    <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+    <string name="settings_popup_title">Push-értesítések</string>
+    <string name="settings_popup_message">        Kérjük erősítse meg, mely push-értesítéseket szeretné megkapni.
+        Ezeket az értesítéseket később ki- vagy bekapcsolhatja (Értesítések fülön).
     </string>
     <string name="settings_popup_timeline">For unread toots in home time-line?</string>
     <string name="settings_popup_notification">For unread notifications?</string>
     <!-- CACHE -->
-    <string name="cache_title">Clear cache</string>
-    <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+    <string name="cache_title">Gyorsítótár ürítése</string>
+    <string name="cache_message">A gyorsítótárban %1$s megjelenítendő elem van.\n\nSzeretnéd törölni őket?</string>
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
     <!-- ACTIVITY CUSTOM SHARING -->
