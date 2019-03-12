@@ -419,13 +419,13 @@
     <string name="show_pinned">Rögzített tootok megjelenítése</string>
     <string name="filter_no_result">Nincs találat!</string>
     <string name="data_backup_toots">%1$s tootjainak archiválása</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="data_backup_success">%1$s új tootjait importáltuk</string>
     <string-array name="filter_select">
-        <item>No</item>
-        <item>Only</item>
-        <item>Both</item>
+        <item>Nem</item>
+        <item>Csak</item>
+        <item>Mindkettő</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">Nem találtunk tootokat az adatbázisban. Kérjük, letöltésükhöz használd a szinkronizálás gombot.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Recorded data</string>
     <string name="privacy_data">        Only basic information from accounts are stored on the device.
