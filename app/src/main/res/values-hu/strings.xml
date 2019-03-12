@@ -398,27 +398,27 @@
     <string name="cache_title">Gyorsítótár ürítése</string>
     <string name="cache_message">A gyorsítótárban %1$s megjelenítendő elem van.\n\nSzeretnéd törölni őket?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="toast_cache_clear">Gyorsítótár ki lett törölve! %1$s lett felszabadítva</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Cím</string>
+    <string name="title_hint_custom_sharing">Cím&#8230;</string>
+    <string name="description_header_custom_sharing">Leírás</string>
+    <string name="description_hint_custom_sharing">Leírás&#8230;</string>
+    <string name="keywords_header_custom_sharing">Kulcsszavak</string>
+    <string name="keywords_hint_custom_sharing">Kulcsszavak&#8230;</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
-    <string name="action_filter">Filter</string>
-    <string name="owner_cached_toots">Your toots</string>
-    <string name="v_public">Public</string>
-    <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
-    <string name="v_direct">Direct</string>
-    <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
+    <string name="action_sync">Szinkronizálás</string>
+    <string name="action_filter">Szűrés</string>
+    <string name="owner_cached_toots">Tootjaid</string>
+    <string name="v_public">Nyilvános</string>
+    <string name="v_unlisted">Nem megjelenített</string>
+    <string name="v_private">Privát</string>
+    <string name="v_direct">Közvetlen</string>
+    <string name="v_keywords">Néhány kulcsszó…</string>
+    <string name="show_media">Média megjelenítése</string>
     <string name="show_pinned">Rögzített tootok megjelenítése</string>
-    <string name="filter_no_result">No matching result found!</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
+    <string name="filter_no_result">Nincs találat!</string>
+    <string name="data_backup_toots">%1$s tootjainak archiválása</string>
     <string name="data_backup_success">%1$s new toots have been imported</string>
     <string-array name="filter_select">
         <item>No</item>
