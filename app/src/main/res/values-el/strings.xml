@@ -84,7 +84,7 @@
     <string name="follow_request">Αιτήσεις ακολούθησης</string>
     <string name="optimization">Βελτιστοποίηση</string>
     <string name="settings">Ρυθμίσεις</string>
-    <string name="profile">Προφίλ</string>
+    <string name="profile">Πρόσωπο</string>
     <string name="make_a_choice">Τι θέλεις να κάνεις;</string>
     <string name="delete_account_title">Διέγραψε έναν λογαριασμό</string>
     <string name="delete_account_message" formatted="false">Διέγραψε τον λογαριασμό %1$s από την εφαρμογή;</string>
@@ -94,7 +94,7 @@
     <string name="click_to_change">Kλίκαρε στη διαδρομή για να την αλλάξεις</string>
     <string name="failed">Απέτυχε!</string>
     <string name="scheduled_toots">Scheduled toots</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+    <string name="disclaimer_full">Οι παρακάτω πληροφορίες ίσως να είναι μια ανεπαρκής παρουσίαση του προσώπου του χρήστη.</string>
     <string name="insert_emoji">Insert emoji</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">Απ\' ευθείας ειδοποιήσεις</string>
@@ -217,7 +217,7 @@
     <string name="warning_battery">Είναι ενεργοποιημένη η εξοικονόμηση της ενέργειας. Ίσως να μη λειτουργήσει, όπως θα ήταν αναμενόμενο.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
+    <string name="timed_mute_date">%1$s έχει φιμωθεί έως %2$s.\nΜπορείς να βγάλεις αυτό το λογαριασμό από τη σιγή, μέσω της σελίδας του προσώπου του ή της.</string>
     <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
     <!-- Notifications -->
     <string name="no_notifications">Καμία ειδοποίηση προς εμφάνιση</string>
@@ -254,7 +254,7 @@
     <string name="toast_mute">Ο λογαριασμός φιμώθηκε.</string>
     <string name="toast_unmute">Ο λογαριασμός δεν είναι πλέον φιμωμένος.</string>
     <string name="toast_follow">Ο λογαριασμός παρακολουθείται.</string>
-    <string name="toast_unfollow">The account is no longer followed!</string>
+    <string name="toast_unfollow">Ο λογαριασμός πλέον δεν παρακολουθείται.</string>
     <string name="toast_reblog">The toot was boosted!</string>
     <string name="toast_unreblog">The toot is no longer boosted!</string>
     <string name="toast_favourite">The toot was added to your favourites!</string>
@@ -264,12 +264,12 @@
     <string name="toast_pin">The toot was pinned!</string>
     <string name="toast_unpin">The toot was unpinned!</string>
     <string name="toast_error">Ώπα... Παρουσιάστηκε κάποιο σφάλμα.</string>
-    <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-    <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
+    <string name="toast_code_error">Παρουσιάστηκε κάποιο σφάλμα. Η υπόσταση δεν απάντησε με κωδικό εξουσιοδότησης.</string>
+    <string name="toast_error_instance">Ο τομέας της υπόστασης δεν φαίνεται για έγκυρος.</string>
     <string name="toast_error_loading_account">Παρουσιάστηκε κάποιο σφάλμα, κατά την εναλλαγή μεταξύ των λογαριασμών.</string>
     <string name="toast_error_search">Παρουσιάστηκε κάποιο σφάλμα κατά την αναζήτηση.</string>
     <string name="toast_error_login">Αδυναμία σύνδεσης.</string>
-    <string name="toast_update_credential_ok">The profile data have been saved!</string>
+    <string name="toast_update_credential_ok">Τα δεδομένα του προσώπου έχουν αποθηκευτεί.</string>
     <string name="nothing_to_do">Δεν μπορεί να εκτελεστεί καμία ενέργεια</string>
     <string name="toast_saved">Το πολυμέσο αποθηκεύθηκε.</string>
     <string name="toast_error_translate">Παρουσιάστηκε κάποιο σφάλμα κατά την μετάφραση.</string>
@@ -312,7 +312,7 @@
     <string name="set_notif_silent">Άηχες Ειδοποιήσεις</string>
     <string name="set_night_mode">Κατάσταση λειτουργίας νύχτας</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-    <string name="settings_title_profile">Edit profile</string>
+    <string name="settings_title_profile">Επεξεργασία του προσώπου</string>
     <string name="settings_title_custom_sharing">Προσαρμοσμένη μοιρασιά</string>
     <string name="settings_custom_sharing_url">Η διεύθυνση URL&#8230; τς προσαρμοσμένης μοιρασιάς</string>
     <string name="set_profile_description">Βιογραφικό…</string>
@@ -646,8 +646,8 @@
     <string name="art_menu">Art timeline</string>
     <string name="open_menu">Open menu</string>
     <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
+    <string name="profile_picture">Εικόνα του προσώπου</string>
+    <string name="profile_banner">Σημαία του προσώπου</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
     <string name="add_new">Προθήκη νέου</string>
     <string name="mastohost_logo">MastoHost logo</string>
