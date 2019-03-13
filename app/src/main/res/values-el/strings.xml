@@ -217,8 +217,8 @@
     <string name="warning_battery">Είναι ενεργοποιημένη η εξοικονόμηση της ενέργειας. Ίσως να μη λειτουργήσει, όπως θα ήταν αναμενόμενο.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s έχει φιμωθεί έως %2$s.\nΜπορείς να βγάλεις αυτό το λογαριασμό από τη σιγή, μέσω της σελίδας του προσώπου του ή της.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_date">%1$s έχει φιμωθεί έως τις %2$s.\nΜπορείς να βγάλεις αυτό το λογαριασμό από τη σιγή, μέσω της σελίδας του προσώπου του ή της.</string>
+    <string name="timed_mute_profile">%1$s είναι φιμωμένος μέχρι τις %2$s.\nΚλίκαρε εδώ, για να τον βγάλεις από τη σιγή.</string>
     <!-- Notifications -->
     <string name="no_notifications">Καμία ειδοποίηση προς εμφάνιση</string>
     <string name="notif_mention">σε ανέφερε</string>
@@ -343,15 +343,15 @@
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Καρτέλες</item>
-        <item>Menu</item>
-        <item>Tabs and menu</item>
+        <item>Κατάλογος επιλογών</item>
+        <item>Καρτέλες και κατάλογος επιλογών</item>
     </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
         <item>Καθόλου</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">Το API κλειδί σου· μπορείς να το αφήσεις κενό για το Yandex</string>
     <string-array name="settings_theme">
         <item>Σκοτεινό</item>
         <item>Φωτεινό</item>
@@ -374,7 +374,7 @@
         <item>Λευκό</item>
     </string-array>
     <string name="set_title_news">Νέα</string>
-    <string name="set_notification_news">Notify for new toots on the home timeline</string>
+    <string name="set_notification_news">Ειδοποίηση για νέες φωνές στην σπιτική χρονογραμμή</string>
     <string name="action_follow">Παρακολούθηση</string>
     <string name="action_unfollow">Διακοπή παρακολούθησης</string>
     <string name="action_block">Φραγή</string>
@@ -392,7 +392,7 @@
     <string name="settings_popup_message">        Παρακαλώ, επιβεβαίωσε τις ειδοποιήσεις προωθήσεων, που θα ήθελες να λαμβάνεις.
         Μπορείς να ενεργοποιήσεις ή να απενεργοποιήσεις αυτές τις ειδοποιήσεις, αργότερα, στις ρυθμίσεις (στην καρτέλα Ειδοποιήσεων).
     </string>
-    <string name="settings_popup_timeline">For unread toots in home time-line?</string>
+    <string name="settings_popup_timeline">Για τις μη διαβασμένες φωνές στην σπιτική χρονογραμμή;</string>
     <string name="settings_popup_notification">Για τις μη διαβασμένες ειδοποιήσεις;</string>
     <!-- CACHE -->
     <string name="cache_title">Καθάρισμα της μικραποθήκευσης</string>
@@ -409,7 +409,7 @@
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Συγχρονισμός</string>
     <string name="action_filter">Κόσκινο</string>
-    <string name="owner_cached_toots">Your toots</string>
+    <string name="owner_cached_toots">Οι φωνές σου</string>
     <string name="v_public">Δημόσια</string>
     <string name="v_unlisted">Αταξινόμητα</string>
     <string name="v_private">Ιδιωτικά</string>
@@ -418,8 +418,8 @@
     <string name="show_media">Εμφάνιση των πολυμέσων</string>
     <string name="show_pinned">Εμφάνιση των καρφιτσωμένων</string>
     <string name="filter_no_result">Δεν βρέθηκαν αποτελέσματα που να ταιριάζουν.</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="data_backup_toots">Δημιουργία αντιγράφου δεδομένων των φωνών του %1$s</string>
+    <string name="data_backup_success">Έχουν εισαχθεί %1$s νέες φωνές</string>
     <string-array name="filter_select">
         <item>Καθόλου</item>
         <item>Μόνο</item>
@@ -441,7 +441,7 @@
         - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
         - <b>WAKE_LOCK</b>: Used during the notification service.
     </string>
-    <string name="privacy_API_authorizations_title">API permissions:</string>
+    <string name="privacy_API_authorizations_title">Δικαιώματα API:</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
@@ -454,7 +454,7 @@
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
     </string>
-    <string name="privacy_API_yandex_title">Translation of toots</string>
+    <string name="privacy_API_yandex_title">Μετάφραση των φωνών</string>
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
@@ -465,7 +465,7 @@
     <string name="filter_regex">Απομάκρυνση σύμφωνα με τις κανονικές εκφράσεις</string>
     <string name="search">Αναζήτηση</string>
     <string name="delete">Διαγραφή</string>
-    <string name="fetch_more_toots">Fetch more toots…</string>
+    <string name="fetch_more_toots">Λήψη περισσότερων φωνών…</string>
     <!-- About lists -->
     <string name="action_lists">Κατάστιχα</string>
     <string name="action_lists_confirm_delete">Σίγουρα, να διαγραφεί αυτό το κατάστιχο, αμετάκλητα;</string>
@@ -476,7 +476,7 @@
     <string name="action_lists_delete">Διαγραφή κατάστιχου</string>
     <string name="action_lists_update">Επεξεργασία κατάστιχου</string>
     <string name="action_lists_title_placeholder">Το όνομα του νέου κατάστιχου</string>
-    <string name="action_lists_search_users">Search among people you follow</string>
+    <string name="action_lists_search_users">Αναζήτηση ανάμεσα σε ανθρώπους που παρακολουθείς</string>
     <string name="action_lists_owner">Τα δικά σου κατάστιχα</string>
     <!-- Migration -->
     <string name="account_moved_to">Το %1$s έχει πάει στο %2$s</string>
@@ -519,10 +519,10 @@
     <string name="which_language">Μετάφραση στο</string>
     <string name="crash_title">Mastalab has stopped :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
-    <string name="follow_instance">Follow instance</string>
-    <string name="toast_instance_already_added">You already follow this instance!</string>
-    <string name="toast_instance_followed">The instance is followed!</string>
+    <string name="send_crash_report">Ερώτηση πριν την αποστολή αναφορών κατάρρευσης μέσω του ηλεκτρονικού ταχυδρομείου;</string>
+    <string name="follow_instance">Παρακολούθηση της υπόστασης</string>
+    <string name="toast_instance_already_added">Ήδη παρακολουθείς αυτή την υπόσταση.</string>
+    <string name="toast_instance_followed">Η υπόσταση παρακολουθείται.</string>
     <string name="action_partnership">Συνεργασίες</string>
     <string name="neutral_menu_information">Πληροφορίες</string>
     <string name="hide_boost">Hide boosts from %s</string>
