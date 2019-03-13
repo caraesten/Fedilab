@@ -249,11 +249,11 @@
     <!-- TOAST -->
     <string name="client_error">Αδυναμία λήψης του αριθμού ταυτότητας (id) του πελάτη.</string>
     <string name="no_internet">Καμία σύνδεση στο διαδίκτυο.</string>
-    <string name="toast_block">The account was blocked!</string>
-    <string name="toast_unblock">The account is no longer blocked!</string>
-    <string name="toast_mute">The account was muted!</string>
-    <string name="toast_unmute">The account is no longer muted!</string>
-    <string name="toast_follow">The account was followed!</string>
+    <string name="toast_block">Ο λογαριασμός φράχτηκε.</string>
+    <string name="toast_unblock">Ο λογαριασμός δεν είναι πλέον φραγμένος.</string>
+    <string name="toast_mute">Ο λογαριασμός φιμώθηκε.</string>
+    <string name="toast_unmute">Ο λογαριασμός δεν είναι πλέον φιμωμένος.</string>
+    <string name="toast_follow">Ο λογαριασμός παρακολουθείται.</string>
     <string name="toast_unfollow">The account is no longer followed!</string>
     <string name="toast_reblog">The toot was boosted!</string>
     <string name="toast_unreblog">The toot is no longer boosted!</string>
