@@ -463,7 +463,7 @@
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
     </string>
-    <string name="privacy_API_title">Tracking and Libraries</string>
+    <string name="privacy_API_title">Tracio a Llyfrgelloedd</string>
     <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
         - <b>Glide</b>: To manage media\n
@@ -474,7 +474,7 @@
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text">        Thank you to Stéphane for the logo.
+    <string name="thanks_text">        Diolch i Stéphane am y logo.
     </string>
     <string name="thanks_text_dev">Diolch i:    </string>
     <string name="filter_regex">Hidlo drwy ddefnyddio mynegiadau rheolaidd</string>
@@ -484,7 +484,7 @@
     <!-- About lists -->
     <string name="action_lists">Rhestrau</string>
     <string name="action_lists_confirm_delete">A ydych chi\'n sicr eich bod eisiau dileu y rhestr hon am byth?</string>
-    <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+    <string name="action_lists_empty_content">Does dim byd ar y rhestr hwn eto. Wrthi aelodau\'r rhestr gyhoeddi diwedderiadau, byddent yn ymdangos yma.</string>
     <string name="action_lists_add_to">Ychwanegu i\'r rhestr</string>
     <string name="action_lists_remove_from">Dileu o\'r rhestr</string>
     <string name="action_lists_create">Ychwanegu rhestr</string>
