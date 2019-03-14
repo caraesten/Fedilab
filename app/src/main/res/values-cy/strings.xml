@@ -658,11 +658,11 @@
     <string name="boost_scheduled">Mae\'r bŵst wedi\'i drefnu!</string>
     <string name="no_scheduled_boosts">Dim trefniant bŵst i\'w arddangos!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Agorwch y ddewislen ar gyfer tŵt ac yna dewiswch <b>Trefnu bŵst</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
+    <string name="art_menu">Ffrwd gelf</string>
     <string name="open_menu">Agor dewislen</string>
     <string name="app_logo">Logo y rhaglen</string>
     <string name="profile_picture">Llun proffil</string>
-    <string name="profile_banner">Profile banner</string>
+    <string name="profile_banner">Baner proffil</string>
     <string name="contact_instance_admin">Cysylltwch a gweinyddwr yr achos</string>
     <string name="add_new">Ychwanegu</string>
     <string name="mastohost_logo">Logo MastoHost</string>
@@ -687,11 +687,11 @@
         <item>1 diwrnod</item>
         <item>1 wythnos</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        Yn y maes hwn mae angen i chi ysgrifennu enw lletywr eich achos.\nEr enghraifft, os wnaethoch chi greu eich cyfrif ar https://mastodon.social\nYsgrifennwch <b>mastodon.social</b> (heb https://)\n
+        Mae modd i chi ddechrau ysgrifennu llythrennau cychwynol a bydd enwau yn cael eu hawgrymu.\n\n
+        ⚠ Bydd y botwm Mewngofnodi ond yn gweithio os yw enw\'r achos yn ddilys a bod yr achos yn weithredol!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        Yn y maes hwn, ysgrifennwch yr ebost sydd wedi ei gysylltu a\'ch cyfrif Mastodon.
     </string>
     <string name="showcase_pwd">        Y cam olaf yw i fewnosod eich cyfrinair a clicio ar Mengofnodi.
     </string>
@@ -712,31 +712,31 @@
     <string name="any_tags">Unrhyw un o rhain</string>
     <string name="all_tags">Rhain i gyd</string>
     <string name="none_tags">Dim un o rhain</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
-    <string name="change_tag_column">Change column name</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
-    <string name="misskey_instance">Misskey instance</string>
-    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
+    <string name="some_words_any">Unrhyw un o\'r geiriau hyn (a gofod rhyngddynt)</string>
+    <string name="some_words_all">Yr holl eiriau hyn (a gofod rhyngddynt)</string>
+    <string name="some_words_none">Dim un o\'r geiriau hyn (a gofod rhyngddynt)</string>
+    <string name="change_tag_column">Newid enw\'r golofn</string>
+    <string name="no_misskey_instance">Dim achosion Misskey</string>
+    <string name="misskey_instance">Achos Misskey</string>
+    <string name="toast_no_apps">Nid oes ap sy\'n cefnogi\'r ddolen yma wedi\'i osod ar eich dyfais.</string>
     <string name="subscriptions">Subscriptions</string>
-    <string name="overview">Overview</string>
-    <string name="trending">Trending</string>
-    <string name="recently_added">Recently added</string>
-    <string name="local">Local</string>
-    <string name="upload_video">Upload</string>
-    <string name="reply">Reply</string>
-    <string name="delete_comment">Delete a comment</string>
-    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
-    <string name="fullscreen">Full screen video</string>
+    <string name="overview">Trosolwg</string>
+    <string name="trending">Trendio</string>
+    <string name="recently_added">Wedi\'i ychwanegu yn ddiweddar</string>
+    <string name="local">Lleol</string>
+    <string name="upload_video">Uwchlwytho</string>
+    <string name="reply">Ateb</string>
+    <string name="delete_comment">Dileu sylw</string>
+    <string name="delete_comment_confirm">Ydych chi\'n sicr eich bod am ddileu y sylw hwn?</string>
+    <string name="fullscreen">Fideo sgrîn llawn</string>
     <string name="set_video_mode">Mode for videos</string>
-    <string name="file_to_upload">Select the file to upload</string>
+    <string name="file_to_upload">Dewiswch y ddogfen er mwyn uwchlwytho</string>
     <string name="my_videos">My videos</string>
-    <string name="title">Title</string>
-    <string name="categories">Categories</string>
-    <string name="license">License</string>
-    <string name="category">Category</string>
-    <string name="language">Language</string>
+    <string name="title">Teitl</string>
+    <string name="categories">Categorïau</string>
+    <string name="license">Trwydded</string>
+    <string name="category">Categori</string>
+    <string name="language">Iaith</string>
     <string name="peertube_nsfw">This video contains mature or explicit content</string>
     <string name="peertube_enable_comments">Enable video comments</string>
     <string name="update_video">Update video</string>
