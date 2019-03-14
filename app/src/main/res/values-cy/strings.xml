@@ -158,12 +158,12 @@
     <string name="toot_cw_placeholder">Rhybudd</string>
     <string name="toot_placeholder">Beth sydd ar eich meddwl?</string>
     <string name="toot_it">Tŵt!</string>
-    <string name="queet_it">QUEET!</string>
+    <string name="queet_it">Cwît!</string>
     <string name="cw">cs</string>
     <string name="toot_title">Cyfansoddi tŵt</string>
     <string name="toot_title_reply">Ymateb i dŵt</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
+    <string name="queet_title">Ysgrifennu cwît</string>
+    <string name="queet_title_reply">Ymateb i gwît</string>
     <string name="toot_no_space">Yr ydych wedi cyrraedd yr uchafswm o 500 nod!</string>
     <string name="toot_select_image">Dewis cyfryngau</string>
     <string name="toot_select_image_error">Roedd gwall!</string>
@@ -247,7 +247,7 @@
         <item quantity="other">and %d other toots to discover</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="zero">%d likes</item>
+        <item quantity="zero">%d wedi hoffi</item>
         <item quantity="one">%d like</item>
         <item quantity="two">%d likes</item>
         <item quantity="few">%d likes</item>
@@ -327,7 +327,7 @@
     <string name="set_notify">Hsybysu?</string>
     <string name="set_notif_silent">Hysbysiadau distaw</string>
     <string name="set_night_mode">Modd hwyrnos</string>
-    <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+    <string name="set_nsfw_timeout">Terfyn amser golwg deunydd anaddas i\'r gweithle (eiliadau, ystyr 0 yw ei fod wedi ei ddiffodd)</string>
     <string name="settings_title_profile">Golygu proffil</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
@@ -511,9 +511,9 @@
     <string name="data_export_toots">Allforio statysau ar gyfer %1$s</string>
     <string name="data_export_success">Mae %1$s o dŵtiau o\'r %2$s wedi eu hallforio.</string>
     <string name="data_export_error">Aeth rhywbeth o\'i le tra\'n allforio data i %1$s</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_export_error_simple">Aeth rhywbeth o le tra\'n allforio data!</string>
+    <string name="data_import_success_simple">Data wedi ei fewnforio!</string>
+    <string name="data_import_error_simple">Aeth rhywbeth o le tra\'n mewnforio data!</string>
     <!-- Proxy -->
     <string name="proxy_set">Procsi</string>
     <string name="proxy_type">Math</string>
@@ -661,11 +661,11 @@
     <string name="art_menu">Art timeline</string>
     <string name="open_menu">Agor dewislen</string>
     <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
+    <string name="profile_picture">Llun proffil</string>
     <string name="profile_banner">Profile banner</string>
     <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
-    <string name="mastohost_logo">MastoHost logo</string>
+    <string name="add_new">Ychwanegu</string>
+    <string name="mastohost_logo">Logo MastoHost</string>
     <string name="emoji_picker">Dewiswr emoji</string>
     <string name="refresh">Ail-lwytho</string>
     <string name="expand_conversation">Ehangu\'r sgwrs</string>
@@ -695,13 +695,13 @@
     </string>
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Mwy o wybodaeth</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
-    <string name="show_media_only">Media only</string>
+    <string name="languages">Ieithoedd</string>
+    <string name="show_media_only">Cyfryngau yn unig</string>
     <string name="show_media_nsfw">Dangos NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
+    <string name="crowdin_translations">Cyfieithiadau Crowdin</string>
     <string name="crowdin_manager">Crowdin manager</string>
     <string name="translation_app">Cyfieithu\'r rhaglen</string>
     <string name="about_crowdin">Ynghylch Crowdin</string>
