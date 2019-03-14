@@ -719,7 +719,7 @@
     <string name="no_misskey_instance">Dim achosion Misskey</string>
     <string name="misskey_instance">Achos Misskey</string>
     <string name="toast_no_apps">Nid oes ap sy\'n cefnogi\'r ddolen yma wedi\'i osod ar eich dyfais.</string>
-    <string name="subscriptions">Subscriptions</string>
+    <string name="subscriptions">Tanysgrifiadau</string>
     <string name="overview">Trosolwg</string>
     <string name="trending">Trendio</string>
     <string name="recently_added">Wedi\'i ychwanegu yn ddiweddar</string>
@@ -748,20 +748,20 @@
     <string name="video_uploaded_action">Cliciwch yma i olygu data\'r fideo.</string>
     <string name="delete_video">Dileu fideo</string>
     <string name="delete_video_confirmation">Ydych chi\'n sicr eich bod am ddileu y fideo hwn?</string>
-    <string name="no_video_uploaded">No videos uploaded yet!</string>
-    <string name="display_nsfw_videos">Display NSFW videos</string>
+    <string name="no_video_uploaded">Dim fideo wedi\'i uwchlwytho eto!</string>
+    <string name="display_nsfw_videos">Dangos fideo anaddas i\'r gweithle</string>
     <string name="default_channel_of">Default %s channel</string>
-    <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
+    <string name="no_video_to_display">Dim fideo i\'w arddangos!</string>
+    <string name="add_image_to_favorite">Ychwanegu cyfryngau i ffefrynnau</string>
     <string name="leave_a_comment">Gadael sylw</string>
     <string name="share">Rhannu</string>
     <string name="my_pictures">Fy lluniau</string>
     <string name="choose_schedule">Choose a schedule mode</string>
     <string name="device_schedule">From device</string>
     <string name="server_schedule">From server</string>
-    <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
-    <string name="modify">Modify</string>
+    <string name="toots_server">Tŵtiau (Gweinydd)</string>
+    <string name="toots_client">Tŵtiau (Dyfais)</string>
+    <string name="modify">Newid</string>
     <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
     <string name="settings_category_label_confirmations">Confirmations</string>
     <string name="settings_category_label_timelines">Timelines</string>
@@ -810,10 +810,10 @@
     <string name="data_base_exported">The data base has been exported!</string>
     <string name="featured_hashtags">Featured hashtags</string>
     <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
-    <string name="no_tags">No tags</string>
+    <string name="no_tags">Dim tagiau</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
-        <item>Direct stream</item>
+        <item>Ffrwd uniongyrchol</item>
     </string-array>
 </resources>
