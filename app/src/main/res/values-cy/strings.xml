@@ -434,7 +434,7 @@
     <string name="show_media">Dangos cyfryngau</string>
     <string name="show_pinned">Dangos yr hyn sydd wedi ei binio</string>
     <string name="filter_no_result">Dim byd cyfatebol wedi ei ganfod!</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
+    <string name="data_backup_toots">Tŵtiau wrth gefn am %1$s</string>
     <string name="data_backup_success">Mae %1$s o dŵtiau newydd wedi eu mewnforio</string>
     <string-array name="filter_select">
         <item>Na</item>
