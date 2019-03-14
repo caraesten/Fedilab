@@ -471,8 +471,8 @@
         - <b>PhotoView</b>: To manage images\n
     </string>
     <string name="privacy_API_yandex_title">Cyfieithiadau o\'r tŵtiau</string>
-    <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+    <string name="privacy_API_yandex_authorizations">        Mae\'r rhaglen yn caniatau y gallu i gyfieithu toots gan ddefnyddio lleoliad y ddyfais ac API Yandex.\n
+        Mae gan Yandex bolisi preifatrwydd, mae modd ei weld yma: https://yandex.ru/legal/confidential/?lang=en
     </string>
     <string name="thanks_text">        Diolch i Stéphane am y logo.
     </string>
@@ -533,8 +533,8 @@
     <string name="warning_delete_instance">Yr ydych am ddileu %s o\'r achosion yr ydych yn eu dilyn.</string>
     <string name="which_language">Cyfieithu yn</string>
     <string name="crash_title">Mae Mastalab wedi stopio :(</string>
-    <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
+    <string name="crash_message">Mae modd i chi anfon adroddiad crash ata\'i drwy ebost. Bydd yn help i\'w ddatrys. :)\n\nMae modd i chi ychwanegu cynnwys ychwanegol! Diolch!</string>
+    <string name="send_crash_report">Gofyn am adroddiadau crash drwy ebost?</string>
     <string name="follow_instance">Dilyn achos</string>
     <string name="toast_instance_already_added">Yr ydych yn dilyn yr achos yma\'n barod!</string>
     <string name="toast_instance_followed">Dilynwyd yr achos!</string>
@@ -561,7 +561,7 @@
     <string name="filter_keyword_explanations">Ceith ei gyfateb heb ystyriaeth i faint lythrennau yn y testun neu rhybudd cynnwys mewn tŵt</string>
     <string name="context_drop">Gollwng yn lle cuddio</string>
     <string name="context_drop_explanations">Bydd y tŵtiau a hidlwyd yn diflannu am byth, hyd yn oed os dileuir yr hidlydd wedyn</string>
-    <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
+    <string name="context_whole_word_explanations">Pan y mae allweddair neu ymadrodd yn alffaniwmerig yn unig, bydd ond yn cael ei osod os yw\'n cyfateb i\'r gair cyfan</string>
     <string name="context_whole_word">Gair cyfan</string>
     <string name="filter_context">Hidlo cyd-destunnau</string>
     <string name="filter_context_explanations">Un cyd-destun neu fwy lle dylai\'r hidlydd fod yn berthnasol</string>
@@ -584,7 +584,7 @@
     <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
     <string name="about_trunk">Who to follow</string>
     <string name="about_trunk_action">API Trunk</string>
-    <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
+    <string name="toast_impossible_to_follow">Ni ellir dilyn y cyfrif(au)</string>
     <string name="retrieve_remote_account">Fetching remote account</string>
     <string name="expand_image">Automatically expand hidden media</string>
     <string name="set_display_follow_instance">Display follow instances button</string>
