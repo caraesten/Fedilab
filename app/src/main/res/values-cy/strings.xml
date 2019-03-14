@@ -450,12 +450,12 @@
         &#9888; Nid yw\'r manylion mewngofnodi na cyfrineiriau yn cael eu storio. Maent ond yn cael eu defnyddio yn ystod dilysu (SSL) gyda achos.
     </string>
     <string name="privacy_authorizations_title">Caniatad:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Defnyddir er mwyn gweld os yw\'r ddyfais wedi ei gysylltu a rhwydwaith WIFI.\n
+        - <b>INTERNET</b>: Defnyddir er mwyn gnweud holiadau i achos.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Defnyddir er mwyn storio cyfryngau neu i symud yr ap ar gerdyn SD.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Defnyddir er mwyn ychwanegu cyfryngau i dŵtiau\n
+        - <b>BOOT_COMPLETED</b>: Defnyddir er mwyn cychwyn y gwasanaeth hysbysu.\n
+        - <b>WAKE_LOCK</b>: Defnyddir yn ystod y gwasanaeth hysbysu.
     </string>
     <string name="privacy_API_authorizations_title">Caniatad API:</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
@@ -497,12 +497,12 @@
     <string name="account_moved_to">Mae %1$s wedi symud i %2$s</string>
     <string name="show_boost_count">Dangos nifer hybiadau/ffefrynnau</string>
     <string name="issue_login_title">Dilysu ddim yn gweithio?</string>
-    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
+    <string name="issue_login_message">        <b>Dyma ambell wiriad all fod yn help:</b>\n\n
+        - Gwiriwch nad oes camgymeriad sillafu yn enw\'r achos\n\n
+        - Gwiriwch nad yw eich achos i lawr\n\n
+        - Os ydych yn defnyddio dilysu dau gam (2FA), defnyddiwch y ddolen ar y gwaelod (unwaith y mae enw\'r achos wedi\'i lenwi)\n\n
+        - Mae modd defnyddio\'r ddolen yma heb ddefnyddio 2FA\n\n
+        - Os yw dal ddim yn gweithio, codwch y mater ar GitLab: https://gitlab.com/tom79/mastalab/issues
     </string>
     <string name="media_ready">Mae\'r cyfryngau wedi eu llwytho. Cliciwch yma i\'w harddangos.</string>
     <string name="data_export_start">Mae\'r weithred yma\'n gallu cymryd amser. Cewch eich hysbysu pan y mae wedi gorffen.</string>
@@ -585,7 +585,7 @@
     <string name="about_trunk">Pwy i ddilyn</string>
     <string name="about_trunk_action">API Trunk</string>
     <string name="toast_impossible_to_follow">Ni ellir dilyn y cyfrif(au)</string>
-    <string name="retrieve_remote_account">Fetching remote account</string>
+    <string name="retrieve_remote_account">Nôl cyfrif anghysbell</string>
     <string name="expand_image">Ehangu cyfryngau cuddiedig yn awtomatig</string>
     <string name="set_display_follow_instance">Dangos botwm dilyn achosion</string>
     <string name="channel_notif_follow">New follow</string>
@@ -593,7 +593,7 @@
     <string name="channel_notif_fav">Ffefryn newydd</string>
     <string name="channel_notif_mention">New Mention</string>
     <string name="channel_notif_toot">Tŵt Newydd</string>
-    <string name="channel_notif_backup">Toots Backup</string>
+    <string name="channel_notif_backup">Tŵtiau wrth gefn</string>
     <string name="channel_notif_media">Lawrlwytho Cyfryngau</string>
     <string name="set_notif_sound">Newid swn hsybysu</string>
     <string name="select_sound">Dewis tôn</string>
@@ -654,16 +654,16 @@
     <string name="tags_renamed">Mae\'r tag hwn wedi\'i newid!</string>
     <string name="tags_deleted">Mae\'r tag wedi ei ddileu!</string>
     <string name="set_display_art">Dangos ffrwd gelf</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
+    <string name="schedule_boost">Trefnu bŵst</string>
+    <string name="boost_scheduled">Mae\'r bŵst wedi\'i drefnu!</string>
+    <string name="no_scheduled_boosts">Dim trefniant bŵst i\'w arddangos!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Agorwch y ddewislen ar gyfer tŵt ac yna dewiswch <b>Trefnu bŵst</b>.]]></string>
     <string name="art_menu">Art timeline</string>
     <string name="open_menu">Agor dewislen</string>
-    <string name="app_logo">Logo of the application</string>
+    <string name="app_logo">Logo y rhaglen</string>
     <string name="profile_picture">Llun proffil</string>
     <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
+    <string name="contact_instance_admin">Cysylltwch a gweinyddwr yr achos</string>
     <string name="add_new">Ychwanegu</string>
     <string name="mastohost_logo">Logo MastoHost</string>
     <string name="emoji_picker">Dewiswr emoji</string>
@@ -693,16 +693,16 @@
     </string>
     <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        Y cam olaf yw i fewnosod eich cyfrinair a clicio ar Mengofnodi.
     </string>
     <string name="more_information">Mwy o wybodaeth</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="showcase_2FA">Os ydych yn defnyddio 2FA (Dilysu dau gam), mae angen i chi ddefnyddio\'r ddolen yma. \nMae modd i chi ddefnyddio os nad ydych eisiau mewnosod eich cymwysterau yma.</string>
     <!-- languages not translated -->
     <string name="languages">Ieithoedd</string>
     <string name="show_media_only">Cyfryngau yn unig</string>
     <string name="show_media_nsfw">Dangos NSFW</string>
     <string name="crowdin_translations">Cyfieithiadau Crowdin</string>
-    <string name="crowdin_manager">Crowdin manager</string>
+    <string name="crowdin_manager">Rheolwr Crowdin</string>
     <string name="translation_app">Cyfieithu\'r rhaglen</string>
     <string name="about_crowdin">Ynghylch Crowdin</string>
     <string name="bot">Bot</string>
