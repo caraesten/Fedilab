@@ -329,8 +329,8 @@
     <string name="set_night_mode">Modd hwyrnos</string>
     <string name="set_nsfw_timeout">Terfyn amser golwg deunydd anaddas i\'r gweithle (eiliadau, ystyr 0 yw ei fod wedi ei ddiffodd)</string>
     <string name="settings_title_profile">Golygu proffil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Rhannu dethol</string>
+    <string name="settings_custom_sharing_url">Eich URL&#8230; rhannu dethol</string>
     <string name="set_profile_description">Bywgraffiad…</string>
     <string name="set_lock_account">Cloi\'r cyfrif</string>
     <string name="set_save_changes">Arbed newidiadau</string>
