@@ -791,12 +791,12 @@
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Logout account</string>
-    <string name="set_optimize_loading">Optimize loading time</string>
+    <string name="set_optimize_loading">Optimeiddio amser llwytho</string>
     <string name="all">All</string>
-    <string name="about_opencollective">Support the app</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
-    <string name="copy_link">Copy link</string>
-    <string name="connect_instance">Connect</string>
+    <string name="about_opencollective">Cefnogi\'r ap</string>
+    <string name="more_about_opencollective">Mae Open Collective yn caniatau grwpiau i sefyddlu torf, codi arian a\'u rheoli mewn modd tryloyw.</string>
+    <string name="copy_link">Copïo\'r ddolen</string>
+    <string name="connect_instance">Cysylltu</string>
     <string name="set_normal">Nomal</string>
     <string name="set_compact">Compact</string>
     <string name="set_console">Console</string>
@@ -809,7 +809,7 @@
     <string name="submit">Submit</string>
     <string name="data_base_exported">The data base has been exported!</string>
     <string name="featured_hashtags">Featured hashtags</string>
-    <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
+    <string name="filter_timeline_with_a_tag">Hidlo ffrwd drwy ddefnyddio tagiau</string>
     <string name="no_tags">Dim tagiau</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
