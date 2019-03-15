@@ -99,14 +99,14 @@
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
     <string name="live_notif">Απ\' ευθείας ειδοποιήσεις</string>
     <!-- Status -->
-    <string name="no_status">No toot to display</string>
-    <string name="fav_added">The toot was added to favourites</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
+    <string name="no_status">Καμία φωνή προς εμφάνιση</string>
+    <string name="fav_added">Η φωνή προστέθηκε στις αγαπημένες</string>
+    <string name="fav_removed">Η φωνή απομακρύνθηκε από τις αγαπημένες.</string>
     <string name="reblog_added">The toot was boosted!</string>
     <string name="reblog_removed">The toot is no longer boosted!</string>
     <string name="reblog_by">Boosted by %1$s</string>
-    <string name="favourite_add">Add this toot to your favourites?</string>
-    <string name="favourite_remove">Remove this toot from your favourites?</string>
+    <string name="favourite_add">Προσθήκη αυτής της φωνής στις αγαπημένες σου;</string>
+    <string name="favourite_remove">Απομάκρυνση αυτής της φωνής από τις αγαπημένες σου;</string>
     <string name="reblog_add">Boost this toot?</string>
     <string name="reblog_remove">Unboost this toot?</string>
     <string name="pin_add">Καρφίτσωμα αυτής της φωνής;</string>
@@ -225,14 +225,14 @@
     <string name="notif_reblog">boosted your status</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">άρχισε να σε παρακολουθεί</string>
-    <string name="notif_pouet">New toot from %1$s</string>
+    <string name="notif_pouet">Νέα φωνή από %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
         <item quantity="other">και %d άλλες ειδοποιήσεις</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">and another toot to discover</item>
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="other">και ακόμη %d φωνές για να εξερευνήσεις</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d like</item>
@@ -261,8 +261,8 @@
     <string name="toast_unfavourite">Η φωνή απομακρύνθηκε από τις αγαπημένες σου.</string>
     <string name="toast_report">Έγινε αναφορά της φωνής.</string>
     <string name="toast_unstatus">Η φωνή διαγράφηκε.</string>
-    <string name="toast_pin">The toot was pinned!</string>
-    <string name="toast_unpin">The toot was unpinned!</string>
+    <string name="toast_pin">Η φωνή καρφιτσώθηκε.</string>
+    <string name="toast_unpin">Η φωνή ξεκαρφιτσώθηκε.</string>
     <string name="toast_error">Ώπα... Παρουσιάστηκε κάποιο σφάλμα.</string>
     <string name="toast_code_error">Παρουσιάστηκε κάποιο σφάλμα. Η υπόσταση δεν απάντησε με κωδικό εξουσιοδότησης.</string>
     <string name="toast_error_instance">Ο τομέας της υπόστασης δεν φαίνεται για έγκυρος.</string>
@@ -274,12 +274,12 @@
     <string name="toast_saved">Το πολυμέσο αποθηκεύθηκε.</string>
     <string name="toast_error_translate">Παρουσιάστηκε κάποιο σφάλμα κατά την μετάφραση.</string>
     <string name="toast_toot_saved">Αποθηκεύτηκε το προσχέδιο.</string>
-    <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-    <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
-    <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
+    <string name="toast_error_char_limit">Είσαι σίγουρος πως αυτή η υπόσταση επιτρέπει αυτό το πλήθος των χαρακτήρων; Συνήθως αυτή η τιμή είναι γύρω στους 500 χαρακτήρες.</string>
+    <string name="toast_visibility_changed">Έχει αλλαχτεί η εμφανισιμότητα των φωνών, για το λογαριασμό %1$s</string>
+    <string name="toast_empty_search">Το όνομα της υπόστασης και το όνομα της οθόνης δεν μπορούν να είναι κενά.</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Βελτιστοποίηση του φορτώματος</string>
-    <string name="set_toots_page">Number of toots per load</string>
+    <string name="set_toots_page">Πλήθος φωνών ανά φόρτωμα</string>
     <string name="set_accounts_page">Πλήθος λογαριασμών ανά φόρτωμα</string>
     <string name="set_notifications_page">Πλήθος ειδοποιήσεων ανά φόρτωμα</string>
     <string name="set_attachment_always">Πάντα</string>
@@ -292,12 +292,12 @@
     <string name="load_sensitive_attachment">Ευαίσθητο περιεχόμενο</string>
     <string name="set_display_reply">Προβολή του προπορευόμενου μηνύματος στις αποκρίσεις</string>
     <string name="set_display_local">Προβολή της τοπικής χρονογραμμής</string>
-    <string name="set_display_global">Display federated timeline</string>
+    <string name="set_display_global">Προβολή της ομοσπονδιακής χρονογραμμής</string>
     <string name="set_disable_gif">Disable GIF avatars</string>
     <string name="set_folder_title">Διαδρομή: </string>
     <string name="set_auto_store_toot">Αυτόματη αποθήκευση των προσχεδίων</string>
     <string name="set_bubble_counter">Προβολή των μετρητών</string>
-    <string name="set_auto_add_media_url">Add URL of media in toots</string>
+    <string name="set_auto_add_media_url">Προσθήκη της διεύθυνσης URL στις φωνές πολυμέσων</string>
     <string name="settings_title_notifications">Διαχείριση των ειδοποιήσεων</string>
     <string name="set_notif_follow">Ειδοποίηση όταν κάποιος σε παρακολουθεί</string>
     <string name="set_notif_follow_ask">Ειδοποίηση όταν κάποιος ζητήσει να σε παρακολουθεί</string>
@@ -335,7 +335,7 @@
     <string name="use_javascript">Ενεργοποίηση των Σεναρίων της Τζάβα</string>
     <string name="expand_cw">Αυτόματη επέκταση της Προειδοποίησης Περιεχομένου</string>
     <string name="use_cookies">Να επιτρέπονται τα κουλουράκια τρίτων</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="settings_ui_layout">Διάταξη των χρονογραμμών: </string>
     <string-array name="battery_profiles">
         <item>Κανονική κατανάλωση της μπαταρίας</item>
         <item>Μεσαία κατανάλωση της μπαταρίας</item>
@@ -425,7 +425,7 @@
         <item>Μόνο</item>
         <item>Καί</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">Δεν βρέθηκαν φωνές στην βάση δεδομένων. Παρακαλώ, για να τις λάβεις, χρησιμοποίησε το πλήκτρο συγχρονισμού από τον κατάλογο των επιλογών.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Αρχειοθετημένα δεδομένα</string>
     <string name="privacy_data">        Στη συσκευή, αποθηκεύονται μόνο βασικές πληροφορίες των λογαριασμών.
@@ -509,13 +509,13 @@
     <string name="poxy_password">Συνθηματικό</string>
     <string name="set_theme">Θέμα:</string>
     <string name="set_compact_mode">Συμπαγής Κατάσταση Λειτουργίας</string>
-    <string name="set_share_details">Add toot details when sharing</string>
-    <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
+    <string name="set_share_details">Προσθήκη των λεπτομερειών των φωνών, κατά το μοίρασμα</string>
+    <string name="support_the_app_on_liberapay">Υποστήριξη της εφαρμογής στο Liberapay</string>
     <string name="alert_regex">Υπάρχει κάποιο σφάλμα στην κανονική έκφραση.</string>
     <string name="no_account_yet">Ακόμη χωρίς λογαριασμό;</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-    <string name="delete_instance">Delete this instance?</string>
-    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
+    <string name="toast_instance_unavailable">Δεν βρέθηκε κάποια χρονογραμμή σε αυτή την υπόσταση.</string>
+    <string name="delete_instance">Διαγραφή αυτής της υπόστασης;</string>
+    <string name="warning_delete_instance">Πρόκειται να διαγράψεις την %s , από τις υποστάσεις που παρακολουθείς.</string>
     <string name="which_language">Μετάφραση στο</string>
     <string name="crash_title">Mastalab has stopped :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
