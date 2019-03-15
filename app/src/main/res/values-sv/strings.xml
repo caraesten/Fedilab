@@ -36,7 +36,7 @@
     <string name="toast_account_changed" formatted="false">Fungerar nu med kontot %1$s</string>
     <string name="add_account">Lägg till ett konto</string>
     <string name="clipboard">Tootens innehåll har kopierats till urklipp</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">URL i tooten har kopierats till urklipp</string>
     <string name="change">Ändra</string>
     <string name="choose_picture">Välj en bild…</string>
     <string name="clear">Rengör</string>
@@ -138,7 +138,7 @@
         <item quantity="one">%d svar</item>
         <item quantity="other">%d replies</item>
     </plurals>
-    <string name="set_display_bookmark_button">Display the bookmark button</string>
+    <string name="set_display_bookmark_button">Visa bokmärksknappen</string>
     <string name="bookmarks">Bokmärken</string>
     <string name="bookmark_add">Lägger till bokmärke</string>
     <string name="bookmark_remove">Ta bort bokmärke</string>
@@ -158,8 +158,8 @@
     <string name="cw">cw</string>
     <string name="toot_title">Skriv en toot</string>
     <string name="toot_title_reply">Svara på en toot</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
+    <string name="queet_title">Skriv en queet</string>
+    <string name="queet_title_reply">Svara på en queet</string>
     <string name="toot_no_space">Du har nått de 500 tecken tillåtna!</string>
     <string name="toot_select_image">Välj en media</string>
     <string name="toot_select_image_error">Ett fel uppstod medans du valde media!</string>
@@ -228,7 +228,7 @@
     <string name="notif_pouet">Nya toot från %1$s</string>
     <plurals name="other_notifications">
         <item quantity="one">and another notification</item>
-        <item quantity="other">and %d other notifications</item>
+        <item quantity="other">och %d andra notifikationer</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
         <item quantity="one">and another toot to discover</item>
@@ -284,12 +284,12 @@
     <string name="set_notifications_page">Number of notifications per load</string>
     <string name="set_attachment_always">Alltid</string>
     <string name="set_attachment_wifi">WIFI</string>
-    <string name="set_attachment_ask">Ask</string>
-    <string name="set_attachment_action">Load the media</string>
-    <string name="load_attachment">Load the pictures</string>
+    <string name="set_attachment_ask">Fråga</string>
+    <string name="set_attachment_action">Ladda media</string>
+    <string name="load_attachment">Ladda bilderna</string>
     <string name="load_attachment_spoiler">Visa mer…</string>
     <string name="load_attachment_spoiler_less">Visa mindre…</string>
-    <string name="load_sensitive_attachment">Sensitive content</string>
+    <string name="load_sensitive_attachment">Känsligt innehåll</string>
     <string name="set_display_reply">Display previous message in responses</string>
     <string name="set_display_local">Display local timeline</string>
     <string name="set_display_global">Display federated timeline</string>
@@ -312,7 +312,7 @@
     <string name="set_notif_silent">Silent Notifications</string>
     <string name="set_night_mode">Night mode</string>
     <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-    <string name="settings_title_profile">Edit profile</string>
+    <string name="settings_title_profile">Ändra profil</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">Bio…</string>
