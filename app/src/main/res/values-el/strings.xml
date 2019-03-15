@@ -209,10 +209,10 @@
     <string name="reject">Απόρριψη</string>
     <!-- Scheduled toots -->
     <string name="no_scheduled_toots">Δεν υπάρχει κάποια προγραμματισμένη φωνή για να εμφανιστεί.</string>
-    <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Delete scheduled toot?</string>
+    <string name="no_scheduled_toots_indications">Γράψε μία φωνή, και μετά, από τον κατάλογο των επιλογών, διάλεξε το <b>Προγραμματισμός</b> .</string>
+    <string name="remove_scheduled">Διαγραφή των προγραμματισμένων φωνών;</string>
     <string name="media_count">Πολυμέσα: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
+    <string name="toot_scheduled">Η φωνή προγραμματίστηκε.</string>
     <string name="toot_scheduled_date">Η προγραμματισμένη ημερομηνία θα πρέπει να είναι αργότερα από την τωρινή ώρα.</string>
     <string name="warning_battery">Είναι ενεργοποιημένη η εξοικονόμηση της ενέργειας. Ίσως να μη λειτουργήσει, όπως θα ήταν αναμενόμενο.</string>
     <!-- timed mute -->
@@ -257,10 +257,10 @@
     <string name="toast_unfollow">Ο λογαριασμός πλέον δεν παρακολουθείται.</string>
     <string name="toast_reblog">The toot was boosted!</string>
     <string name="toast_unreblog">The toot is no longer boosted!</string>
-    <string name="toast_favourite">The toot was added to your favourites!</string>
-    <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-    <string name="toast_report">The toot was reported!</string>
-    <string name="toast_unstatus">The toot was deleted!</string>
+    <string name="toast_favourite">Η φωνή προστέθηκε στις αγαπημένες σου.</string>
+    <string name="toast_unfavourite">Η φωνή απομακρύνθηκε από τις αγαπημένες σου.</string>
+    <string name="toast_report">Έγινε αναφορά της φωνής.</string>
+    <string name="toast_unstatus">Η φωνή διαγράφηκε.</string>
     <string name="toast_pin">The toot was pinned!</string>
     <string name="toast_unpin">The toot was unpinned!</string>
     <string name="toast_error">Ώπα... Παρουσιάστηκε κάποιο σφάλμα.</string>
@@ -741,7 +741,7 @@
     <string name="leave_a_comment">Γράψε ένα σχόλιο</string>
     <string name="share">Να γυρίζει</string>
     <string name="my_pictures">Οι εικόνες μου</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
+    <string name="choose_schedule">Επιλέξτε μια κατάσταση λειτουργίας προγραμματισμού</string>
     <string name="device_schedule">Από συσκευή</string>
     <string name="server_schedule">Από διακομιστή</string>
     <string name="toots_server">Toots (Server)</string>
