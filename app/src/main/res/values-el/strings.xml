@@ -93,7 +93,7 @@
     <string name="choose_file_error">Δεν βρέθηκε εφαρμογή περίηγησης αρχείων!</string>
     <string name="click_to_change">Kλίκαρε στη διαδρομή για να την αλλάξεις</string>
     <string name="failed">Απέτυχε!</string>
-    <string name="scheduled_toots">Scheduled toots</string>
+    <string name="scheduled_toots">Προγραμματισμένες φωνές</string>
     <string name="disclaimer_full">Οι παρακάτω πληροφορίες ίσως να είναι μια ανεπαρκής παρουσίαση του προσώπου του χρήστη.</string>
     <string name="insert_emoji">Insert emoji</string>
     <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
@@ -109,8 +109,8 @@
     <string name="favourite_remove">Remove this toot from your favourites?</string>
     <string name="reblog_add">Boost this toot?</string>
     <string name="reblog_remove">Unboost this toot?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
+    <string name="pin_add">Καρφίτσωμα αυτής της φωνής;</string>
+    <string name="pin_remove">Ξεκαρφίτσωμα αυτής της φωνής;</string>
     <string name="more_action_1">Σίγαση</string>
     <string name="more_action_2">Φραγή</string>
     <string name="more_action_3">Αναφορά</string>
@@ -118,21 +118,21 @@
     <string name="more_action_5">Αντιγραφή</string>
     <string name="more_action_6">Να γυρίζει</string>
     <string name="more_action_7">Αναφορά</string>
-    <string name="more_action_8">Timed mute</string>
+    <string name="more_action_8">Σίγαση με περιορισμένο χρόνο</string>
     <string name="more_action_9">Διαγραφή κ´ επανασχεδίαση</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
+        <item>Φίμωμα αυτού του λογαριασμού;</item>
         <item>Φραγή αυτού του λογαριασμού;</item>
-        <item>Report this toot?</item>
-        <item>Block this domain?</item>
+        <item>Αναφορά αυτής της φωνής;</item>
+        <item>Φραγή αυτού του τομέα;</item>
     </string-array>
     <string-array name="action_notification">
         <item>Ειδοποίηση</item>
-        <item>Silent</item>
+        <item>Σιωπηλό</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>Απομάκρυνση αυτής της φωνής;</item>
+        <item>Διαγραφή κ´ επανασχεδίαση αυτής της φωνής;</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d απάντηση</item>
@@ -143,8 +143,8 @@
     <string name="bookmark_add">Προσθήκη στους σελιδοδείκτες</string>
     <string name="bookmark_remove">Απομάκρυνση του σελιδοδείκτη</string>
     <string name="bookmarks_empty">Δεν υπάρχουν σελιδοδείκτες προς εμφάνιση</string>
-    <string name="status_bookmarked">Status has been added to bookmarks!</string>
-    <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+    <string name="status_bookmarked">Η κατάσταση προστέθηκε στους σελιδοδείκτες.</string>
+    <string name="status_unbookmarked">Η κατάσταση απομακρύνθηκε από τους σελιδοδείκτες.</string>
     <!-- Date -->
     <string name="date_seconds">%d δευτ.</string>
     <string name="date_minutes">%d λεπ.</string>
@@ -152,23 +152,23 @@
     <string name="date_day">%d ημ.</string>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Προειδοποίηση</string>
-    <string name="toot_placeholder">What is on your mind?</string>
-    <string name="toot_it">TOOT!</string>
-    <string name="queet_it">QUEET!</string>
-    <string name="cw">cw</string>
-    <string name="toot_title">Write a toot</string>
-    <string name="toot_title_reply">Reply to a toot</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
+    <string name="toot_placeholder">Τι συλλογιέσαι;</string>
+    <string name="toot_it">ΦΩΝΗ!</string>
+    <string name="queet_it">ΟΥ-ΟΥ!</string>
+    <string name="cw">Π.Π.</string>
+    <string name="toot_title">Γράψιμο μιας φωνής</string>
+    <string name="toot_title_reply">Απάντηση σε μια φωνή</string>
+    <string name="queet_title">Γράψιμο ενός ού-ου</string>
+    <string name="queet_title_reply">Απάντηση σε ένα ού-ου</string>
     <string name="toot_no_space">Έχεις χρησιμοποιήσει το πλήθος των 500 επιτρεπόμενων χαρακτήρων.</string>
     <string name="toot_select_image">Επιλογή ενός πολυμέσου</string>
     <string name="toot_select_image_error">Παρουσιάστηκε κάποιο σφάλμα κατά την επιλογή του πολυμέσου.</string>
     <string name="toot_delete_media">Διαγραφή αυτού του πολυμέσου;</string>
-    <string name="toot_error_no_content">Your toot is empty!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
-    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
+    <string name="toot_error_no_content">Η φωνή σου είναι άδεια.</string>
+    <string name="toot_visibility_tilte">Εμφανισιμότητα της φωνής</string>
+    <string name="toots_visibility_tilte">Εμφανισιμότητα των φωνών, κατά προεπιλογή: </string>
+    <string name="toot_sent">Η φωνή στάλθηκε!</string>
+    <string name="toot_reply_content_title">Αποκρίνεσαι σε αυτή τη φωνή:</string>
     <string name="toot_sensitive">Ευαίσθητο περιεχόμενο;</string>
     <string-array name="toot_visibility">
         <item>Δημοσίευση σε δημόσιες χρονογραμμές</item>
@@ -177,12 +177,12 @@
         <item>Δημοσίευση μόνο στους αναφερόμενους χρήστες</item>
     </string-array>
     <string name="no_draft">Καθόλου προσχέδια.</string>
-    <string name="choose_toot">Choose a toot</string>
+    <string name="choose_toot">Επέλεξε μια φωνή</string>
     <string name="choose_accounts">Επέλεξε ένα λογαριασμό</string>
     <string name="select_accounts">Επέλεξε μερικούς λογαριασμούς</string>
     <string name="remove_draft">Απομάκρυνση του προσχέδιου;</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="show_reply">Κλίκαρε στο πλήκτρο, για να εμφανιστεί η αρχική φωνή</string>
+    <string name="upload_form_description">Περιγραφή για όσους είναι με προβλήματα όρασης</string>
     <!-- Instance -->
     <string name="instance_no_description">Δεν υπάρχει διαθέσιμη περιγραφή.</string>
     <!-- About -->
@@ -191,7 +191,7 @@
     <string name="about_license">Άδεια: </string>
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Πηγαίος κώδικας: </string>
-    <string name="about_yandex">Translation of toots:</string>
+    <string name="about_yandex">Μετάφραση των φωνών:</string>
     <string name="about_thekinrar">Αναζήτηση για υποστάσεις:</string>
     <string name="about_thekinrar_action">instances.social</string>
     <string name="thanks_text_logo">Σχεδιαστής εικονιδίου:</string>
@@ -201,14 +201,14 @@
     <!-- Accounts -->
     <string name="no_accounts">Δεν υπάρχει λογαριασμός προς εμφάνιση</string>
     <string name="no_follow_request">Κανένα αίτημα παρακολούθησης</string>
-    <string name="status_cnt">Toots \n %1$s</string>
+    <string name="status_cnt">Φωνές \n %1$s</string>
     <string name="following_cnt">Παρακολουθεί \n %1$s</string>
     <string name="followers_cnt">Τον παρακολουθούν \n %1$s</string>
     <string name="pins_cnt">Πινέζες \n %d</string>
     <string name="authorize">Εξουσιοδότηση</string>
     <string name="reject">Απόρριψη</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
+    <string name="no_scheduled_toots">Δεν υπάρχει κάποια προγραμματισμένη φωνή για να εμφανιστεί.</string>
     <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
     <string name="remove_scheduled">Delete scheduled toot?</string>
     <string name="media_count">Πολυμέσα: %d</string>
@@ -333,7 +333,7 @@
     <string name="embedded_browser">Χρήση του ενσωματωμένου πλοηγού διαδικτύου</string>
     <string name="custom_tabs">Προσαρμοσμένες καρτέλες</string>
     <string name="use_javascript">Ενεργοποίηση των Σεναρίων της Τζάβα</string>
-    <string name="expand_cw">Αυτόματη επέκταση της προειδοποίησης περιεχομένου</string>
+    <string name="expand_cw">Αυτόματη επέκταση της Προειδοποίησης Περιεχομένου</string>
     <string name="use_cookies">Να επιτρέπονται τα κουλουράκια τρίτων</string>
     <string name="settings_ui_layout">Layout for timelines: </string>
     <string-array name="battery_profiles">
