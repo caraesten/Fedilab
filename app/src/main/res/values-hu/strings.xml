@@ -33,10 +33,10 @@
     <string name="no_result">Nincs találat!</string>
     <string name="instance">Instancia</string>
     <string name="instance_example">Instancia: mastodon.social</string>
-    <string name="toast_account_changed" formatted="false">Now works with the account %1$s</string>
+    <string name="toast_account_changed" formatted="false">Aktív fiók: %1$s</string>
     <string name="add_account">Fiók hozzáadása</string>
     <string name="clipboard">A tülk tartalma a vágólapra lett másolva</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">A tülk URL-je a vágólapra lett másolva</string>
     <string name="change">Változtat</string>
     <string name="choose_picture">Kép kiválasztása</string>
     <string name="clear">Tisztítás</string>
@@ -48,8 +48,8 @@
     <string name="translate_toot">Tülk fordítása</string>
     <string name="schedule">Időzítés</string>
     <string name="text_size">Szöveg és ikon méret</string>
-    <string name="text_size_change">Change the current text size:</string>
-    <string name="icon_size_change">Change the current icon size:</string>
+    <string name="text_size_change">Szöveg méretének megváltoztatása:</string>
+    <string name="icon_size_change">Ikonok méretének megváltoztatása:</string>
     <string name="next">Tovább</string>
     <string name="previous">Vissza</string>
     <string name="open_with">Megnyitás a következővel:</string>
@@ -60,7 +60,7 @@
     <string name="replies">Válaszok</string>
     <string name="username">Felhasználónév</string>
     <string name="drafts">Piszkozatok</string>
-    <string name="new_data">New data are available! Do you want to display them?</string>
+    <string name="new_data">Új adatok állnak rendelkezésre! Szeretnéd megjeleníteni őket?</string>
     <string name="favourite">Kedvencek</string>
     <string name="follow">Új követők</string>
     <string name="mention">Megemlítések</string>
@@ -69,11 +69,11 @@
     <string name="show_replies">Válaszok megjelenítése</string>
     <string name="action_open_in_web">Megnyitás böngészőben</string>
     <string name="translate">Fordítás</string>
-    <string name="please_wait">Please, wait few seconds before making this action.</string>
+    <string name="please_wait">Kérlek várj néhány másodpercet, mielőtt ezt tennéd.</string>
     <!--- Menu -->
     <string name="home_menu">Főoldal</string>
     <string name="local_menu">Helyi idővonal</string>
-    <string name="global_menu">Összevont idővonal</string>
+    <string name="global_menu">Globális idővonal</string>
     <string name="neutral_menu_title">Beállítások</string>
     <string name="favorites_menu">Kedvencek</string>
     <string name="communication_menu_title">Kommunikáció</string>
@@ -85,238 +85,238 @@
     <string name="optimization">Optimalizálás</string>
     <string name="settings">Beállítások</string>
     <string name="profile">Profil</string>
-    <string name="make_a_choice">What do you want to do?</string>
+    <string name="make_a_choice">Mit akarsz tenni?</string>
     <string name="delete_account_title">Fiók törlése</string>
     <string name="delete_account_message" formatted="false">Valóban törölni szeretnéd a %1$s fiókot az alkalmazásból?</string>
     <string name="send_email">E-mail küldése</string>
     <string name="choose_file">Válassz egy fájlt</string>
     <string name="choose_file_error">Fájlkezelő nem található!</string>
-    <string name="click_to_change">Click on the path to change it</string>
+    <string name="click_to_change">Változtatáshoz kattints az elérési útra</string>
     <string name="failed">Sikertelen!</string>
     <string name="scheduled_toots">Időzített tülkök</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+    <string name="disclaimer_full">Az alábbi információ lehet, hogy nem mutat minden részletet a felhasználóról.</string>
     <string name="insert_emoji">Emoji beszúrása</string>
-    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+    <string name="no_emoji">Az app nem gyűjtött egyéni emojikat jelenleg.</string>
     <string name="live_notif">Valós idejű értesítések</string>
     <!-- Status -->
     <string name="no_status">Nincs megjeleníthető tülkölés</string>
-    <string name="fav_added">The toot was added to favourites</string>
-    <string name="fav_removed">The toot was removed from favourites!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
-    <string name="favourite_add">Add this toot to your favourites?</string>
-    <string name="favourite_remove">Remove this toot from your favourites?</string>
-    <string name="reblog_add">Boost this toot?</string>
-    <string name="reblog_remove">Unboost this toot?</string>
-    <string name="pin_add">Pin this toot?</string>
-    <string name="pin_remove">Unpin this toot?</string>
-    <string name="more_action_1">Mute</string>
-    <string name="more_action_2">Block</string>
-    <string name="more_action_3">Report</string>
-    <string name="more_action_4">Remove</string>
-    <string name="more_action_5">Copy</string>
-    <string name="more_action_6">Share</string>
-    <string name="more_action_7">Mention</string>
-    <string name="more_action_8">Timed mute</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="fav_added">A tootot hozzáadtuk a kedvencekhez</string>
+    <string name="fav_removed">A tootot eltávolítottuk a kedvencek közül!</string>
+    <string name="reblog_added">A tootot kiemeltük!</string>
+    <string name="reblog_removed">A tootot kiemelését megszüntettük!</string>
+    <string name="reblog_by">Kiemeltük %1$s egységgel</string>
+    <string name="favourite_add">Hozzáadjuk ezt a tootot a kedvencekhez?</string>
+    <string name="favourite_remove">Eltávolítsuk ezt a tootot a kedvencek közül?</string>
+    <string name="reblog_add">Emeljük ki ezt a tootot?</string>
+    <string name="reblog_remove">Szüntessük meg a tootot kiemelését?</string>
+    <string name="pin_add">Rögzítsük ezt a tootot?</string>
+    <string name="pin_remove">Szüntessük meg a toot rögzítését?</string>
+    <string name="more_action_1">Elnémít</string>
+    <string name="more_action_2">Letilt</string>
+    <string name="more_action_3">Jelent</string>
+    <string name="more_action_4">Eltávolít</string>
+    <string name="more_action_5">Másol</string>
+    <string name="more_action_6">Megoszt</string>
+    <string name="more_action_7">Megemlít</string>
+    <string name="more_action_8">Időzített elnémítás</string>
+    <string name="more_action_9">Töröl &amp; Újrafogalmaz</string>
     <string-array name="more_action_confirm">
-        <item>Mute this account?</item>
-        <item>Block this account?</item>
-        <item>Report this toot?</item>
-        <item>Block this domain?</item>
+        <item>Elnémítja ezt a fiókot?</item>
+        <item>Letiltja ezt a fiókot?</item>
+        <item>Jelenti ezt a tootot?</item>
+        <item>Letiltja ezt a domaint?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Értesít</item>
+        <item>Csendes</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>Remove this toot?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>El akarja távolítani ezt a tootot?</item>
+        <item>Törli és újrafogalmazza ezt a tootot?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="one">%d reply</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="one">%d válasz</item>
+        <item quantity="other">%d válasz</item>
     </plurals>
-    <string name="set_display_bookmark_button">Display the bookmark button</string>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
-    <string name="bookmarks_empty">No bookmarks to display</string>
-    <string name="status_bookmarked">Status has been added to bookmarks!</string>
-    <string name="status_unbookmarked">Status was removed from bookmarks!</string>
+    <string name="set_display_bookmark_button">Könyvjelző gomb megjelenítése</string>
+    <string name="bookmarks">Könyvjelzők</string>
+    <string name="bookmark_add">Hozzáadás a könyvjelzőkhöz</string>
+    <string name="bookmark_remove">Könyvjelző eltávolítása</string>
+    <string name="bookmarks_empty">Nincs megjeleníthető könyvjelző</string>
+    <string name="status_bookmarked">Hozzáadtuk a tootot a könyvjelzőkhöz!</string>
+    <string name="status_unbookmarked">Eltávolítottuk a tootot a könyvjelzők közül!</string>
     <!-- Date -->
-    <string name="date_seconds">%d s</string>
-    <string name="date_minutes">%d m</string>
-    <string name="date_hours">%d h</string>
-    <string name="date_day">%d d</string>
+    <string name="date_seconds">%d m</string>
+    <string name="date_minutes">%d p</string>
+    <string name="date_hours">%d ó</string>
+    <string name="date_day">%d nap</string>
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Warning</string>
-    <string name="toot_placeholder">What is on your mind?</string>
-    <string name="toot_it">TOOT!</string>
+    <string name="toot_cw_placeholder">Figyelmeztetés</string>
+    <string name="toot_placeholder">Mi foglalkoztat épp most?</string>
+    <string name="toot_it">Toot!</string>
     <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
-    <string name="toot_title">Write a toot</string>
-    <string name="toot_title_reply">Reply to a toot</string>
+    <string name="toot_title">Írj egy tootot!</string>
+    <string name="toot_title_reply">Válaszolj egy tootra</string>
     <string name="queet_title">Write a queet</string>
     <string name="queet_title_reply">Reply to a queet</string>
-    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-    <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Delete this media?</string>
-    <string name="toot_error_no_content">Your toot is empty!</string>
-    <string name="toot_visibility_tilte">Visibility of the toot</string>
-    <string name="toots_visibility_tilte">Visibility of the toots by default: </string>
-    <string name="toot_sent">The toot has been sent!</string>
-    <string name="toot_reply_content_title">You are replying to this toot:</string>
-    <string name="toot_sensitive">Sensitive content?</string>
+    <string name="toot_no_space">Elérted az 500 karakteres limitet!</string>
+    <string name="toot_select_image">Média kiválasztása</string>
+    <string name="toot_select_image_error">Hiba történt a média kiválasztásakor!</string>
+    <string name="toot_delete_media">Törli ezt a médiát?</string>
+    <string name="toot_error_no_content">Ez a tootod üres!</string>
+    <string name="toot_visibility_tilte">A toot láthatósága</string>
+    <string name="toots_visibility_tilte">A tootok alapértelmezett láthatósága: </string>
+    <string name="toot_sent">A tootot elküldtük!</string>
+    <string name="toot_reply_content_title">Erre a tootra válaszolsz:</string>
+    <string name="toot_sensitive">Bizalmas tartalom?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
-        <item>Post to mentioned users only</item>
+        <item>Posztolj a nyilvános idővonalra</item>
+        <item>Ne posztolj nyilvános idővonalra</item>
+        <item>Csak követőid részére posztolj</item>
+        <item>Csak a megemlített felhasználók részére posztolj</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
-    <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="no_draft">Nincs piszkozat!</string>
+    <string name="choose_toot">Válassz egy tootot</string>
+    <string name="choose_accounts">Válassz egy fiókot</string>
+    <string name="select_accounts">Válassz néhány fiókot</string>
+    <string name="remove_draft">Eltávolítsuk a piszkozatot?</string>
+    <string name="show_reply">Klikkelj a gombra az eredeti toot megjelenítéséhez</string>
+    <string name="upload_form_description">Írd le a látássérültek számára</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">Nincs elérhető leírás!</string>
     <!-- About -->
-    <string name="about_vesrion">Release %1$s</string>
-    <string name="about_developer">Developer:</string>
-    <string name="about_license">License: </string>
+    <string name="about_vesrion">Verzió %1$s</string>
+    <string name="about_developer">Fejlesztő:</string>
+    <string name="about_license">Licensz: </string>
     <string name="about_license_action">GNU GPL V3</string>
-    <string name="about_code">Source code: </string>
-    <string name="about_yandex">Translation of toots:</string>
-    <string name="about_thekinrar">Search instances:</string>
+    <string name="about_code">Forráskód: </string>
+    <string name="about_yandex">Tootok fordítása:</string>
+    <string name="about_thekinrar">Szerver keresése:</string>
     <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Icon designer:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="thanks_text_logo">Ikontervező:</string>
+    <string name="thanks_text_banner">Bannertervező:</string>
     <!-- Conversation -->
-    <string name="conversation">Conversation</string>
+    <string name="conversation">Beszélgetés</string>
     <!-- Accounts -->
-    <string name="no_accounts">No account to display</string>
-    <string name="no_follow_request">No follow request</string>
-    <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
-    <string name="followers_cnt">Followers \n %1$s</string>
-    <string name="pins_cnt">Pinned \n %d</string>
-    <string name="authorize">Authorize</string>
-    <string name="reject">Reject</string>
+    <string name="no_accounts">Nincs megjelenítető fiók</string>
+    <string name="no_follow_request">Nincs követési kérés</string>
+    <string name="status_cnt">Tootok \n %1$s</string>
+    <string name="following_cnt">Követ \n %1$s</string>
+    <string name="followers_cnt">Követők \n %1$s</string>
+    <string name="pins_cnt">Rögzített \n %d</string>
+    <string name="authorize">Engedélyez</string>
+    <string name="reject">Elutasít</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
-    <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Delete scheduled toot?</string>
-    <string name="media_count">Media: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
-    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
+    <string name="no_scheduled_toots">Nincs megjelenítendő időzített toot!</string>
+    <string name="no_scheduled_toots_indications">Írj egy tootot, és a felső menüből válaszd ki az <b>Időzít</b> elemet.</string>
+    <string name="remove_scheduled">Törlöd az időzített tootot?</string>
+    <string name="media_count">Média: %d</string>
+    <string name="toot_scheduled">A tootot időzítettük!</string>
+    <string name="toot_scheduled_date">Az időzítés dátuma az aktuális óra után kell legyen!</string>
     <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_date_error">Az elnémítás ideje több mint egy perc kell legyen.</string>
+    <string name="timed_mute_date">%1$s el lett némítva %2$s időpontig.\n Az elnémítást a fiók profiloldalán lehet megszüntetni.</string>
+    <string name="timed_mute_profile">%1$s el lett némítva %2$s időpontig.\n Klikkelj ide a fiók némításának megszűntetéséhez.</string>
     <!-- Notifications -->
-    <string name="no_notifications">No notification to display</string>
-    <string name="notif_mention">mentioned you</string>
-    <string name="notif_reblog">boosted your status</string>
-    <string name="notif_favourite">favourited your status</string>
-    <string name="notif_follow">followed you</string>
-    <string name="notif_pouet">New toot from %1$s</string>
+    <string name="no_notifications">Nincs megjelenítendő értesítés</string>
+    <string name="notif_mention">megemlített téged</string>
+    <string name="notif_reblog">kiemelte posztodat</string>
+    <string name="notif_favourite">lájkolta a posztodat</string>
+    <string name="notif_follow">követ téged</string>
+    <string name="notif_pouet">Új toot %1$s felhasználótól</string>
     <plurals name="other_notifications">
-        <item quantity="one">and another notification</item>
-        <item quantity="other">and %d other notifications</item>
+        <item quantity="one">és még egy értesítés</item>
+        <item quantity="other">és még %d értesítés</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="one">és még egy felfedezhető toot</item>
+        <item quantity="other">és még %d felfedezhető toot</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d lájkolás</item>
+        <item quantity="other">%d lájkolás</item>
     </plurals>
-    <string name="delete_notification_ask">Delete a notification?</string>
-    <string name="delete_notification_ask_all">Delete all notifications?</string>
-    <string name="delete_notification">The notification has been deleted!</string>
-    <string name="delete_notification_all">All notifications have been deleted!</string>
+    <string name="delete_notification_ask">Törlöd az értesítést?</string>
+    <string name="delete_notification_ask_all">Törlöd az értesítéseket?</string>
+    <string name="delete_notification">Az értesítést töröltük!</string>
+    <string name="delete_notification_all">Minden értesítést töröltünk!</string>
     <!-- HEADER -->
-    <string name="following">Following</string>
-    <string name="followers">Followers</string>
-    <string name="pinned_toots">Pinned</string>
+    <string name="following">Követik</string>
+    <string name="followers">Követők</string>
+    <string name="pinned_toots">Rögzített</string>
     <!-- TOAST -->
     <string name="client_error">Unable to get client id!</string>
-    <string name="no_internet">No Internet connection!</string>
-    <string name="toast_block">The account was blocked!</string>
-    <string name="toast_unblock">The account is no longer blocked!</string>
-    <string name="toast_mute">The account was muted!</string>
-    <string name="toast_unmute">The account is no longer muted!</string>
-    <string name="toast_follow">The account was followed!</string>
-    <string name="toast_unfollow">The account is no longer followed!</string>
-    <string name="toast_reblog">The toot was boosted!</string>
-    <string name="toast_unreblog">The toot is no longer boosted!</string>
-    <string name="toast_favourite">The toot was added to your favourites!</string>
-    <string name="toast_unfavourite">The toot was removed from your favourites!</string>
-    <string name="toast_report">The toot was reported!</string>
-    <string name="toast_unstatus">The toot was deleted!</string>
-    <string name="toast_pin">The toot was pinned!</string>
-    <string name="toast_unpin">The toot was unpinned!</string>
-    <string name="toast_error">Oops ! An error occurred!</string>
-    <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-    <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
-    <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-    <string name="toast_error_search">An error occurred while searching!</string>
-    <string name="toast_error_login">Can not log in!</string>
-    <string name="toast_update_credential_ok">The profile data have been saved!</string>
+    <string name="no_internet">Nincs internetkapcsolat!</string>
+    <string name="toast_block">Letiltottuk a fiókot!</string>
+    <string name="toast_unblock">A fiók letiltását megszűntettük!</string>
+    <string name="toast_mute">A fiók el lett némítva!</string>
+    <string name="toast_unmute">A fiók nincs többé némítva!</string>
+    <string name="toast_follow">A fiókot követted!</string>
+    <string name="toast_unfollow">A fiókot már nem követed!</string>
+    <string name="toast_reblog">A fiók ki lett emelve!</string>
+    <string name="toast_unreblog">A toot nincs többé kiemelve!</string>
+    <string name="toast_favourite">A tootot hozzáadtuk a kedvencekhez!</string>
+    <string name="toast_unfavourite">A tootot eltávolítottuk a kedvencek közül!</string>
+    <string name="toast_report">Jelentetted a tootot!</string>
+    <string name="toast_unstatus">Törölted a tootot!</string>
+    <string name="toast_pin">A tootot rögzítettük!</string>
+    <string name="toast_unpin">A toot rögzítését megszüntettük!</string>
+    <string name="toast_error">Ááá! Hiba történt!</string>
+    <string name="toast_code_error">Hiba történt! A szerver nem adott vissza engedélyezési kódot!</string>
+    <string name="toast_error_instance">A szerver doménje érvénytelennek tűnik!</string>
+    <string name="toast_error_loading_account">Hiba történt a fiókváltás során!</string>
+    <string name="toast_error_search">Hiba történt a keresés közben!</string>
+    <string name="toast_error_login">A bejelentkezés sikertelen!</string>
+    <string name="toast_update_credential_ok">A profiladatokat elmentettük!</string>
     <string name="nothing_to_do">No action can be taken</string>
-    <string name="toast_saved">The media has been saved!</string>
-    <string name="toast_error_translate">An error occurred while translating!</string>
-    <string name="toast_toot_saved">Draft saved!</string>
-    <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-    <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
-    <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
+    <string name="toast_saved">A médiát elmentettük!</string>
+    <string name="toast_error_translate">Hiba lépett fel a fordítás során!</string>
+    <string name="toast_toot_saved">Piszkozat elmentve!</string>
+    <string name="toast_error_char_limit">Biztos vagy benne, hogy ez a szerver megenged ennyi karaktert? Ez az érték általában 500 karakter körül van.</string>
+    <string name="toast_visibility_changed">A tootok láthatósága megváltozott a %1$s fiók számára</string>
+    <string name="toast_empty_search">A szervernév és a felhasználónév nem maradhat üresen!</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">Optimisation of loading</string>
-    <string name="set_toots_page">Number of toots per load</string>
-    <string name="set_accounts_page">Number of accounts per load</string>
-    <string name="set_notifications_page">Number of notifications per load</string>
-    <string name="set_attachment_always">Always</string>
-    <string name="set_attachment_wifi">WIFI</string>
-    <string name="set_attachment_ask">Ask</string>
-    <string name="set_attachment_action">Load the media</string>
-    <string name="load_attachment">Load the pictures</string>
-    <string name="load_attachment_spoiler">Show more…</string>
-    <string name="load_attachment_spoiler_less">Show less…</string>
-    <string name="load_sensitive_attachment">Sensitive content</string>
-    <string name="set_display_reply">Display previous message in responses</string>
-    <string name="set_display_local">Display local timeline</string>
-    <string name="set_display_global">Display federated timeline</string>
-    <string name="set_disable_gif">Disable GIF avatars</string>
-    <string name="set_folder_title">Path: </string>
-    <string name="set_auto_store_toot">Save drafts automatically</string>
-    <string name="set_bubble_counter">Display counters</string>
-    <string name="set_auto_add_media_url">Add URL of media in toots</string>
-    <string name="settings_title_notifications">Manage notifications</string>
-    <string name="set_notif_follow">Notify when someone follows you</string>
-    <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
-    <string name="set_notif_follow_share">Notify when someone boosts your status</string>
-    <string name="set_notif_follow_add">Notify when someone favourites your status</string>
-    <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-    <string name="set_share_validation">Show confirmation dialog before boosting</string>
-    <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">Advanced settings</string>
-    <string name="set_wifi_only">Notify in WIFI only</string>
-    <string name="set_notify">Notify?</string>
-    <string name="set_notif_silent">Silent Notifications</string>
-    <string name="set_night_mode">Night mode</string>
-    <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
-    <string name="settings_title_profile">Edit profile</string>
+    <string name="settings_title_optimisation">Letöltés optimalizálása</string>
+    <string name="set_toots_page">Tootok száma letöltésenként</string>
+    <string name="set_accounts_page">Fiókok száma letöltésenként</string>
+    <string name="set_notifications_page">Értesítések száma letöltésenként</string>
+    <string name="set_attachment_always">Mindig</string>
+    <string name="set_attachment_wifi">WiFi</string>
+    <string name="set_attachment_ask">Kérdezz rá</string>
+    <string name="set_attachment_action">Média betöltése</string>
+    <string name="load_attachment">Képek betöltése</string>
+    <string name="load_attachment_spoiler">Mutasson többet…</string>
+    <string name="load_attachment_spoiler_less">Mutasson kevesebbet…</string>
+    <string name="load_sensitive_attachment">Bizalmas tartalom</string>
+    <string name="set_display_reply">Előző üzenet megjelenítése a válaszokban</string>
+    <string name="set_display_local">Mutassa a helyi idővonalat</string>
+    <string name="set_display_global">Globális idővonal megjelenítése</string>
+    <string name="set_disable_gif">GIF avatarok kikapcsolása</string>
+    <string name="set_folder_title">Útvonal: </string>
+    <string name="set_auto_store_toot">Piszkozatok automatikus mentése</string>
+    <string name="set_bubble_counter">Számlálók megjelenítése</string>
+    <string name="set_auto_add_media_url">Média URL-jének hozzáadása a tootokhoz</string>
+    <string name="settings_title_notifications">Értesítések kezelése</string>
+    <string name="set_notif_follow">Értesítsen, amikor valaki követ</string>
+    <string name="set_notif_follow_ask">Értesítsen, amikor valaki követni szeretne téged</string>
+    <string name="set_notif_follow_share">Értesítsen, amikor valaki kiemeli a posztodat</string>
+    <string name="set_notif_follow_add">Értesíts, ha valaki lájkolja a posztodat</string>
+    <string name="set_notif_follow_mention">Értesítsen, amikor valaki megemlít téged</string>
+    <string name="set_share_validation">Kérdezz vissza kiemelés előtt</string>
+    <string name="set_share_validation_fav">Kérdezz vissza, mielőtt hozzáadsz valamit a kedvenceidhez</string>
+    <string name="settings_title_more_options">Haladó beállítások</string>
+    <string name="set_wifi_only">Csak WiFi esetén értesíts</string>
+    <string name="set_notify">Kér értesítést?</string>
+    <string name="set_notif_silent">Csendes értesítések</string>
+    <string name="set_night_mode">Éjszakai mód</string>
+    <string name="set_nsfw_timeout">Érzékeny tartalom megjelenítésének ideje (mp, 0 érték kikapcsolja)</string>
+    <string name="settings_title_profile">Profil szerkesztése</string>
     <string name="settings_title_custom_sharing">Custom sharing</string>
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
-    <string name="set_profile_description">Bio…</string>
-    <string name="set_lock_account">Lock account</string>
+    <string name="set_profile_description">Rövid bemutatkozás…</string>
+    <string name="set_lock_account">Fiók zárolása</string>
     <string name="set_save_changes">Save changes</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
     <string name="set_fit_preview">Fit preview images</string>
@@ -335,7 +335,7 @@
     <string name="use_javascript">Enable Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="settings_ui_layout">Idővonalak elrendezése: </string>
     <string-array name="battery_profiles">
         <item>Normal battery drain</item>
         <item>Medium battery drain</item>
@@ -368,70 +368,70 @@
         <item>Blue</item>
         <item>Cyan</item>
         <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>Zöld</item>
+        <item>Piros</item>
+        <item>Sárga</item>
+        <item>Fehér</item>
     </string-array>
-    <string name="set_title_news">News</string>
-    <string name="set_notification_news">Notify for new toots on the home timeline</string>
-    <string name="action_follow">Follow</string>
-    <string name="action_unfollow">Unfollow</string>
-    <string name="action_block">Block</string>
-    <string name="action_unblock">Unblock</string>
-    <string name="action_mute">Mute</string>
+    <string name="set_title_news">Hírek</string>
+    <string name="set_notification_news">Értesíts, mikor a saját szerver idővonalán új toot jelenik meg</string>
+    <string name="action_follow">Követ</string>
+    <string name="action_unfollow">Többé nem követ</string>
+    <string name="action_block">Letilt</string>
+    <string name="action_unblock">Letiltás feloldása</string>
+    <string name="action_mute">Elnémít</string>
     <string name="action_no_action">No action</string>
-    <string name="action_unmute">Unmute</string>
-    <string name="request_sent">Request sent</string>
-    <string name="followed_by">Follows you</string>
-    <string name="action_search">Search</string>
-    <string name="set_capitalize">First letter in capital for replies</string>
-    <string name="set_resize_picture">Resize pictures</string>
+    <string name="action_unmute">Némítás feloldása</string>
+    <string name="request_sent">Kérés elküldve</string>
+    <string name="followed_by">Követ téged</string>
+    <string name="action_search">Keresés</string>
+    <string name="set_capitalize">Első betű kiemelése a válaszokban</string>
+    <string name="set_resize_picture">Képek átméretezése</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push notifications</string>
-    <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
+    <string name="settings_popup_title">Push-értesítések</string>
+    <string name="settings_popup_message">        Kérjük erősítse meg, mely push-értesítéseket szeretné megkapni.
+        Ezeket az értesítéseket később ki- vagy bekapcsolhatja (Értesítések fülön).
     </string>
     <string name="settings_popup_timeline">For unread toots in home time-line?</string>
     <string name="settings_popup_notification">For unread notifications?</string>
     <!-- CACHE -->
-    <string name="cache_title">Clear cache</string>
-    <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+    <string name="cache_title">Gyorsítótár ürítése</string>
+    <string name="cache_message">A gyorsítótárban %1$s megjelenítendő elem van.\n\nSzeretnéd törölni őket?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="toast_cache_clear">Gyorsítótár ki lett törölve! %1$s lett felszabadítva</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Cím</string>
+    <string name="title_hint_custom_sharing">Cím&#8230;</string>
+    <string name="description_header_custom_sharing">Leírás</string>
+    <string name="description_hint_custom_sharing">Leírás&#8230;</string>
+    <string name="keywords_header_custom_sharing">Kulcsszavak</string>
+    <string name="keywords_hint_custom_sharing">Kulcsszavak&#8230;</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
-    <string name="action_filter">Filter</string>
-    <string name="owner_cached_toots">Your toots</string>
-    <string name="v_public">Public</string>
-    <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
-    <string name="v_direct">Direct</string>
-    <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
-    <string name="filter_no_result">No matching result found!</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="action_sync">Szinkronizálás</string>
+    <string name="action_filter">Szűrés</string>
+    <string name="owner_cached_toots">Tootjaid</string>
+    <string name="v_public">Nyilvános</string>
+    <string name="v_unlisted">Nem megjelenített</string>
+    <string name="v_private">Privát</string>
+    <string name="v_direct">Közvetlen</string>
+    <string name="v_keywords">Néhány kulcsszó…</string>
+    <string name="show_media">Média megjelenítése</string>
+    <string name="show_pinned">Rögzített tootok megjelenítése</string>
+    <string name="filter_no_result">Nincs találat!</string>
+    <string name="data_backup_toots">%1$s tootjainak archiválása</string>
+    <string name="data_backup_success">%1$s új tootjait importáltuk</string>
     <string-array name="filter_select">
-        <item>No</item>
-        <item>Only</item>
-        <item>Both</item>
+        <item>Nem</item>
+        <item>Csak</item>
+        <item>Mindkettő</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">Nem találtunk tootokat az adatbázisban. Kérjük, letöltésükhöz használd a szinkronizálás gombot.</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Recorded data</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+    <string name="privacy_data_title">Rögzített adatok</string>
+    <string name="privacy_data">        A készüléken csak a fiókok alapadatait tároljuk.
+        Ezek az adatok szigorúan bizalmasak és csak az alkalmazás fér hozzá.
+        Az alkalmazás eltávolítása azonnal törli ezeket az adatokat.\n
+        &#9888; Felhasználónevet és jelszavakat sohasem tárolunk. Csak a szerverre való biztonságos (SSL) bejentkezés során használjuk.
     </string>
     <string name="privacy_authorizations_title">Permissions:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
@@ -480,7 +480,7 @@
     <string name="action_lists_owner">Your lists</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
+    <string name="show_boost_count">Mutasd meg a kiemelt/lájkolt posztok számát</string>
     <string name="issue_login_title">Authentication does not work?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
@@ -513,7 +513,7 @@
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
     <string name="no_account_yet">No account yet?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+    <string name="toast_instance_unavailable">Ezen a szerveren nem találtunk idővonalat!</string>
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
     <string name="which_language">Translate in</string>
@@ -539,8 +539,8 @@
     <string name="filters">Filters</string>
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
     <string name="filter_keyword">Keyword or phrase</string>
-    <string name="context_home">Home timeline</string>
-    <string name="context_public">Public timelines</string>
+    <string name="context_home">Saját szerver idővonala</string>
+    <string name="context_public">Nyilvános idővonalak</string>
     <string name="context_notification">Notifications</string>
     <string name="context_conversation">Conversations</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
@@ -575,7 +575,7 @@
     <string name="set_display_follow_instance">Display follow instances button</string>
     <string name="channel_notif_follow">New follow</string>
     <string name="channel_notif_boost">New Boost</string>
-    <string name="channel_notif_fav">New Favourite</string>
+    <string name="channel_notif_fav">Új kedvenc</string>
     <string name="channel_notif_mention">New Mention</string>
     <string name="channel_notif_toot">New Toot</string>
     <string name="channel_notif_backup">Toots Backup</string>
@@ -604,10 +604,10 @@
     <string name="add_remote_instance">Add an instance</string>
     <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
     <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube favourites</string>
+    <string name="peertube_favorites">Peertube kedvencek</string>
     <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
     <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-    <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+    <string name="bookmark_peertube_empty">Nincs Peertube videó a kedvenceid között!</string>
     <string name="channel">Channel</string>
     <string name="no_peertube_channels">No Peertube channels</string>
     <string name="no_peertube_instances">No Peertube instances</string>
@@ -749,7 +749,7 @@
     <string name="modify">Modify</string>
     <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
     <string name="settings_category_label_confirmations">Confirmations</string>
-    <string name="settings_category_label_timelines">Timelines</string>
+    <string name="settings_category_label_timelines">Idővonalak</string>
     <string name="settings_category_label_notification">Notification service</string>
     <string name="settings_category_label_interface">Interface</string>
     <string name="settings_category_label_hiddencontent">Hidden content</string>
@@ -794,7 +794,7 @@
     <string name="submit">Submit</string>
     <string name="data_base_exported">The data base has been exported!</string>
     <string name="featured_hashtags">Featured hashtags</string>
-    <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
+    <string name="filter_timeline_with_a_tag">Idővonal szűrése címkékkel</string>
     <string name="no_tags">No tags</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">

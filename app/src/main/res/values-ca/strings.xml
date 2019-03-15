@@ -19,7 +19,7 @@
     <string name="download_over">La baixada ha finalitzat</string>
     <string name="save_file">Desa %1$s</string>
     <string name="save_over">S\'ha desat l\'element multimèdia</string>
-    <string name="download_from" formatted="false">Fitxer: %1$s</string>
+    <string name="download_from" formatted="false">Document: %1$s</string>
     <string name="password">Contrasenya</string>
     <string name="email">Adreça electrònica</string>
     <string name="accounts">Comptes</string>
@@ -29,57 +29,57 @@
     <string name="save">Desa</string>
     <string name="restore">Restaura</string>
     <string name="two_factor_authentification">Autenticació de dos factors?</string>
-    <string name="other_instance">Other instance than mastodon.etalab.gouv.fr?</string>
+    <string name="other_instance">Instància diferent de mastodon.etalab.gouv.fr?</string>
     <string name="no_result">No hi ha cap resultat!</string>
     <string name="instance">Instància</string>
     <string name="instance_example">Intància: mastodon.social</string>
     <string name="toast_account_changed" formatted="false">Ara funciona amb el compte %1$s</string>
     <string name="add_account">Afegeix un compte</string>
     <string name="clipboard">El contingut del toot s\'ha copiat al porta-retalls</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">L\'adreça web del toot s\'ha copiat al porta-retalls</string>
     <string name="change">Canvia</string>
-    <string name="choose_picture">Seleccioneu una imatge...</string>
+    <string name="choose_picture">Seleccioneu una imatge…</string>
     <string name="clear">Neteja</string>
     <string name="microphone">Micròfon</string>
     <string name="camera">Càmera</string>
-    <string name="speech_prompt">Digueu quelcom</string>
+    <string name="speech_prompt">Digues alguna cosa</string>
     <string name="speech_not_supported">El vostre aparell sembla que no permet la introducció de veu!</string>
     <string name="delete_all">Suprimeix-ho tot</string>
     <string name="translate_toot">Tradueix aquest toot.</string>
-    <string name="schedule">Planifica</string>
-    <string name="text_size">Mides del text i la icona</string>
+    <string name="schedule">Temporalitza</string>
+    <string name="text_size">Mides de text i icones</string>
     <string name="text_size_change">Canvia la mida del text actual:</string>
     <string name="icon_size_change">Canvia la mida de la icona actual:</string>
-    <string name="next">Endavant</string>
-    <string name="previous">Enrere</string>
+    <string name="next">Següent</string>
+    <string name="previous">Anterior</string>
     <string name="open_with">Obre amb</string>
     <string name="validate">Valida</string>
-    <string name="media">Multimèdia</string>
+    <string name="media">Mèdia</string>
     <string name="share_with">Comparteix amb</string>
-    <string name="shared_via">Comparteix via Mastalab</string>
+    <string name="shared_via">Compartit via Mastalab</string>
     <string name="replies">Respostes</string>
     <string name="username">Nom d\'usuari</string>
     <string name="drafts">Esborranys</string>
-    <string name="new_data">New data are available! Do you want to display them?</string>
+    <string name="new_data">Hi ha noves dades disponibles! Les voleu visualitzar?</string>
     <string name="favourite">Preferits</string>
     <string name="follow">Seguidors nous</string>
     <string name="mention">Mencions</string>
-    <string name="reblog">Boosts</string>
-    <string name="show_boosts">Show boosts</string>
+    <string name="reblog">Difusions</string>
+    <string name="show_boosts">Mostrar difusions</string>
     <string name="show_replies">Mostra les respostes</string>
     <string name="action_open_in_web">Obre al navegador</string>
     <string name="translate">Tradueix</string>
-    <string name="please_wait">Please, wait few seconds before making this action.</string>
+    <string name="please_wait">Si us plau, espereu uns segons abans de fer aquesta acció.</string>
     <!--- Menu -->
     <string name="home_menu">Inici</string>
-    <string name="local_menu">Local timeline</string>
-    <string name="global_menu">Federated timeline</string>
+    <string name="local_menu">Cronologia local</string>
+    <string name="global_menu">Pissarra federada</string>
     <string name="neutral_menu_title">Opcions</string>
     <string name="favorites_menu">Preferits</string>
     <string name="communication_menu_title">Comunicació</string>
     <string name="muted_menu">Usuaris silenciats</string>
     <string name="blocked_menu">Usuaris blocats</string>
-    <string name="remote_follow_menu">Remote follow</string>
+    <string name="remote_follow_menu">Seguiment remot</string>
     <string name="notifications">Notificacions</string>
     <string name="follow_request">Peticions de seguiment</string>
     <string name="optimization">Optimització</string>
@@ -87,30 +87,30 @@
     <string name="profile">Perfil</string>
     <string name="make_a_choice">Què vols fer?</string>
     <string name="delete_account_title">Suprimeix un compte</string>
-    <string name="delete_account_message" formatted="false">Delete the account %1$s from the application?</string>
+    <string name="delete_account_message" formatted="false">Voleu suprimir el compte %1$s de l\'aplicació?</string>
     <string name="send_email">Envia un correu electrònic</string>
-    <string name="choose_file">Selecciona un fitxer</string>
-    <string name="choose_file_error">No file explorer found!</string>
-    <string name="click_to_change">Click on the path to change it</string>
+    <string name="choose_file">Selecciona un document</string>
+    <string name="choose_file_error">No es troba un explorador de documents!</string>
+    <string name="click_to_change">Feu clic en a la ruta per canviar-la</string>
     <string name="failed">Ha fallat!</string>
-    <string name="scheduled_toots">Toots planificats</string>
-    <string name="disclaimer_full">Information below may reflect the user\'s profile incompletely.</string>
+    <string name="scheduled_toots">Toots temporalitzats</string>
+    <string name="disclaimer_full">Aquesta informació d\'usuari pot estar incompleta.</string>
     <string name="insert_emoji">Insereix un emoji</string>
-    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+    <string name="no_emoji">L\'app no ha recollit emojis personalitzats de moment.</string>
     <string name="live_notif">Notificacions en directe</string>
     <!-- Status -->
-    <string name="no_status">No toot to display</string>
+    <string name="no_status">Cap toot per mostrar</string>
     <string name="fav_added">El toot s\'ha afegit als preferits</string>
     <string name="fav_removed">El toot s\'ha suprimit dels preferits!</string>
-    <string name="reblog_added">The toot was boosted!</string>
-    <string name="reblog_removed">The toot is no longer boosted!</string>
-    <string name="reblog_by">Boosted by %1$s</string>
-    <string name="favourite_add">Add this toot to your favourites?</string>
-    <string name="favourite_remove">Remove this toot from your favourites?</string>
-    <string name="reblog_add">Boost this toot?</string>
-    <string name="reblog_remove">Unboost this toot?</string>
+    <string name="reblog_added">S\'ha difós el toot!</string>
+    <string name="reblog_removed">El toot ja no està difós!</string>
+    <string name="reblog_by">Difós per %1$s</string>
+    <string name="favourite_add">Afegir aquest toot als favorits?</string>
+    <string name="favourite_remove">Esborrar aquest toot dels favorits?</string>
+    <string name="reblog_add">Vols difondre aquest toot?</string>
+    <string name="reblog_remove">Desdifondre el toot?</string>
     <string name="pin_add">Vols fixar aquest toot?</string>
-    <string name="pin_remove">Vols deixar de fixar aquest toot?</string>
+    <string name="pin_remove">Desfixar aquest toot?</string>
     <string name="more_action_1">Silencia</string>
     <string name="more_action_2">Bloca</string>
     <string name="more_action_3">Denuncia</string>
@@ -119,29 +119,29 @@
     <string name="more_action_6">Comparteix</string>
     <string name="more_action_7">Menciona</string>
     <string name="more_action_8">Silencia temporalment</string>
-    <string name="more_action_9">Delete &amp; re-draft</string>
+    <string name="more_action_9">Suprimir &amp; tornar a redactar</string>
     <string-array name="more_action_confirm">
         <item>Vols silenciar aquest compte?</item>
         <item>Vols blocar aquest compte?</item>
         <item>Vols denunciar aquest toot?</item>
-        <item>Block this domain?</item>
+        <item>Vols blocar el domini?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Notificar</item>
+        <item>Silenciar</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Vols suprimir aquest toot?</item>
-        <item>Delete &amp; re-draft this toot?</item>
+        <item>Suprimir &amp; tornar a redactar aquest toot?</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="one">%d reply</item>
-        <item quantity="other">%d replies</item>
+        <item quantity="one">%d respondre</item>
+        <item quantity="other">%d respostes</item>
     </plurals>
-    <string name="set_display_bookmark_button">Display the bookmark button</string>
+    <string name="set_display_bookmark_button">Mostrar el botó de marcador</string>
     <string name="bookmarks">Marcadors</string>
-    <string name="bookmark_add">Add to bookmarks</string>
-    <string name="bookmark_remove">Remove bookmark</string>
+    <string name="bookmark_add">Afegeix als marcadors</string>
+    <string name="bookmark_remove">Suprimeix el marcador</string>
     <string name="bookmarks_empty">No hi ha cap marcador per a mostrar</string>
     <string name="status_bookmarked">L\'estat s\'ha afegit als marcadors!</string>
     <string name="status_unbookmarked">L\'estat s\'ha suprimit dels marcadors!</string>
@@ -151,40 +151,40 @@
     <string name="date_hours">%d h</string>
     <string name="date_day">%d d.</string>
     <!-- TOOT -->
-    <string name="toot_cw_placeholder">Atenció</string>
-    <string name="toot_placeholder">En què estàs pensant?</string>
+    <string name="toot_cw_placeholder">Alerta</string>
+    <string name="toot_placeholder">Què et passa pel cap?</string>
     <string name="toot_it">TOOT!</string>
-    <string name="queet_it">QUEET!</string>
-    <string name="cw">cw</string>
+    <string name="queet_it">Quita!</string>
+    <string name="cw">ac</string>
     <string name="toot_title">Escriu un toot</string>
-    <string name="toot_title_reply">Respon un toot</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
-    <string name="toot_no_space">You have reached the 500 characters allowed!</string>
-    <string name="toot_select_image">Select a media</string>
-    <string name="toot_select_image_error">An error occurred while selecting the media!</string>
-    <string name="toot_delete_media">Vols suprimir aquest element multimèdia?</string>
+    <string name="toot_title_reply">Respon a un toot</string>
+    <string name="queet_title">Escriu un quit</string>
+    <string name="queet_title_reply">Respon a un quit</string>
+    <string name="toot_no_space">Heu assolit els 500 caràcters permesos!</string>
+    <string name="toot_select_image">Escull un recurs multimèdia</string>
+    <string name="toot_select_image_error">S\'ha produït un error en seleccionar el recurs multimèdia!</string>
+    <string name="toot_delete_media">Vols suprimir aquest mèdia?</string>
     <string name="toot_error_no_content">El toot és buit!</string>
     <string name="toot_visibility_tilte">Visibilitat del toot</string>
     <string name="toots_visibility_tilte">Visibilitat predeterminada dels toots: </string>
     <string name="toot_sent">S\'ha enviat el toot!</string>
-    <string name="toot_reply_content_title">Estàs responent aquest toot:</string>
+    <string name="toot_reply_content_title">Estàs responent a aquest toot:</string>
     <string name="toot_sensitive">Això és contingut sensible?</string>
     <string-array name="toot_visibility">
-        <item>Post to public timelines</item>
-        <item>Do not post to public timelines</item>
-        <item>Post to followers only</item>
-        <item>Post to mentioned users only</item>
+        <item>Penja\'l a les pissarres públiques</item>
+        <item>No el pengis en pissarres públiques</item>
+        <item>Penja\'l només per als seguidors</item>
+        <item>Penja\'l només per a usuaris amb mencions</item>
     </string-array>
-    <string name="no_draft">No drafts!</string>
-    <string name="choose_toot">Choose a toot</string>
-    <string name="choose_accounts">Choose an account</string>
-    <string name="select_accounts">Select some accounts</string>
-    <string name="remove_draft">Remove draft?</string>
-    <string name="show_reply">Click on the button to display the original toot</string>
-    <string name="upload_form_description">Describe for the visually impaired</string>
+    <string name="no_draft">No hi ha esborranys!</string>
+    <string name="choose_toot">Escull un toot</string>
+    <string name="choose_accounts">Escull un compte</string>
+    <string name="select_accounts">Seleccionar comptes</string>
+    <string name="remove_draft">Vols suprimir l\'esborrany?</string>
+    <string name="show_reply">Fes clic al botó per mostrar el toot original</string>
+    <string name="upload_form_description">Descriu-ho per a disminuïts visuals</string>
     <!-- Instance -->
-    <string name="instance_no_description">No description available!</string>
+    <string name="instance_no_description">No hi ha descripció disponible!</string>
     <!-- About -->
     <string name="about_vesrion">Versió %1$s</string>
     <string name="about_developer">Desenvolupador:</string>
@@ -192,55 +192,55 @@
     <string name="about_license_action">GNU GPL V3</string>
     <string name="about_code">Codi font: </string>
     <string name="about_yandex">Traducció dels toots:</string>
-    <string name="about_thekinrar">Search instances:</string>
-    <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Disseny de la icona:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="about_thekinrar">Cerca instàncies:</string>
+    <string name="about_thekinrar_action">instancies.social</string>
+    <string name="thanks_text_logo">Disseny d\'icones:</string>
+    <string name="thanks_text_banner">Disseny de banderoles:</string>
     <!-- Conversation -->
     <string name="conversation">Conversa</string>
     <!-- Accounts -->
-    <string name="no_accounts">No hi ha cap compte per mostrar</string>
+    <string name="no_accounts">No hi ha comptes per mostrar</string>
     <string name="no_follow_request">No hi ha cap petició de seguiment</string>
     <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Following \n %1$s</string>
-    <string name="followers_cnt">Followers \n %1$s</string>
-    <string name="pins_cnt">Pinned \n %d</string>
+    <string name="following_cnt">A qui segueixo \n %1$s</string>
+    <string name="followers_cnt">Seguidors \n %1$s</string>
+    <string name="pins_cnt">Fixat \n %d</string>
     <string name="authorize">Autoritza</string>
     <string name="reject">Rebutja</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">No scheduled toots to display!</string>
-    <string name="no_scheduled_toots_indications">Write a toot and then choose <b>Schedule</b> from the top menu.</string>
-    <string name="remove_scheduled">Delete scheduled toot?</string>
-    <string name="media_count">Media: %d</string>
-    <string name="toot_scheduled">The toot has been scheduled!</string>
-    <string name="toot_scheduled_date">The scheduled date must be greater than the current hour!</string>
-    <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+    <string name="no_scheduled_toots">No hi ha toots programats per mostrar!</string>
+    <string name="no_scheduled_toots_indications">Escriu un tot i seleccionar <b>Temporització</b> al menú de dalt.</string>
+    <string name="remove_scheduled">Suprimir tot programat?</string>
+    <string name="media_count">Mèdia: %d</string>
+    <string name="toot_scheduled">S\'ha guardat la temporització d\'un toot!</string>
+    <string name="toot_scheduled_date">La data programada ha de ser posterior al moment actual!</string>
+    <string name="warning_battery">L\'estalvi de bateria està activat! Això pot no rutllar com està previst.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">The time for muting should be greater than one minute.</string>
-    <string name="timed_mute_date">%1$s has been muted until %2$s.\n You can unmute this account from his/her profile page.</string>
-    <string name="timed_mute_profile">%1$s is muted until %2$s.\n Click here to unmute the account.</string>
+    <string name="timed_mute_date_error">El silenciament ha de durar més d\'un minut.</string>
+    <string name="timed_mute_date">%1$s s\'ha silenciat fins a %2$s.\n Pots desilenciar el compte des de la seva pàgina de perfil.</string>
+    <string name="timed_mute_profile">%1$s està silenciat fins a %2$s.\n Feu clic aquí per desactivar el silenciament.</string>
     <!-- Notifications -->
     <string name="no_notifications">No hi ha cap notificació per mostrar</string>
     <string name="notif_mention">et menciona</string>
-    <string name="notif_reblog">boosted your status</string>
-    <string name="notif_favourite">favourited your status</string>
-    <string name="notif_follow">et segueix</string>
-    <string name="notif_pouet">New toot from %1$s</string>
+    <string name="notif_reblog">ha difós el teu estatus</string>
+    <string name="notif_favourite">ha marcat com a preferit el teu estatus</string>
+    <string name="notif_follow">t\'ha començat a seguir</string>
+    <string name="notif_pouet">Nou toot provinent de %1$s</string>
     <plurals name="other_notifications">
-        <item quantity="one">and another notification</item>
-        <item quantity="other">and %d other notifications</item>
+        <item quantity="one">i un altra notificació</item>
+        <item quantity="other">i %d altres notificacions</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="one">i un altre toot per descobrir</item>
+        <item quantity="other">i %d toots més per descobrir</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="one">%d agradament</item>
+        <item quantity="other">%d agradament</item>
     </plurals>
     <string name="delete_notification_ask">Vols suprimir la notificació?</string>
     <string name="delete_notification_ask_all">Vols suprimir totes les notificacions?</string>
-    <string name="delete_notification">S\'ha suprimit la notificació!</string>
+    <string name="delete_notification">La notificació s\'ha suprimit!</string>
     <string name="delete_notification_all">S\'han suprimit totes les notificacions!</string>
     <!-- HEADER -->
     <string name="following">Seguits</string>
@@ -250,96 +250,96 @@
     <string name="client_error">No s\'ha pogut obtenir la id del client!</string>
     <string name="no_internet">No hi ha connexió a internet!</string>
     <string name="toast_block">El compte s\'ha blocat!</string>
-    <string name="toast_unblock">The account is no longer blocked!</string>
+    <string name="toast_unblock">El compte ja no està blocat!</string>
     <string name="toast_mute">El compte s\'ha silenciat!</string>
     <string name="toast_unmute">El compte ja no està silenciat!</string>
-    <string name="toast_follow">The account was followed!</string>
-    <string name="toast_unfollow">The account is no longer followed!</string>
-    <string name="toast_reblog">The toot was boosted!</string>
-    <string name="toast_unreblog">The toot is no longer boosted!</string>
-    <string name="toast_favourite">The toot was added to your favourites!</string>
-    <string name="toast_unfavourite">The toot was removed from your favourites!</string>
+    <string name="toast_follow">El compte tenia seguidors!</string>
+    <string name="toast_unfollow">El compte ja no té seguidors!</string>
+    <string name="toast_reblog">El toot ha estat difós!</string>
+    <string name="toast_unreblog">El toot ja no està difós!</string>
+    <string name="toast_favourite">S\'ha afegit el toot als teus preferits!</string>
+    <string name="toast_unfavourite">S\'ha eliminat el toot dels teus preferits!</string>
     <string name="toast_report">S\'ha denunciat el toot!</string>
     <string name="toast_unstatus">S\'ha suprimit el toot!</string>
     <string name="toast_pin">S\'ha fixat el toot!</string>
-    <string name="toast_unpin">S\'ha deixat de fixar el toot!</string>
+    <string name="toast_unpin">S\'ha desfixat el toot!</string>
     <string name="toast_error">Ep! S\'ha produït un error!</string>
-    <string name="toast_code_error">An error occurred! The instance did not return an authorisation code!</string>
-    <string name="toast_error_instance">The instance domain does not seem to be valid!</string>
-    <string name="toast_error_loading_account">An error occurred while switching between accounts!</string>
-    <string name="toast_error_search">An error occurred while searching!</string>
-    <string name="toast_error_login">Can not log in!</string>
-    <string name="toast_update_credential_ok">The profile data have been saved!</string>
-    <string name="nothing_to_do">No action can be taken</string>
-    <string name="toast_saved">The media has been saved!</string>
-    <string name="toast_error_translate">An error occurred while translating!</string>
+    <string name="toast_code_error">Hi ha un error! La instància no ha generat cap codi d\'autorització!</string>
+    <string name="toast_error_instance">El domini de la instància no sembla vàlid!</string>
+    <string name="toast_error_loading_account">Hi ha hagut un error en passar d\'un compte a l\'altre!</string>
+    <string name="toast_error_search">Hi ha hagut un error durant la cerca!</string>
+    <string name="toast_error_login">No es pot iniciar la sessió!</string>
+    <string name="toast_update_credential_ok">S\'han guardat les dades del perfil!</string>
+    <string name="nothing_to_do">No es pot endegar cap acció</string>
+    <string name="toast_saved">El mèdia s\'ha guardat!</string>
+    <string name="toast_error_translate">Hi ha hagut un error durant la traducció!</string>
     <string name="toast_toot_saved">S\'ha desat l\'esborrany!</string>
-    <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-    <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
-    <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
+    <string name="toast_error_char_limit">Estàs segur que aquesta instància permet tants caràcters? El valor usual s\'aproxima a 500 caràcters.</string>
+    <string name="toast_visibility_changed">S\'ha canviat la visibilitat dels toots d\'aquest compte %1$s</string>
+    <string name="toast_empty_search">El noms de la instància i de la pantalla no poden quedar en blanc!</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">Optimisation of loading</string>
-    <string name="set_toots_page">Number of toots per load</string>
-    <string name="set_accounts_page">Number of accounts per load</string>
-    <string name="set_notifications_page">Number of notifications per load</string>
+    <string name="settings_title_optimisation">Optimització de la càrrega</string>
+    <string name="set_toots_page">Nombre de toots per càrrega</string>
+    <string name="set_accounts_page">Nombre de comptes per càrrega</string>
+    <string name="set_notifications_page">Nombre de notificacions per càrrega</string>
     <string name="set_attachment_always">Sempre</string>
     <string name="set_attachment_wifi">Wi-Fi</string>
-    <string name="set_attachment_ask">Ask</string>
-    <string name="set_attachment_action">Load the media</string>
-    <string name="load_attachment">Load the pictures</string>
+    <string name="set_attachment_ask">Demana</string>
+    <string name="set_attachment_action">Carrega el mèdia</string>
+    <string name="load_attachment">Carrega les imatges</string>
     <string name="load_attachment_spoiler">Mostra\'n més...</string>
     <string name="load_attachment_spoiler_less">Mostra\'n menys...</string>
-    <string name="load_sensitive_attachment">Sensitive content</string>
-    <string name="set_display_reply">Display previous message in responses</string>
-    <string name="set_display_local">Display local timeline</string>
-    <string name="set_display_global">Display federated timeline</string>
+    <string name="load_sensitive_attachment">Contingut sensible</string>
+    <string name="set_display_reply">Mostra el missatge anterior en les respostes</string>
+    <string name="set_display_local">Mostra la pissarra local</string>
+    <string name="set_display_global">Mostra la pissarra federada</string>
     <string name="set_disable_gif">Desactiva els avatars GIF</string>
     <string name="set_folder_title">Camí: </string>
     <string name="set_auto_store_toot">Desa els esborrany automàticament</string>
     <string name="set_bubble_counter">Mostra els comptadors</string>
-    <string name="set_auto_add_media_url">Add URL of media in toots</string>
+    <string name="set_auto_add_media_url">Afegeix als toots els URL dels mèdia</string>
     <string name="settings_title_notifications">Gestiona les notificacions</string>
-    <string name="set_notif_follow">Notify when someone follows you</string>
-    <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
-    <string name="set_notif_follow_share">Notify when someone boosts your status</string>
-    <string name="set_notif_follow_add">Notify when someone favourites your status</string>
-    <string name="set_notif_follow_mention">Notify when someone mentions you</string>
-    <string name="set_share_validation">Show confirmation dialog before boosting</string>
-    <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
+    <string name="set_notif_follow">Avisa quan algú et comenci a seguir</string>
+    <string name="set_notif_follow_ask">Avisa quan algú demani per seguir-te</string>
+    <string name="set_notif_follow_share">Avisa quan algú difongui el teu estatus</string>
+    <string name="set_notif_follow_add">Avisa quan algú marqui el teu estatus com a preferit</string>
+    <string name="set_notif_follow_mention">Avisa quan algú et mencioni</string>
+    <string name="set_share_validation">Demana confirmació abans de difondre</string>
+    <string name="set_share_validation_fav">Demana confirmació abans d\'afegir a preferits</string>
     <string name="settings_title_more_options">Configuració avançada</string>
-    <string name="set_wifi_only">Notify in WIFI only</string>
-    <string name="set_notify">Notify?</string>
+    <string name="set_wifi_only">Enviar avisos només per WIFI</string>
+    <string name="set_notify">Avisar?</string>
     <string name="set_notif_silent">Notificacions silencioses</string>
     <string name="set_night_mode">Mode nocturn</string>
-    <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+    <string name="set_nsfw_timeout">Límit per mostrar material ofensiu (en segons, 0 és desactivat)</string>
     <string name="settings_title_profile">Edita el perfil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Personalitza el compartir</string>
+    <string name="settings_custom_sharing_url">Personalització del que comparteixo a URL&#8230;</string>
     <string name="set_profile_description">Biografia...</string>
-    <string name="set_lock_account">Lock account</string>
+    <string name="set_lock_account">Fes el compte privat</string>
     <string name="set_save_changes">Desa els canvis</string>
-    <string name="set_header_picture_overlay">Choose a header picture</string>
-    <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
-    <string name="note_no_space">You have reached the 160 characters allowed!</string>
-    <string name="username_no_space">You have reached the 30 characters allowed!</string>
-    <string name="settings_title_hour">Time slot for notifications:</string>
+    <string name="set_header_picture_overlay">Escull una foto per l\'encapçalament</string>
+    <string name="set_fit_preview">Ajusta la previsualització d\'imatges</string>
+    <string name="set_automatically_split_toot">Per sobre de 500 caràcters, separa automàticament els toots de resposta</string>
+    <string name="note_no_space">Has assolit el màxim permès de 160 caràcters!</string>
+    <string name="username_no_space">Has assolit el màxim permès de 30 caràcters!</string>
+    <string name="settings_title_hour">Intèrval de temps per a notificacions:</string>
     <string name="settings_time_from">Entre</string>
     <string name="settings_time_to">i</string>
-    <string name="settings_time_greater">The time must be greater than %1$s</string>
-    <string name="settings_time_lower">The time must be lower than %1$s</string>
-    <string name="settings_hour_init">Start time</string>
-    <string name="settings_hour_end">End time</string>
-    <string name="embedded_browser">Use the built-in browser</string>
+    <string name="settings_time_greater">Ha d\'haver passat més de %1$s</string>
+    <string name="settings_time_lower">Ha d\'haver passat menys de %1$s</string>
+    <string name="settings_hour_init">Hora d\'inici</string>
+    <string name="settings_hour_end">Hora d\'acabament</string>
+    <string name="embedded_browser">Utilitzar el navegador predefinit</string>
     <string name="custom_tabs">Pestanyes personalitzades</string>
     <string name="use_javascript">Habilita el Javascript</string>
-    <string name="expand_cw">Automatically expand cw</string>
-    <string name="use_cookies">Allow third-party cookies</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="expand_cw">Expandir automàticament el ca</string>
+    <string name="use_cookies">Permetre galetes de tercers</string>
+    <string name="settings_ui_layout">Disposició de les pissarres: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Consum normal de la pila</item>
+        <item>Consum mitjà de la pila</item>
+        <item>Comsum baix de la pila</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Pestanyes</item>
@@ -351,7 +351,7 @@
         <item>DeepL</item>
         <item>No</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">Per a Yandex, pots deixar en blanc la clau de l\'API</string>
     <string-array name="settings_theme">
         <item>Fosc</item>
         <item>Clar</item>
@@ -374,7 +374,7 @@
         <item>Blanc</item>
     </string-array>
     <string name="set_title_news">Notícies</string>
-    <string name="set_notification_news">Notify for new toots on the home timeline</string>
+    <string name="set_notification_news">Avisa dels toots nous a la pissarra pròpia</string>
     <string name="action_follow">Segueix</string>
     <string name="action_unfollow">Deixa de seguir</string>
     <string name="action_block">Bloca</string>
@@ -385,120 +385,111 @@
     <string name="request_sent">S\'ha enviat la petició</string>
     <string name="followed_by">Et segueix</string>
     <string name="action_search">Cerca</string>
-    <string name="set_capitalize">First letter in capital for replies</string>
-    <string name="set_resize_picture">Resize pictures</string>
+    <string name="set_capitalize">Primera lletra en majúscula a les respostes</string>
+    <string name="set_resize_picture">Redimensiona les fotos</string>
     <!-- Quick settings for notifications -->
-    <string name="settings_popup_title">Push notifications</string>
-    <string name="settings_popup_message">        Please, confirm push notifications that you want to receive.
-        You can enable or disable these notifications later in settings (Notifications tab).
-    </string>
-    <string name="settings_popup_timeline">For unread toots in home time-line?</string>
-    <string name="settings_popup_notification">For unread notifications?</string>
+    <string name="settings_popup_title">Notificacions emergents</string>
+    <string name="settings_popup_message">Sisplau, confirma les notificacions emergents que vols rebre.
+Pots habilitar o deshabilitar les notificacions més endavant als ajustaments (Pestanya de notificacions).    </string>
+    <string name="settings_popup_timeline">Per als toots no llegits a la pissarra pròpia?</string>
+    <string name="settings_popup_notification">Per a notificacions no llegides?</string>
     <!-- CACHE -->
-    <string name="cache_title">Clear cache</string>
-    <string name="cache_message">There are %1$s of data in cache.\n\nWould you like to delete them?</string>
+    <string name="cache_title">Netejar la memòria cau</string>
+    <string name="cache_message">Hi ha %1$s de dades a la memòria cau.\n\nVoldries eliminar-les?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Cache was cleared! %1$s were released</string>
+    <string name="toast_cache_clear">S\'ha netejat la memòria cau! S\'han alliberat %1$s</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Títol</string>
+    <string name="title_hint_custom_sharing">Títol&#8230;</string>
+    <string name="description_header_custom_sharing">Descripció</string>
+    <string name="description_hint_custom_sharing">Descripció&#8230;</string>
+    <string name="keywords_header_custom_sharing">Paraules clau</string>
+    <string name="keywords_hint_custom_sharing">Paraules clau&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sincronitza</string>
     <string name="action_filter">Filtre</string>
-    <string name="owner_cached_toots">Your toots</string>
+    <string name="owner_cached_toots">Els teus toots</string>
     <string name="v_public">Públic</string>
-    <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
-    <string name="v_direct">Direct</string>
-    <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
-    <string name="filter_no_result">No matching result found!</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="v_unlisted">No llistats</string>
+    <string name="v_private">Privat</string>
+    <string name="v_direct">Directe</string>
+    <string name="v_keywords">Algunes paraules clau…</string>
+    <string name="show_media">Mostra els mèdia</string>
+    <string name="show_pinned">Mostra els fixats</string>
+    <string name="filter_no_result">No s`han trobat textos coincidents!</string>
+    <string name="data_backup_toots">Còpia de seguretat dels toots per %1$s</string>
+    <string name="data_backup_success">S\'han importat %1$s toots nous</string>
     <string-array name="filter_select">
         <item>No</item>
         <item>Només</item>
         <item>Tots dos</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">No s\'han trobat toots a la base de dades. Sisplau, feu ús del botó de sincronitzar del menú per recobrar-los.</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Recorded data</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
-    </string>
+    <string name="privacy_data_title">Dades gravades</string>
+    <string name="privacy_data">Només es guarda al dispositiu la informació bàsica dels comptes.
+Aquestes dades són estrictament confidencials i només les pot usar l\'aplicació.
+Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
+&#9888; Els noms d\'usuari i contrasenyes no s\'emmagatzemen mai. Només s\'utilitzen durant una autentificació segura (SSL) en una instància.    </string>
     <string name="privacy_authorizations_title">Permisos:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+    <string name="privacy_authorizations">- <b>ESTAT_ACCES_XARXA</b>: Usat per detectar si el dispositiu està connectat a una xarxa WIFI.\n
+         - <b>INTERNET</b>: Usat per a requeriments a una instància.\n
+         - <b>ESCRIURE_MAGATZEM_EXTERN</b>: Usat per emmagatzemar mèdia o moure l\'app a una tarja SD.\n
+         - <b>LLEGIR_MAGATZEM_EXTERN</b>: Usat per afegir mèdia als toots.\n
+         - <b>BOOT_COMPLET</b>: Usat per iniciar el servei de notificació.\n
+         - <b>DESPERTA_BLOCATGE</b>: Usat durant el servei de notificació.    </string>
+    <string name="privacy_API_authorizations_title">Permisos d\'API:</string>
+    <string name="privacy_API_authorizations">        - <b>Lectura</b>: Lectura de dades.\n
+        - <b>Escriptura</b>: Defineix els estatus i carrega mèdia per a estatus.\n
+        - <b>Seguiments</b>: segueix, desegueix, bloca, desbloca.\n\n
+        <b>&#9888; Aquestes accions es realitzen només a petició de l\'usuari.</b>
     </string>
-    <string name="privacy_API_authorizations_title">API permissions:</string>
-    <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+    <string name="privacy_API_title">Rastreig i llibreries</string>
+    <string name="privacy_API">        L\' aplicació <b>no fa ús d\'eines de rastreig</b> (mesures d\'audiència, informes d\'errors, etc.) i no conté publicitat.\n\n
+        es minimitza l\'ús de les biblioteques: \n
+        - <b>Lliscar</b>: Per gestionar els mèdia\n
+        - <b>Tasques-Android</b>: Per gestionar serveis\n
+        - <b>FotoVista</b>: Per gestionar imatges\n
     </string>
-    <string name="privacy_API_title">Tracking and Libraries</string>
-    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+    <string name="privacy_API_yandex_title">Traducció dels toots</string>
+    <string name="privacy_API_yandex_authorizations">        L\'aplicació permet la traducció de toots a través de la configuració regional del dispositiu i l\'API Yandex.\n
+        Yandex té la seva pròpia política de privacitat, disponible aquí: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="privacy_API_yandex_title">Translation of toots</string>
-    <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    </string>
-    <string name="thanks_text">        Thank you to Stéphane for the logo.
-    </string>
+    <string name="thanks_text">Moltes gràcies a Stéphane pel logo.    </string>
     <string name="thanks_text_dev">        Agraïments:
     </string>
-    <string name="filter_regex">Filter out by regular expressions</string>
+    <string name="filter_regex">Filtratge mitjançant expressions regulars</string>
     <string name="search">Cerca</string>
     <string name="delete">Suprimeix</string>
-    <string name="fetch_more_toots">Fetch more toots…</string>
+    <string name="fetch_more_toots">Arreplega més toots…</string>
     <!-- About lists -->
     <string name="action_lists">Llistes</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-    <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+    <string name="action_lists_confirm_delete">Segur que vols suprimir permanentment la llista?</string>
+    <string name="action_lists_empty_content">No hi ha encara res a la llista. Quan els membres de la llista pengin nous estatus, apareixeran aquí.</string>
     <string name="action_lists_add_to">Afegeix a una llista</string>
     <string name="action_lists_remove_from">Suprimeix de la llista</string>
     <string name="action_lists_create">Afegeix una llista</string>
     <string name="action_lists_delete">Suprimeix la llista</string>
     <string name="action_lists_update">Edita la llista</string>
     <string name="action_lists_title_placeholder">Títol de llista nou</string>
-    <string name="action_lists_search_users">Search among people you follow</string>
-    <string name="action_lists_owner">Your lists</string>
+    <string name="action_lists_search_users">Cerca entre la gent a qui segueixes</string>
+    <string name="action_lists_owner">Les teves llistes</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s has moved to %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
-    <string name="issue_login_title">Authentication does not work?</string>
-    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
-    </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
-    <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-    <string name="data_export_running">Still running, please wait…</string>
-    <string name="data_export">Export statuses</string>
-    <string name="data_export_toots">Export statuses for %1$s</string>
-    <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="account_moved_to">%1$s s\'ha traslladat a %2$s</string>
+    <string name="show_boost_count">Mostra el recompte de difusions/preferits</string>
+    <string name="issue_login_title">L\'autenticació falla?</string>
+    <string name="issue_login_message">        <b>Aquí hi ha algunes comprovacions potencialment útils:</b>\n\n         
+- Comprova que no hi hagi errors de picatge en el nom de la instància\n\n         - Comprova que no tinguis la instància inactiva\n\n         - Si tens l\'autenticació de dos factors (2FA), prova l\'enllaç de la part inferior  (després d\'entrar el nom de la instància)\n\n         - L\'enllaç el pots fer servir encara que no tinguis la 2FA\n\n         - Si encara no rutlla, sisplau obre fil del GitLab a https://gitlab.com/tom79/mastalab/issues    </string>
+    <string name="media_ready">S\'ha carregat el mèdia. Clica aquí per mostrar-lo.</string>
+    <string name="data_export_start">Aquesta acció pot durar temps. Rebràs un avís quan estigui enllestida.</string>
+    <string name="data_export_running">Segueix processant, espereu sisplau…</string>
+    <string name="data_export">Exporta els estatus</string>
+    <string name="data_export_toots">Exporta els estatus de %1$s</string>
+    <string name="data_export_success">S\'han exportat %1$s toots d\'un total de %2$s.</string>
+    <string name="data_export_error">Ha fallat alguna cosa durant l\'exportació de dades de %1$s</string>
+    <string name="data_export_error_simple">Ha fallat alguna cosa mentre s\'exportaven dades!</string>
+    <string name="data_import_success_simple">S\'han importat dades!</string>
+    <string name="data_import_error_simple">Ha fallat alguna cosa mentre s\'importaven dades!</string>
     <!-- Proxy -->
     <string name="proxy_set">Servidor intermediari</string>
     <string name="proxy_type">Tipus</string>
@@ -508,161 +499,161 @@
     <string name="poxy_login">Iniciar Sessió</string>
     <string name="poxy_password">Contrasenya</string>
     <string name="set_theme">Tema:</string>
-    <string name="set_compact_mode">Compact mode</string>
-    <string name="set_share_details">Add toot details when sharing</string>
-    <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-    <string name="alert_regex">There is an error in the regular expression!</string>
-    <string name="no_account_yet">No account yet?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
-    <string name="delete_instance">Delete this instance?</string>
-    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-    <string name="which_language">Translate in</string>
-    <string name="crash_title">Mastalab has stopped :(</string>
-    <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
-    <string name="follow_instance">Follow instance</string>
-    <string name="toast_instance_already_added">You already follow this instance!</string>
-    <string name="toast_instance_followed">The instance is followed!</string>
-    <string name="action_partnership">Associacions</string>
+    <string name="set_compact_mode">Mode Compacte</string>
+    <string name="set_share_details">Inclou detalls del toot en compartir-lo</string>
+    <string name="support_the_app_on_liberapay">Dona suport a l\'App al Liberapay</string>
+    <string name="alert_regex">Hi ha un error en l\'expressió regular!</string>
+    <string name="no_account_yet">No tens compte encara?</string>
+    <string name="toast_instance_unavailable">En aquesta instància no hi hem trobat pissarres!</string>
+    <string name="delete_instance">Esborrar la instància?</string>
+    <string name="warning_delete_instance">Ara eliminaràs %s de les instàncies que segueixes.</string>
+    <string name="which_language">Tradueix al</string>
+    <string name="crash_title">Malaslab s\'ha aturat :(</string>
+    <string name="crash_message">Pots enviar-me l\'informe de la fallada per email. Ajudarà a resoldre-ho :)\n\nPots afegir-hi contingut. Gràcies!</string>
+    <string name="send_crash_report">Demanar d\'enviar informes de fallades per email?</string>
+    <string name="follow_instance">Segueix la instància</string>
+    <string name="toast_instance_already_added">Ja estàs seguint aquesta instància!</string>
+    <string name="toast_instance_followed">La instància ja té seguidors!</string>
+    <string name="action_partnership">Socis</string>
     <string name="neutral_menu_information">Informació</string>
-    <string name="hide_boost">Hide boosts from %s</string>
-    <string name="endorse">Feature on profile</string>
-    <string name="hide_everything">Hide everything from %s</string>
-    <string name="show_boost">Show boosts from %s</string>
-    <string name="unendorse">Don\'t feature on profile</string>
-    <string name="show_everything">Show everything from %s</string>
-    <string name="toast_endorse">The account is now featured on profile</string>
-    <string name="toast_unendorse">The account is no longer featured on profile</string>
-    <string name="toast_show_boost">Boosts are now shown!</string>
-    <string name="toast_hide_boost">Boosts are now hidden!</string>
-    <string name="direct_message">Direct message</string>
-    <string name="filters">Filters</string>
-    <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
-    <string name="filter_keyword">Keyword or phrase</string>
-    <string name="context_home">Home timeline</string>
-    <string name="context_public">Public timelines</string>
-    <string name="context_notification">Notifications</string>
-    <string name="context_conversation">Conversations</string>
-    <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
-    <string name="context_drop">Drop instead of hide</string>
-    <string name="context_drop_explanations">Filtered toots will disappear irreversibly, even if filter is later removed</string>
-    <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
-    <string name="context_whole_word">Whole word</string>
-    <string name="filter_context">Filter contexts</string>
-    <string name="filter_context_explanations">One or multiple contexts where the filter should apply</string>
-    <string name="filter_expire">Expire after</string>
-    <string name="add_new_filter">Add New Filter</string>
-    <string name="action_filter_delete">Delete filter?</string>
-    <string name="action_update_filter">Update filter</string>
-    <string name="action_filter_create">Create filter</string>
-    <string name="how_to_follow">Whom to follow</string>
-    <string name="action_who_to_follow_empty_content">There is no accounts listed for the moment!</string>
+    <string name="hide_boost">Amaga les difusions de %s</string>
+    <string name="endorse">Incloure al perfil</string>
+    <string name="hide_everything">Amaga-ho tot de %s</string>
+    <string name="show_boost">Mostra difusions de %s</string>
+    <string name="unendorse">No incloure al perfil</string>
+    <string name="show_everything">Mostra tot el de %s</string>
+    <string name="toast_endorse">El compte ara s\'inclou al perfil</string>
+    <string name="toast_unendorse">El compte ja no s\'inclou al perfil</string>
+    <string name="toast_show_boost">Les difusions estan visibles!</string>
+    <string name="toast_hide_boost">Les difusions estan amagades!</string>
+    <string name="direct_message">Missatge directe</string>
+    <string name="filters">Filtres</string>
+    <string name="action_filters_empty_content">No hi ha filtres per mostrar. En podeu crear fent clic al botó \"+\".</string>
+    <string name="filter_keyword">Frase o paraula clau</string>
+    <string name="context_home">Pissarra pròpia</string>
+    <string name="context_public">Pissarres públiques</string>
+    <string name="context_notification">Notificacions</string>
+    <string name="context_conversation">Converses</string>
+    <string name="filter_keyword_explanations">S\'associaran a textos dels toots encara que vagin en cursiva o negreta o associats a alertes de contingut</string>
+    <string name="context_drop">Descarta enlloc d\'amagar</string>
+    <string name="context_drop_explanations">Els toots filtrats desapareixeran del tot, encara que després s\'elimini el filtre</string>
+    <string name="context_whole_word_explanations">Quan les frases o les paraules clau siguin alfanumèriques, només s\'aplicaran a les coincidències de mots sencers</string>
+    <string name="context_whole_word">Mot sencer</string>
+    <string name="filter_context">Contexts de filtre</string>
+    <string name="filter_context_explanations">El context o conjunt de contexts on ha d\'operar un filtre</string>
+    <string name="filter_expire">Expira el</string>
+    <string name="add_new_filter">Nou filtre</string>
+    <string name="action_filter_delete">Eliminar el filtre?</string>
+    <string name="action_update_filter">Actualitza el filtre</string>
+    <string name="action_filter_create">Crear un filtre</string>
+    <string name="how_to_follow">A qui seguir</string>
+    <string name="action_who_to_follow_empty_content">No hi ha comptes llistats de moment!</string>
     <string name="follow_account">Segueix</string>
-    <string name="select_all">Select all</string>
-    <string name="unselect_all">Unselect all</string>
-    <string name="follow_trunk">%s is followed!</string>
-    <string name="create_list_trunk">Creating the list %s</string>
-    <string name="add_account_list_trunk">Adding accounts to the list</string>
-    <string name="account_added_list_trunk">Accounts were added to the list</string>
-    <string name="adding_account_list_trunk">Adding accounts to the list</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
-    <string name="about_trunk">Who to follow</string>
-    <string name="about_trunk_action">Trunk API</string>
-    <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
-    <string name="retrieve_remote_account">Fetching remote account</string>
-    <string name="expand_image">Automatically expand hidden media</string>
-    <string name="set_display_follow_instance">Display follow instances button</string>
-    <string name="channel_notif_follow">New follow</string>
-    <string name="channel_notif_boost">New Boost</string>
-    <string name="channel_notif_fav">New Favourite</string>
-    <string name="channel_notif_mention">New Mention</string>
-    <string name="channel_notif_toot">New Toot</string>
-    <string name="channel_notif_backup">Toots Backup</string>
-    <string name="channel_notif_media">Media Download</string>
-    <string name="set_notif_sound">Change notification sound</string>
-    <string name="select_sound">Select Tone</string>
-    <string name="set_enable_time_slot">Enable time slot</string>
-    <string name="how_to_videos">How To Videos</string>
-    <string name="retrieve_remote_conversation">Fetching remote thread!</string>
-    <string name="no_blocked_domain">No blocked domains!</string>
-    <string name="unblock_domain_confirm">Unblock domain</string>
-    <string name="unblock_domain_confirm_message">Are you sure to unblock %s?</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?\n\nYou will not see any content from that domain in any public timeline or in your notifications. Your followers from that domain will be removed.</string>
-    <string name="blocked_domains">Blocked domains</string>
-    <string name="block_domain">Block domain</string>
-    <string name="toast_block_domain">The domain is blocked</string>
-    <string name="toast_unblock_domain">The domain is no longer blocked!</string>
-    <string name="retrieve_remote_status">Fetching remote status</string>
-    <string name="comment">Comment</string>
-    <string name="peertube_instance">Peertube instance</string>
-    <string name="set_display_direct">Display private messages timeline</string>
-    <string name="set_keep_background_process">Keep background process when app is closed</string>
-    <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-    <string name="number_view_video">%s views</string>
+    <string name="select_all">Seleccionar-ho tot</string>
+    <string name="unselect_all">Seleccionar-ho tot</string>
+    <string name="follow_trunk">%s és seguit!</string>
+    <string name="create_list_trunk">La llista s\'està creant %s</string>
+    <string name="add_account_list_trunk">Afegint comptes a la llista</string>
+    <string name="account_added_list_trunk">S\'han afegit els comptes a la llista</string>
+    <string name="adding_account_list_trunk">Afegint comptes a la llista</string>
+    <string name="action_list_add">No has creat cap llista encara. Clica el botó \"+\" per afegir-ne una.</string>
+    <string name="action_remote_instance_add">No estàs seguint cap instància remota. Fes clic al botó \"+\" per afegir-ne una.</string>
+    <string name="about_trunk">A qui seguir</string>
+    <string name="about_trunk_action">API troncal</string>
+    <string name="toast_impossible_to_follow">No es pot seguir el(s) compte(s)</string>
+    <string name="retrieve_remote_account">Arreplegant compte remot</string>
+    <string name="expand_image">Expandeix automàticament els mèdia amagats</string>
+    <string name="set_display_follow_instance">Mostrar el botó de seguiment d\'instàncies</string>
+    <string name="channel_notif_follow">Nou seguidor</string>
+    <string name="channel_notif_boost">Nova difusió</string>
+    <string name="channel_notif_fav">Nou preferit</string>
+    <string name="channel_notif_mention">Nova menció</string>
+    <string name="channel_notif_toot">Toot nou</string>
+    <string name="channel_notif_backup">Còpia de seguretat de toots</string>
+    <string name="channel_notif_media">Baixada de mèdia</string>
+    <string name="set_notif_sound">Canvi del so d\'avís</string>
+    <string name="select_sound">Selecciona el so</string>
+    <string name="set_enable_time_slot">Activa interval de temps</string>
+    <string name="how_to_videos">Indicacions per als Vídeos</string>
+    <string name="retrieve_remote_conversation">Arreplegant el fil remot!</string>
+    <string name="no_blocked_domain">No hi ha dominis blocats!</string>
+    <string name="unblock_domain_confirm">Desbloca el domini</string>
+    <string name="unblock_domain_confirm_message">Segur que vols desblocar %s?</string>
+    <string name="block_domain_confirm_message">Segur que vols blocar %s\n\nJa no veuràs cap contingut del domini en cap pissarra pública ni en les notificacions. S\'eliminaran els teus seguidors provinents del domini.</string>
+    <string name="blocked_domains">Dominis blocats</string>
+    <string name="block_domain">Bloca el domini</string>
+    <string name="toast_block_domain">El domini està blocat</string>
+    <string name="toast_unblock_domain">El domini ja no està blocat!</string>
+    <string name="retrieve_remote_status">Arreplegant l\'estatus remot</string>
+    <string name="comment">Comentari</string>
+    <string name="peertube_instance">Instància de Peertube</string>
+    <string name="set_display_direct">Mostra la pissarra de missatges privats</string>
+    <string name="set_keep_background_process">Mantén el procés en segon pla quan es tanca l\'app</string>
+    <string name="no_comments">Estrena els comentaris a aquest vídeo amb el botó de dalt a la dreta!</string>
+    <string name="number_view_video">%s visites</string>
     <string name="duration_video">Durada: %s</string>
-    <string name="add_remote_instance">Add an instance</string>
-    <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
-    <string name="pickup_resolution">Pick up a resolution</string>
-    <string name="peertube_favorites">Peertube favourites</string>
-    <string name="bookmark_add_peertube">The video has been added to bookmarks!</string>
-    <string name="bookmark_remove_peertube">The video has been removed from bookmarks!</string>
-    <string name="bookmark_peertube_empty">There is no Peertube videos in your favourites!</string>
+    <string name="add_remote_instance">Afegeix-hi una instància</string>
+    <string name="comment_no_allowed_peertube">Aquest vídeo no acull comentaris!</string>
+    <string name="pickup_resolution">Tria una solució</string>
+    <string name="peertube_favorites">Favorits de Peertube</string>
+    <string name="bookmark_add_peertube">S\'ha afegit el vídeo als marcadors!</string>
+    <string name="bookmark_remove_peertube">S\'ha eliminat el vídeo d\'entre els marcadors!</string>
+    <string name="bookmark_peertube_empty">No tens vídeos de Peertube als preferits!</string>
     <string name="channel">Canal</string>
-    <string name="no_peertube_channels">No Peertube channels</string>
-    <string name="no_peertube_instances">No Peertube instances</string>
-    <string name="no_mastodon_instances">No Mastodon instances</string>
-    <string name="no_lists">No lists</string>
-    <string name="videos">Videos</string>
-    <string name="channels">Channels</string>
-    <string name="set_display_emoji">Use Emoji One</string>
+    <string name="no_peertube_channels">No hi ha canals de Peertube</string>
+    <string name="no_peertube_instances">No hi ha instàncies de Peertube</string>
+    <string name="no_mastodon_instances">No hi ha instàncies de Mastodont</string>
+    <string name="no_lists">No hi ha llistes</string>
+    <string name="videos">Vídeos</string>
+    <string name="channels">Canals</string>
+    <string name="set_display_emoji">Fer ús d\' Emoji One</string>
     <string name="information">Informació</string>
-    <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
+    <string name="set_display_card">Mostra la vista preliminar de tots els toots</string>
+    <string name="thanks_text_ux">Nou dissenyador UX/UI</string>
+    <string name="set_old_direct_timeline">Fer ús de la pissarra directa anterior a Mastodont 2.6</string>
+    <string name="set_display_video_preview">Mostrar les vistes preliminars dels vídeos</string>
+    <string name="thanks_text_support">Servei a l\'usuari de Gitlab</string>
+    <string name="action_bug_report">Informe d\'errors</string>
+    <string name="no_mail_client">No hi ha clients de correu electrònic instal·lats.</string>
+    <string name="bug_report_mail">Envia un informe d\'errors</string>
+    <string name="account_id_clipbloard">S\'ha copiat la id del compte al portapapers!</string>
+    <string name="settings_title_battery">Optimització de la bateria</string>
     <string name="set_change_locale">Canvi d\'idioma</string>
     <string name="default_language">Idioma per defecte</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
+    <string name="truncate_long_toots">Truncar els toots llargs</string>
+    <string name="set_truncate_toot">Truncar els toots per sobre de les \'x\' línies. El zero vol dir inactiu.</string>
     <string name="display_toot_truncate">Mostra més</string>
     <string name="hide_toot_truncate">Mostra menys</string>
     <string name="manage_tags">Gestionar etiquetes</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
+    <string name="tags_already_stored">L\'etiqueta ja existeix!</string>
+    <string name="tags_stored">L\'etiqueta s\'ha guardat!</string>
+    <string name="tags_renamed">S\'ha canviat l\'etiqueta!</string>
+    <string name="tags_deleted">S\'ha eliminat l\'etiqueta!</string>
+    <string name="set_display_art">Mostra la pissarra d\'Art</string>
+    <string name="schedule_boost">Temporalitza difusió</string>
+    <string name="boost_scheduled">Aquesta difusió s\'ha temporalitzat!</string>
+    <string name="no_scheduled_boosts">No hi ha temporalitzacions de difusió per mostrar!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Obre el menú d'un toot i selecciona <b>Temporalitza la difusió</b>.]]></string>
+    <string name="art_menu">Pissarra de l\'art</string>
     <string name="open_menu">Obrir menú</string>
-    <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
+    <string name="app_logo">Logo de l\'aplicació</string>
+    <string name="profile_picture">Foto de perfil</string>
+    <string name="profile_banner">Bànner de perfil</string>
+    <string name="contact_instance_admin">Contacteu l\'administrador de la instància</string>
     <string name="add_new">Afegir nou</string>
-    <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
-    <string name="refresh">Refresh</string>
-    <string name="expand_conversation">Expand the conversation</string>
-    <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
-    <string name="play_video">Play video</string>
-    <string name="new_toot">New toot</string>
-    <string name="card_view_image">Image of the card</string>
-    <string name="hide_media">Hide media</string>
-    <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="mastohost_logo">Logo del MastoServidor</string>
+    <string name="emoji_picker">Tria d\'emojis</string>
+    <string name="refresh">Refresca</string>
+    <string name="expand_conversation">Mostra tota la conversa</string>
+    <string name="remove_account">Suprimeix el compte</string>
+    <string name="delete_domain">Esborra el domini blocat</string>
+    <string name="custom_emoji_picker">Personalització de la tria d\'emojis</string>
+    <string name="play_video">Reproduir vídeo</string>
+    <string name="new_toot">Toot nou</string>
+    <string name="card_view_image">Imatge de la targeta</string>
+    <string name="hide_media">Amaga els mèdia</string>
+    <string name="favicon">Icona de preferits</string>
+    <string name="media_description">Mèdia per afegir una descripció</string>
     <string-array name="filter_expire">
         <item>Mai</item>
         <item>30 minuts</item>
@@ -672,133 +663,133 @@
         <item>1 dia</item>
         <item>1 setmana</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        En aquest camp, cal que hi escriguis el nom del servidor de la teva instància.\nPer exemple, si has creat el compte a https://mastodon.social\n Només cal escriure <b>mastodon.social</b> (sense https://)\n
+        Pots començar amb les primeres lletres i ja se suggeriran noms.\n\n
+        ⚠ El botó d\'inici de sessió només funcionarà si el nom d\'instància és vàlid i la instància està activa!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        En aquest camp, hi escrius el correu electrònic associat al teu compte de mastodont.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        L\'últim pas consisteix en introduir la contrasenya i clicar a \"Inici de sessió\".
     </string>
-    <string name="more_information">More information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="more_information">Més informació</string>
+    <string name="showcase_2FA">Si fas ús del 2FA (autenticació de dos factors), et cal emprar aquest enllaç.\nTambé pots utilitzar-lo si no vols introduir les credencials aquí.</string>
     <!-- languages not translated -->
     <string name="languages">Idiomes</string>
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
+    <string name="show_media_only">Només mèdia</string>
+    <string name="show_media_nsfw">Mostra contingut sensible</string>
+    <string name="crowdin_translations">Traduccions crowdin</string>
+    <string name="crowdin_manager">Director de crowdin</string>
+    <string name="translation_app">Traducció de l\'aplicació</string>
+    <string name="about_crowdin">Sobre Crowdin</string>
     <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
-    <string name="change_tag_column">Change column name</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
-    <string name="misskey_instance">Misskey instance</string>
-    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
-    <string name="subscriptions">Subscriptions</string>
-    <string name="overview">Overview</string>
-    <string name="trending">Trending</string>
-    <string name="recently_added">Recently added</string>
+    <string name="pixelfed_instance">Instància Pixelfed</string>
+    <string name="mastodon_instance">Instància de mastodont</string>
+    <string name="no_pixelfed_instance">No hi ha instàncies de Pixelfed</string>
+    <string name="any_tags">Qualsevol d\'aquests</string>
+    <string name="all_tags">Tots aquests</string>
+    <string name="none_tags">Cap d\'aquests</string>
+    <string name="some_words_any">Qualsevol d\'aquestes paraules (separades-per-espais)</string>
+    <string name="some_words_all">Totes aquestes paraules (separades-per-espais)</string>
+    <string name="some_words_none">Cap d\'aquestes paraules (separades per espais)</string>
+    <string name="change_tag_column">Canvi de nom de columna</string>
+    <string name="no_misskey_instance">No hi ha instàncies de Misskey</string>
+    <string name="misskey_instance">Instància Misskey</string>
+    <string name="toast_no_apps">No tens instal·lada cap app que gestioni aquest tipus d\'enllaç.</string>
+    <string name="subscriptions">Subscripcions</string>
+    <string name="overview">Resum</string>
+    <string name="trending">Tendències</string>
+    <string name="recently_added">Afegits recentment</string>
     <string name="local">Local</string>
-    <string name="upload_video">Upload</string>
-    <string name="reply">Reply</string>
-    <string name="delete_comment">Delete a comment</string>
-    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
-    <string name="fullscreen">Full screen video</string>
-    <string name="set_video_mode">Mode for videos</string>
-    <string name="file_to_upload">Select the file to upload</string>
-    <string name="my_videos">My videos</string>
-    <string name="title">Title</string>
+    <string name="upload_video">Pujar</string>
+    <string name="reply">Respondre</string>
+    <string name="delete_comment">Esborrar un comentari</string>
+    <string name="delete_comment_confirm">Estàs segur d\'esborrar aquest comentari?</string>
+    <string name="fullscreen">Vídeo a pantalla completa</string>
+    <string name="set_video_mode">Mode per a vídeos</string>
+    <string name="file_to_upload">Seleccioneu el document per carregar</string>
+    <string name="my_videos">Els meus vídeos</string>
+    <string name="title">Títol</string>
     <string name="categories">Categories</string>
-    <string name="license">License</string>
-    <string name="category">Category</string>
-    <string name="language">Language</string>
-    <string name="peertube_nsfw">This video contains mature or explicit content</string>
-    <string name="peertube_enable_comments">Enable video comments</string>
-    <string name="update_video">Update video</string>
-    <string name="description">Description</string>
-    <string name="toast_peertube_video_updated">The video has been updated!</string>
-    <string name="toast_cancelled">Upload cancelled!</string>
-    <string name="upload_video_success">The video has been uploaded!</string>
-    <string name="uploading">Uploading, please wait…</string>
-    <string name="video_uploaded_action">Click here to edit the video data.</string>
-    <string name="delete_video">Delete video</string>
-    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
-    <string name="no_video_uploaded">No videos uploaded yet!</string>
-    <string name="display_nsfw_videos">Display NSFW videos</string>
-    <string name="default_channel_of">Default %s channel</string>
-    <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
-    <string name="leave_a_comment">Leave a comment</string>
-    <string name="share">Share</string>
-    <string name="my_pictures">My pictures</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
-    <string name="server_schedule">From server</string>
-    <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
-    <string name="modify">Modify</string>
-    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
-    <string name="settings_category_label_confirmations">Confirmations</string>
-    <string name="settings_category_label_timelines">Timelines</string>
-    <string name="settings_category_label_notification">Notification service</string>
-    <string name="settings_category_label_interface">Interface</string>
-    <string name="settings_category_label_hiddencontent">Hidden content</string>
-    <string name="settings_category_label_composing">Composing</string>
-    <string name="contact">Contacts</string>
-    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
-    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
-    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
-    <string name="peertube_video_published"><![CDATA[Your video <b>%1$s</b> has been published]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
-    <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
-    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
-    <string name="export_data">Export data</string>
-    <string name="import_data">Import Data</string>
-    <string name="toot_select_import">Select the file to import</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
-    <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
-    <string name="add_public_comment">Add a public comment</string>
-    <string name="send_comment">Send comment</string>
-    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
-    <string name="action_plain_text">Plain text</string>
+    <string name="license">Llicència</string>
+    <string name="category">Categoria</string>
+    <string name="language">Idioma</string>
+    <string name="peertube_nsfw">Aquest vídeo conté contingut explícit o per adults</string>
+    <string name="peertube_enable_comments">Habilita els comentaris als vídeos</string>
+    <string name="update_video">Actualitza el vídeo</string>
+    <string name="description">Descripció</string>
+    <string name="toast_peertube_video_updated">S\'ha actualitzat el vídeo!</string>
+    <string name="toast_cancelled">S\'ha cancel·lat la càrrega!</string>
+    <string name="upload_video_success">S\'ha carregat el vídeo!</string>
+    <string name="uploading">Carregant, espera sisplau…</string>
+    <string name="video_uploaded_action">Feu clic aquí per editar les dades de vídeo.</string>
+    <string name="delete_video">Eliminar vídeo</string>
+    <string name="delete_video_confirmation">Segur que vols suprimir aquest vídeo?</string>
+    <string name="no_video_uploaded">No s\'han carregat vídeos encara!</string>
+    <string name="display_nsfw_videos">Mostra vídeos de contingut sensible</string>
+    <string name="default_channel_of">Canal %s per defecte</string>
+    <string name="no_video_to_display">No hi ha vídeos per mostrar!</string>
+    <string name="add_image_to_favorite">Afegeix un mèdia als preferits</string>
+    <string name="leave_a_comment">Deixa un comentari</string>
+    <string name="share">Comparteix</string>
+    <string name="my_pictures">Les meves imatges</string>
+    <string name="choose_schedule">Tria un mode de temporització</string>
+    <string name="device_schedule">Des del dispositiu</string>
+    <string name="server_schedule">Des del servidor</string>
+    <string name="toots_server">Toots (servidor)</string>
+    <string name="toots_client">Toots (al meu dispositiu)</string>
+    <string name="modify">Modifica</string>
+    <string name="set_display_content_after_fetch_more">Mostra nous toots per damunt del botó \"Arreplegar-ne més\"</string>
+    <string name="settings_category_label_confirmations">Confirmacions</string>
+    <string name="settings_category_label_timelines">Pissarres</string>
+    <string name="settings_category_label_notification">Servei de notificacions</string>
+    <string name="settings_category_label_interface">Interfícies</string>
+    <string name="settings_category_label_hiddencontent">Contingut ocult</string>
+    <string name="settings_category_label_composing">Composició</string>
+    <string name="contact">Contactes</string>
+    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> ha comentat el teu vídeo <b>%2$s</b>]]></string>
+    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> segueix el teu canal <b>%2$s</b>]]></string>
+    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> segueix el teu compte]]></string>
+    <string name="peertube_video_published"><![CDATA[S'ha publicat el teu vídeo <b>%1$s</b>]]></string>
+    <string name="peertube_video_import_success"><![CDATA[Ha reeixit la importació del teu vídeo <b>%1$s</b>]]></string>
+    <string name="peertube_video_import_error"><![CDATA[Ha fallat la importació del vídeo <b>%1$s</b>]]></string>
+    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> ha publicat un nou vídeo: <b>%2$s</b>]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[Han posat el teu vídeo <b>%1$s</b> en una llista negra]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Han tret el teu vídeo <b>%1$s</b> d'una llista negra]]></string>
+    <string name="export_data">Exportar dades</string>
+    <string name="import_data">Importar dades</string>
+    <string name="toot_select_import">Selecciona el document a importar</string>
+    <string name="toot_select_file_error">S\'ha produït un error en seleccionar la còpia de seguretat!</string>
+    <string name="data_import_start">Si us plau, no atureu l\'app a mig procés. Això no ha de durar gaire.</string>
+    <string name="add_public_comment">Afegir un comentari públic</string>
+    <string name="send_comment">Enviar comentari</string>
+    <string name="toast_toot_saved_error">No hi ha connexió a Internet. El missatge s\'ha guardat entre els esborranys.</string>
+    <string name="action_plain_text">Text sense format</string>
     <string name="action_html">HTML</string>
-    <string name="action_markdown">Markdown</string>
-    <string name="action_logout_account">Logout account</string>
-    <string name="set_optimize_loading">Optimize loading time</string>
-    <string name="all">All</string>
-    <string name="about_opencollective">Support the app</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
-    <string name="copy_link">Copy link</string>
-    <string name="connect_instance">Connect</string>
+    <string name="action_markdown">Assenyala</string>
+    <string name="action_logout_account">Sortir de la sessió</string>
+    <string name="set_optimize_loading">Optimitzar el temps de càrrega</string>
+    <string name="all">Tot</string>
+    <string name="about_opencollective">Dona suport a l\'app</string>
+    <string name="more_about_opencollective">Open Collective facilita a grups de crear ràpidament un col·lectiu, recollir diners i gestionar-los amb transparència.</string>
+    <string name="copy_link">Copia l\'enllaç</string>
+    <string name="connect_instance">Connectar</string>
     <string name="set_normal">Nomal</string>
-    <string name="set_compact">Compact</string>
-    <string name="set_console">Console</string>
-    <string name="set_mode">Set display mode</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
-    <string name="update_tracking_domains">Update tracking domains</string>
-    <string name="tracking_db_updated">The tracking data base has been updated!</string>
-    <string name="calls_blocked">http calls blocked by the application</string>
-    <string name="list_of_blocked_domains">List of blocked calls</string>
-    <string name="submit">Submit</string>
-    <string name="data_base_exported">The data base has been exported!</string>
-    <string name="featured_hashtags">Featured hashtags</string>
-    <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
-    <string name="no_tags">No tags</string>
+    <string name="set_compact">Compactar</string>
+    <string name="set_console">Consola</string>
+    <string name="set_mode">Tria mode de presentació</string>
+    <string name="set_security_provider">Pedaços de seguretat</string>
+    <string name="update_tracking_domains">Actualitzar el rastreig de dominis</string>
+    <string name="tracking_db_updated">S\'ha actualitzat la base de dades de rastreig!</string>
+    <string name="calls_blocked">trucades http blocades per l\'aplicació</string>
+    <string name="list_of_blocked_domains">Llista de trucades blocades</string>
+    <string name="submit">Sol·licita</string>
+    <string name="data_base_exported">S\'ha exportat la base de dades!</string>
+    <string name="featured_hashtags">Hashtags recomanats</string>
+    <string name="filter_timeline_with_a_tag">Pissarra de filtres amb etiquetes</string>
+    <string name="no_tags">Sense etiquetes</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
-        <item>Webview</item>
-        <item>Direct stream</item>
+        <item>Visualització web</item>
+        <item>Stream directe</item>
     </string-array>
 </resources>

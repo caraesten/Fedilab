@@ -36,7 +36,7 @@
     <string name="toast_account_changed" formatted="false">Agora funcionando com a conta %1$s</string>
     <string name="add_account">Adicionar conta</string>
     <string name="clipboard">O conteúdo do toot foi copiado para a área de transferência</string>
-    <string name="clipboard_url">The URL of the toot has been copied to the clipboard</string>
+    <string name="clipboard_url">A URL do toot foi copiada para o clipboard</string>
     <string name="change">Mudar</string>
     <string name="choose_picture">Selecione uma imagem…</string>
     <string name="clear">Limpar</string>
@@ -127,8 +127,8 @@
         <item>Bloquear este domínio?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Notify</item>
-        <item>Silent</item>
+        <item>Notificar</item>
+        <item>Silencioso</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Excluir este toot?</item>
@@ -235,7 +235,7 @@
         <item quantity="other">e outros %d toots para descobrir</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d like</item>
+        <item quantity="one">%d gostos</item>
         <item quantity="other">%d likes</item>
     </plurals>
     <string name="delete_notification_ask">Excluir notificação?</string>
@@ -313,8 +313,8 @@
     <string name="set_night_mode">Modo noturno</string>
     <string name="set_nsfw_timeout">Tempo até visualização de NSFW expirar (segundos, 0 significa desligado)</string>
     <string name="settings_title_profile">Editar perfil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Compartilhamento personalizado</string>
+    <string name="settings_custom_sharing_url">Seu URL de compartilhamento personalizado&#8230;</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Bloquear conta</string>
     <string name="set_save_changes">Salvar mudanças</string>
@@ -337,9 +337,9 @@
     <string name="use_cookies">Habilitar cookies de terceiros</string>
     <string name="settings_ui_layout">Modelo das timelines: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Alto consumo de bateria</item>
+        <item>Consumo médio de bateria</item>
+        <item>Baixo consumo de bateria</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Abas</item>
@@ -400,11 +400,11 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cache limpo! %1$s foram liberados</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
+    <string name="title_header_custom_sharing">Título</string>
+    <string name="title_hint_custom_sharing">Título&#8230;</string>
+    <string name="description_header_custom_sharing">Descrição</string>
+    <string name="description_hint_custom_sharing">Descrição&#8230;</string>
+    <string name="keywords_header_custom_sharing">Palavras-chave</string>
     <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Sincronizar</string>
@@ -620,27 +620,27 @@
     <string name="set_display_card">Mostrar pré-visualização em todos os toots</string>
     <string name="thanks_text_ux">Novo UX/UI designer</string>
     <string name="set_old_direct_timeline">Usar a linha do tempo direta anterior ao Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
+    <string name="set_display_video_preview">Mostrar visualizações do vídeo</string>
+    <string name="thanks_text_support">Suporte do Gitlab</string>
+    <string name="action_bug_report">Relatório de erro</string>
     <string name="no_mail_client">There are no email clients installed.</string>
     <string name="bug_report_mail">Send a bug report</string>
     <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
     <string name="settings_title_battery">Optimization of the battery</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
+    <string name="set_change_locale">Mudar o idioma</string>
+    <string name="default_language">Idioma padrão</string>
     <string name="truncate_long_toots">Truncate long toots</string>
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
+    <string name="display_toot_truncate">Mostrar mais</string>
+    <string name="hide_toot_truncate">Mostrar menos</string>
     <string name="manage_tags">Manage tags</string>
     <string name="tags_already_stored">The tag already exists!</string>
     <string name="tags_stored">The tag has been stored!</string>
     <string name="tags_renamed">The tag has been changed!</string>
     <string name="tags_deleted">The tag has been deleted!</string>
     <string name="set_display_art">Display Art timeline</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
+    <string name="schedule_boost">Programar boost</string>
+    <string name="boost_scheduled">O boost está programado!</string>
     <string name="no_scheduled_boosts">No scheduled boost to display!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
     <string name="art_menu">Art timeline</string>
@@ -651,7 +651,7 @@
     <string name="contact_instance_admin">Contact admin of the instance</string>
     <string name="add_new">Add new</string>
     <string name="mastohost_logo">MastoHost logo</string>
-    <string name="emoji_picker">Emoji picker</string>
+    <string name="emoji_picker">Seletor de emoticons</string>
     <string name="refresh">Refresh</string>
     <string name="expand_conversation">Expand the conversation</string>
     <string name="remove_account">Remove an account</string>
@@ -719,18 +719,18 @@
     <string name="my_videos">My videos</string>
     <string name="title">Title</string>
     <string name="categories">Categories</string>
-    <string name="license">License</string>
-    <string name="category">Category</string>
-    <string name="language">Language</string>
-    <string name="peertube_nsfw">This video contains mature or explicit content</string>
-    <string name="peertube_enable_comments">Enable video comments</string>
-    <string name="update_video">Update video</string>
-    <string name="description">Description</string>
-    <string name="toast_peertube_video_updated">The video has been updated!</string>
-    <string name="toast_cancelled">Upload cancelled!</string>
-    <string name="upload_video_success">The video has been uploaded!</string>
-    <string name="uploading">Uploading, please wait…</string>
-    <string name="video_uploaded_action">Click here to edit the video data.</string>
+    <string name="license">Licença</string>
+    <string name="category">Categoria</string>
+    <string name="language">Idioma</string>
+    <string name="peertube_nsfw">Este vídeo possui conteúdo adulto ou explícito</string>
+    <string name="peertube_enable_comments">Ativar comentários no vídeo</string>
+    <string name="update_video">Atualizar o vídeo</string>
+    <string name="description">Descrição</string>
+    <string name="toast_peertube_video_updated">O vídeo foi atualizado!</string>
+    <string name="toast_cancelled">Upload cancelado!</string>
+    <string name="upload_video_success">O vídeo foi enviado!</string>
+    <string name="uploading">Enviando, por favor aguarde…</string>
+    <string name="video_uploaded_action">Clique aqui para editar os dados do vídeo.</string>
     <string name="delete_video">Delete video</string>
     <string name="delete_video_confirmation">Are you sure to delete this video?</string>
     <string name="no_video_uploaded">No videos uploaded yet!</string>

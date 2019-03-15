@@ -63,7 +63,7 @@
     <string name="new_data">Mae data newydd ar gael! A ydych eisiau eu harddangos?</string>
     <string name="favourite">Ffefrynnau</string>
     <string name="follow">Dilynwyr newydd</string>
-    <string name="mention">Mentions</string>
+    <string name="mention">Crybwylliadau</string>
     <string name="reblog">Hybiadau</string>
     <string name="show_boosts">Dangos hybiadau</string>
     <string name="show_replies">Dangos atebion</string>
@@ -158,12 +158,12 @@
     <string name="toot_cw_placeholder">Rhybudd</string>
     <string name="toot_placeholder">Beth sydd ar eich meddwl?</string>
     <string name="toot_it">Tŵt!</string>
-    <string name="queet_it">QUEET!</string>
+    <string name="queet_it">Cwît!</string>
     <string name="cw">cs</string>
     <string name="toot_title">Cyfansoddi tŵt</string>
     <string name="toot_title_reply">Ymateb i dŵt</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
+    <string name="queet_title">Ysgrifennu cwît</string>
+    <string name="queet_title_reply">Ymateb i gwît</string>
     <string name="toot_no_space">Yr ydych wedi cyrraedd yr uchafswm o 500 nod!</string>
     <string name="toot_select_image">Dewis cyfryngau</string>
     <string name="toot_select_image_error">Roedd gwall!</string>
@@ -247,7 +247,7 @@
         <item quantity="other">and %d other toots to discover</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="zero">%d likes</item>
+        <item quantity="zero">%d wedi hoffi</item>
         <item quantity="one">%d like</item>
         <item quantity="two">%d likes</item>
         <item quantity="few">%d likes</item>
@@ -327,10 +327,10 @@
     <string name="set_notify">Hsybysu?</string>
     <string name="set_notif_silent">Hysbysiadau distaw</string>
     <string name="set_night_mode">Modd hwyrnos</string>
-    <string name="set_nsfw_timeout">NSFW view timeout (seconds, 0 means off)</string>
+    <string name="set_nsfw_timeout">Terfyn amser golwg deunydd anaddas i\'r gweithle (eiliadau, ystyr 0 yw ei fod wedi ei ddiffodd)</string>
     <string name="settings_title_profile">Golygu proffil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Rhannu dethol</string>
+    <string name="settings_custom_sharing_url">Eich URL&#8230; rhannu dethol</string>
     <string name="set_profile_description">Bywgraffiad…</string>
     <string name="set_lock_account">Cloi\'r cyfrif</string>
     <string name="set_save_changes">Arbed newidiadau</string>
@@ -416,12 +416,12 @@
     <string name="cache_units">Mb</string>
     <string name="toast_cache_clear">Cliriwyd y storfa! Rhyddhawyd %1$s</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Teitl</string>
+    <string name="title_hint_custom_sharing">Teitl&#8230;</string>
+    <string name="description_header_custom_sharing">Disgrifiad</string>
+    <string name="description_hint_custom_sharing">Disgrifiad&#8230;</string>
+    <string name="keywords_header_custom_sharing">Allweddeiriau</string>
+    <string name="keywords_hint_custom_sharing">Allweddeiriau&#8230;</string>
     <!-- ACTIVITY CACHE -->
     <string name="action_sync">Cydamseru</string>
     <string name="action_filter">Hidlo</string>
@@ -434,7 +434,7 @@
     <string name="show_media">Dangos cyfryngau</string>
     <string name="show_pinned">Dangos yr hyn sydd wedi ei binio</string>
     <string name="filter_no_result">Dim byd cyfatebol wedi ei ganfod!</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
+    <string name="data_backup_toots">Tŵtiau wrth gefn am %1$s</string>
     <string name="data_backup_success">Mae %1$s o dŵtiau newydd wedi eu mewnforio</string>
     <string-array name="filter_select">
         <item>Na</item>
@@ -444,26 +444,26 @@
     <string name="owner_cached_toots_empty">Ni ganfyddwyd unrhyw dŵtiau yn y gronfa data. Defnyddiwch y botwm cydamseru o\'r ddewislen i\'w dychwelyd.</string>
     <!-- PRIVACY -->
     <string name="privacy_data_title">Data a gofnodwyd</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+    <string name="privacy_data">        Ond gwybodaeth syml o\'r cyfrifoedd sy\'n cael ei gadw ar y ddyfais.
+        Mae\'r data yma\'n gwbl gyfrinachol ac ond yn gallu cael ei ddefnyddio gan y rhaglen.
+        Mae dileu y rhaglen yn cael gwared ar y data yma\'n syth.\n
+        &#9888; Nid yw\'r manylion mewngofnodi na cyfrineiriau yn cael eu storio. Maent ond yn cael eu defnyddio yn ystod dilysu (SSL) gyda achos.
     </string>
     <string name="privacy_authorizations_title">Caniatad:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Defnyddir er mwyn gweld os yw\'r ddyfais wedi ei gysylltu a rhwydwaith WIFI.\n
+        - <b>INTERNET</b>: Defnyddir er mwyn gnweud holiadau i achos.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Defnyddir er mwyn storio cyfryngau neu i symud yr ap ar gerdyn SD.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Defnyddir er mwyn ychwanegu cyfryngau i dŵtiau\n
+        - <b>BOOT_COMPLETED</b>: Defnyddir er mwyn cychwyn y gwasanaeth hysbysu.\n
+        - <b>WAKE_LOCK</b>: Defnyddir yn ystod y gwasanaeth hysbysu.
     </string>
-    <string name="privacy_API_authorizations_title">API permissions:</string>
+    <string name="privacy_API_authorizations_title">Caniatad API:</string>
     <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
         - <b>Write</b>: Post statuses and upload media for statuses.\n
         - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
         <b>&#9888; These actions are carried out only when user requests them.</b>
     </string>
-    <string name="privacy_API_title">Tracking and Libraries</string>
+    <string name="privacy_API_title">Tracio a Llyfrgelloedd</string>
     <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
         - <b>Glide</b>: To manage media\n
@@ -471,10 +471,10 @@
         - <b>PhotoView</b>: To manage images\n
     </string>
     <string name="privacy_API_yandex_title">Cyfieithiadau o\'r tŵtiau</string>
-    <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+    <string name="privacy_API_yandex_authorizations">        Mae\'r rhaglen yn caniatau y gallu i gyfieithu toots gan ddefnyddio lleoliad y ddyfais ac API Yandex.\n
+        Mae gan Yandex bolisi preifatrwydd, mae modd ei weld yma: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text">        Thank you to Stéphane for the logo.
+    <string name="thanks_text">        Diolch i Stéphane am y logo.
     </string>
     <string name="thanks_text_dev">Diolch i:    </string>
     <string name="filter_regex">Hidlo drwy ddefnyddio mynegiadau rheolaidd</string>
@@ -484,7 +484,7 @@
     <!-- About lists -->
     <string name="action_lists">Rhestrau</string>
     <string name="action_lists_confirm_delete">A ydych chi\'n sicr eich bod eisiau dileu y rhestr hon am byth?</string>
-    <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+    <string name="action_lists_empty_content">Does dim byd ar y rhestr hwn eto. Wrthi aelodau\'r rhestr gyhoeddi diwedderiadau, byddent yn ymdangos yma.</string>
     <string name="action_lists_add_to">Ychwanegu i\'r rhestr</string>
     <string name="action_lists_remove_from">Dileu o\'r rhestr</string>
     <string name="action_lists_create">Ychwanegu rhestr</string>
@@ -497,12 +497,12 @@
     <string name="account_moved_to">Mae %1$s wedi symud i %2$s</string>
     <string name="show_boost_count">Dangos nifer hybiadau/ffefrynnau</string>
     <string name="issue_login_title">Dilysu ddim yn gweithio?</string>
-    <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
-        - Check there is no spelling mistakes in the instance name\n\n
-        - Check that your instance is not down\n\n
-        - If you use the two-factor authentication (2FA), please use the link at the bottom (once the instance name is filled)\n\n
-        - You can also use this link without using the 2FA\n\n
-        - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
+    <string name="issue_login_message">        <b>Dyma ambell wiriad all fod yn help:</b>\n\n
+        - Gwiriwch nad oes camgymeriad sillafu yn enw\'r achos\n\n
+        - Gwiriwch nad yw eich achos i lawr\n\n
+        - Os ydych yn defnyddio dilysu dau gam (2FA), defnyddiwch y ddolen ar y gwaelod (unwaith y mae enw\'r achos wedi\'i lenwi)\n\n
+        - Mae modd defnyddio\'r ddolen yma heb ddefnyddio 2FA\n\n
+        - Os yw dal ddim yn gweithio, codwch y mater ar GitLab: https://gitlab.com/tom79/mastalab/issues
     </string>
     <string name="media_ready">Mae\'r cyfryngau wedi eu llwytho. Cliciwch yma i\'w harddangos.</string>
     <string name="data_export_start">Mae\'r weithred yma\'n gallu cymryd amser. Cewch eich hysbysu pan y mae wedi gorffen.</string>
@@ -511,9 +511,9 @@
     <string name="data_export_toots">Allforio statysau ar gyfer %1$s</string>
     <string name="data_export_success">Mae %1$s o dŵtiau o\'r %2$s wedi eu hallforio.</string>
     <string name="data_export_error">Aeth rhywbeth o\'i le tra\'n allforio data i %1$s</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_export_error_simple">Aeth rhywbeth o le tra\'n allforio data!</string>
+    <string name="data_import_success_simple">Data wedi ei fewnforio!</string>
+    <string name="data_import_error_simple">Aeth rhywbeth o le tra\'n mewnforio data!</string>
     <!-- Proxy -->
     <string name="proxy_set">Procsi</string>
     <string name="proxy_type">Math</string>
@@ -533,8 +533,8 @@
     <string name="warning_delete_instance">Yr ydych am ddileu %s o\'r achosion yr ydych yn eu dilyn.</string>
     <string name="which_language">Cyfieithu yn</string>
     <string name="crash_title">Mae Mastalab wedi stopio :(</string>
-    <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
+    <string name="crash_message">Mae modd i chi anfon adroddiad crash ata\'i drwy ebost. Bydd yn help i\'w ddatrys. :)\n\nMae modd i chi ychwanegu cynnwys ychwanegol! Diolch!</string>
+    <string name="send_crash_report">Gofyn am adroddiadau crash drwy ebost?</string>
     <string name="follow_instance">Dilyn achos</string>
     <string name="toast_instance_already_added">Yr ydych yn dilyn yr achos yma\'n barod!</string>
     <string name="toast_instance_followed">Dilynwyd yr achos!</string>
@@ -561,7 +561,7 @@
     <string name="filter_keyword_explanations">Ceith ei gyfateb heb ystyriaeth i faint lythrennau yn y testun neu rhybudd cynnwys mewn tŵt</string>
     <string name="context_drop">Gollwng yn lle cuddio</string>
     <string name="context_drop_explanations">Bydd y tŵtiau a hidlwyd yn diflannu am byth, hyd yn oed os dileuir yr hidlydd wedyn</string>
-    <string name="context_whole_word_explanations">When the keyword or phrase is alphanumeric only, it will only be applied if it matches the whole word</string>
+    <string name="context_whole_word_explanations">Pan y mae allweddair neu ymadrodd yn alffaniwmerig yn unig, bydd ond yn cael ei osod os yw\'n cyfateb i\'r gair cyfan</string>
     <string name="context_whole_word">Gair cyfan</string>
     <string name="filter_context">Hidlo cyd-destunnau</string>
     <string name="filter_context_explanations">Un cyd-destun neu fwy lle dylai\'r hidlydd fod yn berthnasol</string>
@@ -578,47 +578,47 @@
     <string name="follow_trunk">Dilynwyd %s!</string>
     <string name="create_list_trunk">Creu y rhestr %s</string>
     <string name="add_account_list_trunk">Ychwanegu cyfrifoedd i\'r rhestr</string>
-    <string name="account_added_list_trunk">Accounts were added to the list</string>
-    <string name="adding_account_list_trunk">Adding accounts to the list</string>
-    <string name="action_list_add">You have not created a list yet. Click on the \"+\" button to add a new one.</string>
-    <string name="action_remote_instance_add">You don\'t follow any remote instances. Click on the \"+\" button to add a new one.</string>
-    <string name="about_trunk">Who to follow</string>
+    <string name="account_added_list_trunk">Ychwanegwyd y cyfrifau i\'r rhestr</string>
+    <string name="adding_account_list_trunk">Ychwanegu cyfrifau i\'r rhestr</string>
+    <string name="action_list_add">Nid ydych wedi creu rhestr eto. Cliciwch ar y botwm \"+\" i ychwanegu un newydd.</string>
+    <string name="action_remote_instance_add">Nid ydych yn dilyn unrhyw achosion anghysbell. Cliciwch ar y botwm \"+\" i ychwanegu un newydd.</string>
+    <string name="about_trunk">Pwy i ddilyn</string>
     <string name="about_trunk_action">API Trunk</string>
-    <string name="toast_impossible_to_follow">Account(s) can\'t be followed</string>
-    <string name="retrieve_remote_account">Fetching remote account</string>
-    <string name="expand_image">Automatically expand hidden media</string>
-    <string name="set_display_follow_instance">Display follow instances button</string>
+    <string name="toast_impossible_to_follow">Ni ellir dilyn y cyfrif(au)</string>
+    <string name="retrieve_remote_account">Nôl cyfrif anghysbell</string>
+    <string name="expand_image">Ehangu cyfryngau cuddiedig yn awtomatig</string>
+    <string name="set_display_follow_instance">Dangos botwm dilyn achosion</string>
     <string name="channel_notif_follow">New follow</string>
     <string name="channel_notif_boost">Hybiad newydd</string>
     <string name="channel_notif_fav">Ffefryn newydd</string>
     <string name="channel_notif_mention">New Mention</string>
     <string name="channel_notif_toot">Tŵt Newydd</string>
-    <string name="channel_notif_backup">Toots Backup</string>
-    <string name="channel_notif_media">Media Download</string>
+    <string name="channel_notif_backup">Tŵtiau wrth gefn</string>
+    <string name="channel_notif_media">Lawrlwytho Cyfryngau</string>
     <string name="set_notif_sound">Newid swn hsybysu</string>
     <string name="select_sound">Dewis tôn</string>
-    <string name="set_enable_time_slot">Enable time slot</string>
-    <string name="how_to_videos">How To Videos</string>
-    <string name="retrieve_remote_conversation">Fetching remote thread!</string>
+    <string name="set_enable_time_slot">Caniatau slot amser</string>
+    <string name="how_to_videos">Fideos Cymorth</string>
+    <string name="retrieve_remote_conversation">Nôl edefyn anghysbell!</string>
     <string name="no_blocked_domain">Dim parthau wedi eu blocio!</string>
     <string name="unblock_domain_confirm">Dadflocio\'r parth</string>
     <string name="unblock_domain_confirm_message">Ydych chi\'n siŵr eich bod am ddadflocio %s?</string>
     <string name="block_domain_confirm_message">Ydych chi\'n siŵr eich bod am flocio %s?</string>
-    <string name="blocked_domains">Blocked domains</string>
-    <string name="block_domain">Block domain</string>
-    <string name="toast_block_domain">The domain is blocked</string>
-    <string name="toast_unblock_domain">The domain is no longer blocked!</string>
-    <string name="retrieve_remote_status">Fetching remote status</string>
+    <string name="blocked_domains">Parthau wedi\'i blocio</string>
+    <string name="block_domain">Blocio parth</string>
+    <string name="toast_block_domain">Mae\'r parth wedi\'i flocio</string>
+    <string name="toast_unblock_domain">Nid yw\'r parth wedi ei flocio mwyach!</string>
+    <string name="retrieve_remote_status">Nôl statws anghysbell</string>
     <string name="comment">Gwneud sylw</string>
     <string name="peertube_instance">Achos Peertube</string>
     <string name="set_display_direct">Dangos ffrwd negeseuon preifat</string>
-    <string name="set_keep_background_process">Keep background process when app is closed</string>
-    <string name="no_comments">Be the first to leave a comment on this video with the top right button!</string>
-    <string name="number_view_video">%s views</string>
+    <string name="set_keep_background_process">Cadw proses cefndir pan y mae\'r ap wedi\'i gau</string>
+    <string name="no_comments">Byddwch y cyntaf i adael sylw ar y fideo hwn gyda\'r botwm ar y dde uchaf!</string>
+    <string name="number_view_video">Wedi ei wylio %s gwaith</string>
     <string name="duration_video">Hyd: %s</string>
     <string name="add_remote_instance">Ychwanegu achos</string>
-    <string name="comment_no_allowed_peertube">Comments are not enabled on this video!</string>
-    <string name="pickup_resolution">Pick up a resolution</string>
+    <string name="comment_no_allowed_peertube">Nid yw sylwadau wedi eu galluogi ar gyfer y fideo hwn!</string>
+    <string name="pickup_resolution">Codi penderfyniad</string>
     <string name="peertube_favorites">Ffefrynnau Peertube</string>
     <string name="bookmark_add_peertube">Mae\'r fideo wedi ei ychwanegu i\'r llyfrnodau!</string>
     <string name="bookmark_remove_peertube">Mae\'r fideo wedi ei ddileu o\'r llyfrnodau!</string>
@@ -630,42 +630,42 @@
     <string name="no_lists">Dim rhestrau</string>
     <string name="videos">Fideos</string>
     <string name="channels">Sianeli</string>
-    <string name="set_display_emoji">Use Emoji One</string>
+    <string name="set_display_emoji">Defnyddio Emoji One</string>
     <string name="information">Gwybodaeth</string>
-    <string name="set_display_card">Display previews in all toots</string>
-    <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Use the direct timeline prior to Mastodon 2.6</string>
-    <string name="set_display_video_preview">Display video previews</string>
-    <string name="thanks_text_support">Gitlab Support</string>
-    <string name="action_bug_report">Bug Report</string>
-    <string name="no_mail_client">There are no email clients installed.</string>
-    <string name="bug_report_mail">Send a bug report</string>
-    <string name="account_id_clipbloard">The account id has been copied in the clipboard!</string>
-    <string name="settings_title_battery">Optimization of the battery</string>
+    <string name="set_display_card">Dangos rhaglun ym mhob tŵt</string>
+    <string name="thanks_text_ux">Dylunydd UX/UI newydd</string>
+    <string name="set_old_direct_timeline">Defnyddio\'r amserlen uniongyrchol cyn Mastodon 2.6</string>
+    <string name="set_display_video_preview">Dangos rhaglun fideo</string>
+    <string name="thanks_text_support">Cefnogaeth Gitlab</string>
+    <string name="action_bug_report">Adroddiad Byg</string>
+    <string name="no_mail_client">Nid oes unrhyw gleientiaid wedi\'u gosod.</string>
+    <string name="bug_report_mail">Anfon adroddiad byg</string>
+    <string name="account_id_clipbloard">Mae\'r cyfrif id wedi\'i gopïo yn y clipfwrdd!</string>
+    <string name="settings_title_battery">Optimeiddio\'r batri</string>
     <string name="set_change_locale">Newid iaith</string>
     <string name="default_language">Iaith diofyn</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
-    <string name="manage_tags">Manage tags</string>
-    <string name="tags_already_stored">The tag already exists!</string>
-    <string name="tags_stored">The tag has been stored!</string>
-    <string name="tags_renamed">The tag has been changed!</string>
-    <string name="tags_deleted">The tag has been deleted!</string>
-    <string name="set_display_art">Display Art timeline</string>
-    <string name="schedule_boost">Schedule boost</string>
-    <string name="boost_scheduled">The boost is scheduled!</string>
-    <string name="no_scheduled_boosts">No scheduled boost to display!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Open the menu of a toot and then choose <b>Schedule boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
+    <string name="truncate_long_toots">Cwtogi tŵtiau hir</string>
+    <string name="set_truncate_toot">Cwtogi tŵtiau dros \'x\' o linellau. Mae sero\'n golygu ei fod wedi ei ddiffodd.</string>
+    <string name="display_toot_truncate">Dangos mwy</string>
+    <string name="hide_toot_truncate">Dangos llai</string>
+    <string name="manage_tags">Rheoli tagiau</string>
+    <string name="tags_already_stored">Mae\'r tag hwn yn bodoli\'n barod!</string>
+    <string name="tags_stored">Mae\'r tag hwn wedi\'i storio!</string>
+    <string name="tags_renamed">Mae\'r tag hwn wedi\'i newid!</string>
+    <string name="tags_deleted">Mae\'r tag wedi ei ddileu!</string>
+    <string name="set_display_art">Dangos ffrwd gelf</string>
+    <string name="schedule_boost">Trefnu bŵst</string>
+    <string name="boost_scheduled">Mae\'r bŵst wedi\'i drefnu!</string>
+    <string name="no_scheduled_boosts">Dim trefniant bŵst i\'w arddangos!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Agorwch y ddewislen ar gyfer tŵt ac yna dewiswch <b>Trefnu bŵst</b>.]]></string>
+    <string name="art_menu">Ffrwd gelf</string>
     <string name="open_menu">Agor dewislen</string>
-    <string name="app_logo">Logo of the application</string>
-    <string name="profile_picture">Profile picture</string>
-    <string name="profile_banner">Profile banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
-    <string name="add_new">Add new</string>
-    <string name="mastohost_logo">MastoHost logo</string>
+    <string name="app_logo">Logo y rhaglen</string>
+    <string name="profile_picture">Llun proffil</string>
+    <string name="profile_banner">Baner proffil</string>
+    <string name="contact_instance_admin">Cysylltwch a gweinyddwr yr achos</string>
+    <string name="add_new">Ychwanegu</string>
+    <string name="mastohost_logo">Logo MastoHost</string>
     <string name="emoji_picker">Dewiswr emoji</string>
     <string name="refresh">Ail-lwytho</string>
     <string name="expand_conversation">Ehangu\'r sgwrs</string>
@@ -687,133 +687,133 @@
         <item>1 diwrnod</item>
         <item>1 wythnos</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        Yn y maes hwn mae angen i chi ysgrifennu enw lletywr eich achos.\nEr enghraifft, os wnaethoch chi greu eich cyfrif ar https://mastodon.social\nYsgrifennwch <b>mastodon.social</b> (heb https://)\n
+        Mae modd i chi ddechrau ysgrifennu llythrennau cychwynol a bydd enwau yn cael eu hawgrymu.\n\n
+        ⚠ Bydd y botwm Mewngofnodi ond yn gweithio os yw enw\'r achos yn ddilys a bod yr achos yn weithredol!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        Yn y maes hwn, ysgrifennwch yr ebost sydd wedi ei gysylltu a\'ch cyfrif Mastodon.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        Y cam olaf yw i fewnosod eich cyfrinair a clicio ar Mengofnodi.
     </string>
-    <string name="more_information">More information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="more_information">Mwy o wybodaeth</string>
+    <string name="showcase_2FA">Os ydych yn defnyddio 2FA (Dilysu dau gam), mae angen i chi ddefnyddio\'r ddolen yma. \nMae modd i chi ddefnyddio os nad ydych eisiau mewnosod eich cymwysterau yma.</string>
     <!-- languages not translated -->
-    <string name="languages">Languages</string>
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
-    <string name="crowdin_translations">Crowdin translations</string>
-    <string name="crowdin_manager">Crowdin manager</string>
-    <string name="translation_app">Translation of the application</string>
-    <string name="about_crowdin">About Crowdin</string>
+    <string name="languages">Ieithoedd</string>
+    <string name="show_media_only">Cyfryngau yn unig</string>
+    <string name="show_media_nsfw">Dangos NSFW</string>
+    <string name="crowdin_translations">Cyfieithiadau Crowdin</string>
+    <string name="crowdin_manager">Rheolwr Crowdin</string>
+    <string name="translation_app">Cyfieithu\'r rhaglen</string>
+    <string name="about_crowdin">Ynghylch Crowdin</string>
     <string name="bot">Bot</string>
-    <string name="pixelfed_instance">Pixelfed instance</string>
-    <string name="mastodon_instance">Mastodon instance</string>
-    <string name="no_pixelfed_instance">No Pixelfed instances</string>
-    <string name="any_tags">Any of these</string>
-    <string name="all_tags">All of these</string>
-    <string name="none_tags">None of these</string>
-    <string name="some_words_any">Any of these words (space-separated)</string>
-    <string name="some_words_all">All these words (space-separated)</string>
-    <string name="some_words_none">None of these words (space-separated)</string>
-    <string name="change_tag_column">Change column name</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
-    <string name="misskey_instance">Misskey instance</string>
-    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
-    <string name="subscriptions">Subscriptions</string>
-    <string name="overview">Overview</string>
-    <string name="trending">Trending</string>
-    <string name="recently_added">Recently added</string>
-    <string name="local">Local</string>
-    <string name="upload_video">Upload</string>
-    <string name="reply">Reply</string>
-    <string name="delete_comment">Delete a comment</string>
-    <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
-    <string name="fullscreen">Full screen video</string>
-    <string name="set_video_mode">Mode for videos</string>
-    <string name="file_to_upload">Select the file to upload</string>
-    <string name="my_videos">My videos</string>
-    <string name="title">Title</string>
-    <string name="categories">Categories</string>
-    <string name="license">License</string>
-    <string name="category">Category</string>
-    <string name="language">Language</string>
-    <string name="peertube_nsfw">This video contains mature or explicit content</string>
-    <string name="peertube_enable_comments">Enable video comments</string>
-    <string name="update_video">Update video</string>
-    <string name="description">Description</string>
-    <string name="toast_peertube_video_updated">The video has been updated!</string>
-    <string name="toast_cancelled">Upload cancelled!</string>
-    <string name="upload_video_success">The video has been uploaded!</string>
-    <string name="uploading">Uploading, please wait…</string>
-    <string name="video_uploaded_action">Click here to edit the video data.</string>
-    <string name="delete_video">Delete video</string>
-    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
-    <string name="no_video_uploaded">No videos uploaded yet!</string>
-    <string name="display_nsfw_videos">Display NSFW videos</string>
+    <string name="pixelfed_instance">Achos Pixelfed</string>
+    <string name="mastodon_instance">Achos Mastodon</string>
+    <string name="no_pixelfed_instance">Dim achosion Pixelfed</string>
+    <string name="any_tags">Unrhyw un o rhain</string>
+    <string name="all_tags">Rhain i gyd</string>
+    <string name="none_tags">Dim un o rhain</string>
+    <string name="some_words_any">Unrhyw un o\'r geiriau hyn (a gofod rhyngddynt)</string>
+    <string name="some_words_all">Yr holl eiriau hyn (a gofod rhyngddynt)</string>
+    <string name="some_words_none">Dim un o\'r geiriau hyn (a gofod rhyngddynt)</string>
+    <string name="change_tag_column">Newid enw\'r golofn</string>
+    <string name="no_misskey_instance">Dim achosion Misskey</string>
+    <string name="misskey_instance">Achos Misskey</string>
+    <string name="toast_no_apps">Nid oes ap sy\'n cefnogi\'r ddolen yma wedi\'i osod ar eich dyfais.</string>
+    <string name="subscriptions">Tanysgrifiadau</string>
+    <string name="overview">Trosolwg</string>
+    <string name="trending">Trendio</string>
+    <string name="recently_added">Wedi\'i ychwanegu yn ddiweddar</string>
+    <string name="local">Lleol</string>
+    <string name="upload_video">Uwchlwytho</string>
+    <string name="reply">Ateb</string>
+    <string name="delete_comment">Dileu sylw</string>
+    <string name="delete_comment_confirm">Ydych chi\'n sicr eich bod am ddileu y sylw hwn?</string>
+    <string name="fullscreen">Fideo sgrîn llawn</string>
+    <string name="set_video_mode">Modd ar gyfer fideo</string>
+    <string name="file_to_upload">Dewiswch y ddogfen er mwyn uwchlwytho</string>
+    <string name="my_videos">Fy fideo</string>
+    <string name="title">Teitl</string>
+    <string name="categories">Categorïau</string>
+    <string name="license">Trwydded</string>
+    <string name="category">Categori</string>
+    <string name="language">Iaith</string>
+    <string name="peertube_nsfw">Mae\'r fideo hwn yn cynnwys deunydd aeddfed neu anaddas</string>
+    <string name="peertube_enable_comments">Tanysgrifiadau</string>
+    <string name="update_video">Diweddaru fideo</string>
+    <string name="description">Disgrifiad</string>
+    <string name="toast_peertube_video_updated">Mae\'r fideo wedi ei ddiweddaru!</string>
+    <string name="toast_cancelled">Uwchlwythiad wedi\'i ganslo!</string>
+    <string name="upload_video_success">Mae\'r fideo wedi ei uwchlwtho!</string>
+    <string name="uploading">Uwchlwytho, arhoswch os gwelwch yn dda…</string>
+    <string name="video_uploaded_action">Cliciwch yma i olygu data\'r fideo.</string>
+    <string name="delete_video">Dileu fideo</string>
+    <string name="delete_video_confirmation">Ydych chi\'n sicr eich bod am ddileu y fideo hwn?</string>
+    <string name="no_video_uploaded">Dim fideo wedi\'i uwchlwytho eto!</string>
+    <string name="display_nsfw_videos">Dangos fideo anaddas i\'r gweithle</string>
     <string name="default_channel_of">Default %s channel</string>
-    <string name="no_video_to_display">No videos to display!</string>
-    <string name="add_image_to_favorite">Add media to favorites</string>
-    <string name="leave_a_comment">Leave a comment</string>
-    <string name="share">Share</string>
-    <string name="my_pictures">My pictures</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
-    <string name="device_schedule">From device</string>
-    <string name="server_schedule">From server</string>
-    <string name="toots_server">Toots (Server)</string>
-    <string name="toots_client">Toots (Device)</string>
-    <string name="modify">Modify</string>
-    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
+    <string name="no_video_to_display">Dim fideo i\'w arddangos!</string>
+    <string name="add_image_to_favorite">Ychwanegu cyfryngau i ffefrynnau</string>
+    <string name="leave_a_comment">Gadael sylw</string>
+    <string name="share">Rhannu</string>
+    <string name="my_pictures">Fy lluniau</string>
+    <string name="choose_schedule">Dewiswch fodd amserlennu</string>
+    <string name="device_schedule">O\'r ddyfais</string>
+    <string name="server_schedule">O\'r gweinydd</string>
+    <string name="toots_server">Tŵtiau (Gweinydd)</string>
+    <string name="toots_client">Tŵtiau (Dyfais)</string>
+    <string name="modify">Newid</string>
+    <string name="set_display_content_after_fetch_more">Dangos tŵtiau newydd uwchben y botwm \"Nôl mwy\"</string>
     <string name="settings_category_label_confirmations">Confirmations</string>
-    <string name="settings_category_label_timelines">Timelines</string>
-    <string name="settings_category_label_notification">Notification service</string>
-    <string name="settings_category_label_interface">Interface</string>
-    <string name="settings_category_label_hiddencontent">Hidden content</string>
-    <string name="settings_category_label_composing">Composing</string>
-    <string name="contact">Contacts</string>
-    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
-    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
-    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
-    <string name="peertube_video_published"><![CDATA[Your video <b>%1$s</b> has been published]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
-    <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
-    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
-    <string name="export_data">Export data</string>
-    <string name="import_data">Import Data</string>
-    <string name="toot_select_import">Select the file to import</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
-    <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
-    <string name="add_public_comment">Add a public comment</string>
-    <string name="send_comment">Send comment</string>
-    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
-    <string name="action_plain_text">Plain text</string>
+    <string name="settings_category_label_timelines">Ffrydiau</string>
+    <string name="settings_category_label_notification">Gwasanaeth hysbysu</string>
+    <string name="settings_category_label_interface">Rhyngwyneb</string>
+    <string name="settings_category_label_hiddencontent">Cynnwys cuddiedig</string>
+    <string name="settings_category_label_composing">Cyfansoddi</string>
+    <string name="contact">Cysylltiadau</string>
+    <string name="peertube_comment_on_video"><![CDATA[Nath <b>%1$s</b> wneud sylw ar eich fideo <b>%2$s</b>]]></string>
+    <string name="peertube_follow_channel"><![CDATA[Mae <b>%1$s</b> yn dilyn eich sianel <b>%2$s</b>]]></string>
+    <string name="peertube_follow_account"><![CDATA[Mae <b>%1$s</b> yn dilyn eich cyfrif]]></string>
+    <string name="peertube_video_published"><![CDATA[Mae eich fideo <b>%1$s</b> wedi'i gyhoeddi]]></string>
+    <string name="peertube_video_import_success"><![CDATA[Mae'r fideo a fewnforiwyd <b>%1$s</b> wedi llwyddo]]></string>
+    <string name="peertube_video_import_error"><![CDATA[Mae'r fideo a fewnforiwyd <b>%1$s</b> wedi methu]]></string>
+    <string name="peertube_video_from_subscription"><![CDATA[Cyhoeddodd <b>%1$s</b> fideo newydd: <b>%2$s</b>]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[Mae eich fideo <b>%1$s</b> wedi ei osod ar y rhestr ddu]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Mae eich fideo <b>%1$s</b> wedi ei dynnu o'r rhestr ddu]]></string>
+    <string name="export_data">Allforio data</string>
+    <string name="import_data">Mewnforio Data</string>
+    <string name="toot_select_import">Dewiswch ddogfen i\'w fewnforio</string>
+    <string name="toot_select_file_error">Bu gwall tra\'n dewis y ddogfen wrth gefn!</string>
+    <string name="data_import_start">Peidiwch a lladd yr ap wrth brosesu os gwelwch yn dda. Ni all hynny fod yn hir iawn.</string>
+    <string name="add_public_comment">Ychwanegu sylw cyhoeddus</string>
+    <string name="send_comment">Anfon sylw</string>
+    <string name="toast_toot_saved_error">Nid oes cyswllt a\'r rhyngrwyd. Mae eich neges wedi ei storio yn y drafftiau.</string>
+    <string name="action_plain_text">Testun plaen</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Logout account</string>
-    <string name="set_optimize_loading">Optimize loading time</string>
+    <string name="set_optimize_loading">Optimeiddio amser llwytho</string>
     <string name="all">All</string>
-    <string name="about_opencollective">Support the app</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
-    <string name="copy_link">Copy link</string>
-    <string name="connect_instance">Connect</string>
-    <string name="set_normal">Nomal</string>
-    <string name="set_compact">Compact</string>
-    <string name="set_console">Console</string>
-    <string name="set_mode">Set display mode</string>
+    <string name="about_opencollective">Cefnogi\'r ap</string>
+    <string name="more_about_opencollective">Mae Open Collective yn caniatau grwpiau i sefyddlu torf, codi arian a\'u rheoli mewn modd tryloyw.</string>
+    <string name="copy_link">Copïo\'r ddolen</string>
+    <string name="connect_instance">Cysylltu</string>
+    <string name="set_normal">Normal</string>
+    <string name="set_compact">Cryno</string>
+    <string name="set_console">Consol</string>
+    <string name="set_mode">Gosod modd arddangos</string>
     <string name="set_security_provider">Patch the Security Provider</string>
     <string name="update_tracking_domains">Update tracking domains</string>
-    <string name="tracking_db_updated">The tracking data base has been updated!</string>
-    <string name="calls_blocked">http calls blocked by the application</string>
-    <string name="list_of_blocked_domains">List of blocked calls</string>
-    <string name="submit">Submit</string>
-    <string name="data_base_exported">The data base has been exported!</string>
-    <string name="featured_hashtags">Featured hashtags</string>
-    <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
-    <string name="no_tags">No tags</string>
+    <string name="tracking_db_updated">Ma\'r bas data wedi ei ddiweddaru!</string>
+    <string name="calls_blocked">galwadau http wedi\'u blocio gan y rhaglen</string>
+    <string name="list_of_blocked_domains">Rhestr o alwadau wedi\'u blocio</string>
+    <string name="submit">Cyflwyno</string>
+    <string name="data_base_exported">Mae\'r bas data wedi ei allforio!</string>
+    <string name="featured_hashtags">Hashnodau Nodedig</string>
+    <string name="filter_timeline_with_a_tag">Hidlo ffrwd drwy ddefnyddio tagiau</string>
+    <string name="no_tags">Dim tagiau</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
-        <item>Direct stream</item>
+        <item>Ffrwd uniongyrchol</item>
     </string-array>
 </resources>

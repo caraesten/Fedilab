@@ -60,7 +60,7 @@
     <string name="replies">ප්‍රතිචාර</string>
     <string name="username">පරිශීලක නාමය</string>
     <string name="drafts">කටුසටහන්</string>
-    <string name="new_data">නව දත්ත ඇත! ඒවා දර්ශනය කිරීමට ඔබට අවශ්‍ය ද?</string>
+    <string name="new_data">නව දත්ත ඇත! ඔබට ඒවා පෙන්වීමට අවශ්‍ය ද?</string>
     <string name="favourite">ප්‍රියතම</string>
     <string name="follow">New followers</string>
     <string name="mention">සඳහන් කිරීම්</string>
@@ -291,8 +291,8 @@
     <string name="load_attachment_spoiler_less">අඩුවෙන් පෙන්වන්න…</string>
     <string name="load_sensitive_attachment">සංවේදී අන්තර්ගතයකි</string>
     <string name="set_display_reply">ප්‍රතිචාරවල පෙර පණිවිඩය පෙන්වන්න</string>
-    <string name="set_display_local">Display local timeline</string>
-    <string name="set_display_global">Display federated timeline</string>
+    <string name="set_display_local">ස්ථානීය කාල රේඛාව පෙන්වන්න</string>
+    <string name="set_display_global">ඒකාබද්ධ කාල රේඛාව පෙන්වන්න</string>
     <string name="set_disable_gif">Disable GIF avatars</string>
     <string name="set_folder_title">මාර්ගය: </string>
     <string name="set_auto_store_toot">කටුසටහන් ස්වයංක්‍රීයව සුරකින්න</string>
@@ -335,11 +335,11 @@
     <string name="use_javascript">Javascript සක්‍රිය කරන්න</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="settings_ui_layout">කාල රේඛා සඳහා සැලැස්ම: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>සාමාන්‍ය බැටරි භාවිතය</item>
+        <item>මධ්‍යස්ථ බැටරි භාවිතය</item>
+        <item>අවම බැටරි භාවිතය</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Tabs</item>
@@ -540,7 +540,7 @@
     <string name="action_filters_empty_content">No filters to display. You can create one by clicking on the \"+\" button.</string>
     <string name="filter_keyword">Keyword or phrase</string>
     <string name="context_home">Home timeline</string>
-    <string name="context_public">Public timelines</string>
+    <string name="context_public">පොදු කාල රේඛා</string>
     <string name="context_notification">Notifications</string>
     <string name="context_conversation">Conversations</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
@@ -748,7 +748,7 @@
     <string name="modify">Modify</string>
     <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
     <string name="settings_category_label_confirmations">Confirmations</string>
-    <string name="settings_category_label_timelines">Timelines</string>
+    <string name="settings_category_label_timelines">කාල රේඛා</string>
     <string name="settings_category_label_notification">Notification service</string>
     <string name="settings_category_label_interface">Interface</string>
     <string name="settings_category_label_hiddencontent">Hidden content</string>
@@ -763,8 +763,8 @@
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
     <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
-    <string name="export_data">Export data</string>
-    <string name="import_data">Import Data</string>
+    <string name="export_data">දත්ත අපනයනය</string>
+    <string name="import_data">දත්ත ආනයනය</string>
     <string name="toot_select_import">Select the file to import</string>
     <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
     <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
