@@ -794,19 +794,19 @@ public class LoginActivity extends BaseActivity {
                 }
             }
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                    intent.setType("application/vnd.ms-excel");
-                    String[] mimetypes = {"application/vnd.ms-excel"};
-                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-                    startActivityForResult(intent, PICK_IMPORT);
-                }else {
-                    intent.setType("application/vnd.ms-excel");
-                    Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_import));
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-                    startActivityForResult(chooserIntent, PICK_IMPORT);
-                }
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                intent.setType("*/*");
+                String[] mimetypes = {"*/*"};
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                startActivityForResult(intent, PICK_IMPORT);
+            }else {
+                intent.setType("*/*");
+                Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent chooserIntent = Intent.createChooser(intent, getString(R.string.toot_select_import));
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+                startActivityForResult(chooserIntent, PICK_IMPORT);
+            }
         }
         return super.onOptionsItemSelected(item);
     }
