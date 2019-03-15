@@ -88,7 +88,7 @@ pouet-it:
     # Make the project name first letter uppercase
     - export NC_DOWNLOAD_URL="${NC_SHARE_URL}?path=%2F${CI_COMMIT_TAG}%2F"
     - export project="$(tr '[:lower:]' '[:upper:]' <<< ${CI_PROJECT_NAME:0:1})${CI_PROJECT_NAME:1}"
-    - export MESSAGE=$(echo -e "I just released a new version of "'#'"${project}!""\n${CI_PROJECT_URL}/tags/${CI_COMMIT_TAG}\nYou can download the apks on ${NC_DOWNLOAD_URL}")
+    - export MESSAGE=$(echo -e "I just released a new version of "'#'"${APP_NAME}!""\n${CI_PROJECT_URL}/tags/${CI_COMMIT_TAG}\nYou can download the apks on ${NC_DOWNLOAD_URL}")
     - if [[ ! -z $HOST ]]; then carton exec ./pouet-it-from-ci.pl; fi
   only:
     - tags
