@@ -809,7 +809,7 @@
     <string name="data_base_exported">تم تصدير قاعدة البيانات!</string>
     <string name="featured_hashtags">هاشتاگات مبرزة</string>
     <string name="filter_timeline_with_a_tag">تصفية الخط الزمني بالستخدام الأوسمة</string>
-    <string name="no_tags">No tags</string>
+    <string name="no_tags">دون وسم</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>تورنت</item>
