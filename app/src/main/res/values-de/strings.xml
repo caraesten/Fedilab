@@ -159,7 +159,7 @@
     <string name="toot_title">Einen Toot verfassen</string>
     <string name="toot_title_reply">Auf einen Toot antworten</string>
     <string name="queet_title">Schreib einen Queet</string>
-    <string name="queet_title_reply">Antworte auf einen Queet</string>
+    <string name="queet_title_reply">Auf einen Queet antworten</string>
     <string name="toot_no_space">Sie haben das Limit von 500 Zeichen erreicht!</string>
     <string name="toot_select_image">Wähle eine Mediendatei</string>
     <string name="toot_select_image_error">Ein Fehler während der Auswahl ist aufgetreten!</string>
@@ -235,7 +235,7 @@
         <item quantity="other">und %d weitere toots zum entdecken</item>
     </plurals>
     <plurals name="likes">
-        <item quantity="one">%d Gefällt mir</item>
+        <item quantity="one">%d gefällt mir</item>
         <item quantity="other">%d Gefällt mir</item>
     </plurals>
     <string name="delete_notification_ask">Entferne Benachrichtigung?</string>
@@ -689,7 +689,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="some_words_all">Alle diese Wörter (Leerzeichen getrennt)</string>
     <string name="some_words_none">Keines dieser Wörter (Leerzeichen getrennt)</string>
     <string name="change_tag_column">Spaltenname ändern</string>
-    <string name="no_misskey_instance">Keine Misskey Instanzen</string>
+    <string name="no_misskey_instance">Keine Misskey-Instanzen</string>
     <string name="misskey_instance">Misskey Instanz</string>
     <string name="toast_no_apps">Auf Ihrem Gerät ist keine App installiert, die diesen Link unterstützt.</string>
     <string name="subscriptions">Abonnements</string>
