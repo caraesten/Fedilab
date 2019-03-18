@@ -455,20 +455,17 @@
         - <b>PhotoView</b>: Képek kezelése\n
     </string>
     <string name="privacy_API_yandex_title">Tootok fordítása</string>
-    <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
-    </string>
-    <string name="thanks_text">        Thank you to Stéphane for the logo.
-    </string>
-    <string name="thanks_text_dev">        Thank you to:
-    </string>
-    <string name="filter_regex">Filter out by regular expressions</string>
-    <string name="search">Search</string>
-    <string name="delete">Delete</string>
-    <string name="fetch_more_toots">Fetch more toots…</string>
+    <string name="privacy_API_yandex_authorizations">Az alkalmazás lehetővé teszi a tootok lefordítását az eszköz nyelvi beállításainak és a Yandex API segítségével.\n
+Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: https://yandex.ru/legal/confidential/?lang=en    </string>
+    <string name="thanks_text">Köszönet Stéphane-nak a logóért.    </string>
+    <string name="thanks_text_dev">Köszönettel a következőknek:    </string>
+    <string name="filter_regex">Szűrés reguláris kifejezések használatával</string>
+    <string name="search">Keresés</string>
+    <string name="delete">Törlés</string>
+    <string name="fetch_more_toots">További tootok letöltése…</string>
     <!-- About lists -->
-    <string name="action_lists">Lists</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
+    <string name="action_lists">Listák</string>
+    <string name="action_lists_confirm_delete">Biztos benne, hogy véglegesen törölni szeretné ezt a listát?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
     <string name="action_lists_add_to">Add to list</string>
     <string name="action_lists_remove_from">Remove from list</string>
