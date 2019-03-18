@@ -763,7 +763,7 @@
     <string name="toots_client">Tŵtiau (Dyfais)</string>
     <string name="modify">Newid</string>
     <string name="set_display_content_after_fetch_more">Dangos tŵtiau newydd uwchben y botwm \"Nôl mwy\"</string>
-    <string name="settings_category_label_confirmations">Confirmations</string>
+    <string name="settings_category_label_confirmations">Wedi\'u cadarnhau</string>
     <string name="settings_category_label_timelines">Ffrydiau</string>
     <string name="settings_category_label_notification">Gwasanaeth hysbysu</string>
     <string name="settings_category_label_interface">Rhyngwyneb</string>
@@ -789,10 +789,10 @@
     <string name="toast_toot_saved_error">Nid oes cyswllt a\'r rhyngrwyd. Mae eich neges wedi ei storio yn y drafftiau.</string>
     <string name="action_plain_text">Testun plaen</string>
     <string name="action_html">HTML</string>
-    <string name="action_markdown">Markdown</string>
-    <string name="action_logout_account">Logout account</string>
+    <string name="action_markdown">Marcio</string>
+    <string name="action_logout_account">Allgofnodi o\'r cyfrif</string>
     <string name="set_optimize_loading">Optimeiddio amser llwytho</string>
-    <string name="all">All</string>
+    <string name="all">Oll</string>
     <string name="about_opencollective">Cefnogi\'r ap</string>
     <string name="more_about_opencollective">Mae Open Collective yn caniatau grwpiau i sefyddlu torf, codi arian a\'u rheoli mewn modd tryloyw.</string>
     <string name="copy_link">Copïo\'r ddolen</string>
@@ -801,8 +801,8 @@
     <string name="set_compact">Cryno</string>
     <string name="set_console">Consol</string>
     <string name="set_mode">Gosod modd arddangos</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
-    <string name="update_tracking_domains">Update tracking domains</string>
+    <string name="set_security_provider">Diweddaru\'r Darparwr Diogelwch</string>
+    <string name="update_tracking_domains">Diweddaru y parthau tracio</string>
     <string name="tracking_db_updated">Ma\'r bas data wedi ei ddiweddaru!</string>
     <string name="calls_blocked">galwadau http wedi\'u blocio gan y rhaglen</string>
     <string name="list_of_blocked_domains">Rhestr o alwadau wedi\'u blocio</string>
