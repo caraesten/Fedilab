@@ -458,17 +458,17 @@
         - <b>WAKE_LOCK</b>: Defnyddir yn ystod y gwasanaeth hysbysu.
     </string>
     <string name="privacy_API_authorizations_title">Caniatad API:</string>
-    <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+    <string name="privacy_API_authorizations">        - <b>Darllen</b>: Darllen data.\n
+        - <b>Ysgrifennu</b>: Postio statws ac uwchlwytho cyfryngau ar gyfer statws.\n
+        - <b>Dilyn</b>: Dilyn, dad-ddilyn, blocio a dad-flocio.\n\n
+        <b>&#9888;  Ceith y rhain ond eu gweithredu pan y mae defnyddiwr yn gwneud cais amdanynt.</b>
     </string>
     <string name="privacy_API_title">Tracio a Llyfrgelloedd</string>
-    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+    <string name="privacy_API">        Nid yw\'r rhaglen hwn <b>yn defnyddio offerynnau tracio</b> (mesur cynulleidfa, adrodd gwallau, a. y. y. b) ac nid oes hysbysebu chwaith.\n\n
+        Mae defnydd llyfrgelloedd yn gyfyngedig: \n
+        - <b>Glide</b>: I reoli cyfryngau\n
+        - <b>Android-Job</b>: I reoli gwasanaethau\n
+        - <b>PhotoView</b>: I reoli delweddau\n
     </string>
     <string name="privacy_API_yandex_title">Cyfieithiadau o\'r tŵtiau</string>
     <string name="privacy_API_yandex_authorizations">        Mae\'r rhaglen yn caniatau y gallu i gyfieithu toots gan ddefnyddio lleoliad y ddyfais ac API Yandex.\n
