@@ -270,7 +270,7 @@
     <string name="toast_error_search">Hiba történt a keresés közben!</string>
     <string name="toast_error_login">A bejelentkezés sikertelen!</string>
     <string name="toast_update_credential_ok">A profiladatokat elmentettük!</string>
-    <string name="nothing_to_do">No action can be taken</string>
+    <string name="nothing_to_do">Semmit sem lehet tenni</string>
     <string name="toast_saved">A médiát elmentettük!</string>
     <string name="toast_error_translate">Hiba lépett fel a fordítás során!</string>
     <string name="toast_toot_saved">Piszkozat elmentve!</string>
@@ -313,37 +313,37 @@
     <string name="set_night_mode">Éjszakai mód</string>
     <string name="set_nsfw_timeout">Érzékeny tartalom megjelenítésének ideje (mp, 0 érték kikapcsolja)</string>
     <string name="settings_title_profile">Profil szerkesztése</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Egyéni megosztás</string>
+    <string name="settings_custom_sharing_url">Az Ön egyéni megosztása URL&#8230;</string>
     <string name="set_profile_description">Rövid bemutatkozás…</string>
     <string name="set_lock_account">Fiók zárolása</string>
-    <string name="set_save_changes">Save changes</string>
-    <string name="set_header_picture_overlay">Choose a header picture</string>
-    <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
-    <string name="note_no_space">You have reached the 160 characters allowed!</string>
-    <string name="username_no_space">You have reached the 30 characters allowed!</string>
-    <string name="settings_title_hour">Time slot for notifications:</string>
-    <string name="settings_time_from">Between</string>
-    <string name="settings_time_to">and</string>
-    <string name="settings_time_greater">The time must be greater than %1$s</string>
-    <string name="settings_time_lower">The time must be lower than %1$s</string>
-    <string name="settings_hour_init">Start time</string>
-    <string name="settings_hour_end">End time</string>
-    <string name="embedded_browser">Use the built-in browser</string>
-    <string name="custom_tabs">Custom tabs</string>
-    <string name="use_javascript">Enable Javascript</string>
+    <string name="set_save_changes">Változások mentése</string>
+    <string name="set_header_picture_overlay">Válasszon egy képet a fejléchez</string>
+    <string name="set_fit_preview">Előnézeti képek méretre szabása</string>
+    <string name="set_automatically_split_toot">Automatikusan darabolja fel az 500 karakternél hosszabb tootokat a válaszokban</string>
+    <string name="note_no_space">Elérted az 160 karakteres limitet!</string>
+    <string name="username_no_space">Elérted az 30 karakteres limitet!</string>
+    <string name="settings_title_hour">Engedélyezett idősáv az értesítések számára:</string>
+    <string name="settings_time_from">Között</string>
+    <string name="settings_time_to">és</string>
+    <string name="settings_time_greater">Az időnek hosszabbnak kell lennie, mint %1$s</string>
+    <string name="settings_time_lower">Az időnek rövidebbnek kell lennie, mint %1$s</string>
+    <string name="settings_hour_init">Kezdés időpontja</string>
+    <string name="settings_hour_end">Befejezés időpontja</string>
+    <string name="embedded_browser">Beépített böngésző használata</string>
+    <string name="custom_tabs">Egyéni lapok</string>
+    <string name="use_javascript">Javascript engedélyezése</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
     <string name="settings_ui_layout">Idővonalak elrendezése: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Közepes akkuterhelés</item>
+        <item>Közepes akkuterhelés</item>
+        <item>Alacsony akkuterhelés</item>
     </string-array>
     <string-array name="settings_menu_tabs">
-        <item>Tabs</item>
-        <item>Menu</item>
+        <item>Lapok</item>
+        <item>Menü</item>
         <item>Tabs and menu</item>
     </string-array>
     <string-array name="settings_translation">
