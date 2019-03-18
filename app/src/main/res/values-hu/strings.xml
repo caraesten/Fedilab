@@ -344,30 +344,30 @@
     <string-array name="settings_menu_tabs">
         <item>Lapok</item>
         <item>Menü</item>
-        <item>Tabs and menu</item>
+        <item>Lapok és menü</item>
     </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
-        <item>No</item>
+        <item>Nem</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">Az Ön API-kulcsa (Yandex esetén üresen hagyhatja)</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>Black</item>
+        <item>Sötét</item>
+        <item>Világos</item>
+        <item>Fekete</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
-        <item>512 Kb</item>
-        <item>1 Mb</item>
-        <item>2 Mb</item>
+        <item>Nem</item>
+        <item>512 KB</item>
+        <item>1 MB</item>
+        <item>2 MB</item>
     </string-array>
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">LED színének beállítása:</string>
     <string-array name="led_colours">
-        <item>Blue</item>
-        <item>Cyan</item>
-        <item>Magenta</item>
+        <item>Kék</item>
+        <item>Világoskék</item>
+        <item>Bíborvörös</item>
         <item>Zöld</item>
         <item>Piros</item>
         <item>Sárga</item>
@@ -380,7 +380,7 @@
     <string name="action_block">Letilt</string>
     <string name="action_unblock">Letiltás feloldása</string>
     <string name="action_mute">Elnémít</string>
-    <string name="action_no_action">No action</string>
+    <string name="action_no_action">Semmit se tegyen</string>
     <string name="action_unmute">Némítás feloldása</string>
     <string name="request_sent">Kérés elküldve</string>
     <string name="followed_by">Követ téged</string>
@@ -502,11 +502,11 @@
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Type</string>
-    <string name="proxy_enable">Enable proxy?</string>
-    <string name="poxy_host">Host</string>
+    <string name="proxy_enable">Proxy bekapcsolása</string>
+    <string name="poxy_host">Proxyszerver neve</string>
     <string name="poxy_port">Port</string>
-    <string name="poxy_login">Login</string>
-    <string name="poxy_password">Password</string>
+    <string name="poxy_login">Felhasználónév</string>
+    <string name="poxy_password">Jelszó</string>
     <string name="set_theme">Theme:</string>
     <string name="set_compact_mode">Compact mode</string>
     <string name="set_share_details">Add toot details when sharing</string>
