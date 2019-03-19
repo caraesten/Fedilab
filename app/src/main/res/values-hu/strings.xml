@@ -158,8 +158,8 @@
     <string name="cw">cw</string>
     <string name="toot_title">Írj egy tootot!</string>
     <string name="toot_title_reply">Válaszolj egy tootra</string>
-    <string name="queet_title">Write a queet</string>
-    <string name="queet_title_reply">Reply to a queet</string>
+    <string name="queet_title">Írj egy queetet!</string>
+    <string name="queet_title_reply">Válaszolj egy quuetre!</string>
     <string name="toot_no_space">Elérted az 500 karakteres limitet!</string>
     <string name="toot_select_image">Média kiválasztása</string>
     <string name="toot_select_image_error">Hiba történt a média kiválasztásakor!</string>
@@ -247,7 +247,7 @@
     <string name="followers">Követők</string>
     <string name="pinned_toots">Rögzített</string>
     <!-- TOAST -->
-    <string name="client_error">Unable to get client id!</string>
+    <string name="client_error">Hiba a kliens id betöltésekor!</string>
     <string name="no_internet">Nincs internetkapcsolat!</string>
     <string name="toast_block">Letiltottuk a fiókot!</string>
     <string name="toast_unblock">A fiók letiltását megszűntettük!</string>
@@ -433,13 +433,13 @@
         Az alkalmazás eltávolítása azonnal törli ezeket az adatokat.\n
         &#9888; Felhasználónevet és jelszavakat sohasem tárolunk. Csak a szerverre való biztonságos (SSL) bejentkezés során használjuk.
     </string>
-    <string name="privacy_authorizations_title">Permissions:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+    <string name="privacy_authorizations_title">Engedélyek:</string>
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Arra használjuk, hogy a kliens WiFi-hálózathoz kapcsolódik-e.\n
+        - <b>INTERNET</b>: Szerverek lekérdezésekor használatos.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Média vagy magának alkalmazásnak az SD-kártyára mozgatásához használatos.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Médiát ad hozzá toothoz.\n
+        - <b>BOOT_COMPLETED</b>: Az értesítési szolgáltatás indítására használatos.\n
+        - <b>WAKE_LOCK</b>: Az értesítési szolgáltatás használja működés közben.
     </string>
     <string name="privacy_API_authorizations_title">API jogosultságok:</string>
     <string name="privacy_API_authorizations">        - <b>Olvas</b>: Adatot olvas.\n
@@ -466,19 +466,19 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <!-- About lists -->
     <string name="action_lists">Listák</string>
     <string name="action_lists_confirm_delete">Biztos benne, hogy véglegesen törölni szeretné ezt a listát?</string>
-    <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
-    <string name="action_lists_add_to">Add to list</string>
-    <string name="action_lists_remove_from">Remove from list</string>
-    <string name="action_lists_create">Add list</string>
-    <string name="action_lists_delete">Delete list</string>
-    <string name="action_lists_update">Edit list</string>
+    <string name="action_lists_empty_content">Ez a lista még üres. Mikor a lista tagjai posztolnak, azok itt fognak megjelenni.</string>
+    <string name="action_lists_add_to">Hozzáadás a listához</string>
+    <string name="action_lists_remove_from">Eltávolítás a listáról</string>
+    <string name="action_lists_create">Új lista</string>
+    <string name="action_lists_delete">Lista törlése</string>
+    <string name="action_lists_update">Lista szerkesztése</string>
     <string name="action_lists_title_placeholder">New list title</string>
-    <string name="action_lists_search_users">Search among people you follow</string>
-    <string name="action_lists_owner">Your lists</string>
+    <string name="action_lists_search_users">Keresés azok között, akiket követsz</string>
+    <string name="action_lists_owner">Listáid</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s has moved to %2$s</string>
     <string name="show_boost_count">Mutasd meg a kiemelt/lájkolt posztok számát</string>
-    <string name="issue_login_title">Authentication does not work?</string>
+    <string name="issue_login_title">Nem sikerül bejelentkezni?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
