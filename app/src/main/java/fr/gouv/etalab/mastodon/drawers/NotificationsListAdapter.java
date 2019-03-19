@@ -144,6 +144,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         boolean expand_cw = sharedpreferences.getBoolean(Helper.SET_EXPAND_CW, false);
         boolean confirmFav = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION_FAV, false);
         boolean confirmBoost = sharedpreferences.getBoolean(Helper.SET_NOTIF_VALIDATION, true);
+        boolean hide_notification_delete = sharedpreferences.getBoolean(Helper.SET_HIDE_DELETE_BUTTON_ON_TAB, false);
 
         if (theme == THEME_DARK ){
             holder.main_container_trans.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
@@ -162,6 +163,9 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }else {
             style = R.style.Dialog;
         }
+
+        if(hide_notification_delete)
+            holder.notification_delete.setVisibility(View.GONE);
         Drawable imgH = null;
         holder.status_date.setVisibility(View.VISIBLE);
         switch (type){

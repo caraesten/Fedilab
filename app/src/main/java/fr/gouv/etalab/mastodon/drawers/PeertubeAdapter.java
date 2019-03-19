@@ -96,7 +96,6 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
             peertube.setInstance(Helper.getLiveInstance(context));
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        boolean hide_notification_delete = sharedpreferences.getBoolean(Helper.SET_HIDE_DELETE_BUTTON_ON_TAB, false);
         if( theme == Helper.THEME_LIGHT){
             holder.main_container.setBackgroundResource(R.color.mastodonC3__);
         }else if (theme == Helper.THEME_DARK){
@@ -104,8 +103,6 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         }else if (theme == Helper.THEME_BLACK){
             holder.main_container.setBackgroundResource(R.color.black);
         }
-        if(hide_notification_delete)
-            holder.notification_delete.setVisibility(View.GONE);
         Account account = peertube.getAccount();
 
         holder.peertube_account_name.setText(account.getAcct());
@@ -209,7 +206,7 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
 
     class ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout main_container;
-        ImageView peertube_profile, peertube_video_image, notification_delete;
+        ImageView peertube_profile, peertube_video_image;
         TextView peertube_account_name, peertube_views, peertube_duration;
         TextView peertube_title, peertube_date, header_title;
 
@@ -224,7 +221,6 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
             peertube_duration = itemView.findViewById(R.id.peertube_duration);
             main_container = itemView.findViewById(R.id.main_container);
             header_title = itemView.findViewById(R.id.header_title);
-            notification_delete = itemView.findViewById(R.id.notification_delete);
         }
     }
 

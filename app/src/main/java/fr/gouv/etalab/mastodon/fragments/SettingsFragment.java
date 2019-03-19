@@ -609,9 +609,9 @@ public class SettingsFragment extends Fragment {
 
         boolean hide_delete_notification_on_tab = sharedpreferences.getBoolean(Helper.SET_HIDE_DELETE_BUTTON_ON_TAB, false);
         final CheckBox set_hide_delete_notification_on_tab = rootView.findViewById(R.id.set_hide_delete_notification_on_tab);
-        set_old_direct_timeline.setChecked(hide_delete_notification_on_tab);
+        set_hide_delete_notification_on_tab.setChecked(hide_delete_notification_on_tab);
 
-        set_old_direct_timeline.setOnClickListener(new View.OnClickListener() {
+        set_hide_delete_notification_on_tab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
