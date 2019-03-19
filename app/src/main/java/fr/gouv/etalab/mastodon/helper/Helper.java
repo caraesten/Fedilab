@@ -307,6 +307,7 @@ public class Helper {
     public static final String SET_DISPLAY_CONTENT_AFTER_FM = "set_display_content_after_fm";
     public static final String SET_FEATURED_TAGS ="set_featured_tags";
     public static final String SET_FEATURED_TAG_ACTION ="set_featured_tag_action";
+    public static final String SET_HIDE_DELETE_BUTTON_ON_TAB = "set_hide_delete_notification_on_tab";
     public static final int S_NO = 0;
     static final int S_512KO = 1;
     public static final int S_1MO = 2;

@@ -607,6 +607,24 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        boolean hide_delete_notification_on_tab = sharedpreferences.getBoolean(Helper.SET_HIDE_DELETE_BUTTON_ON_TAB, false);
+        final CheckBox set_hide_delete_notification_on_tab = rootView.findViewById(R.id.set_hide_delete_notification_on_tab);
+        set_old_direct_timeline.setChecked(hide_delete_notification_on_tab);
+
+        set_old_direct_timeline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_HIDE_DELETE_BUTTON_ON_TAB, set_hide_delete_notification_on_tab.isChecked());
+                editor.apply();
+                if( getActivity() != null)
+                    getActivity().recreate();
+                Intent intent = new Intent(context, MainActivity.class);
+                if(getActivity() != null)
+                    getActivity().finish();
+                startActivity(intent);
+            }
+        });
         int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
         SeekBar set_truncate_size = rootView.findViewById(R.id.set_truncate_size);
         set_truncate_size.setMax(20);
