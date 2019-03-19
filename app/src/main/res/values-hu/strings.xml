@@ -519,9 +519,9 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Szerver követése</string>
     <string name="toast_instance_already_added">Már követed ezt a szervert!</string>
-    <string name="toast_instance_followed">The instance is followed!</string>
-    <string name="action_partnership">Partnerships</string>
-    <string name="neutral_menu_information">Information</string>
+    <string name="toast_instance_followed">Mostantól követed a szervert!</string>
+    <string name="action_partnership">Együttműködők</string>
+    <string name="neutral_menu_information">Információ</string>
     <string name="hide_boost">Hide boosts from %s</string>
     <string name="endorse">Feature on profile</string>
     <string name="hide_everything">Hide everything from %s</string>
