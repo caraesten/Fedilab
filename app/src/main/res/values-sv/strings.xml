@@ -255,8 +255,8 @@
     <string name="toast_unmute">Kontot är inte längre tystat!</string>
     <string name="toast_follow">Kontot följdes!</string>
     <string name="toast_unfollow">Kontot följs inte längre!</string>
-    <string name="toast_reblog">The toot was boosted!</string>
-    <string name="toast_unreblog">The toot is no longer boosted!</string>
+    <string name="toast_reblog">Tooten knuffades!</string>
+    <string name="toast_unreblog">Tooten är inte längre knuffad!</string>
     <string name="toast_favourite">Toot har lagts till dina favoriter!</string>
     <string name="toast_unfavourite">Toot togs bort från dina favoriter!</string>
     <string name="toast_report">Toot rapporterades!</string>
@@ -313,10 +313,10 @@
     <string name="set_night_mode">Nattläge</string>
     <string name="set_nsfw_timeout">NSFW visningspaus (i sekunder, 0 betyder av)</string>
     <string name="settings_title_profile">Ändra profil</string>
-    <string name="settings_title_custom_sharing">Custom sharing</string>
-    <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
+    <string name="settings_title_custom_sharing">Anpassad delning</string>
+    <string name="settings_custom_sharing_url">Din anpassade URL&#8230;</string>
     <string name="set_profile_description">Bio…</string>
-    <string name="set_lock_account">Lock account</string>
+    <string name="set_lock_account">Lås konto</string>
     <string name="set_save_changes">Spara ändringar</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
     <string name="set_fit_preview">Passa förhandsgranskningen av bilder</string>
@@ -332,14 +332,14 @@
     <string name="settings_hour_end">Sluttid</string>
     <string name="embedded_browser">Använd den inbyggda webbläsaren</string>
     <string name="custom_tabs">Anpassade flikar</string>
-    <string name="use_javascript">Enable Javascript</string>
+    <string name="use_javascript">Aktivera Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
-    <string name="use_cookies">Allow third-party cookies</string>
-    <string name="settings_ui_layout">Layout for timelines: </string>
+    <string name="use_cookies">Tillåt tredjepartskakor</string>
+    <string name="settings_ui_layout">Layout för tidslinjer: </string>
     <string-array name="battery_profiles">
-        <item>Normal battery drain</item>
-        <item>Medium battery drain</item>
-        <item>Low battery drain</item>
+        <item>Normala batteriförbrukningen</item>
+        <item>Medel batteriförbrukningen</item>
+        <item>Låg batteriförbrukningen</item>
     </string-array>
     <string-array name="settings_menu_tabs">
         <item>Flikar</item>
@@ -447,20 +447,20 @@
         - <b>Follow</b>: Följ, av följ, blockera, avblockera.\n\n
         <b>&#9888; Dessa händelser sker endast när användaren begär det.</b>
     </string>
-    <string name="privacy_API_title">Tracking and Libraries</string>
+    <string name="privacy_API_title">Spårning och bibliotek</string>
     <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
         The use of libraries is minimized: \n
         - <b>Glide</b>: To manage media\n
         - <b>Android-Job</b>: To manage services\n
         - <b>PhotoView</b>: To manage images\n
     </string>
-    <string name="privacy_API_yandex_title">Translation of toots</string>
+    <string name="privacy_API_yandex_title">Översättning av toots</string>
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
     <string name="thanks_text">        Thank you to Stéphane for the logo.
     </string>
-    <string name="thanks_text_dev">        Thank you to:
+    <string name="thanks_text_dev">        Tack till:
     </string>
     <string name="filter_regex">Filter out by regular expressions</string>
     <string name="search">Sök</string>
@@ -471,7 +471,7 @@
     <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
     <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
     <string name="action_lists_add_to">Lägg till i lista</string>
-    <string name="action_lists_remove_from">Remove from list</string>
+    <string name="action_lists_remove_from">Ta bort från listan</string>
     <string name="action_lists_create">Lägg till lista</string>
     <string name="action_lists_delete">Ta bort lista</string>
     <string name="action_lists_update">Redigera lista</string>
