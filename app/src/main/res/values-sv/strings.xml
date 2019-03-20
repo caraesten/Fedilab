@@ -320,17 +320,17 @@
     <string name="set_save_changes">Save changes</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
     <string name="set_fit_preview">Fit preview images</string>
-    <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
-    <string name="note_no_space">You have reached the 160 characters allowed!</string>
-    <string name="username_no_space">You have reached the 30 characters allowed!</string>
-    <string name="settings_title_hour">Time slot for notifications:</string>
-    <string name="settings_time_from">Between</string>
-    <string name="settings_time_to">and</string>
-    <string name="settings_time_greater">The time must be greater than %1$s</string>
-    <string name="settings_time_lower">The time must be lower than %1$s</string>
-    <string name="settings_hour_init">Start time</string>
-    <string name="settings_hour_end">End time</string>
-    <string name="embedded_browser">Use the built-in browser</string>
+    <string name="set_automatically_split_toot">Dela automatiskt toots med fler än 500 tecken i svar</string>
+    <string name="note_no_space">Du har nått gränsen på max 160 tecken!</string>
+    <string name="username_no_space">Du har nått gränsen på max 30 tecken!</string>
+    <string name="settings_title_hour">Tidsfönster för notifieringar:</string>
+    <string name="settings_time_from">Mellan</string>
+    <string name="settings_time_to">och</string>
+    <string name="settings_time_greater">Intervallet måste vara större än %1$s</string>
+    <string name="settings_time_lower">Intervallet måste vara lägre än %1$s</string>
+    <string name="settings_hour_init">Starttid</string>
+    <string name="settings_hour_end">Sluttid</string>
+    <string name="embedded_browser">Använd den inbyggda webbläsaren</string>
     <string name="custom_tabs">Custom tabs</string>
     <string name="use_javascript">Enable Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
@@ -753,7 +753,7 @@
     <string name="settings_category_label_notification">Notification service</string>
     <string name="settings_category_label_interface">Gränssnitt</string>
     <string name="settings_category_label_hiddencontent">Dolt innehåll</string>
-    <string name="settings_category_label_composing">Composing</string>
+    <string name="settings_category_label_composing">Komponering</string>
     <string name="contact">Contacts</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
@@ -765,40 +765,40 @@
     <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
     <string name="export_data">Export data</string>
-    <string name="import_data">Import Data</string>
-    <string name="toot_select_import">Select the file to import</string>
+    <string name="import_data">Importera data</string>
+    <string name="toot_select_import">Välj en fil att importera</string>
     <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
     <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
     <string name="add_public_comment">Add a public comment</string>
     <string name="send_comment">Send comment</string>
     <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
-    <string name="action_plain_text">Plain text</string>
+    <string name="action_plain_text">Enbart text</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
-    <string name="action_logout_account">Logout account</string>
+    <string name="action_logout_account">Logga ut konto</string>
     <string name="set_optimize_loading">Optimize loading time</string>
-    <string name="all">All</string>
-    <string name="about_opencollective">Support the app</string>
+    <string name="all">Allt</string>
+    <string name="about_opencollective">Stötta appen</string>
     <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
     <string name="copy_link">Copy link</string>
-    <string name="connect_instance">Connect</string>
+    <string name="connect_instance">Anslut</string>
     <string name="set_normal">Nomal</string>
-    <string name="set_compact">Compact</string>
-    <string name="set_console">Console</string>
-    <string name="set_mode">Set display mode</string>
+    <string name="set_compact">Kompakt</string>
+    <string name="set_console">Konsol</string>
+    <string name="set_mode">Ange visningsläge</string>
     <string name="set_security_provider">Patch the Security Provider</string>
     <string name="update_tracking_domains">Update tracking domains</string>
     <string name="tracking_db_updated">The tracking data base has been updated!</string>
     <string name="calls_blocked">http calls blocked by the application</string>
     <string name="list_of_blocked_domains">List of blocked calls</string>
-    <string name="submit">Submit</string>
+    <string name="submit">Skicka</string>
     <string name="data_base_exported">The data base has been exported!</string>
     <string name="featured_hashtags">Featured hashtags</string>
     <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
-    <string name="no_tags">No tags</string>
+    <string name="no_tags">Inga taggar</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
-        <item>Direct stream</item>
+        <item>Direkt stream</item>
     </string-array>
 </resources>
