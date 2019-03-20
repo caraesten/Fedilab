@@ -271,11 +271,11 @@
     <string name="toast_error_login">Kan inte logga in!</string>
     <string name="toast_update_credential_ok">Profildata har sparats!</string>
     <string name="nothing_to_do">Inga åtgärder kan vidtas</string>
-    <string name="toast_saved">The media has been saved!</string>
-    <string name="toast_error_translate">An error occurred while translating!</string>
+    <string name="toast_saved">Inlägget har sparats!</string>
+    <string name="toast_error_translate">Ett fel uppstod under översättningens gång!</string>
     <string name="toast_toot_saved">Utkast sparat!</string>
-    <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
-    <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>
+    <string name="toast_error_char_limit">Är du säker på att denna instans tillåter detta dessa antal tecken? Vanligtvis, är detta värde ungefär 500 tecken.</string>
+    <string name="toast_visibility_changed">Synligheten för toots har ändrats för konto %1$s</string>
     <string name="toast_empty_search">Instance name and screen name cannot be blank!</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Optimisation of loading</string>
