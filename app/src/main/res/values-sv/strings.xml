@@ -231,16 +231,16 @@
         <item quantity="other">och %d andra notifikationer</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
-        <item quantity="other">and %d other toots to discover</item>
+        <item quantity="one">lägg till en till toot att utforska</item>
+        <item quantity="other">lägg till %d till toot att utforska</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d like</item>
-        <item quantity="other">%d likes</item>
+        <item quantity="other">%d gillningar</item>
     </plurals>
-    <string name="delete_notification_ask">Delete a notification?</string>
-    <string name="delete_notification_ask_all">Delete all notifications?</string>
-    <string name="delete_notification">The notification has been deleted!</string>
+    <string name="delete_notification_ask">Ta bort notifiering?</string>
+    <string name="delete_notification_ask_all">Radera alla notifikationer?</string>
+    <string name="delete_notification">Notifieringen har tagits bort!</string>
     <string name="delete_notification_all">All notifications have been deleted!</string>
     <!-- HEADER -->
     <string name="following">Följer</string>
