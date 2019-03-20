@@ -317,7 +317,7 @@
     <string name="settings_custom_sharing_url">Your custom sharing URL&#8230;</string>
     <string name="set_profile_description">Bio…</string>
     <string name="set_lock_account">Lock account</string>
-    <string name="set_save_changes">Save changes</string>
+    <string name="set_save_changes">Spara ändringar</string>
     <string name="set_header_picture_overlay">Choose a header picture</string>
     <string name="set_fit_preview">Passa förhandsgranskningen av bilder</string>
     <string name="set_automatically_split_toot">Dela automatiskt toots med fler än 500 tecken i svar</string>
@@ -331,7 +331,7 @@
     <string name="settings_hour_init">Starttid</string>
     <string name="settings_hour_end">Sluttid</string>
     <string name="embedded_browser">Använd den inbyggda webbläsaren</string>
-    <string name="custom_tabs">Custom tabs</string>
+    <string name="custom_tabs">Anpassade flikar</string>
     <string name="use_javascript">Enable Javascript</string>
     <string name="expand_cw">Automatically expand cw</string>
     <string name="use_cookies">Allow third-party cookies</string>
@@ -662,7 +662,7 @@
     <string name="card_view_image">Bild på kortet</string>
     <string name="hide_media">Dölj media</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Media för att lägga till beskrivning</string>
     <string-array name="filter_expire">
         <item>Aldrig</item>
         <item>30 minuter</item>
