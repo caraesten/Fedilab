@@ -342,36 +342,36 @@
         <item>Low battery drain</item>
     </string-array>
     <string-array name="settings_menu_tabs">
-        <item>Tabs</item>
-        <item>Menu</item>
-        <item>Tabs and menu</item>
+        <item>Flikar</item>
+        <item>Meny</item>
+        <item>Flikar och meny</item>
     </string-array>
     <string-array name="settings_translation">
         <item>Yandex</item>
         <item>DeepL</item>
-        <item>No</item>
+        <item>Nej</item>
     </string-array>
-    <string name="your_api_key">Your API key, you can leave blank for Yandex</string>
+    <string name="your_api_key">Din API-nyckel, lämna blankt för Yandex</string>
     <string-array name="settings_theme">
-        <item>Dark</item>
-        <item>Light</item>
-        <item>Black</item>
+        <item>Mörkt</item>
+        <item>Ljust</item>
+        <item>Svart</item>
     </string-array>
     <string-array name="settings_resize_picture">
-        <item>No</item>
-        <item>512 Kb</item>
-        <item>1 Mb</item>
-        <item>2 Mb</item>
+        <item>Nej</item>
+        <item>512 KB</item>
+        <item>1 MB</item>
+        <item>2 MB</item>
     </string-array>
-    <string name="set_led_colour">Set LED colour:</string>
+    <string name="set_led_colour">Färg på LED:</string>
     <string-array name="led_colours">
-        <item>Blue</item>
+        <item>Blå</item>
         <item>Cyan</item>
         <item>Magenta</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Yellow</item>
-        <item>White</item>
+        <item>Grön</item>
+        <item>Röd</item>
+        <item>Gul</item>
+        <item>Vit</item>
     </string-array>
     <string name="set_title_news">Nyheter</string>
     <string name="set_notification_news">Meddela om nya toots på hemtidslinjen</string>
@@ -400,52 +400,52 @@
     <string name="cache_units">MB</string>
     <string name="toast_cache_clear">Cachen har rensats! %1$s frigjordes</string>
     <!-- ACTIVITY CUSTOM SHARING -->
-    <string name="title_header_custom_sharing">Title</string>
-    <string name="title_hint_custom_sharing">Title&#8230;</string>
-    <string name="description_header_custom_sharing">Description</string>
-    <string name="description_hint_custom_sharing">Description&#8230;</string>
-    <string name="keywords_header_custom_sharing">Keywords</string>
-    <string name="keywords_hint_custom_sharing">Keywords&#8230;</string>
+    <string name="title_header_custom_sharing">Titel</string>
+    <string name="title_hint_custom_sharing">Titel&#8230;</string>
+    <string name="description_header_custom_sharing">Beskrivning</string>
+    <string name="description_hint_custom_sharing">Beskrivning&#8230;</string>
+    <string name="keywords_header_custom_sharing">Nyckelord</string>
+    <string name="keywords_hint_custom_sharing">Nyckelord&#8230;</string>
     <!-- ACTIVITY CACHE -->
-    <string name="action_sync">Synchronize</string>
+    <string name="action_sync">Synkronisera</string>
     <string name="action_filter">Filter</string>
-    <string name="owner_cached_toots">Your toots</string>
-    <string name="v_public">Public</string>
-    <string name="v_unlisted">Unlisted</string>
-    <string name="v_private">Private</string>
-    <string name="v_direct">Direct</string>
-    <string name="v_keywords">Some keywords…</string>
-    <string name="show_media">Show media</string>
-    <string name="show_pinned">Show pinned</string>
-    <string name="filter_no_result">No matching result found!</string>
-    <string name="data_backup_toots">Backup toots for %1$s</string>
-    <string name="data_backup_success">%1$s new toots have been imported</string>
+    <string name="owner_cached_toots">Dina toots</string>
+    <string name="v_public">Offentligt</string>
+    <string name="v_unlisted">Ej listat</string>
+    <string name="v_private">Privat</string>
+    <string name="v_direct">Direkt</string>
+    <string name="v_keywords">Vissa nyckelord…</string>
+    <string name="show_media">Visa media</string>
+    <string name="show_pinned">Visa nålat</string>
+    <string name="filter_no_result">Inga matchande resultat hittades!</string>
+    <string name="data_backup_toots">Säkerhetskopiering toots för %1$s</string>
+    <string name="data_backup_success">%1$s nya toots har importerats</string>
     <string-array name="filter_select">
-        <item>No</item>
-        <item>Only</item>
-        <item>Both</item>
+        <item>Nej</item>
+        <item>Endast</item>
+        <item>Båda</item>
     </string-array>
-    <string name="owner_cached_toots_empty">No toots were found in database. Please, use the synchronize button from the menu to retrieve them.</string>
+    <string name="owner_cached_toots_empty">Ingen toots hittades i databasen. Använd gärna knappen Synkronisera från menyn för att hämta dem.</string>
     <!-- PRIVACY -->
-    <string name="privacy_data_title">Recorded data</string>
-    <string name="privacy_data">        Only basic information from accounts are stored on the device.
-        These data are strictly confidential and can only be used by the application.
-        Deleting the application immediately removes these data.\n
-        &#9888; Login and passwords are never stored. They are only used during a secure authentication (SSL) with an instance.
+    <string name="privacy_data_title">Sparad data</string>
+    <string name="privacy_data">        Endast grundläggande information från konton lagras på enheten.
+        Uppgifterna är konfidentiella och kan endast användas av programmet.
+        Borttagning av programmet tar omedelbart bort dessa data.\n
+        &#9888; Inloggning och lösenord lagras aldrig. De används endast under en säker autentisering (SSL) med en instans.
     </string>
-    <string name="privacy_authorizations_title">Permissions:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Used to detect if the device is connected to a WIFI network.\n
-        - <b>INTERNET</b>: Used for queries to an instance.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Used to store media or to move the app on a SD card.\n
-        - <b>READ_EXTERNAL_STORAGE</b>: Used to add media to toots.\n
-        - <b>BOOT_COMPLETED</b>: Used to start the notification service.\n
-        - <b>WAKE_LOCK</b>: Used during the notification service.
+    <string name="privacy_authorizations_title">Behörigheter:</string>
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Används för att upptäcka om enheten är ansluten till ett trådlöst nätverk.\n
+        - <b>INTERNET</b>: Används för frågor till en instans.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Används för att lagra media eller flytta appen på ett SD-kort.\n
+        - <b>READ_EXTERNAL_STORAGE</b>: Används för att lägga till media till toots.\n
+        - <b>BOOT_COMPLETED</b>: Används för att starta meddelandetjänsten.\n
+        - <b>WAKE_LOCK</b>: Används under meddelandetjänsten.
     </string>
-    <string name="privacy_API_authorizations_title">API permissions:</string>
-    <string name="privacy_API_authorizations">        - <b>Read</b>: Read data.\n
-        - <b>Write</b>: Post statuses and upload media for statuses.\n
-        - <b>Follow</b>: Follow, unfollow, block, unblock.\n\n
-        <b>&#9888; These actions are carried out only when user requests them.</b>
+    <string name="privacy_API_authorizations_title">API-rättigheter:</string>
+    <string name="privacy_API_authorizations">         - <b>Read</b>: Läs data.\n
+        - <b>Write</b>: Posta statusar och ladda upp media till statusar.\n
+        - <b>Follow</b>: Följ, av följ, blockera, avblockera.\n\n
+        <b>&#9888; Dessa händelser sker endast när användaren begär det.</b>
     </string>
     <string name="privacy_API_title">Tracking and Libraries</string>
     <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
@@ -501,14 +501,14 @@
     <string name="data_import_error_simple">Something went wrong when importing data!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
-    <string name="proxy_type">Type</string>
-    <string name="proxy_enable">Enable proxy?</string>
-    <string name="poxy_host">Host</string>
+    <string name="proxy_type">Typ</string>
+    <string name="proxy_enable">Aktivera proxy?</string>
+    <string name="poxy_host">Värd</string>
     <string name="poxy_port">Port</string>
-    <string name="poxy_login">Login</string>
-    <string name="poxy_password">Password</string>
-    <string name="set_theme">Theme:</string>
-    <string name="set_compact_mode">Compact mode</string>
+    <string name="poxy_login">Logga in</string>
+    <string name="poxy_password">Lösenord</string>
+    <string name="set_theme">Tema:</string>
+    <string name="set_compact_mode">Kompakt läge</string>
     <string name="set_share_details">Add toot details when sharing</string>
     <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
     <string name="alert_regex">There is an error in the regular expression!</string>
@@ -516,16 +516,16 @@
     <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
     <string name="delete_instance">Delete this instance?</string>
     <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
-    <string name="which_language">Translate in</string>
-    <string name="crash_title">Mastalab has stopped :(</string>
+    <string name="which_language">Översätt till</string>
+    <string name="crash_title">Fedilab har stängts :(</string>
     <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
     <string name="send_crash_report">Ask for sending crash reports by email?</string>
     <string name="follow_instance">Follow instance</string>
     <string name="toast_instance_already_added">You already follow this instance!</string>
     <string name="toast_instance_followed">The instance is followed!</string>
-    <string name="action_partnership">Partnerships</string>
+    <string name="action_partnership">Samarbete</string>
     <string name="neutral_menu_information">Information</string>
-    <string name="hide_boost">Hide boosts from %s</string>
+    <string name="hide_boost">Dölj boosts för %s</string>
     <string name="endorse">Feature on profile</string>
     <string name="hide_everything">Hide everything from %s</string>
     <string name="show_boost">Show boosts from %s</string>
