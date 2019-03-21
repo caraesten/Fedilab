@@ -103,7 +103,6 @@ public class PeertubeAdapter extends RecyclerView.Adapter implements OnListActio
         }else if (theme == Helper.THEME_BLACK){
             holder.main_container.setBackgroundResource(R.color.black);
         }
-
         Account account = peertube.getAccount();
 
         holder.peertube_account_name.setText(account.getAcct());
