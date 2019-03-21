@@ -797,6 +797,7 @@
     <string name="featured_hashtags">Etiquetas destacadas</string>
     <string name="filter_timeline_with_a_tag">Filtrar liña temporal con etiquetas</string>
     <string name="no_tags">Sen etiquetas</string>
+    <string name="set_hide_delete_notification_on_tab">Hide delete notifcation button on notification tab</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
