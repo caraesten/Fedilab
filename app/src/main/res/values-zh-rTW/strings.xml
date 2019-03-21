@@ -792,6 +792,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="featured_hashtags">特色主題標籤</string>
     <string name="filter_timeline_with_a_tag">以標籤過濾時間軸</string>
     <string name="no_tags">沒有標籤</string>
+    <string name="set_hide_delete_notification_on_tab">Hide delete notifcation button on notification tab</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
