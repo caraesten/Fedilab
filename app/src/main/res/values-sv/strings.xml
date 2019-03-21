@@ -333,7 +333,7 @@
     <string name="embedded_browser">Använd den inbyggda webbläsaren</string>
     <string name="custom_tabs">Anpassade flikar</string>
     <string name="use_javascript">Aktivera Javascript</string>
-    <string name="expand_cw">Automatically expand cw</string>
+    <string name="expand_cw">Utöka meddelanden automatiskt</string>
     <string name="use_cookies">Tillåt tredjepartskakor</string>
     <string name="settings_ui_layout">Layout för tidslinjer: </string>
     <string-array name="battery_profiles">
@@ -458,18 +458,18 @@
     <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
         Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
     </string>
-    <string name="thanks_text">        Thank you to Stéphane for the logo.
+    <string name="thanks_text">        Tack till Stéphane för logon.
     </string>
     <string name="thanks_text_dev">        Tack till:
     </string>
-    <string name="filter_regex">Filter out by regular expressions</string>
+    <string name="filter_regex">Filtrera ut av reguljära uttryck</string>
     <string name="search">Sök</string>
     <string name="delete">Ta bort</string>
     <string name="fetch_more_toots">Hämta fler toots…</string>
     <!-- About lists -->
-    <string name="action_lists">Lists</string>
-    <string name="action_lists_confirm_delete">Are you sure you want to permanently delete this list?</string>
-    <string name="action_lists_empty_content">There is nothing in this list yet. When members of this list post new statuses, they will appear here.</string>
+    <string name="action_lists">Listor</string>
+    <string name="action_lists_confirm_delete">Är du säker du vill ta bort listan permanent?</string>
+    <string name="action_lists_empty_content">Det finns inget i den här listan ännu. När medlemmar av denna lista skickar nya toots, visas de här.</string>
     <string name="action_lists_add_to">Lägg till i lista</string>
     <string name="action_lists_remove_from">Ta bort från listan</string>
     <string name="action_lists_create">Lägg till lista</string>
@@ -480,8 +480,8 @@
     <string name="action_lists_owner">Din lista</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s har flyttats till %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
-    <string name="issue_login_title">Authentication does not work?</string>
+    <string name="show_boost_count">Visa knuffar/favoriter antal</string>
+    <string name="issue_login_title">Autentisering fungerar inte?</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
         - Check that your instance is not down\n\n
@@ -492,13 +492,13 @@
     <string name="media_ready">Media has been loaded. Click here to display it.</string>
     <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
     <string name="data_export_running">Still running, please wait…</string>
-    <string name="data_export">Export statuses</string>
-    <string name="data_export_toots">Export statuses for %1$s</string>
-    <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
-    <string name="data_export_error">Something went wrong when exporting data for %1$s</string>
-    <string name="data_export_error_simple">Something went wrong when exporting data!</string>
-    <string name="data_import_success_simple">Data have been imported!</string>
-    <string name="data_import_error_simple">Something went wrong when importing data!</string>
+    <string name="data_export">Export toots</string>
+    <string name="data_export_toots">Exportera toots för %1$s</string>
+    <string name="data_export_success">%1$s toots av %2$s har blivit exporterade.</string>
+    <string name="data_export_error">Något gick fel vid exporteringen %1$s</string>
+    <string name="data_export_error_simple">Något gick fel vid exporteringen!</string>
+    <string name="data_import_success_simple">Data har blivit importerat!</string>
+    <string name="data_import_error_simple">Något gick fel vid importeringen!</string>
     <!-- Proxy -->
     <string name="proxy_set">Proxy</string>
     <string name="proxy_type">Typ</string>
