@@ -448,15 +448,15 @@
         <b>&#9888; Dessa händelser sker endast när användaren begär det.</b>
     </string>
     <string name="privacy_API_title">Spårning och bibliotek</string>
-    <string name="privacy_API">        The application <b>does not use tracking tools</b> (audience measurement, error reporting, etc.) and does not contain any advertising.\n\n
-        The use of libraries is minimized: \n
-        - <b>Glide</b>: To manage media\n
-        - <b>Android-Job</b>: To manage services\n
-        - <b>PhotoView</b>: To manage images\n
+    <string name="privacy_API">        Applikationen <b>använder inga tracking-verktyg</b> (publikmätning, felrapportering etc.) och innehåller ingen reklam.\n\n
+        Användanded av tredje-parts bibliotek är minimerad: \n
+        - <b>Glide</b>: Till att hantera media\n
+        - <b>Android-Job</b>: Till att hantera services\n
+        - <b>PhotoView</b>: Till att hantera bilder\n
     </string>
     <string name="privacy_API_yandex_title">Översättning av toots</string>
-    <string name="privacy_API_yandex_authorizations">        The application offers the ability to translate toots using the locale of the device and the Yandex API.\n
-        Yandex has its proper privacy-policy which can be found here: https://yandex.ru/legal/confidential/?lang=en
+    <string name="privacy_API_yandex_authorizations">        Applikationen erbjuder möjligheten att översätta toots med hjälp av språket på enheten och Yandex API..\n
+        Yandex har sin integritetspolicy  här: https://yandex.ru/legal/confidential/?lang=en
     </string>
     <string name="thanks_text">        Tack till Stéphane för logon.
     </string>
