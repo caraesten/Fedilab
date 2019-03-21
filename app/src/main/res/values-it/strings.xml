@@ -796,7 +796,7 @@
     <string name="featured_hashtags">Hashtag in evidenza</string>
     <string name="filter_timeline_with_a_tag">Filtra la timeline con i tag</string>
     <string name="no_tags">Nessun tag</string>
-    <string name="set_hide_delete_notification_on_tab">Hide delete notifcation button on notification tab</string>
+    <string name="set_hide_delete_notification_on_tab">Nascondi pulsante per l\'eliminazione delle notifiche nella relativa tab</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>
