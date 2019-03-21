@@ -214,7 +214,7 @@
     <string name="media_count">Média: %d</string>
     <string name="toot_scheduled">A tootot időzítettük!</string>
     <string name="toot_scheduled_date">Az időzítés dátuma az aktuális óra után kell legyen!</string>
-    <string name="warning_battery">Battery saver is enabled! It might not work as expected.</string>
+    <string name="warning_battery">Energiatakarékos üzemmód be van kapcsolva! Lehet, hogy nem a várt módon viselkedik.</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">Az elnémítás ideje több mint egy perc kell legyen.</string>
     <string name="timed_mute_date">%1$s el lett némítva %2$s időpontig.\n Az elnémítást a fiók profiloldalán lehet megszüntetni.</string>
