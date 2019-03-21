@@ -784,7 +784,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="featured_hashtags">Empfohlene Hashtags</string>
     <string name="filter_timeline_with_a_tag">Timeline mit Tags filtern</string>
     <string name="no_tags">Keine Tags</string>
-    <string name="set_hide_delete_notification_on_tab">Hide delete notifcation button on notification tab</string>
+    <string name="set_hide_delete_notification_on_tab">Schaltfläche „Mitteilungen löschen” im Tab „Mitteilungen” ausblenden</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
