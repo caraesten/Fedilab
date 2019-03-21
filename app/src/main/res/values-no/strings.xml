@@ -784,7 +784,7 @@ Adresser vil bli foreslått når du begynner å skrive.\n\n
     <string name="featured_hashtags">Utvalgte stikkord</string>
     <string name="filter_timeline_with_a_tag">Filtrer tidslinjen med stikkord</string>
     <string name="no_tags">Ingen stikkord</string>
-    <string name="set_hide_delete_notification_on_tab">Hide delete notifcation button on notification tab</string>
+    <string name="set_hide_delete_notification_on_tab">Skjul slett-knappen</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
