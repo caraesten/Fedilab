@@ -333,8 +333,8 @@
     <string name="embedded_browser">Beépített böngésző használata</string>
     <string name="custom_tabs">Egyéni lapok</string>
     <string name="use_javascript">Javascript engedélyezése</string>
-    <string name="expand_cw">Automatically expand cw</string>
-    <string name="use_cookies">Allow third-party cookies</string>
+    <string name="expand_cw">cw automatikus kibontása</string>
+    <string name="use_cookies">Harmadik féltől származó sütik engedélyezése</string>
     <string name="settings_ui_layout">Idővonalak elrendezése: </string>
     <string-array name="battery_profiles">
         <item>Közepes akkuterhelés</item>
@@ -472,11 +472,11 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="action_lists_create">Új lista</string>
     <string name="action_lists_delete">Lista törlése</string>
     <string name="action_lists_update">Lista szerkesztése</string>
-    <string name="action_lists_title_placeholder">New list title</string>
+    <string name="action_lists_title_placeholder">Új listacím</string>
     <string name="action_lists_search_users">Keresés azok között, akiket követsz</string>
     <string name="action_lists_owner">Listáid</string>
     <!-- Migration -->
-    <string name="account_moved_to">%1$s has moved to %2$s</string>
+    <string name="account_moved_to">%1$s elköltözött ide: %2$s</string>
     <string name="show_boost_count">Mutasd meg a kiemelt/lájkolt posztok számát</string>
     <string name="issue_login_title">Nem sikerül bejelentkezni?</string>
     <string name="issue_login_message">        <b>Íme néhány hasznos tipp:</b>\n\n
@@ -512,11 +512,11 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="no_account_yet">Nincs még fiókja?</string>
     <string name="toast_instance_unavailable">Ezen a szerveren nem találtunk idővonalat!</string>
     <string name="delete_instance">Töröljuk ezt a szervert?</string>
-    <string name="warning_delete_instance">You are going to delete %s from your followed instances.</string>
+    <string name="warning_delete_instance">Ezzel ki fogod törölni %s szervert a követett szerverek listájáról.</string>
     <string name="which_language">Translate in</string>
     <string name="crash_title">Mastalab leállt :(</string>
-    <string name="crash_message">You can send me by email the crash report. It will help to fix it :)\n\nYou can add additional content. Thank you!</string>
-    <string name="send_crash_report">Ask for sending crash reports by email?</string>
+    <string name="crash_message">Küldhetsz nekem e-mailt a hibajelentéssel. Ez segít majd a javításnál :)\n\nHozzáadhatsz még további tartalmakat is. Köszönöm!</string>
+    <string name="send_crash_report">Rákerdezzen a hibajelentések e-mailen történő elküldése előtt?</string>
     <string name="follow_instance">Szerver követése</string>
     <string name="toast_instance_already_added">Már követed ezt a szervert!</string>
     <string name="toast_instance_followed">Mostantól követed a szervert!</string>
