@@ -659,15 +659,15 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="card_view_image">Image of the card</string>
     <string name="hide_media">Média elrejtése</string>
     <string name="favicon">Könyvjelzőikon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Média-leírás hozzáadása (látássérültek hasznára)</string>
     <string-array name="filter_expire">
-        <item>Never</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>12 hours</item>
-        <item>1 day</item>
-        <item>1 week</item>
+        <item>Soha</item>
+        <item>30 perc</item>
+        <item>1 óra</item>
+        <item>6 óra</item>
+        <item>12 óra</item>
+        <item>1 nap</item>
+        <item>1 hét</item>
     </string-array>
     <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
         You can start writing first letters and names will be suggested.\n\n
@@ -710,27 +710,27 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="reply">Reply</string>
     <string name="delete_comment">Delete a comment</string>
     <string name="delete_comment_confirm">Are you sure to delete this comment?</string>
-    <string name="fullscreen">Full screen video</string>
-    <string name="set_video_mode">Mode for videos</string>
-    <string name="file_to_upload">Select the file to upload</string>
-    <string name="my_videos">My videos</string>
-    <string name="title">Title</string>
-    <string name="categories">Categories</string>
-    <string name="license">License</string>
-    <string name="category">Category</string>
-    <string name="language">Language</string>
+    <string name="fullscreen">Teljes képernyős videó</string>
+    <string name="set_video_mode">Videó-módok</string>
+    <string name="file_to_upload">Feltöltetndő fájl kiválasztása</string>
+    <string name="my_videos">Videóim</string>
+    <string name="title">Cím</string>
+    <string name="categories">Kategóriák</string>
+    <string name="license">Licensz</string>
+    <string name="category">Kategória</string>
+    <string name="language">Nyelv</string>
     <string name="peertube_nsfw">This video contains mature or explicit content</string>
-    <string name="peertube_enable_comments">Enable video comments</string>
-    <string name="update_video">Update video</string>
-    <string name="description">Description</string>
-    <string name="toast_peertube_video_updated">The video has been updated!</string>
-    <string name="toast_cancelled">Upload cancelled!</string>
-    <string name="upload_video_success">The video has been uploaded!</string>
-    <string name="uploading">Uploading, please wait…</string>
-    <string name="video_uploaded_action">Click here to edit the video data.</string>
-    <string name="delete_video">Delete video</string>
-    <string name="delete_video_confirmation">Are you sure to delete this video?</string>
-    <string name="no_video_uploaded">No videos uploaded yet!</string>
+    <string name="peertube_enable_comments">Hozzászólások engedélyezése</string>
+    <string name="update_video">Videó frissítése</string>
+    <string name="description">Leírás</string>
+    <string name="toast_peertube_video_updated">A videót frissítettük!</string>
+    <string name="toast_cancelled">Feltöltés megszakítva!</string>
+    <string name="upload_video_success">A videót feltöltöttük!</string>
+    <string name="uploading">Feltöltés folyamatban, kérjük várj…</string>
+    <string name="video_uploaded_action">Klikkelj ide a videó adatok szerkesztéséhez.</string>
+    <string name="delete_video">Videó törlése</string>
+    <string name="delete_video_confirmation">Biztos törölni akarod a videót?</string>
+    <string name="no_video_uploaded">Nincs még feltöltött videó!</string>
     <string name="display_nsfw_videos">Display NSFW videos</string>
     <string name="default_channel_of">Default %s channel</string>
     <string name="no_video_to_display">No videos to display!</string>
