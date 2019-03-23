@@ -901,6 +901,12 @@
     <string name="featured_hashtags">Featured hashtags</string>
     <string name="filter_timeline_with_a_tag">Filter timeline with tags</string>
     <string name="no_tags">No tags</string>
+    <string name="poll">Poll</string>
+    <string name="create_poll">Create a poll</string>
+    <string name="poll_choice_1">Choice 1</string>
+    <string name="poll_choice_2">Choice 2</string>
+    <string name="poll_choice_3">Choice 3</string>
+    <string name="poll_choice_4">Choice 4</string>
     <!-- end languages -->
 
 

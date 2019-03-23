@@ -1046,6 +1046,33 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 });
                 alert.show();
                 return true;
+
+            case R.id.action_poll:
+                AlertDialog.Builder alertPoll = new AlertDialog.Builder(TootActivity.this, style);
+                alertPoll.setTitle(R.string.create_poll);
+
+                alert.setView(input);
+                String content = tootReply.getContent();
+                if(tootReply.getReblog() != null)
+                    content = tootReply.getReblog().getContent();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    input.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY));
+                else
+                    //noinspection deprecation
+                    input.setText(Html.fromHtml(content));
+                alert.setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.setNegativeButton(R.string.accounts, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        new RetrieveAccountsForReplyAsyncTask(getApplicationContext(), tootReply.getReblog() != null?tootReply.getReblog():tootReply, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+                return true;
             case R.id.action_translate:
                 final CountryPicker picker = CountryPicker.newInstance(getString(R.string.which_language));  // dialog title
                 if( theme == Helper.THEME_LIGHT){
@@ -1592,6 +1619,11 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if( tootReply == null){
             if( itemViewReply != null)
                 itemViewReply.setVisible(false);
+        }
+        if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.MASTODON){
+            MenuItem itemPoll = menu.findItem(R.id.action_poll);
+            if( itemPoll != null)
+                itemPoll.setVisible(false);
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);

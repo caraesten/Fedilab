@@ -17,6 +17,11 @@
         android:icon="@drawable/ic_photo_camera"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/action_poll"
+        android:title="@string/poll"
+        android:icon="@drawable/ic_view_list_poll"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_contacts"
         android:title="@string/contact"
         android:icon="@drawable/ic_contacts"
