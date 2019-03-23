@@ -478,11 +478,11 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <!-- Migration -->
     <string name="account_moved_to">%1$s elköltözött ide: %2$s</string>
     <string name="show_boost_count">Mutasd meg a kiemelt/lájkolt posztok számát</string>
-    <string name="issue_login_title">Nem sikerül bejelentkezni?</string>
+    <string name="issue_login_title">Nem sikeres a hitelesítés?</string>
     <string name="issue_login_message">        <b>Íme néhány hasznos tipp:</b>\n\n
         - Ellenőrizd, hogy nem gépelted-e el a szerver nevét.\n\n
         - Ellenőrizd, hogy a szervered elérhető\n\n
-        - Használd az alsó linket, ha két-faktoros bejelentkezést (2FA) használsz  (miután kitöltötted a szerver nevét)\n\n
+        - Használd az alsó linket, ha két faktoros hitelesítést (2FA) használsz  (miután kitöltötted a szerver nevét)\n\n
         - Ezt a linket 2FA nélkül is használhatod\n\n
         - Ha még mindig nem sikerül bejelentkezni, jelentsd a GitLabon  a https://gitlab.com/tom79/mastalab/issues címen
     </string>
@@ -630,7 +630,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="set_truncate_toot">Csonkold a tootot, ha hosszabb \'x\' sornál. Nullánál nem csonkol.</string>
     <string name="display_toot_truncate">Mutass többet</string>
     <string name="hide_toot_truncate">Mutass kevesebbet</string>
-    <string name="manage_tags">Manage tags</string>
+    <string name="manage_tags">Címkék kezelése</string>
     <string name="tags_already_stored">Ez a címke már létezik!</string>
     <string name="tags_stored">Eltároltuk a címkét!</string>
     <string name="tags_renamed">Megváltoztattuk a címkét!</string>
@@ -669,16 +669,16 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
         <item>1 nap</item>
         <item>1 hét</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        Ebbe a mezőbe, írd a szervered host-nevét.\nPéldául, ha a fiókodat a  https://mastodon.social\n címen nyitottad, akkor írd, hogy  <b>mastodon.social</b> (https:// nélkül)\n
+        Kezdd beírni az első néhány betűt és a többit segítünk kiegészíteni.\n\n
+        ⚠ A Bejelentkezés gomb csak akkor fog működni, ha a szervernév érvényes és a szerver elérhető!
     </string>
     <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
     </string>
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
     <string name="more_information">More information</string>
-    <string name="showcase_2FA">Ha 2FA-t (kétfaktoros hitelesítés) használsz, ezt a linket kell használnod.\nAkkor is használhatod, ha nem akarod ide írni a bejelentkezési adataidat.</string>
+    <string name="showcase_2FA">Ha 2FA-t (kétfaktoros hitelesítést) használsz, ezt a linket kell használnod.\nAkkor is használhatod, ha nem akarod ide írni a bejelentkezési adataidat.</string>
     <!-- languages not translated -->
     <string name="languages">Languages</string>
     <string name="show_media_only">Media only</string>
