@@ -1927,7 +1927,6 @@ public abstract class BaseMainActivity extends BaseActivity
                         if(matchStart < matchEnd && sharedText.length() >= matchEnd)
                             url = sharedText.substring(matchStart, matchEnd);
                     }
-                    Log.v("shouldRetrieve", String.valueOf(shouldRetrieveMetaData));
                     new RetrieveMetaDataAsyncTask(BaseMainActivity.this, shouldRetrieveMetaData, sharedSubject, sharedText, url,BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
 
