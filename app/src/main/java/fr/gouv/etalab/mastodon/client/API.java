@@ -1028,7 +1028,10 @@ public class API {
         if( max_id == null)
             max_id = "0";
         params.put("start", max_id);
-        params.put("count", "50");
+        params.put("filter","local");
+        params.put("sort","-publishedAt");
+        params.put("count", "20");
+
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get("https://"+instance+"/api/v1/videos", 60, params, null);
