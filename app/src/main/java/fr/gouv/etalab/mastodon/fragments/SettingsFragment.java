@@ -625,6 +625,7 @@ public class SettingsFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         int truncate_toots_size = sharedpreferences.getInt(Helper.SET_TRUNCATE_TOOTS_SIZE, 0);
         SeekBar set_truncate_size = rootView.findViewById(R.id.set_truncate_size);
         set_truncate_size.setMax(20);
@@ -731,6 +732,20 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(Helper.SET_SHARE_DETAILS, set_share_details.isChecked());
+                editor.apply();
+            }
+        });
+
+        // retrieve metadata if URL from external apps when composing
+        boolean should_retrieve_metadata = sharedpreferences.getBoolean(Helper.SET_RETRIEVE_METADATA_IF_URL_FROM_EXTERAL, true);
+        final CheckBox set_retrieve_metadata = rootView.findViewById(R.id.set_retrieve_metadata_share_from_extras);
+        set_retrieve_metadata.setChecked(should_retrieve_metadata);
+
+        set_retrieve_metadata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(Helper.SET_RETRIEVE_METADATA_IF_URL_FROM_EXTERAL, set_retrieve_metadata.isChecked());
                 editor.apply();
             }
         });

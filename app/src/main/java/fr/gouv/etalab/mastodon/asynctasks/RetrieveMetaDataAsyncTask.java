@@ -43,17 +43,25 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
     private boolean error = false;
     private String image, title, description, sharedSubject, sharedText;
     private WeakReference<Context> contextWeakReference;
-
-    public RetrieveMetaDataAsyncTask(Context context, String sharedSubject, String sharedText,String url, OnRetrieveMetaDataInterface onRetrieveRemoteAccountInterface){
+    private boolean shouldFetchMetaData = true;
+    public RetrieveMetaDataAsyncTask(Context context,boolean shouldFetchMetaData, String sharedSubject, String sharedText,String url, OnRetrieveMetaDataInterface onRetrieveRemoteAccountInterface){
         this.url = url;
         this.listener = onRetrieveRemoteAccountInterface;
         this.sharedText = sharedText;
         this.sharedSubject = sharedSubject;
         this.contextWeakReference = new WeakReference<>(context);
+        this.shouldFetchMetaData = shouldFetchMetaData;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
+        if(shouldFetchMetaData)
+            return execRetrieveMetaDataInBackground();
+        else
+            return null;
+    }
+    private Void execRetrieveMetaDataInBackground(){
+
         String potentialUrl = "";
         if (url == null) {
             error = true;
@@ -118,7 +126,6 @@ public class RetrieveMetaDataAsyncTask extends AsyncTask<Void, Void, Void> {
         }
         return null;
     }
-
     @Override
     protected void onPostExecute(Void result) {
         listener.onRetrieveMetaData(error, sharedSubject, sharedText, image, title, description);
