@@ -431,7 +431,7 @@
     <string name="privacy_data">        A készüléken csak a fiókok alapadatait tároljuk.
         Ezek az adatok szigorúan bizalmasak és csak az alkalmazás fér hozzá.
         Az alkalmazás eltávolítása azonnal törli ezeket az adatokat.\n
-        &#9888; Felhasználónevet és jelszavakat sohasem tárolunk. Csak a szerverre való biztonságos (SSL) bejentkezés során használjuk.
+        &#9888; Felhasználónevet és jelszavakat sohasem tárolunk. Csak a szerverre való biztonságos (SSL) hitelesítés során használjuk.
     </string>
     <string name="privacy_authorizations_title">Engedélyek:</string>
     <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Arra használjuk, hogy a kliens WiFi-hálózathoz kapcsolódik-e.\n
@@ -505,7 +505,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="poxy_login">Felhasználónév</string>
     <string name="poxy_password">Jelszó</string>
     <string name="set_theme">Theme:</string>
-    <string name="set_compact_mode">Compact mode</string>
+    <string name="set_compact_mode">Kompakt mód</string>
     <string name="set_share_details">Toot részleteinek hozzaádása megosztáskor</string>
     <string name="support_the_app_on_liberapay">Támogasd az appot a Liberapayen</string>
     <string name="alert_regex">A reguláris kifejezés hibát tartalmaz!</string>
@@ -513,7 +513,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="toast_instance_unavailable">Ezen a szerveren nem találtunk idővonalat!</string>
     <string name="delete_instance">Töröljuk ezt a szervert?</string>
     <string name="warning_delete_instance">Ezzel ki fogod törölni %s szervert a követett szerverek listájáról.</string>
-    <string name="which_language">Translate in</string>
+    <string name="which_language">Fordítsd erre:</string>
     <string name="crash_title">Mastalab leállt :(</string>
     <string name="crash_message">Küldhetsz nekem e-mailt a hibajelentéssel. Ez segít majd a javításnál :)\n\nHozzáadhatsz még további tartalmakat is. Köszönöm!</string>
     <string name="send_crash_report">Rákerdezzen a hibajelentések e-mailen történő elküldése előtt?</string>
@@ -600,7 +600,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="duration_video">Időtartam: %s</string>
     <string name="add_remote_instance">Szerver hozzáadása</string>
     <string name="comment_no_allowed_peertube">A kommentálás nem engedélyezett ennél a videónál!</string>
-    <string name="pickup_resolution">Pick up a resolution</string>
+    <string name="pickup_resolution">Válassz egy felbontást</string>
     <string name="peertube_favorites">Peertube kedvencek</string>
     <string name="bookmark_add_peertube">Hozzáadtuk a videót a könyvjelzőkhöz!</string>
     <string name="bookmark_remove_peertube">Eltávolítottuk a videót a könyvjelzők közül!</string>
@@ -624,12 +624,12 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="bug_report_mail">Hibajelentés küldése</string>
     <string name="account_id_clipbloard">A fiók id-jét átmásoltuk a vágólapra!</string>
     <string name="settings_title_battery">Akkuhasználat optimalizálása</string>
-    <string name="set_change_locale">Change the language</string>
-    <string name="default_language">Default language</string>
-    <string name="truncate_long_toots">Truncate long toots</string>
-    <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
-    <string name="display_toot_truncate">Display more</string>
-    <string name="hide_toot_truncate">Display less</string>
+    <string name="set_change_locale">Nyelv megváltoztatása</string>
+    <string name="default_language">Alapértelmezett nyelv</string>
+    <string name="truncate_long_toots">Túl hosszú tootok csonkolása</string>
+    <string name="set_truncate_toot">Csonkold a tootot, ha hosszabb \'x\' sornál. Nullánál nem csonkol.</string>
+    <string name="display_toot_truncate">Mutass többet</string>
+    <string name="hide_toot_truncate">Mutass kevesebbet</string>
     <string name="manage_tags">Manage tags</string>
     <string name="tags_already_stored">Ez a címke már létezik!</string>
     <string name="tags_stored">Eltároltuk a címkét!</string>
@@ -678,7 +678,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
     <string name="more_information">More information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="showcase_2FA">Ha 2FA-t (kétfaktoros hitelesítés) használsz, ezt a linket kell használnod.\nAkkor is használhatod, ha nem akarod ide írni a bejelentkezési adataidat.</string>
     <!-- languages not translated -->
     <string name="languages">Languages</string>
     <string name="show_media_only">Media only</string>
