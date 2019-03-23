@@ -793,6 +793,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="featured_hashtags">Uitgelichte hashtags</string>
     <string name="filter_timeline_with_a_tag">Tijdlijn op tags filteren</string>
     <string name="no_tags">Geen tags</string>
+    <string name="set_hide_delete_notification_on_tab">Hide delete notifcation button on notification tab</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Via WebTorrent</item>

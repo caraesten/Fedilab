@@ -560,7 +560,7 @@
     <string name="filter_keyword_explanations">سوف يتم العثور عليه مهما كانت حالة الأحرف في النص أو حتى و إن كان داخل الويب و فيه تحذير عن المحتوى</string>
     <string name="context_drop">حذف بدلًا مِن الإخفاء</string>
     <string name="context_drop_explanations">سوف تختفي التبويقات المُصفّاة إلى الأبد، حتى و إن تم حذف عامل التصفية لاحقًا</string>
-    <string name="context_whole_word_explanations">إذا كانت الكلمة أو الجملة مكونة من الأرقام والخروف فقط سوف يتم تطبيقها فقط عند مطابقة الكلمة ككل</string>
+    <string name="context_whole_word_explanations">إذا كانت الكلمة أو الجملة مكونة من الأرقام والحروف فقط سوف يتم تطبيقها فقط عند مطابقة الكلمة ككل</string>
     <string name="context_whole_word">الكلمة كلها</string>
     <string name="filter_context">سياق عامل التصفية</string>
     <string name="filter_context_explanations">مجالات تطبيق عامل التصفية</string>
@@ -800,16 +800,18 @@
     <string name="set_compact">مضغوط</string>
     <string name="set_console">الطرفية</string>
     <string name="set_mode">اختيار طريقة العرض</string>
-    <string name="set_security_provider">تحسن الحماية</string>
+    <string name="set_security_provider">تحسين موفر الأمان</string>
     <string name="update_tracking_domains">تحديث نطاقات التعقب</string>
     <string name="tracking_db_updated">تم تحديث قاعدة بيانات التعقب!</string>
     <string name="calls_blocked">طلبات الـ http التي حجبها التطبيق</string>
     <string name="list_of_blocked_domains">قائمة الطلبات المحجوبة</string>
     <string name="submit">إرسال</string>
     <string name="data_base_exported">تم تصدير قاعدة البيانات!</string>
-    <string name="featured_hashtags">هاشتاگات مبرزة</string>
-    <string name="filter_timeline_with_a_tag">تصفية الخط الزمني بالستخدام الأوسمة</string>
-    <string name="no_tags">No tags</string>
+    <string name="featured_hashtags">الوسوم الشائعة</string>
+    <string name="filter_timeline_with_a_tag">تصفية الخيط الزمني باستخدام الوسوم</string>
+    <string name="no_tags">دون وسم</string>
+    <string name="set_hide_delete_notification_on_tab">Hide delete notifcation button on notification tab</string>
+    <string name="set_retrieve_metadata_share_from_extras">Retrieve metadata if URL that share from other apps</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>تورنت</item>

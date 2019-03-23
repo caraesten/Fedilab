@@ -792,6 +792,7 @@
     <string name="featured_hashtags">特色标签</string>
     <string name="filter_timeline_with_a_tag">根据标签过滤时间线</string>
     <string name="no_tags">无标签</string>
+    <string name="set_hide_delete_notification_on_tab">Hide delete notifcation button on notification tab</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webview</item>

@@ -801,6 +801,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="featured_hashtags">Zvýrazněné hashtagy</string>
     <string name="filter_timeline_with_a_tag">Filtrovat časovou osu s hashtagy</string>
     <string name="no_tags">Žádné hashtagy</string>
+    <string name="set_hide_delete_notification_on_tab">Skrýt tlačítko pro vymazání oznámení ze záložky oznámení</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Webové zobrazení</item>

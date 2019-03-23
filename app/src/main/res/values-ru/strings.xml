@@ -804,6 +804,7 @@
     <string name="featured_hashtags">Рекомендуемые хэштеги</string>
     <string name="filter_timeline_with_a_tag">Фильтровать ленту тегами</string>
     <string name="no_tags">Нет тегов</string>
+    <string name="set_hide_delete_notification_on_tab">Скрыть кнопку удаления уведомлений на вкладке уведомлений</string>
     <!-- end languages -->
     <string-array name="settings_video_mode">
         <item>Torrent</item>
