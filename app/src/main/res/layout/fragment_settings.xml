@@ -378,6 +378,15 @@
             android:text="@string/set_share_details"
             android:layout_height="wrap_content" />
 
+        <!-- RETRIEVE METADATA -->
+        <CheckBox
+            android:id="@+id/set_retrieve_metadata_share_from_extras"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/settings_checkbox_margin"
+            android:layout_marginBottom="@dimen/settings_checkbox_margin"
+            android:text="@string/set_retrieve_metadata_share_from_extras"
+            android:layout_height="wrap_content" />
+
         <!-- CUSTOM SHARING  -->
         <CheckBox
             android:id="@+id/set_custom_sharing"

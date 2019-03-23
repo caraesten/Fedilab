@@ -55,6 +55,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -1908,6 +1909,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 String url = null;
                 String sharedSubject = intent.getStringExtra(Intent.EXTRA_SUBJECT);
                 String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+                boolean shouldRetrieveMetaData = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE).getBoolean(Helper.SET_RETRIEVE_METADATA_IF_URL_FROM_EXTERAL, true);
+
                 if (sharedText != null) {
                     /* Some apps don't send the URL as the first part of the EXTRA_TEXT,
                         the BBC News app being one such, in this case find where the URL
@@ -1924,7 +1927,8 @@ public abstract class BaseMainActivity extends BaseActivity
                         if(matchStart < matchEnd && sharedText.length() >= matchEnd)
                             url = sharedText.substring(matchStart, matchEnd);
                     }
-                    new RetrieveMetaDataAsyncTask(BaseMainActivity.this, sharedSubject, sharedText, url,BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    Log.v("shouldRetrieve", String.valueOf(shouldRetrieveMetaData));
+                    new RetrieveMetaDataAsyncTask(BaseMainActivity.this, shouldRetrieveMetaData, sharedSubject, sharedText, url,BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
 
             } else if (type.startsWith("image/") || type.startsWith("video/")) {

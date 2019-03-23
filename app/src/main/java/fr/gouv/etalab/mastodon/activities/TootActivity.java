@@ -975,7 +975,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if (extras != null && extras.getString("imageUri") != null) {
             Uri imageUri = Uri.parse(extras.getString("imageUri"));
             picture_scrollview.setVisibility(View.VISIBLE);
-            if(  imageUri == null) {
+            if( imageUri == null) {
                 Toasty.error(getApplicationContext(),getString(R.string.toot_select_image_error),Toast.LENGTH_LONG).show();
                 return;
             }
