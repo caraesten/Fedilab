@@ -811,6 +811,7 @@ Aceste date sunt strict confidențiale și pot fi folosite doar de aplicație.
     <string name="poll_finish_at">end at %s</string>
     <string name="refresh_poll">Refresh poll</string>
     <string name="vote">Vote</string>
+    <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="few">%d votes</item>
