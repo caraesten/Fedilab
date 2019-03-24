@@ -485,7 +485,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.status_show_more.setVisibility(View.GONE);
             }else {
                 if (status.getReblog() == null) {
-                    if (status.getMedia_attachments().size() < 1) {
+                    if (status.getMedia_attachments() == null || status.getMedia_attachments().size() < 1) {
                         holder.status_document_container.setVisibility(View.GONE);
                         holder.status_show_more.setVisibility(View.GONE);
                     } else {

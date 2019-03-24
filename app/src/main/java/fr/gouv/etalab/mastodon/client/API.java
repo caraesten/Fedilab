@@ -3648,26 +3648,6 @@ public class API {
                     attachments.add(attachment);
                 }
             }
-            if( resobj.has("poll") && !resobj.isNull("poll")){
-                Poll poll = new Poll();
-                poll.setId(resobj.getJSONObject("poll").getString("id"));
-                poll.setExpires_at(Helper.mstStringToDate(context, resobj.getJSONObject("poll").getString("expires_at")));
-                poll.setExpired(resobj.getJSONObject("poll").getBoolean("expired"));
-                poll.setMultiple(resobj.getJSONObject("poll").getBoolean("multiple"));
-                poll.setVotes_count(resobj.getJSONObject("poll").getInt("votes_count"));
-                poll.setVoted(resobj.getJSONObject("poll").getBoolean("voted"));
-                JSONArray options = resobj.getJSONObject("poll").getJSONArray("options");
-                List<PollOptions> pollOptions = new ArrayList<>();
-                for(int i = 0; i < options.length() ; i++){
-                    JSONObject option = options.getJSONObject(i);
-                    PollOptions pollOption = new PollOptions();
-                    pollOption.setTitle(option.getString("title"));
-                    pollOption.setVotes_count(option.getInt("votes_count"));
-                    pollOptions.add(pollOption);
-                }
-                poll.setOptionsList(pollOptions);
-                status.setPoll(poll);
-            }
 
             try {
                 status.setCard(parseCardResponse(resobj.getJSONObject("card")));
@@ -3761,6 +3741,28 @@ public class API {
             try{
                 status.setReblog(parseStatuses(context, resobj.getJSONObject("reblog")));
             }catch (Exception ignored){}
+
+            if( resobj.has("poll") && !resobj.isNull("poll")){
+                Poll poll = new Poll();
+                poll.setId(resobj.getJSONObject("poll").getString("id"));
+                poll.setExpires_at(Helper.mstStringToDate(context, resobj.getJSONObject("poll").getString("expires_at")));
+                poll.setExpired(resobj.getJSONObject("poll").getBoolean("expired"));
+                poll.setMultiple(resobj.getJSONObject("poll").getBoolean("multiple"));
+                poll.setVotes_count(resobj.getJSONObject("poll").getInt("votes_count"));
+                poll.setVoted(resobj.getJSONObject("poll").getBoolean("voted"));
+                JSONArray options = resobj.getJSONObject("poll").getJSONArray("options");
+                List<PollOptions> pollOptions = new ArrayList<>();
+                for(int i = 0; i < options.length() ; i++){
+                    JSONObject option = options.getJSONObject(i);
+                    PollOptions pollOption = new PollOptions();
+                    pollOption.setTitle(option.getString("title"));
+                    pollOption.setVotes_count(option.getInt("votes_count"));
+                    pollOptions.add(pollOption);
+                }
+                poll.setOptionsList(pollOptions);
+                status.setPoll(poll);
+            }
+
         } catch (JSONException ignored) {} catch (ParseException e) {
             e.printStackTrace();
         }
