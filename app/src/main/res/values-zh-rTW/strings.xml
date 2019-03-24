@@ -221,7 +221,7 @@
     <!-- Notifications -->
     <string name="no_notifications">沒有通知</string>
     <string name="notif_mention">提及您</string>
-    <string name="notif_reblog">加速了您的狀態</string>
+    <string name="notif_reblog">已轉嘟您的嘟文</string>
     <string name="notif_favourite">收藏您的狀態</string>
     <string name="notif_follow">關注了您</string>
     <string name="notif_pouet">來自 %1$s 的新嘟文</string>
