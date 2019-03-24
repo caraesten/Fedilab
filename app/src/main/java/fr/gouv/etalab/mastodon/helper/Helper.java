@@ -1515,6 +1515,8 @@ public class Helper {
     public static SpannableString makeMentionsClick(final Context context, List<Mention> mentions){
 
         String cw_mention = "";
+        if( mentions == null)
+            return new SpannableString(cw_mention);
         for(Mention mention:mentions){
             cw_mention = String.format("@%s %s",mention.getUsername(),cw_mention);
         }
