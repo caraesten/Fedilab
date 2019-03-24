@@ -557,7 +557,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.multiple_choice.setVisibility(View.GONE);
                 holder.single_choice.setVisibility(View.GONE);
                 holder.submit_vote.setVisibility(View.GONE);
-                if( status.getPoll() != null){
+                if( status.getPoll() != null && status.getPoll().getOptionsList() != null ){
                     Poll poll = status.getPoll();
                     int choiceCount = status.getPoll().getOptionsList().size();
                     if( poll.isVoted()){

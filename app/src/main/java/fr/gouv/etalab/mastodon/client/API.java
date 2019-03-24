@@ -3745,7 +3745,11 @@ public class API {
             if( resobj.has("poll") && !resobj.isNull("poll")){
                 Poll poll = new Poll();
                 poll.setId(resobj.getJSONObject("poll").getString("id"));
-                poll.setExpires_at(Helper.mstStringToDate(context, resobj.getJSONObject("poll").getString("expires_at")));
+                try {
+                    poll.setExpires_at(Helper.mstStringToDate(context, resobj.getJSONObject("poll").getString("expires_at")));
+                }catch (Exception e){
+                    poll.setExpires_at(new Date());
+                }
                 poll.setExpired(resobj.getJSONObject("poll").getBoolean("expired"));
                 poll.setMultiple(resobj.getJSONObject("poll").getBoolean("multiple"));
                 poll.setVotes_count(resobj.getJSONObject("poll").getInt("votes_count"));
