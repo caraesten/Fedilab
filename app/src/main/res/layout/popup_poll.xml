@@ -20,6 +20,8 @@
 
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     android:layout_height="match_parent">
     <EditText
         android:id="@+id/choice_1"
@@ -29,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:layout_marginBottom="10dp"
        />
     <EditText
         android:id="@+id/choice_2"
@@ -38,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:layout_marginBottom="10dp"
         />
     <EditText
         android:id="@+id/choice_3"
@@ -47,6 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:layout_marginBottom="10dp"
         />
     <EditText
         android:id="@+id/choice_4"
@@ -56,6 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
+        android:layout_marginBottom="10dp"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,12 +70,12 @@
         <Spinner
             android:id="@+id/poll_choice"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:layout_height="wrap_content"/>
         <Spinner
             android:id="@+id/poll_duration"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 </LinearLayout>
