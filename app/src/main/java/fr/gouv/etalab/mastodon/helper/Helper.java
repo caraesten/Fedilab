@@ -672,6 +672,18 @@ public class Helper {
      * @param date Date
      * @return String
      */
+    public static String dateToStringPoll(Date date) {
+        if( date == null)
+            return null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm",Locale.getDefault());
+        return dateFormat.format(date);
+    }
+
+    /**
+     * Convert a date in String -> format yyyy-MM-dd HH:mm:ss
+     * @param date Date
+     * @return String
+     */
     public static String shortDateToString(Date date) {
         SimpleDateFormat df = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
         return df.format(date);

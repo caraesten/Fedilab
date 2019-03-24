@@ -656,7 +656,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
-
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/layout_poll" />
     <TextView
         android:visibility="gone"
         android:layout_marginEnd="20dp"

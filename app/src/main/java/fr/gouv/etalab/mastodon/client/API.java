@@ -21,6 +21,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +34,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.text.Format;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +65,8 @@ import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.NodeInfo;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
+import fr.gouv.etalab.mastodon.client.Entities.Poll;
+import fr.gouv.etalab.mastodon.client.Entities.PollOptions;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Schedule;
@@ -432,6 +438,7 @@ public class API {
         }
         return relationship;
     }
+
 
 
 
@@ -2091,6 +2098,63 @@ public class API {
     }
 
 
+    /**
+     * Public api call to submit a vote
+     * @param pollId
+     * @param choices
+     * @return
+     */
+    public Poll submiteVote(String pollId, int[] choices){
+        JsonObject jsonObject = new JsonObject();
+        JsonArray jchoices = new JsonArray();
+        for(int choice : choices){
+            jchoices.add(choice);
+        }
+        jsonObject.add("choices",jchoices);
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.postJson(getAbsoluteUrl(String.format("/polls/%s/votes", pollId)), 60, jsonObject, prefKeyOauthTokenT);
+            return parsePoll(context, new JSONObject(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Public api call to refresh a poll
+     * @param pollId
+     * @return
+     */
+    public Poll getPoll(String pollId){
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/polls/%s", pollId)), 60, null, prefKeyOauthTokenT);
+            return parsePoll(context, new JSONObject(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /**
      * Posts a status
@@ -2099,38 +2163,41 @@ public class API {
      */
     public APIResponse postStatusAction(Status status){
 
-        HashMap<String, String> params = new HashMap<>();
-        try {
-            params.put("status", URLEncoder.encode(status.getContent(), "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            params.put("status", status.getContent());
-        }
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("status", status.getContent());
         if( status.getContentType() != null)
-            params.put("content_type", status.getContentType());
+            jsonObject.addProperty("content_type", status.getContentType());
         if( status.getIn_reply_to_id() != null)
-            params.put("in_reply_to_id", status.getIn_reply_to_id());
+            jsonObject.addProperty("in_reply_to_id", status.getIn_reply_to_id());
         if( status.getMedia_attachments() != null && status.getMedia_attachments().size() > 0 ) {
-            StringBuilder parameters = new StringBuilder();
+            JsonArray mediaArray = new JsonArray();
             for(Attachment attachment: status.getMedia_attachments())
-                parameters.append("media_ids[]=").append(attachment.getId()).append("&");
-            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(12));
-            params.put("media_ids[]", parameters.toString());
+                mediaArray.add(attachment.getId());
+            jsonObject.add("media_ids", mediaArray);
         }
         if( status.getScheduled_at() != null)
-            params.put("scheduled_at", status.getScheduled_at());
+            jsonObject.addProperty("scheduled_at", status.getScheduled_at());
         if( status.isSensitive())
-            params.put("sensitive", Boolean.toString(status.isSensitive()));
+            jsonObject.addProperty("sensitive", Boolean.toString(status.isSensitive()));
         if( status.getSpoiler_text() != null)
-            try {
-                params.put("spoiler_text", URLEncoder.encode(status.getSpoiler_text(), "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                params.put("spoiler_text", status.getSpoiler_text());
+            jsonObject.addProperty("spoiler_text", status.getSpoiler_text());
+        if( status.getPoll() != null){
+            JsonObject poll = new JsonObject();
+            JsonArray options = new JsonArray();
+            for(PollOptions option: status.getPoll().getOptionsList()){
+                if( !option.getTitle().isEmpty())
+                    options.add(option.getTitle());
             }
-        params.put("visibility", status.getVisibility());
+            poll.add("options",options);
+            poll.addProperty("expires_in",status.getPoll().getExpires_in());
+            poll.addProperty("multiple",status.getPoll().isMultiple());
+            jsonObject.add("poll", poll);
+        }
+        jsonObject.addProperty("visibility", status.getVisibility());
         statuses = new ArrayList<>();
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.post(getAbsoluteUrl("/statuses"), 60, params, prefKeyOauthTokenT);
+            String response = httpsConnection.postJson(getAbsoluteUrl("/statuses"), 60, jsonObject, prefKeyOauthTokenT);
             apiResponse.setSince_id(httpsConnection.getSince_id());
             apiResponse.setMax_id(httpsConnection.getMax_id());
             Status statusreturned = parseStatuses(context, new JSONObject(response));
@@ -3505,6 +3572,40 @@ public class API {
         return statuses;
     }
 
+
+    /**
+     * Parse a poll
+     * @param context
+     * @param resobj
+     * @return
+     */
+    public static Poll parsePoll(Context context, JSONObject resobj){
+        Poll poll = new Poll();
+        try {
+            poll.setId(resobj.getString("id"));
+            poll.setExpires_at(Helper.mstStringToDate(context, resobj.getString("expires_at")));
+            poll.setExpired(resobj.getBoolean("expired"));
+            poll.setMultiple(resobj.getBoolean("multiple"));
+            poll.setVotes_count(resobj.getInt("votes_count"));
+            poll.setVoted(resobj.getBoolean("voted"));
+            JSONArray options = resobj.getJSONArray("options");
+            List<PollOptions> pollOptions = new ArrayList<>();
+            for(int i = 0; i < options.length() ; i++){
+                JSONObject option = options.getJSONObject(i);
+                PollOptions pollOption = new PollOptions();
+                pollOption.setTitle(option.getString("title"));
+                pollOption.setVotes_count(option.getInt("votes_count"));
+                pollOptions.add(pollOption);
+            }
+            poll.setOptionsList(pollOptions);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return poll;
+    }
+
     /**
      * Parse json response for unique status
      * @param resobj JSONObject
@@ -3546,6 +3647,26 @@ public class API {
                     }catch (JSONException ignore){}
                     attachments.add(attachment);
                 }
+            }
+            if( resobj.has("poll") && !resobj.isNull("poll")){
+                Poll poll = new Poll();
+                poll.setId(resobj.getJSONObject("poll").getString("id"));
+                poll.setExpires_at(Helper.mstStringToDate(context, resobj.getJSONObject("poll").getString("expires_at")));
+                poll.setExpired(resobj.getJSONObject("poll").getBoolean("expired"));
+                poll.setMultiple(resobj.getJSONObject("poll").getBoolean("multiple"));
+                poll.setVotes_count(resobj.getJSONObject("poll").getInt("votes_count"));
+                poll.setVoted(resobj.getJSONObject("poll").getBoolean("voted"));
+                JSONArray options = resobj.getJSONObject("poll").getJSONArray("options");
+                List<PollOptions> pollOptions = new ArrayList<>();
+                for(int i = 0; i < options.length() ; i++){
+                    JSONObject option = options.getJSONObject(i);
+                    PollOptions pollOption = new PollOptions();
+                    pollOption.setTitle(option.getString("title"));
+                    pollOption.setVotes_count(option.getInt("votes_count"));
+                    pollOptions.add(pollOption);
+                }
+                poll.setOptionsList(pollOptions);
+                status.setPoll(poll);
             }
 
             try {

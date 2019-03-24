@@ -22,6 +22,7 @@ import android.text.Html;
 import android.text.SpannableString;
 
 import com.google.common.io.ByteStreams;
+import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
@@ -42,6 +43,7 @@ import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -325,7 +327,6 @@ public class HttpsConnection {
                 postData.append(String.valueOf(param.getValue()));
             }
             byte[] postDataBytes = postData.toString().getBytes("UTF-8");
-
             if (proxy != null)
                 httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
             else
@@ -384,6 +385,98 @@ public class HttpsConnection {
                 postData.append(String.valueOf(param.getValue()));
             }
             byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+            if (proxy != null)
+                httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
+            else
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpURLConnection.setConnectTimeout(timeout * 1000);
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setRequestMethod("POST");
+            if (token != null && !token.startsWith("Basic "))
+                httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpURLConnection.setRequestProperty("Authorization", token);
+            httpURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+
+            httpURLConnection.getOutputStream().write(postDataBytes);
+            String response;
+            if (httpURLConnection.getResponseCode() >= 200 && httpURLConnection.getResponseCode() < 400) {
+                getSinceMaxId();
+                response = converToString(httpURLConnection.getInputStream());
+            } else {
+                String error = null;
+                if( httpURLConnection.getErrorStream() != null) {
+                    InputStream stream = httpURLConnection.getErrorStream();
+                    if (stream == null) {
+                        stream = httpURLConnection.getInputStream();
+                    }
+                    try (Scanner scanner = new Scanner(stream)) {
+                        scanner.useDelimiter("\\Z");
+                        error = scanner.next();
+                    }catch (Exception e){e.printStackTrace();}
+                }
+                int responseCode = httpURLConnection.getResponseCode();
+                throw new HttpsConnectionException(responseCode, error);
+            }
+            getSinceMaxId();
+            httpURLConnection.getInputStream().close();
+            return response;
+        }
+
+    }
+
+
+    public String postJson(String urlConnection, int timeout, JsonObject jsonObject, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
+        if( urlConnection.startsWith("https://")) {
+            URL url = new URL(urlConnection);
+            byte[] postDataBytes = new byte[0];
+            postDataBytes = jsonObject.toString().getBytes("UTF-8");
+            if (proxy != null)
+                httpsURLConnection = (HttpsURLConnection) url.openConnection(proxy);
+            else
+                httpsURLConnection = (HttpsURLConnection) url.openConnection();
+            httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setConnectTimeout(timeout * 1000);
+            httpsURLConnection.setDoOutput(true);
+            httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
+            httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpsURLConnection.setRequestProperty("Accept", "application/json");
+            httpsURLConnection.setRequestMethod("POST");
+            if (token != null && !token.startsWith("Basic "))
+                httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+            else if( token != null && token.startsWith("Basic "))
+                httpsURLConnection.setRequestProperty("Authorization", token);
+            httpsURLConnection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+
+
+            httpsURLConnection.getOutputStream().write(postDataBytes);
+            String response;
+            if (httpsURLConnection.getResponseCode() >= 200 && httpsURLConnection.getResponseCode() < 400) {
+                getSinceMaxId();
+                response = converToString(httpsURLConnection.getInputStream());
+            } else {
+                String error = null;
+                if( httpsURLConnection.getErrorStream() != null) {
+                    InputStream stream = httpsURLConnection.getErrorStream();
+                    if (stream == null) {
+                        stream = httpsURLConnection.getInputStream();
+                    }
+                    try (Scanner scanner = new Scanner(stream)) {
+                        scanner.useDelimiter("\\Z");
+                        error = scanner.next();
+                    }catch (Exception e){e.printStackTrace();}
+                }
+                int responseCode = httpsURLConnection.getResponseCode();
+                throw new HttpsConnectionException(responseCode, error);
+            }
+            getSinceMaxId();
+            httpsURLConnection.getInputStream().close();
+            return response;
+        }else {
+            URL url = new URL(urlConnection);
+            byte[] postDataBytes = jsonObject.toString().getBytes("UTF-8");
 
             if (proxy != null)
                 httpURLConnection = (HttpURLConnection) url.openConnection(proxy);
