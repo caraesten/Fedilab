@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -2112,6 +2111,31 @@ public class API {
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.postJson(getAbsoluteUrl(String.format("/polls/%s/votes", pollId)), 60, jsonObject, prefKeyOauthTokenT);
+            return parsePoll(context, new JSONObject(response));
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Public api call to refresh a poll
+     * @param pollId
+     * @return
+     */
+    public Poll getPoll(String pollId){
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/polls/%s", pollId)), 60, null, prefKeyOauthTokenT);
             return parsePoll(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);

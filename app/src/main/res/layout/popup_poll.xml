@@ -25,6 +25,7 @@
         android:id="@+id/choice_1"
         android:hint="@string/poll_choice_1"
         android:singleLine="true"
+        android:maxLength="25"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
@@ -32,6 +33,7 @@
     <EditText
         android:id="@+id/choice_2"
         android:hint="@string/poll_choice_2"
+        android:maxLength="25"
         android:singleLine="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,6 +42,7 @@
     <EditText
         android:id="@+id/choice_3"
         android:hint="@string/poll_choice_3"
+        android:maxLength="25"
         android:singleLine="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,6 +51,7 @@
     <EditText
         android:id="@+id/choice_4"
         android:hint="@string/poll_choice_4"
+        android:maxLength="25"
         android:singleLine="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
