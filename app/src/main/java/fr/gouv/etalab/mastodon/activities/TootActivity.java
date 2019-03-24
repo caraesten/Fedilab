@@ -1515,6 +1515,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         }
         if( poll != null && visibility.equals("direct")){
             Toasty.error(getApplicationContext(),getString(R.string.poll_not_private),Toast.LENGTH_LONG).show();
+            toot_it.setEnabled(true);
             return;
         }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
