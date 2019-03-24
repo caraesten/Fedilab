@@ -103,6 +103,14 @@
                     android:src="@drawable/ic_insert_photo"
                     android:contentDescription="@string/toot_select_image"  />
                 <ImageButton
+                    android:id="@+id/poll_action"
+                    android:visibility="gone"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:src="@drawable/ic_view_list_poll"
+                    android:contentDescription="@string/poll"  />
+                <ImageButton
                     android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
                     android:id="@+id/toot_visibility"

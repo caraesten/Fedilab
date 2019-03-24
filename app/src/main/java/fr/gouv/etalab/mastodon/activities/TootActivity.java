@@ -221,6 +221,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     private int max_media_count;
     public static HashMap<String, Uri> filesMap;
     private Poll poll;
+    private ImageButton poll_action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -306,6 +307,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         toot_sensitive = findViewById(R.id.toot_sensitive);
         drawer_layout = findViewById(R.id.drawer_layout);
         ImageButton toot_emoji = findViewById(R.id.toot_emoji);
+        poll_action = findViewById(R.id.poll_action);
         isScheduled = false;
         if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_EMOJI, true)) {
             final EmojiPopup emojiPopup = EmojiPopup.Builder.fromRootView(drawer_layout).build(toot_content);
@@ -753,6 +755,12 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             restoreToot(restored);
         }
 
+        poll_action.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPollPopup();
+            }
+        });
     }
 
     @Override
@@ -1052,153 +1060,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 return true;
 
             case R.id.action_poll:
-                AlertDialog.Builder alertPoll = new AlertDialog.Builder(TootActivity.this, style);
-                alertPoll.setTitle(R.string.create_poll);
-                View view = getLayoutInflater().inflate(R.layout.popup_poll, null);
-                alertPoll.setView(view);
-                Spinner poll_choice = view.findViewById(R.id.poll_choice);
-                Spinner poll_duration = view.findViewById(R.id.poll_duration);
-                EditText choice_1 = view.findViewById(R.id.choice_1);
-                EditText choice_2 = view.findViewById(R.id.choice_2);
-                EditText choice_3 = view.findViewById(R.id.choice_3);
-                EditText choice_4 = view.findViewById(R.id.choice_4);
-                ArrayAdapter<CharSequence> pollduration = ArrayAdapter.createFromResource(TootActivity.this,
-                        R.array.poll_duration, android.R.layout.simple_spinner_item);
-
-                ArrayAdapter<CharSequence> pollchoice = ArrayAdapter.createFromResource(TootActivity.this,
-                        R.array.poll_choice_type, android.R.layout.simple_spinner_item);
-                poll_choice.setAdapter(pollchoice);
-                poll_duration.setAdapter(pollduration);
-                poll_duration.setSelection(4);
-                poll_choice.setSelection(0);
-                if( poll != null){
-                    int i = 1;
-                    for(PollOptions pollOptions: poll.getOptionsList()){
-                        switch (i){
-                            case 1:
-                                if( pollOptions.getTitle() != null)
-                                    choice_1.setText(pollOptions.getTitle());
-                                break;
-                            case 2:
-                                if( pollOptions.getTitle() != null)
-                                    choice_2.setText(pollOptions.getTitle());
-                                break;
-                            case 3:
-                                if( pollOptions.getTitle() != null)
-                                    choice_3.setText(pollOptions.getTitle());
-                                break;
-                            case 4:
-                                if( pollOptions.getTitle() != null)
-                                    choice_4.setText(pollOptions.getTitle());
-                                break;
-                        }
-                        i++;
-                    }
-                    switch (poll.getExpires_in()){
-                        case 300:
-                            poll_duration.setSelection(0);
-                            break;
-                        case 1800:
-                            poll_duration.setSelection(1);
-                            break;
-                        case 3600:
-                            poll_duration.setSelection(2);
-                            break;
-                        case 21600:
-                            poll_duration.setSelection(3);
-                            break;
-                        case 86400:
-                            poll_duration.setSelection(4);
-                            break;
-                        case 259200:
-                            poll_duration.setSelection(5);
-                            break;
-                        case 604800:
-                            poll_duration.setSelection(6);
-                            break;
-                    }
-                    if( poll.isMultiple())
-                        poll_choice.setSelection(1);
-                    else
-                        poll_choice.setSelection(0);
-
-
-                }
-                alertPoll.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        if( poll != null)
-                            poll = null;
-                        dialog.dismiss();
-                    }
-                });
-
-                alertPoll.setPositiveButton(R.string.done, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        int poll_duration_pos = poll_duration.getSelectedItemPosition();
-
-                        int poll_choice_pos = poll_choice.getSelectedItemPosition();
-                        String choice1 = choice_1.getText().toString().trim();
-                        String choice2 = choice_2.getText().toString().trim();
-                        String choice3 = choice_3.getText().toString().trim();
-                        String choice4 = choice_4.getText().toString().trim();
-
-                        if( choice1.isEmpty() && choice2.isEmpty()){
-                            Toasty.error(getApplicationContext(), getString(R.string.poll_invalid_choices), Toast.LENGTH_SHORT).show();
-                        }else{
-                            poll = new Poll();
-                            poll.setMultiple(poll_choice_pos != 0);
-                            int expire = 0;
-                            switch (poll_duration_pos){
-                                case 0:
-                                    expire = 300;
-                                    break;
-                                case 1:
-                                    expire = 1800;
-                                    break;
-                                case 2:
-                                    expire = 3600;
-                                    break;
-                                case 3:
-                                    expire = 21600;
-                                    break;
-                                case 4:
-                                    expire = 86400;
-                                    break;
-                                case 5:
-                                    expire = 259200;
-                                    break;
-                                case 6:
-                                    expire = 604800;
-                                    break;
-                                default:
-                                    expire = 864000;
-                            }
-                            poll.setExpires_in(expire);
-
-                            List<PollOptions> pollOptions = new ArrayList<>();
-                            PollOptions pollOption1 = new PollOptions();
-                            pollOption1.setTitle(choice1);
-                            pollOptions.add(pollOption1);
-
-                            PollOptions pollOption2 = new PollOptions();
-                            pollOption2.setTitle(choice2);
-                            pollOptions.add(pollOption2);
-
-                            PollOptions pollOption3 = new PollOptions();
-                            pollOption3.setTitle(choice3);
-                            pollOptions.add(pollOption3);
-
-                            PollOptions pollOption4 = new PollOptions();
-                            pollOption4.setTitle(choice4);
-                            pollOptions.add(pollOption4);
-                            poll.setOptionsList(pollOptions);
-
-                            dialog.dismiss();
-                        }
-
-                    }
-                });
-                alertPoll.show();
+                displayPollPopup();
                 return false;
             case R.id.action_translate:
                 final CountryPicker picker = CountryPicker.newInstance(getString(R.string.which_language));  // dialog title
@@ -1651,6 +1513,10 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             toot_it.setEnabled(true);
             return;
         }
+        if( poll != null && visibility.equals("direct")){
+            Toasty.error(getApplicationContext(),getString(R.string.poll_not_private),Toast.LENGTH_LONG).show();
+            return;
+        }
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean split_toot = sharedpreferences.getBoolean(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS, false);
         int split_toot_size = sharedpreferences.getInt(Helper.SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE, Helper.SPLIT_TOOT_SIZE);
@@ -1668,15 +1534,18 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if(content_type != null)
             toot.setContentType(content_type);
         toot.setSensitive(isSensitive);
-        toot.setMedia_attachments(attachments);
+
         if( toot_cw_content.getText().toString().trim().length() > 0)
             toot.setSpoiler_text(toot_cw_content.getText().toString().trim());
         toot.setVisibility(visibility);
         if( tootReply != null)
             toot.setIn_reply_to_id(tootReply.getId());
         toot.setContent(tootContent);
-        if( poll != null)
+        if( poll != null) {
             toot.setPoll(poll);
+        }else{
+            toot.setMedia_attachments(attachments);
+        }
         if( timestamp == null)
             if( scheduledstatus == null)
                 new PostStatusAsyncTask(getApplicationContext(), accountReply, toot, TootActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -2394,6 +2263,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         if (matcher.find()) {
             content = matcher.replaceAll("$3@$2");
         }
+
         if( removed ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 content = Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY).toString();
@@ -2401,6 +2271,13 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 //noinspection deprecation
                 content = Html.fromHtml(content).toString();
         }
+        if( status.getPoll() != null) {
+            poll = status.getPoll();
+            poll_action.setVisibility(View.VISIBLE);
+            toot_picture.setVisibility(View.GONE);
+            picture_scrollview.setVisibility(View.GONE);
+        }
+
         if( attachments != null && attachments.size() > 0){
             toot_picture_container.setVisibility(View.VISIBLE);
             picture_scrollview.setVisibility(View.VISIBLE);
@@ -2806,6 +2683,162 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     }
 
 
+    private void displayPollPopup(){
+        AlertDialog.Builder alertPoll = new AlertDialog.Builder(TootActivity.this, style);
+        alertPoll.setTitle(R.string.create_poll);
+        View view = getLayoutInflater().inflate(R.layout.popup_poll, null);
+        alertPoll.setView(view);
+        Spinner poll_choice = view.findViewById(R.id.poll_choice);
+        Spinner poll_duration = view.findViewById(R.id.poll_duration);
+        EditText choice_1 = view.findViewById(R.id.choice_1);
+        EditText choice_2 = view.findViewById(R.id.choice_2);
+        EditText choice_3 = view.findViewById(R.id.choice_3);
+        EditText choice_4 = view.findViewById(R.id.choice_4);
+        ArrayAdapter<CharSequence> pollduration = ArrayAdapter.createFromResource(TootActivity.this,
+                R.array.poll_duration, android.R.layout.simple_spinner_item);
+
+        ArrayAdapter<CharSequence> pollchoice = ArrayAdapter.createFromResource(TootActivity.this,
+                R.array.poll_choice_type, android.R.layout.simple_spinner_item);
+        poll_choice.setAdapter(pollchoice);
+        poll_duration.setAdapter(pollduration);
+        poll_duration.setSelection(4);
+        poll_choice.setSelection(0);
+        if( poll != null){
+            int i = 1;
+            for(PollOptions pollOptions: poll.getOptionsList()){
+                switch (i){
+                    case 1:
+                        if( pollOptions.getTitle() != null)
+                            choice_1.setText(pollOptions.getTitle());
+                        break;
+                    case 2:
+                        if( pollOptions.getTitle() != null)
+                            choice_2.setText(pollOptions.getTitle());
+                        break;
+                    case 3:
+                        if( pollOptions.getTitle() != null)
+                            choice_3.setText(pollOptions.getTitle());
+                        break;
+                    case 4:
+                        if( pollOptions.getTitle() != null)
+                            choice_4.setText(pollOptions.getTitle());
+                        break;
+                }
+                i++;
+            }
+            switch (poll.getExpires_in()){
+                case 300:
+                    poll_duration.setSelection(0);
+                    break;
+                case 1800:
+                    poll_duration.setSelection(1);
+                    break;
+                case 3600:
+                    poll_duration.setSelection(2);
+                    break;
+                case 21600:
+                    poll_duration.setSelection(3);
+                    break;
+                case 86400:
+                    poll_duration.setSelection(4);
+                    break;
+                case 259200:
+                    poll_duration.setSelection(5);
+                    break;
+                case 604800:
+                    poll_duration.setSelection(6);
+                    break;
+            }
+            if( poll.isMultiple())
+                poll_choice.setSelection(1);
+            else
+                poll_choice.setSelection(0);
+
+
+        }
+        alertPoll.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                if( poll != null)
+                    poll = null;
+                poll_action.setVisibility(View.GONE);
+                toot_picture.setVisibility(View.VISIBLE);
+                if( attachments != null && attachments.size() > 0)
+                    picture_scrollview.setVisibility(View.VISIBLE);
+                dialog.dismiss();
+            }
+        });
+
+        alertPoll.setPositiveButton(R.string.done, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                int poll_duration_pos = poll_duration.getSelectedItemPosition();
+
+                int poll_choice_pos = poll_choice.getSelectedItemPosition();
+                String choice1 = choice_1.getText().toString().trim();
+                String choice2 = choice_2.getText().toString().trim();
+                String choice3 = choice_3.getText().toString().trim();
+                String choice4 = choice_4.getText().toString().trim();
+
+                if( choice1.isEmpty() && choice2.isEmpty()){
+                    Toasty.error(getApplicationContext(), getString(R.string.poll_invalid_choices), Toast.LENGTH_SHORT).show();
+                }else{
+                    poll = new Poll();
+                    poll.setMultiple(poll_choice_pos != 0);
+                    int expire = 0;
+                    switch (poll_duration_pos){
+                        case 0:
+                            expire = 300;
+                            break;
+                        case 1:
+                            expire = 1800;
+                            break;
+                        case 2:
+                            expire = 3600;
+                            break;
+                        case 3:
+                            expire = 21600;
+                            break;
+                        case 4:
+                            expire = 86400;
+                            break;
+                        case 5:
+                            expire = 259200;
+                            break;
+                        case 6:
+                            expire = 604800;
+                            break;
+                        default:
+                            expire = 864000;
+                    }
+                    poll.setExpires_in(expire);
+
+                    List<PollOptions> pollOptions = new ArrayList<>();
+                    PollOptions pollOption1 = new PollOptions();
+                    pollOption1.setTitle(choice1);
+                    pollOptions.add(pollOption1);
+
+                    PollOptions pollOption2 = new PollOptions();
+                    pollOption2.setTitle(choice2);
+                    pollOptions.add(pollOption2);
+
+                    PollOptions pollOption3 = new PollOptions();
+                    pollOption3.setTitle(choice3);
+                    pollOptions.add(pollOption3);
+
+                    PollOptions pollOption4 = new PollOptions();
+                    pollOption4.setTitle(choice4);
+                    pollOptions.add(pollOption4);
+                    poll.setOptionsList(pollOptions);
+
+                    dialog.dismiss();
+                }
+                poll_action.setVisibility(View.VISIBLE);
+                toot_picture.setVisibility(View.GONE);
+                picture_scrollview.setVisibility(View.GONE);
+
+            }
+        });
+        alertPoll.show();
+    }
 
     private void storeToot(boolean message, boolean forced){
         //Nothing to store here....
@@ -2823,6 +2856,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
         toot.setVisibility(visibility);
         toot.setContent(toot_content.getText().toString().trim());
 
+        if( poll != null)
+            toot.setPoll(poll);
         if( tootReply != null)
             toot.setIn_reply_to_id(tootReply.getId());
         SQLiteDatabase db = Sqlite.getInstance(getApplicationContext(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();

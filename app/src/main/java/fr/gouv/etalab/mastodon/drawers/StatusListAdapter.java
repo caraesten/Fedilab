@@ -2531,6 +2531,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                     toot.setSpoiler_text(status.getSpoiler_text().trim());
                                                 toot.setContent(status.getContent());
                                                 toot.setVisibility(status.getVisibility());
+                                                if( status.getPoll() != null){
+                                                    toot.setPoll(status.getPoll());
+                                                }
                                                 new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, status.getIn_reply_to_id(), null, false, false, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                             } else {
                                                 toot = new Status();
@@ -2540,6 +2543,9 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                     toot.setSpoiler_text(status.getSpoiler_text().trim());
                                                 toot.setVisibility(status.getVisibility());
                                                 toot.setContent(status.getContent());
+                                                if( status.getPoll() != null){
+                                                    toot.setPoll(status.getPoll());
+                                                }
                                                 final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                                                 long id = new StatusStoredDAO(context, db).insertStatus(toot, null);
                                                 Intent intentToot = new Intent(context, TootActivity.class);
