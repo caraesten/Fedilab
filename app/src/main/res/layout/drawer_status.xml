@@ -725,7 +725,11 @@
                 android:id="@+id/status_peertube_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-        </LinearLayout>/
+        </LinearLayout>
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/layout_poll" />
         <LinearLayout
             android:layout_marginStart="60dp"
             android:layout_marginLeft="60dp"

@@ -132,6 +132,7 @@ public class Status implements Parcelable{
     private String scheduled_at;
     private String contentType;
     private boolean isNotice = false;
+    private Poll poll = null;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -188,6 +189,7 @@ public class Status implements Parcelable{
         dest.writeString(this.contentType);
         dest.writeByte(this.showSpoiler ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isNotice ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.poll, flags);
     }
 
     protected Status(Parcel in) {
@@ -246,6 +248,7 @@ public class Status implements Parcelable{
         this.contentType = in.readString();
         this.showSpoiler = in.readByte() != 0;
         this.isNotice = in.readByte() != 0;
+        this.poll = in.readParcelable(Poll.class.getClassLoader());
     }
 
     public static final Creator<Status> CREATOR = new Creator<Status>() {
@@ -1330,5 +1333,13 @@ public class Status implements Parcelable{
 
     public void setNotice(boolean notice) {
         isNotice = notice;
+    }
+
+    public Poll getPoll() {
+        return poll;
+    }
+
+    public void setPoll(Poll poll) {
+        this.poll = poll;
     }
 }

@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -46,6 +47,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -55,12 +57,15 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -90,6 +95,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import br.com.felix.horizontalbargraph.HorizontalBar;
+import br.com.felix.horizontalbargraph.model.BarItem;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
@@ -113,6 +120,8 @@ import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Poll;
+import fr.gouv.etalab.mastodon.client.Entities.PollOptions;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
@@ -328,6 +337,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         LinearLayout status_peertube_container;
         TextView status_peertube_reply, status_peertube_delete;
 
+
+        //Poll
+        LinearLayout poll_container, single_choice, multiple_choice, rated;
+        RadioGroup radio_group;
+        RadioButton r_choice_1, r_choice_2, r_choice_3, r_choice_4;
+        CheckBox c_choice_1, c_choice_2, c_choice_3, c_choice_4;
+        HorizontalBar choices;
+        TextView number_votes, remaining_time;
+        Button submit_vote;
+
         public View getView(){
             return itemView;
         }
@@ -416,6 +435,23 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
             status_peertube_reply = itemView.findViewById(R.id.status_peertube_reply);
             status_peertube_delete = itemView.findViewById(R.id.status_peertube_delete);
 
+            poll_container = itemView.findViewById(R.id.poll_container);
+            single_choice = itemView.findViewById(R.id.single_choice);
+            multiple_choice = itemView.findViewById(R.id.multiple_choice);
+            rated = itemView.findViewById(R.id.rated);
+            radio_group = itemView.findViewById(R.id.radio_group);
+            r_choice_1 = itemView.findViewById(R.id.r_choice_1);
+            r_choice_2 = itemView.findViewById(R.id.r_choice_2);
+            r_choice_3 = itemView.findViewById(R.id.r_choice_3);
+            r_choice_4 = itemView.findViewById(R.id.r_choice_4);
+            c_choice_1 = itemView.findViewById(R.id.c_choice_1);
+            c_choice_2 = itemView.findViewById(R.id.c_choice_2);
+            c_choice_3 = itemView.findViewById(R.id.c_choice_3);
+            c_choice_4 = itemView.findViewById(R.id.c_choice_4);
+            choices = itemView.findViewById(R.id.choices);
+            number_votes = itemView.findViewById(R.id.number_votes);
+            remaining_time = itemView.findViewById(R.id.remaining_time);
+            submit_vote = itemView.findViewById(R.id.submit_vote);
         }
     }
 
@@ -506,7 +542,91 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
 
             holder.status_reply.setText("");
             //Display a preview for accounts that have replied *if enabled and only for home timeline*
+            if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
+                holder.rated.setVisibility(View.GONE);
+                holder.multiple_choice.setVisibility(View.GONE);
+                holder.single_choice.setVisibility(View.GONE);
+                holder.submit_vote.setVisibility(View.GONE);
+                if( status.getPoll() != null){
+                    Poll poll = status.getPoll();
+                    int choiceCount = status.getPoll().getOptionsList().size();
+                    if( poll.isVoted()){
+                        holder.rated.setVisibility(View.VISIBLE);
+                        List<BarItem> items = new ArrayList<>();
+                        int greaterValue = 0;
+                        for(PollOptions pollOption: status.getPoll().getOptionsList()){
+                            if( pollOption.getVotes_count() > greaterValue)
+                                greaterValue = pollOption.getVotes_count();
+                        }
+                        for(PollOptions pollOption: status.getPoll().getOptionsList()){
+                            double value = ((double)(pollOption.getVotes_count()* 100) / (double)poll.getVotes_count()) ;
+                            if( pollOption.getVotes_count() == greaterValue) {
+                                BarItem bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC4), Color.WHITE);
+                                bar.setRounded(true);
+                                bar.setHeight1(30);
+                                items.add(bar);
+                            }else {
+                                BarItem bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC2), Color.WHITE);
+                                bar.setRounded(true);
+                                bar.setHeight1(30);
+                                items.add(bar);
+                            }
+                        }
+                        holder.choices.init(context).hasAnimation(true).addAll(items).build();
+                    }else {
+                        if( poll.isMultiple()){
+                            Log.v(Helper.TAG,"count: " + choiceCount);
+                            holder.multiple_choice.setVisibility(View.VISIBLE);
+                            holder.c_choice_3.setVisibility(View.GONE);
+                            holder.c_choice_4.setVisibility(View.GONE);
+                            if( choiceCount > 2)
+                                holder.c_choice_3.setVisibility(View.VISIBLE);
+                            if( choiceCount > 3)
+                                holder.c_choice_4.setVisibility(View.VISIBLE);
+                            int j = 1;
+                            for(PollOptions pollOption: status.getPoll().getOptionsList()){
+                                if( j == 1 )
+                                    holder.c_choice_1.setText(pollOption.getTitle());
+                                else  if( j == 2 )
+                                    holder.c_choice_2.setText(pollOption.getTitle());
+                                else  if( j == 3 )
+                                    holder.c_choice_3.setText(pollOption.getTitle());
+                                else  if( j == 4 )
+                                    holder.c_choice_4.setText(pollOption.getTitle());
+                                j++;
+                            }
 
+                        }else {
+                            Log.v(Helper.TAG,"count: " + choiceCount);
+                            holder.single_choice.setVisibility(View.VISIBLE);
+                            holder.r_choice_3.setVisibility(View.GONE);
+                            holder.r_choice_4.setVisibility(View.GONE);
+                            if( choiceCount > 2)
+                                holder.r_choice_3.setVisibility(View.VISIBLE);
+                            if( choiceCount > 3)
+                                holder.r_choice_4.setVisibility(View.VISIBLE);
+                            int j = 1;
+                            for(PollOptions pollOption: status.getPoll().getOptionsList()){
+                                if( j == 1 )
+                                    holder.r_choice_1.setText(pollOption.getTitle());
+                                else  if( j == 2 )
+                                    holder.r_choice_2.setText(pollOption.getTitle());
+                                else  if( j == 3 )
+                                    holder.r_choice_3.setText(pollOption.getTitle());
+                                else  if( j == 4 )
+                                    holder.r_choice_4.setText(pollOption.getTitle());
+                                j++;
+                            }
+                        }
+                        holder.submit_vote.setVisibility(View.VISIBLE);
+                    }
+                    holder.poll_container.setVisibility(View.VISIBLE);
+                    holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_vote,status.getPoll().getVotes_count(),status.getPoll().getVotes_count()));
+                    holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
+                }else {
+                    holder.poll_container.setVisibility(View.GONE);
+                }
+            }
 
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
                 holder.status_action_container.setVisibility(View.GONE);

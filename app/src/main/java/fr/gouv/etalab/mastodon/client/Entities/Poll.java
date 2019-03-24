@@ -14,10 +14,10 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,11 +25,23 @@ public class Poll implements Parcelable {
 
     private String id;
     private Date expires_at;
+    private int expires_in;
     private boolean expired;
     private boolean multiple;
     private int votes_count;
     private boolean voted;
     private List<PollOptions> optionsList;
+
+    public Poll() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Date getExpires_at() {
         return expires_at;
@@ -79,27 +91,14 @@ public class Poll implements Parcelable {
         this.optionsList = optionsList;
     }
 
-
-    private class PollOptions{
-        private String title;
-        private String votes_count;
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getVotes_count() {
-            return votes_count;
-        }
-
-        public void setVotes_count(String votes_count) {
-            this.votes_count = votes_count;
-        }
+    public int getExpires_in() {
+        return expires_in;
     }
+
+    public void setExpires_in(int expires_in) {
+        this.expires_in = expires_in;
+    }
+
 
     @Override
     public int describeContents() {
@@ -110,26 +109,24 @@ public class Poll implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeLong(this.expires_at != null ? this.expires_at.getTime() : -1);
+        dest.writeInt(this.expires_in);
         dest.writeByte(this.expired ? (byte) 1 : (byte) 0);
         dest.writeByte(this.multiple ? (byte) 1 : (byte) 0);
         dest.writeInt(this.votes_count);
         dest.writeByte(this.voted ? (byte) 1 : (byte) 0);
-        dest.writeList(this.optionsList);
-    }
-
-    public Poll() {
+        dest.writeTypedList(this.optionsList);
     }
 
     protected Poll(Parcel in) {
         this.id = in.readString();
         long tmpExpires_at = in.readLong();
         this.expires_at = tmpExpires_at == -1 ? null : new Date(tmpExpires_at);
+        this.expires_in = in.readInt();
         this.expired = in.readByte() != 0;
         this.multiple = in.readByte() != 0;
         this.votes_count = in.readInt();
         this.voted = in.readByte() != 0;
-        this.optionsList = new ArrayList<PollOptions>();
-        in.readList(this.optionsList, PollOptions.class.getClassLoader());
+        this.optionsList = in.createTypedArrayList(PollOptions.CREATOR);
     }
 
     public static final Parcelable.Creator<Poll> CREATOR = new Parcelable.Creator<Poll>() {
