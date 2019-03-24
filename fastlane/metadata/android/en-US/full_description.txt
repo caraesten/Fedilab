@@ -1,0 +1,81 @@
+/!\ The first field when logging in should be your instance hostname. For example: "mastodon.social" for the most popular Instance
+
+
+- You need to create an account on an Instance first
+- If you don't know what's Mastodon, please read: https://joinmastodon.org/
+- You want to choose an instance, please use this tool: https://instances.social/
+- It's an open source app, if you encounter a bug you can open a ticket on Gitlab: https://gitlab.com/tom79/mastalab/issues
+
+
+The number of libraries is minimized and it does not use tracking tools. The source code is free (GPLv3).
+You can help translating via https://crowdin.com/project/mastalab
+
+Current translations:
+🇬🇧 - 🇨🇳 - 🇯🇵 - 🇩🇪 - 🇫🇷 - 🇳🇱 - 🇪🇸 - 🇹🇷 - 🇻🇳 -🇧🇷 - 🇵🇹 - 🇷🇴- 🇷🇸- 🇵🇱 - 🇮🇩- 🇳🇴
+
+Features
+
+Multi-account management
+- Add accounts from different instances
+- Switch from one account to another by a simple click
+- Boost/Add to favorites/Reply with another account without switching
+
+Timelines
+- Federated / Local / Home
+- Clicks on toots display the conversation (context)
+- Clicks on mentioned accounts display details about these accounts
+- Clicks on hashtags display toots containing this hashtags
+- Create lists
+
+Actions on toots
+- Mute an account related to a toot
+- Block an account related to a toot
+- Report inappropriate toots to administrators
+- Add/Remove a toot from favourites
+- Boost/Unboost toots
+- Copy the content of a toot
+- Download media
+- Translation of toots by a simple click (via the Yandex API)
+
+Write a toot
+- Add media
+- Change the visibility of the toot
+- Mention accounts in toots with autocompletion (@ + 2 characters)
+- Use tags with autocompletion
+- Mark the content as sensitive
+- Add spoilers
+- Toots which have not been sent are saved (drafts) - can be disabled in settings
+- Drafts can be edited/deleted/scheduled
+
+Scheduled toots
+- Can be edited/deleted/scheduled at another date as long as they have not been sent.
+
+Interaction with accounts
+- Follow/Unfollow/Block/Unblock/Mute/Unmute
+- Display details of accounts
+- Authorize/Reject follow requests (for locked accounts)
+
+Searches
+- A top bar allows to make researches for accounts/tags/toots
+- A click on a tag displays toots containing this tag
+- Create a timeline with a search
+
+Network optimization
+- Load of media: Automatic/WIFI only/Ask
+- Customization of the number of toots/accounts per load
+
+Notifications
+- Live notifications
+- Notifications for new toots on the home page (could be disabled in settings)
+- Notifications for new events (could be disabled or filtered in settings)
+
+Built-in browser
+- Full screen videos
+- Disable JavaScript (default: enabled)
+- Disable third-party cookies (default: disabled)
+- Disable the built-in browser in settings
+
+
+Source code: https://gitlab.com/tom79/mastalab/
+Issues: https://gitlab.com/tom79/mastalab/issues
+Developer: https://mastodon.social/@tom79
