@@ -24,13 +24,11 @@ import android.os.AsyncTask;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.net.URLDecoder;
-import java.util.HashMap;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.GNUAPI;
-import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.PeertubeAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
@@ -73,33 +71,18 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
             account.setSocial(account.getSocial());
         }else if( social == SOCIAL.PEERTUBE) {
-            try {
-                account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
-                account.setSocial("PEERTUBE");
-            }catch (HttpsConnection.HttpsConnectionException exception){
-                if(exception.getStatusCode() == 401){
-                    HashMap<String, String> values = new PeertubeAPI(this.contextReference.get(), instance, null).refreshToken(client_id, client_secret, refresh_token);
-                    if( values.get("access_token") != null)
-                        this.token = values.get("access_token");
-                    if( values.get("refresh_token") != null)
-                        this.refresh_token = values.get("refresh_token");
-                }
-            }
+            account = new PeertubeAPI(this.contextReference.get(), instance, null).verifyCredentials();
+            account.setSocial("PEERTUBE");
         }else{
             account = new GNUAPI(this.contextReference.get(), instance, null).verifyCredentials();
             account.setSocial(account.getSocial());
         }
 
-        if( account == null)
-            return null;
         try {
             //At the state the instance can be encoded
             instance = URLDecoder.decode(instance, "utf-8");
-        } catch (UnsupportedEncodingException ignored) {ignored.printStackTrace();}
+        } catch (UnsupportedEncodingException ignored) {}
         SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-        if( token == null) {
-            token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-        }
         account.setToken(token);
         account.setClient_id(client_id);
         account.setClient_secret(client_secret);
