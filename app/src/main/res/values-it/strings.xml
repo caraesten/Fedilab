@@ -810,14 +810,14 @@
     <string name="poll_finish_at">termina tra %s</string>
     <string name="refresh_poll">Aggiorna sondaggio</string>
     <string name="vote">Vota</string>
-    <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
+    <string name="poll_not_private">Un sondaggio non può essere allegato ad un messaggio diretto!</string>
     <plurals name="number_of_vote">
-        <item quantity="one">%d vote</item>
-        <item quantity="other">%d votes</item>
+        <item quantity="one">%d voto</item>
+        <item quantity="other">%d voti</item>
     </plurals>
     <string-array name="poll_choice_type">
-        <item>Single choice</item>
-        <item>Multiple choices</item>
+        <item>Scelta singola</item>
+        <item>Scelta multipla</item>
     </string-array>
     <string-array name="poll_duration">
         <item>5 minutes</item>
