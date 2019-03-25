@@ -826,7 +826,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
         <item>7 nap</item>
     </string-array>
     <string-array name="settings_video_mode">
-        <item>Webes megjelenítés</item>
+        <item>Megjelenítés böngészőben</item>
         <item>Élő közvetítés</item>
     </string-array>
 </resources>
