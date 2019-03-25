@@ -813,21 +813,21 @@
     <string name="vote">Votar</string>
     <string name="poll_not_private">Unha sondaxe non se pode anexar a unha mensaxe directa!</string>
     <plurals name="number_of_vote">
-        <item quantity="one">%d vote</item>
-        <item quantity="other">%d votes</item>
+        <item quantity="one">%d voto</item>
+        <item quantity="other">%d votos</item>
     </plurals>
     <string-array name="poll_choice_type">
-        <item>Single choice</item>
-        <item>Multiple choices</item>
+        <item>Opción única</item>
+        <item>Selección múltiple</item>
     </string-array>
     <string-array name="poll_duration">
-        <item>5 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>7 days</item>
+        <item>5 minutos</item>
+        <item>30 minutos</item>
+        <item>1 hora</item>
+        <item>6 horas</item>
+        <item>1 día</item>
+        <item>3 días</item>
+        <item>7 días</item>
     </string-array>
     <string-array name="settings_video_mode">
         <item>Torrent</item>
