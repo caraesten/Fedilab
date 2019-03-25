@@ -735,7 +735,7 @@
     <string name="card_view_image">Image of the card</string>
     <string name="hide_media">Hide media</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Add description for media (for the visually impaired)</string>
 
     <string-array name="filter_expire">
         <item>Never</item>
