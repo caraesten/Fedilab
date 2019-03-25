@@ -64,8 +64,8 @@
     <string name="favourite">Kedvencek</string>
     <string name="follow">Új követők</string>
     <string name="mention">Említések</string>
-    <string name="reblog">Reblogok</string>
-    <string name="show_boosts">Reblogok megjelenítése</string>
+    <string name="reblog">Ismétlések</string>
+    <string name="show_boosts">Ismétlések megjelenítése</string>
     <string name="show_replies">Válaszok megjelenítése</string>
     <string name="action_open_in_web">Megnyitás böngészőben</string>
     <string name="translate">Fordítás</string>
@@ -102,13 +102,13 @@
     <string name="no_status">Nincs megjeleníthető tülkölés</string>
     <string name="fav_added">A tootot hozzáadtuk a kedvencekhez</string>
     <string name="fav_removed">A tootot eltávolítottuk a kedvencek közül!</string>
-    <string name="reblog_added">A tootot kiemeltük!</string>
-    <string name="reblog_removed">A tootot kiemelését megszüntettük!</string>
-    <string name="reblog_by">Kiemeltük %1$s egységgel</string>
+    <string name="reblog_added">A tootot megismételted!</string>
+    <string name="reblog_removed">A tootot többé nem ismétled!</string>
+    <string name="reblog_by">Ismétlés %1$s által</string>
     <string name="favourite_add">Hozzáadjuk ezt a tootot a kedvencekhez?</string>
     <string name="favourite_remove">Eltávolítsuk ezt a tootot a kedvencek közül?</string>
-    <string name="reblog_add">Emeljük ki ezt a tootot?</string>
-    <string name="reblog_remove">Szüntessük meg a tootot kiemelését?</string>
+    <string name="reblog_add">Megismétled ezt a tootot?</string>
+    <string name="reblog_remove">Megszünteted a tootot ismétlését?</string>
     <string name="pin_add">Rögzítsük ezt a tootot?</string>
     <string name="pin_remove">Szüntessük meg a toot rögzítését?</string>
     <string name="more_action_1">Elnémít</string>
@@ -222,7 +222,7 @@
     <!-- Notifications -->
     <string name="no_notifications">Nincs megjelenítendő értesítés</string>
     <string name="notif_mention">megemlített téged</string>
-    <string name="notif_reblog">kiemelte posztodat</string>
+    <string name="notif_reblog">megismételte posztodat</string>
     <string name="notif_favourite">lájkolta a posztodat</string>
     <string name="notif_follow">követ téged</string>
     <string name="notif_pouet">Új toot %1$s felhasználótól</string>
@@ -255,8 +255,8 @@
     <string name="toast_unmute">A fiók nincs többé némítva!</string>
     <string name="toast_follow">A fiókot követted!</string>
     <string name="toast_unfollow">A fiókot már nem követed!</string>
-    <string name="toast_reblog">A fiók ki lett emelve!</string>
-    <string name="toast_unreblog">A toot nincs többé kiemelve!</string>
+    <string name="toast_reblog">Megismételted a tootot!</string>
+    <string name="toast_unreblog">A toot ismétlését megszüntetted!</string>
     <string name="toast_favourite">A tootot hozzáadtuk a kedvencekhez!</string>
     <string name="toast_unfavourite">A tootot eltávolítottuk a kedvencek közül!</string>
     <string name="toast_report">Jelentetted a tootot!</string>
@@ -301,10 +301,10 @@
     <string name="settings_title_notifications">Értesítések kezelése</string>
     <string name="set_notif_follow">Értesítsen, amikor valaki követ</string>
     <string name="set_notif_follow_ask">Értesítsen, amikor valaki követni szeretne téged</string>
-    <string name="set_notif_follow_share">Értesítsen, amikor valaki kiemeli a posztodat</string>
+    <string name="set_notif_follow_share">Értesíts, amikor valaki megismétli a posztodat</string>
     <string name="set_notif_follow_add">Értesíts, ha valaki lájkolja a posztodat</string>
     <string name="set_notif_follow_mention">Értesítsen, amikor valaki megemlít téged</string>
-    <string name="set_share_validation">Kérdezz vissza kiemelés előtt</string>
+    <string name="set_share_validation">Kérdezz vissza ismétlés előtt</string>
     <string name="set_share_validation_fav">Kérdezz vissza, mielőtt hozzáadsz valamit a kedvenceidhez</string>
     <string name="settings_title_more_options">Részletes beállítások</string>
     <string name="set_wifi_only">Csak WiFi esetén értesíts</string>
@@ -477,7 +477,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="action_lists_owner">Listáid</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s elköltözött ide: %2$s</string>
-    <string name="show_boost_count">Mutasd meg a kiemelt/lájkolt posztok számát</string>
+    <string name="show_boost_count">Mutasd meg az ismétlések/kedvenc posztok számát</string>
     <string name="issue_login_title">Nem sikeres a hitelesítés?</string>
     <string name="issue_login_message">        <b>Íme néhány hasznos tipp:</b>\n\n
         - Ellenőrizd, hogy nem gépelted-e el a szerver nevét.\n\n
@@ -571,7 +571,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="expand_image">Automatikusan kibontjuk a rejtett médiákat</string>
     <string name="set_display_follow_instance">Megjeleníti a szerver követése gombot</string>
     <string name="channel_notif_follow">Új követő</string>
-    <string name="channel_notif_boost">Új kiemelés</string>
+    <string name="channel_notif_boost">Új ismétlés</string>
     <string name="channel_notif_fav">Új kedvenc</string>
     <string name="channel_notif_mention">Új említés</string>
     <string name="channel_notif_toot">Új toot</string>
@@ -636,10 +636,10 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="tags_renamed">Megváltoztattuk a címkét!</string>
     <string name="tags_deleted">Töröltük a címkét!</string>
     <string name="set_display_art">Művészies idővonal megjelenítése</string>
-    <string name="schedule_boost">Felerősítés időzítése</string>
-    <string name="boost_scheduled">Időzítettük a felerősítést!</string>
-    <string name="no_scheduled_boosts">Nincs megjeleníthető időzített felerősítése!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Nyisd meg egy toot menüjét és válaszd a <b>Felerősítés időzítése</b> opciót.]]></string>
+    <string name="schedule_boost">Ismétlés időzítése</string>
+    <string name="boost_scheduled">Időzítettük az ismétlést!</string>
+    <string name="no_scheduled_boosts">Nincs megjeleníthető időzített ismétlés!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Nyisd meg egy toot menüjét és válaszd az <b>Ismétlés időzítése</b> opciót.]]></string>
     <string name="art_menu">Művészies idővonal</string>
     <string name="open_menu">Menü megnyitása</string>
     <string name="app_logo">Alkalmazás logója</string>
