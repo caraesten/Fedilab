@@ -64,8 +64,8 @@
     <string name="favourite">最愛</string>
     <string name="follow">新的跟隨者</string>
     <string name="mention">提及</string>
-    <string name="reblog">加速</string>
-    <string name="show_boosts">顯示加速</string>
+    <string name="reblog">轉嘟</string>
+    <string name="show_boosts">顯示轉嘟</string>
     <string name="show_replies">顯示回覆</string>
     <string name="action_open_in_web">在瀏覽器中開啟</string>
     <string name="translate">翻譯</string>
