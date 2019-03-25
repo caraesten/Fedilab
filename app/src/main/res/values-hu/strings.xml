@@ -45,22 +45,22 @@
     <string name="speech_prompt">Kérlek, mondj valamit</string>
     <string name="speech_not_supported">Sajnáljuk, az eszközöd nem támogatja a hangfelvételt!</string>
     <string name="delete_all">Összes törlése</string>
-    <string name="translate_toot">Tülk fordítása</string>
+    <string name="translate_toot">Toot fordítása.</string>
     <string name="schedule">Időzítés</string>
     <string name="text_size">Szöveg és ikon méret</string>
     <string name="text_size_change">Szöveg méretének megváltoztatása:</string>
-    <string name="icon_size_change">Ikonok méretének megváltoztatása:</string>
-    <string name="next">Tovább</string>
-    <string name="previous">Vissza</string>
+    <string name="icon_size_change">Ikon méretének megváltoztatása:</string>
+    <string name="next">Következő</string>
+    <string name="previous">Előző</string>
     <string name="open_with">Megnyitás a következővel:</string>
-    <string name="validate">Érvényesítés</string>
+    <string name="validate">Jóváhagyás</string>
     <string name="media">Média</string>
     <string name="share_with">Megosztás a következővel:</string>
     <string name="shared_via">Megosztva a Mastalabon keresztül</string>
     <string name="replies">Válaszok</string>
     <string name="username">Felhasználónév</string>
     <string name="drafts">Piszkozatok</string>
-    <string name="new_data">Új adatok állnak rendelkezésre! Szeretnéd megjeleníteni őket?</string>
+    <string name="new_data">Új adatok állnak rendelkezésre! Szeretnéd megjeleníteni?</string>
     <string name="favourite">Kedvencek</string>
     <string name="follow">Új követők</string>
     <string name="mention">Említések</string>
@@ -306,7 +306,7 @@
     <string name="set_notif_follow_mention">Értesítsen, amikor valaki megemlít téged</string>
     <string name="set_share_validation">Kérdezz vissza kiemelés előtt</string>
     <string name="set_share_validation_fav">Kérdezz vissza, mielőtt hozzáadsz valamit a kedvenceidhez</string>
-    <string name="settings_title_more_options">Haladó beállítások</string>
+    <string name="settings_title_more_options">Részletes beállítások</string>
     <string name="set_wifi_only">Csak WiFi esetén értesíts</string>
     <string name="set_notify">Kér értesítést?</string>
     <string name="set_notif_silent">Csendes értesítések</string>
@@ -389,8 +389,8 @@
     <string name="set_resize_picture">Képek átméretezése</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-értesítések</string>
-    <string name="settings_popup_message">        Kérjük erősítse meg, mely push-értesítéseket szeretné megkapni.
-        Ezeket az értesítéseket később ki- vagy bekapcsolhatja (Értesítések fülön).
+    <string name="settings_popup_message">        Kérjük erősítsd meg, mely push-értesítéseket szeretnéd megkapni.
+        Ezeket az értesítéseket később ki- vagy bekapcsolhatod (Értesítések lapon).
     </string>
     <string name="settings_popup_timeline">For unread toots in home time-line?</string>
     <string name="settings_popup_notification">For unread notifications?</string>
