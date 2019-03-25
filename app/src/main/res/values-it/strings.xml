@@ -820,13 +820,13 @@
         <item>Scelta multipla</item>
     </string-array>
     <string-array name="poll_duration">
-        <item>5 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>7 days</item>
+        <item>5 minuti</item>
+        <item>30 minuti</item>
+        <item>1 ora</item>
+        <item>6 ore</item>
+        <item>1 giorno</item>
+        <item>3 giorni</item>
+        <item>7 giorni</item>
     </string-array>
     <string-array name="settings_video_mode">
         <item>Webview</item>
