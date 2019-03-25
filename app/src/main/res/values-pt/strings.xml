@@ -680,12 +680,12 @@
     </string>
     <string name="showcase_pwd">        Last step is to enter your password and click on Login.
     </string>
-    <string name="more_information">More information</string>
+    <string name="more_information">Mais informação</string>
     <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
     <!-- languages not translated -->
     <string name="languages">Línguas</string>
-    <string name="show_media_only">Media only</string>
-    <string name="show_media_nsfw">Show NSFW</string>
+    <string name="show_media_only">Apenas mídia</string>
+    <string name="show_media_nsfw">Conteúdo NSFW</string>
     <string name="crowdin_translations">Crowdin translations</string>
     <string name="crowdin_manager">Crowdin manager</string>
     <string name="translation_app">Translation of the application</string>
