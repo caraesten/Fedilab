@@ -64,7 +64,7 @@
     <string name="favourite">Kedvencek</string>
     <string name="follow">Új követők</string>
     <string name="mention">Említések</string>
-    <string name="reblog">Boosts</string>
+    <string name="reblog">Újratootok</string>
     <string name="show_boosts">Ismétlések megjelenítése</string>
     <string name="show_replies">Válaszok megjelenítése</string>
     <string name="action_open_in_web">Megnyitás böngészőben</string>
