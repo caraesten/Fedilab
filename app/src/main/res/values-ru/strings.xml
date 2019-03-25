@@ -805,7 +805,7 @@
     <string name="filter_timeline_with_a_tag">Фильтровать ленту тегами</string>
     <string name="no_tags">Нет тегов</string>
     <string name="set_hide_delete_notification_on_tab">Скрыть кнопку удаления уведомлений на вкладке уведомлений</string>
-    <string name="set_retrieve_metadata_share_from_extras">Извлекать метаданные, если URL получен от другого приложения</string>
+    <string name="set_retrieve_metadata_share_from_extras">Прикрепить изображение при публикации URL</string>
     <!-- end languages -->
     <string name="poll">Опрос</string>
     <string name="create_poll">Создать опрос</string>
