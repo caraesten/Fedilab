@@ -651,12 +651,12 @@
     <string name="contact_instance_admin">Kontakta admin för instansen</string>
     <string name="add_new">Lägg till ny</string>
     <string name="mastohost_logo">MastoHost logotyp</string>
-    <string name="emoji_picker">Emoji picker</string>
+    <string name="emoji_picker">Emoji-väljare</string>
     <string name="refresh">Uppdatera</string>
     <string name="expand_conversation">Utöka konversation</string>
-    <string name="remove_account">Remove an account</string>
-    <string name="delete_domain">Delete the blocked domain</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
+    <string name="remove_account">Ta bort ett konto</string>
+    <string name="delete_domain">Ta bort den blockerade domänen</string>
+    <string name="custom_emoji_picker">Anpassad emoji-väljare</string>
     <string name="play_video">Spela film</string>
     <string name="new_toot">Ny toot</string>
     <string name="card_view_image">Bild på kortet</string>
@@ -672,16 +672,16 @@
         <item>1 dag</item>
         <item>1 vecka</item>
     </string-array>
-    <string name="showcase_instance">        In this field, you need to write your instance host name.\nFor example, if you created your account on https://mastodon.social\nJust write <b>mastodon.social</b> (without https://)\n
-        You can start writing first letters and names will be suggested.\n\n
-        ⚠ The Login button will only work if the instance name is valid and the instance is up!
+    <string name="showcase_instance">        I det här fältet måste du skriva din instans värdnamn.\nTill exempel om du skapade ditt konto på https://mastodon.social\n skriv <b>mastodon.social</b> (utan https://)\n
+        Börja skriv de första bokstäverna, sen kommer förslag att visas.\n\n
+        ⚠ Inloggningsknappen fungerar bara om instansnamnet är giltig och instansen körs!
     </string>
-    <string name="showcase_uid">        In this field, write the email that is attached to your Mastodon account.
+    <string name="showcase_uid">        I det här fältet ange den e-post som är kopplad till kontot på Mastodon.
     </string>
-    <string name="showcase_pwd">        Last step is to enter your password and click on Login.
+    <string name="showcase_pwd">        Sista steget är att ange ditt lösenord och klicka sen på Login.
     </string>
     <string name="more_information">Mer information</string>
-    <string name="showcase_2FA">If you use 2FA (Two-factor authentication), you need to use this link.\nYou can also use it if you do not want to enter your credentials here.</string>
+    <string name="showcase_2FA">Om du använder 2FA (två-faktorn autentisering), så måste du använda denna länk.\nDu kan också använda den om du inte vill ange dina autentiseringsuppgifter här.</string>
     <!-- languages not translated -->
     <string name="languages">Språk</string>
     <string name="show_media_only">Endast media</string>
@@ -701,9 +701,9 @@
     <string name="some_words_all">Alla dessa ord (mellanrumsseparerade)</string>
     <string name="some_words_none">Inga av dessa ord (mellanrumsseparerade)</string>
     <string name="change_tag_column">Ändra kolumnnamn</string>
-    <string name="no_misskey_instance">No Misskey instances</string>
-    <string name="misskey_instance">Misskey instance</string>
-    <string name="toast_no_apps">No app supporting this link is installed on your device.</string>
+    <string name="no_misskey_instance">Inga Misskey-instanser</string>
+    <string name="misskey_instance">Misskey-instans</string>
+    <string name="toast_no_apps">Ingen app finns installerad som kan hantera denna länk.</string>
     <string name="subscriptions">Prenumerationer</string>
     <string name="overview">Översikt</string>
     <string name="trending">Trendar</string>
@@ -741,13 +741,13 @@
     <string name="leave_a_comment">Lämna ett meddelande</string>
     <string name="share">Dela</string>
     <string name="my_pictures">Mina bilder</string>
-    <string name="choose_schedule">Choose a schedule mode</string>
+    <string name="choose_schedule">Välj ett schema-läge</string>
     <string name="device_schedule">Från enhet</string>
     <string name="server_schedule">Från server</string>
     <string name="toots_server">Toots (Server)</string>
     <string name="toots_client">Toots (enhet)</string>
     <string name="modify">Ändra</string>
-    <string name="set_display_content_after_fetch_more">Display new toots above the \"Fetch more\" button</string>
+    <string name="set_display_content_after_fetch_more">Visa nya toots ovanför knappen ”Hämta mer”</string>
     <string name="settings_category_label_confirmations">Bekräftelser</string>
     <string name="settings_category_label_timelines">Tidslinjer</string>
     <string name="settings_category_label_notification">Notifieringstjänst</string>
@@ -755,23 +755,23 @@
     <string name="settings_category_label_hiddencontent">Dolt innehåll</string>
     <string name="settings_category_label_composing">Komponering</string>
     <string name="contact">Kontakter</string>
-    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> commented your video <b>%2$s</b>]]></string>
-    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> is following your channel <b>%2$s</b>]]></string>
-    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> is following your account]]></string>
-    <string name="peertube_video_published"><![CDATA[Your video <b>%1$s</b> has been published]]></string>
-    <string name="peertube_video_import_success"><![CDATA[Your video import <b>%1$s</b> succeeded]]></string>
-    <string name="peertube_video_import_error"><![CDATA[Your video import <b>%1$s</b> failed]]></string>
-    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> published a new video: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[Your video <b>%1$s</b> has been blacklisted]]></string>
-    <string name="peertube_video_unblacklist"><![CDATA[Your video <b>%1$s</b> has been unblacklisted]]></string>
+    <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> kommenterade din video <b>%2$s</b>]]></string>
+    <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> följer din kanal <b>%2$s</b>]]></string>
+    <string name="peertube_follow_account"><![CDATA[<b>%1$s</b> följer ditt konto]]></string>
+    <string name="peertube_video_published"><![CDATA[Din video <b>%1$s</b> har publicerats]]></string>
+    <string name="peertube_video_import_success"><![CDATA[Importen av din video, <b>%1$s</b>, lyckades]]></string>
+    <string name="peertube_video_import_error"><![CDATA[Importen av din video, <b>%1$s</b>, misslyckades]]></string>
+    <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> publicerade en ny video: <b>%2$s</b>]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[Din video <b>%1$s</b> har svartlistats]]></string>
+    <string name="peertube_video_unblacklist"><![CDATA[Svartlistningen av din video, <b>%1$s</b>, har tagits bort]]></string>
     <string name="export_data">Exportera data</string>
     <string name="import_data">Importera data</string>
     <string name="toot_select_import">Välj en fil att importera</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
-    <string name="data_import_start">Please, don\'t kill the app while processing. That can\'t be quite long.</string>
+    <string name="toot_select_file_error">Ett fel uppstod när säkerhetskopia valdes!</string>
+    <string name="data_import_start">Vänligen, döda inte appen medan den bearbetar.</string>
     <string name="add_public_comment">Lägg till en publik kommentar</string>
     <string name="send_comment">Skicka kommentar</string>
-    <string name="toast_toot_saved_error">There is no Internet connection. Your message has been stored in drafts.</string>
+    <string name="toast_toot_saved_error">Det finns ingen Internetanslutning. Ditt meddelande har sparats i utkast.</string>
     <string name="action_plain_text">Enbart text</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
@@ -779,7 +779,7 @@
     <string name="set_optimize_loading">Optimera laddningstid</string>
     <string name="all">Allt</string>
     <string name="about_opencollective">Stötta appen</string>
-    <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
+    <string name="more_about_opencollective">Open Collective gör det möjligt för grupper att snabbt inrätta ett kollektiv, samla in pengar och hantera dem transparent.</string>
     <string name="copy_link">Kopiera länk</string>
     <string name="connect_instance">Anslut</string>
     <string name="set_normal">Nomal</string>
