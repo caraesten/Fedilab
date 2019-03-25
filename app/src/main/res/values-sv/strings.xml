@@ -489,9 +489,9 @@
         - You can also use this link without using the 2FA\n\n
         - If it still does not work, please raise an issue on GitLab at https://gitlab.com/tom79/mastalab/issues
     </string>
-    <string name="media_ready">Media has been loaded. Click here to display it.</string>
-    <string name="data_export_start">This action can be quite long. You will be notified when it will be finished.</string>
-    <string name="data_export_running">Still running, please wait…</string>
+    <string name="media_ready">Media har laddats, klicka här för att visa.</string>
+    <string name="data_export_start">Denna åtgärd kan ta ganska lång tid. Du kommer att meddelas när den är färdig.</string>
+    <string name="data_export_running">Körs fortfarande, vänligen vänta…</string>
     <string name="data_export">Export toots</string>
     <string name="data_export_toots">Exportera toots för %1$s</string>
     <string name="data_export_success">%1$s toots av %2$s har blivit exporterade.</string>
@@ -509,11 +509,11 @@
     <string name="poxy_password">Lösenord</string>
     <string name="set_theme">Tema:</string>
     <string name="set_compact_mode">Kompakt läge</string>
-    <string name="set_share_details">Add toot details when sharing</string>
-    <string name="support_the_app_on_liberapay">Support the app on Liberapay</string>
-    <string name="alert_regex">There is an error in the regular expression!</string>
+    <string name="set_share_details">Lägg till detaljer om toot vid delning</string>
+    <string name="support_the_app_on_liberapay">Stöd appen på Liberapay</string>
+    <string name="alert_regex">Det finns ett fel i det reguljära uttrycket!</string>
     <string name="no_account_yet">Inget konto ännu?</string>
-    <string name="toast_instance_unavailable">No timelines was found on this instance!</string>
+    <string name="toast_instance_unavailable">Ingen tidslinje hittades på denna instans!</string>
     <string name="delete_instance">Ta bort denna instans?</string>
     <string name="warning_delete_instance">Du håller på att ta bort %s från dina instanser.</string>
     <string name="which_language">Översätt till</string>
@@ -563,8 +563,8 @@
     <string name="follow_trunk">%s följs!</string>
     <string name="create_list_trunk">Skapa lista %s</string>
     <string name="add_account_list_trunk">Lägger till konton i listan</string>
-    <string name="account_added_list_trunk">Accounts were added to the list</string>
-    <string name="adding_account_list_trunk">Adding accounts to the list</string>
+    <string name="account_added_list_trunk">Konton har lagts till i listan</string>
+    <string name="adding_account_list_trunk">Lägg till konton till listan</string>
     <string name="action_list_add">Du har inte skapat någon lista än. Klicka på \"+\" för att skapa en.</string>
     <string name="action_remote_instance_add">Du följer inte någon fjärrinstanser. Klicka på knappen ”+” att lägga till en ny.</string>
     <string name="about_trunk">Vem ska du följa</string>
@@ -643,14 +643,14 @@
     <string name="boost_scheduled">Boosten har schemalagts!</string>
     <string name="no_scheduled_boosts">Inga schemalagda boosts att visa!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Öppna menyn på en boost och välj <b>Schemalägg boost</b>.]]></string>
-    <string name="art_menu">Art timeline</string>
+    <string name="art_menu">Konstidslinje</string>
     <string name="open_menu">Öppna menyn</string>
     <string name="app_logo">Applikationens logo</string>
     <string name="profile_picture">Profilbild</string>
     <string name="profile_banner">Profil banner</string>
-    <string name="contact_instance_admin">Contact admin of the instance</string>
+    <string name="contact_instance_admin">Kontakta admin för instansen</string>
     <string name="add_new">Lägg till ny</string>
-    <string name="mastohost_logo">MastoHost logo</string>
+    <string name="mastohost_logo">MastoHost logotyp</string>
     <string name="emoji_picker">Emoji picker</string>
     <string name="refresh">Uppdatera</string>
     <string name="expand_conversation">Utöka konversation</string>
