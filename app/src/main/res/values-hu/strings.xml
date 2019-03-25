@@ -212,7 +212,7 @@
     <string name="no_scheduled_toots_indications">Írj egy tootot, és a felső menüből válaszd ki az <b>Időzít</b> elemet.</string>
     <string name="remove_scheduled">Törlöd az időzített tootot?</string>
     <string name="media_count">Média: %d</string>
-    <string name="toot_scheduled">A tootot időzítettük!</string>
+    <string name="toot_scheduled">A tootot időzítésre került!</string>
     <string name="toot_scheduled_date">Az időzítés dátuma az aktuális óra után kell legyen!</string>
     <string name="warning_battery">Energiatakarékos üzemmód be van kapcsolva! Lehet, hogy nem a várt módon viselkedik.</string>
     <!-- timed mute -->
@@ -794,7 +794,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="filter_timeline_with_a_tag">Idővonal szűrése címkékkel</string>
     <string name="no_tags">Nincs címke</string>
     <string name="set_hide_delete_notification_on_tab">Rejtsd el az értesítés gombot az értesítés lapon</string>
-    <string name="set_retrieve_metadata_share_from_extras">Más alkalmazásokból származó metaadat-URL-ek megjelenítése</string>
+    <string name="set_retrieve_metadata_share_from_extras">Kép csatolása URL megosztásakor</string>
     <!-- end languages -->
     <string name="poll">Szavazás</string>
     <string name="create_poll">Szavazás létrehozása</string>
