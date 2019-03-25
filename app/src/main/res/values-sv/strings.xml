@@ -44,12 +44,12 @@
     <string name="camera">Kamera</string>
     <string name="speech_prompt">Var god säg något</string>
     <string name="speech_not_supported">Tyvärr stöder inte din enhet röstinmatning!</string>
-    <string name="delete_all">Radera alla</string>
-    <string name="translate_toot">Översätt detta toot.</string>
+    <string name="delete_all">Ta bort allt</string>
+    <string name="translate_toot">Översätt denna toot.</string>
     <string name="schedule">Schema</string>
-    <string name="text_size">Storlek av text och ikoner</string>
-    <string name="text_size_change">Ändra textstorleken:</string>
-    <string name="icon_size_change">Ändra ikonstorleken:</string>
+    <string name="text_size">Storlek på text och ikoner</string>
+    <string name="text_size_change">Ändra nuvarande textstorlek:</string>
+    <string name="icon_size_change">Ändra nuvarande ikonstorlek:</string>
     <string name="next">Nästa</string>
     <string name="previous">Föregående</string>
     <string name="open_with">Öppna med</string>
@@ -73,11 +73,11 @@
     <!--- Menu -->
     <string name="home_menu">Hem</string>
     <string name="local_menu">Lokal tidslinje</string>
-    <string name="global_menu">Federerad tidslinje</string>
+    <string name="global_menu">Förenad tidslinje</string>
     <string name="neutral_menu_title">Alternativ</string>
     <string name="favorites_menu">Favoriter</string>
     <string name="communication_menu_title">Kommunikation</string>
-    <string name="muted_menu">Dämpade användare</string>
+    <string name="muted_menu">Tystade användare</string>
     <string name="blocked_menu">Blockerade användare</string>
     <string name="remote_follow_menu">Fjärrfölj</string>
     <string name="notifications">Notifieringar</string>
@@ -88,15 +88,15 @@
     <string name="make_a_choice">Vad vill du göra?</string>
     <string name="delete_account_title">Ta bort ett konto</string>
     <string name="delete_account_message" formatted="false">Radera kontot %1$s från programmet?</string>
-    <string name="send_email">Skicka ett mejl</string>
-    <string name="choose_file">Vänligen välj en fil</string>
+    <string name="send_email">Skicka e-post</string>
+    <string name="choose_file">Välj en fil</string>
     <string name="choose_file_error">Ingen filhanterare hittad!</string>
     <string name="click_to_change">Klicka på sökvägen för att ändra den</string>
     <string name="failed">Misslyckades!</string>
     <string name="scheduled_toots">Schemalagda toots</string>
     <string name="disclaimer_full">Informationen nedan kan avspegla användarens profil ofullständigt.</string>
     <string name="insert_emoji">Infoga emoji</string>
-    <string name="no_emoji">Appen kunde inte samla egna emojis för tillfället.</string>
+    <string name="no_emoji">Appen kunde inte samla anpassade emojis för tillfället.</string>
     <string name="live_notif">Livenotiser</string>
     <!-- Status -->
     <string name="no_status">Ingen toot att visa</string>
