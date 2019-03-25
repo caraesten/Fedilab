@@ -173,8 +173,8 @@
     <string-array name="toot_visibility">
         <item>Posztolj a nyilvános idővonalakra</item>
         <item>Ne posztolj nyilvános idővonalakra</item>
-        <item>Csak követőid részére posztolj</item>
-        <item>Csak a megemlített felhasználók részére posztolj</item>
+        <item>Csak követőidnek posztolj</item>
+        <item>Csak megemlített felhasználóknak posztolj</item>
     </string-array>
     <string name="no_draft">Nincs piszkozat!</string>
     <string name="choose_toot">Válassz egy tootot</string>
@@ -186,7 +186,7 @@
     <!-- Instance -->
     <string name="instance_no_description">Nincs elérhető leírás!</string>
     <!-- About -->
-    <string name="about_vesrion">Verzió %1$s</string>
+    <string name="about_vesrion">Verzió: %1$s</string>
     <string name="about_developer">Fejlesztő:</string>
     <string name="about_license">Licensz: </string>
     <string name="about_license_action">GNU GPL V3</string>
@@ -202,7 +202,7 @@
     <string name="no_accounts">Nincs megjelenítető fiók</string>
     <string name="no_follow_request">Nincs követési kérés</string>
     <string name="status_cnt">Tootok \n %1$s</string>
-    <string name="following_cnt">Követ \n %1$s</string>
+    <string name="following_cnt">Követi \n %1$s</string>
     <string name="followers_cnt">Követők \n %1$s</string>
     <string name="pins_cnt">Rögzített \n %d</string>
     <string name="authorize">Engedélyez</string>
