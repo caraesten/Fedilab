@@ -41,7 +41,7 @@
     <string name="choose_picture">Kép kiválasztása…</string>
     <string name="clear">Tisztítás</string>
     <string name="microphone">Mikrofon</string>
-    <string name="camera">Kamera</string>
+    <string name="camera">Felvétel</string>
     <string name="speech_prompt">Kérlek, mondj valamit</string>
     <string name="speech_not_supported">Sajnáljuk, az eszközöd nem támogatja a hangfelvételt!</string>
     <string name="delete_all">Összes törlése</string>
@@ -149,17 +149,17 @@
     <string name="date_seconds">%d m</string>
     <string name="date_minutes">%d p</string>
     <string name="date_hours">%d ó</string>
-    <string name="date_day">%d nap</string>
+    <string name="date_day">%d n</string>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">Figyelmeztetés</string>
-    <string name="toot_placeholder">Mi foglalkoztat épp most?</string>
+    <string name="toot_placeholder">Mi jár a fejedben?</string>
     <string name="toot_it">Toot!</string>
     <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
-    <string name="toot_title">Írj egy tootot!</string>
+    <string name="toot_title">Írj egy tootot</string>
     <string name="toot_title_reply">Válaszolj egy tootra</string>
-    <string name="queet_title">Írj egy queetet!</string>
-    <string name="queet_title_reply">Válaszolj egy quuetre!</string>
+    <string name="queet_title">Írj egy queetet</string>
+    <string name="queet_title_reply">Válaszolj egy queetre!</string>
     <string name="toot_no_space">Elérted az 500 karakteres limitet!</string>
     <string name="toot_select_image">Média kiválasztása</string>
     <string name="toot_select_image_error">Hiba történt a média kiválasztásakor!</string>
@@ -167,12 +167,12 @@
     <string name="toot_error_no_content">Ez a tootod üres!</string>
     <string name="toot_visibility_tilte">A toot láthatósága</string>
     <string name="toots_visibility_tilte">A tootok alapértelmezett láthatósága: </string>
-    <string name="toot_sent">A tootot elküldtük!</string>
+    <string name="toot_sent">A tootot el lett küldve!</string>
     <string name="toot_reply_content_title">Erre a tootra válaszolsz:</string>
     <string name="toot_sensitive">Bizalmas tartalom?</string>
     <string-array name="toot_visibility">
-        <item>Posztolj a nyilvános idővonalra</item>
-        <item>Ne posztolj nyilvános idővonalra</item>
+        <item>Posztolj a nyilvános idővonalakra</item>
+        <item>Ne posztolj nyilvános idővonalakra</item>
         <item>Csak követőid részére posztolj</item>
         <item>Csak a megemlített felhasználók részére posztolj</item>
     </string-array>
@@ -637,9 +637,9 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="tags_deleted">Töröltük a címkét!</string>
     <string name="set_display_art">Művészies idővonal megjelenítése</string>
     <string name="schedule_boost">Újratoot időzítése</string>
-    <string name="boost_scheduled">Időzítettük az újratootot!</string>
-    <string name="no_scheduled_boosts">Nincs megjeleníthető időzített ismétlés!</string>
-    <string name="no_scheduled_boosts_indications"><![CDATA[Nyisd meg egy toot menüjét és válaszd az <b>Ismétlés időzítése</b> opciót.]]></string>
+    <string name="boost_scheduled">Az újratoot időzítésre került!</string>
+    <string name="no_scheduled_boosts">Nincs megjeleníthető időzített újratoot!</string>
+    <string name="no_scheduled_boosts_indications"><![CDATA[Nyisd meg egy toot menüjét és válaszd az <b>Újratoot időzítése</b> opciót.]]></string>
     <string name="art_menu">Művészies idővonal</string>
     <string name="open_menu">Menü megnyitása</string>
     <string name="app_logo">Alkalmazás logója</string>
