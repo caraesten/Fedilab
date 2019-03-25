@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Menü megnyitása</string>
     <string name="navigation_drawer_close">Menü bezárása</string>
     <string name="action_about">Névjegy</string>
-    <string name="action_about_instance">Az instanciáról</string>
+    <string name="action_about_instance">A szerverről</string>
     <string name="action_privacy">Adatvédelem</string>
     <string name="action_cache">Gyorsítótár</string>
     <string name="action_logout">Kijelentkezés</string>
@@ -63,7 +63,7 @@
     <string name="new_data">Új adatok állnak rendelkezésre! Szeretnéd megjeleníteni őket?</string>
     <string name="favourite">Kedvencek</string>
     <string name="follow">Új követők</string>
-    <string name="mention">Megemlítések</string>
+    <string name="mention">Említések</string>
     <string name="reblog">Reblogok</string>
     <string name="show_boosts">Reblogok megjelenítése</string>
     <string name="show_replies">Válaszok megjelenítése</string>
@@ -71,9 +71,9 @@
     <string name="translate">Fordítás</string>
     <string name="please_wait">Kérlek várj néhány másodpercet, mielőtt ezt tennéd.</string>
     <!--- Menu -->
-    <string name="home_menu">Főoldal</string>
+    <string name="home_menu">Kezdőlap</string>
     <string name="local_menu">Helyi idővonal</string>
-    <string name="global_menu">Globális idővonal</string>
+    <string name="global_menu">Összevont idővonal</string>
     <string name="neutral_menu_title">Beállítások</string>
     <string name="favorites_menu">Kedvencek</string>
     <string name="communication_menu_title">Kommunikáció</string>
@@ -292,7 +292,7 @@
     <string name="load_sensitive_attachment">Bizalmas tartalom</string>
     <string name="set_display_reply">Előző üzenet megjelenítése a válaszokban</string>
     <string name="set_display_local">Mutassa a helyi idővonalat</string>
-    <string name="set_display_global">Globális idővonal megjelenítése</string>
+    <string name="set_display_global">Összevont idővonal megjelenítése</string>
     <string name="set_disable_gif">GIF avatarok kikapcsolása</string>
     <string name="set_folder_title">Útvonal: </string>
     <string name="set_auto_store_toot">Piszkozatok automatikus mentése</string>
