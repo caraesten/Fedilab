@@ -677,7 +677,7 @@
     <string name="card_view_image">Delwedd y cerdyn</string>
     <string name="hide_media">Cuddio cyfryngau</string>
     <string name="favicon">Favicon</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Add description for media (for the visually impaired)</string>
     <string-array name="filter_expire">
         <item>Byth</item>
         <item>30 munud</item>
