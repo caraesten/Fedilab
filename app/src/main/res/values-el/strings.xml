@@ -662,7 +662,7 @@
     <string name="card_view_image">Εικόνα της κάρτας</string>
     <string name="hide_media">Απόκρυψη πολυμέσων</string>
     <string name="favicon">Έμβλημα</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Add description for media (for the visually impaired)</string>
     <string-array name="filter_expire">
         <item>Ποτέ</item>
         <item>30 λεπτά</item>
