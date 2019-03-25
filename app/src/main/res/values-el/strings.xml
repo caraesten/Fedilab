@@ -189,7 +189,7 @@
     <string name="about_vesrion">Έκδοση %1$s</string>
     <string name="about_developer">Προγραμματιστής:</string>
     <string name="about_license">Άδεια: </string>
-    <string name="about_license_action">GNU GPL V3</string>
+    <string name="about_license_action">GNU Γενική Δημόσια Άδεια, Έκδοση 3η</string>
     <string name="about_code">Πηγαίος κώδικας: </string>
     <string name="about_yandex">Μετάφραση των φωνών:</string>
     <string name="about_thekinrar">Αναζήτηση για υποστάσεις:</string>
@@ -293,7 +293,7 @@
     <string name="set_display_reply">Προβολή του προπορευόμενου μηνύματος στις αποκρίσεις</string>
     <string name="set_display_local">Προβολή της τοπικής χρονογραμμής</string>
     <string name="set_display_global">Προβολή της ομοσπονδιακής χρονογραμμής</string>
-    <string name="set_disable_gif">Disable GIF avatars</string>
+    <string name="set_disable_gif">Απενεργοποίηση των προσωπικών απεικονίσεων μορφής GIF</string>
     <string name="set_folder_title">Διαδρομή: </string>
     <string name="set_auto_store_toot">Αυτόματη αποθήκευση των προσχεδίων</string>
     <string name="set_bubble_counter">Προβολή των μετρητών</string>
@@ -320,7 +320,7 @@
     <string name="set_save_changes">Αποθήκευση των αλλαγών</string>
     <string name="set_header_picture_overlay">Επέλεξε μία εικόνα κεφαλίδας</string>
     <string name="set_fit_preview">Ταίριασμα των εικόνων προεπισκόπησης</string>
-    <string name="set_automatically_split_toot">Automatically split toots over 500 chars in replies</string>
+    <string name="set_automatically_split_toot">Στις απαντήσεις, αυτόματο κομμάτιασμα των φωνών, που έχουν περισσότερους από 500 χαρακτήρες</string>
     <string name="note_no_space">Έχεις χρησιμοποιήσει το πλήθος των 160 επιτρεπόμενων χαρακτήρων.</string>
     <string name="username_no_space">Έχεις χρησιμοποιήσει το πλήθος των 30 επιτρεπόμενων χαρακτήρων.</string>
     <string name="settings_title_hour">Time slot for notifications:</string>
@@ -397,7 +397,7 @@
     <!-- CACHE -->
     <string name="cache_title">Καθάρισμα της μικραποθήκευσης</string>
     <string name="cache_message">Υπάρχουν %1$s δεδομένων στην μικραποθήκευση.\n\nΘα ήθελες να διαγραφούν;</string>
-    <string name="cache_units">Mb</string>
+    <string name="cache_units">Μεγαμπάιτια</string>
     <string name="toast_cache_clear">Η μικραποθήκευση καθαρίστηκε. Απελευθερώθηκαν %1$s</string>
     <!-- ACTIVITY CUSTOM SHARING -->
     <string name="title_header_custom_sharing">Τίτλος</string>
@@ -492,17 +492,17 @@
     <string name="media_ready">Φορτώθηκε το πολυμέσο. Κλίκαρε εδώ για να προβληθεί.</string>
     <string name="data_export_start">Αυτή η ενέργεια μπορεί να είναι χρονοβόρα. Θα ειδοποιηθείς, όταν θα ολοκληρωθεί.</string>
     <string name="data_export_running">Ακόμη τρέχει· παρακαλώ, περίμενε…</string>
-    <string name="data_export">Export statuses</string>
-    <string name="data_export_toots">Export statuses for %1$s</string>
-    <string name="data_export_success">%1$s toots out of %2$s have been exported.</string>
+    <string name="data_export">Εξαγωγή των καταστάσεων</string>
+    <string name="data_export_toots">Εξαγωγή των καταστάσεων για %1$s</string>
+    <string name="data_export_success">Εξάχθηκαν %1$s φωνές από τις %2$s .</string>
     <string name="data_export_error">Παρουσιάστηκε κάποιο σφάλμα, κατά την εξαγωγή δεδομένων για το %1$s</string>
     <string name="data_export_error_simple">Παρουσιάστηκε κάποιο σφάλμα, κατά την εξαγωγή δεδομένων.</string>
     <string name="data_import_success_simple">Έγινε εισαγωγή των δεδομένων.</string>
     <string name="data_import_error_simple">Παρουσιάστηκε κάποιο σφάλμα, κατά την εισαγωγή δεδομένων.</string>
     <!-- Proxy -->
-    <string name="proxy_set">Proxy</string>
-    <string name="proxy_type">Type</string>
-    <string name="proxy_enable">Enable proxy?</string>
+    <string name="proxy_set">Μεσολαβητής</string>
+    <string name="proxy_type">Μορφή</string>
+    <string name="proxy_enable">Ενεργοποίηση του μεσολαβητή;</string>
     <string name="poxy_host">Οικοδεσπότης</string>
     <string name="poxy_port">Θύρα</string>
     <string name="poxy_login">Σύνδεση</string>
@@ -809,7 +809,7 @@
     <string name="done">Έγινε</string>
     <string name="poll_finish_at">τελειώνει στις %s</string>
     <string name="refresh_poll">Ανανέωση της ψηφοφορίας</string>
-    <string name="vote">Vote</string>
+    <string name="vote">Ψήφισμα</string>
     <string name="poll_not_private">Μία ψηφοφορίας δεν μπορεί να προσκολληθεί σε ένα άμεσο μήνυμα.</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
@@ -822,14 +822,14 @@
     <string-array name="poll_duration">
         <item>5 λεπτά</item>
         <item>30 λεπτά</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>7 days</item>
+        <item>1 ώρα</item>
+        <item>6 ώρες</item>
+        <item>1 ημέρα</item>
+        <item>3 ημέρες</item>
+        <item>7 ημέρες</item>
     </string-array>
     <string-array name="settings_video_mode">
         <item>Webview</item>
-        <item>Direct stream</item>
+        <item>Άμεση ροή</item>
     </string-array>
 </resources>
