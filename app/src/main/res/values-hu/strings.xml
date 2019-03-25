@@ -103,7 +103,7 @@
     <string name="fav_added">A tootot hozzáadtuk a kedvencekhez</string>
     <string name="fav_removed">A tootot eltávolítottuk a kedvencek közül!</string>
     <string name="reblog_added">A tootot meg lett ismételve!</string>
-    <string name="reblog_removed">A tootot többé nem ismétled!</string>
+    <string name="reblog_removed">A tootot többé nincs ismételve!</string>
     <string name="reblog_by">Ismétlés %1$s által</string>
     <string name="favourite_add">Hozzáadjuk ezt a tootot a kedvencekhez?</string>
     <string name="favourite_remove">Eltávolítsuk ezt a tootot a kedvencek közül?</string>
@@ -255,8 +255,8 @@
     <string name="toast_unmute">A fiók nincs többé némítva!</string>
     <string name="toast_follow">A fiókot követted!</string>
     <string name="toast_unfollow">A fiókot már nem követed!</string>
-    <string name="toast_reblog">Megismételted a tootot!</string>
-    <string name="toast_unreblog">A toot ismétlését megszüntetted!</string>
+    <string name="toast_reblog">A toot meg lett ismételve!</string>
+    <string name="toast_unreblog">A toot ismétlése meg lett szüntetve!</string>
     <string name="toast_favourite">A tootot hozzáadtuk a kedvencekhez!</string>
     <string name="toast_unfavourite">A tootot eltávolítottuk a kedvencek közül!</string>
     <string name="toast_report">Jelentetted a tootot!</string>
@@ -304,7 +304,7 @@
     <string name="set_notif_follow_share">Értesíts, amikor valaki megismétli a posztodat</string>
     <string name="set_notif_follow_add">Értesíts, ha valaki lájkolja a posztodat</string>
     <string name="set_notif_follow_mention">Értesítsen, amikor valaki megemlít téged</string>
-    <string name="set_share_validation">Kérdezz vissza ismétlés előtt</string>
+    <string name="set_share_validation">Kérdezz vissza újratootolás előtt</string>
     <string name="set_share_validation_fav">Kérdezz vissza, mielőtt hozzáadsz valamit a kedvenceidhez</string>
     <string name="settings_title_more_options">Részletes beállítások</string>
     <string name="set_wifi_only">Csak WiFi esetén értesíts</string>
@@ -477,7 +477,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="action_lists_owner">Listáid</string>
     <!-- Migration -->
     <string name="account_moved_to">%1$s elköltözött ide: %2$s</string>
-    <string name="show_boost_count">Mutasd meg az ismétlések/kedvenc posztok számát</string>
+    <string name="show_boost_count">Mutasd az újratootok/kedvenc posztok számát</string>
     <string name="issue_login_title">Nem sikeres a hitelesítés?</string>
     <string name="issue_login_message">        <b>Íme néhány hasznos tipp:</b>\n\n
         - Ellenőrizd, hogy nem gépelted-e el a szerver nevét.\n\n
@@ -530,8 +530,8 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="show_everything">Mutasson mindent %s-től</string>
     <string name="toast_endorse">A fiókot mostantól mutatjuk a profilban</string>
     <string name="toast_unendorse">A fiókot többé nem mutatjuk a profilban</string>
-    <string name="toast_show_boost">Mostantól mutatjuk a ismétléseket!</string>
-    <string name="toast_hide_boost">Továbbiakban nem mutatjuk a ismétléseket!</string>
+    <string name="toast_show_boost">Mostantól láthatóak az újratootok!</string>
+    <string name="toast_hide_boost">Mostantól el vannak rejtve az újratootok!</string>
     <string name="direct_message">Közvetlen üzenet</string>
     <string name="filters">Szűrők</string>
     <string name="action_filters_empty_content">Nincs megjeleníthető szűrő. Kattintson a \"+\" gombra a létrehozáshoz.</string>
@@ -571,7 +571,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="expand_image">Automatikusan kibontjuk a rejtett médiákat</string>
     <string name="set_display_follow_instance">Megjeleníti a szerver követése gombot</string>
     <string name="channel_notif_follow">Új követő</string>
-    <string name="channel_notif_boost">Új ismétlés</string>
+    <string name="channel_notif_boost">Új újratoot</string>
     <string name="channel_notif_fav">Új kedvenc</string>
     <string name="channel_notif_mention">Új említés</string>
     <string name="channel_notif_toot">Új toot</string>
@@ -636,8 +636,8 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="tags_renamed">Megváltoztattuk a címkét!</string>
     <string name="tags_deleted">Töröltük a címkét!</string>
     <string name="set_display_art">Művészies idővonal megjelenítése</string>
-    <string name="schedule_boost">Ismétlés időzítése</string>
-    <string name="boost_scheduled">Időzítettük az ismétlést!</string>
+    <string name="schedule_boost">Újratoot időzítése</string>
+    <string name="boost_scheduled">Időzítettük az újratootot!</string>
     <string name="no_scheduled_boosts">Nincs megjeleníthető időzített ismétlés!</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Nyisd meg egy toot menüjét és válaszd az <b>Ismétlés időzítése</b> opciót.]]></string>
     <string name="art_menu">Művészies idővonal</string>
