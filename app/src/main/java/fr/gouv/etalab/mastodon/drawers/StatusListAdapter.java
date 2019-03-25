@@ -560,7 +560,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if( status.getPoll() != null && status.getPoll().getOptionsList() != null ){
                     Poll poll = status.getPoll();
                     int choiceCount = status.getPoll().getOptionsList().size();
-                    if( poll.isVoted()){
+                    if( poll.isVoted() || poll.isExpired()){
                         holder.rated.setVisibility(View.VISIBLE);
                         List<BarItem> items = new ArrayList<>();
                         int greaterValue = 0;
