@@ -666,7 +666,7 @@
     <string name="card_view_image">Слика картице</string>
     <string name="hide_media">Сакриј мултимедију</string>
     <string name="favicon">Фавикон</string>
-    <string name="media_description">Media for adding a description</string>
+    <string name="media_description">Add description for media (for the visually impaired)</string>
     <string-array name="filter_expire">
         <item>Никадa</item>
         <item>30 минута</item>
@@ -786,7 +786,7 @@
     <string name="more_about_opencollective">Open Collective enables groups to quickly set up a collective, raise funds and manage them transparently.</string>
     <string name="copy_link">Copy link</string>
     <string name="connect_instance">Connect</string>
-    <string name="set_normal">Nomal</string>
+    <string name="set_normal">Normal</string>
     <string name="set_compact">Compact</string>
     <string name="set_console">Console</string>
     <string name="set_mode">Set display mode</string>
