@@ -584,7 +584,7 @@
     <string name="select_sound">Επιλογή Τόνου</string>
     <string name="set_enable_time_slot">Enable time slot</string>
     <string name="how_to_videos">Βίντεο Οδηγιών</string>
-    <string name="retrieve_remote_conversation">Fetching remote thread!</string>
+    <string name="retrieve_remote_conversation">Λαμβάνει την απομακρυσμένη  πλοκή.</string>
     <string name="no_blocked_domain">Κανένας φραγμένος τομέας.</string>
     <string name="unblock_domain_confirm">Απόφραξη τομέα</string>
     <string name="unblock_domain_confirm_message">Σίγουρα απόφραξη του %s;</string>
@@ -593,7 +593,7 @@
     <string name="block_domain">Φράξιμο του τομέα</string>
     <string name="toast_block_domain">Ο τομέας έχει φραχτεί</string>
     <string name="toast_unblock_domain">Ο τομέας δεν είναι πλέον φραγμένος.</string>
-    <string name="retrieve_remote_status">Fetching remote status</string>
+    <string name="retrieve_remote_status">Λαμβάνει την απομακρυσμένη κατάσταση</string>
     <string name="comment">Σχολιασμός</string>
     <string name="peertube_instance">Peertube υπόσταση</string>
     <string name="set_display_direct">Προβολή της χρονογραμμής των προσωπικών μηνυμάτων</string>
@@ -610,8 +610,8 @@
     <string name="bookmark_peertube_empty">Δεν υπάρχουν Πειρτιούμπια βίντεα στα αγαπημένα σου.</string>
     <string name="channel">Κανάλι</string>
     <string name="no_peertube_channels">Κανένα Πειρτιούμπιο κανάλι</string>
-    <string name="no_peertube_instances">No Peertube instances</string>
-    <string name="no_mastodon_instances">No Mastodon instances</string>
+    <string name="no_peertube_instances">Καμία υπόσταση του Peertube</string>
+    <string name="no_mastodon_instances">Καμία υπόσταση του Μαστόδοντου</string>
     <string name="no_lists">Κανένα κατάστιχο</string>
     <string name="videos">Βίντεα</string>
     <string name="channels">Κανάλια</string>
