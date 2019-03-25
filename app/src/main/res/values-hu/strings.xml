@@ -42,8 +42,8 @@
     <string name="clear">Tisztítás</string>
     <string name="microphone">Mikrofon</string>
     <string name="camera">Kamera</string>
-    <string name="speech_prompt">Kérlek mondj valamit</string>
-    <string name="speech_not_supported">Sajnáljuk, az eszközöd nem támogatja a hangbevitelt!</string>
+    <string name="speech_prompt">Kérlek, mondj valamit</string>
+    <string name="speech_not_supported">Sajnáljuk, az eszközöd nem támogatja a hangfelvételt!</string>
     <string name="delete_all">Összes törlése</string>
     <string name="translate_toot">Tülk fordítása</string>
     <string name="schedule">Időzítés</string>
