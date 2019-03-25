@@ -811,8 +811,8 @@
     <string name="featured_hashtags">Hashnodau Nodedig</string>
     <string name="filter_timeline_with_a_tag">Hidlo ffrwd drwy ddefnyddio tagiau</string>
     <string name="no_tags">Dim tagiau</string>
-    <string name="set_hide_delete_notification_on_tab">Hide delete notifcation button on notification tab</string>
-    <string name="set_retrieve_metadata_share_from_extras">Retrieve metadata if URL that share from other apps</string>
+    <string name="set_hide_delete_notification_on_tab">Hide the \"delete\" button in the notification tab</string>
+    <string name="set_retrieve_metadata_share_from_extras">Attach an image when sharing a URL</string>
     <!-- end languages -->
     <string name="poll">Poll</string>
     <string name="create_poll">Create a poll</string>
