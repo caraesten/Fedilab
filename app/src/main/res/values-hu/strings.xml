@@ -93,15 +93,15 @@
     <string name="choose_file_error">Fájlkezelő nem található!</string>
     <string name="click_to_change">Változtatáshoz kattints az elérési útra</string>
     <string name="failed">Sikertelen!</string>
-    <string name="scheduled_toots">Időzített tülkök</string>
-    <string name="disclaimer_full">Az alábbi információ lehet, hogy nem mutat minden részletet a felhasználóról.</string>
+    <string name="scheduled_toots">Időzített tootok</string>
+    <string name="disclaimer_full">Az alábbi információ lehet, hogy nem mutat minden részletet a felhasználói profilból.</string>
     <string name="insert_emoji">Emoji beszúrása</string>
-    <string name="no_emoji">Az app nem gyűjtött egyéni emojikat jelenleg.</string>
+    <string name="no_emoji">Az app nem gyűjtött egyéni emojikat.</string>
     <string name="live_notif">Valós idejű értesítések</string>
     <!-- Status -->
-    <string name="no_status">Nincs megjeleníthető tülkölés</string>
-    <string name="fav_added">A tootot hozzáadtuk a kedvencekhez</string>
-    <string name="fav_removed">A tootot eltávolítottuk a kedvencek közül!</string>
+    <string name="no_status">Nincs megjeleníthető toot</string>
+    <string name="fav_added">A toot hozzá lett adva a kedvencekhez</string>
+    <string name="fav_removed">A toot el lett távolítva a kedvencek közül!</string>
     <string name="reblog_added">A tootot meg lett ismételve!</string>
     <string name="reblog_removed">A tootot többé nincs ismételve!</string>
     <string name="reblog_by">Ismétlés %1$s által</string>
@@ -808,7 +808,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="refresh_poll">Szavazás frissítése</string>
     <string name="vote">Szavazás</string>
     <string name="poll_not_private">Közvetlen üzenethez nem csatolhatsz szavazást!</string>
-    <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="notif_poll">Véget ért egy szavazás, amiben részt vettél</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>
