@@ -806,24 +806,24 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="done">Fait</string>
     <string name="poll_finish_at">fin à %s</string>
     <string name="refresh_poll">Actualiser le sondage</string>
-    <string name="vote">Vote</string>
-    <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
+    <string name="vote">Voter</string>
+    <string name="poll_not_private">Un sondage ne peut pas être attaché à un message direct!</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
     </plurals>
     <string-array name="poll_choice_type">
-        <item>Single choice</item>
-        <item>Multiple choices</item>
+        <item>Choix unique</item>
+        <item>Choix multiple</item>
     </string-array>
     <string-array name="poll_duration">
         <item>5 minutes</item>
         <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>7 days</item>
+        <item>1 heure</item>
+        <item>6 heures</item>
+        <item>1 jour</item>
+        <item>3 jours</item>
+        <item>7 jours</item>
     </string-array>
     <string-array name="settings_video_mode">
         <item>Torrent</item>
