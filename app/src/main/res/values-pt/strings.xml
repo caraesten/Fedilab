@@ -633,7 +633,7 @@
     <string name="set_truncate_toot">Truncate toots over \'x\' lines. Zero means disabled.</string>
     <string name="display_toot_truncate">Mostrar mais</string>
     <string name="hide_toot_truncate">Mostrar menos</string>
-    <string name="manage_tags">Manage tags</string>
+    <string name="manage_tags">Gerenciar tags</string>
     <string name="tags_already_stored">The tag already exists!</string>
     <string name="tags_stored">The tag has been stored!</string>
     <string name="tags_renamed">The tag has been changed!</string>
