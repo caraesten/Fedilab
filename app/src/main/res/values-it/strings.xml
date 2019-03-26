@@ -811,6 +811,7 @@
     <string name="refresh_poll">Aggiorna sondaggio</string>
     <string name="vote">Vota</string>
     <string name="poll_not_private">Un sondaggio non può essere allegato ad un messaggio diretto!</string>
+    <string name="notif_poll">A poll you have voted in has ended</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d voti</item>
