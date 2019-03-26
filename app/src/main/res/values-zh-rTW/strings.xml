@@ -93,7 +93,7 @@
     <string name="choose_file_error">找不到檔案管理員！</string>
     <string name="click_to_change">點選路徑變更</string>
     <string name="failed">失敗！</string>
-    <string name="scheduled_toots">排定的嘟文</string>
+    <string name="scheduled_toots">排程的嘟文</string>
     <string name="disclaimer_full">下面的資訊可能不完全反映使用者的個人資料。</string>
     <string name="insert_emoji">插入表情符號</string>
     <string name="no_emoji">應用程式目前不能收集自訂表情符號。</string>
@@ -110,7 +110,7 @@
     <string name="reblog_add">轉嘟此嘟文？</string>
     <string name="reblog_remove">移除此嘟文的轉嘟？</string>
     <string name="pin_add">是否釘選此嘟文？</string>
-    <string name="pin_remove">是否取消釘選此嘟文？</string>
+    <string name="pin_remove">是否取消此嘟文的釘選？</string>
     <string name="more_action_1">靜音</string>
     <string name="more_action_2">封鎖</string>
     <string name="more_action_3">檢舉</string>
@@ -141,7 +141,7 @@
     <string name="bookmarks">書籤</string>
     <string name="bookmark_add">新增至書籤</string>
     <string name="bookmark_remove">移除書籤</string>
-    <string name="bookmarks_empty">沒有書籤</string>
+    <string name="bookmarks_empty">尚無書籤</string>
     <string name="status_bookmarked">已將此嘟文加入書籤！</string>
     <string name="status_unbookmarked">已將此嘟文從書籤中移除！</string>
     <!-- Date -->
@@ -159,21 +159,21 @@
     <string name="toot_title_reply">回覆一則嘟文</string>
     <string name="queet_title">寫一篇 queet</string>
     <string name="queet_title_reply">回覆一則 queet</string>
-    <string name="toot_no_space">您已到達允許之最大 500 字元數！</string>
+    <string name="toot_no_space">您已經到達允許的 500 字元！</string>
     <string name="toot_select_image">選取媒體</string>
     <string name="toot_select_image_error">選擇媒體時發生錯誤！</string>
     <string name="toot_delete_media">刪除此媒體？</string>
     <string name="toot_error_no_content">您的嘟文是空的！</string>
     <string name="toot_visibility_tilte">嘟文可見度</string>
     <string name="toots_visibility_tilte">預設情況下的嘟文可見度：</string>
-    <string name="toot_sent">已傳送嘟文！</string>
-    <string name="toot_reply_content_title">您正在回覆給此嘟文：</string>
+    <string name="toot_sent">已送出嘟文！</string>
+    <string name="toot_reply_content_title">您正在回覆此嘟文：</string>
     <string name="toot_sensitive">敏感內容？</string>
     <string-array name="toot_visibility">
         <item>張貼到公開時間軸</item>
         <item>不要張貼到公開時間軸</item>
-        <item>僅張貼給關注者</item>
-        <item>僅張貼給提及的使用者</item>
+        <item>僅關注者可見</item>
+        <item>僅提及的使用者可見</item>
     </string-array>
     <string name="no_draft">沒有草稿！</string>
     <string name="choose_toot">選擇一個嘟文</string>
@@ -207,12 +207,12 @@
     <string name="authorize">授權</string>
     <string name="reject">拒絕</string>
     <!-- Scheduled toots -->
-    <string name="no_scheduled_toots">沒有已排定的嘟文！</string>
-    <string name="no_scheduled_toots_indications">先撰寫嘟文，再從頂端選單中選擇<b>排程</b>。</string>
-    <string name="remove_scheduled">刪除排定的嘟文？</string>
+    <string name="no_scheduled_toots">沒有已排程的嘟文！</string>
+    <string name="no_scheduled_toots_indications">先撰寫嘟文，再從頂端選單選擇<b>排程</b>。</string>
+    <string name="remove_scheduled">刪除排程的嘟文？</string>
     <string name="media_count">媒體：%d</string>
-    <string name="toot_scheduled">嘟文已排定好了！</string>
-    <string name="toot_scheduled_date">嘟文排定的時間必須大於目前的時間！</string>
+    <string name="toot_scheduled">嘟文已經排程！</string>
+    <string name="toot_scheduled_date">嘟文排程的時間必須大於目前的時間！</string>
     <string name="warning_battery">已啟用電量節省模式！它可能無法正常運作。</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">靜音時間應該大於一分鐘。</string>
@@ -636,8 +636,8 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="tags_deleted">標籤已刪除！</string>
     <string name="set_display_art">顯示 MastoArt 時間軸</string>
     <string name="schedule_boost">排程轉嘟</string>
-    <string name="boost_scheduled">已排定轉嘟！</string>
-    <string name="no_scheduled_boosts">沒有排定轉嘟！</string>
+    <string name="boost_scheduled">已排程轉嘟！</string>
+    <string name="no_scheduled_boosts">尚無排程轉嘟！</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[開啟嘟文選單然後選擇<b>排程轉嘟</b>。]]></string>
     <string name="art_menu">藝術時間軸</string>
     <string name="open_menu">開啟選單</string>
@@ -737,7 +737,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="leave_a_comment">留下評論</string>
     <string name="share">分享</string>
     <string name="my_pictures">我的圖片</string>
-    <string name="choose_schedule">選擇排定模式</string>
+    <string name="choose_schedule">選擇排程模式</string>
     <string name="device_schedule">從裝置</string>
     <string name="server_schedule">從伺服器</string>
     <string name="toots_server">嘟文（伺服器）</string>
