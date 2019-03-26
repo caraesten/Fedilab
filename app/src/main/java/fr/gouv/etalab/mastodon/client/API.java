@@ -364,7 +364,45 @@ public class API {
                 isPleromaAdmin(account.getAcct());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
+            if( e.getStatusCode() == 401 || e.getStatusCode() == 403){
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                Account targetedAccount = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+                HashMap<String, String> values = refreshToken(targetedAccount.getClient_id(), targetedAccount.getClient_secret(), targetedAccount.getRefresh_token());
+                if( values.containsKey("access_token") && values.get("access_token") != null) {
+                    targetedAccount.setToken(values.get("access_token"));
+                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                    //This account is currently logged in, the token is updated
+                    if( prefKeyOauthTokenT.equals(token)){
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, targetedAccount.getToken());
+                        editor.apply();
+                    }
+                }if( values.containsKey("refresh_token") && values.get("refresh_token") != null)
+                    targetedAccount.setRefresh_token(values.get("refresh_token"));
+                new AccountDAO(context, db).updateAccount(targetedAccount);
+                String response;
+                try {
+                    response = new HttpsConnection(context).get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, targetedAccount.getToken());
+                    account = parseAccountResponse(context, new JSONObject(response));
+                    if( account.getSocial().equals("PLEROMA")){
+                        isPleromaAdmin(account.getAcct());
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (NoSuchAlgorithmException e1) {
+                    e1.printStackTrace();
+                } catch (KeyManagementException e1) {
+                    e1.printStackTrace();
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                } catch (HttpsConnection.HttpsConnectionException e1) {
+                    e1.printStackTrace();
+                    setError(e.getStatusCode(), e);
+                }
+            }else{
+                setError(e.getStatusCode(), e);
+            }
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -377,6 +415,47 @@ public class API {
         }
         return account;
     }
+
+
+    /***
+     * Verifiy credential of the authenticated user *synchronously*
+     * @return Account
+     */
+    private HashMap<String, String> refreshToken(String client_id, String client_secret, String refresh_token)  {
+        account = new Account();
+        HashMap<String, String> params = new HashMap<>();
+        HashMap<String, String> newValues = new HashMap<>();
+        params.put("grant_type", "refresh_token");
+        params.put("client_id", client_id);
+        params.put("client_secret", client_secret);
+        params.put("refresh_token", refresh_token);
+        try {
+            String response = new HttpsConnection(context).post(getAbsoluteUrl("/oauth/token"), 60, params, null);
+            JSONObject resobj = new JSONObject(response);
+            String token = resobj.get("access_token").toString();
+            if( resobj.has("refresh_token"))
+                refresh_token = resobj.get("refresh_token").toString();
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
+            editor.apply();
+            newValues.put("access_token",token);
+            newValues.put("refresh_token",refresh_token);
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            e.printStackTrace();
+        }
+        return newValues;
+    }
+
 
     /**
      * Returns an account
