@@ -811,6 +811,7 @@
     <string name="refresh_poll">Ανανέωση της ψηφοφορίας</string>
     <string name="vote">Ψήφισμα</string>
     <string name="poll_not_private">Μία ψηφοφορίας δεν μπορεί να προσκολληθεί σε ένα άμεσο μήνυμα.</string>
+    <string name="notif_poll">A poll you have voted in has ended</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d ψήφοι</item>
