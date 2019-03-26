@@ -816,6 +816,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="refresh_poll">Obnovit anketu</string>
     <string name="vote">Hlasovat</string>
     <string name="poll_not_private">K přímé zprávě nelze připojit anketu!</string>
+    <string name="notif_poll">A poll you have voted in has ended</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d hlas</item>
         <item quantity="few">%d hlasy</item>
