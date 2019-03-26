@@ -56,20 +56,20 @@
     <string name="validate">確認</string>
     <string name="media">媒體</string>
     <string name="share_with">分享給</string>
-    <string name="shared_via">透過 Mastalab 分享</string>
+    <string name="shared_via">已透過 Mastalab 分享</string>
     <string name="replies">回覆</string>
     <string name="username">使用者名稱</string>
     <string name="drafts">草稿</string>
     <string name="new_data">有可用的新資料！是否顯示？</string>
     <string name="favourite">最愛</string>
-    <string name="follow">新的跟隨者</string>
+    <string name="follow">新的關注者</string>
     <string name="mention">提及</string>
     <string name="reblog">轉嘟</string>
     <string name="show_boosts">顯示轉嘟</string>
     <string name="show_replies">顯示回覆</string>
     <string name="action_open_in_web">在瀏覽器中開啟</string>
     <string name="translate">翻譯</string>
-    <string name="please_wait">請等待幾秒鐘, 然後再進行此操作。</string>
+    <string name="please_wait">請等待幾秒鐘再進行此操作。</string>
     <!--- Menu -->
     <string name="home_menu">首頁</string>
     <string name="local_menu">本地時間軸</string>
@@ -91,24 +91,24 @@
     <string name="send_email">傳送電子郵件</string>
     <string name="choose_file">請選擇一個檔案</string>
     <string name="choose_file_error">找不到檔案管理員！</string>
-    <string name="click_to_change">點擊路徑更改</string>
-    <string name="failed">失敗 ！</string>
+    <string name="click_to_change">點選路徑變更</string>
+    <string name="failed">失敗！</string>
     <string name="scheduled_toots">排定的嘟文</string>
     <string name="disclaimer_full">下面的資訊可能不完全反映使用者的個人資料。</string>
     <string name="insert_emoji">插入表情符號</string>
     <string name="no_emoji">應用程式目前不能收集自訂表情符號。</string>
     <string name="live_notif">即時通知</string>
     <!-- Status -->
-    <string name="no_status">沒有嘟文</string>
-    <string name="fav_added">嘟文被加入到最愛中</string>
+    <string name="no_status">尚無嘟文</string>
+    <string name="fav_added">此嘟文已被加入到最愛中</string>
     <string name="fav_removed">嘟文已從最愛中移除！</string>
-    <string name="reblog_added">此嘟文被其他使用者轉嘟！</string>
+    <string name="reblog_added">此嘟文已被其他使用者轉嘟！</string>
     <string name="reblog_removed">無法再轉嘟此嘟文！</string>
     <string name="reblog_by">被 %1$s 轉嘟</string>
     <string name="favourite_add">將此嘟文新增到您的最愛？</string>
     <string name="favourite_remove">從您的最愛中移除此嘟文？</string>
-    <string name="reblog_add">是否轉嘟此嘟文？</string>
-    <string name="reblog_remove">是否移除此嘟文的轉嘟？</string>
+    <string name="reblog_add">轉嘟此嘟文？</string>
+    <string name="reblog_remove">移除此嘟文的轉嘟？</string>
     <string name="pin_add">是否釘選此嘟文？</string>
     <string name="pin_remove">是否取消釘選此嘟文？</string>
     <string name="more_action_1">靜音</string>
@@ -135,7 +135,7 @@
         <item>刪除 &amp; 並將此嘟文變回草稿？</item>
     </string-array>
     <plurals name="preview_replies">
-        <item quantity="other">%d 回覆</item>
+        <item quantity="other">%d 條回覆</item>
     </plurals>
     <string name="set_display_bookmark_button">顯示書籤按鈕</string>
     <string name="bookmarks">書籤</string>
@@ -151,7 +151,7 @@
     <string name="date_day">%d 天</string>
     <!-- TOOT -->
     <string name="toot_cw_placeholder">警告</string>
-    <string name="toot_placeholder">你在想什麼？</string>
+    <string name="toot_placeholder">您正在想些什麼？</string>
     <string name="toot_it">嘟出去！</string>
     <string name="queet_it">QUEET!</string>
     <string name="cw">cw</string>
@@ -161,7 +161,7 @@
     <string name="queet_title_reply">回覆一則 queet</string>
     <string name="toot_no_space">您已到達允許之最大 500 字元數！</string>
     <string name="toot_select_image">選取媒體</string>
-    <string name="toot_select_image_error">選擇媒體時出錯！</string>
+    <string name="toot_select_image_error">選擇媒體時發生錯誤！</string>
     <string name="toot_delete_media">刪除此媒體？</string>
     <string name="toot_error_no_content">您的嘟文是空的！</string>
     <string name="toot_visibility_tilte">嘟文可見度</string>
@@ -222,7 +222,7 @@
     <string name="no_notifications">沒有通知</string>
     <string name="notif_mention">提及您</string>
     <string name="notif_reblog">已轉嘟您的嘟文</string>
-    <string name="notif_favourite">收藏您的狀態</string>
+    <string name="notif_favourite">將您的嘟文加到最愛</string>
     <string name="notif_follow">關注了您</string>
     <string name="notif_pouet">來自 %1$s 的新嘟文</string>
     <plurals name="other_notifications">
@@ -378,7 +378,7 @@
     <string name="action_mute">靜音</string>
     <string name="action_no_action">沒有動作</string>
     <string name="action_unmute">取消靜音</string>
-    <string name="request_sent">已發送請求</string>
+    <string name="request_sent">已送出請求</string>
     <string name="followed_by">關注您</string>
     <string name="action_search">搜尋</string>
     <string name="set_capitalize">回覆的第一個字母大寫</string>
