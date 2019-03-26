@@ -213,7 +213,7 @@
     <string name="media_count">媒體：%d</string>
     <string name="toot_scheduled">嘟文已經排程！</string>
     <string name="toot_scheduled_date">嘟文排程的時間必須大於目前的時間！</string>
-    <string name="warning_battery">已啟用電量節省模式！它可能無法正常運作。</string>
+    <string name="warning_battery">已開啟電量節省模式！它可能無法如預期般運作。</string>
     <!-- timed mute -->
     <string name="timed_mute_date_error">靜音時間應該大於一分鐘。</string>
     <string name="timed_mute_date">%1$s 已經靜音到 %2$s。\n 您可以從他／她的個人資料頁面解除靜音該帳號。</string>
