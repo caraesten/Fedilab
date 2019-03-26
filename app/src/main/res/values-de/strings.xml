@@ -789,23 +789,23 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <!-- end languages -->
     <string name="poll">Umfrage</string>
     <string name="create_poll">Umfrage erstellen</string>
-    <string name="poll_choice_1">Choice 1</string>
-    <string name="poll_choice_2">Choice 2</string>
-    <string name="poll_choice_3">Choice 3</string>
-    <string name="poll_choice_4">Choice 4</string>
-    <string name="poll_invalid_choices">You need two choices at least for the poll!</string>
-    <string name="done">Done</string>
-    <string name="poll_finish_at">end at %s</string>
-    <string name="refresh_poll">Refresh poll</string>
-    <string name="vote">Vote</string>
-    <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
+    <string name="poll_choice_1">Möglichkeit 1</string>
+    <string name="poll_choice_2">Möglichkeit 2</string>
+    <string name="poll_choice_3">Möglichkeit 3</string>
+    <string name="poll_choice_4">Möglichkeit 4</string>
+    <string name="poll_invalid_choices">Sie benötigen mindestens zwei Möglichkeiten für die Umfrage!</string>
+    <string name="done">Fertig</string>
+    <string name="poll_finish_at">endet um %s</string>
+    <string name="refresh_poll">Umfrage aktualisieren</string>
+    <string name="vote">Abstimmen</string>
+    <string name="poll_not_private">Eine Umfrage kann nicht an eine direkte Nachricht angehängt werden!</string>
     <plurals name="number_of_vote">
-        <item quantity="one">%d vote</item>
-        <item quantity="other">%d votes</item>
+        <item quantity="one">%d Stimme</item>
+        <item quantity="other">%d Stimmen</item>
     </plurals>
     <string-array name="poll_choice_type">
-        <item>Single choice</item>
-        <item>Multiple choices</item>
+        <item>Einfachauswahl</item>
+        <item>Mehrfachauswahl</item>
     </string-array>
     <string-array name="poll_duration">
         <item>5 Minuten</item>
