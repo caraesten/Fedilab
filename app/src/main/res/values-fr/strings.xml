@@ -808,6 +808,7 @@ Le bouton de connexion s’activera une fois qu’un domaine valide sera renseig
     <string name="refresh_poll">Actualiser le sondage</string>
     <string name="vote">Voter</string>
     <string name="poll_not_private">Un sondage ne peut pas être attaché à un message direct!</string>
+    <string name="notif_poll">A poll you have voted in has ended</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
