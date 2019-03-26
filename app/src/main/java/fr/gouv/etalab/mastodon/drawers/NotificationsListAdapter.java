@@ -21,6 +21,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -41,10 +43,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,8 +60,11 @@ import com.varunest.sparkbutton.SparkButton;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import br.com.felix.horizontalbargraph.HorizontalBar;
+import br.com.felix.horizontalbargraph.model.BarItem;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.CustomSharingActivity;
@@ -66,6 +74,7 @@ import fr.gouv.etalab.mastodon.activities.ShowAccountActivity;
 import fr.gouv.etalab.mastodon.activities.ShowConversationActivity;
 import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.activities.TootInfoActivity;
+import fr.gouv.etalab.mastodon.asynctasks.ManagePollAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.PostNotificationsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
@@ -77,15 +86,19 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Poll;
+import fr.gouv.etalab.mastodon.client.Entities.PollOptions;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.helper.CrossActions;
 import fr.gouv.etalab.mastodon.helper.CustomTextView;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnPollInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnPostNotificationsActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiAccountInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveEmojiInterface;
 
+import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.social;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
@@ -97,7 +110,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
  * Adapter for Status
  */
 
-public class NotificationsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface, OnRetrieveEmojiAccountInterface {
+public class NotificationsListAdapter extends RecyclerView.Adapter implements OnPostActionInterface, OnPostNotificationsActionInterface, OnRetrieveEmojiInterface, OnRetrieveEmojiAccountInterface, OnPollInterface {
 
     private Context context;
     private List<Notification> notifications;
@@ -195,6 +208,20 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                 holder.main_container_trans.setVisibility(View.GONE);
                 holder.status_more.setVisibility(View.VISIBLE);
                 break;
+            case "poll":
+                holder.status_action_container.setVisibility(View.GONE);
+                typeString = context.getString(R.string.notif_poll);;
+                if( theme == Helper.THEME_DARK){
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_dark_1));
+                }else if( theme == Helper.THEME_BLACK){
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_black_1));
+                }else {
+                    holder.card_status_container.setBackgroundColor(ContextCompat.getColor(context, R.color.notif_light_1));
+                }
+                imgH = ContextCompat.getDrawable(context, R.drawable.ic_view_list_poll_notif);
+                holder.main_container_trans.setVisibility(View.VISIBLE);
+                holder.status_more.setVisibility(View.GONE);
+                break;
             case "reblog":
                 holder.status_action_container.setVisibility(View.GONE);
                 if( notification.getAccount().getDisplay_name() != null && notification.getAccount().getDisplay_name().length() > 0)
@@ -253,11 +280,13 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             changeDrawableColor(context, R.drawable.ic_repeat_head,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_star_border_header,R.color.dark_icon);
             changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.dark_icon);
+            changeDrawableColor(context, R.drawable.ic_view_list_poll_notif,R.color.dark_icon);
         }else {
             changeDrawableColor(context, R.drawable.ic_chat_bubble_outline, R.color.mastodonC4);
             changeDrawableColor(context, R.drawable.ic_repeat_head,R.color.mastodonC4);
             changeDrawableColor(context, R.drawable.ic_star_border_header,R.color.mastodonC4);
             changeDrawableColor(context, R.drawable.ic_follow_notif_header,R.color.mastodonC4);
+            changeDrawableColor(context, R.drawable.ic_view_list_poll_notif,R.color.mastodonC4);
         }
 
 
@@ -506,6 +535,134 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                             }
                         }
                     }
+                }
+            }
+
+
+            if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && status != null) {
+                holder.rated.setVisibility(View.GONE);
+                holder.multiple_choice.setVisibility(View.GONE);
+                holder.single_choice.setVisibility(View.GONE);
+                holder.submit_vote.setVisibility(View.GONE);
+                if( status.getPoll() != null && status.getPoll().getOptionsList() != null ){
+                    Poll poll = status.getPoll();
+                    int choiceCount = status.getPoll().getOptionsList().size();
+                    if( poll.isVoted() || poll.isExpired()){
+                        holder.rated.setVisibility(View.VISIBLE);
+                        List<BarItem> items = new ArrayList<>();
+                        int greaterValue = 0;
+                        for(PollOptions pollOption: status.getPoll().getOptionsList()){
+                            if( pollOption.getVotes_count() > greaterValue)
+                                greaterValue = pollOption.getVotes_count();
+                        }
+                        for(PollOptions pollOption: status.getPoll().getOptionsList()){
+                            double value = ((double)(pollOption.getVotes_count()* 100) / (double)poll.getVotes_count()) ;
+                            if( pollOption.getVotes_count() == greaterValue) {
+                                BarItem bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC4), Color.WHITE);
+                                bar.setRounded(true);
+                                bar.setHeight1(30);
+                                items.add(bar);
+                            }else {
+                                BarItem bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC2), Color.WHITE);
+                                bar.setRounded(true);
+                                bar.setHeight1(30);
+                                items.add(bar);
+                            }
+                        }
+                        holder.choices.init(context).hasAnimation(true).removeAll();
+                        holder.choices.init(context).hasAnimation(true).addAll(items).build();
+                    }else {
+                        if( poll.isMultiple()){
+                            holder.multiple_choice.setVisibility(View.VISIBLE);
+                            holder.c_choice_3.setVisibility(View.GONE);
+                            holder.c_choice_4.setVisibility(View.GONE);
+                            if( choiceCount > 2)
+                                holder.c_choice_3.setVisibility(View.VISIBLE);
+                            if( choiceCount > 3)
+                                holder.c_choice_4.setVisibility(View.VISIBLE);
+                            int j = 1;
+                            for(PollOptions pollOption: status.getPoll().getOptionsList()){
+                                if( j == 1 )
+                                    holder.c_choice_1.setText(pollOption.getTitle());
+                                else  if( j == 2 )
+                                    holder.c_choice_2.setText(pollOption.getTitle());
+                                else  if( j == 3 )
+                                    holder.c_choice_3.setText(pollOption.getTitle());
+                                else  if( j == 4 )
+                                    holder.c_choice_4.setText(pollOption.getTitle());
+                                j++;
+                            }
+
+                        }else {
+                            holder.single_choice.setVisibility(View.VISIBLE);
+                            holder.r_choice_3.setVisibility(View.GONE);
+                            holder.r_choice_4.setVisibility(View.GONE);
+                            if( choiceCount > 2)
+                                holder.r_choice_3.setVisibility(View.VISIBLE);
+                            if( choiceCount > 3)
+                                holder.r_choice_4.setVisibility(View.VISIBLE);
+                            int j = 1;
+                            for(PollOptions pollOption: status.getPoll().getOptionsList()){
+                                if( j == 1 )
+                                    holder.r_choice_1.setText(pollOption.getTitle());
+                                else  if( j == 2 )
+                                    holder.r_choice_2.setText(pollOption.getTitle());
+                                else  if( j == 3 )
+                                    holder.r_choice_3.setText(pollOption.getTitle());
+                                else  if( j == 4 )
+                                    holder.r_choice_4.setText(pollOption.getTitle());
+                                j++;
+                            }
+                        }
+                        holder.submit_vote.setVisibility(View.VISIBLE);
+                        holder.submit_vote.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int [] choice;
+                                if( poll.isMultiple()){
+                                    ArrayList<Integer> choices = new ArrayList<>();
+                                    if( holder.c_choice_1.isChecked())
+                                        choices.add(0);
+                                    if( holder.c_choice_2.isChecked())
+                                        choices.add(1);
+                                    if( holder.c_choice_3.isChecked())
+                                        choices.add(2);
+                                    if( holder.c_choice_4.isChecked())
+                                        choices.add(3);
+                                    choice = new int[choices.size()];
+                                    Iterator<Integer> iterator = choices.iterator();
+                                    for (int i = 0; i < choice.length; i++) {
+                                        choice[i] = iterator.next().intValue();
+                                    }
+                                }else{
+                                    choice = new int[1];
+                                    int checkedId = holder.radio_group.getCheckedRadioButtonId();
+                                    if( checkedId == R.id.r_choice_1)
+                                        choice[0] = 0;
+                                    if( checkedId == R.id.r_choice_2)
+                                        choice[0] = 1;
+                                    if( checkedId == R.id.r_choice_3)
+                                        choice[0] = 2;
+                                    if( checkedId == R.id.r_choice_4)
+                                        choice[0] = 3;
+                                }
+                                new ManagePollAsyncTask(context, ManagePollAsyncTask.type_s.SUBMIT, status, choice, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            }
+                        });
+                    }
+
+                    holder.refresh_poll.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new ManagePollAsyncTask(context, ManagePollAsyncTask.type_s.REFRESH, status, null, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        }
+                    });
+                    holder.poll_container.setVisibility(View.VISIBLE);
+                    holder.refresh_poll.setPaintFlags(holder.refresh_poll.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+                    holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_vote,status.getPoll().getVotes_count(),status.getPoll().getVotes_count()));
+                    holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
+                }else {
+                    holder.poll_container.setVisibility(View.GONE);
                 }
             }
 
@@ -938,6 +1095,10 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                             favCount++;
                         else if( statusAction == API.StatusAction.UNFAVOURITE)
                             favCount--;
+                        else if( statusAction == API.StatusAction.REFRESHPOLL){
+                            if( status.getPoll() != null)
+                                notifications.get(i).getStatus().setPoll(status.getPoll());
+                        }
                         if( boostCount < 0 )
                             boostCount = 0;
                         if( favCount < 0 )
@@ -1180,6 +1341,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         }
     }
 
+    @Override
+    public void onPoll(Status status, Poll poll) {
+        status.setPoll(poll);
+        notifyNotificationWithActionChanged(API.StatusAction.REFRESHPOLL, status);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         FrameLayout card_status_container;
@@ -1216,6 +1383,16 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         LinearLayout status_spoiler_mention_container;
         TextView status_mention_spoiler;
         SparkButton spark_button_fav, spark_button_reblog;
+
+        //Poll
+        LinearLayout poll_container, single_choice, multiple_choice, rated;
+        RadioGroup radio_group;
+        RadioButton r_choice_1, r_choice_2, r_choice_3, r_choice_4;
+        CheckBox c_choice_1, c_choice_2, c_choice_3, c_choice_4;
+        HorizontalBar choices;
+        TextView number_votes, remaining_time, refresh_poll;
+        Button submit_vote;
+
         public View getView(){
             return itemView;
         }
@@ -1257,6 +1434,26 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
             status_mention_spoiler = itemView.findViewById(R.id.status_mention_spoiler);
             spark_button_fav =  itemView.findViewById(R.id.spark_button_fav);
             spark_button_reblog =  itemView.findViewById(R.id.spark_button_reblog);
+
+
+            poll_container = itemView.findViewById(R.id.poll_container);
+            single_choice = itemView.findViewById(R.id.single_choice);
+            multiple_choice = itemView.findViewById(R.id.multiple_choice);
+            rated = itemView.findViewById(R.id.rated);
+            radio_group = itemView.findViewById(R.id.radio_group);
+            r_choice_1 = itemView.findViewById(R.id.r_choice_1);
+            r_choice_2 = itemView.findViewById(R.id.r_choice_2);
+            r_choice_3 = itemView.findViewById(R.id.r_choice_3);
+            r_choice_4 = itemView.findViewById(R.id.r_choice_4);
+            c_choice_1 = itemView.findViewById(R.id.c_choice_1);
+            c_choice_2 = itemView.findViewById(R.id.c_choice_2);
+            c_choice_3 = itemView.findViewById(R.id.c_choice_3);
+            c_choice_4 = itemView.findViewById(R.id.c_choice_4);
+            choices = itemView.findViewById(R.id.choices);
+            number_votes = itemView.findViewById(R.id.number_votes);
+            remaining_time = itemView.findViewById(R.id.remaining_time);
+            submit_vote = itemView.findViewById(R.id.submit_vote);
+            refresh_poll = itemView.findViewById(R.id.refresh_poll);
         }
     }
 

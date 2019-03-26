@@ -135,7 +135,8 @@ public class API {
         PEERTUBEDELETECOMMENT,
         PEERTUBEDELETEVIDEO,
         UPDATESERVERSCHEDULE,
-        DELETESCHEDULED
+        DELETESCHEDULED,
+        REFRESHPOLL
 
     }
     public enum accountPrivacy {
