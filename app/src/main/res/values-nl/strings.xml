@@ -793,7 +793,7 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="featured_hashtags">Uitgelichte hashtags</string>
     <string name="filter_timeline_with_a_tag">Tijdlijn op tags filteren</string>
     <string name="no_tags">Geen tags</string>
-    <string name="set_hide_delete_notification_on_tab">Hide the \"delete\" button in the notification tab</string>
+    <string name="set_hide_delete_notification_on_tab">De \"verwijderen\"-knop in de notificatiekolom verbergen</string>
     <string name="set_retrieve_metadata_share_from_extras">Een afbeelding toevoegen wanneer een URL wordt gedeeld</string>
     <!-- end languages -->
     <string name="poll">Poll</string>
