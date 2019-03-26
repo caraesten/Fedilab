@@ -808,6 +808,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="refresh_poll">Szavazás frissítése</string>
     <string name="vote">Szavazás</string>
     <string name="poll_not_private">Közvetlen üzenethez nem csatolhatsz szavazást!</string>
+    <string name="notif_poll">A poll you have voted in has ended</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>
