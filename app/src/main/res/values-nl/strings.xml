@@ -797,9 +797,9 @@ Je kunt beginnen met typen en er zullen namen gesuggereerd worden.\n\n
     <string name="set_retrieve_metadata_share_from_extras">Attach an image when sharing a URL</string>
     <!-- end languages -->
     <string name="poll">Poll</string>
-    <string name="create_poll">Create a poll</string>
-    <string name="poll_choice_1">Choice 1</string>
-    <string name="poll_choice_2">Choice 2</string>
+    <string name="create_poll">Een poll maken</string>
+    <string name="poll_choice_1">Keuze 1</string>
+    <string name="poll_choice_2">Keuze 2</string>
     <string name="poll_choice_3">Keuze 3</string>
     <string name="poll_choice_4">Keuze 4</string>
     <string name="poll_invalid_choices">Je hebt tenminste twee keuzes nodig voor een poll!</string>
