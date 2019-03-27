@@ -257,12 +257,12 @@
     <string name="toast_unfollow">A fiókot már nem követed!</string>
     <string name="toast_reblog">A toot meg lett ismételve!</string>
     <string name="toast_unreblog">A toot ismétlése meg lett szüntetve!</string>
-    <string name="toast_favourite">A tootot hozzáadtuk a kedvencekhez!</string>
-    <string name="toast_unfavourite">A tootot eltávolítottuk a kedvencek közül!</string>
-    <string name="toast_report">Jelentetted a tootot!</string>
+    <string name="toast_favourite">A toot hozzá lett adva a kedvencekhez!</string>
+    <string name="toast_unfavourite">A toot el lett távolítva a kedvencek közül!</string>
+    <string name="toast_report">Jelentve lett a toot!</string>
     <string name="toast_unstatus">Törölted a tootot!</string>
-    <string name="toast_pin">A tootot rögzítettük!</string>
-    <string name="toast_unpin">A toot rögzítését megszüntettük!</string>
+    <string name="toast_pin">Rögzítetted a tootot!</string>
+    <string name="toast_unpin">A toot rögzítését megszüntetted!</string>
     <string name="toast_error">Ááá! Hiba történt!</string>
     <string name="toast_code_error">Hiba történt! A szerver nem adott vissza engedélyezési kódot!</string>
     <string name="toast_error_instance">A szerver doménje érvénytelennek tűnik!</string>
