@@ -811,7 +811,7 @@
     <string name="refresh_poll">Uppdatera enkät</string>
     <string name="vote">Rösta</string>
     <string name="poll_not_private">En undersökning kan inte bifogas i ett direktmeddelande!</string>
-    <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="notif_poll">En enkät som du röstat i har avslutats</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d votes</item>
