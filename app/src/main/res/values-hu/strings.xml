@@ -119,20 +119,20 @@
     <string name="more_action_6">Megosztás</string>
     <string name="more_action_7">Megemlítés</string>
     <string name="more_action_8">Időzített elnémítás</string>
-    <string name="more_action_9">Töröl &amp; Újrafogalmaz</string>
+    <string name="more_action_9">Törlés &amp; Újrafogalmazás</string>
     <string-array name="more_action_confirm">
-        <item>Elnémítja ezt a fiókot?</item>
+        <item>Elnémítod ezt a fiókot?</item>
         <item>Letiltod ezt a fiókot?</item>
-        <item>Jelenti ezt a tootot?</item>
+        <item>Jelented ezt a tootot?</item>
         <item>Letiltod ezt a domént?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Értesít</item>
+        <item>Értesítés</item>
         <item>Csendes</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>El akarja távolítani ezt a tootot?</item>
-        <item>Törli és újrafogalmazza ezt a tootot?</item>
+        <item>Eltávolítod ezt a tootot?</item>
+        <item>Törlöd és újrafogalmazod ezt a tootot?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d válasz</item>
@@ -143,8 +143,8 @@
     <string name="bookmark_add">Hozzáadás a könyvjelzőkhöz</string>
     <string name="bookmark_remove">Könyvjelző eltávolítása</string>
     <string name="bookmarks_empty">Nincs megjeleníthető könyvjelző</string>
-    <string name="status_bookmarked">Hozzáadtuk a tootot a könyvjelzőkhöz!</string>
-    <string name="status_unbookmarked">Eltávolítottuk a tootot a könyvjelzők közül!</string>
+    <string name="status_bookmarked">Hozzáadtad a tootot a könyvjelzőkhöz!</string>
+    <string name="status_unbookmarked">Eltávolítottad a tootot a könyvjelzők közül!</string>
     <!-- Date -->
     <string name="date_seconds">%d m</string>
     <string name="date_minutes">%d p</string>
@@ -213,10 +213,10 @@
     <string name="remove_scheduled">Törlöd az időzített tootot?</string>
     <string name="media_count">Média: %d</string>
     <string name="toot_scheduled">A tootot időzítésre került!</string>
-    <string name="toot_scheduled_date">Az időzítés dátuma az aktuális óra után kell legyen!</string>
-    <string name="warning_battery">Energiatakarékos üzemmód be van kapcsolva! Lehet, hogy nem a várt módon viselkedik.</string>
+    <string name="toot_scheduled_date">Az időzítés dátuma az aktuális óranak után kell lennie!</string>
+    <string name="warning_battery">Be van kapcsolva az energiatakarékos üzemmód! Lehet, hogy nem a várt módon viselkedik.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">Az elnémítás ideje több mint egy perc kell legyen.</string>
+    <string name="timed_mute_date_error">Az elnémítás minimális ideje egy perc.</string>
     <string name="timed_mute_date">%1$s el lett némítva %2$s időpontig.\n Az elnémítást a fiók profiloldalán lehet megszüntetni.</string>
     <string name="timed_mute_profile">%1$s el lett némítva %2$s időpontig.\n Klikkelj ide a fiók némításának megszűntetéséhez.</string>
     <!-- Notifications -->
