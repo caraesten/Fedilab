@@ -318,7 +318,7 @@
     <string name="set_profile_description">Rövid bemutatkozás…</string>
     <string name="set_lock_account">Fiók zárolása</string>
     <string name="set_save_changes">Változások mentése</string>
-    <string name="set_header_picture_overlay">Válasszon egy képet a fejléchez</string>
+    <string name="set_header_picture_overlay">Válassz egy képet a fejléchez</string>
     <string name="set_fit_preview">Előnézeti képek méretre szabása</string>
     <string name="set_automatically_split_toot">Automatikusan darabolja fel az 500 karakternél hosszabb tootokat a válaszokban</string>
     <string name="note_no_space">Elérted az 160 karakteres limitet!</string>
@@ -385,7 +385,7 @@
     <string name="request_sent">Kérés elküldve</string>
     <string name="followed_by">Követ téged</string>
     <string name="action_search">Keresés</string>
-    <string name="set_capitalize">Első betű kiemelése a válaszokban</string>
+    <string name="set_capitalize">Első betű nagybetűsítése a válaszokban</string>
     <string name="set_resize_picture">Képek átméretezése</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-értesítések</string>
@@ -398,7 +398,7 @@
     <string name="cache_title">Gyorsítótár ürítése</string>
     <string name="cache_message">A gyorsítótárban %1$s megjelenítendő elem van.\n\nSzeretnéd törölni őket?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Gyorsítótár ki lett törölve! %1$s lett felszabadítva</string>
+    <string name="toast_cache_clear">Gyorsítótár ki lett űrítve! %1$s lett felszabadítva</string>
     <!-- ACTIVITY CUSTOM SHARING -->
     <string name="title_header_custom_sharing">Cím</string>
     <string name="title_hint_custom_sharing">Cím&#8230;</string>
@@ -418,7 +418,7 @@
     <string name="show_media">Média megjelenítése</string>
     <string name="show_pinned">Rögzített tootok megjelenítése</string>
     <string name="filter_no_result">Nincs találat!</string>
-    <string name="data_backup_toots">%1$s tootjainak archiválása</string>
+    <string name="data_backup_toots">%1$s fiók tootjainak archiválása</string>
     <string name="data_backup_success">%1$s új tootjait importáltuk</string>
     <string-array name="filter_select">
         <item>Nem</item>
@@ -431,12 +431,12 @@
     <string name="privacy_data">        A készüléken csak a fiókok alapadatait tároljuk.
         Ezek az adatok szigorúan bizalmasak és csak az alkalmazás fér hozzá.
         Az alkalmazás eltávolítása azonnal törli ezeket az adatokat.\n
-        &#9888; Felhasználónevet és jelszavakat sohasem tárolunk. Csak a szerverre való biztonságos (SSL) hitelesítés során használjuk.
+        &#9888; Felhasználónevet és jelszavakat sohasem tárolunk. Csak a szerverre való biztonságos (SSL) bejentkezés során használjuk.
     </string>
     <string name="privacy_authorizations_title">Engedélyek:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Arra használjuk, hogy a kliens WiFi-hálózathoz kapcsolódik-e.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Arra használjuk, hogy megállapítsuk, a kliens WiFi-hálózathoz kapcsolódik-e.\n
         - <b>INTERNET</b>: Szerverek lekérdezésekor használatos.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Média vagy magának alkalmazásnak az SD-kártyára mozgatásához használatos.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Média vagy magának alkalmazásnak az SD-kártyára áthelyezéséhez használatos.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Médiát ad hozzá toothoz.\n
         - <b>BOOT_COMPLETED</b>: Az értesítési szolgáltatás indítására használatos.\n
         - <b>WAKE_LOCK</b>: Az értesítési szolgáltatás használja működés közben.
@@ -455,8 +455,8 @@
         - <b>PhotoView</b>: Képek kezelése\n
     </string>
     <string name="privacy_API_yandex_title">Tootok fordítása</string>
-    <string name="privacy_API_yandex_authorizations">Az alkalmazás lehetővé teszi a tootok lefordítását az eszköz nyelvi beállításainak és a Yandex API segítségével.\n
-Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: https://yandex.ru/legal/confidential/?lang=en    </string>
+    <string name="privacy_API_yandex_authorizations">Az alkalmazás lehetővé teszi a tootok lefordítását az eszköz nyelvi beállításainak megfelelően, a Yandex API segítségével.\n
+A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="thanks_text">Köszönet Stéphane-nak a logóért.    </string>
     <string name="thanks_text_dev">Köszönettel a következőknek:    </string>
     <string name="filter_regex">Szűrés reguláris kifejezések használatával</string>
