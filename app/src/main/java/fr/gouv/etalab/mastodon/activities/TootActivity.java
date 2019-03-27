@@ -761,6 +761,8 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 displayPollPopup();
             }
         });
+
+        toot_space_left.setText(String.valueOf(toot_content.length()));
     }
 
     @Override
