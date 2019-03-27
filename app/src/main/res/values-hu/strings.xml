@@ -224,7 +224,7 @@
     <string name="notif_mention">megemlített téged</string>
     <string name="notif_reblog">megismételte posztodat</string>
     <string name="notif_favourite">lájkolta a posztodat</string>
-    <string name="notif_follow">követ téged</string>
+    <string name="notif_follow">követett téged</string>
     <string name="notif_pouet">Új toot %1$s felhasználótól</string>
     <plurals name="other_notifications">
         <item quantity="one">és még egy értesítés</item>
