@@ -240,11 +240,11 @@
     </plurals>
     <string name="delete_notification_ask">Törlöd az értesítést?</string>
     <string name="delete_notification_ask_all">Törlöd az értesítéseket?</string>
-    <string name="delete_notification">Az értesítést töröltük!</string>
-    <string name="delete_notification_all">Minden értesítést töröltünk!</string>
+    <string name="delete_notification">Az értesítést törölted!</string>
+    <string name="delete_notification_all">Minden értesítést töröltél!</string>
     <!-- HEADER -->
-    <string name="following">Követik</string>
-    <string name="followers">Követők</string>
+    <string name="following">Követi</string>
+    <string name="followers">Követő</string>
     <string name="pinned_toots">Rögzített</string>
     <!-- TOAST -->
     <string name="client_error">Hiba a kliens id betöltésekor!</string>
@@ -375,11 +375,11 @@
     </string-array>
     <string name="set_title_news">Hírek</string>
     <string name="set_notification_news">Értesíts, mikor a saját szerver idővonalán új toot jelenik meg</string>
-    <string name="action_follow">Követ</string>
-    <string name="action_unfollow">Többé nem követ</string>
+    <string name="action_follow">Követés</string>
+    <string name="action_unfollow">Követés megszűntetése</string>
     <string name="action_block">Letilt</string>
     <string name="action_unblock">Letiltás feloldása</string>
-    <string name="action_mute">Elnémít</string>
+    <string name="action_mute">Elnémítás</string>
     <string name="action_no_action">Semmit se tegyen</string>
     <string name="action_unmute">Némítás feloldása</string>
     <string name="request_sent">Kérés elküldve</string>
