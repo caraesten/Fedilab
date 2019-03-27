@@ -812,7 +812,7 @@
     <string name="refresh_poll">Actualizar sondaxe</string>
     <string name="vote">Votar</string>
     <string name="poll_not_private">Unha sondaxe non se pode anexar a unha mensaxe directa!</string>
-    <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="notif_poll">Rematou a sondaxe na que participou</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d voto</item>
         <item quantity="other">%d votos</item>
