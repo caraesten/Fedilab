@@ -185,6 +185,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
                     intent.putExtras(b);
                     finish();
                     startActivity(intent);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
             });
             action_unhide.setOnClickListener(new View.OnClickListener() {
@@ -211,6 +212,8 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
                     intent.putExtras(b);
                     finish();
                     startActivity(intent);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
                 }
             });
 
@@ -292,6 +295,7 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
                 intent.putExtras(b);
                 finish();
                 startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
 
