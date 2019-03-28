@@ -123,7 +123,7 @@
                 <Button
                     android:layout_marginLeft="5dp"
                     android:id="@+id/toot_cw"
-                    android:padding="5dp"
+                    android:padding="2dp"
                     android:text="@string/cw"
                     android:layout_gravity="center"
                     style="@style/AppTheme.RoundedCornerMaterialButton"
