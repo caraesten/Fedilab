@@ -202,8 +202,8 @@
     <string name="no_accounts">Inget konto att visa</string>
     <string name="no_follow_request">Ingen följförfrågan</string>
     <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Följande \n %1$s</string>
-    <string name="followers_cnt">Anhängare \n %1$s</string>
+    <string name="following_cnt">Följer \n %1$s</string>
+    <string name="followers_cnt">Följare \n %1$s</string>
     <string name="pins_cnt">Fästa \n %d</string>
     <string name="authorize">Auktorisera</string>
     <string name="reject">Avvisa</string>
