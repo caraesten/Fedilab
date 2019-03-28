@@ -46,7 +46,7 @@
     <string name="speech_not_supported">抱歉！您的裝置不支援語音輸入！</string>
     <string name="delete_all">全部刪除</string>
     <string name="translate_toot">翻譯此嘟文。</string>
-    <string name="schedule">時間表</string>
+    <string name="schedule">排程</string>
     <string name="text_size">文字與圖示大小</string>
     <string name="text_size_change">更改目前文字大小：</string>
     <string name="icon_size_change">變更目前圖示大小：</string>
