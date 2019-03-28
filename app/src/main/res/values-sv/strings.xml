@@ -46,7 +46,7 @@
     <string name="speech_not_supported">Tyvärr stöder inte din enhet röstinmatning!</string>
     <string name="delete_all">Ta bort allt</string>
     <string name="translate_toot">Översätt denna toot.</string>
-    <string name="schedule">Schema</string>
+    <string name="schedule">Schemalägg</string>
     <string name="text_size">Storlek på text och ikoner</string>
     <string name="text_size_change">Ändra nuvarande textstorlek:</string>
     <string name="icon_size_change">Ändra nuvarande ikonstorlek:</string>
@@ -73,7 +73,7 @@
     <!--- Menu -->
     <string name="home_menu">Hem</string>
     <string name="local_menu">Lokal tidslinje</string>
-    <string name="global_menu">Förenad tidslinje</string>
+    <string name="global_menu">Federerad tidslinje</string>
     <string name="neutral_menu_title">Alternativ</string>
     <string name="favorites_menu">Favoriter</string>
     <string name="communication_menu_title">Kommunikation</string>
