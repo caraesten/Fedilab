@@ -324,8 +324,8 @@
     <string name="note_no_space">Elérted az 160 karakteres limitet!</string>
     <string name="username_no_space">Elérted az 30 karakteres limitet!</string>
     <string name="settings_title_hour">Engedélyezett idősáv az értesítések számára:</string>
-    <string name="settings_time_from">Között</string>
-    <string name="settings_time_to">és</string>
+    <string name="settings_time_from">Kezdet:</string>
+    <string name="settings_time_to">Befejezés:</string>
     <string name="settings_time_greater">Az időnek hosszabbnak kell lennie, mint %1$s</string>
     <string name="settings_time_lower">Az időnek rövidebbnek kell lennie, mint %1$s</string>
     <string name="settings_hour_init">Kezdés időpontja</string>
@@ -337,7 +337,7 @@
     <string name="use_cookies">Harmadik féltől származó sütik engedélyezése</string>
     <string name="settings_ui_layout">Idővonalak elrendezése: </string>
     <string-array name="battery_profiles">
-        <item>Közepes akkuterhelés</item>
+        <item>Normális akkuterhelés</item>
         <item>Közepes akkuterhelés</item>
         <item>Alacsony akkuterhelés</item>
     </string-array>
@@ -351,7 +351,7 @@
         <item>DeepL</item>
         <item>Nem</item>
     </string-array>
-    <string name="your_api_key">Az Ön API-kulcsa (Yandex esetén üresen hagyhatja)</string>
+    <string name="your_api_key">A te API-kulcsod (Yandex esetén üresen hagyhatja)</string>
     <string-array name="settings_theme">
         <item>Sötét</item>
         <item>Világos</item>
@@ -359,9 +359,9 @@
     </string-array>
     <string-array name="settings_resize_picture">
         <item>Nem</item>
-        <item>512 KB</item>
-        <item>1 MB</item>
-        <item>2 MB</item>
+        <item>512 Kb</item>
+        <item>1 Mb</item>
+        <item>2 Mb</item>
     </string-array>
     <string name="set_led_colour">LED színének beállítása:</string>
     <string-array name="led_colours">
@@ -458,11 +458,11 @@
     <string name="privacy_API_yandex_authorizations">Az alkalmazás lehetővé teszi a tootok lefordítását az eszköz nyelvi beállításainak megfelelően, a Yandex API segítségével.\n
 A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="thanks_text">Köszönet Stéphane-nak a logóért.    </string>
-    <string name="thanks_text_dev">Köszönettel a következőknek:    </string>
+    <string name="thanks_text_dev">Köszönet a következőknek:    </string>
     <string name="filter_regex">Szűrés reguláris kifejezések használatával</string>
     <string name="search">Keresés</string>
     <string name="delete">Törlés</string>
-    <string name="fetch_more_toots">További tootok letöltése…</string>
+    <string name="fetch_more_toots">További tootok betöltése…</string>
     <!-- About lists -->
     <string name="action_lists">Listák</string>
     <string name="action_lists_confirm_delete">Biztos benne, hogy véglegesen törölni szeretné ezt a listát?</string>
