@@ -488,12 +488,12 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     </string>
     <string name="media_ready">Betöltöttük a médiát. Klikkelj ide a megjelenítéshez.</string>
     <string name="data_export_start">Ez a folyamat sokáig tarthat. Értesítünk majd, amikor befejeződött.</string>
-    <string name="data_export_running">Még nem fejeztük be, kérjük várj még…</string>
+    <string name="data_export_running">Még nem fejeztük be, kérlek várj még…</string>
     <string name="data_export">Exportáld a posztokat</string>
     <string name="data_export_toots">Exportáld %1$s posztjait</string>
     <string name="data_export_success">%1$s tootot exportáltunk a %2$s tootból.</string>
-    <string name="data_export_error">Valamilyen hiba történt %1$s adatainak exportja közben</string>
-    <string name="data_export_error_simple">Valamilyen hiba az exportálás közben!</string>
+    <string name="data_export_error">Valamilyen hiba történt %1$s adatainak exportálása közben</string>
+    <string name="data_export_error_simple">Valamilyen hiba történt az exportálás közben!</string>
     <string name="data_import_success_simple">Az adatok importálása befejeződött!</string>
     <string name="data_import_error_simple">Valamilyen hiba történt az importálás közben!</string>
     <!-- Proxy -->
@@ -549,12 +549,12 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="filter_context_explanations">Egy vagy több kontextus, amire a szűrő alkalmazandó</string>
     <string name="filter_expire">Lejárat dátuma</string>
     <string name="add_new_filter">Új szűrő hozzáadása</string>
-    <string name="action_filter_delete">Törli a szűrőt?</string>
-    <string name="action_update_filter">Szűrőt módosítása</string>
+    <string name="action_filter_delete">Törlöd a szűrőt?</string>
+    <string name="action_update_filter">Szűrő módosítása</string>
     <string name="action_filter_create">Szűrő létrehozása</string>
     <string name="how_to_follow">Kit érdemes követni</string>
     <string name="action_who_to_follow_empty_content">Nincs több listázott fiók jelenleg!</string>
-    <string name="follow_account">Követ</string>
+    <string name="follow_account">Követés</string>
     <string name="select_all">Összes kiválasztása</string>
     <string name="unselect_all">Összes kijelölés megszüntetése</string>
     <string name="follow_trunk">%s követése elkezdődött!</string>
