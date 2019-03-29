@@ -562,13 +562,13 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="add_account_list_trunk">Hozzáadjuk a fiókot a listához</string>
     <string name="account_added_list_trunk">Hozzáadtuk a fiókokat a listához</string>
     <string name="adding_account_list_trunk">Hozzáadjuk a fiókokat a listához</string>
-    <string name="action_list_add">Nem hozott még létre listát. Kattintson a \"+\" gomb-ra egy új hozzáadásához.</string>
+    <string name="action_list_add">Nem hoztál még létre listát. Kattintson a \"+\" gomb-ra egy új hozzáadásához.</string>
     <string name="action_remote_instance_add">Nem követsz még egyetlen távoli szervert sem. Klikkelj a \"+\" gombra a hozzáadáshoz.</string>
     <string name="about_trunk">Who to follow</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">A fiók(ok) nem követhetőek</string>
     <string name="retrieve_remote_account">Betöltjük a távoli fiók adatait</string>
-    <string name="expand_image">Automatikusan kibontjuk a rejtett médiákat</string>
+    <string name="expand_image">Rejtett médiák automatikus kibontása</string>
     <string name="set_display_follow_instance">Megjeleníti a szerver követése gombot</string>
     <string name="channel_notif_follow">Új követő</string>
     <string name="channel_notif_boost">Új újratoot</string>
@@ -594,7 +594,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="comment">Hozzászólás</string>
     <string name="peertube_instance">Peertube szerver</string>
     <string name="set_display_direct">Privát üzenetek idővonalának megjelenítése</string>
-    <string name="set_keep_background_process">Tartsd nyitva a háttéfolyamatot az app bezárásakor</string>
+    <string name="set_keep_background_process">Tartsd nyitva a háttérfolyamatot az app bezárásakor</string>
     <string name="no_comments">Legyél te az első, aki hozzászól ehhez a videóhoz a jobb felső gomb segítségével!</string>
     <string name="number_view_video">%s megtekintés</string>
     <string name="duration_video">Időtartam: %s</string>
