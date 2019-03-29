@@ -100,7 +100,7 @@
                     android:id="@+id/toot_picture"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:src="@drawable/ic_insert_photo"
                     android:contentDescription="@string/toot_select_image" />
                 <ImageButton
@@ -108,7 +108,7 @@
                     android:visibility="gone"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:src="@drawable/ic_view_list_poll"
                     android:contentDescription="@string/poll"  />
                 <ImageButton
@@ -117,23 +117,24 @@
                     android:id="@+id/toot_visibility"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:src="@drawable/ic_public"
                     android:contentDescription="@string/toot_visibility_tilte" />
+
                 <Button
-                    android:layout_marginLeft="5dp"
                     android:id="@+id/toot_cw"
-                    android:padding="2dp"
-                    android:text="@string/cw"
-                    android:layout_gravity="center"
-                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginStart="5dp" />
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:padding="2dp"
+                    android:text="@string/cw" />
 
                 <ImageButton
                     android:id="@+id/toot_emoji"
-                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -156,7 +157,7 @@
 
                 <Button
                     android:id="@+id/toot_it"
-                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="end"

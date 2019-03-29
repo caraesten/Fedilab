@@ -392,7 +392,4 @@
     <style name="Shape.Dark" parent="AppThemeDark">
         <item name="android:background">@drawable/shape_border_bottom_settings_dark</item>
     </style>
-    <style name="AppTheme.RoundedCornerMaterialButton" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:background">@drawable/rounded_shape</item>
-    </style>
 </resources>
