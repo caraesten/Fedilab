@@ -569,7 +569,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="toast_impossible_to_follow">A fiók(ok) nem követhetőek</string>
     <string name="retrieve_remote_account">Betöltjük a távoli fiók adatait</string>
     <string name="expand_image">Rejtett médiák automatikus kibontása</string>
-    <string name="set_display_follow_instance">Megjeleníti a szerver követése gombot</string>
+    <string name="set_display_follow_instance">Megjeleníti a szerverek követése gombot</string>
     <string name="channel_notif_follow">Új követő</string>
     <string name="channel_notif_boost">Új újratoot</string>
     <string name="channel_notif_fav">Új kedvenc</string>
@@ -744,7 +744,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="toots_server">Tootok (szerver)</string>
     <string name="toots_client">Tootok (eszköz)</string>
     <string name="modify">Módosítás</string>
-    <string name="set_display_content_after_fetch_more">Új tootok megjelenítése a \"Továbbiak letöltése\" gomb fölött</string>
+    <string name="set_display_content_after_fetch_more">Új tootok megjelenítése a \"Továbbiak betöltése\" gomb fölött</string>
     <string name="settings_category_label_confirmations">Megerősítések</string>
     <string name="settings_category_label_timelines">Idővonalak</string>
     <string name="settings_category_label_notification">Értesítési szolgáltatás</string>
@@ -759,7 +759,7 @@ A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: http
     <string name="peertube_video_import_success"><![CDATA[<b>%1$s</b> videód importálása sikerült]]></string>
     <string name="peertube_video_import_error"><![CDATA[<b>%1$s</b> videód importálása nem sikerült]]></string>
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> közzétett egy új videót: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[<b>%1$s</b> videód tiltolistára került]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[<b>%1$s</b> videód tiltólistára került]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[<b>%1$s</b> videód lekerült a tiltólistáról]]></string>
     <string name="export_data">Adat exportálása</string>
     <string name="import_data">Adat importálása</string>
