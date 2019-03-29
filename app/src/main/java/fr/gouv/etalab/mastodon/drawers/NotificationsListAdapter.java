@@ -541,6 +541,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
 
             if (social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON && status != null) {
                 holder.rated.setVisibility(View.GONE);
+                holder.poll_container.setVisibility(View.GONE);
                 holder.multiple_choice.setVisibility(View.GONE);
                 holder.single_choice.setVisibility(View.GONE);
                 holder.submit_vote.setVisibility(View.GONE);
