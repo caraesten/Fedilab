@@ -100,7 +100,9 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:scaleType="centerCrop"
+                    android:padding="5dp"
                     style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:background="@color/transparent"
                     android:src="@drawable/ic_insert_photo"
                     android:contentDescription="@string/toot_select_image"  />
                 <ImageButton
@@ -108,8 +110,10 @@
                     android:visibility="gone"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:padding="5dp"
                     android:scaleType="centerCrop"
                     style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:background="@color/transparent"
                     android:src="@drawable/ic_view_list_poll"
                     android:contentDescription="@string/poll"  />
                 <ImageButton
@@ -119,7 +123,9 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:scaleType="centerCrop"
+                    android:padding="5dp"
                     style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:background="@color/transparent"
                     android:src="@drawable/ic_public"
                     android:contentDescription="@string/toot_visibility_tilte"/>
                 <Button
@@ -128,9 +134,11 @@
                     android:layout_marginStart="5dp"
                     android:padding="5dp"
                     android:text="@string/cw"
+                    android:textSize="20sp"
                     android:adjustViewBounds="true"
                     android:layout_gravity="center"
                     style="@style/Widget.AppCompat.Button.Colored"
+                    android:background="@color/transparent"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:scaleType="centerCrop"/>
@@ -141,10 +149,11 @@
                     android:layout_marginStart="5dp"
                     android:minWidth="0dp"
                     android:layout_gravity="center"
-                    android:padding="10dp"
+                    android:padding="5dp"
                     android:contentDescription="@string/emoji_picker"
                     android:src="@drawable/ic_emoji_selector"
                     style="@style/Widget.AppCompat.Button.Colored"
+                    android:background="@color/transparent"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:scaleType="centerCrop"

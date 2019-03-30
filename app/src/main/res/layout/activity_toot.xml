@@ -46,136 +46,143 @@
             android:minLines="4"
             android:layout_weight="1"
             android:layout_height="0dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/progress_bar_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
                 <ProgressBar
-                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-                    android:indeterminate="false"
                     android:id="@+id/upload_progress"
+                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
-                    android:max="100"
-                    android:progress="0"
                     android:layout_height="wrap_content"
-                    />
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="0" />
+
                 <TextView
                     android:id="@+id/toolbar_text"
                     android:layout_width="match_parent"
-                    android:textColor="@color/dark_text"
-                    android:gravity="center"
-                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_height="wrap_content" />
+                    android:gravity="center"
+                    android:textColor="@color/dark_text"
+                    android:textSize="12sp" />
             </RelativeLayout>
 
             <HorizontalScrollView
                 android:id="@+id/picture_scrollview"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:visibility="gone">
+
                 <LinearLayout
-                    android:padding="5dp"
                     android:id="@+id/toot_picture_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxHeight="100dp"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
+                    android:maxHeight="100dp"
                     android:orientation="horizontal"
-                    >
-                </LinearLayout>
+                    android:padding="5dp"></LinearLayout>
             </HorizontalScrollView>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <fr.gouv.etalab.mastodon.helper.SquareImageButton
+                <ImageButton
                     android:id="@+id/toot_picture"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
+                    android:background="@color/transparent"
                     android:contentDescription="@string/toot_select_image"
+                    android:padding="5dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_insert_photo" />
-                <fr.gouv.etalab.mastodon.helper.SquareImageButton
+
+                <ImageButton
                     android:id="@+id/poll_action"
-                    android:visibility="gone"
-                    android:scaleType="centerCrop"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:adjustViewBounds="true"
-                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:background="@color/transparent"
+                    android:contentDescription="@string/poll"
+                    android:padding="5dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_view_list_poll"
-                    android:contentDescription="@string/poll"  />
-                <fr.gouv.etalab.mastodon.helper.SquareImageButton
-                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                <ImageButton
                     android:id="@+id/toot_visibility"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:adjustViewBounds="true"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:src="@drawable/ic_public"
-                    android:contentDescription="@string/toot_visibility_tilte" />
+                    android:background="@color/transparent"
+                    android:contentDescription="@string/toot_visibility_tilte"
+                    android:padding="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_public" />
 
-                <fr.gouv.etalab.mastodon.helper.SquareButton
+                <Button
                     android:id="@+id/toot_cw"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:scaleType="fitXY"
-                    android:layout_gravity="center"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:adjustViewBounds="true"
-                    android:padding="2dp"
-                    android:text="@string/cw" />
+                    android:background="@color/transparent"
+                    android:text="@string/cw"
+                    android:textSize="20sp" />
 
-                <fr.gouv.etalab.mastodon.helper.SquareImageButton
+                <ImageButton
                     android:id="@+id/toot_emoji"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
+                    android:background="@color/transparent"
                     android:contentDescription="@string/emoji_picker"
                     android:minWidth="0dp"
                     android:minHeight="0dp"
-                    android:padding="8dp"
+                    android:padding="5dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_emoji_selector" />
+
                 <TextView
                     android:id="@+id/toot_space_left"
                     android:layout_width="0dp"
-                    android:textColor="?colorAccent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_gravity="center"
-                    android:layout_height="45dp" />
+                    android:textColor="?colorAccent" />
 
                 <Button
                     android:id="@+id/toot_it"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
-                    android:layout_height="45dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="end"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/toot_it" />
 
             </LinearLayout>
+
             <CheckBox
-                android:text="@string/toot_sensitive"
-                android:visibility="gone"
                 android:id="@+id/toot_sensitive"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/toot_sensitive"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

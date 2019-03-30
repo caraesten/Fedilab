@@ -157,6 +157,7 @@ import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import static fr.gouv.etalab.mastodon.helper.Helper.HOME_TIMELINE_INTENT;
 import static fr.gouv.etalab.mastodon.helper.Helper.INTENT_ACTION;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
+import static fr.gouv.etalab.mastodon.helper.Helper.changeButtonTextColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.convertDpToPixel;
 
@@ -2883,8 +2884,6 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
                 Toasty.error(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG).show();
         }
     }
-
-
     private void changeColor(){
         final SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
@@ -2898,6 +2897,13 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.dark_text);
             changeDrawableColor(TootActivity.this, R.drawable.emoji_one_category_smileysandpeople, R.color.dark_text);
+            //bottom action
+            changeDrawableColor(TootActivity.this, findViewById(R.id.toot_picture), R.color.dark_text);
+            changeDrawableColor(TootActivity.this, findViewById(R.id.poll_action), R.color.dark_text);
+            changeDrawableColor(TootActivity.this, findViewById(R.id.toot_visibility), R.color.dark_text);
+            changeDrawableColor(TootActivity.this, findViewById(R.id.toot_emoji), R.color.dark_text);
+            changeButtonTextColor(TootActivity.this, findViewById(R.id.toot_cw), R.color.dark_text);
+
         }else {
             changeDrawableColor(TootActivity.this, R.drawable.ic_public_toot, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_lock_open_toot, R.color.white);
@@ -2908,6 +2914,13 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             changeDrawableColor(TootActivity.this, R.drawable.ic_skip_next, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.ic_check, R.color.white);
             changeDrawableColor(TootActivity.this, R.drawable.emoji_one_category_smileysandpeople, R.color.black);
+            //bottom action
+            changeDrawableColor(TootActivity.this, findViewById(R.id.toot_picture), R.color.black);
+            changeDrawableColor(TootActivity.this, findViewById(R.id.poll_action), R.color.black);
+            changeDrawableColor(TootActivity.this, findViewById(R.id.toot_visibility), R.color.black);
+            changeDrawableColor(TootActivity.this, findViewById(R.id.toot_emoji), R.color.black);
+            changeButtonTextColor(TootActivity.this, findViewById(R.id.toot_cw), R.color.black);
+
         }
     }
 
