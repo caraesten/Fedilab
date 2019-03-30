@@ -1081,33 +1081,12 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     }
 
 
-    public void notifyNotificationWithActionChanged(API.StatusAction statusAction, Status status){
+    public void notifyNotificationWithActionChanged(Status status){
         for (int i = 0; i < notificationsListAdapter.getItemCount(); i++) {
             if (notificationsListAdapter.getItemAt(i) != null && notificationsListAdapter.getItemAt(i).getStatus() != null && notificationsListAdapter.getItemAt(i).getStatus().getId().equals(status.getId())) {
                 try {
                     if( notifications.get(i).getStatus() != null){
-                        int favCount = notifications.get(i).getStatus().getFavourites_count();
-                        int boostCount = notifications.get(i).getStatus().getReblogs_count();
-                        if( statusAction == API.StatusAction.REBLOG)
-                            boostCount++;
-                        else if( statusAction == API.StatusAction.UNREBLOG)
-                            boostCount--;
-                        else if( statusAction == API.StatusAction.FAVOURITE)
-                            favCount++;
-                        else if( statusAction == API.StatusAction.UNFAVOURITE)
-                            favCount--;
-                        else if( statusAction == API.StatusAction.REFRESHPOLL){
-                            if( status.getPoll() != null)
-                                notifications.get(i).getStatus().setPoll(status.getPoll());
-                        }
-                        if( boostCount < 0 )
-                            boostCount = 0;
-                        if( favCount < 0 )
-                            favCount = 0;
-                        notifications.get(i).getStatus().setFavourited(status.isFavourited());
-                        notifications.get(i).getStatus().setFavourites_count(favCount);
-                        notifications.get(i).getStatus().setReblogged(status.isReblogged());
-                        notifications.get(i).getStatus().setReblogs_count(boostCount);
+                        notifications.get(i).setStatus(status);
                         notificationsListAdapter.notifyItemChanged(i);
                         break;
                     }
@@ -1345,7 +1324,7 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
     @Override
     public void onPoll(Status status, Poll poll) {
         status.setPoll(poll);
-        notifyNotificationWithActionChanged(API.StatusAction.REFRESHPOLL, status);
+        notifyNotificationWithActionChanged(status);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

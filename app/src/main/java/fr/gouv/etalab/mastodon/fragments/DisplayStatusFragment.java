@@ -245,13 +245,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     Bundle b = intent.getExtras();
                     assert b != null;
                     Status status = b.getParcelable("status");
-                    Poll poll = b.getParcelable("poll");
-                    if (poll != null && status != null){
-                        status.setPoll(poll);
-                    }
-                    API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
                     if( status != null && statusListAdapter != null) {
-                        statusListAdapter.notifyStatusWithActionChanged(statusAction, status);
+                        statusListAdapter.notifyStatusWithActionChanged(status);
                     }
                 }
             };

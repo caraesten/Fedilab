@@ -3025,29 +3025,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
-    public void notifyStatusWithActionChanged(API.StatusAction statusAction, Status status){
+    public void notifyStatusWithActionChanged(Status status){
         for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
-                    int favCount = statuses.get(i).getFavourites_count();
-                    int boostCount = statuses.get(i).getReblogs_count();
-                    if( statusAction == API.StatusAction.REBLOG)
-                        boostCount++;
-                    else if( statusAction == API.StatusAction.UNREBLOG)
-                        boostCount--;
-                    else if( statusAction == API.StatusAction.FAVOURITE)
-                        favCount++;
-                    else if( statusAction == API.StatusAction.UNFAVOURITE)
-                        favCount--;
-                    if( boostCount < 0 )
-                        boostCount = 0;
-                    if( favCount < 0 )
-                        favCount = 0;
-                    statuses.get(i).setFavourited(status.isFavourited());
-                    statuses.get(i).setFavourites_count(favCount);
-                    statuses.get(i).setReblogged(status.isReblogged());
-                    statuses.get(i).setReblogs_count(boostCount);
+                    statuses.set(i, status);
                     statusListAdapter.notifyItemChanged(i);
                 } catch (Exception ignored) {
                 }

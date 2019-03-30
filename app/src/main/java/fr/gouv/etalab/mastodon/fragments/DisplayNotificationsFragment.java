@@ -157,14 +157,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                         Bundle b = intent.getExtras();
                         assert b != null;
                         Status status = b.getParcelable("status");
-                        Poll poll = b.getParcelable("poll");
-                        if (poll != null && status != null){
-                            status.setPoll(poll);
-                        }
-                        API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
-                        if (status != null) {
-                            notificationsListAdapter.notifyNotificationWithActionChanged(statusAction, status);
-                        }
+                        if( notificationsListAdapter != null && status != null)
+                            notificationsListAdapter.notifyNotificationWithActionChanged(status);
                     }
                 };
                 LocalBroadcastManager.getInstance(context).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));

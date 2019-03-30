@@ -2065,7 +2065,6 @@ public class API {
                     try {
                         Status status1 = parseStatuses(context, new JSONObject(resp));
                         b.putParcelable("status", status1);
-                        b.putSerializable("action", statusAction);
                     } catch (JSONException ignored) {}
                     Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
                     intentBC.putExtras(b);
@@ -2223,9 +2222,8 @@ public class API {
             String response = httpsConnection.get(getAbsoluteUrl(String.format("/polls/%s", status.getPoll().getId())), 60, null, prefKeyOauthTokenT);
             Poll poll = parsePoll(context, new JSONObject(response));
             Bundle b = new Bundle();
-            b.putParcelable("poll", poll);
+            status.setPoll(poll);
             b.putParcelable("status", status);
-            b.putSerializable("action", REFRESHPOLL);
             Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
             intentBC.putExtras(b);
             LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);

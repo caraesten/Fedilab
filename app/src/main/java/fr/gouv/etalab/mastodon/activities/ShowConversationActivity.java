@@ -129,9 +129,8 @@ public class ShowConversationActivity extends BaseActivity implements  OnRetriev
                     Bundle b = intent.getExtras();
                     assert b != null;
                     Status status = b.getParcelable("status");
-                    API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
-                    if( status != null) {
-                        statusListAdapter.notifyStatusWithActionChanged(statusAction, status);
+                    if( status != null && statusListAdapter != null) {
+                        statusListAdapter.notifyStatusWithActionChanged(status);
                     }
                 }
             };
