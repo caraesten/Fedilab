@@ -78,6 +78,8 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
+import static fr.gouv.etalab.mastodon.client.API.StatusAction.REFRESHPOLL;
+
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -2212,13 +2214,21 @@ public class API {
 
     /**
      * Public api call to refresh a poll
-     * @param pollId
-     * @return
+     * @param status Status
+     * @return Poll
      */
-    public Poll getPoll(String pollId){
+    public Poll getPoll(Status status){
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/polls/%s", pollId)), 60, null, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/polls/%s", status.getPoll().getId())), 60, null, prefKeyOauthTokenT);
+            Poll poll = parsePoll(context, new JSONObject(response));
+            Bundle b = new Bundle();
+            b.putParcelable("poll", poll);
+            b.putParcelable("status", status);
+            b.putSerializable("action", REFRESHPOLL);
+            Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
+            intentBC.putExtras(b);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
             return parsePoll(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);

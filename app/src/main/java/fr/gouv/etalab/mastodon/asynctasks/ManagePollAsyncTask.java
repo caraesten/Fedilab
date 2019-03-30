@@ -58,7 +58,7 @@ public class ManagePollAsyncTask extends AsyncTask<Void, Void, Void> {
         if (type == type_s.SUBMIT){
             poll = new API(contextReference.get()).submiteVote(status.getPoll().getId(),choices);
         }else if( type == type_s.REFRESH){
-            poll = new API(contextReference.get()).getPoll(status.getPoll().getId());
+            poll = new API(contextReference.get()).getPoll(status);
         }
         return null;
     }
