@@ -97,7 +97,7 @@
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
 
-                <ImageButton
+                <fr.gouv.etalab.mastodon.helper.SquareImageButton
                     android:id="@+id/toot_picture"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="45dp"
@@ -106,7 +106,7 @@
                     android:scaleType="centerCrop"
                     android:contentDescription="@string/toot_select_image"
                     android:src="@drawable/ic_insert_photo" />
-                <ImageButton
+                <fr.gouv.etalab.mastodon.helper.SquareImageButton
                     android:id="@+id/poll_action"
                     android:visibility="gone"
                     android:scaleType="centerCrop"
@@ -116,9 +116,7 @@
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:src="@drawable/ic_view_list_poll"
                     android:contentDescription="@string/poll"  />
-                <ImageButton
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
+                <fr.gouv.etalab.mastodon.helper.SquareImageButton
                     android:scaleType="centerCrop"
                     android:id="@+id/toot_visibility"
                     android:adjustViewBounds="true"
@@ -128,7 +126,7 @@
                     android:src="@drawable/ic_public"
                     android:contentDescription="@string/toot_visibility_tilte" />
 
-                <Button
+                <fr.gouv.etalab.mastodon.helper.SquareButton
                     android:id="@+id/toot_cw"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="45dp"
@@ -136,20 +134,16 @@
                     android:scaleType="fitXY"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
                     android:padding="2dp"
                     android:text="@string/cw" />
 
-                <ImageButton
+                <fr.gouv.etalab.mastodon.helper.SquareImageButton
                     android:id="@+id/toot_emoji"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="5dp"
                     android:adjustViewBounds="true"
-                    android:layout_marginLeft="5dp"
                     android:contentDescription="@string/emoji_picker"
                     android:minWidth="0dp"
                     android:minHeight="0dp"
