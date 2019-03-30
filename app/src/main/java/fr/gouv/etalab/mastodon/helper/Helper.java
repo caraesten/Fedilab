@@ -95,6 +95,7 @@ import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -2303,6 +2304,14 @@ public class Helper {
         imageButton.setColorFilter(context.getResources().getColor(hexaColor));
     }
 
+    /**
+     * change color of a drawable
+     * @param button int the button
+     * @param hexaColor example 0xffff00
+     */
+    public static void changeButtonTextColor(Context context, Button button, int hexaColor){
+        button.setTextColor(context.getResources().getColor(hexaColor));
+    }
     /**
      * Returns the current locale of the device
      * @param context Context
