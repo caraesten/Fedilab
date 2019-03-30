@@ -802,7 +802,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="filter_timeline_with_a_tag">Filtrovat časovou osu s hashtagy</string>
     <string name="no_tags">Žádné hashtagy</string>
     <string name="set_hide_delete_notification_on_tab">Skrýt tlačítko pro vymazání oznámení ze záložky oznámení</string>
-    <string name="set_retrieve_metadata_share_from_extras">Attach an image when sharing a URL</string>
+    <string name="set_retrieve_metadata_share_from_extras">Připojit při sdílení URL obrázek</string>
     <!-- end languages -->
     <string name="poll">Anketa</string>
     <string name="create_poll">Vytvořit anketu</string>
@@ -816,6 +816,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="refresh_poll">Obnovit anketu</string>
     <string name="vote">Hlasovat</string>
     <string name="poll_not_private">K přímé zprávě nelze připojit anketu!</string>
+    <string name="notif_poll">Anketa, ve které jste hlasoval/a, skončila</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d hlas</item>
         <item quantity="few">%d hlasy</item>
