@@ -128,6 +128,7 @@
                     android:layout_marginStart="5dp"
                     android:padding="5dp"
                     android:text="@string/cw"
+                    android:adjustViewBounds="true"
                     android:layout_gravity="center"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="50dp"
