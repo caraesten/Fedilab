@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2017 Thomas Schneider
 
     This file is a part of Mastalab
@@ -16,173 +15,196 @@
     see <http://www.gnu.org/licenses>.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:fillViewport="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
     <LinearLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/fab_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/fab_margin"
-        android:orientation="vertical">
+        android:paddingBottom="@dimen/activity_vertical_margin">
+
         <EditText
             android:id="@+id/toot_cw_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:animateLayoutChanges="true"
-            android:visibility="gone"
             android:hint="@string/toot_cw_placeholder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:visibility="gone" />
+
         <fr.gouv.etalab.mastodon.helper.MastalabAutoCompleteTextView
-            android:layout_marginTop="10dp"
             android:id="@+id/toot_content"
-            android:gravity="top|start"
-            android:inputType="textMultiLine|textCapSentences"
-            android:hint="@string/toot_placeholder"
             android:layout_width="match_parent"
-            android:minLines="4"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:layout_height="0dp" />
+            android:gravity="top|start"
+            android:hint="@string/toot_placeholder"
+            android:inputType="textMultiLine|textCapSentences"
+            android:minLines="4" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/progress_bar_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
                 <ProgressBar
-                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-                    android:indeterminate="false"
                     android:id="@+id/upload_progress"
+                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
-                    android:max="100"
-                    android:progress="0"
                     android:layout_height="wrap_content"
-                    />
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="0" />
+
                 <TextView
                     android:id="@+id/toolbar_text"
                     android:layout_width="match_parent"
-                    android:textColor="@color/dark_text"
-                    android:gravity="center"
-                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_height="wrap_content" />
+                    android:gravity="center"
+                    android:textColor="@color/dark_text"
+                    android:textSize="12sp" />
             </RelativeLayout>
+
             <HorizontalScrollView
                 android:id="@+id/picture_scrollview"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:visibility="gone">
+
                 <LinearLayout
-                    android:padding="5dp"
                     android:id="@+id/toot_picture_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxHeight="100dp"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
+                    android:maxHeight="100dp"
                     android:orientation="horizontal"
-                    >
-                </LinearLayout>
+                    android:padding="5dp"></LinearLayout>
             </HorizontalScrollView>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <ImageButton
                     android:id="@+id/toot_picture"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="centerCrop"
-                    android:padding="5dp"
                     style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
                     android:background="@color/transparent"
-                    android:src="@drawable/ic_insert_photo"
-                    android:contentDescription="@string/toot_select_image"  />
+                    android:contentDescription="@string/toot_select_image"
+                    android:gravity="center"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_insert_photo" />
+
                 <ImageButton
                     android:id="@+id/poll_action"
-                    android:visibility="gone"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:padding="5dp"
-                    android:scaleType="centerCrop"
                     style="@style/Base.Widget.AppCompat.Button.Colored"
-                    android:background="@color/transparent"
-                    android:src="@drawable/ic_view_list_poll"
-                    android:contentDescription="@string/poll"  />
-                <ImageButton
-                    android:layout_marginLeft="5dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
                     android:layout_marginStart="5dp"
-                    android:id="@+id/toot_visibility"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="centerCrop"
-                    android:padding="5dp"
-                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
                     android:background="@color/transparent"
-                    android:src="@drawable/ic_public"
-                    android:contentDescription="@string/toot_visibility_tilte"/>
+                    android:contentDescription="@string/poll"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_view_list_poll" />
+
+                <ImageButton
+                    android:id="@+id/toot_visibility"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/transparent"
+                    android:contentDescription="@string/toot_visibility_tilte"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_public" />
+
                 <Button
                     android:id="@+id/toot_cw"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:padding="5dp"
-                    android:text="@string/cw"
-                    android:textSize="20sp"
-                    android:adjustViewBounds="true"
-                    android:layout_gravity="center"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:background="@color/transparent"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="centerCrop"/>
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/transparent"
+                    android:scaleType="centerCrop"
+                    android:text="@string/cw"
+                    android:textSize="25sp" />
+
                 <ImageButton
                     android:id="@+id/toot_emoji"
-                    android:minHeight="0dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:minWidth="0dp"
-                    android:layout_gravity="center"
-                    android:padding="5dp"
-                    android:contentDescription="@string/emoji_picker"
-                    android:src="@drawable/ic_emoji_selector"
                     style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
                     android:background="@color/transparent"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:contentDescription="@string/emoji_picker"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
                     android:scaleType="centerCrop"
-                    />
+                    android:src="@drawable/ic_insert_emoticon" />
+
                 <TextView
                     android:id="@+id/toot_space_left"
                     android:layout_width="0dp"
-                    android:textColor="?colorAccent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_gravity="center"
-                    android:layout_height="50dp" />
+                    android:textColor="?colorAccent" />
+
                 <Button
                     android:id="@+id/toot_it"
-                    android:padding="5dp"
-                    android:text="@string/toot_it"
-                    android:layout_gravity="end"
-                    android:gravity="center"
                     style="@style/Base.Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/toot_it"
+                    android:textSize="18sp" />
 
             </LinearLayout>
+
             <CheckBox
-                android:text="@string/toot_sensitive"
-                android:visibility="gone"
                 android:id="@+id/toot_sensitive"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/toot_sensitive"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
