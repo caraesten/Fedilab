@@ -96,27 +96,32 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
+
                 <ImageButton
                     android:id="@+id/toot_picture"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:src="@drawable/ic_insert_photo"
-                    android:contentDescription="@string/toot_select_image" />
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/toot_select_image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_insert_photo" />
                 <ImageButton
                     android:id="@+id/poll_action"
                     android:visibility="gone"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:scaleType="centerCrop"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:src="@drawable/ic_view_list_poll"
                     android:contentDescription="@string/poll"  />
                 <ImageButton
                     android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
+                    android:scaleType="centerCrop"
                     android:id="@+id/toot_visibility"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:src="@drawable/ic_public"
                     android:contentDescription="@string/toot_visibility_tilte" />
@@ -124,8 +129,9 @@
                 <Button
                     android:id="@+id/toot_cw"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:scaleType="centerCrop"
                     android:layout_gravity="center"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
@@ -135,16 +141,16 @@
                 <ImageButton
                     android:id="@+id/toot_emoji"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="5dp"
                     android:contentDescription="@string/emoji_picker"
                     android:minWidth="0dp"
                     android:minHeight="0dp"
-                    android:padding="6dp"
-                    android:scaleType="fitXY"
+                    android:padding="8dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_emoji_selector" />
                 <TextView
                     android:id="@+id/toot_space_left"
@@ -153,13 +159,13 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:layout_height="40dp" />
+                    android:layout_height="45dp" />
 
                 <Button
                     android:id="@+id/toot_it"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="end"
                     android:gravity="center"
                     android:padding="5dp"
