@@ -7,7 +7,7 @@
     <dimen name="nav_header_height">170dp</dimen>
     <dimen name="fab_margin">5dp</dimen>
     <dimen name="drawer_padding">2dp</dimen>
-    <dimen name="toot_padding">20dp</dimen>
+    <dimen name="toot_padding">10dp</dimen>
     <bool name="isTablet">false</bool>
     <dimen name="layout_height_header">180dp</dimen>
     <dimen name="fab_margin_floating">16dp</dimen>
