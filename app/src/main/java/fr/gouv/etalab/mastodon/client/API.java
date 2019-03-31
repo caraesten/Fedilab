@@ -106,6 +106,12 @@ public class API {
     private Error APIError;
     private List<String> domains;
 
+    public enum searchType{
+        TAGS,
+        STATUSES,
+        ACCOUNTS
+    }
+
     public enum StatusAction{
         FAVOURITE,
         UNFAVOURITE,
@@ -2510,9 +2516,10 @@ public class API {
      * @param query  String search
      * @return Results
      */
-    public Results search(String query) {
+    public APIResponse search(String query) {
 
         HashMap<String, String> params = new HashMap<>();
+        apiResponse = new APIResponse();
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
             params.put("q", query);
         else
@@ -2525,6 +2532,7 @@ public class API {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/search"), 60, params, prefKeyOauthTokenT);
             results = parseResultsResponse(new JSONObject(response));
+            apiResponse.setResults(results);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -2537,7 +2545,61 @@ public class API {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return results;
+        return apiResponse;
+    }
+
+
+    /**
+     * Retrieves Accounts and feeds when searching *synchronously*
+     *
+     * @param query  String search
+     * @return Results
+     */
+    public APIResponse search2(String query, searchType type, String max_id) {
+        apiResponse = new APIResponse();
+        HashMap<String, String> params = new HashMap<>();
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            params.put("q", query);
+        else
+            try {
+                params.put("q", URLEncoder.encode(query, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                params.put("q", query);
+            }
+        if( max_id != null)
+            params.put("max_id", max_id);
+        switch (type){
+            case TAGS:
+                params.put("type", "hashtags");
+                break;
+            case ACCOUNTS:
+                params.put("type", "accounts");
+                break;
+            case STATUSES:
+                params.put("type", "statuses");
+                break;
+        }
+        params.put("limite", "40");
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUr2l("/search"), 60, params, prefKeyOauthTokenT);
+            results = parseResultsResponse(new JSONObject(response));
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            apiResponse.setResults(results);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
     }
 
 

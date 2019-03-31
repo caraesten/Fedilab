@@ -1646,9 +1646,10 @@ public class GNUAPI {
      * @param query  String search
      * @return Results
      */
-    public Results search(String query) {
+    public APIResponse search(String query) {
         Results results = new Results();
         HashMap<String, String> params = new HashMap<>();
+        apiResponse = new APIResponse();
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
             params.put("q", query);
         else
@@ -1662,6 +1663,7 @@ public class GNUAPI {
             String response = httpsConnection.get(getAbsoluteUrl("/users/search.json"), 60, params, prefKeyOauthTokenT);
             List<Account> accounts = parseAccountResponse(new JSONArray(response));
             results.setAccounts(accounts);
+            apiResponse.setResults(results);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -1674,7 +1676,7 @@ public class GNUAPI {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return results;
+        return apiResponse;
     }
 
     /**

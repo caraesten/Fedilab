@@ -23,7 +23,7 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.GNUAPI;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -40,11 +40,12 @@ import fr.gouv.etalab.mastodon.sqlite.TagsCacheDAO;
 public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private String query;
-    private Results results;
+    private APIResponse apiResponse;
     private OnRetrieveSearchInterface listener;
-    private Error error;
     private WeakReference<Context> contextReference;
     private boolean tagsOnly = false;
+    private API.searchType type;
+    private String max_id;
 
     public RetrieveSearchAsyncTask(Context context, String query, OnRetrieveSearchInterface onRetrieveSearchInterface){
         this.contextReference = new WeakReference<>(context);
@@ -59,40 +60,52 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
         this.tagsOnly = tagsOnly;
     }
 
+    public RetrieveSearchAsyncTask(Context context, String query, API.searchType searchType, String max_id, OnRetrieveSearchInterface onRetrieveSearchInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.query = query;
+        this.listener = onRetrieveSearchInterface;
+        this.type = searchType;
+        this.max_id = max_id;
+    }
+
     @Override
     protected Void doInBackground(Void... params) {
 
-        if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-            API api = new API(this.contextReference.get());
-            if (!tagsOnly)
-                results = api.search(query);
-            else {
-                //search tags only
-                results = api.search(query);
-                SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                List<String> cachedTags = new TagsCacheDAO(contextReference.get(), db).getBy(query);
-                if (results != null && results.getHashtags() != null) {
-                    //If cache contains matching tags
-                    if (cachedTags != null) {
-                        for (String apiTag : results.getHashtags()) {
-                            //Cache doesn't contain the tags coming from the api (case insensitive)
-                            if (!Helper.containsCaseInsensitive(apiTag, cachedTags)) {
-                                cachedTags.add(apiTag); //It's added
+        if (this.type == null) {
+            if (MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
+                API api = new API(this.contextReference.get());
+                if (!tagsOnly)
+                    apiResponse = api.search(query);
+                else {
+                    //search tags only
+                    apiResponse = api.search(query);
+                    SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                    List<String> cachedTags = new TagsCacheDAO(contextReference.get(), db).getBy(query);
+                    if (apiResponse != null && apiResponse.getResults() != null && apiResponse.getResults().getHashtags() != null) {
+                        //If cache contains matching tags
+                        if (cachedTags != null) {
+                            for (String apiTag : apiResponse.getResults().getHashtags()) {
+                                //Cache doesn't contain the tags coming from the api (case insensitive)
+                                if (!Helper.containsCaseInsensitive(apiTag, cachedTags)) {
+                                    cachedTags.add(apiTag); //It's added
+                                }
                             }
+                            apiResponse.getResults().setHashtags(cachedTags);
                         }
-                        results.setHashtags(cachedTags);
+                    } else if (cachedTags != null) {
+                        if (apiResponse != null && apiResponse.getResults() == null) {
+                            apiResponse.setResults(new Results());
+                            apiResponse.getResults().setHashtags(cachedTags);
+                        }
                     }
-                } else if (cachedTags != null) {
-                    if (results == null)
-                        results = new Results();
-                    results.setHashtags(cachedTags);
                 }
+            } else {
+                GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
+                apiResponse = gnuapi.search(query);
             }
-            error = api.getError();
-        }else {
-            GNUAPI gnuapi = new GNUAPI(this.contextReference.get());
-            results = gnuapi.search(query);
-            error = gnuapi.getError();
+        }else{
+            API api = new API(this.contextReference.get());
+            apiResponse = api.search2(query, type, max_id);
         }
 
         return null;
@@ -100,7 +113,7 @@ public class RetrieveSearchAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.onRetrieveSearch(results, error);
+        listener.onRetrieveSearch(apiResponse);
     }
 
 }

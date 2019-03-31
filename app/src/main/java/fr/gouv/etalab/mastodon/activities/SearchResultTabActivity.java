@@ -17,13 +17,11 @@ package fr.gouv.etalab.mastodon.activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -35,30 +33,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
-import fr.gouv.etalab.mastodon.client.APIResponse;
-import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.Entities.Results;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.drawers.SearchListAdapter;
-import fr.gouv.etalab.mastodon.drawers.SearchTagsAdapter;
 import fr.gouv.etalab.mastodon.fragments.DisplayAccountsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplaySearchTagsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
-import fr.gouv.etalab.mastodon.fragments.TabLayoutTootsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
-import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchStatusInterface;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 
@@ -68,7 +49,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
  * Show search results within tabs
  */
 
-public class SearchResultTabActivity extends BaseActivity implements OnRetrieveSearchInterface, OnRetrieveSearchStatusInterface {
+public class SearchResultTabActivity extends BaseActivity  {
 
 
     private String search;
@@ -105,16 +86,7 @@ public class SearchResultTabActivity extends BaseActivity implements OnRetrieveS
         tabLayout = findViewById(R.id.search_tabLayout);
         search_viewpager = findViewById(R.id.search_viewpager);
 
-        Bundle b = getIntent().getExtras();
-        if(b != null){
-            search = b.getString("search");
-            if( search != null)
-                new RetrieveSearchAsyncTask(getApplicationContext(), search.trim(), SearchResultTabActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            else
-                Toasty.error(this,getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
-        }else{
-            Toasty.error(this,getString(R.string.toast_error_search),Toast.LENGTH_LONG).show();
-        }
+
         if( getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar actionBar = getSupportActionBar();
@@ -154,80 +126,6 @@ public class SearchResultTabActivity extends BaseActivity implements OnRetrieveS
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-
-    @Override
-    public void onRetrieveSearch(Results results, Error error) {
-        loader.setVisibility(View.GONE);
-
-        if( error != null){
-            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
-            return;
-        }
-        if( results == null || (results.getAccounts().size() == 0 && results.getStatuses().size() == 0 && results.getHashtags().size() == 0)){
-            RelativeLayout no_result = findViewById(R.id.no_result);
-            no_result.setVisibility(View.VISIBLE);
-            return;
-        }
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tags)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.accounts)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.toots)));
-
-        PagerAdapter mPagerAdapter = new SearchResultTabActivity.ScreenSlidePagerAdapter(getSupportFragmentManager());
-
-        search_viewpager.setAdapter(mPagerAdapter);
-
-        search_viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                TabLayout.Tab tab = tabLayout.getTabAt(position);
-                if( tab != null)
-                    tab.select();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                search_viewpager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                Fragment fragment = null;
-                if( search_viewpager.getAdapter() != null)
-                    fragment = (Fragment) search_viewpager.getAdapter().instantiateItem(search_viewpager, tab.getPosition());
-                if( fragment != null) {
-                    if( fragment instanceof DisplayAccountsFragment) {
-                        DisplayAccountsFragment displayAccountsFragment = ((DisplayAccountsFragment) fragment);
-                        displayAccountsFragment.scrollToTop();
-                    }else if (fragment instanceof DisplayStatusFragment){
-                        DisplayStatusFragment displayStatusFragment = ((DisplayStatusFragment) fragment);
-                        displayStatusFragment.scrollToTop();
-                    }else if (fragment instanceof DisplaySearchTagsFragment){
-                        DisplaySearchTagsFragment displaySearchTagsFragment = ((DisplaySearchTagsFragment) fragment);
-                        displaySearchTagsFragment.scrollToTop();
-                    }
-                }
-            }
-        });
-
     }
 
 
@@ -271,22 +169,5 @@ public class SearchResultTabActivity extends BaseActivity implements OnRetrieveS
         public int getCount() {
             return 3;
         }
-    }
-
-    @Override
-    public void onRetrieveSearchStatus(APIResponse apiResponse, Error error) {
-        loader.setVisibility(View.GONE);
-        if( apiResponse.getError() != null){
-            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
-            return;
-        }
-        lv_search.setVisibility(View.VISIBLE);
-        List<String> tags = new ArrayList<>();
-        List<Account> accounts = new ArrayList<>();
-        List<Status> statuses = apiResponse.getStatuses();
-
-        SearchListAdapter searchListAdapter = new SearchListAdapter(SearchResultTabActivity.this, statuses, accounts, tags);
-        lv_search.setAdapter(searchListAdapter);
-        searchListAdapter.notifyDataSetChanged();
     }
 }

@@ -24,25 +24,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
-import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
-import fr.gouv.etalab.mastodon.activities.SearchResultActivity;
-import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
-import fr.gouv.etalab.mastodon.client.Entities.Account;
-import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.Entities.Results;
-import fr.gouv.etalab.mastodon.client.Entities.Status;
-import fr.gouv.etalab.mastodon.drawers.SearchListAdapter;
+import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.drawers.SearchTagsAdapter;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
 
@@ -65,7 +55,7 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
     private RelativeLayout loading_next_tags;
     private LinearLayoutManager mLayoutManager;
     private boolean flag_loading;
-
+    private String max_id;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
@@ -80,7 +70,7 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
         flag_loading = true;
         if (tags == null)
             tags = new ArrayList<>();
-
+        max_id = null;
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             search = bundle.getString("search");
@@ -105,7 +95,7 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
                 if(firstVisibleItem + visibleItemCount == totalItemCount && context != null) {
                     if(!flag_loading ) {
                         flag_loading = true;
-
+                        new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, max_id, DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         loading_next_tags.setVisibility(View.VISIBLE);
                     }
                 } else {
@@ -114,7 +104,7 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
             }
             }
         });
-
+        new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, null,DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         return rootView;
     }
 
@@ -137,18 +127,22 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
         this.context = context;
     }
 
+
     @Override
-    public void onRetrieveSearch(Results results, Error error) {
+    public void onRetrieveSearch(APIResponse apiResponse) {
 
         searchTagsAdapter = new SearchTagsAdapter(context, tags);
-
+        this.max_id = apiResponse.getMax_id();
         loader.setVisibility(View.GONE);
-        if (error!= null) {
-            Toasty.error(context, error.getError(), Toast.LENGTH_LONG).show();
+        if (apiResponse.getError() != null) {
+            if( apiResponse.getError().getError() != null)
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            else
+                Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
         lv_search_tags.setVisibility(View.VISIBLE);
-        List<String> newTags = results.getHashtags();
+        List<String> newTags = apiResponse.getResults().getHashtags();
         tags.addAll(newTags);
         SearchTagsAdapter searchTagsAdapter = new SearchTagsAdapter(context, tags);
         lv_search_tags.setAdapter(searchTagsAdapter);
