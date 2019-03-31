@@ -24,13 +24,11 @@
     app:isSwipeFromEdge="true"
     app:maskAlpha="125"
     app:swipeBackFactor="0.5">
-
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/main_container_media">
-
 
 
         <!-- Main Loader -->
@@ -82,6 +80,7 @@
                 android:id="@+id/media_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:adjustViewBounds="true"
                 />
             <TextView
                 android:visibility="gone"
@@ -89,7 +88,7 @@
                 android:id="@+id/media_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dip"
+                android:layout_marginBottom="62dp"
                 android:layout_gravity="center_horizontal|bottom"
                 android:padding="12dp"
                 android:background="#AA000000"
@@ -104,10 +103,77 @@
             android:layout_height="match_parent"
              />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent_grey"
+            android:id="@+id/action_bar_container"
+            android:paddingTop="16dp">
+            <ImageButton
+                android:id="@+id/media_close"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/transparent"
+                android:contentDescription="@string/close"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_close"
+                app:layout_anchorGravity="top|left" />
+
+
+
+            <LinearLayout
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                app:layout_anchorGravity="top|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/media_save"
+                    android:scaleType="fitXY"
+                    android:layout_marginStart="20dp"
+                    android:background="@color/transparent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_save_white"
+                    android:contentDescription="@string/download"
+                    />
+
+                <ImageButton
+                    android:id="@+id/media_share"
+                    app:layout_anchorGravity="top|left"
+                    android:layout_marginStart="10dp"
+                    android:background="@color/transparent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_share_media"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/share"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+
         <ImageView
             android:id="@+id/media_prev"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
@@ -117,14 +183,16 @@
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
+            android:background="@color/transparent_grey"
+            android:tint="@color/white"
             android:contentDescription="@string/previous"
             android:src="@drawable/ic_first_page"
             android:visibility="gone" />
 
         <ImageView
             android:id="@+id/media_next"
-            android:layout_width="20dp"
-            android:layout_height="30dp"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -134,67 +202,10 @@
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
+            android:background="@color/transparent_grey"
             android:contentDescription="@string/next"
             android:src="@drawable/ic_last_page"
             android:visibility="gone" />
-
-
-        <ImageButton
-            android:id="@+id/media_close"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/transparent"
-            android:contentDescription="@string/close"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_close"
-            app:layout_anchorGravity="top|left" />
-
-
-
-        <LinearLayout
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            app:layout_anchorGravity="top|left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/media_share"
-                app:layout_anchorGravity="top|left"
-                android:layout_marginStart="10dp"
-                android:background="@color/transparent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_share_media"
-                android:scaleType="fitXY"
-                android:contentDescription="@string/share"
-                />
-
-            <ImageButton
-                android:id="@+id/media_save"
-                android:scaleType="fitXY"
-                android:layout_marginStart="20dp"
-                android:background="@color/transparent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="15dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_save_white"
-                android:contentDescription="@string/download"
-                android:layout_marginEnd="10dp" />
-        </LinearLayout>
-
 
 
         <TextView
@@ -205,6 +216,7 @@
             android:text="@string/media_ready"
             android:gravity="center"
             android:textSize="14sp"
+
             android:layout_alignBottom="@+id/media_picture_container"
             android:layout_marginBottom="40dp"
             android:layout_width="match_parent"
