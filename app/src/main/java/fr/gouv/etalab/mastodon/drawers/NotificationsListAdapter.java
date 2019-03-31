@@ -659,7 +659,6 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                         }
                     });
                     holder.poll_container.setVisibility(View.VISIBLE);
-                    holder.refresh_poll.setPaintFlags(holder.refresh_poll.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
                     holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_vote,status.getPoll().getVotes_count(),status.getPoll().getVotes_count()));
                     holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
                 }else {
@@ -1370,8 +1369,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
         RadioButton r_choice_1, r_choice_2, r_choice_3, r_choice_4;
         CheckBox c_choice_1, c_choice_2, c_choice_3, c_choice_4;
         HorizontalBar choices;
-        TextView number_votes, remaining_time, refresh_poll;
-        Button submit_vote;
+        TextView number_votes, remaining_time;
+        Button submit_vote, refresh_poll;
 
         public View getView(){
             return itemView;
