@@ -96,7 +96,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private String finalUrlDownload;
     private String preview_url;
     private ImageView prev, next;
-    private boolean isControlElementShown;
+    private boolean isControlElementShown = true;
     private Bitmap downloadedImage;
     private File fileVideo;
     private TextView progress;
@@ -323,18 +323,19 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     if(deltaY < 0) { finish(); return true; }
                 } else {
                     currentAction = MediaActivity.actionSwipe.POP;
-                    if(event.getY() > action_bar_container.getHeight()) {
-                        isControlElementShown = !isControlElementShown;
-                        FullScreencall(thisControllShown);
-                        if (thisControllShown) {
+                    isControlElementShown = !isControlElementShown;
+                    if (thisControllShown) {
+                        if(event.getY() > action_bar_container.getHeight()) {
+                            FullScreencall(thisControllShown);
                             action_bar_container.setVisibility(View.GONE);
-                        } else {
-                            action_bar_container.setVisibility(View.VISIBLE);
+                            if (media_description.getVisibility() == View.VISIBLE) {
+                                media_description.setVisibility(View.GONE);
+                            }
                         }
-
-                        if (media_description.getVisibility() == View.VISIBLE && thisControllShown) {
-                            media_description.setVisibility(View.GONE);
-                        } else if (!thisControllShown && attachment != null && attachment.getDescription() != null && !attachment.getDescription().equals("null")) {
+                    } else {
+                        action_bar_container.setVisibility(View.VISIBLE);
+                        FullScreencall(thisControllShown);
+                        if (attachment != null && attachment.getDescription() != null && !attachment.getDescription().equals("null")) {
                             media_description.setText(attachment.getDescription());
                             media_description.setVisibility(View.VISIBLE);
                             imageView.setContentDescription(attachment.getDescription());
@@ -343,10 +344,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                             media_description.setVisibility(View.GONE);
                         }
                     }
-                }
 
+
+                }
             }
+
         }
+
 
 
         return super.dispatchTouchEvent(event);
@@ -544,7 +548,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     @Override
     public void onResume(){
         super.onResume();
-        FullScreencall(isControlElementShown);
         if( player != null) {
             player.setPlayWhenReady(true);
         }
