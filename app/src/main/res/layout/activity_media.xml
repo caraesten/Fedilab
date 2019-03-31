@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <!-- Description is set dynamically -->
-            <fr.gouv.etalab.mastodon.helper.CustomPhotoView
+            <com.github.chrisbanes.photoview.PhotoView
                 android:visibility="gone"
                 android:id="@+id/media_picture"
                 android:layout_width="match_parent"
@@ -138,21 +138,6 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/media_share"
-                    app:layout_anchorGravity="top|left"
-                    android:layout_marginStart="10dp"
-                    android:background="@color/transparent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_share_media"
-                    android:scaleType="fitXY"
-                    android:contentDescription="@string/share"
-                    />
-
-                <ImageButton
                     android:id="@+id/media_save"
                     android:scaleType="fitXY"
                     android:layout_marginStart="20dp"
@@ -160,12 +145,28 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:layout_marginRight="15dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_save_white"
                     android:contentDescription="@string/download"
-                    android:layout_marginEnd="10dp" />
+                    />
+
+                <ImageButton
+                    android:id="@+id/media_share"
+                    app:layout_anchorGravity="top|left"
+                    android:layout_marginStart="10dp"
+                    android:background="@color/transparent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_share_media"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/share"
+                    />
             </LinearLayout>
         </RelativeLayout>
 

@@ -19,17 +19,13 @@ import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +65,6 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.HttpsConnection;
 import fr.gouv.etalab.mastodon.client.TLSSocketFactory;
-import fr.gouv.etalab.mastodon.helper.CustomPhotoView;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 import fr.gouv.etalab.mastodon.webview.MastalabWebChromeClient;
@@ -77,7 +72,6 @@ import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
-import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
@@ -92,7 +86,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
 
     private RelativeLayout loader;
     private ArrayList<Attachment>  attachments;
-    private CustomPhotoView imageView;
+    private PhotoView imageView;
     private SimpleExoPlayerView videoView;
     private float downX;
     private float downY;
@@ -180,7 +174,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         media_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isSHaring = false;
+                isSHaring = true;
                 if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) {
                     if( attachment != null ) {
                         progress.setText("0 %");
@@ -265,7 +259,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             @Override
             public void onMatrixChanged(RectF rect) {
                 imageScale = imageView.getScale();
-                Log.v("imageScale", String.valueOf(imageScale));
                 canSwipe = (imageView.getScale() == 1 );
                 mSwipeBackLayout.isDisabled(imageView.getScale() != 1 );
             }
@@ -298,34 +291,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         Boolean thisControllShown = isControlElementShown;
-        if( event.getAction() == MotionEvent.ACTION_DOWN){
-            isControlElementShown = !isControlElementShown;
-            FullScreencall(thisControllShown);
-            if(thisControllShown){
-                action_bar_container.setVisibility(View.GONE);
-                media_close.setVisibility(View.GONE);
-                media_save.setVisibility(View.GONE);
-                media_share.setVisibility(View.GONE);
-            }else{
-                action_bar_container.setVisibility(View.VISIBLE);
-                media_close.setVisibility(View.VISIBLE);
-                media_save.setVisibility(View.VISIBLE);
-                media_share.setVisibility(View.VISIBLE);
-            }
-
-        }
-        if( event.getAction() == MotionEvent.ACTION_DOWN){
-            if(media_description.getVisibility() == View.VISIBLE && thisControllShown){
-                media_description.setVisibility(View.GONE);
-            }else if(!thisControllShown && attachment != null && attachment.getDescription() != null && !attachment.getDescription().equals("null")){
-                media_description.setText(attachment.getDescription());
-                media_description.setVisibility(View.VISIBLE);
-                imageView.setContentDescription(attachment.getDescription());
-            }else{
-                media_description.setText("");
-                media_description.setVisibility(View.GONE);
-            }
-        }
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN: {
                 downX = event.getX();
@@ -358,7 +323,28 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     if(deltaY < 0) { finish(); return true; }
                 } else {
                     currentAction = MediaActivity.actionSwipe.POP;
+                    if(event.getY() > action_bar_container.getHeight()) {
+                        isControlElementShown = !isControlElementShown;
+                        FullScreencall(thisControllShown);
+                        if (thisControllShown) {
+                            action_bar_container.setVisibility(View.GONE);
+                        } else {
+                            action_bar_container.setVisibility(View.VISIBLE);
+                        }
+
+                        if (media_description.getVisibility() == View.VISIBLE && thisControllShown) {
+                            media_description.setVisibility(View.GONE);
+                        } else if (!thisControllShown && attachment != null && attachment.getDescription() != null && !attachment.getDescription().equals("null")) {
+                            media_description.setText(attachment.getDescription());
+                            media_description.setVisibility(View.VISIBLE);
+                            imageView.setContentDescription(attachment.getDescription());
+                        } else {
+                            media_description.setText("");
+                            media_description.setVisibility(View.GONE);
+                        }
+                    }
                 }
+
             }
         }
 
