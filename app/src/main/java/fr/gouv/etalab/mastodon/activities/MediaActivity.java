@@ -23,11 +23,9 @@ import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +72,7 @@ import fr.gouv.etalab.mastodon.webview.MastalabWebViewClient;
 
 import static fr.gouv.etalab.mastodon.helper.Helper.EXTERNAL_STORAGE_REQUEST_CODE;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_BLACK;
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 
 
@@ -90,13 +89,14 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private PhotoView imageView;
     private SimpleExoPlayerView videoView;
     private float downX;
+    private float downY;
     private int mediaPosition;
     MediaActivity.actionSwipe currentAction;
     static final int MIN_DISTANCE = 100;
     private String finalUrlDownload;
     private String preview_url;
     private ImageView prev, next;
-    private boolean isHiding;
+    private boolean isControlElementShown = true;
     private Bitmap downloadedImage;
     private File fileVideo;
     private TextView progress;
@@ -106,6 +106,8 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private TextView media_description;
     private Attachment attachment;
     SwipeBackLayout mSwipeBackLayout;
+    private float imageScale = 0;
+    private RelativeLayout action_bar_container;
     private enum actionSwipe{
         RIGHT_TO_LEFT,
         LEFT_TO_RIGHT,
@@ -125,8 +127,9 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             setTheme(R.style.TransparentBlack);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media);
+        action_bar_container = (RelativeLayout) findViewById(R.id.action_bar_container);
         mSwipeBackLayout = new SwipeBackLayout(MediaActivity.this);
-        mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_BOTTOM);
+        mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_TOP);
         mSwipeBackLayout.setMaskAlpha(125);
         mSwipeBackLayout.setSwipeBackFactor(0.5f);
         mSwipeBackLayout.setSwipeBackListener(new SwipeBackLayout.OnSwipeBackListener() {
@@ -162,17 +165,16 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         }
         media_description = findViewById(R.id.media_description);
         message_ready = findViewById(R.id.message_ready);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         media_save = findViewById(R.id.media_save);
         media_share = findViewById(R.id.media_share);
         media_close = findViewById(R.id.media_close);
         progress = findViewById(R.id.loader_progress);
         webview_video = findViewById(R.id.webview_video);
+
         media_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isSHaring = false;
+                isSHaring = true;
                 if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) {
                     if( attachment != null ) {
                         progress.setText("0 %");
@@ -221,28 +223,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 finish();
             }
         });
-        Handler h = new Handler();
-        scheduleHidden = scheduleHiddenDescription = true;
-        h.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                // DO DELAYED STUFF
-                media_close.setVisibility(View.GONE);
-                media_save.setVisibility(View.GONE);
-                media_share.setVisibility(View.GONE);
-                scheduleHidden = false;
-            }
-        }, 2000);
-        h.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                // DO DELAYED STUFF
-                media_description.setVisibility(View.GONE);
-                scheduleHiddenDescription = false;
-            }
-        }, 6000);
         canSwipe = true;
         loader = findViewById(R.id.loader);
         imageView = findViewById(R.id.media_picture);
@@ -252,9 +232,12 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         if( theme == THEME_BLACK){
             changeDrawableColor(getApplicationContext(), prev, R.color.dark_icon);
             changeDrawableColor(getApplicationContext(), next, R.color.dark_icon);
-        }else {
+        }else if(theme == THEME_LIGHT) {
             changeDrawableColor(getApplicationContext(), prev, R.color.mastodonC4);
             changeDrawableColor(getApplicationContext(), next, R.color.mastodonC4);
+        }else{
+            changeDrawableColor(getApplicationContext(), prev, R.color.white);
+            changeDrawableColor(getApplicationContext(), next, R.color.white);
         }
         prev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,18 +258,28 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         imageView.setOnMatrixChangeListener(new OnMatrixChangedListener() {
             @Override
             public void onMatrixChanged(RectF rect) {
+                imageScale = imageView.getScale();
                 canSwipe = (imageView.getScale() == 1 );
                 mSwipeBackLayout.isDisabled(imageView.getScale() != 1 );
             }
         });
+        if( attachments != null && attachments.size() > 1){
+            prev.setVisibility(View.VISIBLE);
+            next.setVisibility(View.VISIBLE);
+        }
         pbar_inf = findViewById(R.id.pbar_inf);
         setTitle("");
 
-        isHiding = false;
+        //isHiding = false;
         setTitle("");
         displayMediaAtPosition(actionSwipe.POP);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putFloat("scale", imageScale);
+        super.onSaveInstanceState(outState);
+    }
 
 
     /**
@@ -297,75 +290,69 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-
-        if( event.getAction() == MotionEvent.ACTION_DOWN && !scheduleHidden){
-            scheduleHidden = true;
-            media_close.setVisibility(View.VISIBLE);
-            media_save.setVisibility(View.VISIBLE);
-            media_share.setVisibility(View.VISIBLE);
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    media_close.setVisibility(View.GONE);
-                    media_save.setVisibility(View.GONE);
-                    media_share.setVisibility(View.GONE);
-                    scheduleHidden = false;
-                }
-            }, 2000);
-        }
-        if( event.getAction() == MotionEvent.ACTION_DOWN && !scheduleHiddenDescription){
-            scheduleHiddenDescription = true;
-            if( attachment != null && attachment.getDescription() != null && !attachment.getDescription().equals("null")){
-                media_description.setText(attachment.getDescription());
-                media_description.setVisibility(View.VISIBLE);
-                imageView.setContentDescription(attachment.getDescription());
-            }else{
-                media_description.setText("");
-                media_description.setVisibility(View.GONE);
-            }
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    media_description.setVisibility(View.GONE);
-                    scheduleHiddenDescription = false;
-                }
-            }, 6000);
-        }
-        if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
-            return super.dispatchTouchEvent(event);
+        Boolean thisControllShown = isControlElementShown;
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN: {
                 downX = event.getX();
+                downY = event.getY();
                 //Displays navigation left/right buttons
-                if( attachments != null && attachments.size() > 1 && !isHiding){
-                    prev.setVisibility(View.VISIBLE);
-                    next.setVisibility(View.VISIBLE);
-                    isHiding = true;
-                    new Handler().postDelayed(new Runnable(){
-                        public void run() {
-                            prev.setVisibility(View.GONE);
-                            next.setVisibility(View.GONE);
-                            isHiding = false;
-                        }
-                    }, 2000);
+                if( attachments != null && attachments.size() > 1){
+                    if(thisControllShown){
+                        prev.setVisibility(View.GONE);
+                        next.setVisibility(View.GONE);
+                    }else{
+                        prev.setVisibility(View.VISIBLE);
+                        next.setVisibility(View.VISIBLE);
+                    }
                 }
                 return super.dispatchTouchEvent(event);
             }
             case MotionEvent.ACTION_UP: {
                 float upX = event.getX();
                 float deltaX = downX - upX;
+                float upY = event.getY();
+                float deltaY = downY - upY;
                 // swipe horizontal
-
                 if( downX > MIN_DISTANCE & (Math.abs(deltaX) > MIN_DISTANCE ) ){
+                    if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
+                        return super.dispatchTouchEvent(event);
                     if(deltaX < 0) { switchOnSwipe(MediaActivity.actionSwipe.LEFT_TO_RIGHT); return true; }
                     if(deltaX > 0) { switchOnSwipe(MediaActivity.actionSwipe.RIGHT_TO_LEFT); return true; }
-                }else{
+                }else if(downY > MIN_DISTANCE & (Math.abs(deltaY) > MIN_DISTANCE ) ){
+                    if(deltaY > 0) { finish(); return true; }
+                    if(deltaY < 0) { finish(); return true; }
+                } else {
                     currentAction = MediaActivity.actionSwipe.POP;
+                    isControlElementShown = !isControlElementShown;
+                    if (thisControllShown) {
+                        if(event.getY() > action_bar_container.getHeight()) {
+                            FullScreencall(thisControllShown);
+                            action_bar_container.setVisibility(View.GONE);
+                            if (media_description.getVisibility() == View.VISIBLE) {
+                                media_description.setVisibility(View.GONE);
+                            }
+                        }
+                    } else {
+                        action_bar_container.setVisibility(View.VISIBLE);
+                        FullScreencall(thisControllShown);
+                        if (attachment != null && attachment.getDescription() != null && !attachment.getDescription().equals("null")) {
+                            media_description.setText(attachment.getDescription());
+                            media_description.setVisibility(View.VISIBLE);
+                            imageView.setContentDescription(attachment.getDescription());
+                        } else {
+                            media_description.setText("");
+                            media_description.setVisibility(View.GONE);
+                        }
+                    }
+
+
                 }
             }
+
         }
+
+
+
         return super.dispatchTouchEvent(event);
     }
 
@@ -561,20 +548,46 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     @Override
     public void onResume(){
         super.onResume();
-        FullScreencall();
         if( player != null) {
             player.setPlayWhenReady(true);
         }
 
     }
-    public void FullScreencall() {
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        FullScreencall(false);
+    }
+
+    public void FullScreencall(Boolean shouldFullscreen) {
         if(Build.VERSION.SDK_INT < 19) {
             View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
+            if(shouldFullscreen){
+                v.setSystemUiVisibility(View.GONE);
+            }else {
+                v.setSystemUiVisibility(View.VISIBLE);
+            }
         } else {
             View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-            decorView.setSystemUiVisibility(uiOptions);
+            if(shouldFullscreen){
+                decorView.setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_IMMERSIVE
+                                // Set the content to appear under the system bars so that the
+                                // content doesn't resize when the system bars hide and show.
+                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                // Hide the nav bar and status bar
+                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+            }else{
+                decorView.setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            }
         }
     }
 
