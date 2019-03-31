@@ -95,6 +95,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     private CustomPhotoView imageView;
     private SimpleExoPlayerView videoView;
     private float downX;
+    private float downY;
     private int mediaPosition;
     MediaActivity.actionSwipe currentAction;
     static final int MIN_DISTANCE = 100;
@@ -134,7 +135,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         setContentView(R.layout.activity_media);
         action_bar_container = (RelativeLayout) findViewById(R.id.action_bar_container);
         mSwipeBackLayout = new SwipeBackLayout(MediaActivity.this);
-        mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_BOTTOM);
+        mSwipeBackLayout.setDirectionMode(SwipeBackLayout.FROM_TOP);
         mSwipeBackLayout.setMaskAlpha(125);
         mSwipeBackLayout.setSwipeBackFactor(0.5f);
         mSwipeBackLayout.setSwipeBackListener(new SwipeBackLayout.OnSwipeBackListener() {
@@ -306,7 +307,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 media_save.setVisibility(View.GONE);
                 media_share.setVisibility(View.GONE);
             }else{
-                media_close.setVisibility(View.VISIBLE);
+                action_bar_container.setVisibility(View.VISIBLE);
                 media_close.setVisibility(View.VISIBLE);
                 media_save.setVisibility(View.VISIBLE);
                 media_share.setVisibility(View.VISIBLE);
@@ -325,11 +326,10 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                 media_description.setVisibility(View.GONE);
             }
         }
-        if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
-            return super.dispatchTouchEvent(event);
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN: {
                 downX = event.getX();
+                downY = event.getY();
                 //Displays navigation left/right buttons
                 if( attachments != null && attachments.size() > 1){
                     if(thisControllShown){
@@ -345,12 +345,18 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             case MotionEvent.ACTION_UP: {
                 float upX = event.getX();
                 float deltaX = downX - upX;
+                float upY = event.getY();
+                float deltaY = downY - upY;
                 // swipe horizontal
-
                 if( downX > MIN_DISTANCE & (Math.abs(deltaX) > MIN_DISTANCE ) ){
+                    if( !canSwipe || mediaPosition > attachments.size() || mediaPosition < 1 || attachments.size() <= 1)
+                        return super.dispatchTouchEvent(event);
                     if(deltaX < 0) { switchOnSwipe(MediaActivity.actionSwipe.LEFT_TO_RIGHT); return true; }
                     if(deltaX > 0) { switchOnSwipe(MediaActivity.actionSwipe.RIGHT_TO_LEFT); return true; }
-                }else{
+                }else if(downY > MIN_DISTANCE & (Math.abs(deltaY) > MIN_DISTANCE ) ){
+                    if(deltaY > 0) { finish(); return true; }
+                    if(deltaY < 0) { finish(); return true; }
+                } else {
                     currentAction = MediaActivity.actionSwipe.POP;
                 }
             }
