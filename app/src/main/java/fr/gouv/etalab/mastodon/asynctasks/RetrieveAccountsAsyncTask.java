@@ -48,7 +48,8 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
         FOLLOWERS,
         CHANNELS,
         REBLOGGED,
-        FAVOURITED
+        FAVOURITED,
+        SEARCH
     }
 
     public RetrieveAccountsAsyncTask(Context context, String instance, String name, OnRetrieveAccountsInterface onRetrieveAccountsInterface){
