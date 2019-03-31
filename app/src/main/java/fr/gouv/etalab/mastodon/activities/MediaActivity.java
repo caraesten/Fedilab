@@ -553,13 +553,20 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         }
 
     }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        FullScreencall(false);
+    }
+
     public void FullScreencall(Boolean shouldFullscreen) {
         if(Build.VERSION.SDK_INT < 19) {
             View v = this.getWindow().getDecorView();
             if(shouldFullscreen){
-                v.setSystemUiVisibility(View.VISIBLE);
-            }else {
                 v.setSystemUiVisibility(View.GONE);
+            }else {
+                v.setSystemUiVisibility(View.VISIBLE);
             }
         } else {
             View decorView = getWindow().getDecorView();
