@@ -365,7 +365,7 @@ public class PeertubeAPI {
      * Verifiy credential of the authenticated user *synchronously*
      * @return Account
      */
-    public Account verifyCredentials() throws HttpsConnection.HttpsConnectionException {
+    public Account verifyCredentials()  {
         account = new Account();
         try {
             String response = new HttpsConnection(context).get(getAbsoluteUrl("/users/me"), 60, null, prefKeyOauthTokenT);
@@ -379,6 +379,41 @@ public class PeertubeAPI {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
+        }catch (HttpsConnection.HttpsConnectionException e) {
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account targetedAccount = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+            HashMap<String, String> values = refreshToken(targetedAccount.getClient_id(), targetedAccount.getClient_secret(), targetedAccount.getRefresh_token());
+            if( values.containsKey("access_token") && values.get("access_token") != null) {
+                targetedAccount.setToken(values.get("access_token"));
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                //This account is currently logged in, the token is updated
+                if( prefKeyOauthTokenT.equals(token)){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, targetedAccount.getToken());
+                    editor.apply();
+                }
+            }if( values.containsKey("refresh_token") && values.get("refresh_token") != null)
+                targetedAccount.setRefresh_token(values.get("refresh_token"));
+            new AccountDAO(context, db).updateAccount(targetedAccount);
+            String response;
+            try {
+                response = new HttpsConnection(context).get(getAbsoluteUrl("/users/me"), 60, null, targetedAccount.getToken());
+                JSONObject accountObject = new JSONObject(response).getJSONObject("account");
+                account = parseAccountResponsePeertube(context, accountObject);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (NoSuchAlgorithmException e1) {
+                e1.printStackTrace();
+            } catch (KeyManagementException e1) {
+                e1.printStackTrace();
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            } catch (HttpsConnection.HttpsConnectionException e1) {
+                e1.printStackTrace();
+                setError(e.getStatusCode(), e);
+            }
+            e.printStackTrace();
         }
         return account;
     }
@@ -387,7 +422,7 @@ public class PeertubeAPI {
      * Verifiy credential of the authenticated user *synchronously*
      * @return Account
      */
-    public HashMap<String, String> refreshToken(String client_id, String client_secret, String refresh_token)  {
+    private HashMap<String, String> refreshToken(String client_id, String client_secret, String refresh_token)  {
         account = new Account();
         HashMap<String, String> params = new HashMap<>();
         HashMap<String, String> newValues = new HashMap<>();

@@ -383,9 +383,9 @@ public class PeertubeActivity extends BaseActivity implements OnRetrievePeertube
                         protected Void doInBackground(Void... voids) {
 
                             if (peertube != null) {
-                                Results search = new API(contextReference.get()).search("https://" + peertube.getAccount().getHost() + "/videos/watch/" + peertube.getUuid());
-                                if (search != null) {
-                                    remoteStatuses = search.getStatuses();
+                                APIResponse search = new API(contextReference.get()).search("https://" + peertube.getAccount().getHost() + "/videos/watch/" + peertube.getUuid());
+                                if (search != null && search.getResults() != null) {
+                                    remoteStatuses = search.getResults().getStatuses();
                                 }
                             }
                             return null;

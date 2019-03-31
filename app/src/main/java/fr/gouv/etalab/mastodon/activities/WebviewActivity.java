@@ -50,6 +50,7 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.helper.CountDrawable;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -288,9 +289,9 @@ public class WebviewActivity extends BaseActivity {
                     protected Void doInBackground(Void... voids) {
 
                         if(url != null) {
-                            Results search = new API(contextReference.get()).search(peertubeLinkToFetch);
-                            if (search != null) {
-                                remoteStatuses = search.getStatuses();
+                            APIResponse search = new API(contextReference.get()).search(peertubeLinkToFetch);
+                            if (search != null && search.getResults() != null) {
+                                remoteStatuses = search.getResults().getStatuses();
                             }
                         }
                         return null;

@@ -49,6 +49,7 @@ import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
+import fr.gouv.etalab.mastodon.client.Entities.Poll;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.drawers.NotificationsListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
@@ -156,10 +157,8 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
                         Bundle b = intent.getExtras();
                         assert b != null;
                         Status status = b.getParcelable("status");
-                        API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
-                        if (status != null) {
-                            notificationsListAdapter.notifyNotificationWithActionChanged(statusAction, status);
-                        }
+                        if( notificationsListAdapter != null && status != null)
+                            notificationsListAdapter.notifyNotificationWithActionChanged(status);
                     }
                 };
                 LocalBroadcastManager.getInstance(context).registerReceiver(receive_action, new IntentFilter(Helper.RECEIVE_ACTION));

@@ -57,25 +57,9 @@ public class MastalabWebViewClient extends WebViewClient {
 
     @Override
     public WebResourceResponse shouldInterceptRequest (final WebView view, String url) {
-        URI uri;
-        try {
-            uri = new URI(url);
-            String domain = uri.getHost();
-            if( domain != null) {
-                domain = domain.startsWith("www.") ? domain.substring(4) : domain;
-            }
-            if (domain != null && WebviewActivity.trackingDomains.contains(domain)) {
-                if( activity instanceof WebviewActivity){
-                    count++;
-                    domains.add(url);
-                    ((WebviewActivity)activity).setCount(activity, String.valueOf(count));
-                }
-                ByteArrayInputStream nothing = new    ByteArrayInputStream("".getBytes());
-                return new WebResourceResponse("text/plain", "utf-8", nothing);
-            }
-        } catch (URISyntaxException e) {
+        if( WebviewActivity.trackingDomains != null){
+            URI uri;
             try {
-                url = url.substring(0,50);
                 uri = new URI(url);
                 String domain = uri.getHost();
                 if( domain != null) {
@@ -89,11 +73,30 @@ public class MastalabWebViewClient extends WebViewClient {
                     }
                     ByteArrayInputStream nothing = new    ByteArrayInputStream("".getBytes());
                     return new WebResourceResponse("text/plain", "utf-8", nothing);
-
                 }
-            } catch (URISyntaxException ignored) {
-                ignored.printStackTrace();
-            }        }
+            } catch (URISyntaxException e) {
+                try {
+                    url = url.substring(0, 50);
+                    uri = new URI(url);
+                    String domain = uri.getHost();
+                    if (domain != null) {
+                        domain = domain.startsWith("www.") ? domain.substring(4) : domain;
+                    }
+                    if (domain != null && WebviewActivity.trackingDomains.contains(domain)) {
+                        if (activity instanceof WebviewActivity) {
+                            count++;
+                            domains.add(url);
+                            ((WebviewActivity) activity).setCount(activity, String.valueOf(count));
+                        }
+                        ByteArrayInputStream nothing = new ByteArrayInputStream("".getBytes());
+                        return new WebResourceResponse("text/plain", "utf-8", nothing);
+
+                    }
+                } catch (URISyntaxException ignored) {
+                    ignored.printStackTrace();
+                }
+            }
+        }
         return super.shouldInterceptRequest(view, url);
     }
 

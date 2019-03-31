@@ -32,6 +32,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Conversation;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
+import fr.gouv.etalab.mastodon.client.Entities.Poll;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
@@ -244,9 +246,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     Bundle b = intent.getExtras();
                     assert b != null;
                     Status status = b.getParcelable("status");
-                    API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
                     if( status != null && statusListAdapter != null) {
-                        statusListAdapter.notifyStatusWithActionChanged(statusAction, status);
+                        statusListAdapter.notifyStatusWithActionChanged(status);
                     }
                 }
             };
@@ -499,7 +500,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 apiResponse.setStatuses(statusesConversations);
             }
             int previousPosition = this.statuses.size();
-            List<Status> statuses = apiResponse.getStatuses();
+            List<Status> statuses;
+
+            if( apiResponse.getResults() != null && apiResponse.getResults().getStatuses() != null)
+                statuses = apiResponse.getResults().getStatuses();
+            else
+                statuses = apiResponse.getStatuses();
             //At this point all statuses are in "List<Status> statuses"
             //Pagination for Pixelfed
             if(instanceType.equals("PIXELFED")) {
@@ -507,9 +513,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     max_id = "1";
                 //max_id needs to work like an offset
                 max_id = String.valueOf(Integer.valueOf(max_id) + 1);
-            }else{
+            }else if( type == RetrieveFeedsAsyncTask.Type.SEARCH) {
+                if(max_id == null)
+                    max_id = "0";
+                max_id = String.valueOf(Integer.valueOf(max_id) + 20);
+            } else{
                 max_id = apiResponse.getMax_id();
             }
+
             //while max_id is different from null, there are some more toots to load when scrolling
             flag_loading = (max_id == null );
             //If it's the first load and the reply doesn't contain any toots, a message is displayed.
@@ -984,7 +995,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if (type == RetrieveFeedsAsyncTask.Type.USER || type == RetrieveFeedsAsyncTask.Type.CHANNEL)
             asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         //Tag timelines
-        else if (type == RetrieveFeedsAsyncTask.Type.TAG)
+        else if (type == RetrieveFeedsAsyncTask.Type.TAG || type == RetrieveFeedsAsyncTask.Type.SEARCH)
             asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
             //Remote instances

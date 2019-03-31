@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -78,6 +79,8 @@ import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 
+import static fr.gouv.etalab.mastodon.client.API.StatusAction.REFRESHPOLL;
+
 
 /**
  * Created by Thomas on 23/04/2017.
@@ -103,6 +106,12 @@ public class API {
     private APIResponse apiResponse;
     private Error APIError;
     private List<String> domains;
+
+    public enum searchType{
+        TAGS,
+        STATUSES,
+        ACCOUNTS
+    }
 
     public enum StatusAction{
         FAVOURITE,
@@ -135,7 +144,8 @@ public class API {
         PEERTUBEDELETECOMMENT,
         PEERTUBEDELETEVIDEO,
         UPDATESERVERSCHEDULE,
-        DELETESCHEDULED
+        DELETESCHEDULED,
+        REFRESHPOLL
 
     }
     public enum accountPrivacy {
@@ -364,8 +374,41 @@ public class API {
                 isPleromaAdmin(account.getAcct());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
-            setError(e.getStatusCode(), e);
-            e.printStackTrace();
+            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+            Account targetedAccount = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+            HashMap<String, String> values = refreshToken(targetedAccount.getClient_id(), targetedAccount.getClient_secret(), targetedAccount.getRefresh_token());
+            if( values.containsKey("access_token") && values.get("access_token") != null) {
+                targetedAccount.setToken(values.get("access_token"));
+                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                //This account is currently logged in, the token is updated
+                if( prefKeyOauthTokenT.equals(token)){
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, targetedAccount.getToken());
+                    editor.apply();
+                }
+            }if( values.containsKey("refresh_token") && values.get("refresh_token") != null)
+                targetedAccount.setRefresh_token(values.get("refresh_token"));
+            new AccountDAO(context, db).updateAccount(targetedAccount);
+            String response;
+            try {
+                response = new HttpsConnection(context).get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, targetedAccount.getToken());
+                account = parseAccountResponse(context, new JSONObject(response));
+                if( account.getSocial().equals("PLEROMA")){
+                    isPleromaAdmin(account.getAcct());
+                }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (NoSuchAlgorithmException e1) {
+                e1.printStackTrace();
+            } catch (KeyManagementException e1) {
+                e1.printStackTrace();
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            } catch (HttpsConnection.HttpsConnectionException e1) {
+                e1.printStackTrace();
+                setError(e.getStatusCode(), e);
+            }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -377,6 +420,47 @@ public class API {
         }
         return account;
     }
+
+
+    /***
+     * Verifiy credential of the authenticated user *synchronously*
+     * @return Account
+     */
+    private HashMap<String, String> refreshToken(String client_id, String client_secret, String refresh_token)  {
+        account = new Account();
+        HashMap<String, String> params = new HashMap<>();
+        HashMap<String, String> newValues = new HashMap<>();
+        params.put("grant_type", "refresh_token");
+        params.put("client_id", client_id);
+        params.put("client_secret", client_secret);
+        params.put("refresh_token", refresh_token);
+        try {
+            String response = new HttpsConnection(context).post(getAbsoluteUrl("/oauth/token"), 60, params, null);
+            JSONObject resobj = new JSONObject(response);
+            String token = resobj.get("access_token").toString();
+            if( resobj.has("refresh_token"))
+                refresh_token = resobj.get("refresh_token").toString();
+            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
+            editor.apply();
+            newValues.put("access_token",token);
+            newValues.put("refresh_token",refresh_token);
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            e.printStackTrace();
+        }
+        return newValues;
+    }
+
 
     /**
      * Returns an account
@@ -1983,7 +2067,6 @@ public class API {
                     try {
                         Status status1 = parseStatuses(context, new JSONObject(resp));
                         b.putParcelable("status", status1);
-                        b.putSerializable("action", statusAction);
                     } catch (JSONException ignored) {}
                     Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
                     intentBC.putExtras(b);
@@ -2132,13 +2215,20 @@ public class API {
 
     /**
      * Public api call to refresh a poll
-     * @param pollId
-     * @return
+     * @param status Status
+     * @return Poll
      */
-    public Poll getPoll(String pollId){
+    public Poll getPoll(Status status){
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/polls/%s", pollId)), 60, null, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/polls/%s", status.getPoll().getId())), 60, null, prefKeyOauthTokenT);
+            Poll poll = parsePoll(context, new JSONObject(response));
+            Bundle b = new Bundle();
+            status.setPoll(poll);
+            b.putParcelable("status", status);
+            Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
+            intentBC.putExtras(b);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intentBC);
             return parsePoll(context, new JSONObject(response));
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
@@ -2422,9 +2512,10 @@ public class API {
      * @param query  String search
      * @return Results
      */
-    public Results search(String query) {
+    public APIResponse search(String query) {
 
         HashMap<String, String> params = new HashMap<>();
+        apiResponse = new APIResponse();
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
             params.put("q", query);
         else
@@ -2437,6 +2528,7 @@ public class API {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUrl("/search"), 60, params, prefKeyOauthTokenT);
             results = parseResultsResponse(new JSONObject(response));
+            apiResponse.setResults(results);
         } catch (HttpsConnection.HttpsConnectionException e) {
             setError(e.getStatusCode(), e);
             e.printStackTrace();
@@ -2449,7 +2541,61 @@ public class API {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return results;
+        return apiResponse;
+    }
+
+
+    /**
+     * Retrieves Accounts and feeds when searching *synchronously*
+     *
+     * @param query  String search
+     * @return Results
+     */
+    public APIResponse search2(String query, searchType type, String offset) {
+        apiResponse = new APIResponse();
+        HashMap<String, String> params = new HashMap<>();
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
+            params.put("q", query);
+        else
+            try {
+                params.put("q", URLEncoder.encode(query, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                params.put("q", query);
+            }
+        if( offset != null)
+            params.put("offset", offset);
+        switch (type){
+            case TAGS:
+                params.put("type", "hashtags");
+                break;
+            case ACCOUNTS:
+                params.put("type", "accounts");
+                break;
+            case STATUSES:
+                params.put("type", "statuses");
+                break;
+        }
+        params.put("limit", "20");
+        try {
+            HttpsConnection httpsConnection = new HttpsConnection(context);
+            String response = httpsConnection.get(getAbsoluteUr2l("/search"), 60, params, prefKeyOauthTokenT);
+            results = parseResultsResponse(new JSONObject(response));
+            apiResponse.setSince_id(httpsConnection.getSince_id());
+            apiResponse.setMax_id(httpsConnection.getMax_id());
+            apiResponse.setResults(results);
+        } catch (HttpsConnection.HttpsConnectionException e) {
+            setError(e.getStatusCode(), e);
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return apiResponse;
     }
 
 
@@ -3264,7 +3410,7 @@ public class API {
         List<String> list_tmp = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++){
             try {
-                list_tmp.add(jsonArray.getString(i));
+                list_tmp.add(jsonArray.getJSONObject(i).getString("name"));
             } catch (JSONException ignored) {}
         }
         return  list_tmp;

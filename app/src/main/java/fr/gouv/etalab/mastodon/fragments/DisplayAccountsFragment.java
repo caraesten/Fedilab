@@ -25,6 +25,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveAccountsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveManyRelationshipsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
@@ -69,7 +71,6 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
     private boolean swiped;
     private RecyclerView lv_accounts;
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -80,7 +81,10 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
         accounts = new ArrayList<>();
         if (bundle != null) {
             type = (RetrieveAccountsAsyncTask.Type) bundle.get("type");
-            targetedId = bundle.getString("targetedid", null);
+            if( bundle.containsKey("tag"))
+                targetedId = bundle.getString("tag", null);
+            else
+                targetedId = bundle.getString("targetedid", null);
             instance = bundle.getString("instance", null);
             name = bundle.getString("name", null);
         }
@@ -113,7 +117,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                     if (firstVisibleItem + visibleItemCount == totalItemCount) {
                         if (!flag_loading) {
                             flag_loading = true;
-                            if (type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING || type == RetrieveAccountsAsyncTask.Type.REBLOGGED || type == RetrieveAccountsAsyncTask.Type.FAVOURITED)
+                            if (type == RetrieveAccountsAsyncTask.Type.SEARCH  || type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING || type == RetrieveAccountsAsyncTask.Type.REBLOGGED || type == RetrieveAccountsAsyncTask.Type.FAVOURITED)
                                 asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             else if (type == RetrieveAccountsAsyncTask.Type.CHANNELS)
                                 asyncTask = new RetrieveAccountsAsyncTask(context, instance, name, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -135,7 +139,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                 firstLoad = true;
                 flag_loading = true;
                 swiped = true;
-                if (type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING|| type == RetrieveAccountsAsyncTask.Type.REBLOGGED || type == RetrieveAccountsAsyncTask.Type.FAVOURITED)
+                if (type == RetrieveAccountsAsyncTask.Type.SEARCH  || type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING|| type == RetrieveAccountsAsyncTask.Type.REBLOGGED || type == RetrieveAccountsAsyncTask.Type.FAVOURITED)
                     asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 else if (type == RetrieveAccountsAsyncTask.Type.CHANNELS)
                     asyncTask = new RetrieveAccountsAsyncTask(context, instance, name, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -166,7 +170,7 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
                 break;
         }
 
-        if (type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING|| type == RetrieveAccountsAsyncTask.Type.REBLOGGED || type == RetrieveAccountsAsyncTask.Type.FAVOURITED)
+        if (type == RetrieveAccountsAsyncTask.Type.SEARCH  || type == RetrieveAccountsAsyncTask.Type.FOLLOWERS || type == RetrieveAccountsAsyncTask.Type.FOLLOWING|| type == RetrieveAccountsAsyncTask.Type.REBLOGGED || type == RetrieveAccountsAsyncTask.Type.FAVOURITED)
             asyncTask = new RetrieveAccountsAsyncTask(context, type, targetedId, max_id, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else if (type == RetrieveAccountsAsyncTask.Type.CHANNELS)
             asyncTask = new RetrieveAccountsAsyncTask(context, instance, name, DisplayAccountsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -213,12 +217,24 @@ public class DisplayAccountsFragment extends Fragment implements OnRetrieveAccou
             return;
         }
         flag_loading = (apiResponse.getMax_id() == null );
-        List<Account> accounts = apiResponse.getAccounts();
+
+        List<Account> accounts;
+        if( apiResponse.getResults() != null && apiResponse.getResults().getAccounts() != null)
+            accounts = apiResponse.getResults().getAccounts();
+        else
+            accounts = apiResponse.getAccounts();
         if( !swiped && firstLoad && (accounts == null || accounts.size() == 0))
             textviewNoAction.setVisibility(View.VISIBLE);
         else
             textviewNoAction.setVisibility(View.GONE);
-        max_id = apiResponse.getMax_id();
+
+        if( type == RetrieveAccountsAsyncTask.Type.SEARCH) {
+            if(max_id == null)
+                max_id = "0";
+            max_id = String.valueOf(Integer.valueOf(max_id) + 20);
+        }else {
+            max_id = apiResponse.getMax_id();
+        }
         if( swiped ){
             accountsListAdapter = new AccountsListAdapter(context, type,targetedId, this.accounts);
             lv_accounts.setAdapter(accountsListAdapter);

@@ -62,28 +62,8 @@ public class UpdateAccountInfoByIDAsyncTask extends AsyncTask<Void, Void, Void> 
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)
             account = new API(this.contextReference.get()).getAccount(userId);
         else if( social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
-
-            try {
-                account = new PeertubeAPI(this.contextReference.get()).verifyCredentials();
-                account.setSocial("PEERTUBE");
-            }catch (HttpsConnection.HttpsConnectionException exception){
-                if(exception.getStatusCode() == 401){
-                    SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-                    String instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(contextReference.get()));
-                    account = new AccountDAO(contextReference.get(), db).getUniqAccount(userId, instance);
-                    HashMap<String, String> values = new PeertubeAPI(this.contextReference.get()).refreshToken(account.getClient_id(), account.getClient_secret(), account.getRefresh_token());
-                    if( values != null) {
-                        String newtoken = values.get("access_token");
-                        String refresh_token = values.get("refresh_token");
-                        if (newtoken != null)
-                            account.setToken(newtoken);
-                        if (refresh_token != null)
-                            account.setRefresh_token(refresh_token);
-                        new AccountDAO(this.contextReference.get(), db).updateAccount(account);
-                    }
-                }
-            }
-
+            account = new PeertubeAPI(this.contextReference.get()).verifyCredentials();
+            account.setSocial("PEERTUBE");
         }else if ( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
             account = new GNUAPI(this.contextReference.get()).verifyCredentials();
         }

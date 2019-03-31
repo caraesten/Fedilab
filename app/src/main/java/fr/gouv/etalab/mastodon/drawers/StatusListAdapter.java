@@ -353,8 +353,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         RadioButton r_choice_1, r_choice_2, r_choice_3, r_choice_4;
         CheckBox c_choice_1, c_choice_2, c_choice_3, c_choice_4;
         HorizontalBar choices;
-        TextView number_votes, remaining_time, refresh_poll;
-        Button submit_vote;
+        TextView number_votes, remaining_time;
+        Button submit_vote, refresh_poll;
 
         public View getView(){
             return itemView;
@@ -560,7 +560,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 if( status.getPoll() != null && status.getPoll().getOptionsList() != null ){
                     Poll poll = status.getPoll();
                     int choiceCount = status.getPoll().getOptionsList().size();
-                    if( poll.isVoted()){
+                    if( poll.isVoted() || poll.isExpired()){
                         holder.rated.setVisibility(View.VISIBLE);
                         List<BarItem> items = new ArrayList<>();
                         int greaterValue = 0;
@@ -576,7 +576,11 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                 bar.setHeight1(30);
                                 items.add(bar);
                             }else {
-                                BarItem bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC2), Color.WHITE);
+                                BarItem bar;
+                                if( theme == Helper.THEME_LIGHT)
+                                    bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC2), Color.BLACK);
+                                else
+                                    bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC2), Color.WHITE);
                                 bar.setRounded(true);
                                 bar.setHeight1(30);
                                 items.add(bar);
@@ -671,7 +675,6 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }
                     });
                     holder.poll_container.setVisibility(View.VISIBLE);
-                    holder.refresh_poll.setPaintFlags(holder.refresh_poll.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
                     holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_vote,status.getPoll().getVotes_count(),status.getPoll().getVotes_count()));
                     holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
                 }else {
@@ -3025,29 +3028,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
         }
     }
 
-    public void notifyStatusWithActionChanged(API.StatusAction statusAction, Status status){
+    public void notifyStatusWithActionChanged(Status status){
         for (int i = 0; i < statusListAdapter.getItemCount(); i++) {
             //noinspection ConstantConditions
             if (statusListAdapter.getItemAt(i) != null && statusListAdapter.getItemAt(i).getId().equals(status.getId())) {
                 try {
-                    int favCount = statuses.get(i).getFavourites_count();
-                    int boostCount = statuses.get(i).getReblogs_count();
-                    if( statusAction == API.StatusAction.REBLOG)
-                        boostCount++;
-                    else if( statusAction == API.StatusAction.UNREBLOG)
-                        boostCount--;
-                    else if( statusAction == API.StatusAction.FAVOURITE)
-                        favCount++;
-                    else if( statusAction == API.StatusAction.UNFAVOURITE)
-                        favCount--;
-                    if( boostCount < 0 )
-                        boostCount = 0;
-                    if( favCount < 0 )
-                        favCount = 0;
-                    statuses.get(i).setFavourited(status.isFavourited());
-                    statuses.get(i).setFavourites_count(favCount);
-                    statuses.get(i).setReblogged(status.isReblogged());
-                    statuses.get(i).setReblogs_count(boostCount);
+                    statuses.set(i, status);
                     statusListAdapter.notifyItemChanged(i);
                 } catch (Exception ignored) {
                 }

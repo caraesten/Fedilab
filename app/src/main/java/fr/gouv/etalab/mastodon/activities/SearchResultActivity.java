@@ -139,21 +139,24 @@ public class SearchResultActivity extends BaseActivity implements OnRetrieveSear
 
 
     @Override
-    public void onRetrieveSearch(Results results, Error error) {
+    public void onRetrieveSearch(APIResponse apiResponse) {
         loader.setVisibility(View.GONE);
-        if( error != null){
-            Toasty.error(getApplicationContext(), error.getError(),Toast.LENGTH_LONG).show();
+        if( apiResponse.getError() != null){
+            if( apiResponse.getError().getError() != null)
+                Toasty.error(getApplicationContext(), apiResponse.getError().getError(),Toast.LENGTH_LONG).show();
+            else
+                Toasty.error(getApplicationContext(), getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             return;
         }
-        if( results == null || (results.getAccounts().size() == 0 && results.getStatuses().size() == 0 && results.getHashtags().size() == 0)){
+        if( apiResponse.getResults() == null || ( apiResponse.getResults().getAccounts().size() == 0 &&  apiResponse.getResults().getStatuses().size() == 0 &&  apiResponse.getResults().getHashtags().size() == 0)){
             RelativeLayout no_result = findViewById(R.id.no_result);
             no_result.setVisibility(View.VISIBLE);
             return;
         }
         lv_search.setVisibility(View.VISIBLE);
-        List<String> tags = results.getHashtags();
-        List<Account> accounts = results.getAccounts();
-        List<Status> statuses = results.getStatuses();
+        List<String> tags =  apiResponse.getResults().getHashtags();
+        List<Account> accounts =  apiResponse.getResults().getAccounts();
+        List<Status> statuses =  apiResponse.getResults().getStatuses();
 
         SearchListAdapter searchListAdapter = new SearchListAdapter(SearchResultActivity.this, statuses, accounts, tags);
         lv_search.setAdapter(searchListAdapter);

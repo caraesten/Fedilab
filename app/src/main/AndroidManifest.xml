@@ -172,6 +172,11 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             />
+        <activity android:name=".activities.SearchResultTabActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            />
         <activity android:name=".activities.ListActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|screenSize"

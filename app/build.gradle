@@ -7,8 +7,8 @@ android {
         applicationId "fr.gouv.etalab.mastodon"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 249
-        versionName "1.77.1"
+        versionCode 251
+        versionName "1.78.0"
         multiDexEnabled true
     }
     dexOptions {
@@ -55,7 +55,7 @@ ext.conscryptLibraryVersion = '2.0.0'
 ext.evernoteLibraryVersion = '1.2.6'
 ext.gsonLibraryVersion = '2.8.2'
 ext.guavaLibraryVersion = '24.1-android'
-ext.photoViewLibraryVersion = '2.0.0'
+ext.photoViewLibraryVersion = '2.1.3'
 ext.swipebackLibraryVersion = '1.0.3'
 ext.ratethisappLibraryVersion = '1.2.0'
 ext.uploadServiceVersion = "3.4.2"
@@ -94,6 +94,6 @@ dependencies {
     implementation 'com.github.mabbas007:TagsEditText:1.0.5'
     implementation 'com.jaredrummler:material-spinner:1.3.1'
     implementation "com.tonyodev.fetch2:fetch2:2.3.6"
-    implementation 'com.github.stom79:horizontalbargraph:1.3'
+    implementation 'com.github.stom79:horizontalbargraph:1.5'
     playstoreImplementation "io.github.kobakei:ratethisapp:$ratethisappLibraryVersion"
 }

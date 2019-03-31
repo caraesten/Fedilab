@@ -14,13 +14,12 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.interfaces;
 
-import fr.gouv.etalab.mastodon.client.Entities.Error;
-import fr.gouv.etalab.mastodon.client.Entities.Results;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 
 /**
  * Created by Thomas on 05/05/2017.
  * Interface for search
  */
 public interface OnRetrieveSearchInterface {
-    void onRetrieveSearch(Results results, Error error);
+    void onRetrieveSearch(APIResponse apiResponse);
 }

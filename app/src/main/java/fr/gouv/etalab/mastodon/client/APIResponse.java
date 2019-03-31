@@ -29,6 +29,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
 import fr.gouv.etalab.mastodon.client.Entities.PeertubeNotification;
 import fr.gouv.etalab.mastodon.client.Entities.Relationship;
+import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.StoredStatus;
 
@@ -45,6 +46,7 @@ public class APIResponse {
     private List<Conversation> conversations = null;
     private List<Notification> notifications = null;
     private List<Relationship> relationships = null;
+    private Results results = null;
     private List<HowToVideo> howToVideos = null;
     private List<Peertube> peertubes = null;
     private List<PeertubeNotification> peertubeNotifications = null;
@@ -198,5 +200,13 @@ public class APIResponse {
 
     public void setPeertubeNotifications(List<PeertubeNotification> peertubeNotifications) {
         this.peertubeNotifications = peertubeNotifications;
+    }
+
+    public Results getResults() {
+        return results;
+    }
+
+    public void setResults(Results results) {
+        this.results = results;
     }
 }

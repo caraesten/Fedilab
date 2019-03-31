@@ -48,7 +48,8 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
         FOLLOWERS,
         CHANNELS,
         REBLOGGED,
-        FAVOURITED
+        FAVOURITED,
+        SEARCH
     }
 
     public RetrieveAccountsAsyncTask(Context context, String instance, String name, OnRetrieveAccountsInterface onRetrieveAccountsInterface){
@@ -91,6 +92,10 @@ public class RetrieveAccountsAsyncTask extends AsyncTask<Void, Void, Void> {
                     assert gnuapi != null;
                     apiResponse = gnuapi.getRebloggedBy(targetedId, max_id);
                 }
+                break;
+            case SEARCH:
+                api = new API(this.contextReference.get());
+                apiResponse = api.search2(targetedId, API.searchType.ACCOUNTS, max_id);
                 break;
             case FAVOURITED:
                 if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
