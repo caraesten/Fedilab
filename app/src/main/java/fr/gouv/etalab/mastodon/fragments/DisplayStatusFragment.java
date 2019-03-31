@@ -58,6 +58,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Conversation;
 import fr.gouv.etalab.mastodon.client.Entities.Peertube;
+import fr.gouv.etalab.mastodon.client.Entities.Poll;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
@@ -244,9 +245,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     Bundle b = intent.getExtras();
                     assert b != null;
                     Status status = b.getParcelable("status");
-                    API.StatusAction statusAction = (API.StatusAction) b.getSerializable("action");
                     if( status != null && statusListAdapter != null) {
-                        statusListAdapter.notifyStatusWithActionChanged(statusAction, status);
+                        statusListAdapter.notifyStatusWithActionChanged(status);
                     }
                 }
             };

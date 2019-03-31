@@ -93,46 +93,46 @@
     <string name="choose_file_error">Fájlkezelő nem található!</string>
     <string name="click_to_change">Változtatáshoz kattints az elérési útra</string>
     <string name="failed">Sikertelen!</string>
-    <string name="scheduled_toots">Időzített tülkök</string>
-    <string name="disclaimer_full">Az alábbi információ lehet, hogy nem mutat minden részletet a felhasználóról.</string>
+    <string name="scheduled_toots">Időzített tootok</string>
+    <string name="disclaimer_full">Az alábbi információ lehet, hogy nem mutat minden részletet a felhasználói profilból.</string>
     <string name="insert_emoji">Emoji beszúrása</string>
-    <string name="no_emoji">Az app nem gyűjtött egyéni emojikat jelenleg.</string>
+    <string name="no_emoji">Az app nem gyűjtött egyéni emojikat.</string>
     <string name="live_notif">Valós idejű értesítések</string>
     <!-- Status -->
-    <string name="no_status">Nincs megjeleníthető tülkölés</string>
-    <string name="fav_added">A tootot hozzáadtuk a kedvencekhez</string>
-    <string name="fav_removed">A tootot eltávolítottuk a kedvencek közül!</string>
+    <string name="no_status">Nincs megjeleníthető toot</string>
+    <string name="fav_added">A toot hozzá lett adva a kedvencekhez</string>
+    <string name="fav_removed">A toot el lett távolítva a kedvencek közül!</string>
     <string name="reblog_added">A tootot meg lett ismételve!</string>
     <string name="reblog_removed">A tootot többé nincs ismételve!</string>
     <string name="reblog_by">Ismétlés %1$s által</string>
-    <string name="favourite_add">Hozzáadjuk ezt a tootot a kedvencekhez?</string>
-    <string name="favourite_remove">Eltávolítsuk ezt a tootot a kedvencek közül?</string>
+    <string name="favourite_add">Hozzáadod ezt a tootot a kedvencekhez?</string>
+    <string name="favourite_remove">Eltávolítod ezt a tootot a kedvencek közül?</string>
     <string name="reblog_add">Megismétled ezt a tootot?</string>
     <string name="reblog_remove">Megszünteted a toot ismétlését?</string>
-    <string name="pin_add">Rögzítsük ezt a tootot?</string>
-    <string name="pin_remove">Szüntessük meg a toot rögzítését?</string>
-    <string name="more_action_1">Elnémít</string>
+    <string name="pin_add">Rögzíted ezt a tootot?</string>
+    <string name="pin_remove">Megszünteted a toot rögzítését?</string>
+    <string name="more_action_1">Elnémítás</string>
     <string name="more_action_2">Letiltás</string>
-    <string name="more_action_3">Jelent</string>
-    <string name="more_action_4">Eltávolít</string>
-    <string name="more_action_5">Másol</string>
-    <string name="more_action_6">Megoszt</string>
-    <string name="more_action_7">Megemlít</string>
+    <string name="more_action_3">Bejelentés</string>
+    <string name="more_action_4">Eltávolítás</string>
+    <string name="more_action_5">Másolás</string>
+    <string name="more_action_6">Megosztás</string>
+    <string name="more_action_7">Megemlítés</string>
     <string name="more_action_8">Időzített elnémítás</string>
-    <string name="more_action_9">Töröl &amp; Újrafogalmaz</string>
+    <string name="more_action_9">Törlés &amp; Újrafogalmazás</string>
     <string-array name="more_action_confirm">
-        <item>Elnémítja ezt a fiókot?</item>
+        <item>Elnémítod ezt a fiókot?</item>
         <item>Letiltod ezt a fiókot?</item>
-        <item>Jelenti ezt a tootot?</item>
+        <item>Jelented ezt a tootot?</item>
         <item>Letiltod ezt a domént?</item>
     </string-array>
     <string-array name="action_notification">
-        <item>Értesít</item>
+        <item>Értesítés</item>
         <item>Csendes</item>
     </string-array>
     <string-array name="more_action_owner_confirm">
-        <item>El akarja távolítani ezt a tootot?</item>
-        <item>Törli és újrafogalmazza ezt a tootot?</item>
+        <item>Eltávolítod ezt a tootot?</item>
+        <item>Törlöd és újrafogalmazod ezt a tootot?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d válasz</item>
@@ -143,8 +143,8 @@
     <string name="bookmark_add">Hozzáadás a könyvjelzőkhöz</string>
     <string name="bookmark_remove">Könyvjelző eltávolítása</string>
     <string name="bookmarks_empty">Nincs megjeleníthető könyvjelző</string>
-    <string name="status_bookmarked">Hozzáadtuk a tootot a könyvjelzőkhöz!</string>
-    <string name="status_unbookmarked">Eltávolítottuk a tootot a könyvjelzők közül!</string>
+    <string name="status_bookmarked">Hozzáadtad a tootot a könyvjelzőkhöz!</string>
+    <string name="status_unbookmarked">Eltávolítottad a tootot a könyvjelzők közül!</string>
     <!-- Date -->
     <string name="date_seconds">%d m</string>
     <string name="date_minutes">%d p</string>
@@ -213,10 +213,10 @@
     <string name="remove_scheduled">Törlöd az időzített tootot?</string>
     <string name="media_count">Média: %d</string>
     <string name="toot_scheduled">A tootot időzítésre került!</string>
-    <string name="toot_scheduled_date">Az időzítés dátuma az aktuális óra után kell legyen!</string>
-    <string name="warning_battery">Energiatakarékos üzemmód be van kapcsolva! Lehet, hogy nem a várt módon viselkedik.</string>
+    <string name="toot_scheduled_date">Az időzítés dátuma az aktuális óranak után kell lennie!</string>
+    <string name="warning_battery">Be van kapcsolva az energiatakarékos üzemmód! Lehet, hogy nem a várt módon viselkedik.</string>
     <!-- timed mute -->
-    <string name="timed_mute_date_error">Az elnémítás ideje több mint egy perc kell legyen.</string>
+    <string name="timed_mute_date_error">Az elnémítás minimális ideje egy perc.</string>
     <string name="timed_mute_date">%1$s el lett némítva %2$s időpontig.\n Az elnémítást a fiók profiloldalán lehet megszüntetni.</string>
     <string name="timed_mute_profile">%1$s el lett némítva %2$s időpontig.\n Klikkelj ide a fiók némításának megszűntetéséhez.</string>
     <!-- Notifications -->
@@ -224,7 +224,7 @@
     <string name="notif_mention">megemlített téged</string>
     <string name="notif_reblog">megismételte posztodat</string>
     <string name="notif_favourite">lájkolta a posztodat</string>
-    <string name="notif_follow">követ téged</string>
+    <string name="notif_follow">követett téged</string>
     <string name="notif_pouet">Új toot %1$s felhasználótól</string>
     <plurals name="other_notifications">
         <item quantity="one">és még egy értesítés</item>
@@ -240,11 +240,11 @@
     </plurals>
     <string name="delete_notification_ask">Törlöd az értesítést?</string>
     <string name="delete_notification_ask_all">Törlöd az értesítéseket?</string>
-    <string name="delete_notification">Az értesítést töröltük!</string>
-    <string name="delete_notification_all">Minden értesítést töröltünk!</string>
+    <string name="delete_notification">Az értesítést törölted!</string>
+    <string name="delete_notification_all">Minden értesítést töröltél!</string>
     <!-- HEADER -->
-    <string name="following">Követik</string>
-    <string name="followers">Követők</string>
+    <string name="following">Követi</string>
+    <string name="followers">Követő</string>
     <string name="pinned_toots">Rögzített</string>
     <!-- TOAST -->
     <string name="client_error">Hiba a kliens id betöltésekor!</string>
@@ -257,12 +257,12 @@
     <string name="toast_unfollow">A fiókot már nem követed!</string>
     <string name="toast_reblog">A toot meg lett ismételve!</string>
     <string name="toast_unreblog">A toot ismétlése meg lett szüntetve!</string>
-    <string name="toast_favourite">A tootot hozzáadtuk a kedvencekhez!</string>
-    <string name="toast_unfavourite">A tootot eltávolítottuk a kedvencek közül!</string>
-    <string name="toast_report">Jelentetted a tootot!</string>
+    <string name="toast_favourite">A toot hozzá lett adva a kedvencekhez!</string>
+    <string name="toast_unfavourite">A toot el lett távolítva a kedvencek közül!</string>
+    <string name="toast_report">Jelentve lett a toot!</string>
     <string name="toast_unstatus">Törölted a tootot!</string>
-    <string name="toast_pin">A tootot rögzítettük!</string>
-    <string name="toast_unpin">A toot rögzítését megszüntettük!</string>
+    <string name="toast_pin">Rögzítetted a tootot!</string>
+    <string name="toast_unpin">A toot rögzítését megszüntetted!</string>
     <string name="toast_error">Ááá! Hiba történt!</string>
     <string name="toast_code_error">Hiba történt! A szerver nem adott vissza engedélyezési kódot!</string>
     <string name="toast_error_instance">A szerver doménje érvénytelennek tűnik!</string>
@@ -270,15 +270,15 @@
     <string name="toast_error_search">Hiba történt a keresés közben!</string>
     <string name="toast_error_login">A bejelentkezés sikertelen!</string>
     <string name="toast_update_credential_ok">A profiladatokat elmentettük!</string>
-    <string name="nothing_to_do">Semmit sem lehet tenni</string>
-    <string name="toast_saved">A médiát elmentettük!</string>
-    <string name="toast_error_translate">Hiba lépett fel a fordítás során!</string>
+    <string name="nothing_to_do">Nem lehet végrehajtani ezt a műveletet</string>
+    <string name="toast_saved">Média elmentve!</string>
+    <string name="toast_error_translate">Hiba történt fordítás közben!</string>
     <string name="toast_toot_saved">Piszkozat elmentve!</string>
     <string name="toast_error_char_limit">Biztos vagy benne, hogy ez a szerver megenged ennyi karaktert? Ez az érték általában 500 karakter körül van.</string>
     <string name="toast_visibility_changed">A tootok láthatósága megváltozott a %1$s fiók számára</string>
     <string name="toast_empty_search">A szervernév és a felhasználónév nem maradhat üresen!</string>
     <!-- Settings -->
-    <string name="settings_title_optimisation">Letöltés optimalizálása</string>
+    <string name="settings_title_optimisation">Betöltés optimalizálása</string>
     <string name="set_toots_page">Tootok száma letöltésenként</string>
     <string name="set_accounts_page">Fiókok száma letöltésenként</string>
     <string name="set_notifications_page">Értesítések száma letöltésenként</string>
@@ -287,11 +287,11 @@
     <string name="set_attachment_ask">Kérdezz rá</string>
     <string name="set_attachment_action">Média betöltése</string>
     <string name="load_attachment">Képek betöltése</string>
-    <string name="load_attachment_spoiler">Mutasson többet…</string>
-    <string name="load_attachment_spoiler_less">Mutasson kevesebbet…</string>
+    <string name="load_attachment_spoiler">Mutass többet…</string>
+    <string name="load_attachment_spoiler_less">Mutass kevesebbet…</string>
     <string name="load_sensitive_attachment">Bizalmas tartalom</string>
     <string name="set_display_reply">Előző üzenet megjelenítése a válaszokban</string>
-    <string name="set_display_local">Mutassa a helyi idővonalat</string>
+    <string name="set_display_local">Helyi idővonal megjelenítése</string>
     <string name="set_display_global">Összevont idővonal megjelenítése</string>
     <string name="set_disable_gif">GIF avatarok kikapcsolása</string>
     <string name="set_folder_title">Útvonal: </string>
@@ -303,29 +303,29 @@
     <string name="set_notif_follow_ask">Értesítsen, amikor valaki követni szeretne téged</string>
     <string name="set_notif_follow_share">Értesíts, amikor valaki megismétli a posztodat</string>
     <string name="set_notif_follow_add">Értesíts, ha valaki lájkolja a posztodat</string>
-    <string name="set_notif_follow_mention">Értesítsen, amikor valaki megemlít téged</string>
+    <string name="set_notif_follow_mention">Értesíts, amikor valaki megemlít téged</string>
     <string name="set_share_validation">Kérdezz vissza újratootolás előtt</string>
-    <string name="set_share_validation_fav">Kérdezz vissza, mielőtt hozzáadsz valamit a kedvenceidhez</string>
+    <string name="set_share_validation_fav">Megerősítés kérése kedvencekhez hozzáadás előtt</string>
     <string name="settings_title_more_options">Részletes beállítások</string>
-    <string name="set_wifi_only">Csak WiFi esetén értesíts</string>
-    <string name="set_notify">Kér értesítést?</string>
+    <string name="set_wifi_only">Értesítés csak WiFi használatakor </string>
+    <string name="set_notify">Kérsz értesítést?</string>
     <string name="set_notif_silent">Csendes értesítések</string>
     <string name="set_night_mode">Éjszakai mód</string>
-    <string name="set_nsfw_timeout">Érzékeny tartalom megjelenítésének ideje (mp, 0 érték kikapcsolja)</string>
+    <string name="set_nsfw_timeout">NSFW tartalom megjelenítésének ideje (mp, 0 érték kikapcsolja)</string>
     <string name="settings_title_profile">Profil szerkesztése</string>
     <string name="settings_title_custom_sharing">Egyéni megosztás</string>
-    <string name="settings_custom_sharing_url">Az Ön egyéni megosztása URL&#8230;</string>
+    <string name="settings_custom_sharing_url">Az egyéni megosztási URL&#8230;</string>
     <string name="set_profile_description">Rövid bemutatkozás…</string>
     <string name="set_lock_account">Fiók zárolása</string>
     <string name="set_save_changes">Változások mentése</string>
-    <string name="set_header_picture_overlay">Válasszon egy képet a fejléchez</string>
+    <string name="set_header_picture_overlay">Válassz egy képet a fejléchez</string>
     <string name="set_fit_preview">Előnézeti képek méretre szabása</string>
     <string name="set_automatically_split_toot">Automatikusan darabolja fel az 500 karakternél hosszabb tootokat a válaszokban</string>
     <string name="note_no_space">Elérted az 160 karakteres limitet!</string>
     <string name="username_no_space">Elérted az 30 karakteres limitet!</string>
     <string name="settings_title_hour">Engedélyezett idősáv az értesítések számára:</string>
-    <string name="settings_time_from">Között</string>
-    <string name="settings_time_to">és</string>
+    <string name="settings_time_from">Kezdet:</string>
+    <string name="settings_time_to">Befejezés:</string>
     <string name="settings_time_greater">Az időnek hosszabbnak kell lennie, mint %1$s</string>
     <string name="settings_time_lower">Az időnek rövidebbnek kell lennie, mint %1$s</string>
     <string name="settings_hour_init">Kezdés időpontja</string>
@@ -337,7 +337,7 @@
     <string name="use_cookies">Harmadik féltől származó sütik engedélyezése</string>
     <string name="settings_ui_layout">Idővonalak elrendezése: </string>
     <string-array name="battery_profiles">
-        <item>Közepes akkuterhelés</item>
+        <item>Normális akkuterhelés</item>
         <item>Közepes akkuterhelés</item>
         <item>Alacsony akkuterhelés</item>
     </string-array>
@@ -351,7 +351,7 @@
         <item>DeepL</item>
         <item>Nem</item>
     </string-array>
-    <string name="your_api_key">Az Ön API-kulcsa (Yandex esetén üresen hagyhatja)</string>
+    <string name="your_api_key">A te API-kulcsod (Yandex esetén üresen hagyhatja)</string>
     <string-array name="settings_theme">
         <item>Sötét</item>
         <item>Világos</item>
@@ -359,9 +359,9 @@
     </string-array>
     <string-array name="settings_resize_picture">
         <item>Nem</item>
-        <item>512 KB</item>
-        <item>1 MB</item>
-        <item>2 MB</item>
+        <item>512 Kb</item>
+        <item>1 Mb</item>
+        <item>2 Mb</item>
     </string-array>
     <string name="set_led_colour">LED színének beállítása:</string>
     <string-array name="led_colours">
@@ -375,17 +375,17 @@
     </string-array>
     <string name="set_title_news">Hírek</string>
     <string name="set_notification_news">Értesíts, mikor a saját szerver idővonalán új toot jelenik meg</string>
-    <string name="action_follow">Követ</string>
-    <string name="action_unfollow">Többé nem követ</string>
+    <string name="action_follow">Követés</string>
+    <string name="action_unfollow">Követés megszűntetése</string>
     <string name="action_block">Letilt</string>
     <string name="action_unblock">Letiltás feloldása</string>
-    <string name="action_mute">Elnémít</string>
+    <string name="action_mute">Elnémítás</string>
     <string name="action_no_action">Semmit se tegyen</string>
     <string name="action_unmute">Némítás feloldása</string>
     <string name="request_sent">Kérés elküldve</string>
     <string name="followed_by">Követ téged</string>
     <string name="action_search">Keresés</string>
-    <string name="set_capitalize">Első betű kiemelése a válaszokban</string>
+    <string name="set_capitalize">Első betű nagybetűsítése a válaszokban</string>
     <string name="set_resize_picture">Képek átméretezése</string>
     <!-- Quick settings for notifications -->
     <string name="settings_popup_title">Push-értesítések</string>
@@ -398,7 +398,7 @@
     <string name="cache_title">Gyorsítótár ürítése</string>
     <string name="cache_message">A gyorsítótárban %1$s megjelenítendő elem van.\n\nSzeretnéd törölni őket?</string>
     <string name="cache_units">Mb</string>
-    <string name="toast_cache_clear">Gyorsítótár ki lett törölve! %1$s lett felszabadítva</string>
+    <string name="toast_cache_clear">Gyorsítótár ki lett űrítve! %1$s lett felszabadítva</string>
     <!-- ACTIVITY CUSTOM SHARING -->
     <string name="title_header_custom_sharing">Cím</string>
     <string name="title_hint_custom_sharing">Cím&#8230;</string>
@@ -418,7 +418,7 @@
     <string name="show_media">Média megjelenítése</string>
     <string name="show_pinned">Rögzített tootok megjelenítése</string>
     <string name="filter_no_result">Nincs találat!</string>
-    <string name="data_backup_toots">%1$s tootjainak archiválása</string>
+    <string name="data_backup_toots">%1$s fiók tootjainak archiválása</string>
     <string name="data_backup_success">%1$s új tootjait importáltuk</string>
     <string-array name="filter_select">
         <item>Nem</item>
@@ -431,12 +431,12 @@
     <string name="privacy_data">        A készüléken csak a fiókok alapadatait tároljuk.
         Ezek az adatok szigorúan bizalmasak és csak az alkalmazás fér hozzá.
         Az alkalmazás eltávolítása azonnal törli ezeket az adatokat.\n
-        &#9888; Felhasználónevet és jelszavakat sohasem tárolunk. Csak a szerverre való biztonságos (SSL) hitelesítés során használjuk.
+        &#9888; Felhasználónevet és jelszavakat sohasem tárolunk. Csak a szerverre való biztonságos (SSL) bejentkezés során használjuk.
     </string>
     <string name="privacy_authorizations_title">Engedélyek:</string>
-    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Arra használjuk, hogy a kliens WiFi-hálózathoz kapcsolódik-e.\n
+    <string name="privacy_authorizations">        - <b>ACCESS_NETWORK_STATE</b>: Arra használjuk, hogy megállapítsuk, a kliens WiFi-hálózathoz kapcsolódik-e.\n
         - <b>INTERNET</b>: Szerverek lekérdezésekor használatos.\n
-        - <b>WRITE_EXTERNAL_STORAGE</b>: Média vagy magának alkalmazásnak az SD-kártyára mozgatásához használatos.\n
+        - <b>WRITE_EXTERNAL_STORAGE</b>: Média vagy magának alkalmazásnak az SD-kártyára áthelyezéséhez használatos.\n
         - <b>READ_EXTERNAL_STORAGE</b>: Médiát ad hozzá toothoz.\n
         - <b>BOOT_COMPLETED</b>: Az értesítési szolgáltatás indítására használatos.\n
         - <b>WAKE_LOCK</b>: Az értesítési szolgáltatás használja működés közben.
@@ -455,14 +455,14 @@
         - <b>PhotoView</b>: Képek kezelése\n
     </string>
     <string name="privacy_API_yandex_title">Tootok fordítása</string>
-    <string name="privacy_API_yandex_authorizations">Az alkalmazás lehetővé teszi a tootok lefordítását az eszköz nyelvi beállításainak és a Yandex API segítségével.\n
-Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: https://yandex.ru/legal/confidential/?lang=en    </string>
+    <string name="privacy_API_yandex_authorizations">Az alkalmazás lehetővé teszi a tootok lefordítását az eszköz nyelvi beállításainak megfelelően, a Yandex API segítségével.\n
+A Yandexnek megvan a saját adatvédelmi szabályzata, ami itt található: https://yandex.ru/legal/confidential/?lang=en    </string>
     <string name="thanks_text">Köszönet Stéphane-nak a logóért.    </string>
-    <string name="thanks_text_dev">Köszönettel a következőknek:    </string>
+    <string name="thanks_text_dev">Köszönet a következőknek:    </string>
     <string name="filter_regex">Szűrés reguláris kifejezések használatával</string>
     <string name="search">Keresés</string>
     <string name="delete">Törlés</string>
-    <string name="fetch_more_toots">További tootok letöltése…</string>
+    <string name="fetch_more_toots">További tootok betöltése…</string>
     <!-- About lists -->
     <string name="action_lists">Listák</string>
     <string name="action_lists_confirm_delete">Biztos benne, hogy véglegesen törölni szeretné ezt a listát?</string>
@@ -488,12 +488,12 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     </string>
     <string name="media_ready">Betöltöttük a médiát. Klikkelj ide a megjelenítéshez.</string>
     <string name="data_export_start">Ez a folyamat sokáig tarthat. Értesítünk majd, amikor befejeződött.</string>
-    <string name="data_export_running">Még nem fejeztük be, kérjük várj még…</string>
+    <string name="data_export_running">Még nem fejeztük be, kérlek várj még…</string>
     <string name="data_export">Exportáld a posztokat</string>
     <string name="data_export_toots">Exportáld %1$s posztjait</string>
     <string name="data_export_success">%1$s tootot exportáltunk a %2$s tootból.</string>
-    <string name="data_export_error">Valamilyen hiba történt %1$s adatainak exportja közben</string>
-    <string name="data_export_error_simple">Valamilyen hiba az exportálás közben!</string>
+    <string name="data_export_error">Valamilyen hiba történt %1$s adatainak exportálása közben</string>
+    <string name="data_export_error_simple">Valamilyen hiba történt az exportálás közben!</string>
     <string name="data_import_success_simple">Az adatok importálása befejeződött!</string>
     <string name="data_import_error_simple">Valamilyen hiba történt az importálás közben!</string>
     <!-- Proxy -->
@@ -549,12 +549,12 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="filter_context_explanations">Egy vagy több kontextus, amire a szűrő alkalmazandó</string>
     <string name="filter_expire">Lejárat dátuma</string>
     <string name="add_new_filter">Új szűrő hozzáadása</string>
-    <string name="action_filter_delete">Törli a szűrőt?</string>
-    <string name="action_update_filter">Szűrőt módosítása</string>
+    <string name="action_filter_delete">Törlöd a szűrőt?</string>
+    <string name="action_update_filter">Szűrő módosítása</string>
     <string name="action_filter_create">Szűrő létrehozása</string>
     <string name="how_to_follow">Kit érdemes követni</string>
     <string name="action_who_to_follow_empty_content">Nincs több listázott fiók jelenleg!</string>
-    <string name="follow_account">Követ</string>
+    <string name="follow_account">Követés</string>
     <string name="select_all">Összes kiválasztása</string>
     <string name="unselect_all">Összes kijelölés megszüntetése</string>
     <string name="follow_trunk">%s követése elkezdődött!</string>
@@ -562,14 +562,14 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="add_account_list_trunk">Hozzáadjuk a fiókot a listához</string>
     <string name="account_added_list_trunk">Hozzáadtuk a fiókokat a listához</string>
     <string name="adding_account_list_trunk">Hozzáadjuk a fiókokat a listához</string>
-    <string name="action_list_add">Nem hozott még létre listát. Kattintson a \"+\" gomb-ra egy új hozzáadásához.</string>
+    <string name="action_list_add">Nem hoztál még létre listát. Kattintson a \"+\" gomb-ra egy új hozzáadásához.</string>
     <string name="action_remote_instance_add">Nem követsz még egyetlen távoli szervert sem. Klikkelj a \"+\" gombra a hozzáadáshoz.</string>
     <string name="about_trunk">Who to follow</string>
     <string name="about_trunk_action">Trunk API</string>
     <string name="toast_impossible_to_follow">A fiók(ok) nem követhetőek</string>
     <string name="retrieve_remote_account">Betöltjük a távoli fiók adatait</string>
-    <string name="expand_image">Automatikusan kibontjuk a rejtett médiákat</string>
-    <string name="set_display_follow_instance">Megjeleníti a szerver követése gombot</string>
+    <string name="expand_image">Rejtett médiák automatikus kibontása</string>
+    <string name="set_display_follow_instance">Megjeleníti a szerverek követése gombot</string>
     <string name="channel_notif_follow">Új követő</string>
     <string name="channel_notif_boost">Új újratoot</string>
     <string name="channel_notif_fav">Új kedvenc</string>
@@ -594,7 +594,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="comment">Hozzászólás</string>
     <string name="peertube_instance">Peertube szerver</string>
     <string name="set_display_direct">Privát üzenetek idővonalának megjelenítése</string>
-    <string name="set_keep_background_process">Tartsd nyitva a háttéfolyamatot az app bezárásakor</string>
+    <string name="set_keep_background_process">Tartsd nyitva a háttérfolyamatot az app bezárásakor</string>
     <string name="no_comments">Legyél te az első, aki hozzászól ehhez a videóhoz a jobb felső gomb segítségével!</string>
     <string name="number_view_video">%s megtekintés</string>
     <string name="duration_video">Időtartam: %s</string>
@@ -712,7 +712,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="delete_comment_confirm">Biztos, hogy törli ezt a hozzászólást?</string>
     <string name="fullscreen">Teljes képernyős videó</string>
     <string name="set_video_mode">Videó-módok</string>
-    <string name="file_to_upload">Feltöltetndő fájl kiválasztása</string>
+    <string name="file_to_upload">Feltöltendő fájl kiválasztása</string>
     <string name="my_videos">Videóim</string>
     <string name="title">Cím</string>
     <string name="categories">Kategóriák</string>
@@ -725,7 +725,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="description">Leírás</string>
     <string name="toast_peertube_video_updated">A videót frissítettük!</string>
     <string name="toast_cancelled">Feltöltés megszakítva!</string>
-    <string name="upload_video_success">A videót feltöltöttük!</string>
+    <string name="upload_video_success">A videót feltöltése bejefeződött!</string>
     <string name="uploading">Feltöltés folyamatban, kérjük várj…</string>
     <string name="video_uploaded_action">Klikkelj ide a videó adatok szerkesztéséhez.</string>
     <string name="delete_video">Videó törlése</string>
@@ -744,7 +744,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="toots_server">Tootok (szerver)</string>
     <string name="toots_client">Tootok (eszköz)</string>
     <string name="modify">Módosítás</string>
-    <string name="set_display_content_after_fetch_more">Új tootok megjelenítése a \"Továbbiak letöltése\" gomb fölött</string>
+    <string name="set_display_content_after_fetch_more">Új tootok megjelenítése a \"Továbbiak betöltése\" gomb fölött</string>
     <string name="settings_category_label_confirmations">Megerősítések</string>
     <string name="settings_category_label_timelines">Idővonalak</string>
     <string name="settings_category_label_notification">Értesítési szolgáltatás</string>
@@ -759,7 +759,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="peertube_video_import_success"><![CDATA[<b>%1$s</b> videód importálása sikerült]]></string>
     <string name="peertube_video_import_error"><![CDATA[<b>%1$s</b> videód importálása nem sikerült]]></string>
     <string name="peertube_video_from_subscription"><![CDATA[<b>%1$s</b> közzétett egy új videót: <b>%2$s</b>]]></string>
-    <string name="peertube_video_blacklist"><![CDATA[<b>%1$s</b> videód tiltolistára került]]></string>
+    <string name="peertube_video_blacklist"><![CDATA[<b>%1$s</b> videód tiltólistára került]]></string>
     <string name="peertube_video_unblacklist"><![CDATA[<b>%1$s</b> videód lekerült a tiltólistáról]]></string>
     <string name="export_data">Adat exportálása</string>
     <string name="import_data">Adat importálása</string>
@@ -773,7 +773,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
     <string name="action_logout_account">Kijelentkezés fiókból</string>
-    <string name="set_optimize_loading">Töltési idő optimalizálása</string>
+    <string name="set_optimize_loading">Betöltési idő optimalizálása</string>
     <string name="all">Összes</string>
     <string name="about_opencollective">Az app támogatása</string>
     <string name="more_about_opencollective">Az Open Collective segít egy új közösség gyors létrehozásában, a pénzgyűjtésben és annak transzparens kezelésében.</string>
@@ -808,6 +808,7 @@ Yandexnek megvan a saját adatvédelmi szabályzata, amit itt lehet találni: ht
     <string name="refresh_poll">Szavazás frissítése</string>
     <string name="vote">Szavazás</string>
     <string name="poll_not_private">Közvetlen üzenethez nem csatolhatsz szavazást!</string>
+    <string name="notif_poll">Véget ért egy szavazás, amiben részt vettél</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d szavazat</item>
         <item quantity="other">%d szavazat</item>

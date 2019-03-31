@@ -1389,7 +1389,6 @@ public class GNUAPI {
                 try {
                     Status status1 = parseStatuses(context, new JSONObject(resp));
                     b.putParcelable("status", status1);
-                    b.putSerializable("action", statusAction);
                 } catch (JSONException ignored) {}
                 Intent intentBC = new Intent(Helper.RECEIVE_ACTION);
                 intentBC.putExtras(b);

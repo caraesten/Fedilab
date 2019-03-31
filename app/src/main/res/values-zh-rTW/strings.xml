@@ -46,7 +46,7 @@
     <string name="speech_not_supported">抱歉！您的裝置不支援語音輸入！</string>
     <string name="delete_all">全部刪除</string>
     <string name="translate_toot">翻譯此嘟文。</string>
-    <string name="schedule">時間表</string>
+    <string name="schedule">排程</string>
     <string name="text_size">文字與圖示大小</string>
     <string name="text_size_change">更改目前文字大小：</string>
     <string name="icon_size_change">變更目前圖示大小：</string>
@@ -807,6 +807,7 @@ Yandex 有適當的隱私權政策，可以在這裡找到：https://yandex.ru/l
     <string name="refresh_poll">重新整理投票</string>
     <string name="vote">投票</string>
     <string name="poll_not_private">投票不能附加到直接訊息中！</string>
+    <string name="notif_poll">您曾投過的投票已經結束</string>
     <plurals name="number_of_vote">
         <item quantity="other">%d 人投票</item>
     </plurals>

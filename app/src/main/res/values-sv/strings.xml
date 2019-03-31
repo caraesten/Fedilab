@@ -46,7 +46,7 @@
     <string name="speech_not_supported">Tyvärr stöder inte din enhet röstinmatning!</string>
     <string name="delete_all">Ta bort allt</string>
     <string name="translate_toot">Översätt denna toot.</string>
-    <string name="schedule">Schema</string>
+    <string name="schedule">Schemalägg</string>
     <string name="text_size">Storlek på text och ikoner</string>
     <string name="text_size_change">Ändra nuvarande textstorlek:</string>
     <string name="icon_size_change">Ändra nuvarande ikonstorlek:</string>
@@ -73,7 +73,7 @@
     <!--- Menu -->
     <string name="home_menu">Hem</string>
     <string name="local_menu">Lokal tidslinje</string>
-    <string name="global_menu">Förenad tidslinje</string>
+    <string name="global_menu">Federerad tidslinje</string>
     <string name="neutral_menu_title">Alternativ</string>
     <string name="favorites_menu">Favoriter</string>
     <string name="communication_menu_title">Kommunikation</string>
@@ -102,26 +102,26 @@
     <string name="no_status">Ingen toot att visa</string>
     <string name="fav_added">Tooten lades till i favoriter</string>
     <string name="fav_removed">Tooten togs bort från favoriter!</string>
-    <string name="reblog_added">Tooten boostades!</string>
-    <string name="reblog_removed">Tooten boostas inte längre!</string>
-    <string name="reblog_by">Boostad av %1$s</string>
+    <string name="reblog_added">Tooten knuffades!</string>
+    <string name="reblog_removed">Tooten knuffas inte längre!</string>
+    <string name="reblog_by">Knuffad av %1$s</string>
     <string name="favourite_add">Lägg till detta toot till dina favoriter?</string>
     <string name="favourite_remove">Ta bort detta toot från dina favoriter?</string>
-    <string name="reblog_add">Boosta detta toot?</string>
-    <string name="reblog_remove">Avboosta denna toot?</string>
-    <string name="pin_add">Fäst denna toot?</string>
-    <string name="pin_remove">Lossa denna toot?</string>
-    <string name="more_action_1">Tyst</string>
+    <string name="reblog_add">Knuffa detta toot?</string>
+    <string name="reblog_remove">Ta bort knuff av denna toot?</string>
+    <string name="pin_add">Nåla denna toot?</string>
+    <string name="pin_remove">Ta bort nål på denna toot?</string>
+    <string name="more_action_1">Tysta</string>
     <string name="more_action_2">Blockera</string>
     <string name="more_action_3">Rapportera</string>
     <string name="more_action_4">Ta bort</string>
     <string name="more_action_5">Kopiera</string>
     <string name="more_action_6">Dela</string>
-    <string name="more_action_7">Nämn</string>
-    <string name="more_action_8">Tidsinställda mute</string>
+    <string name="more_action_7">Omnämn</string>
+    <string name="more_action_8">Tidsinställd tystning</string>
     <string name="more_action_9">Ta bort &amp; nytt utkast</string>
     <string-array name="more_action_confirm">
-        <item>Stänga av detta konto?</item>
+        <item>Tysta detta konto?</item>
         <item>Blockera detta konto?</item>
         <item>Anmäl den här tooten?</item>
         <item>Blockera denna domän?</item>
@@ -160,33 +160,33 @@
     <string name="toot_title_reply">Svara på en toot</string>
     <string name="queet_title">Skriv en queet</string>
     <string name="queet_title_reply">Svara på en queet</string>
-    <string name="toot_no_space">Du har nått de 500 tecken tillåtna!</string>
+    <string name="toot_no_space">Du har nått de tillåtna 500 tecken!</string>
     <string name="toot_select_image">Välj en media</string>
-    <string name="toot_select_image_error">Ett fel uppstod medans du valde media!</string>
+    <string name="toot_select_image_error">Ett fel uppstod när du valde media!</string>
     <string name="toot_delete_media">Ta bort denna media?</string>
     <string name="toot_error_no_content">Din toot är tom!</string>
-    <string name="toot_visibility_tilte">Synligheten för tooten</string>
+    <string name="toot_visibility_tilte">Tootens synlighet</string>
     <string name="toots_visibility_tilte">Synbarheten av tootar som standard: </string>
     <string name="toot_sent">Tooten har skickats!</string>
     <string name="toot_reply_content_title">Du svarar på denna toot:</string>
     <string name="toot_sensitive">Känsligt innehåll?</string>
     <string-array name="toot_visibility">
-        <item>Post till offentliga tidslinjer</item>
-        <item>Lägger inte till offentliga tidslinjer</item>
-        <item>Bokför till anhängare bara</item>
-        <item>Post till nämns endast användare</item>
+        <item>Skicka till offentliga tidslinjer</item>
+        <item>Skickar inte till offentliga tidslinjer</item>
+        <item>Skicka enbart till följare</item>
+        <item>Skicka endast till nämnda användare</item>
     </string-array>
     <string name="no_draft">Inga utkast!</string>
     <string name="choose_toot">Välj ett toot</string>
     <string name="choose_accounts">Välj ett konto</string>
     <string name="select_accounts">Välj några konton</string>
     <string name="remove_draft">Ta bort utkast?</string>
-    <string name="show_reply">Klicka på knappen för att visa den ursprungliga toot</string>
-    <string name="upload_form_description">Beskriva för synskadade</string>
+    <string name="show_reply">Klicka på knappen för att visa den ursprungliga tooten</string>
+    <string name="upload_form_description">Beskriv för synskadade</string>
     <!-- Instance -->
     <string name="instance_no_description">Ingen beskrivning tillgänglig!</string>
     <!-- About -->
-    <string name="about_vesrion">Släppa %1$s</string>
+    <string name="about_vesrion">Version %1$s</string>
     <string name="about_developer">Utvecklare:</string>
     <string name="about_license">Licens: </string>
     <string name="about_license_action">GNU GPL V3</string>
@@ -194,17 +194,17 @@
     <string name="about_yandex">Översättning av toots:</string>
     <string name="about_thekinrar">Sök instanser:</string>
     <string name="about_thekinrar_action">instances.social</string>
-    <string name="thanks_text_logo">Ikonen designer:</string>
-    <string name="thanks_text_banner">Banner designer:</string>
+    <string name="thanks_text_logo">Ikondesigner:</string>
+    <string name="thanks_text_banner">Banner-design av:</string>
     <!-- Conversation -->
     <string name="conversation">Konversation</string>
     <!-- Accounts -->
-    <string name="no_accounts">Inget konto att Visa</string>
-    <string name="no_follow_request">Ny förfrågan från följare</string>
+    <string name="no_accounts">Inget konto att visa</string>
+    <string name="no_follow_request">Ingen följförfrågan</string>
     <string name="status_cnt">Toots \n %1$s</string>
-    <string name="following_cnt">Följande \n %1$s</string>
-    <string name="followers_cnt">Anhängare \n %1$s</string>
-    <string name="pins_cnt">Fästa \n %d</string>
+    <string name="following_cnt">Följer \n %1$s</string>
+    <string name="followers_cnt">Följare \n %1$s</string>
+    <string name="pins_cnt">Fastnålad \n %d</string>
     <string name="authorize">Auktorisera</string>
     <string name="reject">Avvisa</string>
     <!-- Scheduled toots -->
@@ -245,7 +245,7 @@
     <!-- HEADER -->
     <string name="following">Följer</string>
     <string name="followers">Följare</string>
-    <string name="pinned_toots">Fäst</string>
+    <string name="pinned_toots">Fastnålad</string>
     <!-- TOAST -->
     <string name="client_error">Kan inte få tag på klientid!</string>
     <string name="no_internet">Ingen internetuppkoppling!</string>
@@ -261,8 +261,8 @@
     <string name="toast_unfavourite">Toot togs bort från dina favoriter!</string>
     <string name="toast_report">Toot rapporterades!</string>
     <string name="toast_unstatus">Toot togs bort!</string>
-    <string name="toast_pin">Toot nålades!</string>
-    <string name="toast_unpin">Toot onålades!</string>
+    <string name="toast_pin">Tooten är fastnålad!</string>
+    <string name="toast_unpin">Nålen togs bort från tooten!</string>
     <string name="toast_error">Oops! Ett fel uppstod!</string>
     <string name="toast_code_error">Ett fel uppstod! Instansen returnerade inte en auktoriseringskod!</string>
     <string name="toast_error_instance">Domäninstansen verkar inte vara giltig!</string>
@@ -416,7 +416,7 @@
     <string name="v_direct">Direkt</string>
     <string name="v_keywords">Vissa nyckelord…</string>
     <string name="show_media">Visa media</string>
-    <string name="show_pinned">Visa nålat</string>
+    <string name="show_pinned">Visa fastnålade</string>
     <string name="filter_no_result">Inga matchande resultat hittades!</string>
     <string name="data_backup_toots">Säkerhetskopiering toots för %1$s</string>
     <string name="data_backup_success">%1$s nya toots har importerats</string>
@@ -811,6 +811,7 @@
     <string name="refresh_poll">Uppdatera enkät</string>
     <string name="vote">Rösta</string>
     <string name="poll_not_private">En undersökning kan inte bifogas i ett direktmeddelande!</string>
+    <string name="notif_poll">En enkät som du röstat i har avslutats</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d röst</item>
         <item quantity="other">%d votes</item>

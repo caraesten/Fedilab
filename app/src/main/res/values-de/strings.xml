@@ -799,6 +799,7 @@ Sobald Sie die ersten Buchstaben eintippen, werden Namensvorschläge angezeigt\n
     <string name="refresh_poll">Umfrage aktualisieren</string>
     <string name="vote">Abstimmen</string>
     <string name="poll_not_private">Eine Umfrage kann nicht an eine direkte Nachricht angehängt werden!</string>
+    <string name="notif_poll">A poll you have voted in has ended</string>
     <plurals name="number_of_vote">
         <item quantity="one">%d Stimme</item>
         <item quantity="other">%d Stimmen</item>
