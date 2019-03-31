@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -3414,7 +3415,7 @@ public class API {
         List<String> list_tmp = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++){
             try {
-                list_tmp.add(jsonArray.getString(i));
+                list_tmp.add(jsonArray.getJSONObject(i).getString("name"));
             } catch (JSONException ignored) {}
         }
         return  list_tmp;

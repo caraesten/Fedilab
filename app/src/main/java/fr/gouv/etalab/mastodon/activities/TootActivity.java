@@ -2183,14 +2183,14 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
     }
 
     @Override
-    public void onRetrieveSearch(Results results, Error error) {
+    public void onRetrieveSearch(APIResponse apiResponse) {
         if( pp_progress != null && pp_actionBar != null) {
             pp_progress.setVisibility(View.GONE);
             pp_actionBar.setVisibility(View.VISIBLE);
         }
-        if( results == null)
+        if( apiResponse == null || apiResponse.getResults() == null)
             return;
-
+        Results results = apiResponse.getResults();
         final List<String> tags = results.getHashtags();
         if( tags != null && tags.size() > 0){
             TagsSearchAdapter tagsSearchAdapter = new TagsSearchAdapter(TootActivity.this, tags);

@@ -59,10 +59,10 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_search, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_search_tag, container, false);
         context = getContext();
 
-        lv_search_tags = rootView.findViewById(R.id.lv_search_toots);
+        lv_search_tags = rootView.findViewById(R.id.lv_search_tags);
         loader = rootView.findViewById(R.id.loader);
         textviewNoAction = rootView.findViewById(R.id.no_action);
         loader.setVisibility(View.VISIBLE);

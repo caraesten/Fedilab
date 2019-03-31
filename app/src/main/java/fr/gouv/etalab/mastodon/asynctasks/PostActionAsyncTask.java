@@ -22,6 +22,7 @@ import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
@@ -139,9 +140,9 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
                     else
                         uri = remoteStatus.getUrl();
                 }
-                Results search = api.search(uri);
-                if (search != null) {
-                    List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses = search.getStatuses();
+                APIResponse search = api.search(uri);
+                if (search != null && search.getResults() != null) {
+                    List<fr.gouv.etalab.mastodon.client.Entities.Status> remoteStatuses = search.getResults().getStatuses();
                     if (remoteStatuses != null && remoteStatuses.size() > 0) {
                         fr.gouv.etalab.mastodon.client.Entities.Status statusTmp = remoteStatuses.get(0);
                         this.targetedId = statusTmp.getId();
@@ -150,9 +151,9 @@ public class PostActionAsyncTask extends AsyncTask<Void, Void, Void> {
                 }
             } else if (remoteAccount != null) {
                 String searchString = remoteAccount.getAcct().contains("@") ? "@" + remoteAccount.getAcct() : "@" + remoteAccount.getAcct() + "@" + Helper.getLiveInstance(contextReference.get());
-                Results search = api.search(searchString);
-                if (search != null) {
-                    List<Account> accounts = search.getAccounts();
+                APIResponse search = api.search(searchString);
+                if (search != null && search.getResults() != null) {
+                    List<Account> accounts = search.getResults().getAccounts();
                     if (accounts != null && accounts.size() > 0) {
                         Account accountTmp = accounts.get(0);
                         this.targetedId = accountTmp.getId();

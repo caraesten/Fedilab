@@ -41,6 +41,7 @@ import fr.gouv.etalab.mastodon.activities.TootActivity;
 import fr.gouv.etalab.mastodon.asynctasks.PostActionAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
@@ -287,7 +288,8 @@ public class CrossActions {
                 API api = new API(contextReference.get());
                 String url;
                 url = "https://" + remoteAccount.getHost() + "/video-channels/" + remoteAccount.getAcct().split("@")[0];
-                response = api.search(url);
+                APIResponse apiResponse = api.search(url);
+                response = apiResponse.getResults();
                 return null;
             }
             @Override
@@ -328,7 +330,8 @@ public class CrossActions {
                     else
                         url = "https://" + remoteAccount.getInstance() + "/@" + remoteAccount.getAcct();
                 }
-                response = api.search(url);
+                APIResponse apiResponse = api.search(url);
+                response = apiResponse.getResults();
                 return null;
             }
             @Override
@@ -369,7 +372,8 @@ public class CrossActions {
             @Override
             protected Void doInBackground(Void... voids) {
                 API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                response = api.search(remoteStatus.getUrl());
+                APIResponse apiResponse = api.search(remoteStatus.getUrl());
+                response = apiResponse.getResults();
                 return null;
             }
             @Override
@@ -408,7 +412,8 @@ public class CrossActions {
             @Override
             protected Void doInBackground(Void... voids) {
                 API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                response = api.search(url);
+                APIResponse apiResponse = api.search(url);
+                response =  apiResponse.getResults();
                 return null;
             }
             @Override
@@ -479,7 +484,8 @@ public class CrossActions {
                         @Override
                         protected Void doInBackground(Void... voids) {
                             API api = new API(contextReference.get(), account.getInstance(), account.getToken());
-                            response = api.search(status.getUrl());
+                            APIResponse apiResponse = api.search(status.getUrl());
+                            response = apiResponse.getResults();
                             return null;
                         }
                         @Override
@@ -574,9 +580,9 @@ public class CrossActions {
                                         else
                                             uri = status.getUrl();
                                     }
-                                    Results search = api.search(uri);
-                                    if (search != null) {
-                                        remoteStatuses = search.getStatuses();
+                                    APIResponse search = api.search(uri);
+                                    if (search != null && search.getResults() != null) {
+                                        remoteStatuses = search.getResults().getStatuses();
                                     }
                                     return null;
                                 }
@@ -649,9 +655,9 @@ public class CrossActions {
                             else
                                 uri = status.getUrl();
                         }
-                        Results search = api.search(uri);
-                        if( search != null){
-                            remoteStatuses = search.getStatuses();
+                        APIResponse search = api.search(uri);
+                        if( search != null && search.getResults() != null){
+                            remoteStatuses = search.getResults().getStatuses();
                         }
                         return null;
                     }

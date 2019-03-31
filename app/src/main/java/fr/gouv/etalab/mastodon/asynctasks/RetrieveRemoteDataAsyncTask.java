@@ -18,6 +18,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import java.lang.ref.WeakReference;
 import fr.gouv.etalab.mastodon.client.API;
+import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveRemoteAccountInterface;
@@ -53,7 +54,9 @@ public class RetrieveRemoteDataAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         API api = new API(this.contextReference.get());
-        results = api.search(this.url);
+        APIResponse apiResponse = api.search(this.url);
+        if( apiResponse.getResults() != null)
+            results = apiResponse.getResults();
         return null;
     }
 

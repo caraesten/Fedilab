@@ -499,7 +499,12 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                 apiResponse.setStatuses(statusesConversations);
             }
             int previousPosition = this.statuses.size();
-            List<Status> statuses = apiResponse.getStatuses();
+            List<Status> statuses;
+
+            if( apiResponse.getResults() != null && apiResponse.getResults().getStatuses() != null)
+                statuses = apiResponse.getResults().getStatuses();
+            else
+                statuses = apiResponse.getStatuses();
             //At this point all statuses are in "List<Status> statuses"
             //Pagination for Pixelfed
             if(instanceType.equals("PIXELFED")) {
@@ -984,7 +989,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         if (type == RetrieveFeedsAsyncTask.Type.USER || type == RetrieveFeedsAsyncTask.Type.CHANNEL)
             asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         //Tag timelines
-        else if (type == RetrieveFeedsAsyncTask.Type.TAG)
+        else if (type == RetrieveFeedsAsyncTask.Type.TAG || type == RetrieveFeedsAsyncTask.Type.SEARCH)
             asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
             //Remote instances
