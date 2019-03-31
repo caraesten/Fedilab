@@ -392,8 +392,4 @@
     <style name="Shape.Dark" parent="AppThemeDark">
         <item name="android:background">@drawable/shape_border_bottom_settings_dark</item>
     </style>
-    <style name="activity_media_toolbar_theme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionMenuTextColor">@color/white</item>
-        <item name="android:actionMenuTextColor">@color/white</item>
-    </style>
 </resources>
