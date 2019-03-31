@@ -43,7 +43,7 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
 
     public SearchTagsAdapter(Context context, List<String> tags){
         this.context = context;
-        this.tags = ( tags != null)?tags:new ArrayList<String>();
+        this.tags = ( tags != null)?tags:new ArrayList<>();
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -55,7 +55,7 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        return new ViewHolder(layoutInflater.inflate(R.layout.drawer_tag_search, parent, false));
+        return new ViewHolder(layoutInflater.inflate(R.layout.drawer_tag_search_tab, parent, false));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -69,10 +69,9 @@ public class SearchTagsAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         final ViewHolder holder = (ViewHolder) viewHolder;
-        final String tag = (String) getItem(i);
+        final String tag = getItem(i);
 
         holder.tag_name.setText(String.format("#%s",tag));
-        holder.tag_name.setPaintFlags(holder.tag_name.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         holder.tag_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
