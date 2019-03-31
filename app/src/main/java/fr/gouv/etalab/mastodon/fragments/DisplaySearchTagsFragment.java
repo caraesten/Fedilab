@@ -15,10 +15,13 @@ package fr.gouv.etalab.mastodon.fragments;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +37,7 @@ import fr.gouv.etalab.mastodon.asynctasks.RetrieveSearchAsyncTask;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.drawers.SearchTagsAdapter;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveSearchInterface;
 
 
@@ -55,7 +59,9 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
     private RelativeLayout loading_next_tags;
     private LinearLayoutManager mLayoutManager;
     private boolean flag_loading;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private String max_id;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
@@ -67,10 +73,12 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
         textviewNoAction = rootView.findViewById(R.id.no_action);
         loader.setVisibility(View.VISIBLE);
         loading_next_tags = rootView.findViewById(R.id.loading_next_tags);
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeContainer);
         flag_loading = true;
         if (tags == null)
             tags = new ArrayList<>();
         max_id = null;
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             search = bundle.getString("search");
@@ -84,7 +92,39 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
 
         mLayoutManager = new LinearLayoutManager(context);
         lv_search_tags.setLayoutManager(mLayoutManager);
-
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+        switch (theme){
+            case Helper.THEME_LIGHT:
+                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4,
+                        R.color.mastodonC2,
+                        R.color.mastodonC3);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.white));
+                break;
+            case Helper.THEME_DARK:
+                swipeRefreshLayout.setColorSchemeResources(R.color.mastodonC4__,
+                        R.color.mastodonC4,
+                        R.color.mastodonC4);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.mastodonC1_));
+                break;
+            case Helper.THEME_BLACK:
+                swipeRefreshLayout.setColorSchemeResources(R.color.dark_icon,
+                        R.color.mastodonC2,
+                        R.color.mastodonC3);
+                swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context, R.color.black_3));
+                break;
+        }
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                int size = tags.size();
+                tags.clear();
+                tags = new ArrayList<>();
+                max_id = "0";
+                searchTagsAdapter.notifyItemRangeRemoved(0, size);
+                new RetrieveSearchAsyncTask(context, search, API.searchType.TAGS, null,DisplaySearchTagsFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        });
         lv_search_tags.addOnScrollListener(new RecyclerView.OnScrollListener() {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
             {
@@ -133,6 +173,7 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
 
         searchTagsAdapter = new SearchTagsAdapter(context, tags);
         loader.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
         if (apiResponse.getError() != null) {
             if( apiResponse.getError().getError() != null)
                 Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
@@ -149,7 +190,10 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
         SearchTagsAdapter searchTagsAdapter = new SearchTagsAdapter(context, tags);
         lv_search_tags.setAdapter(searchTagsAdapter);
         searchTagsAdapter.notifyDataSetChanged();
-
+        if( newTags.size() == 0 && tags.size() == 0 )
+            textviewNoAction.setVisibility(View.VISIBLE);
+        else
+            textviewNoAction.setVisibility(View.GONE);
     }
 
 }

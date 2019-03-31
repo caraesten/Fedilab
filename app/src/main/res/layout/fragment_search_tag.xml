@@ -41,7 +41,6 @@
         <TextView
             android:id="@+id/no_action_text"
             android:padding="10dp"
-            android:layout_centerInParent="true"
             android:gravity="center"
             android:textSize="25sp"
             android:layout_gravity="center"
@@ -49,7 +48,7 @@
             android:typeface="serif"
             android:text="@string/no_result"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </RelativeLayout>
     <!-- Main Loader -->
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
