@@ -32,6 +32,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -512,9 +513,14 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     max_id = "1";
                 //max_id needs to work like an offset
                 max_id = String.valueOf(Integer.valueOf(max_id) + 1);
-            }else{
+            }else if( type == RetrieveFeedsAsyncTask.Type.SEARCH) {
+                if(max_id == null)
+                    max_id = "0";
+                max_id = String.valueOf(Integer.valueOf(max_id) + 20);
+            } else{
                 max_id = apiResponse.getMax_id();
             }
+
             //while max_id is different from null, there are some more toots to load when scrolling
             flag_loading = (max_id == null );
             //If it's the first load and the reply doesn't contain any toots, a message is displayed.

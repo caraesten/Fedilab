@@ -261,6 +261,9 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
             case ONESTATUS:
                 apiResponse = api.getStatusbyId(targetedID);
                 break;
+            case SEARCH:
+                apiResponse = api.search2(tag, API.searchType.STATUSES, max_id);
+                break;
             case TAG:
                 if( MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
                     List<TagTimeline> tagTimelines = new SearchDAO(contextReference.get(), db).getTimelineInfo(tag);

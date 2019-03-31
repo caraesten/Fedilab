@@ -132,7 +132,6 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
     public void onRetrieveSearch(APIResponse apiResponse) {
 
         searchTagsAdapter = new SearchTagsAdapter(context, tags);
-        this.max_id = apiResponse.getMax_id();
         loader.setVisibility(View.GONE);
         if (apiResponse.getError() != null) {
             if( apiResponse.getError().getError() != null)
@@ -141,6 +140,9 @@ public class DisplaySearchTagsFragment extends Fragment implements OnRetrieveSea
                 Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
             return;
         }
+        if(max_id == null)
+            max_id = "0";
+        max_id = String.valueOf(Integer.valueOf(max_id) + 20);
         lv_search_tags.setVisibility(View.VISIBLE);
         List<String> newTags = apiResponse.getResults().getHashtags();
         tags.addAll(newTags);

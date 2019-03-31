@@ -2556,7 +2556,7 @@ public class API {
      * @param query  String search
      * @return Results
      */
-    public APIResponse search2(String query, searchType type, String max_id) {
+    public APIResponse search2(String query, searchType type, String offset) {
         apiResponse = new APIResponse();
         HashMap<String, String> params = new HashMap<>();
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
@@ -2567,8 +2567,8 @@ public class API {
             } catch (UnsupportedEncodingException e) {
                 params.put("q", query);
             }
-        if( max_id != null)
-            params.put("max_id", max_id);
+        if( offset != null)
+            params.put("offset", offset);
         switch (type){
             case TAGS:
                 params.put("type", "hashtags");
@@ -2580,7 +2580,7 @@ public class API {
                 params.put("type", "statuses");
                 break;
         }
-        params.put("limite", "40");
+        params.put("limit", "20");
         try {
             HttpsConnection httpsConnection = new HttpsConnection(context);
             String response = httpsConnection.get(getAbsoluteUr2l("/search"), 60, params, prefKeyOauthTokenT);
