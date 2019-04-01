@@ -787,7 +787,7 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="featured_hashtags">Hashtags recomanats</string>
     <string name="filter_timeline_with_a_tag">Pissarra de filtres amb etiquetes</string>
     <string name="no_tags">Sense etiquetes</string>
-    <string name="set_hide_delete_notification_on_tab">Hide the \"delete\" button in the notification tab</string>
+    <string name="set_hide_delete_notification_on_tab">Amaga el botó \"suprimir\" de la pestanya de notificacions</string>
     <string name="set_retrieve_metadata_share_from_extras">Adjunta una imatge en compartir un URL</string>
     <!-- end languages -->
     <string name="poll">Enquesta</string>
