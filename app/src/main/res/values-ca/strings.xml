@@ -788,37 +788,37 @@ Quan s\'esborra l\'aplicació s\'eliminen les dades immediatament.\n
     <string name="filter_timeline_with_a_tag">Pissarra de filtres amb etiquetes</string>
     <string name="no_tags">Sense etiquetes</string>
     <string name="set_hide_delete_notification_on_tab">Hide the \"delete\" button in the notification tab</string>
-    <string name="set_retrieve_metadata_share_from_extras">Attach an image when sharing a URL</string>
+    <string name="set_retrieve_metadata_share_from_extras">Adjunta una imatge en compartir un URL</string>
     <!-- end languages -->
-    <string name="poll">Poll</string>
-    <string name="create_poll">Create a poll</string>
-    <string name="poll_choice_1">Choice 1</string>
-    <string name="poll_choice_2">Choice 2</string>
-    <string name="poll_choice_3">Choice 3</string>
-    <string name="poll_choice_4">Choice 4</string>
-    <string name="poll_invalid_choices">You need two choices at least for the poll!</string>
-    <string name="done">Done</string>
-    <string name="poll_finish_at">end at %s</string>
-    <string name="refresh_poll">Refresh poll</string>
-    <string name="vote">Vote</string>
+    <string name="poll">Enquesta</string>
+    <string name="create_poll">Crea una enquesta</string>
+    <string name="poll_choice_1">Opció 1</string>
+    <string name="poll_choice_2">Opció 2</string>
+    <string name="poll_choice_3">Opció 3</string>
+    <string name="poll_choice_4">Opció 4</string>
+    <string name="poll_invalid_choices">Per a una enquesta, cal que hi hagi almenys dues opcions!</string>
+    <string name="done">Fet</string>
+    <string name="poll_finish_at">acaba a %s</string>
+    <string name="refresh_poll">Actualitza l\'enquesta</string>
+    <string name="vote">Vota</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">S\'ha acabat una enquesta en què havies participat</string>
     <plurals name="number_of_vote">
-        <item quantity="one">%d vote</item>
-        <item quantity="other">%d votes</item>
+        <item quantity="one">%d vot</item>
+        <item quantity="other">%d vots</item>
     </plurals>
     <string-array name="poll_choice_type">
-        <item>Single choice</item>
-        <item>Multiple choices</item>
+        <item>Elecció única</item>
+        <item>Elecció múltiple</item>
     </string-array>
     <string-array name="poll_duration">
-        <item>5 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>6 hours</item>
-        <item>1 day</item>
-        <item>3 days</item>
-        <item>7 days</item>
+        <item>5 minuts</item>
+        <item>30 minuts</item>
+        <item>1 hora</item>
+        <item>6 hores</item>
+        <item>1 dia</item>
+        <item>3 dies</item>
+        <item>7 dies</item>
     </string-array>
     <string-array name="settings_video_mode">
         <item>Visualització web</item>
