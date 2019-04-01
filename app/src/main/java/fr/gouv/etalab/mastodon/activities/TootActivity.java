@@ -55,6 +55,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -449,7 +450,7 @@ public class TootActivity extends BaseActivity implements OnPostActionInterface,
             }
         }
 
-
+        toot_content.requestFocus();
         if( mentionAccount != null){
             toot_content.setText(String.format("@%s\n", mentionAccount));
             toot_content.setSelection(toot_content.getText().length());
