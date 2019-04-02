@@ -63,7 +63,7 @@
     <string name="new_data">Nye data er tilgjengelige! Vil du vise dem?</string>
     <string name="favourite">Favoritter</string>
     <string name="follow">Nye følgere</string>
-    <string name="mention">Nevner</string>
+    <string name="mention">Nevnelser</string>
     <string name="reblog">Boosts</string>
     <string name="show_boosts">Vis boosts</string>
     <string name="show_replies">Vis svar</string>
