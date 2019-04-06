@@ -819,9 +819,9 @@
     <string name="poll_choice_2">الخيار 2</string>
     <string name="poll_choice_3">الخيار 3</string>
     <string name="poll_choice_4">الخيار 4</string>
-    <string name="poll_invalid_choices">You need two choices at least for the poll!</string>
+    <string name="poll_invalid_choices">يجب أن يتوفر استطلاع الرأي على خيارين على الأقل!</string>
     <string name="done">تم</string>
-    <string name="poll_finish_at">end at %s</string>
+    <string name="poll_finish_at">ينتهي في %s</string>
     <string name="refresh_poll">تحديث استطلاع الرأي</string>
     <string name="vote">تصويت</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
@@ -832,7 +832,7 @@
         <item quantity="two">%d votes</item>
         <item quantity="few">%d votes</item>
         <item quantity="many">%d votes</item>
-        <item quantity="other">%d votes</item>
+        <item quantity="other">%d صوت</item>
     </plurals>
     <string-array name="poll_choice_type">
         <item>خيار واحد</item>
