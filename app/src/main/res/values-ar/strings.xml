@@ -810,8 +810,8 @@
     <string name="featured_hashtags">الوسوم الشائعة</string>
     <string name="filter_timeline_with_a_tag">تصفية الخيط الزمني باستخدام الوسوم</string>
     <string name="no_tags">دون وسم</string>
-    <string name="set_hide_delete_notification_on_tab">Hide the \"delete\" button in the notification tab</string>
-    <string name="set_retrieve_metadata_share_from_extras">Attach an image when sharing a URL</string>
+    <string name="set_hide_delete_notification_on_tab">إخفاء زر \"الحذف\" المتواجد في لسان الإشعارات</string>
+    <string name="set_retrieve_metadata_share_from_extras">ارفاق صورة عند مشاركة عنوان رابط</string>
     <!-- end languages -->
     <string name="poll">استطلاع رأي</string>
     <string name="create_poll">إنشاء استطلاع</string>
@@ -824,8 +824,8 @@
     <string name="poll_finish_at">ينتهي في %s</string>
     <string name="refresh_poll">تحديث استطلاع الرأي</string>
     <string name="vote">تصويت</string>
-    <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
-    <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="poll_not_private">لا يمكن إرفاق استطلاع للرأي في الرسائل المباشِرة!</string>
+    <string name="notif_poll">لقد انقضت مدة استطلاع رأي قد قُمتَ بالتصويت عليه مِن قَبل</string>
     <plurals name="number_of_vote">
         <item quantity="zero">%d votes</item>
         <item quantity="one">%d vote</item>
