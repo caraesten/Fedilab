@@ -119,7 +119,7 @@
     <string name="more_action_6">Sdílet</string>
     <string name="more_action_7">Zmínit</string>
     <string name="more_action_8">Časově omezené ztlumení</string>
-    <string name="more_action_9">Smazat &amp; koncept</string>
+    <string name="more_action_9">Smazat a přepsat</string>
     <string-array name="more_action_confirm">
         <item>Ztlumit tento účet?</item>
         <item>Blokovat tento účet?</item>
@@ -132,7 +132,7 @@
     </string-array>
     <string-array name="more_action_owner_confirm">
         <item>Odstranit tento toot?</item>
-        <item>Smazat &amp; vytvořit nový koncept?</item>
+        <item>Smazat a přepsat tento toot?</item>
     </string-array>
     <plurals name="preview_replies">
         <item quantity="one">%d odpověď</item>
@@ -776,7 +776,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     <string name="data_import_start">Prosím neukončujte aplikaci počas zpracování. Nemůže to trvat dlouho.</string>
     <string name="add_public_comment">Přidat veřejný komentář</string>
     <string name="send_comment">Odeslat komentář</string>
-    <string name="toast_toot_saved_error">Neexistuje žádné připojení k Internetu. Vaše zpráva byla uložena mezi rozepsané.</string>
+    <string name="toast_toot_saved_error">Nelze se připojit k internetu. Vaše zpráva byla uložena do konceptů.</string>
     <string name="action_plain_text">Prostý text</string>
     <string name="action_html">HTML</string>
     <string name="action_markdown">Markdown</string>
@@ -825,7 +825,7 @@ Uživatelské jméno a heslo nejsou nikdy ukládány. Jsou použity pouze během
     </plurals>
     <string-array name="poll_choice_type">
         <item>Jediná volba</item>
-        <item>Několik voleb</item>
+        <item>Více voleb</item>
     </string-array>
     <string-array name="poll_duration">
         <item>5 minut</item>
