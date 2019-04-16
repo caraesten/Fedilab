@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -203,11 +204,11 @@ public class API {
                     response = new HttpsConnection(context).get(nodeInfo.getHref(), 30, null, null);
                     JSONObject resobj = new JSONObject(response);
                     JSONObject jsonObject = resobj.getJSONObject("software");
-                    String name = "MASTODON";
+                    String name = jsonObject.getString("name").toUpperCase();
                     if( jsonObject.getString("name") != null ){
                         switch (jsonObject.getString("name").toUpperCase()){
-                            case "PEERTUBE":
-                                name = "PEERTUBE";
+                            case "PLEROMA":
+                                name = "MASTODON";
                                 break;
                             case "HUBZILLA":
                             case "REDMATRIX":
@@ -367,7 +368,9 @@ public class API {
                 setError(500, new Throwable("An error occured!"));
                 return null;
             }
+            Log.v(Helper.TAG,"prefKeyOauthTokenT: " + prefKeyOauthTokenT);
             String response = new HttpsConnection(context).get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, prefKeyOauthTokenT);
+            Log.v(Helper.TAG,"response! " + response);
             account = parseAccountResponse(context, new JSONObject(response));
             if( account.getSocial().equals("PLEROMA")){
                 isPleromaAdmin(account.getAcct());
@@ -376,6 +379,8 @@ public class API {
             if( e.getStatusCode() == 401 || e.getStatusCode() == 403){
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 Account targetedAccount = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+                if( targetedAccount == null)
+                    return null;
                 HashMap<String, String> values = refreshToken(targetedAccount.getClient_id(), targetedAccount.getClient_secret(), targetedAccount.getRefresh_token());
                 if( values.containsKey("access_token") && values.get("access_token") != null) {
                     targetedAccount.setToken(values.get("access_token"));

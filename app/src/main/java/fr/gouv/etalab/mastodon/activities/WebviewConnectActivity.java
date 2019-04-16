@@ -182,7 +182,7 @@ public class WebviewConnectActivity extends BaseActivity {
             }
 
         });
-        webView.loadUrl(LoginActivity.redirectUserToAuthorizeAndLogin(clientId, instance));
+        webView.loadUrl(LoginActivity.redirectUserToAuthorizeAndLogin(social, clientId, instance));
     }
 
 

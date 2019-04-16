@@ -289,6 +289,8 @@ public class LoginActivity extends BaseActivity {
                         @Override
                         public void run() {
                             instanceNodeInfo = new API(LoginActivity.this).getNodeInfo(instance);
+
+                            Log.v(Helper.TAG,"ins: " +instanceNodeInfo.getName());
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     connect_button.setEnabled(true);
@@ -297,6 +299,9 @@ public class LoginActivity extends BaseActivity {
                                             case "MASTODON":
                                                 socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
                                                 break;
+                                            case "PIXELFED":
+                                                socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
+                                                break;
                                             case "PEERTUBE":
                                                 socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
                                                 break;
@@ -304,7 +309,7 @@ public class LoginActivity extends BaseActivity {
                                                 socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
                                                 break;
                                         }
-                                        if( instanceNodeInfo.getName().equals("MASTODON")) {
+                                        if( instanceNodeInfo.getName().equals("MASTODON") || instanceNodeInfo.getName().equals("PIXELFED")) {
                                             client_id_for_webview = true;
                                             retrievesClientId();
                                         }else {
@@ -536,6 +541,12 @@ public class LoginActivity extends BaseActivity {
             }else {
                 parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES_PEERTUBE);
             }
+            if(socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
+                client_id = "8";
+                client_secret = "rjnu93kmK1KbRBBMZflMi8rxKJxOjeGtnDUVEUNK";
+                manageClient(client_id, client_secret, null);
+                return;
+            }
 
             parameters.put(Helper.WEBSITE, Helper.WEBSITE_VALUE);
             new Thread(new Runnable(){
@@ -569,10 +580,7 @@ public class LoginActivity extends BaseActivity {
 
                         runOnUiThread(new Runnable() {
                             public void run() {
-                                client_id = "8";
-                                client_secret = "rjnu93kmK1KbRBBMZflMi8rxKJxOjeGtnDUVEUNK";
-                                manageClient(client_id, client_secret, null);
-                                /*
+
                                 String message;
                                 if( e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
                                     message = e.getLocalizedMessage();
@@ -580,7 +588,8 @@ public class LoginActivity extends BaseActivity {
                                     message = e.getMessage();
                                 else
                                     message = getString(R.string.client_error);
-                                Toasty.error(getApplicationContext(), message,Toast.LENGTH_LONG).show();*/
+                                Toasty.error(getApplicationContext(), message,Toast.LENGTH_LONG).show();
+
                             }
                         });
                     }
@@ -619,6 +628,8 @@ public class LoginActivity extends BaseActivity {
                 String oauthUrl = null;
                 if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                     parameters.put("scope", " read write follow");
+                    oauthUrl = "/oauth/token";
+                }else if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
                     oauthUrl = "/oauth/token";
                 }else  if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
                     parameters.put("scope", "user");
@@ -745,6 +756,8 @@ public class LoginActivity extends BaseActivity {
             editor.putString(Helper.ID, id);
             editor.apply();
             connectionButton.setEnabled(true);
+            String url2 = redirectUserToAuthorizeAndLogin(socialNetwork, client_id, instance);
+            Log.v(Helper.TAG,"url: " + url2);
             if( client_id_for_webview){
                 boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
                 if( embedded_browser) {
@@ -753,7 +766,7 @@ public class LoginActivity extends BaseActivity {
                     i.putExtra("instance", instance);
                     startActivity(i);
                 }else{
-                    String url = redirectUserToAuthorizeAndLogin(client_id, instance);
+                    String url = redirectUserToAuthorizeAndLogin(socialNetwork, client_id, instance);
                     Log.v(Helper.TAG,"url: " + url);
 
                     Helper.openBrowser(LoginActivity.this, url);
@@ -850,11 +863,12 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    public static String redirectUserToAuthorizeAndLogin(String clientId, String instance) {
+    public static String redirectUserToAuthorizeAndLogin(UpdateAccountInfoAsyncTask.SOCIAL socialNetwork, String clientId, String instance) {
         String queryString = Helper.CLIENT_ID + "="+ clientId;
         queryString += "&" + Helper.REDIRECT_URI + "="+ Uri.encode(Helper.REDIRECT_CONTENT_WEB);
         queryString += "&" + Helper.RESPONSE_TYPE +"=code";
-        queryString += "&" + Helper.SCOPE +"=" + Helper.OAUTH_SCOPES;
+        if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED )
+            queryString += "&" + Helper.SCOPE +"=" + Helper.OAUTH_SCOPES;
         return Helper.instanceWithProtocol(instance) + Helper.EP_AUTHORIZE + "?" + queryString;
     }
 

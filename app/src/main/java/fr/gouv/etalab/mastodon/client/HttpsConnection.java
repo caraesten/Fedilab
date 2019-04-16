@@ -154,6 +154,8 @@ public class HttpsConnection {
             httpsURLConnection.setConnectTimeout(timeout * 1000);
             httpsURLConnection.setRequestProperty("http.keepAlive", "false");
             httpsURLConnection.setRequestProperty("User-Agent", Helper.USER_AGENT);
+            httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpsURLConnection.setRequestProperty("Accept", "application/json");
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
             if (token != null && !token.startsWith("Basic "))
                 httpsURLConnection.setRequestProperty("Authorization", "Bearer " + token);
@@ -246,6 +248,8 @@ public class HttpsConnection {
                 httpsURLConnection = (HttpsURLConnection)url.openConnection();
             httpsURLConnection.setConnectTimeout(30 * 1000);
             httpsURLConnection.setRequestProperty("http.keepAlive", "false");
+            httpsURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpsURLConnection.setRequestProperty("Accept", "application/json");
             httpsURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36");
             httpsURLConnection.setSSLSocketFactory(new TLSSocketFactory());
             httpsURLConnection.setRequestMethod("GET");
