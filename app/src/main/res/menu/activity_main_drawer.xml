@@ -168,6 +168,7 @@
                         android:icon="@drawable/ic_videocam"
                         android:title="@string/how_to_videos" />
                     <item
+                        android:visible="false"
                         android:id="@+id/nav_bug_report"
                         android:icon="@drawable/ic_bug_report"
                         android:title="@string/action_bug_report" />
