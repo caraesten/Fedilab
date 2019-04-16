@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -174,7 +175,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         media_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isSHaring = true;
+                isSHaring = false;
                 if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) {
                     if( attachment != null ) {
                         progress.setText("0 %");
@@ -511,6 +512,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     @Override
     public void onDownloaded(String path, String originUrl, Error error) {
 
+        Log.v(Helper.TAG,"path: " + path);
         if( path != null) {
             File response = new File(path);
             File dir = getCacheDir();
