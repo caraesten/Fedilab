@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -320,14 +319,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     if(deltaX < 0) { switchOnSwipe(MediaActivity.actionSwipe.LEFT_TO_RIGHT); return true; }
                     if(deltaX > 0) { switchOnSwipe(MediaActivity.actionSwipe.RIGHT_TO_LEFT); return true; }
                 }else if(downY > MIN_DISTANCE & (Math.abs(deltaY) > MIN_DISTANCE ) ){
-                    if(deltaY > 0) { finish(); return true; }
-                    if(deltaY < 0) { finish(); return true; }
+                    if(deltaY > 0 && canSwipe) { finish(); return true; }
+                    if(deltaY < 0 && canSwipe) { finish(); return true; }
                 } else {
                     currentAction = MediaActivity.actionSwipe.POP;
                     isControlElementShown = !isControlElementShown;
                     if (thisControllShown) {
                         if(event.getY() > action_bar_container.getHeight()) {
-                            FullScreencall(thisControllShown);
                             action_bar_container.setVisibility(View.GONE);
                             if (media_description.getVisibility() == View.VISIBLE) {
                                 media_description.setVisibility(View.GONE);
@@ -351,9 +349,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             }
 
         }
-
-
-
         return super.dispatchTouchEvent(event);
     }
 
@@ -512,7 +507,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
     @Override
     public void onDownloaded(String path, String originUrl, Error error) {
 
-        Log.v(Helper.TAG,"path: " + path);
         if( path != null) {
             File response = new File(path);
             File dir = getCacheDir();
