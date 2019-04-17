@@ -714,7 +714,7 @@
     <string name="delete_comment">Διαγραφή ενός σχόλιου</string>
     <string name="delete_comment_confirm">Θέλεις να διαγράψεις αυτό το σχόλιο, στα σίγουρα;</string>
     <string name="fullscreen">Βίντεο πλήρης οθόνης</string>
-    <string name="set_video_mode">Κατάσταση λειτουργίας για τα βίντεα</string>
+    <string name="set_video_mode">Κατάσταση για τα βίντεα</string>
     <string name="file_to_upload">Επέλεξε το αρχείο για αποστολή</string>
     <string name="my_videos">Τα βίντεά μου</string>
     <string name="title">Τίτλος</string>
@@ -786,7 +786,7 @@
     <string name="set_compact">Συμπαγής</string>
     <string name="set_console">Κονσόλας</string>
     <string name="set_mode">Όρισε την κατάσταση λειτουργίας της εμφάνισης</string>
-    <string name="set_security_provider">Patch the Security Provider</string>
+    <string name="set_security_provider">Χρήση του Προμηθευτή Ασφάλειας</string>
     <string name="update_tracking_domains">Ενημέρωση των τομέων παρακολούθησης</string>
     <string name="tracking_db_updated">Έχει γίνει ενημέρωση της βάσης δεδομένων παρακολούθησης.</string>
     <string name="calls_blocked">Οι κλήσεις http είναι φραγμένες από την εφαρμογή</string>
