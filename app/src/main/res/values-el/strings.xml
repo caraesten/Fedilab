@@ -767,7 +767,7 @@
     <string name="export_data">Εξαγωγή δεδομένων</string>
     <string name="import_data">Εισαγωγή δεδομένων</string>
     <string name="toot_select_import">Επέλεξε το αρχείο προς εισαγωγή</string>
-    <string name="toot_select_file_error">An error occurred when selecting the backup file!</string>
+    <string name="toot_select_file_error">Παρουσιάστηκε κάποιο σφάλμα στη συλλογή του αρχείου εξασφάλισης.</string>
     <string name="data_import_start">Παρακαλώ, μην σκοτώσεις την εφαρμογή όσο γίνεται επεξεργασία. Δεν σκοπεύει να αργήσει και πολύ...</string>
     <string name="add_public_comment">Προσθήκη ενός δημόσιου σχόλιου</string>
     <string name="send_comment">Αποστολή σχόλιου</string>
