@@ -376,6 +376,7 @@ public class API {
                 isPleromaAdmin(account.getAcct());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
+            e.printStackTrace();
             if( e.getStatusCode() == 401 || e.getStatusCode() == 403){
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 Account targetedAccount = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
