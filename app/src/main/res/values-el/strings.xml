@@ -392,7 +392,7 @@
     <string name="settings_popup_message">        Παρακαλώ, επιβεβαίωσε τις ειδοποιήσεις προωθήσεων, που θα ήθελες να λαμβάνεις.
         Μπορείς να ενεργοποιήσεις ή να απενεργοποιήσεις αυτές τις ειδοποιήσεις, αργότερα, στις ρυθμίσεις (στην καρτέλα Ειδοποιήσεων).
     </string>
-    <string name="settings_popup_timeline">Για τις μη διαβασμένες φωνές στην σπιτική χρονογραμμή;</string>
+    <string name="settings_popup_timeline">Για τις μη διαβασμένες φωνές στην σπιτική χρονοστήλη;</string>
     <string name="settings_popup_notification">Για τις μη διαβασμένες ειδοποιήσεις;</string>
     <!-- CACHE -->
     <string name="cache_title">Καθάρισμα της μικραποθήκευσης</string>
@@ -513,7 +513,7 @@
     <string name="support_the_app_on_liberapay">Υποστήριξη της εφαρμογής στο Liberapay</string>
     <string name="alert_regex">Υπάρχει κάποιο σφάλμα στην κανονική έκφραση.</string>
     <string name="no_account_yet">Ακόμη χωρίς λογαριασμό;</string>
-    <string name="toast_instance_unavailable">Δεν βρέθηκε κάποια χρονογραμμή σε αυτή την υπόσταση.</string>
+    <string name="toast_instance_unavailable">Δεν βρέθηκε κάποια χρονοστήλη σε αυτή την υπόσταση.</string>
     <string name="delete_instance">Διαγραφή αυτής της υπόστασης;</string>
     <string name="warning_delete_instance">Πρόκειται να διαγράψεις την %s , από τις υποστάσεις που παρακολουθείς.</string>
     <string name="which_language">Μετάφραση στο</string>
@@ -539,8 +539,8 @@
     <string name="filters">Κόσκινα</string>
     <string name="action_filters_empty_content">Δεν υπάρχουν κόσκινα για προβολή. Για να δημιουργήσεις ένα, κλίκαρε στο κουμπί με το « + ».</string>
     <string name="filter_keyword">Λέξη-κλειδί ή φράση</string>
-    <string name="context_home">Σπιτική χρονογραμμή</string>
-    <string name="context_public">Δημόσια χρονογραμμή</string>
+    <string name="context_home">Σπιτική χρονοστήλη</string>
+    <string name="context_public">Δημόσια χρονοστήλη</string>
     <string name="context_notification">Ειδοποιήσεις</string>
     <string name="context_conversation">Συζητήσεις</string>
     <string name="filter_keyword_explanations">Will be matched regardless of casing in text or content warning of a toot</string>
@@ -596,7 +596,7 @@
     <string name="retrieve_remote_status">Λαμβάνει την απομακρυσμένη κατάσταση</string>
     <string name="comment">Σχολιασμός</string>
     <string name="peertube_instance">Peertube υπόσταση</string>
-    <string name="set_display_direct">Προβολή της χρονογραμμής των προσωπικών μηνυμάτων</string>
+    <string name="set_display_direct">Προβολή της χρονοστήλης των προσωπικών μηνυμάτων</string>
     <string name="set_keep_background_process">Διατήρηση της διεργασίας στο παρασκήνιο, αφού κλειστεί η εφαρμογή</string>
     <string name="no_comments">Μπορείς να προλάβεις να σχολιάσεις πρώτος αυτό το βίντεο, χρησιμοποιώντας το πλήκτρο, εκεί, πάνω δεξιά.</string>
     <string name="number_view_video">%s προβολές</string>
@@ -638,12 +638,12 @@
     <string name="tags_stored">Η ετικέτα έχει αποθηκευθεί.</string>
     <string name="tags_renamed">Η ετικέτα έχει αλλαχτεί.</string>
     <string name="tags_deleted">Η ετικέτα έχει διαγραφεί.</string>
-    <string name="set_display_art">Προβολή της Καλλιτεχνικής χρονογραμμής</string>
+    <string name="set_display_art">Προβολή της Καλλιτεχνικής χρονοστήλης</string>
     <string name="schedule_boost">Προγραμματισμός της ενίσχυσης</string>
     <string name="boost_scheduled">Η ενίσχυση προγραμματίστηκε.</string>
     <string name="no_scheduled_boosts">Δεν υπάρχει κάποια προγραμματισμένη ενίσχυση για να εμφανιστεί.</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Άνοιξε το κατάστιχο των επιλογών μίας φωνής και επέλεξε τον <b>Προγραμματισμό της ανύψωσης</b> .]]></string>
-    <string name="art_menu">Χρονογραμμή καλλιτεχνίας</string>
+    <string name="art_menu">Χρονοστήλη καλλιτεχνίας</string>
     <string name="open_menu">Άνοιγμα του κατάλογου επιλογών</string>
     <string name="app_logo">Το λογότυπο της εφαρμογής</string>
     <string name="profile_picture">Εικόνα του προσώπου</string>
