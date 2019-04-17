@@ -46,7 +46,7 @@
     <string name="speech_not_supported">Λυπάμαι, η συσκευή σου δεν υποστηρίζει φωνητική εισαγωγή!</string>
     <string name="delete_all">Σβήσε τα όλα</string>
     <string name="translate_toot">Μετέφρασε αυτό το toot.</string>
-    <string name="schedule">Προγραμμάτισε</string>
+    <string name="schedule">Προγραμματισμός</string>
     <string name="text_size">Μέγεθος κειμένου και εικονιδίων</string>
     <string name="text_size_change">Άλλαξε το τρέχον μέγεθος κειμένου:</string>
     <string name="icon_size_change">Άλλαξε το τρέχον μέγεθος εικονιδίων:</string>
@@ -117,7 +117,7 @@
     <string name="more_action_4">Απομάκρυνση</string>
     <string name="more_action_5">Αντιγραφή</string>
     <string name="more_action_6">Να γυρίζει</string>
-    <string name="more_action_7">Αναφορά</string>
+    <string name="more_action_7">Μνημόνευση</string>
     <string name="more_action_8">Σίγαση με περιορισμένο χρόνο</string>
     <string name="more_action_9">Διαγραφή κ´ επανασχεδίαση</string>
     <string-array name="more_action_confirm">
@@ -165,8 +165,8 @@
     <string name="toot_select_image_error">Παρουσιάστηκε κάποιο σφάλμα κατά την επιλογή του πολυμέσου.</string>
     <string name="toot_delete_media">Διαγραφή αυτού του πολυμέσου;</string>
     <string name="toot_error_no_content">Η φωνή σου είναι άδεια.</string>
-    <string name="toot_visibility_tilte">Εμφανισιμότητα της φωνής</string>
-    <string name="toots_visibility_tilte">Εμφανισιμότητα των φωνών, κατά προεπιλογή: </string>
+    <string name="toot_visibility_tilte">Αναγνωσιμότητα της φωνής</string>
+    <string name="toots_visibility_tilte">Αναγνωσιμότητα των φωνών, κατά προεπιλογή: </string>
     <string name="toot_sent">Η φωνή στάλθηκε!</string>
     <string name="toot_reply_content_title">Αποκρίνεσαι σε αυτή τη φωνή:</string>
     <string name="toot_sensitive">Ευαίσθητο περιεχόμενο;</string>
@@ -275,7 +275,7 @@
     <string name="toast_error_translate">Παρουσιάστηκε κάποιο σφάλμα κατά την μετάφραση.</string>
     <string name="toast_toot_saved">Αποθηκεύτηκε το προσχέδιο.</string>
     <string name="toast_error_char_limit">Είσαι σίγουρος πως αυτή η υπόσταση επιτρέπει αυτό το πλήθος των χαρακτήρων; Συνήθως αυτή η τιμή είναι γύρω στους 500 χαρακτήρες.</string>
-    <string name="toast_visibility_changed">Έχει αλλαχτεί η εμφανισιμότητα των φωνών, για το λογαριασμό %1$s</string>
+    <string name="toast_visibility_changed">Έχει αλλαχτεί η αναγνωσιμότητα των φωνών, για το λογαριασμό %1$s</string>
     <string name="toast_empty_search">Το όνομα της υπόστασης και το όνομα της οθόνης δεν μπορούν να είναι κενά.</string>
     <!-- Settings -->
     <string name="settings_title_optimisation">Βελτιστοποίηση του φορτώματος</string>
@@ -576,7 +576,7 @@
     <string name="channel_notif_follow">Νέα παρακολούθηση</string>
     <string name="channel_notif_boost">Νέα Ενίσχυση</string>
     <string name="channel_notif_fav">Νέο Αγαπημένο</string>
-    <string name="channel_notif_mention">Νέα Αναφορά</string>
+    <string name="channel_notif_mention">Νέα Μνημόνευση</string>
     <string name="channel_notif_toot">Νέα Φωνή</string>
     <string name="channel_notif_backup">Αντίγραφο των Φωνών</string>
     <string name="channel_notif_media">Κατέβασμα Πολυμέσων</string>
@@ -624,7 +624,7 @@
     <string name="thanks_text_support">Gitlab Υποστήριξη</string>
     <string name="action_bug_report">Αναφορά Δυσλειτουργίας</string>
     <string name="no_mail_client">Δεν υπάρχει καμιά εγκατεστημένη εφαρμογή ηλεκτρονικού ταχυδρομείου.</string>
-    <string name="bug_report_mail">Αποστολή αναφοράς δυσλειτουργίας</string>
+    <string name="bug_report_mail">Αποστολή μιας αναφοράς δυσλειτουργίας</string>
     <string name="account_id_clipbloard">Η ID ταυτότητα του λογαριασμού αντιγράφηκε στο πρόχειρο.</string>
     <string name="settings_title_battery">Βελτιστοποίηση της μπαταρίας</string>
     <string name="set_change_locale">Αλλαγή της γλώσσας</string>
