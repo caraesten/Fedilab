@@ -104,10 +104,10 @@
     <string name="fav_removed">Η φωνή απομακρύνθηκε από τις αγαπημένες.</string>
     <string name="reblog_added">Η φωνή ανυψώθηκε.</string>
     <string name="reblog_removed">Αυτή η φωνή δεν είναι ανυψωμένη, πλέον.</string>
-    <string name="reblog_by">Ανύψωση από %1$s</string>
+    <string name="reblog_by">Ενίσχυση από %1$s</string>
     <string name="favourite_add">Προσθήκη αυτής της φωνής στις αγαπημένες σου;</string>
     <string name="favourite_remove">Απομάκρυνση αυτής της φωνής από τις αγαπημένες σου;</string>
-    <string name="reblog_add">Ανύψωση αυτής της φωνής;</string>
+    <string name="reblog_add">Ενίσχυση αυτής της φωνής;</string>
     <string name="reblog_remove">Χαμήλωμα αυτής της φωνής;</string>
     <string name="pin_add">Καρφίτσωμα αυτής της φωνής;</string>
     <string name="pin_remove">Ξεκαρφίτσωμα αυτής της φωνής;</string>
@@ -222,7 +222,7 @@
     <!-- Notifications -->
     <string name="no_notifications">Καμία ειδοποίηση προς εμφάνιση</string>
     <string name="notif_mention">σε ανέφερε</string>
-    <string name="notif_reblog">ανύψωσε την κατάστασή σου</string>
+    <string name="notif_reblog">ενίσχυσε την κατάστασή σου</string>
     <string name="notif_favourite">favourited your status</string>
     <string name="notif_follow">άρχισε να σε παρακολουθεί</string>
     <string name="notif_pouet">Νέα φωνή από %1$s</string>
@@ -304,7 +304,7 @@
     <string name="set_notif_follow_share">Ειδοποίηση όταν κάποιος ανυψώνει την κατάστασή σου</string>
     <string name="set_notif_follow_add">Ειδοποίηση όταν σε κάποιον αρέσει η κατάστασή σου</string>
     <string name="set_notif_follow_mention">Ειδοποίηση όταν κάποιος σε αναφέρει</string>
-    <string name="set_share_validation">Προβολή του διαλόγου επιβεβαίωσης, πριν από την ανύψωση</string>
+    <string name="set_share_validation">Προβολή του διαλόγου επιβεβαίωσης, πριν από την ενίσχυση</string>
     <string name="set_share_validation_fav">Προβολή του διαλόγου επιβεβαίωσης, πριν να γίνει προσθήκη στα Αγαπημένα</string>
     <string name="settings_title_more_options">Προχωρημένες ρυθμίσεις</string>
     <string name="set_wifi_only">Ειδοποίηση μόνο όταν σε Γουάι-Φάι</string>
@@ -480,7 +480,7 @@
     <string name="action_lists_owner">Τα δικά σου κατάστιχα</string>
     <!-- Migration -->
     <string name="account_moved_to">Το %1$s έχει πάει στο %2$s</string>
-    <string name="show_boost_count">Show boosts/favourites count</string>
+    <string name="show_boost_count">Προβολή του μετρητή των ενισχυμένων και των αγαπημένων</string>
     <string name="issue_login_title">Μήπως δεν δουλεύει η έλεγχος ταυτότητας;</string>
     <string name="issue_login_message">        <b>Here are some checks that might help:</b>\n\n
         - Check there is no spelling mistakes in the instance name\n\n
@@ -574,7 +574,7 @@
     <string name="expand_image">Αυτόματη επέκταση των κρυμμένων πολυμέσων</string>
     <string name="set_display_follow_instance">Εμφάνιση του πλήκτρου παρακολούθησης μιας υπόστασης</string>
     <string name="channel_notif_follow">Νέα παρακολούθηση</string>
-    <string name="channel_notif_boost">Νέα Ανύψωση</string>
+    <string name="channel_notif_boost">Νέα Ενίσχυση</string>
     <string name="channel_notif_fav">Νέο Αγαπημένο</string>
     <string name="channel_notif_mention">Νέα Αναφορά</string>
     <string name="channel_notif_toot">Νέα Φωνή</string>
@@ -639,9 +639,9 @@
     <string name="tags_renamed">Η ετικέτα έχει αλλαχτεί.</string>
     <string name="tags_deleted">Η ετικέτα έχει διαγραφεί.</string>
     <string name="set_display_art">Προβολή της Καλλιτεχνικής χρονογραμμής</string>
-    <string name="schedule_boost">Προγραμματισμός της ανύψωσης</string>
-    <string name="boost_scheduled">Η ανύψωση προγραμματίστηκε.</string>
-    <string name="no_scheduled_boosts">Δεν υπάρχει κάποια προγραμματισμένη ανύψωση για να εμφανιστεί.</string>
+    <string name="schedule_boost">Προγραμματισμός της ενίσχυσης</string>
+    <string name="boost_scheduled">Η ενίσχυση προγραμματίστηκε.</string>
+    <string name="no_scheduled_boosts">Δεν υπάρχει κάποια προγραμματισμένη ενίσχυση για να εμφανιστεί.</string>
     <string name="no_scheduled_boosts_indications"><![CDATA[Άνοιξε το κατάστιχο των επιλογών μίας φωνής και επέλεξε τον <b>Προγραμματισμό της ανύψωσης</b> .]]></string>
     <string name="art_menu">Χρονογραμμή καλλιτεχνίας</string>
     <string name="open_menu">Άνοιγμα του κατάλογου επιλογών</string>
