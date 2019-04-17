@@ -3,7 +3,7 @@
 <resources>
     <string name="navigation_drawer_open">Άνοιγμα μενού</string>
     <string name="navigation_drawer_close">Κλείσιμο μενού</string>
-    <string name="action_about">Σχετικά</string>
+    <string name="action_about">Σχετικά με...</string>
     <string name="action_about_instance">Σχετικά με την υπόσταση</string>
     <string name="action_privacy">Απόρρητο</string>
     <string name="action_cache">Ενδιάμεση καταχώρηση</string>
@@ -36,7 +36,7 @@
     <string name="toast_account_changed" formatted="false">Τώρα λειτουργεί με τον λογαριασμό %1$s</string>
     <string name="add_account">Προσθήκη λογαριασμού</string>
     <string name="clipboard">Το περιεχόμενο του toot αντιγράφηκε ως απόκομμα</string>
-    <string name="clipboard_url">Η διεύθυνση URL του τουτ αντιγράφηκε στο πρόχειρο</string>
+    <string name="clipboard_url">Η διεύθυνση URL της φωνής αντιγράφηκε στο πρόχειρο</string>
     <string name="change">Αλλαγή</string>
     <string name="choose_picture">Επιλογή φωτογραφίας…</string>
     <string name="clear">Καθαρισμός</string>
@@ -95,8 +95,8 @@
     <string name="failed">Απέτυχε!</string>
     <string name="scheduled_toots">Προγραμματισμένες φωνές</string>
     <string name="disclaimer_full">Οι παρακάτω πληροφορίες ίσως να είναι μια ανεπαρκής παρουσίαση του προσώπου του χρήστη.</string>
-    <string name="insert_emoji">Insert emoji</string>
-    <string name="no_emoji">The app did not collect custom emojis for the moment.</string>
+    <string name="insert_emoji">Εισαγωγή ιδεογράμματος</string>
+    <string name="no_emoji">Για την ώρα, η εφαρμογή δεν συνέλεξε προσαρμοσμένα ιδεογράμματα.</string>
     <string name="live_notif">Απ\' ευθείας ειδοποιήσεις</string>
     <!-- Status -->
     <string name="no_status">Καμία φωνή προς εμφάνιση</string>
@@ -283,7 +283,7 @@
     <string name="set_accounts_page">Πλήθος λογαριασμών ανά φόρτωμα</string>
     <string name="set_notifications_page">Πλήθος ειδοποιήσεων ανά φόρτωμα</string>
     <string name="set_attachment_always">Πάντα</string>
-    <string name="set_attachment_wifi">Γουάι-Φάι</string>
+    <string name="set_attachment_wifi">με Γουάι-Φάι</string>
     <string name="set_attachment_ask">Ερώτηση</string>
     <string name="set_attachment_action">Φόρτωση των πολυμέσων</string>
     <string name="load_attachment">Φόρτωση των εικόνων</string>
@@ -313,7 +313,7 @@
     <string name="set_night_mode">Κατάσταση λειτουργίας νύχτας</string>
     <string name="set_nsfw_timeout">Χρόνος λήξης της προβολής των Ακατάλληλων (σε δευτερόλεπτα· το 0 σημαίνει ανενεργό)</string>
     <string name="settings_title_profile">Επεξεργασία του προσώπου</string>
-    <string name="settings_title_custom_sharing">Προσαρμοσμένη μοιρασιά</string>
+    <string name="settings_title_custom_sharing">Προσαρμοσμένη κοινοποίηση</string>
     <string name="settings_custom_sharing_url">Η διεύθυνση URL&#8230; τς προσαρμοσμένης μοιρασιάς</string>
     <string name="set_profile_description">Βιογραφικό…</string>
     <string name="set_lock_account">Κλείδωμα του λογαριασμού</string>
@@ -615,7 +615,7 @@
     <string name="no_lists">Κανένα κατάστιχο</string>
     <string name="videos">Βίντεα</string>
     <string name="channels">Κανάλια</string>
-    <string name="set_display_emoji">Use Emoji One</string>
+    <string name="set_display_emoji">Χρήση του Πρώτου Ιδεογράμματος</string>
     <string name="information">Πληροφορίες</string>
     <string name="set_display_card">Εμφάνιση των προεπισκοπήσεων σε όλες τις φωνές</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
@@ -651,12 +651,12 @@
     <string name="contact_instance_admin">Επικοινωνία με τον διαχειριστή της υπόστασης</string>
     <string name="add_new">Προθήκη νέου</string>
     <string name="mastohost_logo">Λογότυπο του MastoHost</string>
-    <string name="emoji_picker">Emoji picker</string>
+    <string name="emoji_picker">Επιλογέας ιδεογραμμάτων</string>
     <string name="refresh">Ανανέωση</string>
     <string name="expand_conversation">Επέκταση της συνομιλίας</string>
     <string name="remove_account">Απομάκρυνση ενός λογαριασμού</string>
     <string name="delete_domain">Διαγραφή του φραγμένου τομέα</string>
-    <string name="custom_emoji_picker">Custom emoji picker</string>
+    <string name="custom_emoji_picker">Επιλογέας προσαρμοσμένων ιδεογραμμάτων</string>
     <string name="play_video">Αναπαραγωγή βίντεου</string>
     <string name="new_toot">Νέα φωνή</string>
     <string name="card_view_image">Εικόνα της κάρτας</string>
@@ -753,7 +753,7 @@
     <string name="settings_category_label_notification">Υπηρεσία ειδοποιήσεων</string>
     <string name="settings_category_label_interface">Περιβάλλον Χρήσης</string>
     <string name="settings_category_label_hiddencontent">Κρυφό περιεχόμενο</string>
-    <string name="settings_category_label_composing">Συνθέτει</string>
+    <string name="settings_category_label_composing">Σύνθεση</string>
     <string name="contact">Επαφές</string>
     <string name="peertube_comment_on_video"><![CDATA[<b>%1$s</b> σχολίασε το βίντεό σου <b>%2$s</b>]]></string>
     <string name="peertube_follow_channel"><![CDATA[<b>%1$s</b> παρακολουθεί το κανάλι σου <b>%2$s</b>]]></string>
@@ -797,7 +797,7 @@
     <string name="filter_timeline_with_a_tag">Κοσκίνισμα της χρονοστήλης με καρτέλες</string>
     <string name="no_tags">Καμία καρτέλα</string>
     <string name="set_hide_delete_notification_on_tab">Απόκρυψη του πλήκτρου διαγραφής της ειδοποίησης, στην καρτέλα των ειδοποιήσεων</string>
-    <string name="set_retrieve_metadata_share_from_extras">Attach an image when sharing a URL</string>
+    <string name="set_retrieve_metadata_share_from_extras">Προσκόλληση μιας εικόνας, όταν κοινοποιείται διεύθυνση URL</string>
     <!-- end languages -->
     <string name="poll">Ψηφοφορία</string>
     <string name="create_poll">Δημιουργία ψηφοφορίας</string>
