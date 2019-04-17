@@ -171,8 +171,8 @@
     <string name="toot_reply_content_title">Αποκρίνεσαι σε αυτή τη φωνή:</string>
     <string name="toot_sensitive">Ευαίσθητο περιεχόμενο;</string>
     <string-array name="toot_visibility">
-        <item>Δημοσίευση σε δημόσιες χρονογραμμές</item>
-        <item>Μη δημοσίευση σε δημόσιες χρονογραμμές</item>
+        <item>Δημοσίευση σε δημόσιες χρονοστήλες</item>
+        <item>Μη δημοσίευση σε δημόσιες χρονοστήλες</item>
         <item>Δημοσίευση μόνο προς όσους σε παρακολουθούν</item>
         <item>Δημοσίευση μόνο στους αναφερόμενους χρήστες</item>
     </string-array>
@@ -231,8 +231,8 @@
         <item quantity="other">και %d άλλες ειδοποιήσεις</item>
     </plurals>
     <plurals name="other_notif_hometimeline">
-        <item quantity="one">and another toot to discover</item>
-        <item quantity="other">και ακόμη %d φωνές για να εξερευνήσεις</item>
+        <item quantity="one">και ακόμη μία φωνή για να εξερευνήσεις</item>
+        <item quantity="other">και ακόμη %d άλλες φωνές για να εξερευνήσεις</item>
     </plurals>
     <plurals name="likes">
         <item quantity="one">%d like</item>
@@ -291,8 +291,8 @@
     <string name="load_attachment_spoiler_less">Εμφάνιση λιγότερων…</string>
     <string name="load_sensitive_attachment">Ευαίσθητο περιεχόμενο</string>
     <string name="set_display_reply">Προβολή του προπορευόμενου μηνύματος στις αποκρίσεις</string>
-    <string name="set_display_local">Προβολή της τοπικής χρονογραμμής</string>
-    <string name="set_display_global">Προβολή της ομοσπονδιακής χρονογραμμής</string>
+    <string name="set_display_local">Προβολή της τοπικής χρονοστήλης</string>
+    <string name="set_display_global">Προβολή της ομοσπονδιακής χρονοστήλης</string>
     <string name="set_disable_gif">Απενεργοποίηση των προσωπικών απεικονίσεων μορφής GIF</string>
     <string name="set_folder_title">Διαδρομή: </string>
     <string name="set_auto_store_toot">Αυτόματη αποθήκευση των προσχεδίων</string>
@@ -335,7 +335,7 @@
     <string name="use_javascript">Ενεργοποίηση των Σεναρίων της Τζάβα</string>
     <string name="expand_cw">Αυτόματη επέκταση της Προειδοποίησης Περιεχομένου</string>
     <string name="use_cookies">Να επιτρέπονται τα κουλουράκια τρίτων</string>
-    <string name="settings_ui_layout">Διάταξη των χρονογραμμών: </string>
+    <string name="settings_ui_layout">Διάταξη των χρονοστηλών: </string>
     <string-array name="battery_profiles">
         <item>Κανονική κατανάλωση της μπαταρίας</item>
         <item>Μεσαία κατανάλωση της μπαταρίας</item>
@@ -374,7 +374,7 @@
         <item>Λευκό</item>
     </string-array>
     <string name="set_title_news">Νέα</string>
-    <string name="set_notification_news">Ειδοποίηση για νέες φωνές στην σπιτική χρονογραμμή</string>
+    <string name="set_notification_news">Ειδοποίηση για νέες φωνές στην σπιτική χρονοστήλη</string>
     <string name="action_follow">Παρακολούθηση</string>
     <string name="action_unfollow">Διακοπή παρακολούθησης</string>
     <string name="action_block">Φραγή</string>
@@ -529,10 +529,10 @@
     <string name="endorse">Προεξέχουσα τοποθέτηση στο πρόσωπο</string>
     <string name="hide_everything">Απόκρυψη όλων από %s</string>
     <string name="show_boost">Προβολή των ενισχύσεων από %s</string>
-    <string name="unendorse">Να μην τοποθέτηθεί στο πρόσωπο</string>
+    <string name="unendorse">Μη τοποθέτηση στο πρόσωπο</string>
     <string name="show_everything">Προβολή όλων από %s</string>
-    <string name="toast_endorse">The account is now featured on profile</string>
-    <string name="toast_unendorse">The account is no longer featured on profile</string>
+    <string name="toast_endorse">Ο λογαριασμός έχει τοποθετηθεί, τώρα, σε προεξέχουσα θέση στο πρόσωπο</string>
+    <string name="toast_unendorse">Ο λογαριασμός δεν είναι, πια, τοποθετημένος σε προεξέχουσα θέση στο πρόσωπο</string>
     <string name="toast_show_boost">Οι ανυψώσεις εμφανίζονται, τώρα.</string>
     <string name="toast_hide_boost">Οι ενισχύσεις κρύβονται τώρα.</string>
     <string name="direct_message">Απευθείας μήνυμα</string>
@@ -588,7 +588,7 @@
     <string name="no_blocked_domain">Κανένας φραγμένος τομέας.</string>
     <string name="unblock_domain_confirm">Απόφραξη τομέα</string>
     <string name="unblock_domain_confirm_message">Σίγουρα απόφραξη του %s;</string>
-    <string name="block_domain_confirm_message">Are you sure to block %s?\n\nYou will not see any content from that domain in any public timeline or in your notifications. Your followers from that domain will be removed.</string>
+    <string name="block_domain_confirm_message">Θέλεις, σίγουρα, να φράξεις το %s ;\n\nΔεν θα βλέπεις καθόλου περιεχόμενο από αυτόν τον τομέα, σε καμία δημόσια χρονοστήλη, ούτε στις ειδοποιήσεις σου. Όσοι σε παρακολουθούν, από αυτόν τον τομέα, θα απομακρυνθούν.</string>
     <string name="blocked_domains">Φραγμένοι τομείς</string>
     <string name="block_domain">Φράξιμο του τομέα</string>
     <string name="toast_block_domain">Ο τομέας έχει φραχτεί</string>
@@ -619,7 +619,7 @@
     <string name="information">Πληροφορίες</string>
     <string name="set_display_card">Εμφάνιση των προεπισκοπήσεων σε όλες τις φωνές</string>
     <string name="thanks_text_ux">New UX/UI designer</string>
-    <string name="set_old_direct_timeline">Χρήση της απ\' ευθείας χρονογραμμής, πριν το Μαστόδοντο 2.6</string>
+    <string name="set_old_direct_timeline">Χρήση της απ\' ευθείας χρονοστήλης, πριν το Μαστόδοντα 2.6</string>
     <string name="set_display_video_preview">Προβολή των προεπισκοπήσεων των βίντεων</string>
     <string name="thanks_text_support">Gitlab Υποστήριξη</string>
     <string name="action_bug_report">Αναφορά Δυσλειτουργίας</string>
@@ -749,7 +749,7 @@
     <string name="modify">Τροποποίηση</string>
     <string name="set_display_content_after_fetch_more">Εμφάνιση νέων φωνών πάνω από το πλήκτρο « Λήψη περισσότερων »</string>
     <string name="settings_category_label_confirmations">Επιβεβαιώσεις</string>
-    <string name="settings_category_label_timelines">Χρονογραμμή</string>
+    <string name="settings_category_label_timelines">Χρονοστήλη</string>
     <string name="settings_category_label_notification">Υπηρεσία ειδοποιήσεων</string>
     <string name="settings_category_label_interface">Περιβάλλον Χρήσης</string>
     <string name="settings_category_label_hiddencontent">Κρυφό περιεχόμενο</string>
@@ -794,7 +794,7 @@
     <string name="submit">Υποβολή</string>
     <string name="data_base_exported">Έγινε εξαγωγή της βάσης δεδομένων.</string>
     <string name="featured_hashtags">Featured hashtags</string>
-    <string name="filter_timeline_with_a_tag">Κοσκίνισμα της χρονογραμμής με καρτέλες</string>
+    <string name="filter_timeline_with_a_tag">Κοσκίνισμα της χρονοστήλης με καρτέλες</string>
     <string name="no_tags">Καμία καρτέλα</string>
     <string name="set_hide_delete_notification_on_tab">Απόκρυψη του πλήκτρου διαγραφής της ειδοποίησης, στην καρτέλα των ειδοποιήσεων</string>
     <string name="set_retrieve_metadata_share_from_extras">Attach an image when sharing a URL</string>
