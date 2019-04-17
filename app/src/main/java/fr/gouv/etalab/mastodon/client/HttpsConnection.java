@@ -66,6 +66,7 @@ import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.helper.FileNameCleaner;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnDownloadInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveAttachmentInterface;
@@ -609,6 +610,7 @@ public class HttpsConnection {
                                 fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1,
                                         downloadUrl.length());
                             }
+                            fileName = FileNameCleaner.cleanFileName(fileName);
                             // opens input stream from the HTTP connection
                             InputStream inputStream = httpsURLConnection.getInputStream();
                             File saveDir = context.getCacheDir();
@@ -696,6 +698,7 @@ public class HttpsConnection {
                                 fileName = downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1,
                                         downloadUrl.length());
                             }
+                            fileName = FileNameCleaner.cleanFileName(fileName);
                             // opens input stream from the HTTP connection
                             InputStream inputStream = httpURLConnection.getInputStream();
                             File saveDir = context.getCacheDir();
@@ -819,6 +822,7 @@ public class HttpsConnection {
 
     @SuppressWarnings("SameParameterValue")
     private void patchImage(String urlConnection, int timeout, imageType it, InputStream image, String fileName, String token) throws IOException, NoSuchAlgorithmException, KeyManagementException, HttpsConnectionException {
+        fileName = FileNameCleaner.cleanFileName(fileName);
         String twoHyphens = "--";
         String boundary = "*****" + Long.toString(System.currentTimeMillis()) + "*****";
         String lineEnd = "\r\n";
@@ -1205,8 +1209,8 @@ public class HttpsConnection {
      * @param inputStream InputStream of the file to upload
      * @param listener - OnRetrieveAttachmentInterface: listener to send information about attachment once uploaded.
      */
-    public void upload(final InputStream inputStream, String fileName, String tokenUsed, final OnRetrieveAttachmentInterface listener) {
-
+    public void upload(final InputStream inputStream, String fname, String tokenUsed, final OnRetrieveAttachmentInterface listener) {
+        final String fileName = FileNameCleaner.cleanFileName(fname);
         if( Helper.getLiveInstanceWithProtocol(context).startsWith("https://")) {
             new Thread(new Runnable() {
                 @Override
