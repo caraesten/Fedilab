@@ -318,9 +318,7 @@ public class Status implements Parcelable{
 
     public void setContent(String content) {
         //Remove UTM by default
-        this.content = content.replaceAll("&amp;utm_\\w+=[0-9a-zA-Z._-]*", "");
-        this.content = this.content.replaceAll("&utm_\\w+=[0-9a-zA-Z._-]*", "");
-        this.content = this.content.replaceAll("\\?utm_\\w+=[0-9a-zA-Z._-]*", "?");
+        this.content = Helper.remove_tracking_param(content);
     }
 
     public Status getReblog() {
