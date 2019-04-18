@@ -2223,8 +2223,9 @@ public class API {
      */
     public Poll getPoll(Status status){
         try {
+            Poll _p = (status.getReblog() != null)?status.getReblog().getPoll():status.getPoll();
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/polls/%s", status.getPoll().getId())), 60, null, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/polls/%s", _p.getId())), 60, null, prefKeyOauthTokenT);
             Poll poll = parsePoll(context, new JSONObject(response));
             Bundle b = new Bundle();
             status.setPoll(poll);

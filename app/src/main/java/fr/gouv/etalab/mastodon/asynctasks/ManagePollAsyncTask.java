@@ -53,10 +53,16 @@ public class ManagePollAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        if( status.getPoll().getId() == null)
+        Poll _poll;
+        if( status.getReblog() != null)
+            _poll = status.getReblog().getPoll();
+        else
+            _poll = status.getPoll();
+
+        if( _poll.getId() == null)
             return null;
         if (type == type_s.SUBMIT){
-            poll = new API(contextReference.get()).submiteVote(status.getPoll().getId(),choices);
+            poll = new API(contextReference.get()).submiteVote(_poll.getId(),choices);
         }else if( type == type_s.REFRESH){
             poll = new API(contextReference.get()).getPoll(status);
         }

@@ -557,18 +557,28 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 holder.multiple_choice.setVisibility(View.GONE);
                 holder.single_choice.setVisibility(View.GONE);
                 holder.submit_vote.setVisibility(View.GONE);
-                if( status.getPoll() != null && status.getPoll().getOptionsList() != null ){
-                    Poll poll = status.getPoll();
-                    int choiceCount = status.getPoll().getOptionsList().size();
+                if( (status.getPoll() != null && status.getPoll().getOptionsList() != null)
+                    || (status.getReblog() != null && status.getReblog().getPoll() != null && status.getReblog().getPoll().getOptionsList() != null)
+                ){
+                    Poll poll;
+                    int choiceCount;
+                    if( status.getReblog() != null) {
+                        poll = status.getReblog().getPoll();
+                        choiceCount = status.getReblog().getPoll().getOptionsList().size();
+                    }else {
+                        poll = status.getPoll();
+                        choiceCount = status.getPoll().getOptionsList().size();
+                    }
+
                     if( poll.isVoted() || poll.isExpired()){
                         holder.rated.setVisibility(View.VISIBLE);
                         List<BarItem> items = new ArrayList<>();
                         int greaterValue = 0;
-                        for(PollOptions pollOption: status.getPoll().getOptionsList()){
+                        for(PollOptions pollOption: poll.getOptionsList()){
                             if( pollOption.getVotes_count() > greaterValue)
                                 greaterValue = pollOption.getVotes_count();
                         }
-                        for(PollOptions pollOption: status.getPoll().getOptionsList()){
+                        for(PollOptions pollOption: poll.getOptionsList()){
                             double value = ((double)(pollOption.getVotes_count()* 100) / (double)poll.getVotes_count()) ;
                             if( pollOption.getVotes_count() == greaterValue) {
                                 BarItem bar = new BarItem(pollOption.getTitle(), value, "%", ContextCompat.getColor(context, R.color.mastodonC4), Color.WHITE);
@@ -598,7 +608,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             if( choiceCount > 3)
                                 holder.c_choice_4.setVisibility(View.VISIBLE);
                             int j = 1;
-                            for(PollOptions pollOption: status.getPoll().getOptionsList()){
+                            for(PollOptions pollOption: poll.getOptionsList()){
                                 if( j == 1 )
                                     holder.c_choice_1.setText(pollOption.getTitle());
                                 else  if( j == 2 )
@@ -619,7 +629,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                             if( choiceCount > 3)
                                 holder.r_choice_4.setVisibility(View.VISIBLE);
                             int j = 1;
-                            for(PollOptions pollOption: status.getPoll().getOptionsList()){
+                            for(PollOptions pollOption: poll.getOptionsList()){
                                 if( j == 1 )
                                     holder.r_choice_1.setText(pollOption.getTitle());
                                 else  if( j == 2 )
@@ -675,7 +685,7 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         }
                     });
                     holder.poll_container.setVisibility(View.VISIBLE);
-                    holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_vote,status.getPoll().getVotes_count(),status.getPoll().getVotes_count()));
+                    holder.number_votes.setText(context.getResources().getQuantityString(R.plurals.number_of_vote,poll.getVotes_count(),poll.getVotes_count()));
                     holder.remaining_time.setText(context.getString(R.string.poll_finish_at, Helper.dateToStringPoll(poll.getExpires_at())));
                 }else {
                     holder.poll_container.setVisibility(View.GONE);
@@ -2536,6 +2546,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 toot.setVisibility(status.getVisibility());
                                                 if( status.getPoll() != null){
                                                     toot.setPoll(status.getPoll());
+                                                }else if(status.getReblog() != null &&  status.getReblog().getPoll() != null ) {
+                                                    toot.setPoll(status.getPoll());
                                                 }
                                                 new RetrieveFeedsAsyncTask(context, RetrieveFeedsAsyncTask.Type.ONESTATUS, status.getIn_reply_to_id(), null, false, false, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                                             } else {
@@ -2547,6 +2559,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                                 toot.setVisibility(status.getVisibility());
                                                 toot.setContent(status.getContent());
                                                 if( status.getPoll() != null){
+                                                    toot.setPoll(status.getPoll());
+                                                }else if(status.getReblog() != null &&  status.getReblog().getPoll() != null ) {
                                                     toot.setPoll(status.getPoll());
                                                 }
                                                 final SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
