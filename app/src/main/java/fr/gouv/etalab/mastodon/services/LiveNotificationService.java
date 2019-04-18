@@ -35,7 +35,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -61,6 +60,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -129,7 +129,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                 List<Account> accountStreams = new AccountDAO(getApplicationContext(), db).getAllAccountCrossAction();
                 if (accountStreams != null) {
                     for (final Account accountStream : accountStreams) {
-                        if( accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON")) {
+                        if( accountStream.getSocial() == null || accountStream.getSocial().equals("MASTODON") || accountStream.getSocial().equals("PLEROMA")) {
                             thread = new Thread() {
                                 @Override
                                 public void run() {
@@ -145,15 +145,15 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             }else {
                 String key = account.getAcct() + "@" + account.getInstance();
                 if(webSocketFutures.containsKey(key)){
-                    if (webSocketFutures.get(key) != null && webSocketFutures.get(key).isOpen()) {
+                    if (webSocketFutures.get(key) != null && Objects.requireNonNull(webSocketFutures.get(key)).isOpen()) {
                         try {
-                            webSocketFutures.get(key).close();
+                            Objects.requireNonNull(webSocketFutures.get(key)).close();
                         }catch (Exception ignored){}
                     }
                 }
                 if(threads.containsKey(key)){
-                    if (threads.get(key) != null && !threads.get(key).isAlive()) {
-                        threads.get(key).interrupt();
+                    if (threads.get(key) != null && !Objects.requireNonNull(threads.get(key)).isAlive()) {
+                        Objects.requireNonNull(threads.get(key)).interrupt();
                     }
                 }
                 Thread thread = new Thread() {
@@ -220,13 +220,16 @@ public class LiveNotificationService extends Service implements NetworkStateRece
             headers.add("Connection", "Keep-Alive");
             headers.add("method", "GET");
             headers.add("scheme", "https");
-            String urlKey = "wss://" + account.getInstance() + "/api/v1/streaming/?stream=user:notification&access_token=" + account.getToken();
+            String notif_url = "user:notification";
+            if( account.getSocial().toUpperCase().equals("PLEROMA"))
+                notif_url = "user";
+            String urlKey = "wss://" + account.getInstance() + "/api/v1/streaming/?stream="+notif_url+"&access_token=" + account.getToken();
             Uri url = Uri.parse(urlKey);
             AsyncHttpRequest.setDefaultHeaders(headers, url);
             if( webSocketFutures.containsKey(urlKey)  ){
                 try {
                     if( webSocketFutures.get(urlKey) != null && webSocketFutures.get(urlKey).isOpen())
-                        webSocketFutures.get(urlKey).close();
+                        Objects.requireNonNull(webSocketFutures.get(urlKey)).close();
                 } catch (Exception ignored) {}
             }
             if( Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT ) {
@@ -239,7 +242,7 @@ public class LiveNotificationService extends Service implements NetworkStateRece
                     e.printStackTrace();
                 }
             }
-            AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream=user:notification&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
+            AsyncHttpClient.getDefaultInstance().websocket("wss://" + account.getInstance() + "/api/v1/streaming/?stream="+notif_url+"&access_token=" + account.getToken(), "wss", new AsyncHttpClient.WebSocketConnectCallback() {
                 @Override
                 public void onCompleted(Exception ex, WebSocket webSocket) {
                     webSocketFutures.put(account.getAcct()+"@"+account.getInstance(), webSocket);
