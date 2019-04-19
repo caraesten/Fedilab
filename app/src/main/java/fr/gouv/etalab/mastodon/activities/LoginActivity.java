@@ -40,7 +40,6 @@ import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.UnderlineSpan;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -142,9 +141,7 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         }
-        Log.v(Helper.TAG, "ici");
-        if( getIntent() != null && getIntent().getData() != null)
-            Log.v(Helper.TAG, getIntent().getData().toString());
+
         if( getIntent() != null && getIntent().getData() != null && getIntent().getData().toString().contains("mastalab://backtomastalab?code=")){
             String url = getIntent().getData().toString();
             String val[] = url.split("code=");
@@ -161,7 +158,6 @@ public class LoginActivity extends BaseActivity {
                 public void run() {
                     try {
                         final String response = new HttpsConnection(LoginActivity.this).post(Helper.instanceWithProtocol(instance) + action, 30, parameters, null);
-                        Log.v(Helper.TAG,"response: " + response);
                         JSONObject resobj;
                         try {
                             resobj = new JSONObject(response);
@@ -290,7 +286,6 @@ public class LoginActivity extends BaseActivity {
                         public void run() {
                             instanceNodeInfo = new API(LoginActivity.this).getNodeInfo(instance);
 
-                            Log.v(Helper.TAG,"ins: " +instanceNodeInfo.getName());
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     connect_button.setEnabled(true);
@@ -541,12 +536,12 @@ public class LoginActivity extends BaseActivity {
             }else {
                 parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES_PEERTUBE);
             }
-            if(socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
+            /*if(socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
                 client_id = "8";
                 client_secret = "rjnu93kmK1KbRBBMZflMi8rxKJxOjeGtnDUVEUNK";
                 manageClient(client_id, client_secret, null);
                 return;
-            }
+            }*/
 
             parameters.put(Helper.WEBSITE, Helper.WEBSITE_VALUE);
             new Thread(new Runnable(){
@@ -756,8 +751,6 @@ public class LoginActivity extends BaseActivity {
             editor.putString(Helper.ID, id);
             editor.apply();
             connectionButton.setEnabled(true);
-            String url2 = redirectUserToAuthorizeAndLogin(socialNetwork, client_id, instance);
-            Log.v(Helper.TAG,"url: " + url2);
             if( client_id_for_webview){
                 boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
                 if( embedded_browser) {
@@ -767,7 +760,7 @@ public class LoginActivity extends BaseActivity {
                     startActivity(i);
                 }else{
                     String url = redirectUserToAuthorizeAndLogin(socialNetwork, client_id, instance);
-                    Log.v(Helper.TAG,"url: " + url);
+
 
                     Helper.openBrowser(LoginActivity.this, url);
                 }

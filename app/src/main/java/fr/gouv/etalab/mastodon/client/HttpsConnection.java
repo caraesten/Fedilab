@@ -20,7 +20,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.text.Html;
 import android.text.SpannableString;
-import android.util.Log;
 
 import com.google.common.io.ByteStreams;
 import com.google.gson.JsonObject;

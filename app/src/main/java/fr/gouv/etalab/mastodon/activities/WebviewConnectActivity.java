@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,7 +137,6 @@ public class WebviewConnectActivity extends BaseActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url){
                 super.shouldOverrideUrlLoading(view,url);
-                Log.v(Helper.TAG,"url!= "  +url );
                 if( url.contains(Helper.REDIRECT_CONTENT_WEB)){
                     String val[] = url.split("code=");
                     if (val.length< 2){
@@ -149,7 +147,6 @@ public class WebviewConnectActivity extends BaseActivity {
                         return false;
                     }
                     String code = val[1];
-                    Log.v(Helper.TAG,"code!= "  +code );
                     final String action = "/oauth/token";
                     final HashMap<String, String> parameters = new HashMap<>();
                     parameters.put(Helper.CLIENT_ID, clientId);

@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -368,9 +367,7 @@ public class API {
                 setError(500, new Throwable("An error occured!"));
                 return null;
             }
-            Log.v(Helper.TAG,"prefKeyOauthTokenT: " + prefKeyOauthTokenT);
             String response = new HttpsConnection(context).get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, prefKeyOauthTokenT);
-            Log.v(Helper.TAG,"response! " + response);
             account = parseAccountResponse(context, new JSONObject(response));
             if( account.getSocial().equals("PLEROMA")){
                 isPleromaAdmin(account.getAcct());

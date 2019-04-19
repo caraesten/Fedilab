@@ -55,7 +55,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.util.SparseArray;
 import android.view.Gravity;
