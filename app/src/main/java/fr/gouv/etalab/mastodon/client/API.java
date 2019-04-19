@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -204,11 +203,11 @@ public class API {
                     response = new HttpsConnection(context).get(nodeInfo.getHref(), 30, null, null);
                     JSONObject resobj = new JSONObject(response);
                     JSONObject jsonObject = resobj.getJSONObject("software");
-                    String name = "MASTODON";
+                    String name = jsonObject.getString("name").toUpperCase();
                     if( jsonObject.getString("name") != null ){
                         switch (jsonObject.getString("name").toUpperCase()){
-                            case "PEERTUBE":
-                                name = "PEERTUBE";
+                            case "PLEROMA":
+                                name = "MASTODON";
                                 break;
                             case "HUBZILLA":
                             case "REDMATRIX":
@@ -374,40 +373,45 @@ public class API {
                 isPleromaAdmin(account.getAcct());
             }
         } catch (HttpsConnection.HttpsConnectionException e) {
-            SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-            Account targetedAccount = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
-            HashMap<String, String> values = refreshToken(targetedAccount.getClient_id(), targetedAccount.getClient_secret(), targetedAccount.getRefresh_token());
-            if( values.containsKey("access_token") && values.get("access_token") != null) {
-                targetedAccount.setToken(values.get("access_token"));
-                SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
-                //This account is currently logged in, the token is updated
-                if( prefKeyOauthTokenT.equals(token)){
-                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                    editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, targetedAccount.getToken());
-                    editor.apply();
+            e.printStackTrace();
+            if( e.getStatusCode() == 401 || e.getStatusCode() == 403){
+                SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
+                Account targetedAccount = new AccountDAO(context, db).getAccountByToken(prefKeyOauthTokenT);
+                if( targetedAccount == null)
+                    return null;
+                HashMap<String, String> values = refreshToken(targetedAccount.getClient_id(), targetedAccount.getClient_secret(), targetedAccount.getRefresh_token());
+                if( values.containsKey("access_token") && values.get("access_token") != null) {
+                    targetedAccount.setToken(values.get("access_token"));
+                    SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                    String token = sharedpreferences.getString(Helper.PREF_KEY_OAUTH_TOKEN, null);
+                    //This account is currently logged in, the token is updated
+                    if( prefKeyOauthTokenT.equals(token)){
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, targetedAccount.getToken());
+                        editor.apply();
+                    }
+                }if( values.containsKey("refresh_token") && values.get("refresh_token") != null)
+                    targetedAccount.setRefresh_token(values.get("refresh_token"));
+                new AccountDAO(context, db).updateAccount(targetedAccount);
+                String response;
+                try {
+                    response = new HttpsConnection(context).get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, targetedAccount.getToken());
+                    account = parseAccountResponse(context, new JSONObject(response));
+                    if( account.getSocial().equals("PLEROMA")){
+                        isPleromaAdmin(account.getAcct());
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (NoSuchAlgorithmException e1) {
+                    e1.printStackTrace();
+                } catch (KeyManagementException e1) {
+                    e1.printStackTrace();
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                } catch (HttpsConnection.HttpsConnectionException e1) {
+                    e1.printStackTrace();
+                    setError(e.getStatusCode(), e);
                 }
-            }if( values.containsKey("refresh_token") && values.get("refresh_token") != null)
-                targetedAccount.setRefresh_token(values.get("refresh_token"));
-            new AccountDAO(context, db).updateAccount(targetedAccount);
-            String response;
-            try {
-                response = new HttpsConnection(context).get(getAbsoluteUrl("/accounts/verify_credentials"), 60, null, targetedAccount.getToken());
-                account = parseAccountResponse(context, new JSONObject(response));
-                if( account.getSocial().equals("PLEROMA")){
-                    isPleromaAdmin(account.getAcct());
-                }
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (NoSuchAlgorithmException e1) {
-                e1.printStackTrace();
-            } catch (KeyManagementException e1) {
-                e1.printStackTrace();
-            } catch (JSONException e1) {
-                e1.printStackTrace();
-            } catch (HttpsConnection.HttpsConnectionException e1) {
-                e1.printStackTrace();
-                setError(e.getStatusCode(), e);
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -440,10 +444,6 @@ public class API {
             String token = resobj.get("access_token").toString();
             if( resobj.has("refresh_token"))
                 refresh_token = resobj.get("refresh_token").toString();
-            SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, token);
-            editor.apply();
             newValues.put("access_token",token);
             newValues.put("refresh_token",refresh_token);
 
@@ -2220,8 +2220,9 @@ public class API {
      */
     public Poll getPoll(Status status){
         try {
+            Poll _p = (status.getReblog() != null)?status.getReblog().getPoll():status.getPoll();
             HttpsConnection httpsConnection = new HttpsConnection(context);
-            String response = httpsConnection.get(getAbsoluteUrl(String.format("/polls/%s", status.getPoll().getId())), 60, null, prefKeyOauthTokenT);
+            String response = httpsConnection.get(getAbsoluteUrl(String.format("/polls/%s", _p.getId())), 60, null, prefKeyOauthTokenT);
             Poll poll = parsePoll(context, new JSONObject(response));
             Bundle b = new Bundle();
             status.setPoll(poll);
@@ -2425,15 +2426,25 @@ public class API {
                parameters.append("exclude_types[]=").append("follow").append("&");
                 parameters.append("exclude_types[]=").append("favourite").append("&");
                 parameters.append("exclude_types[]=").append("reblog").append("&");
+                parameters.append("exclude_types[]=").append("poll").append("&");
                 parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
                 params.put("exclude_types[]", parameters.toString());
         }else if(type == DisplayNotificationsFragment.Type.FAVORITE){
             parameters.append("exclude_types[]=").append("follow").append("&");
             parameters.append("exclude_types[]=").append("mention").append("&");
             parameters.append("exclude_types[]=").append("reblog").append("&");
+            parameters.append("exclude_types[]=").append("poll").append("&");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
             params.put("exclude_types[]", parameters.toString());
         }else if(type == DisplayNotificationsFragment.Type.BOOST){
+            parameters.append("exclude_types[]=").append("follow").append("&");
+            parameters.append("exclude_types[]=").append("mention").append("&");
+            parameters.append("exclude_types[]=").append("favourite").append("&");
+            parameters.append("exclude_types[]=").append("poll").append("&");
+            parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
+            params.put("exclude_types[]", parameters.toString());
+        }else if(type == DisplayNotificationsFragment.Type.POOL){
+            parameters.append("exclude_types[]=").append("reblog").append("&");
             parameters.append("exclude_types[]=").append("follow").append("&");
             parameters.append("exclude_types[]=").append("mention").append("&");
             parameters.append("exclude_types[]=").append("favourite").append("&");
@@ -2443,6 +2454,7 @@ public class API {
             parameters.append("exclude_types[]=").append("reblog").append("&");
             parameters.append("exclude_types[]=").append("mention").append("&");
             parameters.append("exclude_types[]=").append("favourite").append("&");
+            parameters.append("exclude_types[]=").append("poll").append("&");
             parameters = new StringBuilder(parameters.substring(0, parameters.length() - 1).substring(16));
             params.put("exclude_types[]", parameters.toString());
         }

@@ -624,7 +624,7 @@
     <string name="videos">Видео</string>
     <string name="channels">Каналы</string>
     <string name="set_display_emoji">Использовать Emoji One</string>
-    <string name="information">информация</string>
+    <string name="information">Информация</string>
     <string name="set_display_card">Показывать предпросмотр для всех тутов</string>
     <string name="thanks_text_ux">Новый дизайнер UX/UI</string>
     <string name="set_old_direct_timeline">Использовать старый вариант ленты (до версии Mastodon 2.6)</string>

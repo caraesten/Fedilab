@@ -141,6 +141,7 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         }
+
         if( getIntent() != null && getIntent().getData() != null && getIntent().getData().toString().contains("mastalab://backtomastalab?code=")){
             String url = getIntent().getData().toString();
             String val[] = url.split("code=");
@@ -284,6 +285,7 @@ public class LoginActivity extends BaseActivity {
                         @Override
                         public void run() {
                             instanceNodeInfo = new API(LoginActivity.this).getNodeInfo(instance);
+
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     connect_button.setEnabled(true);
@@ -292,6 +294,9 @@ public class LoginActivity extends BaseActivity {
                                             case "MASTODON":
                                                 socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.MASTODON;
                                                 break;
+                                            case "PIXELFED":
+                                                socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED;
+                                                break;
                                             case "PEERTUBE":
                                                 socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE;
                                                 break;
@@ -299,7 +304,7 @@ public class LoginActivity extends BaseActivity {
                                                 socialNetwork = UpdateAccountInfoAsyncTask.SOCIAL.GNU;
                                                 break;
                                         }
-                                        if( instanceNodeInfo.getName().equals("MASTODON")) {
+                                        if( instanceNodeInfo.getName().equals("MASTODON") || instanceNodeInfo.getName().equals("PIXELFED")) {
                                             client_id_for_webview = true;
                                             retrievesClientId();
                                         }else {
@@ -531,6 +536,12 @@ public class LoginActivity extends BaseActivity {
             }else {
                 parameters.put(Helper.SCOPES, Helper.OAUTH_SCOPES_PEERTUBE);
             }
+            /*if(socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED){
+                client_id = "8";
+                client_secret = "rjnu93kmK1KbRBBMZflMi8rxKJxOjeGtnDUVEUNK";
+                manageClient(client_id, client_secret, null);
+                return;
+            }*/
 
             parameters.put(Helper.WEBSITE, Helper.WEBSITE_VALUE);
             new Thread(new Runnable(){
@@ -552,32 +563,19 @@ public class LoginActivity extends BaseActivity {
                                     String id = null;
                                     if(  socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE)
                                         id = resobj.get(Helper.ID).toString();
-                                    SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putString(Helper.CLIENT_ID, client_id);
-                                    editor.putString(Helper.CLIENT_SECRET, client_secret);
-                                    editor.putString(Helper.ID, id);
-                                    editor.apply();
-                                    connectionButton.setEnabled(true);
-                                    if( client_id_for_webview){
-                                        boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
-                                        if( embedded_browser) {
-                                            Intent i = new Intent(LoginActivity.this, WebviewConnectActivity.class);
-                                            i.putExtra("social",  socialNetwork);
-                                            i.putExtra("instance", instance);
-                                            startActivity(i);
-                                        }else{
-                                            String url = redirectUserToAuthorizeAndLogin(client_id, instance);
-                                            Helper.openBrowser(LoginActivity.this, url);
-                                        }
-                                    }
-                                } catch (JSONException ignored) {ignored.printStackTrace();}
+                                    manageClient(client_id, client_secret, id);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
                     } catch (final Exception e) {
                         e.printStackTrace();
+
+
                         runOnUiThread(new Runnable() {
                             public void run() {
+
                                 String message;
                                 if( e.getLocalizedMessage() != null && e.getLocalizedMessage().trim().length() > 0)
                                     message = e.getLocalizedMessage();
@@ -586,6 +584,7 @@ public class LoginActivity extends BaseActivity {
                                 else
                                     message = getString(R.string.client_error);
                                 Toasty.error(getApplicationContext(), message,Toast.LENGTH_LONG).show();
+
                             }
                         });
                     }
@@ -624,6 +623,8 @@ public class LoginActivity extends BaseActivity {
                 String oauthUrl = null;
                 if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON) {
                     parameters.put("scope", " read write follow");
+                    oauthUrl = "/oauth/token";
+                }else if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED) {
                     oauthUrl = "/oauth/token";
                 }else  if( socialNetwork == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
                     parameters.put("scope", "user");
@@ -740,6 +741,32 @@ public class LoginActivity extends BaseActivity {
     }
 
 
+
+    private void manageClient(String client_id, String client_secret, String id){
+
+            SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(Helper.CLIENT_ID, client_id);
+            editor.putString(Helper.CLIENT_SECRET, client_secret);
+            editor.putString(Helper.ID, id);
+            editor.apply();
+            connectionButton.setEnabled(true);
+            if( client_id_for_webview){
+                boolean embedded_browser = sharedpreferences.getBoolean(Helper.SET_EMBEDDED_BROWSER, true);
+                if( embedded_browser) {
+                    Intent i = new Intent(LoginActivity.this, WebviewConnectActivity.class);
+                    i.putExtra("social",  socialNetwork);
+                    i.putExtra("instance", instance);
+                    startActivity(i);
+                }else{
+                    String url = redirectUserToAuthorizeAndLogin(socialNetwork, client_id, instance);
+
+
+                    Helper.openBrowser(LoginActivity.this, url);
+                }
+            }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -829,11 +856,12 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    public static String redirectUserToAuthorizeAndLogin(String clientId, String instance) {
+    public static String redirectUserToAuthorizeAndLogin(UpdateAccountInfoAsyncTask.SOCIAL socialNetwork, String clientId, String instance) {
         String queryString = Helper.CLIENT_ID + "="+ clientId;
         queryString += "&" + Helper.REDIRECT_URI + "="+ Uri.encode(Helper.REDIRECT_CONTENT_WEB);
         queryString += "&" + Helper.RESPONSE_TYPE +"=code";
-        queryString += "&" + Helper.SCOPE +"=" + Helper.OAUTH_SCOPES;
+        if( socialNetwork != UpdateAccountInfoAsyncTask.SOCIAL.PIXELFED )
+            queryString += "&" + Helper.SCOPE +"=" + Helper.OAUTH_SCOPES;
         return Helper.instanceWithProtocol(instance) + Helper.EP_AUTHORIZE + "?" + queryString;
     }
 

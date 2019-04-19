@@ -19,6 +19,10 @@ public class Version implements Comparable<Version> {
     public Version(String version) {
         if(version == null)
             version = "2.1";
+        if( version.contains("+")){
+            String[] versionA = version.split("\\+");
+            version = versionA[0];
+        }
         if( version.endsWith("."))
             version = version.substring(0, version.length() - 1);
         version = version.replaceAll("[^\\d.]", "");

@@ -174,7 +174,7 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
         media_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isSHaring = true;
+                isSHaring = false;
                 if(attachment.getType().toLowerCase().equals("video") || attachment.getType().toLowerCase().equals("gifv") || attachment.getType().toLowerCase().equals("web")) {
                     if( attachment != null ) {
                         progress.setText("0 %");
@@ -319,14 +319,13 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
                     if(deltaX < 0) { switchOnSwipe(MediaActivity.actionSwipe.LEFT_TO_RIGHT); return true; }
                     if(deltaX > 0) { switchOnSwipe(MediaActivity.actionSwipe.RIGHT_TO_LEFT); return true; }
                 }else if(downY > MIN_DISTANCE & (Math.abs(deltaY) > MIN_DISTANCE ) ){
-                    if(deltaY > 0) { finish(); return true; }
-                    if(deltaY < 0) { finish(); return true; }
+                    if(deltaY > 0 && canSwipe) { finish(); return true; }
+                    if(deltaY < 0 && canSwipe) { finish(); return true; }
                 } else {
                     currentAction = MediaActivity.actionSwipe.POP;
                     isControlElementShown = !isControlElementShown;
                     if (thisControllShown) {
                         if(event.getY() > action_bar_container.getHeight()) {
-                            FullScreencall(thisControllShown);
                             action_bar_container.setVisibility(View.GONE);
                             if (media_description.getVisibility() == View.VISIBLE) {
                                 media_description.setVisibility(View.GONE);
@@ -350,9 +349,6 @@ public class MediaActivity extends BaseActivity implements OnDownloadInterface {
             }
 
         }
-
-
-
         return super.dispatchTouchEvent(event);
     }
 

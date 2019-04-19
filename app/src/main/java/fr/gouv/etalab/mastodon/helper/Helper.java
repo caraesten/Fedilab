@@ -135,7 +135,6 @@ import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.net.InetAddress;
-import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
@@ -201,6 +200,7 @@ public class Helper {
     public static  final String TAG = "mastodon_etalab";
     public static final String CLIENT_NAME_VALUE = "Fedilab";
     public static final String OAUTH_SCOPES = "read write follow";
+    public static final String OAUTH_SCOPES_PIXELFED = "write follow";
     public static final String OAUTH_SCOPES_PEERTUBE = "user";
     public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
 
@@ -451,6 +451,8 @@ public class Helper {
         STORE,
         TOOT
     }
+
+
 
     /**
      * Converts emojis in input to unicode
@@ -3758,6 +3760,47 @@ public class Helper {
     }
 
 
+    /*
+     * List from ClearUrls
+     * https://gitlab.com/KevinRoebert/ClearUrls/blob/master/data/data.min.json#L106
+     */
+    private static final String[] UTM_PARAMS = {
+            "utm_\\w+",
+            "ga_source",
+            "ga_medium",
+            "ga_term",
+            "ga_content",
+            "ga_campaign",
+            "ga_place",
+            "yclid",
+            "_openstat",
+            "fb_action_ids",
+            "fb_action_types",
+            "fb_source",
+            "fb_ref",
+            "fbclid",
+            "action_object_map",
+            "action_type_map",
+            "action_ref_map",
+            "gs_l",
+            "mkt_tok",
+            "hmb_campaign",
+            "hmb_medium",
+            "hmb_source",
+            "[\\?|&]ref[\\_]?"
 
+    };
+
+    public static String remove_tracking_param(String original_content){
+        if( original_content == null)
+            return original_content;
+        String cleaned_content = original_content;
+        for(String utm: UTM_PARAMS){
+            cleaned_content = cleaned_content.replaceAll("&amp;"+utm+"=[0-9a-zA-Z._-]*", "");
+            cleaned_content = cleaned_content.replaceAll("&"+utm+"=[0-9a-zA-Z._-]*", "");
+            cleaned_content = cleaned_content.replaceAll("\\?"+utm+"=[0-9a-zA-Z._-]*", "?");
+        }
+        return cleaned_content;
+    }
 
 }

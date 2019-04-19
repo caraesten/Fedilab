@@ -147,7 +147,6 @@ public class WebviewConnectActivity extends BaseActivity {
                         return false;
                     }
                     String code = val[1];
-
                     final String action = "/oauth/token";
                     final HashMap<String, String> parameters = new HashMap<>();
                     parameters.put(Helper.CLIENT_ID, clientId);
@@ -182,7 +181,7 @@ public class WebviewConnectActivity extends BaseActivity {
             }
 
         });
-        webView.loadUrl(LoginActivity.redirectUserToAuthorizeAndLogin(clientId, instance));
+        webView.loadUrl(LoginActivity.redirectUserToAuthorizeAndLogin(social, clientId, instance));
     }
 
 
