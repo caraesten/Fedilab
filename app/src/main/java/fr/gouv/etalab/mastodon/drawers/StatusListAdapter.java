@@ -661,9 +661,12 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     for (int i = 0; i < choice.length; i++) {
                                         choice[i] = iterator.next().intValue();
                                     }
+                                    if( choice.length == 0)
+                                        return;
                                 }else{
                                     choice = new int[1];
                                     int checkedId = holder.radio_group.getCheckedRadioButtonId();
+                                    choice[0] = -1;
                                     if( checkedId == R.id.r_choice_1)
                                         choice[0] = 0;
                                     if( checkedId == R.id.r_choice_2)
@@ -672,6 +675,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                         choice[0] = 2;
                                     if( checkedId == R.id.r_choice_4)
                                         choice[0] = 3;
+                                    if( choice[0] == -1)
+                                        return;
                                 }
                                 new ManagePollAsyncTask(context, ManagePollAsyncTask.type_s.SUBMIT, status, choice, StatusListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             }

@@ -635,8 +635,11 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                     for (int i = 0; i < choice.length; i++) {
                                         choice[i] = iterator.next().intValue();
                                     }
+                                    if( choice.length == 0)
+                                        return;
                                 }else{
                                     choice = new int[1];
+                                    choice[0] = -1;
                                     int checkedId = holder.radio_group.getCheckedRadioButtonId();
                                     if( checkedId == R.id.r_choice_1)
                                         choice[0] = 0;
@@ -646,6 +649,8 @@ public class NotificationsListAdapter extends RecyclerView.Adapter implements On
                                         choice[0] = 2;
                                     if( checkedId == R.id.r_choice_4)
                                         choice[0] = 3;
+                                    if( choice[0] == -1)
+                                        return;
                                 }
                                 new ManagePollAsyncTask(context, ManagePollAsyncTask.type_s.SUBMIT, status, choice, NotificationsListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                             }
