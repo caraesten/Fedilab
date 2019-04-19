@@ -2328,7 +2328,7 @@ public abstract class BaseMainActivity extends BaseActivity
             String filename = Helper.getFilePathFromURI(getApplicationContext(), data.getData());
             importDB(BaseMainActivity.this, filename);
 
-        }else{
+        }else if(requestCode == PICK_IMPORT ){
             Toasty.error(getApplicationContext(),getString(R.string.toot_select_file_error),Toast.LENGTH_LONG).show();
         }
     }

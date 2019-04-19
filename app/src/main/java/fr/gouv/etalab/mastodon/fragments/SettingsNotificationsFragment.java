@@ -14,13 +14,16 @@ package fr.gouv.etalab.mastodon.fragments;
  * You should have received a copy of the GNU General Public License along with Mastalab; if not,
  * see <http://www.gnu.org/licenses>. */
 
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
@@ -126,21 +129,94 @@ public class SettingsNotificationsFragment extends Fragment {
         final Button settings_time_from = rootView.findViewById(R.id.settings_time_from);
         final Button settings_time_to = rootView.findViewById(R.id.settings_time_to);
 
+        final LinearLayout channels_container = rootView.findViewById(R.id.channels_container);
+        final Button sound_boost = rootView.findViewById(R.id.sound_boost);
+        final Button sound_fav = rootView.findViewById(R.id.sound_fav);
+        final Button sound_follow = rootView.findViewById(R.id.sound_follow);
+        final Button sound_mention = rootView.findViewById(R.id.sound_mention);
+        final Button sound_backup = rootView.findViewById(R.id.sound_backup);
+        final Button sound_media = rootView.findViewById(R.id.sound_media);
+        Button set_notif_sound = rootView.findViewById(R.id.set_notif_sound);
         settings_time_from.setText(time_from);
         settings_time_to.setText(time_to);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            set_notif_sound.setVisibility(View.GONE);
+            channels_container.setVisibility(View.VISIBLE);
 
-        Button set_notif_sound = rootView.findViewById(R.id.set_notif_sound);
-        set_notif_sound.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, context.getString(R.string.select_sound));
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
-                startActivityForResult(intent, ACTIVITY_CHOOSE_SOUND);
-            }
-        });
+            sound_boost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_boost");
+                    startActivity(intent);
+                }
+            });
+
+            sound_fav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_fav");
+                    startActivity(intent);
+                }
+            });
+
+            sound_follow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_follow");
+                    startActivity(intent);
+                }
+            });
+
+            sound_mention.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_mention");
+                    startActivity(intent);
+                }
+            });
+
+            sound_backup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_backup");
+                    startActivity(intent);
+                }
+            });
+
+            sound_media.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                    intent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_store");
+                    startActivity(intent);
+                }
+            });
+        }else{
+            set_notif_sound.setVisibility(View.VISIBLE);
+            channels_container.setVisibility(View.GONE);
+            set_notif_sound.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, context.getString(R.string.select_sound));
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
+                    startActivityForResult(intent, ACTIVITY_CHOOSE_SOUND);
+                }
+            });
+        }
 
 
         boolean enable_time_slot = sharedpreferences.getBoolean(Helper.SET_ENABLE_TIME_SLOT, true);
@@ -388,13 +464,14 @@ public class SettingsNotificationsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) return;
 
-       if (requestCode == ACTIVITY_CHOOSE_SOUND){
+        if (requestCode == ACTIVITY_CHOOSE_SOUND){
             try{
                 Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
                 final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString(Helper.SET_NOTIF_SOUND,  uri.toString());
                 editor.apply();
+
             }catch (Exception e){
                 Toasty.error(context, context.getString(R.string.toast_error),Toast.LENGTH_LONG).show();
             }
