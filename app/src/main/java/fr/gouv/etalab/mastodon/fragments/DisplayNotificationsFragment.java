@@ -90,6 +90,7 @@ public class DisplayNotificationsFragment extends Fragment implements OnRetrieve
         MENTION,
         FAVORITE,
         BOOST,
+        POOL,
         FOLLOW
     }
 
