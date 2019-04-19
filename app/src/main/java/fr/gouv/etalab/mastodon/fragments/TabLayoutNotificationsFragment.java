@@ -65,6 +65,7 @@ public class TabLayoutNotificationsFragment extends Fragment {
         TabLayout.Tab tabMention = tabLayout.newTab();
         TabLayout.Tab tabFav = tabLayout.newTab();
         TabLayout.Tab tabBoost = tabLayout.newTab();
+        TabLayout.Tab tabPoll = tabLayout.newTab();
         TabLayout.Tab tabFollow = tabLayout.newTab();
 
         tabMention.setCustomView(R.layout.tab_badge);
@@ -72,6 +73,8 @@ public class TabLayoutNotificationsFragment extends Fragment {
             tabFav.setCustomView(R.layout.tab_badge);
         if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
             tabBoost.setCustomView(R.layout.tab_badge);
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+            tabPoll.setCustomView(R.layout.tab_badge);
         tabFollow.setCustomView(R.layout.tab_badge);
 
 
@@ -96,6 +99,13 @@ public class TabLayoutNotificationsFragment extends Fragment {
             iconBoost = tabBoost.getCustomView().findViewById(R.id.tab_icon);
             iconBoost.setImageResource(R.drawable.ic_repeat_notif_tab);
         }
+
+        ImageView iconPoll =null;
+        if( tabPoll.getCustomView() != null) {
+            iconPoll = tabPoll.getCustomView().findViewById(R.id.tab_icon);
+            iconPoll.setImageResource(R.drawable.ic_view_list_poll_notif);
+        }
+
         @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
         ImageView iconFollow = tabFollow.getCustomView().findViewById(R.id.tab_icon);
         iconFollow.setImageResource(R.drawable.ic_follow_notif_tab);
@@ -107,6 +117,8 @@ public class TabLayoutNotificationsFragment extends Fragment {
             tabLayout.addTab(tabFav);
         if( tabBoost.getCustomView() != null)
             tabLayout.addTab(tabBoost);
+        if( tabPoll.getCustomView() != null)
+            tabLayout.addTab(tabPoll);
         tabLayout.addTab(tabFollow);
 
         if (theme == THEME_BLACK)
@@ -120,6 +132,8 @@ public class TabLayoutNotificationsFragment extends Fragment {
                 iconFav.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             if( iconBoost != null)
                 iconBoost.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+            if( iconPoll != null)
+                iconPoll.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             iconFollow.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
         } else {
             iconMention.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
@@ -127,6 +141,8 @@ public class TabLayoutNotificationsFragment extends Fragment {
                 iconFav.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
             if( iconBoost != null)
                 iconBoost.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
+            if( iconPoll != null)
+                iconPoll.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
             iconFollow.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
         }
 
@@ -207,8 +223,14 @@ public class TabLayoutNotificationsFragment extends Fragment {
                     type = DisplayNotificationsFragment.Type.BOOST;
                     break;
                 case 4:
-                    type = DisplayNotificationsFragment.Type.FOLLOW;
+                    if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                        type = DisplayNotificationsFragment.Type.POOL;
+                    else
+                        type = DisplayNotificationsFragment.Type.FOLLOW;
                     break;
+                case 5:
+                    if (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON)
+                        type = DisplayNotificationsFragment.Type.FOLLOW;
                 default:
 
                     break;
