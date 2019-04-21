@@ -15,6 +15,14 @@ package fr.gouv.etalab.mastodon.client.Entities;
  * see <http://www.gnu.org/licenses>. */
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
+import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
+import fr.gouv.etalab.mastodon.helper.Helper;
+
 
 public class ManageTimelines {
 
@@ -22,8 +30,8 @@ public class ManageTimelines {
     private int id;
     private boolean displayed;
     private Type type;
-    private String userId;
-    private String instance;
+    private static String userId;
+    private static String instance;
     private RemoteInstance remoteInstance;
     private TagTimeline tagTimeline;
     private List listTimeline;
@@ -168,6 +176,78 @@ public class ManageTimelines {
         return null;
     }
 
+
+    public static RetrieveFeedsAsyncTask.Type transform(Context context, Type type){
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
+        if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
+            switch (type){
+                case HOME:
+                    return RetrieveFeedsAsyncTask.Type.HOME;
+                case DIRECT:
+                    userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+                    instance = sharedpreferences.getString(Helper.PREF_INSTANCE, Helper.getLiveInstance(context));
+                    String instanceVersion = sharedpreferences.getString(Helper.INSTANCE_VERSION + userId + instance, null);
+                    if (instanceVersion != null) {
+                        Version currentVersion = new Version(instanceVersion);
+                        Version minVersion = new Version("2.6");
+                        if (currentVersion.compareTo(minVersion) == 1 || currentVersion.equals(minVersion)) {
+                            return RetrieveFeedsAsyncTask.Type.CONVERSATION;
+                        } else {
+                            return RetrieveFeedsAsyncTask.Type.DIRECT;
+                        }
+                    } else {
+                        return RetrieveFeedsAsyncTask.Type.DIRECT;
+                    }
+                case NOTIFICATION:
+                    return RetrieveFeedsAsyncTask.Type.NOTIFICATION;
+                case PUBLIC:
+                    return RetrieveFeedsAsyncTask.Type.PUBLIC;
+                case LOCAL:
+                    return RetrieveFeedsAsyncTask.Type.LOCAL;
+                case ART:
+                    return RetrieveFeedsAsyncTask.Type.ART;
+                case PEERTUBE:
+                    return RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE;
+                case INSTANCE:
+                    return RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE;
+                case TAG:
+                    return RetrieveFeedsAsyncTask.Type.TAG;
+                case LIST:
+                    return RetrieveFeedsAsyncTask.Type.LIST;
+            }
+            return null;
+        }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+            switch (type) {
+                case HOME:
+                    return RetrieveFeedsAsyncTask.Type.GNU_HOME;
+                case NOTIFICATION:
+                    return RetrieveFeedsAsyncTask.Type.GNU_NOTIFICATION;
+                case DIRECT:
+                    return RetrieveFeedsAsyncTask.Type.GNU_DM;
+                case LOCAL:
+                    return RetrieveFeedsAsyncTask.Type.GNU_LOCAL;
+            }
+            return null;
+        }else if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.GNU){
+            switch (type) {
+                case HOME:
+                    return RetrieveFeedsAsyncTask.Type.GNU_HOME;
+                case NOTIFICATION:
+                    return RetrieveFeedsAsyncTask.Type.GNU_NOTIFICATION;
+                case DIRECT:
+                    return RetrieveFeedsAsyncTask.Type.GNU_DM;
+                case LOCAL:
+                    return RetrieveFeedsAsyncTask.Type.GNU_LOCAL;
+                case PUBLIC:
+                    return RetrieveFeedsAsyncTask.Type.GNU_WHOLE;
+                case TAG:
+                    return RetrieveFeedsAsyncTask.Type.GNU_TAG;
+            }
+            return null;
+        }
+        return null;
+    }
 
 
 }
