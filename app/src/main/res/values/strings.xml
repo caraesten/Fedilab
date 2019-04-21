@@ -320,7 +320,6 @@
     <string name="set_auto_store_toot">Save drafts automatically</string>
     <string name="set_bubble_counter">Display counters</string>
     <string name="set_auto_add_media_url">Add URL of media in toots</string>
-    <string name="settings_title_notifications">Manage notifications</string>
     <string name="set_notif_follow">Notify when someone follows you</string>
     <string name="set_notif_follow_ask">Notify when someone requests to follow you</string>
     <string name="set_notif_follow_share">Notify when someone boosts your status</string>
@@ -328,7 +327,6 @@
     <string name="set_notif_follow_mention">Notify when someone mentions you</string>
     <string name="set_share_validation">Show confirmation dialog before boosting</string>
     <string name="set_share_validation_fav">Show confirmation dialog before adding to favourites</string>
-    <string name="settings_title_more_options">Advanced settings</string>
     <string name="set_wifi_only">Notify in WIFI only</string>
     <string name="set_notify">Notify?</string>
     <string name="set_notif_silent">Silent Notifications</string>
@@ -346,7 +344,6 @@
     <string name="note_no_space">You have reached the 160 characters allowed!</string>
     <string name="username_no_space">You have reached the 30 characters allowed!</string>
 
-    <string name="settings_title_hour">Time slot for notifications:</string>
     <string name="settings_time_from">Between</string>
     <string name="settings_time_to">and</string>
     <string name="settings_time_greater">The time must be greater than %1$s</string>
@@ -407,7 +404,6 @@
         <item>White</item>
     </string-array>
 
-    <string name="set_title_news">News</string>
     <string name="set_notification_news">Notify for new toots on the home timeline</string>
     <string name="action_follow">Follow</string>
     <string name="action_unfollow">Unfollow</string>s
