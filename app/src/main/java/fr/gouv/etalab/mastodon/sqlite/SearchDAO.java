@@ -183,6 +183,21 @@ public class SearchDAO {
         }
     }
 
+
+
+    /**
+     * Returns TagTimeline information by its keyword in db
+     * @return info List<TagTimeline>
+     */
+    public List<TagTimeline> getAll(){
+        try {
+            Cursor c = db.query(Sqlite.TABLE_SEARCH, null, Sqlite.COL_USER_ID + " = \"" + userId+ "\"", null, null, null, Sqlite.COL_KEYWORDS + " ASC", null);
+            return cursorToTagTimelineSearch(c);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     /**
      * Returns TagTimeline information by its keyword in db
      * @return info List<TagTimeline>

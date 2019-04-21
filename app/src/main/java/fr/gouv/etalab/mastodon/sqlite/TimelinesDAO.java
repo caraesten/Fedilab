@@ -46,7 +46,6 @@ public class TimelinesDAO {
         ContentValues values = new ContentValues();
         values.put(Sqlite.COL_TYPE, ManageTimelines.typeToDb(timeline.getType()));
         values.put(Sqlite.COL_DISPLAYED, timeline.isDisplayed());
-        values.put(Sqlite.COL_REFERENCED_BY, timeline.getReferencedBy());
         values.put(Sqlite.COL_POSITION, timeline.getPosition());
         values.put(Sqlite.COL_USER_ID, userId);
         values.put(Sqlite.COL_INSTANCE, instance);
@@ -54,6 +53,8 @@ public class TimelinesDAO {
             values.put(Sqlite.COL_TAG_TIMELINE, Helper.tagTimelineToStringStorage(timeline.getTagTimeline()));
         if( timeline.getRemoteInstance() != null)
             values.put(Sqlite.COL_REMOTE_INSTANCE, Helper.remoteInstanceToStringStorage(timeline.getRemoteInstance()));
+        if( timeline.getListTimeline() != null)
+            values.put(Sqlite.COL_LIST_TIMELINE, Helper.listTimelineToStringStorage(timeline.getListTimeline()));
         try{
             db.insert(Sqlite.TABLE_TIMELINES, null, values);
         }catch (Exception ignored) {}
@@ -121,7 +122,8 @@ public class TimelinesDAO {
             manageTimelines.setTagTimeline(Helper.restoreTagTimelineFromString(c.getString(c.getColumnIndex(Sqlite.COL_TAG_TIMELINE))));
         if( c.getString(c.getColumnIndex(Sqlite.COL_REMOTE_INSTANCE)) != null )
             manageTimelines.setRemoteInstance(Helper.restoreRemoteInstanceFromString(c.getString(c.getColumnIndex(Sqlite.COL_REMOTE_INSTANCE))));
-        manageTimelines.setReferencedBy(c.getString(c.getColumnIndex(Sqlite.COL_REFERENCED_BY)));
+        if( c.getString(c.getColumnIndex(Sqlite.COL_LIST_TIMELINE)) != null )
+            manageTimelines.setListTimeline(Helper.restoreListtimelineFromString(c.getString(c.getColumnIndex(Sqlite.COL_LIST_TIMELINE))));
         manageTimelines.setType(ManageTimelines.typeFromDb(c.getString(c.getColumnIndex(Sqlite.COL_TYPE))));
         //Close the cursor
         c.close();
@@ -150,7 +152,8 @@ public class TimelinesDAO {
                 manageTimelines.setTagTimeline(Helper.restoreTagTimelineFromString(c.getString(c.getColumnIndex(Sqlite.COL_TAG_TIMELINE))));
             if( c.getString(c.getColumnIndex(Sqlite.COL_REMOTE_INSTANCE)) != null )
                 manageTimelines.setRemoteInstance(Helper.restoreRemoteInstanceFromString(c.getString(c.getColumnIndex(Sqlite.COL_REMOTE_INSTANCE))));
-            manageTimelines.setReferencedBy(c.getString(c.getColumnIndex(Sqlite.COL_REFERENCED_BY)));
+            if( c.getString(c.getColumnIndex(Sqlite.COL_LIST_TIMELINE)) != null )
+                manageTimelines.setListTimeline(Helper.restoreListtimelineFromString(c.getString(c.getColumnIndex(Sqlite.COL_LIST_TIMELINE))));
             manageTimelines.setType(ManageTimelines.typeFromDb(c.getString(c.getColumnIndex(Sqlite.COL_TYPE))));
             remoteInstances.add(manageTimelines);
         }

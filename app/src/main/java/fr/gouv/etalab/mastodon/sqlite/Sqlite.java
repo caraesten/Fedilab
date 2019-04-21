@@ -259,7 +259,7 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_DOMAIN + " TEXT NOT NULL)";
 
     static final String COL_TYPE = "TYPE";
-    static final String COL_REFERENCED_BY = "REFERENCED_BY";
+    static final String COL_LIST_TIMELINE = "LIST_TIMELINE";
     static final String COL_DISPLAYED = "DISPLAYED";
     static final String COL_POSITION = "POSITION";
     static final String COL_REMOTE_INSTANCE = "REMOTE_INSTANCE";
@@ -273,7 +273,7 @@ public class Sqlite extends SQLiteOpenHelper {
             + COL_REMOTE_INSTANCE + " TEXT, "
             + COL_TAG_TIMELINE + " TEXT, "
             + COL_DISPLAYED + " INTEGER NOT NULL, "
-            + COL_REFERENCED_BY + " TEXT)";
+            + COL_LIST_TIMELINE + " TEXT)";
 
     public Sqlite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

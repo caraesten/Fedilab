@@ -114,6 +114,7 @@ import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoByIDAsyncTask;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.Account;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
+import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Results;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -3482,6 +3483,17 @@ public abstract class BaseMainActivity extends BaseActivity
                 popup.show();
             }
         });
+
+    }
+
+
+    public void syncTimelines(Context context){
+
+        //Sync lists
+        ArrayList<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
+
+        }
 
     }
 }

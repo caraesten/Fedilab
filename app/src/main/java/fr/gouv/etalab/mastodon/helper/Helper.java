@@ -177,6 +177,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
+import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
@@ -2425,6 +2426,35 @@ public class Helper {
 
 
     /**
+     * Unserialized a
+     * @param serializedListTimeline String serialized List
+     * @return List
+     */
+    public static fr.gouv.etalab.mastodon.client.Entities.List restoreListtimelineFromString(String serializedListTimeline){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedListTimeline, fr.gouv.etalab.mastodon.client.Entities.List.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    /**
+     * Serialized a List class
+     * @param listTimeline List to serialize
+     * @return String serialized List
+     */
+    public static String listTimelineToStringStorage(fr.gouv.etalab.mastodon.client.Entities.List listTimeline){
+        Gson gson = new Gson();
+        try {
+            return gson.toJson(listTimeline);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+    /**
      * Unserialized a TagTimeline
      * @param serializedTagTimeline String serialized TagTimeline
      * @return TagTimeline
@@ -3871,11 +3901,15 @@ public class Helper {
 
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
-            if (Objects.equals(value, entry.getValue())) {
-                return entry.getKey();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (Objects.equals(value, entry.getValue())) {
+                    return entry.getKey();
+                }
             }
         }
         return null;
     }
+
+
 
 }

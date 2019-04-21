@@ -22,11 +22,11 @@ public class ManageTimelines {
     private int id;
     private boolean displayed;
     private Type type;
-    private String referencedBy;
     private String userId;
     private String instance;
     private RemoteInstance remoteInstance;
     private TagTimeline tagTimeline;
+    private List listTimeline;
 
     public int getPosition() {
         return position;
@@ -52,14 +52,6 @@ public class ManageTimelines {
         this.type = type;
     }
 
-
-    public String getReferencedBy() {
-        return referencedBy;
-    }
-
-    public void setReferencedBy(String referencedBy) {
-        this.referencedBy = referencedBy;
-    }
 
     public int getId() {
         return id;
@@ -100,6 +92,14 @@ public class ManageTimelines {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public List getListTimeline() {
+        return listTimeline;
+    }
+
+    public void setListTimeline(List listTimeline) {
+        this.listTimeline = listTimeline;
     }
 
     public enum Type{
