@@ -145,13 +145,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.BuildConfig;
@@ -374,6 +378,7 @@ public class Helper {
     public static final String SET_DISPLAY_LOCAL = "set_display_local";
     public static final String SET_DISPLAY_GLOBAL = "set_display_global";
     public static final String SET_DISPLAY_ART = "set_display_art";
+    public static final String SET_DISPLAY_PEERTUBE = "set_display_peertube";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS = "set_automatically_split_toots";
     public static final String SET_AUTOMATICALLY_SPLIT_TOOTS_SIZE = "set_automatically_split_toots_size";
     public static final String SET_TRUNCATE_TOOTS_SIZE = "set_truncate_toots_size";
@@ -3801,6 +3806,16 @@ public class Helper {
             cleaned_content = cleaned_content.replaceAll("\\?"+utm+"=[0-9a-zA-Z._-]*", "?");
         }
         return cleaned_content;
+    }
+
+
+    public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+        for (Map.Entry<T, E> entry : map.entrySet()) {
+            if (Objects.equals(value, entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 
 }

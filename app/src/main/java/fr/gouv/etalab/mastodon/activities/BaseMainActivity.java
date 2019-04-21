@@ -55,6 +55,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -93,6 +94,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -196,11 +198,11 @@ public abstract class BaseMainActivity extends BaseActivity
     private RelativeLayout main_app_container;
     private Stack<Integer> stackBack = new Stack<>();
     public static List<Filters> filters = new ArrayList<>();
-    private DisplayStatusFragment homeFragment, federatedFragment, localFragment, artFragment;
+    private DisplayStatusFragment homeFragment, federatedFragment, localFragment, artFragment, peertubeFragment;
     private TabLayoutNotificationsFragment tabLayoutNotificationsFragment;
     private static final int ERROR_DIALOG_REQUEST_CODE = 97;
 
-    private boolean display_direct, display_local, display_global, display_art;
+    private boolean display_direct, display_local, display_global, display_art, display_peertube;
     public static int countNewStatus;
     public static int countNewNotifications;
     public static String lastHomeId = null, lastNotificationId = null;
@@ -291,6 +293,7 @@ public abstract class BaseMainActivity extends BaseActivity
         display_local = sharedpreferences.getBoolean(Helper.SET_DISPLAY_LOCAL, true);
         display_global = sharedpreferences.getBoolean(Helper.SET_DISPLAY_GLOBAL, true);
         display_art = sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true);
+        display_peertube = sharedpreferences.getBoolean(Helper.SET_DISPLAY_PEERTUBE, true);
         //Test if user is still log in
         if( ! Helper.isLoggedIn(getApplicationContext())) {
             //It is not, the user is redirected to the login page
@@ -355,6 +358,7 @@ public abstract class BaseMainActivity extends BaseActivity
             TabLayout.Tab tabLocal = tabLayout.newTab();
             TabLayout.Tab tabPublic = tabLayout.newTab();
             TabLayout.Tab tabArt = tabLayout.newTab();
+            TabLayout.Tab tabPeertube = tabLayout.newTab();
 
             tabHome.setCustomView(R.layout.tab_badge);
             tabNotif.setCustomView(R.layout.tab_badge);
@@ -362,6 +366,7 @@ public abstract class BaseMainActivity extends BaseActivity
             tabLocal.setCustomView(R.layout.tab_badge);
             tabPublic.setCustomView(R.layout.tab_badge);
             tabArt.setCustomView(R.layout.tab_badge);
+            tabPeertube.setCustomView(R.layout.tab_badge);
 
             @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
             ImageView iconHome = tabHome.getCustomView().findViewById(R.id.tab_icon);
@@ -396,12 +401,17 @@ public abstract class BaseMainActivity extends BaseActivity
             ImageView iconArt = tabArt.getCustomView().findViewById(R.id.tab_icon);
             iconArt.setImageResource(R.drawable.ic_color_lens);
 
+            @SuppressWarnings("ConstantConditions") @SuppressLint("CutPasteId")
+            ImageView iconPeertube = tabPeertube.getCustomView().findViewById(R.id.tab_icon);
+            iconPeertube.setImageResource(R.drawable.ic_video_peertube);
+
             iconHome.setContentDescription(getString(R.string.home_menu));
             iconNotif.setContentDescription(getString(R.string.notifications));
             iconDirect.setContentDescription(getString(R.string.direct_message));
             iconLocal.setContentDescription(getString(R.string.local_menu));
             iconGlobal.setContentDescription(getString(R.string.global_menu));
             iconArt.setContentDescription(getString(R.string.art_menu));
+            iconPeertube.setContentDescription(getString(R.string.peertube_menu));
 
             if (theme == THEME_LIGHT) {
                 iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
@@ -410,6 +420,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
                 iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
                 iconArt.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                iconPeertube.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.action_light_header), PorterDuff.Mode.SRC_IN);
             } else {
                 iconHome.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
                 iconNotif.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
@@ -417,6 +428,7 @@ public abstract class BaseMainActivity extends BaseActivity
                 iconLocal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
                 iconGlobal.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
                 iconArt.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                iconPeertube.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.dark_text), PorterDuff.Mode.SRC_IN);
             }
 
 
@@ -485,8 +497,15 @@ public abstract class BaseMainActivity extends BaseActivity
                 tabLayout.addTab(tabArt);
                 tabPosition.put("art", i);
                 typePosition.put(i, RetrieveFeedsAsyncTask.Type.ART);
+                i++;
             }
-
+            if( social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+                display_peertube = false;
+            if( display_peertube ) {
+                tabLayout.addTab(tabPeertube);
+                tabPosition.put("peertube", i);
+                typePosition.put(i, RetrieveFeedsAsyncTask.Type.PEERTUBE);
+            }
             if( (getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE)
                 tabLayout.setTabMode(TabLayout.MODE_FIXED);
             else if( i > 3 && !Helper.isTablet(getApplicationContext())){
@@ -596,6 +615,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 countPage++;
             if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_ART, true)&& social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
                 countPage++;
+            if( sharedpreferences.getBoolean(Helper.SET_DISPLAY_PEERTUBE, true)&& social != UpdateAccountInfoAsyncTask.SOCIAL.GNU && social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
+                countPage++;
 
             if( tabPosition.containsKey("global"))
                 tabStrip.getChildAt(tabPosition.get("global")).setOnLongClickListener(new View.OnLongClickListener() {
@@ -642,7 +663,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     viewPager.setVisibility(View.VISIBLE);
                     delete_instance.setVisibility(View.GONE);
                     Helper.switchLayout(BaseMainActivity.this);
-                    if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))) {
+                    if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))||(tabPosition.containsKey("peertube") && tab.getPosition() == tabPosition.get("peertube"))) {
                         toot.hide();
                         federatedTimelines.hide();
                     }else {
@@ -687,7 +708,7 @@ public abstract class BaseMainActivity extends BaseActivity
                         DrawerLayout drawer = findViewById(R.id.drawer_layout);
                         drawer.closeDrawer(GravityCompat.START);
                     }
-                    if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))) {
+                    if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))||(tabPosition.containsKey("peertube") && tab.getPosition() == tabPosition.get("peertube"))) {
                         toot.hide();
                         federatedTimelines.hide();
                     }else {
@@ -713,7 +734,7 @@ public abstract class BaseMainActivity extends BaseActivity
                             updateNotifCounter();
                         }else if (tab.getPosition() > 1) {
                             if (typePosition.containsKey(tab.getPosition()))
-                                updateTimeLine(typePosition.get(tab.getPosition()), 0);
+                                manageTab(typePosition.get(tab.getPosition()), 0);
                             displayStatusFragment = ((DisplayStatusFragment) fragment);
                             displayStatusFragment.scrollToTop();
                         }
@@ -1589,7 +1610,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 (homeFragment != null && homeFragment.getUserVisibleHint()) ||
                 (federatedFragment != null && federatedFragment.getUserVisibleHint()) ||
                 (localFragment != null && localFragment.getUserVisibleHint()) ||
-                (artFragment != null && artFragment.getUserVisibleHint())
+                (artFragment != null && artFragment.getUserVisibleHint()) ||
+                (peertubeFragment != null && peertubeFragment.getUserVisibleHint())
         ){
             PopupMenu popup = null;
             if(homeFragment != null && homeFragment.getUserVisibleHint())
@@ -1663,7 +1685,10 @@ public abstract class BaseMainActivity extends BaseActivity
                 });
                 popup.show();
                 return false;
+            }else if(peertubeFragment != null && peertubeFragment.getUserVisibleHint()){
+                //TODO: Peertube manage popup here
             }
+
             if( popup == null)
                 return true;
             popup.getMenuInflater()
@@ -1800,6 +1825,8 @@ public abstract class BaseMainActivity extends BaseActivity
             federatedFragment.refreshFilter();
         if(artFragment != null)
             artFragment.refreshFilter();
+        if(peertubeFragment != null)
+            peertubeFragment.refreshFilter();
     }
 
     @Override
@@ -2509,6 +2536,12 @@ public abstract class BaseMainActivity extends BaseActivity
                     }
                     if (typePosition.get(position) == RetrieveFeedsAsyncTask.Type.ART)
                         bundle.putString("instanceType","ART");
+                    if (typePosition.get(position) == RetrieveFeedsAsyncTask.Type.PEERTUBE) {
+                        bundle.putString("instanceType", "PEERTUBE");
+                        bundle.putString("remote_instance", "peertube.social");
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+
+                    }
                     statusFragment.setArguments(bundle);
                     return statusFragment;
                 }
@@ -2592,6 +2625,8 @@ public abstract class BaseMainActivity extends BaseActivity
                         federatedFragment = (DisplayStatusFragment) createdFragment;
                     else if (display_art && position == tabPosition.get("art"))
                         artFragment = (DisplayStatusFragment) createdFragment;
+                    else if (display_peertube && position == tabPosition.get("peertube"))
+                        peertubeFragment = (DisplayStatusFragment) createdFragment;
 
                 }
 
@@ -2894,132 +2929,44 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
 
+    public void manageTab( RetrieveFeedsAsyncTask.Type type, int value){
+        boolean searchedIsDisplayed;
+        //Search if the current timeline is displayed
+        searchedIsDisplayed = false;
+        int positionInTab;
+        switch (type){
+            case DIRECT:
+                searchedIsDisplayed = display_direct;
+                break;
+            case LOCAL:
+                searchedIsDisplayed = display_local;
+                break;
+            case PUBLIC:
+                searchedIsDisplayed = display_global;
+                break;
+            case ART:
+                searchedIsDisplayed = display_art;
+                break;
+            case PEERTUBE:
+                searchedIsDisplayed = display_peertube;
+                break;
+        }
+        Log.v(Helper.TAG,"positionInTab " + Helper.getKeyByValue(typePosition, type));
+        if( searchedIsDisplayed){
+            //noinspection ConstantConditions
+            positionInTab = Helper.getKeyByValue(typePosition, type);
 
-    public void updateTimeLine(RetrieveFeedsAsyncTask.Type type, int value){
-
-        if( type == RetrieveFeedsAsyncTask.Type.DIRECT || type == RetrieveFeedsAsyncTask.Type.CONVERSATION){
-            if (tabLayout.getTabAt(2) != null && display_direct) {
-                View tabDirect = tabLayout.getTabAt(2).getCustomView();
-                assert tabDirect != null;
-                TextView tabCounterDirect = tabDirect.findViewById(R.id.tab_counter);
-                tabCounterDirect.setText(String.valueOf(value));
-                if (value > 0) {
-                    tabCounterDirect.setVisibility(View.VISIBLE);
-                } else {
-                    tabCounterDirect.setVisibility(View.GONE);
-                }
-            }
-        }else if( type == RetrieveFeedsAsyncTask.Type.LOCAL ){
-            if( display_local) {
-                if (tabLayout.getTabAt(2) != null && !display_direct) {
-                    View tabLocal = tabLayout.getTabAt(2).getCustomView();
-                    assert tabLocal != null;
-                    TextView tabCounterLocal = tabLocal.findViewById(R.id.tab_counter);
-                    tabCounterLocal.setText(String.valueOf(value));
-                    if (value > 0) {
-                        tabCounterLocal.setVisibility(View.VISIBLE);
-                    } else {
-                        tabCounterLocal.setVisibility(View.GONE);
-                    }
-                } else if (tabLayout.getTabAt(3) != null ) {
-                    View tabLocal = tabLayout.getTabAt(3).getCustomView();
-                    assert tabLocal != null;
-                    TextView tabCounterLocal = tabLocal.findViewById(R.id.tab_counter);
-                    tabCounterLocal.setText(String.valueOf(value));
-                    if (value > 0) {
-                        tabCounterLocal.setVisibility(View.VISIBLE);
-                    } else {
-                        tabCounterLocal.setVisibility(View.GONE);
-                    }
-                }
-            }
-        }else if( type == RetrieveFeedsAsyncTask.Type.PUBLIC ){
-            if( display_global){
-                if( tabLayout.getTabAt(2) != null && !display_local && !display_direct){
-                    View tabPublic = tabLayout.getTabAt(2).getCustomView();
-                    assert tabPublic != null;
-                    TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
-                    tabCounterPublic.setText(String.valueOf(value));
-                    if( value > 0){
-                        tabCounterPublic.setVisibility(View.VISIBLE);
-                    }else {
-                        tabCounterPublic.setVisibility(View.GONE);
-                    }
-                }else if( tabLayout.getTabAt(3) != null && ((!display_local && display_direct) || (display_local && !display_direct) )){
-                    View tabPublic = tabLayout.getTabAt(3).getCustomView();
-                    assert tabPublic != null;
-                    TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
-                    tabCounterPublic.setText(String.valueOf(value));
-                    if( value > 0){
-                        tabCounterPublic.setVisibility(View.VISIBLE);
-                    }else {
-                        tabCounterPublic.setVisibility(View.GONE);
-                    }
-                }else if( tabLayout.getTabAt(4) != null && display_local && display_direct){
-                    View tabPublic = tabLayout.getTabAt(4).getCustomView();
-                    assert tabPublic != null;
-                    TextView tabCounterPublic = tabPublic.findViewById(R.id.tab_counter);
-                    tabCounterPublic.setText(String.valueOf(value));
-                    if( value > 0){
-                        tabCounterPublic.setVisibility(View.VISIBLE);
-                    }else {
-                        tabCounterPublic.setVisibility(View.GONE);
-                    }
-                }
-            }
-        }else if( type == RetrieveFeedsAsyncTask.Type.ART ){
-            if( display_art){
-                if( tabLayout.getTabAt(2) != null && !display_local && !display_direct && !display_global){
-                    View tabArt = tabLayout.getTabAt(2).getCustomView();
-                    assert tabArt != null;
-                    TextView tabCounterArt = tabArt.findViewById(R.id.tab_counter);
-                    tabCounterArt.setText(String.valueOf(value));
-                    if( value > 0){
-                        tabCounterArt.setVisibility(View.VISIBLE);
-                    }else {
-                        tabCounterArt.setVisibility(View.GONE);
-                    }
-                }else if( tabLayout.getTabAt(3) != null && (
-                        (!display_local && !display_direct && display_global) ||
-                        (!display_global && !display_direct && display_local) ||
-                        (!display_global && !display_local && display_direct)
-                        )){
-                    View tabArt = tabLayout.getTabAt(3).getCustomView();
-                    assert tabArt != null;
-                    TextView tabCounterArt = tabArt.findViewById(R.id.tab_counter);
-                    tabCounterArt.setText(String.valueOf(value));
-                    if( value > 0){
-                        tabCounterArt.setVisibility(View.VISIBLE);
-                    }else {
-                        tabCounterArt.setVisibility(View.GONE);
-                    }
-                }else if( tabLayout.getTabAt(4) != null && (
-                        (!display_direct && display_local && display_global) ||
-                        (!display_local && display_direct && display_global) ||
-                        (!display_global && display_local && display_direct)
-                )){
-                    View tabArt = tabLayout.getTabAt(4).getCustomView();
-                    assert tabArt != null;
-                    TextView tabCounterArt = tabArt.findViewById(R.id.tab_counter);
-                    tabCounterArt.setText(String.valueOf(value));
-                    if( value > 0){
-                        tabCounterArt.setVisibility(View.VISIBLE);
-                    }else {
-                        tabCounterArt.setVisibility(View.GONE);
-                    }
-                }else if( tabLayout.getTabAt(5) != null && display_local && display_direct && display_global){
-                    View tabArt = tabLayout.getTabAt(5).getCustomView();
-                    assert tabArt != null;
-                    TextView tabCounterArt = tabArt.findViewById(R.id.tab_counter);
-                    tabCounterArt.setText(String.valueOf(value));
-                    if( value > 0){
-                        tabCounterArt.setVisibility(View.VISIBLE);
-                    }else {
-                        tabCounterArt.setVisibility(View.GONE);
-                    }
-                }
+            View tabCustom = tabLayout.getTabAt(positionInTab).getCustomView();
+            assert tabCustom != null;
+            TextView tabCountertCustom = tabCustom.findViewById(R.id.tab_counter);
+            tabCountertCustom.setText(String.valueOf(value));
+            if( value > 0){
+                tabCountertCustom.setVisibility(View.VISIBLE);
+            }else {
+                tabCountertCustom.setVisibility(View.GONE);
             }
         }
+
     }
 
     public void updateNotifCounter(){

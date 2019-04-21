@@ -75,6 +75,7 @@ public class RetrieveFeedsAsyncTask extends AsyncTask<Void, Void, Void> {
         TAG,
         REMOTE_INSTANCE,
         ART,
+        PEERTUBE,
         NOTIFICATION,
         SEARCH,
 

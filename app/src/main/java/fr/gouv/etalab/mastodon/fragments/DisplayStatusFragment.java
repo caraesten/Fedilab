@@ -32,6 +32,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -157,6 +158,8 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             instanceType  = bundle.getString("instanceType", "MASTODON");
             ischannel = bundle.getBoolean("ischannel",false);
         }
+        Log.v(Helper.TAG,"type! " + type);
+        Log.v(Helper.TAG,"instanceType! " + instanceType);
         if( ischannel)
             type = RetrieveFeedsAsyncTask.Type.CHANNEL;
 
@@ -914,9 +917,9 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
                     ((MainActivity) context).updateHomeCounter();
                 else {
                     if( type != RetrieveFeedsAsyncTask.Type.CONVERSATION)
-                        ((MainActivity) context).updateTimeLine(type, inserted);
+                        ((MainActivity) context).manageTab(type, inserted);
                     else
-                        ((MainActivity) context).updateTimeLine(type, insertedConversation);
+                        ((MainActivity) context).manageTab(type, insertedConversation);
                 }
             }catch (Exception ignored){}
         }
