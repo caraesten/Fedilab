@@ -1996,9 +1996,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     toolbar_search.setIconified(true);
                 }
                 //Selection comes from another menu, no action to do
-                DisplayStatusFragment statusFragment;
                 Bundle bundle = new Bundle();
-                SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, DB_NAME, null, Sqlite.DB_VERSION).open();
                 ManageTimelines tl = null;
                 for (ManageTimelines timeline: timelines){
                  if( timeline.getPosition() == position)
@@ -2006,26 +2004,30 @@ public abstract class BaseMainActivity extends BaseActivity
                 }
                 if( tl == null)
                     return null;
-                DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
-                RetrieveFeedsAsyncTask.Type type = ManageTimelines.transform(BaseMainActivity.this, tl.getType());
-                bundle.putSerializable("type", type);
-
-                if (tl.getType() == ManageTimelines.Type.TAG) {
-                    TagTimeline ttl = tl.getTagTimeline();
-                    bundle.putString("tag", ttl.getName());
-                    if( ttl.isART() )
-                        bundle.putString("instanceType","ART");
-                }else if (tl.getType() == ManageTimelines.Type.ART) {
-                    bundle.putString("instanceType", "ART");
-                }else if (tl.getType() == ManageTimelines.Type.PEERTUBE) {
-                    bundle.putString("instanceType", "PEERTUBE");
-                    bundle.putString("remote_instance", "peertube.social");
-                    bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
-                }else if( tl.getType() == ManageTimelines.Type.INSTANCE){
-                    bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
-                    bundle.putString("instanceType", tl.getRemoteInstance().getType());
+                if( tl.getType() != ManageTimelines.Type.NOTIFICATION){
+                    DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
+                    RetrieveFeedsAsyncTask.Type type = ManageTimelines.transform(BaseMainActivity.this, tl.getType());
+                    bundle.putSerializable("type", type);
+                    if (tl.getType() == ManageTimelines.Type.TAG) {
+                        TagTimeline ttl = tl.getTagTimeline();
+                        bundle.putString("tag", ttl.getName());
+                        if( ttl.isART() )
+                            bundle.putString("instanceType","ART");
+                    }else if (tl.getType() == ManageTimelines.Type.ART) {
+                        bundle.putString("instanceType", "ART");
+                    }else if (tl.getType() == ManageTimelines.Type.PEERTUBE) {
+                        bundle.putString("instanceType", "PEERTUBE");
+                        bundle.putString("remote_instance", "peertube.social");
+                        bundle.putSerializable("type", RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE);
+                    }else if( tl.getType() == ManageTimelines.Type.INSTANCE){
+                        bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
+                        bundle.putString("instanceType", tl.getRemoteInstance().getType());
+                    }
+                    return displayStatusFragment;
+                }else{
+                    return new TabLayoutNotificationsFragment();
                 }
-                return displayStatusFragment;
+
             }else if (social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE){
                 //Remove the search bar
                 if( !toolbar_search.isIconified() ) {
