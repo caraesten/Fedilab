@@ -178,8 +178,10 @@ import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Filters;
 import fr.gouv.etalab.mastodon.client.Entities.Mention;
+import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.Status;
 import fr.gouv.etalab.mastodon.client.Entities.Tag;
+import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
 import fr.gouv.etalab.mastodon.client.Entities.Version;
 import fr.gouv.etalab.mastodon.sqlite.AccountDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
@@ -2418,6 +2420,64 @@ public class Helper {
             return canNotify;
         } catch (java.text.ParseException e) {
             return true;
+        }
+    }
+
+
+    /**
+     * Unserialized a TagTimeline
+     * @param serializedTagTimeline String serialized TagTimeline
+     * @return TagTimeline
+     */
+    public static TagTimeline restoreTagTimelineFromString(String serializedTagTimeline){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedTagTimeline, TagTimeline.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    /**
+     * Serialized a TagTimeline class
+     * @param tagTimeline TagTimeline to serialize
+     * @return String serialized TagTimeline
+     */
+    public static String tagTimelineToStringStorage(TagTimeline tagTimeline){
+        Gson gson = new Gson();
+        try {
+            return gson.toJson(tagTimeline);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+    /**
+     * Unserialized a RemoteInstance
+     * @param serializedRemoteInstance String serialized RemoteInstance
+     * @return RemoteInstance
+     */
+    public static RemoteInstance restoreRemoteInstanceFromString(String serializedRemoteInstance){
+        Gson gson = new Gson();
+        try {
+            return gson.fromJson(serializedRemoteInstance, RemoteInstance.class);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    /**
+     * Serialized a RemoteInstance class
+     * @param remoteInstance RemoteInstance to serialize
+     * @return String serialized RemoteInstance
+     */
+    public static String remoteInstanceToStringStorage(RemoteInstance remoteInstance){
+        Gson gson = new Gson();
+        try {
+            return gson.toJson(remoteInstance);
+        }catch (Exception e){
+            return null;
         }
     }
 

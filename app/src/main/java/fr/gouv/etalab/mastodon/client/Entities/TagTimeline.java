@@ -14,6 +14,9 @@
  * see <http://www.gnu.org/licenses>. */
 package fr.gouv.etalab.mastodon.client.Entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -21,7 +24,7 @@ import java.util.List;
  * Manage Tags timeline settings
  */
 
-public class TagTimeline {
+public class TagTimeline implements Parcelable {
 
     private String name;
     private String displayname;
@@ -86,4 +89,45 @@ public class TagTimeline {
     public void setDisplayname(String displayname) {
         this.displayname = displayname;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.displayname);
+        dest.writeByte(this.isART ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isNSFW ? (byte) 1 : (byte) 0);
+        dest.writeStringList(this.any);
+        dest.writeStringList(this.all);
+        dest.writeStringList(this.none);
+    }
+
+    public TagTimeline() {
+    }
+
+    protected TagTimeline(Parcel in) {
+        this.name = in.readString();
+        this.displayname = in.readString();
+        this.isART = in.readByte() != 0;
+        this.isNSFW = in.readByte() != 0;
+        this.any = in.createStringArrayList();
+        this.all = in.createStringArrayList();
+        this.none = in.createStringArrayList();
+    }
+
+    public static final Parcelable.Creator<TagTimeline> CREATOR = new Parcelable.Creator<TagTimeline>() {
+        @Override
+        public TagTimeline createFromParcel(Parcel source) {
+            return new TagTimeline(source);
+        }
+
+        @Override
+        public TagTimeline[] newArray(int size) {
+            return new TagTimeline[size];
+        }
+    };
 }
