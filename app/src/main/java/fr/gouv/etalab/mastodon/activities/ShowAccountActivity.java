@@ -262,9 +262,9 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         accountUrl = account.getUrl();
         if( theme == Helper.THEME_BLACK){
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.dark_icon);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.black);
         }else {
-            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC4);
+            changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC3);
         }
         String accountIdRelation = accountId;
         if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PEERTUBE) {
@@ -309,10 +309,10 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         if(account.isLocked()){
             Drawable img = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_lock_outline);
             assert img != null;
-            img.setBounds(0,0,(int) (20 * scale + 0.5f),(int) (20 * scale + 0.5f));
-            account_dn.setCompoundDrawables( img, null, null, null);
+            img.setBounds(0,0,(int) (16 * scale + 0.5f),(int) (16 * scale + 0.5f));
+            account_un.setCompoundDrawables( null, null, img, null);
         }else{
-            account_dn.setCompoundDrawables( null, null, null, null);
+            account_un.setCompoundDrawables( null, null, null, null);
         }
 
         //Peertube account watched by a Mastodon account

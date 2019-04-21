@@ -135,14 +135,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
-                                android:textSize="16sp"
+                                android:textSize="18sp"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
                             <TextView
                                 android:textColor="?attr/color_in_account_header"
                                 android:id="@+id/account_un"
                                 android:maxLines="1"
                                 android:layout_width="wrap_content"
-                                android:textSize="14sp"
+                                android:textSize="16sp"
                                 android:layout_height="wrap_content"
                                 />
                             <TextView
