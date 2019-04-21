@@ -2905,7 +2905,7 @@ public class API {
      * @return APIResponse
      */
     public APIResponse getLists(){
-
+        apiResponse = new APIResponse();
         List<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
         try {
             String response = new HttpsConnection(context).get(getAbsoluteUrl("/lists"), 60, null, prefKeyOauthTokenT);

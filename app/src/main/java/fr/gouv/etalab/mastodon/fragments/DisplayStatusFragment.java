@@ -158,14 +158,13 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             instanceType  = bundle.getString("instanceType", "MASTODON");
             ischannel = bundle.getBoolean("ischannel",false);
         }
-        Log.v(Helper.TAG,"type! " + type);
-        Log.v(Helper.TAG,"instanceType! " + instanceType);
         if( ischannel)
             type = RetrieveFeedsAsyncTask.Type.CHANNEL;
 
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         //instanceType should not be null only for Peertube accounts
-        if( !remoteInstance.equals("") && instanceType == null){
+
+        if( remoteInstance != null && !remoteInstance.equals("") && instanceType == null){
             List<RemoteInstance> remoteInstanceObj = new InstancesDAO(context, db).getInstanceByName(remoteInstance);
             if( remoteInstanceObj != null && remoteInstanceObj.size() > 0)
                 instanceType = remoteInstanceObj.get(0).getType();
@@ -199,7 +198,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             lastReadToot = sharedpreferences.getString(Helper.LAST_READ_TOOT_ID + userId + instance, null);
             lastReadTootDate  = Helper.stringToDate(context, sharedpreferences.getString(Helper.LAST_READ_TOOT_DATE + userId + instance, null));
         }
-        if( instanceType.equals("MASTODON") ||  instanceType.equals("MISSKEY") ){
+        if( instanceType == null || instanceType.equals("MASTODON") ||  instanceType.equals("MISSKEY") ){
             if( type == RetrieveFeedsAsyncTask.Type.TAG && tag != null) {
                 BaseMainActivity.displayPeertube = null;
                 List<TagTimeline> tagTimelines = new SearchDAO(context, db).getTimelineInfo(tag);
@@ -321,7 +320,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             });
 
 
-        if( !instanceType.equals("PEERTUBE"))
+        if( instanceType == null || !instanceType.equals("PEERTUBE"))
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {

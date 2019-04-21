@@ -64,6 +64,8 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
 
         //First time that the timeline is created
         if( manageTimelines == null || manageTimelines.size() == 0){
+
+            manageTimelines = new ArrayList<>();
             //Add home TL
             ManageTimelines manageHome = new ManageTimelines();
             manageHome.setDisplayed(true);

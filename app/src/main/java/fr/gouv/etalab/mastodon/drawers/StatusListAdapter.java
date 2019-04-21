@@ -121,6 +121,7 @@ import fr.gouv.etalab.mastodon.client.Entities.Attachment;
 import fr.gouv.etalab.mastodon.client.Entities.Card;
 import fr.gouv.etalab.mastodon.client.Entities.Emojis;
 import fr.gouv.etalab.mastodon.client.Entities.Error;
+import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.client.Entities.Notification;
 import fr.gouv.etalab.mastodon.client.Entities.Poll;
 import fr.gouv.etalab.mastodon.client.Entities.PollOptions;
@@ -142,6 +143,7 @@ import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.StatusCacheDAO;
 import fr.gouv.etalab.mastodon.sqlite.StatusStoredDAO;
 import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
+import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
 import static fr.gouv.etalab.mastodon.activities.BaseMainActivity.social;
 import static fr.gouv.etalab.mastodon.activities.MainActivity.currentLocale;
@@ -150,6 +152,7 @@ import static fr.gouv.etalab.mastodon.helper.Helper.THEME_DARK;
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.helper.Helper.changeDrawableColor;
 import static fr.gouv.etalab.mastodon.helper.Helper.getLiveInstance;
+import static fr.gouv.etalab.mastodon.sqlite.Sqlite.DB_NAME;
 
 
 /**
@@ -1352,9 +1355,16 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                         holder.fetch_more.setEnabled(false);
                         holder.fetch_more.setVisibility(View.GONE);
                         if( context instanceof BaseMainActivity) {
-                            DisplayStatusFragment homeFragment = ((BaseMainActivity) context).getHomeFragment();
-                            if (homeFragment != null)
-                                homeFragment.fetchMore(status.getId());
+                            SQLiteDatabase db = Sqlite.getInstance(context, DB_NAME, null, Sqlite.DB_VERSION).open();
+                            List<ManageTimelines> timelines = new TimelinesDAO(context, db).getDisplayedTimelines();
+                            for(ManageTimelines tl: timelines) {
+                                if( tl.getType() == ManageTimelines.Type.HOME) {
+                                    DisplayStatusFragment homeFragment = (DisplayStatusFragment) ((MainActivity) context).getSupportFragmentManager().getFragments().get(tl.getPosition());
+                                    if (homeFragment != null)
+                                        homeFragment.fetchMore(status.getId());
+                                    break;
+                                }
+                            }
                         }else{
                             Toasty.error(context, context.getString(R.string.toast_error), Toast.LENGTH_LONG).show();
                         }

@@ -15,13 +15,46 @@ package fr.gouv.etalab.mastodon.client.Entities;
  * see <http://www.gnu.org/licenses>. */
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.PorterDuff;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+
+import es.dmoral.toasty.Toasty;
+import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
+import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
+import fr.gouv.etalab.mastodon.fragments.TabLayoutNotificationsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
+import fr.gouv.etalab.mastodon.sqlite.Sqlite;
+import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
+
+import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
+import static fr.gouv.etalab.mastodon.sqlite.Sqlite.DB_NAME;
 
 
 public class ManageTimelines {
@@ -35,6 +68,10 @@ public class ManageTimelines {
     private RemoteInstance remoteInstance;
     private TagTimeline tagTimeline;
     private List listTimeline;
+
+
+    private boolean notif_follow, notif_add, notif_mention, notif_share;
+
 
     public int getPosition() {
         return position;
@@ -78,9 +115,6 @@ public class ManageTimelines {
         return instance;
     }
 
-    public void setInstance(String instance) {
-        this.instance = instance;
-    }
 
     public RemoteInstance getRemoteInstance() {
         return remoteInstance;
@@ -98,9 +132,6 @@ public class ManageTimelines {
         this.tagTimeline = tagTimeline;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public List getListTimeline() {
         return listTimeline;
@@ -249,5 +280,385 @@ public class ManageTimelines {
         return null;
     }
 
+
+    public void createTabs(Context context, TabLayout tabLayout, java.util.List<ManageTimelines> manageTimelines){
+
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+
+        for(ManageTimelines tl: manageTimelines){
+            TabLayout.Tab tb = tabLayout.newTab();
+            tb.setCustomView(R.layout.tab_badge);
+            ImageView icon = null;
+            if( tl.getType() != Type.TAG && tl.getType() != Type.INSTANCE && tl.getType() != Type.LIST) {
+                if( tb.getCustomView() != null)
+                    icon = tb.getCustomView().findViewById(R.id.tab_icon);
+            }
+            if( icon != null){
+                switch (tl.getType()){
+                    case HOME:
+                        icon.setImageResource(R.drawable.ic_home);
+                        icon.setContentDescription(context.getString(R.string.home_menu));
+                        break;
+                    case NOTIFICATION:
+                        icon.setImageResource(R.drawable.ic_notifications);
+                        icon.setContentDescription(context.getString(R.string.notifications));
+                        break;
+                    case DIRECT:
+                        icon.setImageResource(R.drawable.ic_direct_messages);
+                        icon.setContentDescription(context.getString(R.string.direct_message));
+                        break;
+                    case LOCAL:
+                        icon.setImageResource(R.drawable.ic_people);
+                        icon.setContentDescription(context.getString(R.string.local_menu));
+                        break;
+                    case PUBLIC:
+                        icon.setImageResource(R.drawable.ic_public);
+                        icon.setContentDescription(context.getString(R.string.global_menu));
+                        break;
+                    case ART:
+                        icon.setImageResource(R.drawable.ic_color_lens);
+                        icon.setContentDescription(context.getString(R.string.art_menu));
+                        break;
+                    case PEERTUBE:
+                        icon.setImageResource(R.drawable.ic_video_peertube);
+                        icon.setContentDescription(context.getString(R.string.peertube_menu));
+                        break;
+                }
+                if (theme == THEME_LIGHT) {
+                    icon.setColorFilter(ContextCompat.getColor(context, R.color.action_light_header), PorterDuff.Mode.SRC_IN);
+                } else {
+                    icon.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
+                }
+                tabLayout.addTab(tb);
+            }
+            final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+            if( tl.getType() == Type.NOTIFICATION){
+                notificationClik(context, tl, tabLayout);
+            }else if( tl.getType() == Type.PUBLIC || tl.getType() == Type.LOCAL || tl.getType() == Type.ART  || tl.getType() == Type.HOME) {
+                if( tabStrip != null && tabStrip.getChildCount() > tl.getPosition()) {
+                    tabStrip.getChildAt(tl.getPosition()).setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            manageFilters(context, tl, tabStrip);
+                            return true;
+                        }
+                    });
+                }
+            }
+        }
+
+    }
+
+    public static void insertUpdateTL(Context context, ManageTimelines manageTimelines){
+        SQLiteDatabase db = Sqlite.getInstance(context, DB_NAME, null, Sqlite.DB_VERSION).open();
+        java.util.List<ManageTimelines> timelines = new TimelinesDAO(context, db).getAllTimelines();
+        boolean canbeAdded = true;
+        for(ManageTimelines tl: timelines){
+            if( tl.getType() == manageTimelines.getType() && manageTimelines.type != Type.LIST && manageTimelines.type != Type.TAG && manageTimelines.type != Type.ART){
+                canbeAdded = false;
+                break;
+            }
+        }
+        if( canbeAdded) {
+            if( manageTimelines.type != Type.PEERTUBE && manageTimelines.type != Type.TAG && manageTimelines.type != Type.ART){
+                new TimelinesDAO(context, db).insert(manageTimelines);
+            }
+        }
+    }
+
+
+
+    private void notificationClik(Context context, ManageTimelines tl,  TabLayout tabLayout){
+        final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
+        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA )
+            if( tabStrip != null && tabStrip.getChildCount() > tl.getPosition()){
+                tabStrip.getChildAt( tl.getPosition()).setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        //Only shown if the tab has focus
+                        PopupMenu popup = new PopupMenu(context, tabStrip.getChildAt(1));
+                        popup.getMenuInflater()
+                                .inflate(R.menu.option_filter_notifications, popup.getMenu());
+                        Menu menu = popup.getMenu();
+                        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+                        final MenuItem itemFavourite = menu.findItem(R.id.action_favorite);
+                        final MenuItem itemFollow = menu.findItem(R.id.action_follow);
+                        final MenuItem itemMention = menu.findItem(R.id.action_mention);
+                        final MenuItem itemBoost = menu.findItem(R.id.action_boost);
+                        notif_follow = sharedpreferences.getBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, true);
+                        notif_add = sharedpreferences.getBoolean(Helper.SET_NOTIF_ADD_FILTER, true);
+                        notif_mention = sharedpreferences.getBoolean(Helper.SET_NOTIF_MENTION_FILTER, true);
+                        notif_share = sharedpreferences.getBoolean(Helper.SET_NOTIF_SHARE_FILTER, true);
+                        itemFavourite.setChecked(notif_add);
+                        itemFollow.setChecked(notif_follow);
+                        itemMention.setChecked(notif_mention);
+                        itemBoost.setChecked(notif_share);
+                        popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                            @Override
+                            public void onDismiss(PopupMenu menu) {
+                                TabLayoutNotificationsFragment tabLayoutNotificationsFragment = (TabLayoutNotificationsFragment) ((MainActivity)context).getSupportFragmentManager().getFragments().get(tl.getPosition());
+                                tabLayoutNotificationsFragment.refreshAll();
+                            }
+                        });
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            public boolean onMenuItemClick(MenuItem item) {
+                                item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                                item.setActionView(new View(context));
+                                item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                                    @Override
+                                    public boolean onMenuItemActionExpand(MenuItem item) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                                        return false;
+                                    }
+                                });
+                                switch (item.getItemId()) {
+                                    case R.id.action_favorite:
+                                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                                        notif_add = !notif_add;
+                                        editor.putBoolean(Helper.SET_NOTIF_ADD_FILTER, notif_add);
+                                        itemFavourite.setChecked(notif_add);
+                                        editor.apply();
+                                        break;
+                                    case R.id.action_follow:
+                                        editor = sharedpreferences.edit();
+                                        notif_follow = !notif_follow;
+                                        editor.putBoolean(Helper.SET_NOTIF_FOLLOW_FILTER, notif_follow);
+                                        itemFollow.setChecked(notif_follow);
+                                        editor.apply();
+                                        break;
+                                    case R.id.action_mention:
+                                        editor = sharedpreferences.edit();
+                                        notif_mention = !notif_mention;
+                                        editor.putBoolean(Helper.SET_NOTIF_MENTION_FILTER, notif_mention);
+                                        itemMention.setChecked(notif_mention);
+                                        editor.apply();
+                                        break;
+                                    case R.id.action_boost:
+                                        editor = sharedpreferences.edit();
+                                        notif_share = !notif_share;
+                                        editor.putBoolean(Helper.SET_NOTIF_SHARE_FILTER, notif_share);
+                                        itemBoost.setChecked(notif_share);
+                                        editor.apply();
+                                        break;
+                                }
+                                return false;
+                            }
+                        });
+                        popup.show();
+                        return true;
+                    }
+                });
+            }
+
+    }
+
+
+
+
+    private void manageFilters(Context context, ManageTimelines tl, LinearLayout tabStrip){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        //Only shown if the tab has focus
+        PopupMenu popup = null;
+        popup = new PopupMenu(context, tabStrip.getChildAt(tl.getPosition()));
+        if( tl.getType() == Type.ART){
+            popup.getMenuInflater()
+                    .inflate(R.menu.option_tag_timeline, popup.getMenu());
+            Menu menu = popup.getMenu();
+
+            final boolean[] show_nsfw = {sharedpreferences.getBoolean(Helper.SET_ART_WITH_NSFW, false)};
+            final MenuItem itemShowNSFW = menu.findItem(R.id.action_show_nsfw);
+            final MenuItem itemMedia = menu.findItem(R.id.action_show_media_only);
+            final MenuItem itemDelete = menu.findItem(R.id.action_delete);
+
+            final MenuItem itemAny = menu.findItem(R.id.action_any);
+            final MenuItem itemAll = menu.findItem(R.id.action_all);
+            final MenuItem itemNone = menu.findItem(R.id.action_none);
+            final MenuItem action_displayname = menu.findItem(R.id.action_displayname);
+            itemAny.setVisible(false);
+            itemAll.setVisible(false);
+            itemNone.setVisible(false);
+            action_displayname.setVisible(false);
+            itemMedia.setVisible(false);
+            itemDelete.setVisible(false);
+            itemShowNSFW.setChecked(show_nsfw[0]);
+            final boolean[] changes = {false};
+            popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                @Override
+                public void onDismiss(PopupMenu menu) {
+                    if(changes[0]) {
+                        FragmentTransaction fragTransaction = ((MainActivity)context).getSupportFragmentManager().beginTransaction();
+                        DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) ((MainActivity)context).getSupportFragmentManager().getFragments().get(tl.getPosition());
+                        fragTransaction.detach(displayStatusFragment);
+                        fragTransaction.attach(displayStatusFragment);
+                        fragTransaction.commit();
+                    }
+                }
+            });
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                public boolean onMenuItemClick(MenuItem item) {
+                    changes[0] = true;
+                    item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                    item.setActionView(new View(context));
+                    item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                        @Override
+                        public boolean onMenuItemActionExpand(MenuItem item) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onMenuItemActionCollapse(MenuItem item) {
+                            return false;
+                        }
+                    });
+                    if (item.getItemId() == R.id.action_show_nsfw) {
+                        show_nsfw[0] = !show_nsfw[0];
+                        itemShowNSFW.setChecked(show_nsfw[0]);
+                        SharedPreferences.Editor editor = sharedpreferences.edit();
+                        editor.putBoolean(Helper.SET_ART_WITH_NSFW, show_nsfw[0]);
+                        editor.apply();
+                    }
+                    return false;
+                }
+            });
+            popup.show();
+        }else{
+            popup.getMenuInflater()
+                    .inflate(R.menu.option_filter_toots, popup.getMenu());
+            Menu menu = popup.getMenu();
+            final MenuItem itemShowBoosts = menu.findItem(R.id.action_show_boosts);
+            final MenuItem itemShowReplies = menu.findItem(R.id.action_show_replies);
+            final MenuItem itemFilter = menu.findItem(R.id.action_filter);
+            DisplayStatusFragment displayStatusFragment = (DisplayStatusFragment) ((MainActivity)context).getSupportFragmentManager().getFragments().get(tl.getPosition());
+            if((displayStatusFragment != null && displayStatusFragment.getUserVisibleHint())){
+                itemShowBoosts.setVisible(false);
+                itemShowReplies.setVisible(false);
+                itemFilter.setVisible(true);
+            }else {
+                itemShowBoosts.setVisible(true);
+                itemShowReplies.setVisible(true);
+                itemFilter.setVisible(true);
+            }
+            final boolean[] show_boosts = {sharedpreferences.getBoolean(Helper.SET_SHOW_BOOSTS, true)};
+            final boolean[] show_replies = {sharedpreferences.getBoolean(Helper.SET_SHOW_REPLIES, true)};
+
+            String show_filtered = null;
+            if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.HOME)
+                show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_HOME, null);
+            if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.LOCAL)
+                show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_LOCAL, null);
+            if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint()  && tl.getType() == Type.PUBLIC)
+                show_filtered = sharedpreferences.getString(Helper.SET_FILTER_REGEX_PUBLIC, null);
+
+            itemShowBoosts.setChecked(show_boosts[0]);
+            itemShowReplies.setChecked(show_replies[0]);
+            if( show_filtered != null && show_filtered.length() > 0){
+                itemFilter.setTitle(show_filtered);
+            }
+
+            popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
+                @Override
+                public void onDismiss(PopupMenu menu) {
+                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint())
+                        displayStatusFragment.refreshFilter();
+                }
+            });
+            int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
+            int style;
+            if (theme == Helper.THEME_DARK) {
+                style = R.style.DialogDark;
+            } else if (theme == Helper.THEME_BLACK){
+                style = R.style.DialogBlack;
+            }else {
+                style = R.style.Dialog;
+            }
+            String finalShow_filtered = show_filtered;
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                public boolean onMenuItemClick(MenuItem item) {
+                    item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                    item.setActionView(new View(context));
+                    item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                        @Override
+                        public boolean onMenuItemActionExpand(MenuItem item) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onMenuItemActionCollapse(MenuItem item) {
+                            return false;
+                        }
+                    });
+                    final SharedPreferences.Editor editor = sharedpreferences.edit();
+                    switch (item.getItemId()) {
+                        case R.id.action_show_boosts:
+                            show_boosts[0] = !show_boosts[0];
+                            editor.putBoolean(Helper.SET_SHOW_BOOSTS, show_boosts[0]);
+                            itemShowBoosts.setChecked(show_boosts[0]);
+                            editor.apply();
+                            break;
+                        case R.id.action_show_replies:
+                            show_replies[0] = !show_replies[0];
+                            editor.putBoolean(Helper.SET_SHOW_REPLIES, show_replies[0]);
+                            itemShowReplies.setChecked(show_replies[0]);
+                            editor.apply();
+                            break;
+                        case R.id.action_filter:
+                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context, style);
+                            LayoutInflater inflater = ((MainActivity)context).getLayoutInflater();
+                            @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.filter_regex, null);
+                            dialogBuilder.setView(dialogView);
+                            final EditText editText = dialogView.findViewById(R.id.filter_regex);
+                            Toast alertRegex = Toasty.warning(context, context.getString(R.string.alert_regex), Toast.LENGTH_LONG);
+                            editText.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                }
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                }
+                                @Override
+                                public void afterTextChanged(Editable s) {
+                                    try {
+                                        Pattern.compile("(" + s.toString() + ")", Pattern.CASE_INSENSITIVE);
+                                    }catch (Exception e){
+                                        if( !alertRegex.getView().isShown()){
+                                            alertRegex.show();
+                                        }
+                                    }
+
+                                }
+                            });
+                            if( finalShow_filtered != null) {
+                                editText.setText(finalShow_filtered);
+                                editText.setSelection(editText.getText().toString().length());
+                            }
+                            dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    itemFilter.setTitle(editText.getText().toString().trim());
+                                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.HOME)
+                                        editor.putString(Helper.SET_FILTER_REGEX_HOME, editText.getText().toString().trim());
+                                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.LOCAL)
+                                        editor.putString(Helper.SET_FILTER_REGEX_LOCAL, editText.getText().toString().trim());
+                                    if(displayStatusFragment != null && displayStatusFragment.getUserVisibleHint() && tl.getType() == Type.PUBLIC)
+                                        editor.putString(Helper.SET_FILTER_REGEX_PUBLIC, editText.getText().toString().trim());
+                                    editor.apply();
+                                }
+                            });
+                            AlertDialog alertDialog = dialogBuilder.create();
+                            alertDialog.show();
+                            break;
+                    }
+                    return false;
+                }
+            });
+            popup.show();
+        }
+    }
 
 }
