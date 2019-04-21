@@ -261,7 +261,7 @@ public class ShowAccountActivity extends BaseActivity implements OnPostActionInt
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         accountUrl = account.getUrl();
-        if( theme == Helper.THEME_BLACK){
+        if( theme == THEME_LIGHT){
             changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.black);
         }else {
             changeDrawableColor(getApplicationContext(), R.drawable.ic_lock_outline,R.color.mastodonC3);
