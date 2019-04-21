@@ -294,6 +294,7 @@
     <string name="nothing_to_do">No action can be taken</string>
     <string name="toast_saved">The media has been saved!</string>
     <string name="toast_error_translate">An error occurred while translating!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Draft saved!</string>
     <string name="toast_error_char_limit">Are you sure this instance allows this number of characters? Usually, this value is close to 500 characters.</string>
     <string name="toast_visibility_changed">Visibility of the toots has been changed for the account %1$s</string>

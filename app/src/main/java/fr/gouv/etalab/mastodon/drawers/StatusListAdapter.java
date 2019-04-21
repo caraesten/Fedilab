@@ -2395,7 +2395,10 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                                     doAction = API.StatusAction.BLOCK;
                                     break;
                                 case R.id.action_translate:
-                                    translateToot(status);
+                                    if (translator == Helper.TRANS_NONE)
+                                        Toasty.info(context, R.string.toast_error_translations_disabled, Toast.LENGTH_SHORT).show();
+                                    else
+                                        translateToot(status);
                                     return true;
                                 case R.id.action_report:
                                     builderInner = new AlertDialog.Builder(context, style);
