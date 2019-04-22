@@ -227,10 +227,11 @@ public abstract class BaseMainActivity extends BaseActivity
     public static HashMap<Integer, RetrieveFeedsAsyncTask.Type> typePosition = new HashMap<>();
     private FloatingActionButton federatedTimelines;
     public static UpdateAccountInfoAsyncTask.SOCIAL social;
-    SparseArray<Fragment> registeredFragments = new SparseArray<>();
     private final int PICK_IMPORT = 5556;
     private AlertDialog.Builder dialogBuilderOptin;
     private List<ManageTimelines> timelines;
+
+    public static HashMap<Integer, Fragment> mPageReferenceMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -687,14 +688,6 @@ public abstract class BaseMainActivity extends BaseActivity
             startSreaming();
 
 
-
-        int tabCount = tabLayout.getTabCount();
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA)
-            for( int j = countPage ; j < tabCount ; j++){
-                attacheDelete(j);
-            }
-
-
         toolbar_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -1148,18 +1141,6 @@ public abstract class BaseMainActivity extends BaseActivity
         }
     }
 
-
-    public void removeSearchTab(String tag){
-        Helper.removeSearchTag(tag, tabLayout, adapter);
-        int allTabCount = tabLayout.getTabCount();
-        if( allTabCount == countPage){
-            main_app_container.setVisibility(View.GONE);
-            viewPager.setVisibility(View.VISIBLE);
-            tabLayout.setVisibility(View.VISIBLE);
-            toolbarTitle.setVisibility(View.GONE);
-            delete_instance.setVisibility(View.GONE);
-        }
-    }
 
 
     protected abstract void rateThisApp();
@@ -1804,7 +1785,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
     @Override
     public void syncedTimelines(List<ManageTimelines> manageTimelines) {
-        new ManageTimelines().createTabs(BaseMainActivity.this, tabLayout, manageTimelines);
+        new ManageTimelines().createTabs(BaseMainActivity.this, manageTimelines);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean optimize_loading = sharedpreferences.getBoolean(Helper.SET_OPTIMIZE_LOADING, false);
         boolean displayFollowInstance = sharedpreferences.getBoolean(Helper.SET_DISPLAY_FOLLOW_INSTANCE, true);
@@ -1994,6 +1975,7 @@ public abstract class BaseMainActivity extends BaseActivity
             }
         }
 
+
         @Override
         public Fragment getItem(int position) {
             if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
@@ -2034,6 +2016,7 @@ public abstract class BaseMainActivity extends BaseActivity
                         bundle.putString("targetedid", tl.getListTimeline().getId());
                     }
                     displayStatusFragment.setArguments(bundle);
+                    mPageReferenceMap.put(tl.getPosition(), displayStatusFragment);
                     return displayStatusFragment;
                 }else{
                     return new TabLayoutNotificationsFragment();
@@ -2102,7 +2085,7 @@ public abstract class BaseMainActivity extends BaseActivity
 
         @Override
         public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            registeredFragments.remove(position);
+            mPageReferenceMap.remove(position);
             super.destroyItem(container, position, object);
         }
         @Override
@@ -2112,271 +2095,7 @@ public abstract class BaseMainActivity extends BaseActivity
     }
 
 
-    private void attacheDelete(int position){
-        LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
-        tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if( tabLayout.getTabAt(position) == null || tabLayout.getTabAt(position).getText() == null){
-                    return false;
-                }
-                String tabName = tabLayout.getTabAt(position).getText().toString().trim();
 
-                SQLiteDatabase db = Sqlite.getInstance(BaseMainActivity.this, DB_NAME, null, Sqlite.DB_VERSION).open();
-
-                List<TagTimeline> tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTabInfo(tabName);
-                String tag;
-                if( tagTimelines == null || tagTimelines.size() == 0) {
-                    tag = tabName;
-                    if(tagTimelines == null)
-                        tagTimelines = new SearchDAO(BaseMainActivity.this, db).getTimelineInfo(tag);
-                }else
-                    tag = tagTimelines.get(0).getName();
-                PopupMenu popup = new PopupMenu(BaseMainActivity.this, tabStrip.getChildAt(position));
-                popup.getMenuInflater()
-                        .inflate(R.menu.option_tag_timeline, popup.getMenu());
-                Menu menu = popup.getMenu();
-
-
-                final MenuItem itemMediaOnly = menu.findItem(R.id.action_show_media_only);
-                final MenuItem itemShowNSFW = menu.findItem(R.id.action_show_nsfw);
-
-
-                final boolean[] changes = {false};
-                final boolean[] mediaOnly = {false};
-                final boolean[] showNSFW = {false};
-                if( tagTimelines != null && tagTimelines.size() > 0 ) {
-                    mediaOnly[0] = tagTimelines.get(0).isART();
-                    showNSFW[0] = tagTimelines.get(0).isNSFW();
-                }
-                itemMediaOnly.setChecked(mediaOnly[0]);
-                itemShowNSFW.setChecked(showNSFW[0]);
-                List<TagTimeline> finalTagTimelines = tagTimelines;
-                if (finalTagTimelines != null && finalTagTimelines.size() > 0)
-                    popup.setOnDismissListener(new PopupMenu.OnDismissListener() {
-                        @Override
-                        public void onDismiss(PopupMenu menu) {
-                            if(changes[0]) {
-                                FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
-                                String tag;
-                                tag = finalTagTimelines.get(0).getName();
-                                if( tagFragment.get(tag) == null)
-                                    return;
-                                fragTransaction.detach(tagFragment.get(tag));
-                                Bundle bundle = new Bundle();
-                                if( mediaOnly[0])
-                                    bundle.putString("instanceType","ART");
-                                else
-                                    bundle.putString("instanceType","MASTODON");
-                                bundle.putString("tag", tag);
-                                bundle.putSerializable("type",  RetrieveFeedsAsyncTask.Type.TAG);
-                                tagFragment.get(tag).setArguments(bundle);
-                                fragTransaction.attach(tagFragment.get(tag));
-                                fragTransaction.commit();
-                            }
-                        }
-                    });
-
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-                        item.setActionView(new View(getApplicationContext()));
-                        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-                            @Override
-                            public boolean onMenuItemActionExpand(MenuItem item) {
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onMenuItemActionCollapse(MenuItem item) {
-                                return false;
-                            }
-                        });
-                        changes[0] = true;
-                        switch (item.getItemId()) {
-                            case R.id.action_show_media_only:
-                                TagTimeline tagTimeline = new TagTimeline();
-                                mediaOnly[0] =!mediaOnly[0];
-                                tagTimeline.setName(tag.trim());
-                                tagTimeline.setART(mediaOnly[0]);
-                                tagTimeline.setNSFW(showNSFW[0]);
-                                itemMediaOnly.setChecked(mediaOnly[0]);
-                                new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, null,null, null, null);
-                                break;
-                            case R.id.action_show_nsfw:
-                                showNSFW[0] = !showNSFW[0];
-                                tagTimeline = new TagTimeline();
-                                tagTimeline.setName(tag.trim());
-                                tagTimeline.setART(mediaOnly[0]);
-                                tagTimeline.setNSFW(showNSFW[0]);
-                                itemShowNSFW.setChecked(showNSFW[0]);
-                                new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, null,null, null, null);
-                                break;
-                            case R.id.action_any:
-                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
-                                LayoutInflater inflater = getLayoutInflater();
-                                @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.tags_any, null);
-                                dialogBuilder.setView(dialogView);
-                                final EditText editText = dialogView.findViewById(R.id.filter_any);
-                                List<TagTimeline> tagInfo = new SearchDAO(BaseMainActivity.this, db).getTimelineInfo(tag);
-                                if( tagInfo != null && tagInfo.size() > 0 && tagInfo.get(0).getAny() != null) {
-                                    String valuesTag = "";
-                                    for(String val: tagInfo.get(0).getAny())
-                                        valuesTag += val+" ";
-                                    editText.setText(valuesTag);
-                                    editText.setSelection(editText.getText().toString().length());
-                                }
-
-                                tagTimeline = new TagTimeline();
-                                tagTimeline.setName(tag.trim());
-                                tagTimeline.setART(mediaOnly[0]);
-                                tagTimeline.setNSFW(showNSFW[0]);
-
-                                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        String[] values = editText.getText().toString().trim().split("\\s+");
-                                        List<String> any =
-                                                new ArrayList<>(Arrays.asList(values));
-                                        new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline,null, any, null, null);
-                                    }
-                                });
-                                AlertDialog alertDialog = dialogBuilder.create();
-                                alertDialog.show();
-                                break;
-                            case R.id.action_all:
-                                dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
-                                inflater = getLayoutInflater();
-                                dialogView = inflater.inflate(R.layout.tags_all, null);
-                                dialogBuilder.setView(dialogView);
-                                final EditText editTextAll = dialogView.findViewById(R.id.filter_all);
-                                tagInfo = new SearchDAO(BaseMainActivity.this, db).getTimelineInfo(tag);
-                                if( tagInfo != null && tagInfo.size() > 0 && tagInfo.get(0).getAll() != null) {
-                                    String valuesTag = "";
-                                    for(String val: tagInfo.get(0).getAll())
-                                        valuesTag += val+" ";
-                                    editTextAll.setText(valuesTag);
-                                    editTextAll.setSelection(editTextAll.getText().toString().length());
-                                }
-                                tagTimeline = new TagTimeline();
-                                tagTimeline.setName(tag.trim());
-                                tagTimeline.setART(mediaOnly[0]);
-                                tagTimeline.setNSFW(showNSFW[0]);
-
-                                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        String[] values = editTextAll.getText().toString().trim().split("\\s+");
-                                        List<String> all =
-                                                new ArrayList<>(Arrays.asList(values));
-                                        new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, null,null, all, null);
-                                    }
-                                });
-                                alertDialog = dialogBuilder.create();
-                                alertDialog.show();
-                                break;
-                            case R.id.action_none:
-                                dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
-                                inflater = getLayoutInflater();
-                                dialogView = inflater.inflate(R.layout.tags_all, null);
-                                dialogBuilder.setView(dialogView);
-                                final EditText editTextNone = dialogView.findViewById(R.id.filter_all);
-                                tagInfo = new SearchDAO(BaseMainActivity.this, db).getTimelineInfo(tag);
-                                if( tagInfo != null && tagInfo.size() > 0 && tagInfo.get(0).getNone() != null) {
-                                    String valuesTag = "";
-                                    for(String val: tagInfo.get(0).getNone())
-                                        valuesTag += val+" ";
-                                    editTextNone.setText(valuesTag);
-                                    editTextNone.setSelection(editTextNone.getText().toString().length());
-                                }
-                                tagTimeline = new TagTimeline();
-                                tagTimeline.setName(tag.trim());
-                                tagTimeline.setART(mediaOnly[0]);
-                                tagTimeline.setNSFW(showNSFW[0]);
-
-                                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        String[] values = editTextNone.getText().toString().trim().split("\\s+");
-                                        List<String> none =
-                                                new ArrayList<>(Arrays.asList(values));
-                                        new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, null,null, null, none);
-                                    }
-                                });
-                                alertDialog = dialogBuilder.create();
-                                alertDialog.show();
-                                break;
-                            case R.id.action_displayname:
-                                dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
-                                inflater = getLayoutInflater();
-                                dialogView = inflater.inflate(R.layout.tags_name, null);
-                                dialogBuilder.setView(dialogView);
-                                final EditText editTextName = dialogView.findViewById(R.id.column_name);
-                                tagInfo = new SearchDAO(BaseMainActivity.this, db).getTimelineInfo(tag);
-                                if( tagInfo != null && tagInfo.size() > 0 && tagInfo.get(0).getDisplayname() != null) {
-                                    editTextName.setText(tagInfo.get(0).getDisplayname());
-                                    editTextName.setSelection(editTextName.getText().toString().length());
-                                }
-                                tagTimeline = new TagTimeline();
-                                tagTimeline.setName(tag.trim());
-                                tagTimeline.setART(mediaOnly[0]);
-                                tagTimeline.setNSFW(showNSFW[0]);
-                                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        String values = editTextName.getText().toString();
-                                        if( values.trim().length() == 0)
-                                            values = tag;
-                                        if( tabLayout.getTabAt(position) != null)
-                                            tabLayout.getTabAt(position).setText(values);
-                                        new SearchDAO(BaseMainActivity.this, db).updateSearch(tagTimeline, values,null, null, null);
-                                    }
-                                });
-                                alertDialog = dialogBuilder.create();
-                                alertDialog.show();
-                                break;
-                            case R.id.action_delete:
-                                dialogBuilder = new AlertDialog.Builder(BaseMainActivity.this, style);
-                                dialogBuilder.setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int id) {
-
-                                        new SearchDAO(BaseMainActivity.this, db).remove(tag);
-                                        Helper.refreshSearchTag(BaseMainActivity.this, tabLayout, adapter);
-                                        dialog.dismiss();
-                                    }
-                                });
-                                dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                dialogBuilder.setMessage(getString(R.string.delete) + ": " + tag);
-                                alertDialog = dialogBuilder.create();
-                                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                    @Override
-                                    public void onDismiss(DialogInterface dialogInterface) {
-                                        //Hide keyboard
-                                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                        assert imm != null;
-                                        imm.hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
-                                    }
-                                });
-                                if( alertDialog.getWindow() != null )
-                                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                                alertDialog.show();
-                                return false;
-                        }
-                        return false;
-                    }
-                });
-                popup.show();
-                return false;
-            }
-        });
-
-    }
 
     public void updateHomeCounter(){
         if( tabLayout.getTabAt(0) == null )

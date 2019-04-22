@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.ItemTouchHelperAdapter;
@@ -144,6 +145,8 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
             } else {
                 holder.iconView.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
             }
+        }else{
+            holder.iconView.setColorFilter(null);
         }
 
         if (theme == THEME_LIGHT) {
@@ -197,9 +200,12 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
         Collections.swap(mItems, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-       for(ManageTimelines timelines: mItems){
-        new TimelinesDAO(context, db).update(timelines);
-       }
+        int i = 0;
+        for(ManageTimelines timelines: mItems){
+           timelines.setPosition(i);
+           new TimelinesDAO(context, db).update(timelines);
+           i++;
+        }
        return true;
     }
 

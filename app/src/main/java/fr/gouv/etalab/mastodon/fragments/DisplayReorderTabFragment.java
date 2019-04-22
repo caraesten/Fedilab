@@ -15,7 +15,6 @@ package fr.gouv.etalab.mastodon.fragments;
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,7 +31,6 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.drawers.ReorderTabAdapter;
-import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.OnStartDragListener;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.SimpleItemTouchHelperCallback;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
@@ -71,8 +69,6 @@ public class DisplayReorderTabFragment extends Fragment implements OnStartDragLi
         lv_reorder_tabs.setLayoutManager(mLayoutManager);
         return rootView;
     }
-
-
 
     @Override
     public void onCreate(Bundle saveInstance) {

@@ -3254,74 +3254,7 @@ public class Helper {
 
 
 
-    public static void refreshSearchTag(Context context, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
-        SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
-        List<String> searches = new SearchDAO(context, db).getAllSearch();
-        int countInitialTab = ((BaseMainActivity) context).countPage;
-        int allTabCount = tableLayout.getTabCount();
-        if( allTabCount > countInitialTab){
-            while(allTabCount > countInitialTab){
-                removeTab(tableLayout, pagerAdapter, allTabCount-1);
-                allTabCount -=1;
-            }
-        }
-        int i = countInitialTab;
-        if( searches != null) {
-            for (String search : searches) {
-                addTab(tableLayout, pagerAdapter, search);
-                BaseMainActivity.typePosition.put(i, RetrieveFeedsAsyncTask.Type.TAG);
-                i++;
-            }
-            if( searches.size() > 0 ){
-                tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-                tableLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-            }
-        }
-        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
-        final int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-        if( theme == THEME_LIGHT)
-            tableLayout.setTabTextColors(ContextCompat.getColor(context, R.color.mastodonC1), ContextCompat.getColor(context, R.color.mastodonC4));
-        else if( theme == THEME_BLACK)
-            tableLayout.setTabTextColors(ContextCompat.getColor(context, R.color.dark_text), ContextCompat.getColor(context, R.color.dark_icon));
-        else if( theme == THEME_DARK)
-            tableLayout.setTabTextColors(ContextCompat.getColor(context, R.color.dark_text), ContextCompat.getColor(context, R.color.mastodonC4));
-    }
 
-    private static void removeTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, int position) {
-        if (tableLayout.getTabCount() >= position  ) {
-            try {
-                if(tableLayout.getTabCount() > 0)
-                    tableLayout.removeTabAt(position);
-                pagerAdapter.removeTabPage();
-            }catch (Exception ignored){
-                refreshSearchTag(tableLayout.getContext(), tableLayout, pagerAdapter);
-            }
-
-        }
-    }
-
-
-
-
-    public static void removeSearchTag(String keyword, TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter){
-
-        int selection = -1;
-        for(int i = 0; i < tableLayout.getTabCount() ; i++ ){
-            if( tableLayout.getTabAt(i).getText() != null && tableLayout.getTabAt(i).getText().equals(keyword)) {
-                selection = i;
-                break;
-            }
-        }
-        if( selection != -1)
-            removeTab(tableLayout, pagerAdapter, selection);
-    }
-
-
-
-    private static void addTab(TabLayout tableLayout, BaseMainActivity.PagerAdapter pagerAdapter, String title) {
-        tableLayout.addTab(tableLayout.newTab().setText(title));
-        pagerAdapter.addTabPage(title);
-    }
 
 
     /**
