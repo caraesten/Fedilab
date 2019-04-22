@@ -133,6 +133,7 @@ import fr.gouv.etalab.mastodon.fragments.DisplayListsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayMutedInstanceFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayNotificationsFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayPeertubeNotificationsFragment;
+import fr.gouv.etalab.mastodon.fragments.DisplayReorderTabFragment;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.fragments.SettingsFragment;
 import fr.gouv.etalab.mastodon.fragments.SettingsPeertubeFragment;
@@ -1638,6 +1639,12 @@ public abstract class BaseMainActivity extends BaseActivity
             fragmentTag = "WHO_TO_FOLLOW";
             fragmentManager.beginTransaction()
                     .replace(R.id.main_app_container, whoToFollowFragment, fragmentTag).commit();
+        }else if(id == R.id.nav_drag_timelines){
+            toot.hide();
+            DisplayReorderTabFragment displayReorderTabFragment = new DisplayReorderTabFragment();
+            fragmentTag = "REORDER_TIMELINES";
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_app_container, displayReorderTabFragment, fragmentTag).commit();
         }
 
         populateTitleWithTag(fragmentTag, item.getTitle().toString(), item.getItemId());

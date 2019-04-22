@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
@@ -32,19 +31,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
-import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.ItemTouchHelperAdapter;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.ItemTouchHelperViewHolder;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.OnStartDragListener;
-import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
@@ -159,14 +154,20 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
             holder.hideView.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
         }
 
+        if(tl.isDisplayed()){
+            holder.hideView.setImageResource(R.drawable.ic_make_tab_visible);
+        }else{
+            holder.hideView.setImageResource(R.drawable.ic_make_tab_unvisible);
+        }
+
         holder.hideView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tl.setDisplayed(! tl.isDisplayed());
                 if(tl.isDisplayed()){
-                    holder.handleView.setImageResource(R.drawable.ic_make_tab_unvisible);
+                    holder.hideView.setImageResource(R.drawable.ic_make_tab_visible);
                 }else{
-                    holder.handleView.setImageResource(R.drawable.ic_make_tab_visible);
+                    holder.hideView.setImageResource(R.drawable.ic_make_tab_unvisible);
                 }
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new TimelinesDAO(context, db).update(tl);

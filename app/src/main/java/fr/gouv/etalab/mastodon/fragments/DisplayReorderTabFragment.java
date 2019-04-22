@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.drawers.ReorderTabAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.OnStartDragListener;
+import fr.gouv.etalab.mastodon.helper.itemtouchhelper.SimpleItemTouchHelperCallback;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
 
@@ -54,13 +56,19 @@ public class DisplayReorderTabFragment extends Fragment implements OnStartDragLi
         context = getContext();
 
         RecyclerView lv_reorder_tabs = rootView.findViewById(R.id.lv_reorder_tabs);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(context);
-        lv_reorder_tabs.setLayoutManager(mLayoutManager);
 
-        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         List<ManageTimelines> timelines = new TimelinesDAO(context, db).getAllTimelines();
-        new ReorderTabAdapter(context, timelines, DisplayReorderTabFragment.this);
+        ReorderTabAdapter adapter = new ReorderTabAdapter(context, timelines, DisplayReorderTabFragment.this);
+
+        ItemTouchHelper.Callback callback =
+                new SimpleItemTouchHelperCallback(adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(lv_reorder_tabs);
+
+        lv_reorder_tabs.setAdapter(adapter);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(context);
+        lv_reorder_tabs.setLayoutManager(mLayoutManager);
         return rootView;
     }
 
