@@ -65,6 +65,14 @@ public class TimelinesDAO {
         return db.delete(Sqlite.TABLE_TIMELINES,  Sqlite.COL_ID + " = \"" + timeline.getId() + "\"", null);
     }
 
+    //------- REMOVE  -------
+    public int removeAll(){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        String userId = sharedpreferences.getString(Helper.PREF_KEY_ID, null);
+        String instance = Helper.getLiveInstance(context);
+        return db.delete(Sqlite.TABLE_TIMELINES,  Sqlite.COL_USER_ID + " = '" + userId+ "' AND " + Sqlite.COL_INSTANCE + " = '" + instance+ "'", null);
+    }
+
     //------- UPDATE  -------
     public int update(ManageTimelines timeline) {
         ContentValues values = new ContentValues();

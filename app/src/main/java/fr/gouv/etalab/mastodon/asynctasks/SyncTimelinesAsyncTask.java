@@ -29,6 +29,7 @@ import fr.gouv.etalab.mastodon.client.APIResponse;
 import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
+import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnSyncTimelineInterface;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
@@ -61,55 +62,71 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
 
         SQLiteDatabase db = Sqlite.getInstance(contextReference.get(), DB_NAME, null, Sqlite.DB_VERSION).open();
         manageTimelines = new TimelinesDAO(contextReference.get(), db).getAllTimelines();
-
         //First time that the timeline is created
+        int i = 0;
         if( manageTimelines == null || manageTimelines.size() == 0){
-
             manageTimelines = new ArrayList<>();
             //Add home TL
             ManageTimelines manageHome = new ManageTimelines();
             manageHome.setDisplayed(true);
             manageHome.setType(ManageTimelines.Type.HOME);
-            manageHome.setPosition(0);
+            manageHome.setPosition(i);
             manageTimelines.add(manageHome);
+            i++;
+            new TimelinesDAO(contextReference.get(), db).insert(manageHome);
             //Add Direct notification TL
             ManageTimelines manageNotif = new ManageTimelines();
             manageNotif.setDisplayed(true);
             manageNotif.setType(ManageTimelines.Type.NOTIFICATION);
-            manageNotif.setPosition(1);
+            manageNotif.setPosition(i);
+            i++;
             manageTimelines.add(manageNotif);
+            new TimelinesDAO(contextReference.get(), db).insert(manageNotif);
             //Add Direct message TL
             ManageTimelines manageDirect = new ManageTimelines();
             manageDirect.setDisplayed(true);
             manageDirect.setType(ManageTimelines.Type.DIRECT);
-            manageDirect.setPosition(2);
+            manageDirect.setPosition(i);
+            i++;
             manageTimelines.add(manageDirect);
+            new TimelinesDAO(contextReference.get(), db).insert(manageDirect);
             //Add Local TL
             ManageTimelines manageLocal = new ManageTimelines();
             manageLocal.setDisplayed(true);
             manageLocal.setType(ManageTimelines.Type.LOCAL);
-            manageLocal.setPosition(3);
+            manageLocal.setPosition(i);
+            i++;
             manageTimelines.add(manageLocal);
-            //Add Public TL
-            ManageTimelines managePublic = new ManageTimelines();
-            managePublic.setDisplayed(true);
-            managePublic.setType(ManageTimelines.Type.PUBLIC);
-            managePublic.setPosition(4);
-            manageTimelines.add(managePublic);
-            //Add Public ART
-            ManageTimelines manageArt = new ManageTimelines();
-            manageArt.setDisplayed(true);
-            manageArt.setType(ManageTimelines.Type.ART);
-            manageArt.setPosition(5);
-            manageTimelines.add(manageArt);
-            //Add Public PEERTUBE
-            ManageTimelines managePeertube = new ManageTimelines();
-            managePeertube.setDisplayed(true);
-            managePeertube.setType(ManageTimelines.Type.ART);
-            managePeertube.setPosition(6);
-            manageTimelines.add(managePeertube);
+            new TimelinesDAO(contextReference.get(), db).insert(manageLocal);
+            if(MainActivity.social != UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA){
+                //Add Public TL
+                ManageTimelines managePublic = new ManageTimelines();
+                managePublic.setDisplayed(true);
+                managePublic.setType(ManageTimelines.Type.PUBLIC);
+                managePublic.setPosition(i);
+                i++;
+                manageTimelines.add(managePublic);
+                new TimelinesDAO(contextReference.get(), db).insert(managePublic);
+            }
+            if(MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA) {
+                //Add Public ART
+                ManageTimelines manageArt = new ManageTimelines();
+                manageArt.setDisplayed(true);
+                manageArt.setType(ManageTimelines.Type.ART);
+                manageArt.setPosition(i);
+                i++;
+                manageTimelines.add(manageArt);
+                new TimelinesDAO(contextReference.get(), db).insert(manageArt);
+                //Add Public PEERTUBE
+                ManageTimelines managePeertube = new ManageTimelines();
+                managePeertube.setDisplayed(true);
+                managePeertube.setType(ManageTimelines.Type.PEERTUBE);
+                managePeertube.setPosition(i);
+                i++;
+                manageTimelines.add(managePeertube);
+                new TimelinesDAO(contextReference.get(), db).insert(managePeertube);
+            }
 
-            int i = 6;
             List<TagTimeline> tagTimelines = new SearchDAO(contextReference.get(), db).getAll();
             if( tagTimelines != null && tagTimelines.size() > 0 ){
                 for(TagTimeline ttl: tagTimelines){
@@ -117,9 +134,11 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                     ManageTimelines manageTagTimeline = new ManageTimelines();
                     manageTagTimeline.setDisplayed(true);
                     manageTagTimeline.setType(ManageTimelines.Type.TAG);
-                    manageTagTimeline.setPosition(i++);
+                    manageTagTimeline.setPosition(i);
                     manageTagTimeline.setTagTimeline(ttl);
                     manageTimelines.add(manageTagTimeline);
+                    new TimelinesDAO(contextReference.get(), db).insert(manageTagTimeline);
+                    i++;
                 }
             }
             List<RemoteInstance> instances = new InstancesDAO(contextReference.get(), db).getAllInstances();
@@ -129,11 +148,14 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                     ManageTimelines manageRemoteTimline = new ManageTimelines();
                     manageRemoteTimline.setDisplayed(true);
                     manageRemoteTimline.setType(ManageTimelines.Type.INSTANCE);
-                    manageRemoteTimline.setPosition(i++);
+                    manageRemoteTimline.setPosition(i);
                     manageRemoteTimline.setRemoteInstance(ritl);
                     manageTimelines.add(manageRemoteTimline);
+                    new TimelinesDAO(contextReference.get(), db).insert(manageRemoteTimline);
+                    i++;
                 }
             }
+        }else{
 
         }
         APIResponse apiResponse = new API(contextReference.get()).getLists();

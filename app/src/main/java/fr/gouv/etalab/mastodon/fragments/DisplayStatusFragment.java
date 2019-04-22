@@ -32,7 +32,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +47,9 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
+import fr.gouv.etalab.mastodon.activities.ListActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.ManageListsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAfterBookmarkAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveMissingFeedsAsyncTask;
@@ -68,6 +69,7 @@ import fr.gouv.etalab.mastodon.drawers.PeertubeAdapter;
 import fr.gouv.etalab.mastodon.drawers.PixelfedListAdapter;
 import fr.gouv.etalab.mastodon.drawers.StatusListAdapter;
 import fr.gouv.etalab.mastodon.helper.Helper;
+import fr.gouv.etalab.mastodon.interfaces.OnListActionInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsAfterBookmarkInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveFeedsInterface;
 import fr.gouv.etalab.mastodon.interfaces.OnRetrieveMissingFeedsInterface;
@@ -85,7 +87,7 @@ import fr.gouv.etalab.mastodon.sqlite.TempMuteDAO;
  * Created by Thomas on 24/04/2017.
  * Fragment to display content related to status
  */
-public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface, OnRetrieveMissingFeedsInterface, OnRetrieveFeedsAfterBookmarkInterface {
+public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsInterface, OnRetrieveMissingFeedsInterface, OnRetrieveFeedsAfterBookmarkInterface, OnListActionInterface {
 
 
     private boolean flag_loading;
@@ -157,6 +159,7 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
             remote_channel_name = bundle.getString("remote_channel_name", null);
             instanceType  = bundle.getString("instanceType", "MASTODON");
             ischannel = bundle.getBoolean("ischannel",false);
+
         }
         if( ischannel)
             type = RetrieveFeedsAsyncTask.Type.CHANNEL;
@@ -991,24 +994,24 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
         }
     }
 
-    private void manageAsyncTask(boolean pagination){
+    private void manageAsyncTask(boolean pagination) {
         //Message for an account
         if (type == RetrieveFeedsAsyncTask.Type.USER || type == RetrieveFeedsAsyncTask.Type.CHANNEL)
-            asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply,DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        //Tag timelines
+            asyncTask = new RetrieveFeedsAsyncTask(context, type, targetedId, max_id, showMediaOnly, showPinned, showReply, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            //Tag timelines
         else if (type == RetrieveFeedsAsyncTask.Type.TAG || type == RetrieveFeedsAsyncTask.Type.SEARCH)
             asyncTask = new RetrieveFeedsAsyncTask(context, type, tag, targetedId, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        else if( type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
+        else if (type == RetrieveFeedsAsyncTask.Type.REMOTE_INSTANCE) {
             //Remote instances
-            if( search_peertube == null) { //Not a Peertube search
-                if( remote_channel_name == null) { //Not a channel
+            if (search_peertube == null) { //Not a Peertube search
+                if (remote_channel_name == null) { //Not a channel
                     asyncTask = new RetrieveFeedsAsyncTask(context, type, remoteInstance, max_id, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-                else
+                } else
                     asyncTask = new RetrieveFeedsAsyncTask(context, remoteInstance, remote_channel_name, null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }
-            else
+            } else
                 asyncTask = new RetrievePeertubeSearchAsyncTask(context, remoteInstance, search_peertube, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }else if( type == RetrieveFeedsAsyncTask.Type.LIST){
+            new ManageListsAsyncTask(context,targetedId, max_id ,null, DisplayStatusFragment.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else {
             if( !pagination) {
                 if (type == RetrieveFeedsAsyncTask.Type.HOME) {
@@ -1029,4 +1032,46 @@ public class DisplayStatusFragment extends Fragment implements OnRetrieveFeedsIn
     }
 
 
+    @Override
+    public void onActionDone(ManageListsAsyncTask.action actionType, APIResponse apiResponse, int statusCode) {
+        final SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
+        mainLoader.setVisibility(View.GONE);
+        nextElementLoader.setVisibility(View.GONE);
+        //Discards 404 - error which can often happen due to toots which have been deleted
+        if (apiResponse.getError() != null) {
+            if ( !apiResponse.getError().getError().startsWith("404 -"))
+                Toasty.error(context, apiResponse.getError().getError(), Toast.LENGTH_LONG).show();
+            swipeRefreshLayout.setRefreshing(false);
+            isSwipped = false;
+            flag_loading = false;
+            return;
+        }
+        if( actionType == ManageListsAsyncTask.action.GET_LIST_TIMELINE) {
+
+            int previousPosition = this.statuses.size();
+            List<Status> statuses = apiResponse.getStatuses();
+            max_id = apiResponse.getMax_id();
+            flag_loading = (max_id == null);
+            if (!isSwipped && firstLoad && (statuses == null || statuses.size() == 0))
+                textviewNoAction.setVisibility(View.VISIBLE);
+            else
+                textviewNoAction.setVisibility(View.GONE);
+
+            if (isSwipped) {
+                if (previousPosition > 0) {
+                    for (int i = 0; i < previousPosition; i++) {
+                        this.statuses.remove(0);
+                    }
+                    statusListAdapter.notifyItemRangeRemoved(0, previousPosition);
+                }
+                isSwipped = false;
+            }
+            if (statuses != null && statuses.size() > 0) {
+                this.statuses.addAll(statuses);
+                statusListAdapter.notifyItemRangeInserted(previousPosition, statuses.size());
+            }
+            swipeRefreshLayout.setRefreshing(false);
+            firstLoad = false;
+        }
+    }
 }

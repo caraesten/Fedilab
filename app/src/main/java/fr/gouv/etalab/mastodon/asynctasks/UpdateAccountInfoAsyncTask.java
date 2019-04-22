@@ -66,7 +66,7 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        Account account = null;
+        Account account;
         if( social == SOCIAL.MASTODON || social == SOCIAL.PIXELFED) {
             account = new API(this.contextReference.get(), instance, null).verifyCredentials();
             account.setSocial(account.getSocial());
@@ -77,18 +77,17 @@ public class UpdateAccountInfoAsyncTask extends AsyncTask<Void, Void, Void> {
             account = new GNUAPI(this.contextReference.get(), instance, null).verifyCredentials();
             account.setSocial(account.getSocial());
         }
-
         try {
             //At the state the instance can be encoded
             instance = URLDecoder.decode(instance, "utf-8");
         } catch (UnsupportedEncodingException ignored) {}
+
         SharedPreferences sharedpreferences = this.contextReference.get().getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         account.setToken(token);
         account.setClient_id(client_id);
         account.setClient_secret(client_secret);
         account.setRefresh_token(refresh_token);
         account.setInstance(instance);
-
         SQLiteDatabase db = Sqlite.getInstance(this.contextReference.get(), Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
         boolean userExists = new AccountDAO(this.contextReference.get(), db).userExist(account);
         SharedPreferences.Editor editor = sharedpreferences.edit();

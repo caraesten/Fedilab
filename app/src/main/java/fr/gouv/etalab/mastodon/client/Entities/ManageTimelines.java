@@ -28,7 +28,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,9 +35,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import es.dmoral.toasty.Toasty;
@@ -49,10 +47,8 @@ import fr.gouv.etalab.mastodon.asynctasks.UpdateAccountInfoAsyncTask;
 import fr.gouv.etalab.mastodon.fragments.DisplayStatusFragment;
 import fr.gouv.etalab.mastodon.fragments.TabLayoutNotificationsFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
-import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.Sqlite;
 import fr.gouv.etalab.mastodon.sqlite.TimelinesDAO;
-
 import static fr.gouv.etalab.mastodon.helper.Helper.THEME_LIGHT;
 import static fr.gouv.etalab.mastodon.sqlite.Sqlite.DB_NAME;
 
@@ -283,19 +279,19 @@ public class ManageTimelines {
 
     public void createTabs(Context context, TabLayout tabLayout, java.util.List<ManageTimelines> manageTimelines){
 
-
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
-
         for(ManageTimelines tl: manageTimelines){
             TabLayout.Tab tb = tabLayout.newTab();
-            tb.setCustomView(R.layout.tab_badge);
             ImageView icon = null;
             if( tl.getType() != Type.TAG && tl.getType() != Type.INSTANCE && tl.getType() != Type.LIST) {
+                tb.setCustomView(R.layout.tab_badge);
                 if( tb.getCustomView() != null)
                     icon = tb.getCustomView().findViewById(R.id.tab_icon);
             }
             if( icon != null){
+                if( tl.getPosition() == 0)
+                    icon.setColorFilter(ContextCompat.getColor(context, R.color.mastodonC4), PorterDuff.Mode.SRC_IN);
                 switch (tl.getType()){
                     case HOME:
                         icon.setImageResource(R.drawable.ic_home);
@@ -332,6 +328,24 @@ public class ManageTimelines {
                     icon.setColorFilter(ContextCompat.getColor(context, R.color.dark_text), PorterDuff.Mode.SRC_IN);
                 }
                 tabLayout.addTab(tb);
+            }else{
+                if( tl.getType() == Type.TAG){
+                    if( tl.getTagTimeline().getDisplayname() != null) {
+                        tb.setText(tl.getTagTimeline().getDisplayname());
+                    }else {
+                        tb.setText(tl.getTagTimeline().getName());
+                    }
+                }else if( tl.getType() == Type.INSTANCE){
+                    tb.setText(tl.getRemoteInstance().getHost());
+                }else if( tl.getType() == Type.LIST){
+                    tb.setText(tl.getListTimeline().getTitle());
+                }
+                tabLayout.addTab(tb);
+                if( tl.getPosition() == 0){
+                    TextView tv = tabLayout.getChildAt(0).findViewById(android.R.id.title);
+                    if( tv != null)
+                        tv.setTextColor(ContextCompat.getColor(context, R.color.mastodonC4));
+                }
             }
             final LinearLayout tabStrip = (LinearLayout) tabLayout.getChildAt(0);
             if( tl.getType() == Type.NOTIFICATION){
@@ -348,7 +362,7 @@ public class ManageTimelines {
                 }
             }
         }
-
+    //    tabLayout.getTabAt(0).select();
     }
 
     public static void insertUpdateTL(Context context, ManageTimelines manageTimelines){

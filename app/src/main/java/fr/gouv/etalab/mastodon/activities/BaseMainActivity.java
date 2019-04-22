@@ -55,7 +55,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -823,11 +822,12 @@ public abstract class BaseMainActivity extends BaseActivity
         //Defines the current locale of the device in a static variable
         currentLocale = Helper.currentLocale(getApplicationContext());
 
-        if( tabLayout.getTabAt(0) == null) {
+        /*if( tabLayout.getTabAt(0) == null) {
             Helper.logout(BaseMainActivity.this);
             return;
         }
         tabLayout.getTabAt(0).select();
+        */
         if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
             toot.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1829,7 +1829,8 @@ public abstract class BaseMainActivity extends BaseActivity
                 viewPager.setVisibility(View.VISIBLE);
                 delete_instance.setVisibility(View.GONE);
                 Helper.switchLayout(BaseMainActivity.this);
-                if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))||(tabPosition.containsKey("peertube") && tab.getPosition() == tabPosition.get("peertube"))) {
+                //TODO: not hiding the compose button
+                if( manageTimelines.size() > tab.getPosition() && (manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.ART || manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.PEERTUBE)) {
                     toot.hide();
                     federatedTimelines.hide();
                 }else {
@@ -1874,7 +1875,7 @@ public abstract class BaseMainActivity extends BaseActivity
                     DrawerLayout drawer = findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
                 }
-                if( tab.getPosition() == 1 || (tabPosition.containsKey("art") && tab.getPosition() == tabPosition.get("art"))||(tabPosition.containsKey("peertube") && tab.getPosition() == tabPosition.get("peertube"))) {
+                if( manageTimelines.size() > tab.getPosition() && (manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.ART || manageTimelines.get(tab.getPosition()).getType() == ManageTimelines.Type.PEERTUBE)) {
                     toot.hide();
                     federatedTimelines.hide();
                 }else {
@@ -1995,19 +1996,19 @@ public abstract class BaseMainActivity extends BaseActivity
                     tabLayout.setVisibility(View.VISIBLE);
                     toolbar_search.setIconified(true);
                 }
+
                 //Selection comes from another menu, no action to do
                 Bundle bundle = new Bundle();
                 ManageTimelines tl = null;
-                for (ManageTimelines timeline: timelines){
-                 if( timeline.getPosition() == position)
-                     tl = timeline;
-                }
+                if( position < timelines.size())
+                    tl = timelines.get(position);
                 if( tl == null)
                     return null;
                 if( tl.getType() != ManageTimelines.Type.NOTIFICATION){
                     DisplayStatusFragment displayStatusFragment = new DisplayStatusFragment();
                     RetrieveFeedsAsyncTask.Type type = ManageTimelines.transform(BaseMainActivity.this, tl.getType());
                     bundle.putSerializable("type", type);
+
                     if (tl.getType() == ManageTimelines.Type.TAG) {
                         TagTimeline ttl = tl.getTagTimeline();
                         bundle.putString("tag", ttl.getName());
@@ -2022,7 +2023,10 @@ public abstract class BaseMainActivity extends BaseActivity
                     }else if( tl.getType() == ManageTimelines.Type.INSTANCE){
                         bundle.putString("remote_instance", tl.getRemoteInstance().getHost()!=null?tl.getRemoteInstance().getHost():"");
                         bundle.putString("instanceType", tl.getRemoteInstance().getType());
+                    }else if( tl.getType() == ManageTimelines.Type.LIST){
+                        bundle.putString("targetedid", tl.getListTimeline().getId());
                     }
+                    displayStatusFragment.setArguments(bundle);
                     return displayStatusFragment;
                 }else{
                     return new TabLayoutNotificationsFragment();

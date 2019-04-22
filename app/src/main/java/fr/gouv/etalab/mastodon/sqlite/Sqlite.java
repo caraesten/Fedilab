@@ -265,7 +265,7 @@ public class Sqlite extends SQLiteOpenHelper {
     static final String COL_REMOTE_INSTANCE = "REMOTE_INSTANCE";
     static final String COL_TAG_TIMELINE = "TAG_TIMELINE";
 
-    private static final String CREATE_TABLE_TIMELINES = "CREATE TABLE " + TABLE_TIMELINES + " ("
+    private static final String CREATE_TABLE_TIMELINES = "CREATE TABLE IF NOT EXISTS " + TABLE_TIMELINES + " ("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_POSITION + " INTEGER NOT NULL, "
             + COL_USER_ID + " TEXT NOT NULL, " + COL_INSTANCE + " TEXT NOT NULL, "

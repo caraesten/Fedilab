@@ -598,6 +598,7 @@ public class Helper {
             editor.putString(Helper.PREF_KEY_OAUTH_TOKEN, newAccount.getToken());
             editor.putString(Helper.PREF_KEY_ID, newAccount.getId());
             editor.putString(Helper.PREF_INSTANCE, newAccount.getInstance().trim());
+
             editor.putBoolean(Helper.PREF_IS_MODERATOR, newAccount.isModerator());
             editor.putBoolean(Helper.PREF_IS_ADMINISTRATOR, newAccount.isAdmin());
             editor.commit();
