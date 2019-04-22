@@ -777,7 +777,8 @@ public class StatusListAdapter extends RecyclerView.Adapter implements OnPostAct
                 });
 
             }
-            if (status.isNew())
+            boolean new_badge = sharedpreferences.getBoolean(Helper.SET_DISPLAY_NEW_BADGE, true);
+            if (status.isNew() && new_badge)
                 holder.new_element.setVisibility(View.VISIBLE);
             else
                 holder.new_element.setVisibility(View.GONE);

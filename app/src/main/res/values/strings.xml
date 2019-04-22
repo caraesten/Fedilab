@@ -920,6 +920,7 @@
     <string name="settings_category_notif_news">News</string>
     <string name="settings_category_notif_time_slot">Time slot</string>
     <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
 
     <plurals name="number_of_vote">
         <item quantity="one">%d vote</item>
