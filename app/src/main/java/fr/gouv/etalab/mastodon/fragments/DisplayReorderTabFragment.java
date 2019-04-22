@@ -16,6 +16,7 @@ package fr.gouv.etalab.mastodon.fragments;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -29,6 +30,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.R;
+import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
+import fr.gouv.etalab.mastodon.asynctasks.SyncTimelinesAsyncTask;
 import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.drawers.ReorderTabAdapter;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.OnStartDragListener;

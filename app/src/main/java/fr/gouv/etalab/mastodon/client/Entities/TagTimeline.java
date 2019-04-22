@@ -26,6 +26,7 @@ import java.util.List;
 
 public class TagTimeline implements Parcelable {
 
+    private int id;
     private String name;
     private String displayname;
     private boolean isART;
@@ -90,6 +91,18 @@ public class TagTimeline implements Parcelable {
         this.displayname = displayname;
     }
 
+    public TagTimeline() {
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -97,6 +110,7 @@ public class TagTimeline implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
         dest.writeString(this.name);
         dest.writeString(this.displayname);
         dest.writeByte(this.isART ? (byte) 1 : (byte) 0);
@@ -106,10 +120,8 @@ public class TagTimeline implements Parcelable {
         dest.writeStringList(this.none);
     }
 
-    public TagTimeline() {
-    }
-
     protected TagTimeline(Parcel in) {
+        this.id = in.readInt();
         this.name = in.readString();
         this.displayname = in.readString();
         this.isART = in.readByte() != 0;
@@ -119,7 +131,7 @@ public class TagTimeline implements Parcelable {
         this.none = in.createStringArrayList();
     }
 
-    public static final Parcelable.Creator<TagTimeline> CREATOR = new Parcelable.Creator<TagTimeline>() {
+    public static final Creator<TagTimeline> CREATOR = new Creator<TagTimeline>() {
         @Override
         public TagTimeline createFromParcel(Parcel source) {
             return new TagTimeline(source);

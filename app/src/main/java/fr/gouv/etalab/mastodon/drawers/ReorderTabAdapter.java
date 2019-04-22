@@ -206,6 +206,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
            new TimelinesDAO(context, db).update(timelines);
            i++;
         }
+
        return true;
     }
 

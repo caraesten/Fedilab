@@ -245,6 +245,7 @@ public class SearchDAO {
             try {
                 tagTimeline.setNone(Helper.restoreArrayFromString(c.getString(c.getColumnIndex(Sqlite.COL_NONE))));
             }catch (Exception ignored){}
+            tagTimeline.setId(c.getInt(c.getColumnIndex(Sqlite.COL_ID)));
             tagTimeline.setName(c.getString(c.getColumnIndex(Sqlite.COL_KEYWORDS)));
             tagTimeline.setDisplayname(c.getString(c.getColumnIndex(Sqlite.COL_NAME)));
             tagTimeline.setART(c.getInt(c.getColumnIndex(Sqlite.COL_IS_ART))==1);

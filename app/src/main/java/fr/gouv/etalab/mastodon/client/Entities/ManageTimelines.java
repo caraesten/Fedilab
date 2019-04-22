@@ -31,7 +31,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -351,12 +350,15 @@ public class ManageTimelines {
                     }else {
                         tb.setText(tl.getTagTimeline().getName());
                     }
-                }else if( tl.getType() == Type.INSTANCE){
+                    tabLayout.addTab(tb);
+                }else if( tl.getType() == Type.INSTANCE && (MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA)){
                     tb.setText(tl.getRemoteInstance().getHost());
+                    tabLayout.addTab(tb);
                 }else if( tl.getType() == Type.LIST){
                     tb.setText(tl.getListTimeline().getTitle());
+                    tabLayout.addTab(tb);
                 }
-                tabLayout.addTab(tb);
+
                 if( tl.getPosition() == 0){
                     TextView tv = tabLayout.getChildAt(0).findViewById(android.R.id.title);
                     if( tv != null)

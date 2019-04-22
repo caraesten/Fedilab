@@ -1344,6 +1344,7 @@ public abstract class BaseMainActivity extends BaseActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -1957,22 +1958,6 @@ public abstract class BaseMainActivity extends BaseActivity
         private PagerAdapter(FragmentManager fm, int NumOfTabs) {
             super(fm);
             this.mNumOfTabs = NumOfTabs;
-        }
-
-        public void removeTabPage() {
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                this.mNumOfTabs--;
-                notifyDataSetChanged();
-            }
-        }
-
-        public void addTabPage(String title) {
-            if( social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA || social == UpdateAccountInfoAsyncTask.SOCIAL.GNU || social == UpdateAccountInfoAsyncTask.SOCIAL.FRIENDICA) {
-                TabLayout.Tab tab = tabLayout.newTab();
-                tab.setText(title);
-                this.mNumOfTabs++;
-                notifyDataSetChanged();
-            }
         }
 
 

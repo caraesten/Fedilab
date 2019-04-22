@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import fr.gouv.etalab.mastodon.activities.MainActivity;
@@ -155,9 +156,63 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                     i++;
                 }
             }
-        }else{
-
         }
+
+        List<TagTimeline> tagsInDb = new SearchDAO(contextReference.get(), db).getAll();
+        List<RemoteInstance> instancesInDb = new InstancesDAO(contextReference.get(), db).getAllInstances();
+
+        List<TagTimeline> tagsInTabs = new ArrayList<>();
+        List<RemoteInstance> instanceInTabs =new ArrayList<>();
+
+        for (ManageTimelines mtl: manageTimelines){
+            if( mtl.getType() == ManageTimelines.Type.TAG){
+                tagsInTabs.add(mtl.getTagTimeline());
+            }else if(mtl.getType() == ManageTimelines.Type.INSTANCE){
+                instanceInTabs.add(mtl.getRemoteInstance());
+            }
+        }
+
+
+
+        for(TagTimeline tag: tagsInDb){
+            boolean isInDb = false;
+            ManageTimelines timelines_tmp = null;
+            for(ManageTimelines manageTimeline: manageTimelines){
+                if( manageTimeline.getTagTimeline() == null )
+                    continue;
+                if(manageTimeline.getTagTimeline().getId() == tag.getId()){
+                    isInDb = true;
+                    timelines_tmp = manageTimeline;
+                    break;
+                }
+            }
+            if( !isInDb){
+                ManageTimelines manageTL = new ManageTimelines();
+                manageTL.setTagTimeline(tag);
+                manageTL.setDisplayed(true);
+                manageTL.setType(ManageTimelines.Type.TAG);
+                manageTL.setPosition(manageTimelines.size());
+                new TimelinesDAO(contextReference.get(), db).insert(manageTL);
+            }else{
+                //Update list
+                timelines_tmp.setTagTimeline(tag);
+            }
+        }
+
+        for(ManageTimelines manageTimelines: manageTimelines){
+            if( manageTimelines.getTagTimeline() == null )
+                continue;
+            boolean shouldBeRemoved = true;
+            for(TagTimeline tag: tagsInDb){
+                if( tag.getId() == manageTimelines.getTagTimeline().getId()){
+                    shouldBeRemoved = false;
+                }
+            }
+            if( shouldBeRemoved){
+                new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
+            }
+        }
+
         APIResponse apiResponse = new API(contextReference.get()).getLists();
         List<fr.gouv.etalab.mastodon.client.Entities.List> lists = apiResponse.getLists();
         if( lists != null && lists.size() > 0){
@@ -183,7 +238,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                     new TimelinesDAO(contextReference.get(), db).insert(manageTL);
                 }else{
                     //Update list
-                    timelines_tmp.getListTimeline().setTitle(list.getTitle());
+                    timelines_tmp.setListTimeline(list);
                 }
             }
             for(ManageTimelines manageTimelines: manageTimelines){
@@ -198,6 +253,12 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                 if( shouldBeRemoved){
                     new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
                 }
+            }
+        }
+
+        for (Iterator<ManageTimelines> it = manageTimelines.iterator(); it.hasNext();) {
+            if (!it.next().isDisplayed()) {
+                it.remove();
             }
         }
         return null;
