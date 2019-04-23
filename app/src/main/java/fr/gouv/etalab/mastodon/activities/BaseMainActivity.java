@@ -1344,6 +1344,10 @@ public abstract class BaseMainActivity extends BaseActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DisplayReorderTabFragment displayReorderTabFragment = (DisplayReorderTabFragment)getSupportFragmentManager().findFragmentByTag("REORDER_TIMELINES");
+        if (displayReorderTabFragment != null && displayReorderTabFragment.isVisible() && DisplayReorderTabFragment.updated) {
+            new SyncTimelinesAsyncTask(BaseMainActivity.this, BaseMainActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -1783,7 +1787,8 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
     @Override
-    public void syncedTimelines(List<ManageTimelines> manageTimelines, boolean updateOnly) {
+    public void syncedTimelines(List<ManageTimelines> manageTimelines) {
+        DisplayReorderTabFragment.updated = false;
         new ManageTimelines().createTabs(BaseMainActivity.this, manageTimelines);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean optimize_loading = sharedpreferences.getBoolean(Helper.SET_OPTIMIZE_LOADING, false);

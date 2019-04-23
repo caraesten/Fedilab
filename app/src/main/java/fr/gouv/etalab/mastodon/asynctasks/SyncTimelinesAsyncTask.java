@@ -27,11 +27,9 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 
-import fr.gouv.etalab.mastodon.client.Entities.Instance;
 import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
-import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.interfaces.OnSyncTimelineInterface;
 import fr.gouv.etalab.mastodon.sqlite.InstancesDAO;
 import fr.gouv.etalab.mastodon.sqlite.SearchDAO;
@@ -52,18 +50,11 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnSyncTimelineInterface listener;
     private WeakReference<Context> contextReference;
     private List<ManageTimelines> manageTimelines;
-    private boolean updateOnly;
 
-    public SyncTimelinesAsyncTask(Context context, boolean updateOnly, OnSyncTimelineInterface onSyncTimelineInterface){
-        this.contextReference = new WeakReference<>(context);
-        this.listener = onSyncTimelineInterface;
-        this.updateOnly = updateOnly;
-    }
 
     public SyncTimelinesAsyncTask(Context context, OnSyncTimelineInterface onSyncTimelineInterface){
         this.contextReference = new WeakReference<>(context);
         this.listener = onSyncTimelineInterface;
-        this.updateOnly = false;
     }
 
     @Override
@@ -302,7 +293,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.syncedTimelines(manageTimelines, updateOnly);
+        listener.syncedTimelines(manageTimelines);
     }
 
 }

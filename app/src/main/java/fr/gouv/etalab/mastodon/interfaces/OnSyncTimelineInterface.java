@@ -24,5 +24,5 @@ import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
  * Interface when timelines are retrieved
  */
 public interface OnSyncTimelineInterface {
-    void syncedTimelines(List<ManageTimelines> manageTimelines, boolean updateOnly);
+    void syncedTimelines(List<ManageTimelines> manageTimelines);
 }

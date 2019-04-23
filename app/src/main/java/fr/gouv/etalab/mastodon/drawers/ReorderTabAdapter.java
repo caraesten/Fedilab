@@ -37,6 +37,7 @@ import java.util.List;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
+import fr.gouv.etalab.mastodon.fragments.DisplayReorderTabFragment;
 import fr.gouv.etalab.mastodon.helper.Helper;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.ItemTouchHelperAdapter;
 import fr.gouv.etalab.mastodon.helper.itemtouchhelper.ItemTouchHelperViewHolder;
@@ -172,6 +173,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
                 }else{
                     holder.hideView.setImageResource(R.drawable.ic_make_tab_unvisible);
                 }
+                DisplayReorderTabFragment.updated = true;
                 SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
                 new TimelinesDAO(context, db).update(tl);
             }
@@ -206,7 +208,7 @@ public class ReorderTabAdapter extends RecyclerView.Adapter<ReorderTabAdapter.It
            new TimelinesDAO(context, db).update(timelines);
            i++;
         }
-
+        DisplayReorderTabFragment.updated = true;
        return true;
     }
 

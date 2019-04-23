@@ -48,14 +48,14 @@ public class DisplayReorderTabFragment extends Fragment implements OnStartDragLi
 
 
     private Context context;
-
+    public static boolean updated;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_reorder_tabs, container, false);
         context = getContext();
-
+        updated = false;
         RecyclerView lv_reorder_tabs = rootView.findViewById(R.id.lv_reorder_tabs);
 
         SQLiteDatabase db = Sqlite.getInstance(context, Sqlite.DB_NAME, null, Sqlite.DB_VERSION).open();
