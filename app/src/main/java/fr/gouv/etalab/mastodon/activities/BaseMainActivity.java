@@ -1782,10 +1782,8 @@ public abstract class BaseMainActivity extends BaseActivity
 
 
 
-    public static HashMap<String, DisplayStatusFragment> tagFragment = new HashMap<>();
-
     @Override
-    public void syncedTimelines(List<ManageTimelines> manageTimelines) {
+    public void syncedTimelines(List<ManageTimelines> manageTimelines, boolean updateOnly) {
         new ManageTimelines().createTabs(BaseMainActivity.this, manageTimelines);
         SharedPreferences sharedpreferences = getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
         boolean optimize_loading = sharedpreferences.getBoolean(Helper.SET_OPTIMIZE_LOADING, false);
@@ -2627,17 +2625,6 @@ public abstract class BaseMainActivity extends BaseActivity
                 popup.show();
             }
         });
-
-    }
-
-
-    public void syncTimelines(Context context){
-
-        //Sync lists
-        ArrayList<fr.gouv.etalab.mastodon.client.Entities.List> lists = new ArrayList<>();
-        if( MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.MASTODON || MainActivity.social == UpdateAccountInfoAsyncTask.SOCIAL.PLEROMA ){
-
-        }
 
     }
 }

@@ -27,6 +27,7 @@ import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.client.API;
 import fr.gouv.etalab.mastodon.client.APIResponse;
 
+import fr.gouv.etalab.mastodon.client.Entities.Instance;
 import fr.gouv.etalab.mastodon.client.Entities.ManageTimelines;
 import fr.gouv.etalab.mastodon.client.Entities.RemoteInstance;
 import fr.gouv.etalab.mastodon.client.Entities.TagTimeline;
@@ -51,11 +52,18 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
     private OnSyncTimelineInterface listener;
     private WeakReference<Context> contextReference;
     private List<ManageTimelines> manageTimelines;
+    private boolean updateOnly;
 
+    public SyncTimelinesAsyncTask(Context context, boolean updateOnly, OnSyncTimelineInterface onSyncTimelineInterface){
+        this.contextReference = new WeakReference<>(context);
+        this.listener = onSyncTimelineInterface;
+        this.updateOnly = updateOnly;
+    }
 
     public SyncTimelinesAsyncTask(Context context, OnSyncTimelineInterface onSyncTimelineInterface){
         this.contextReference = new WeakReference<>(context);
         this.listener = onSyncTimelineInterface;
+        this.updateOnly = false;
     }
 
     @Override
@@ -161,19 +169,6 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
         List<TagTimeline> tagsInDb = new SearchDAO(contextReference.get(), db).getAll();
         List<RemoteInstance> instancesInDb = new InstancesDAO(contextReference.get(), db).getAllInstances();
 
-        List<TagTimeline> tagsInTabs = new ArrayList<>();
-        List<RemoteInstance> instanceInTabs =new ArrayList<>();
-
-        for (ManageTimelines mtl: manageTimelines){
-            if( mtl.getType() == ManageTimelines.Type.TAG){
-                tagsInTabs.add(mtl.getTagTimeline());
-            }else if(mtl.getType() == ManageTimelines.Type.INSTANCE){
-                instanceInTabs.add(mtl.getRemoteInstance());
-            }
-        }
-
-
-
         for(TagTimeline tag: tagsInDb){
             boolean isInDb = false;
             ManageTimelines timelines_tmp = null;
@@ -196,15 +191,55 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
             }else{
                 //Update list
                 timelines_tmp.setTagTimeline(tag);
+                new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
             }
         }
-
         for(ManageTimelines manageTimelines: manageTimelines){
             if( manageTimelines.getTagTimeline() == null )
                 continue;
             boolean shouldBeRemoved = true;
             for(TagTimeline tag: tagsInDb){
                 if( tag.getId() == manageTimelines.getTagTimeline().getId()){
+                    shouldBeRemoved = false;
+                }
+            }
+            if( shouldBeRemoved){
+                new TimelinesDAO(contextReference.get(), db).remove(manageTimelines);
+            }
+        }
+
+
+        for(RemoteInstance instance: instancesInDb){
+            boolean isInDb = false;
+            ManageTimelines timelines_tmp = null;
+            for(ManageTimelines manageTimeline: manageTimelines){
+                if( manageTimeline.getRemoteInstance() == null )
+                    continue;
+                if(manageTimeline.getRemoteInstance().getId().equals(instance.getId())){
+                    isInDb = true;
+                    timelines_tmp = manageTimeline;
+                    break;
+                }
+            }
+            if( !isInDb){
+                ManageTimelines manageTL = new ManageTimelines();
+                manageTL.setRemoteInstance(instance);
+                manageTL.setDisplayed(true);
+                manageTL.setType(ManageTimelines.Type.INSTANCE);
+                manageTL.setPosition(manageTimelines.size());
+                new TimelinesDAO(contextReference.get(), db).insert(manageTL);
+            }else{
+                //Update list
+                timelines_tmp.setRemoteInstance(instance);
+                new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
+            }
+        }
+        for(ManageTimelines manageTimelines: manageTimelines){
+            if( manageTimelines.getRemoteInstance() == null )
+                continue;
+            boolean shouldBeRemoved = true;
+            for(RemoteInstance instance: instancesInDb){
+                if( instance.getId().equals(manageTimelines.getRemoteInstance().getId())){
                     shouldBeRemoved = false;
                 }
             }
@@ -239,6 +274,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
                 }else{
                     //Update list
                     timelines_tmp.setListTimeline(list);
+                    new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
                 }
             }
             for(ManageTimelines manageTimelines: manageTimelines){
@@ -266,7 +302,7 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        listener.syncedTimelines(manageTimelines);
+        listener.syncedTimelines(manageTimelines, updateOnly);
     }
 
 }
