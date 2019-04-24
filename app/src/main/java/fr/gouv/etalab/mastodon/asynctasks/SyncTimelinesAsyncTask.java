@@ -160,29 +160,31 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
         List<TagTimeline> tagsInDb = new SearchDAO(contextReference.get(), db).getAll();
         List<RemoteInstance> instancesInDb = new InstancesDAO(contextReference.get(), db).getAllInstances();
 
-        for(TagTimeline tag: tagsInDb){
-            boolean isInDb = false;
-            ManageTimelines timelines_tmp = null;
-            for(ManageTimelines manageTimeline: manageTimelines){
-                if( manageTimeline.getTagTimeline() == null )
-                    continue;
-                if(manageTimeline.getTagTimeline().getId() == tag.getId()){
-                    isInDb = true;
-                    timelines_tmp = manageTimeline;
-                    break;
+        if( tagsInDb != null) {
+            for (TagTimeline tag : tagsInDb) {
+                boolean isInDb = false;
+                ManageTimelines timelines_tmp = null;
+                for (ManageTimelines manageTimeline : manageTimelines) {
+                    if (manageTimeline.getTagTimeline() == null)
+                        continue;
+                    if (manageTimeline.getTagTimeline().getId() == tag.getId()) {
+                        isInDb = true;
+                        timelines_tmp = manageTimeline;
+                        break;
+                    }
                 }
-            }
-            if( !isInDb){
-                ManageTimelines manageTL = new ManageTimelines();
-                manageTL.setTagTimeline(tag);
-                manageTL.setDisplayed(true);
-                manageTL.setType(ManageTimelines.Type.TAG);
-                manageTL.setPosition(manageTimelines.size());
-                new TimelinesDAO(contextReference.get(), db).insert(manageTL);
-            }else{
-                //Update list
-                timelines_tmp.setTagTimeline(tag);
-                new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
+                if (!isInDb) {
+                    ManageTimelines manageTL = new ManageTimelines();
+                    manageTL.setTagTimeline(tag);
+                    manageTL.setDisplayed(true);
+                    manageTL.setType(ManageTimelines.Type.TAG);
+                    manageTL.setPosition(manageTimelines.size());
+                    new TimelinesDAO(contextReference.get(), db).insert(manageTL);
+                } else {
+                    //Update list
+                    timelines_tmp.setTagTimeline(tag);
+                    new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
+                }
             }
         }
         for(ManageTimelines manageTimelines: manageTimelines){
@@ -199,31 +201,33 @@ public class SyncTimelinesAsyncTask extends AsyncTask<Void, Void, Void> {
             }
         }
 
-
-        for(RemoteInstance instance: instancesInDb){
-            boolean isInDb = false;
-            ManageTimelines timelines_tmp = null;
-            for(ManageTimelines manageTimeline: manageTimelines){
-                if( manageTimeline.getRemoteInstance() == null )
-                    continue;
-                if(manageTimeline.getRemoteInstance().getId().equals(instance.getId())){
-                    isInDb = true;
-                    timelines_tmp = manageTimeline;
-                    break;
+        if( instancesInDb != null){
+            for(RemoteInstance instance: instancesInDb){
+                boolean isInDb = false;
+                ManageTimelines timelines_tmp = null;
+                for(ManageTimelines manageTimeline: manageTimelines){
+                    if( manageTimeline.getRemoteInstance() == null )
+                        continue;
+                    if(manageTimeline.getRemoteInstance().getId().equals(instance.getId())){
+                        isInDb = true;
+                        timelines_tmp = manageTimeline;
+                        break;
+                    }
+                }
+                if( !isInDb){
+                    ManageTimelines manageTL = new ManageTimelines();
+                    manageTL.setRemoteInstance(instance);
+                    manageTL.setDisplayed(true);
+                    manageTL.setType(ManageTimelines.Type.INSTANCE);
+                    manageTL.setPosition(manageTimelines.size());
+                    new TimelinesDAO(contextReference.get(), db).insert(manageTL);
+                }else{
+                    //Update list
+                    timelines_tmp.setRemoteInstance(instance);
+                    new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
                 }
             }
-            if( !isInDb){
-                ManageTimelines manageTL = new ManageTimelines();
-                manageTL.setRemoteInstance(instance);
-                manageTL.setDisplayed(true);
-                manageTL.setType(ManageTimelines.Type.INSTANCE);
-                manageTL.setPosition(manageTimelines.size());
-                new TimelinesDAO(contextReference.get(), db).insert(manageTL);
-            }else{
-                //Update list
-                timelines_tmp.setRemoteInstance(instance);
-                new TimelinesDAO(contextReference.get(), db).update(timelines_tmp);
-            }
+
         }
         for(ManageTimelines manageTimelines: manageTimelines){
             if( manageTimelines.getRemoteInstance() == null )
