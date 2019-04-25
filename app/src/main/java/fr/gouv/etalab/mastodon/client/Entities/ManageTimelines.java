@@ -18,6 +18,7 @@ package fr.gouv.etalab.mastodon.client.Entities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
@@ -51,6 +52,7 @@ import java.util.regex.Pattern;
 import es.dmoral.toasty.Toasty;
 import fr.gouv.etalab.mastodon.R;
 import fr.gouv.etalab.mastodon.activities.BaseMainActivity;
+import fr.gouv.etalab.mastodon.activities.ListActivity;
 import fr.gouv.etalab.mastodon.activities.MainActivity;
 import fr.gouv.etalab.mastodon.asynctasks.RetrieveFeedsAsyncTask;
 import fr.gouv.etalab.mastodon.asynctasks.SyncTimelinesAsyncTask;
@@ -298,6 +300,7 @@ public class ManageTimelines {
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         int theme = sharedpreferences.getInt(Helper.SET_THEME, Helper.THEME_DARK);
         tabLayout.removeAllTabs();
+        int position = 0;
         for(ManageTimelines tl: manageTimelines){
             TabLayout.Tab tb = tabLayout.newTab();
             ImageView icon = null;
@@ -371,26 +374,45 @@ public class ManageTimelines {
             if( tl.getType() == Type.NOTIFICATION){
                 notificationClik(context, tl, tabLayout);
             }else if( tl.getType() == Type.PUBLIC || tl.getType() == Type.LOCAL || tl.getType() == Type.ART  || tl.getType() == Type.HOME) {
-                if( tabStrip != null && tabStrip.getChildCount() > tl.getPosition()) {
-                    tabStrip.getChildAt(tl.getPosition()).setOnLongClickListener(new View.OnLongClickListener() {
+                if( tabStrip != null && tabStrip.getChildCount() > position) {
+                    int finalPosition1 = position;
+                    tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
-                            manageFilters(context, tl, tabStrip);
+                            manageFilters(context, tl, tabStrip, finalPosition1);
                             return true;
                         }
                     });
                 }
             }else if( tl.getType() == Type.TAG) {
-                if( tabStrip != null && tabStrip.getChildCount() > tl.getPosition()) {
-                    tabStrip.getChildAt(tl.getPosition()).setOnLongClickListener(new View.OnLongClickListener() {
+                if(tabStrip != null)
+                if( tabStrip != null && tabStrip.getChildCount() > position) {
+                    int finalPosition = position;
+                    tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
-                            tagClick(context, tl, tabStrip);
+                            tagClick(context, tl, tabStrip, finalPosition);
+                            return true;
+                        }
+                    });
+                }
+            }else if (tl.getType() == Type.LIST){
+                if( tabStrip != null && tabStrip.getChildCount() > position) {
+                    tabStrip.getChildAt(position).setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            Intent intent = new Intent(context, ListActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("id", tl.getListTimeline().getId());
+                            b.putString("title", tl.getListTimeline().getTitle());
+                            intent.putExtras(b);
+                            context.startActivity(intent);
                             return true;
                         }
                     });
                 }
             }
+            position++;
         }
     //    tabLayout.getTabAt(0).select();
     }
@@ -505,10 +527,10 @@ public class ManageTimelines {
 
 
 
-    private void manageFilters(Context context, ManageTimelines tl, LinearLayout tabStrip){
+    private void manageFilters(Context context, ManageTimelines tl, LinearLayout tabStrip, int position){
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, Context.MODE_PRIVATE);
         //Only shown if the tab has focus
-        PopupMenu popup = new PopupMenu(context, tabStrip.getChildAt(tl.getPosition()));
+        PopupMenu popup = new PopupMenu(context, tabStrip.getChildAt(position));
         if( tl.getType() == Type.ART){
             popup.getMenuInflater()
                     .inflate(R.menu.option_tag_timeline, popup.getMenu());
@@ -706,10 +728,10 @@ public class ManageTimelines {
     }
 
 
-    private void tagClick(Context context, ManageTimelines tl, LinearLayout tabStrip){
+    private void tagClick(Context context, ManageTimelines tl, LinearLayout tabStrip, int position){
 
 
-        PopupMenu popup = new PopupMenu(context, tabStrip.getChildAt(tl.getPosition()));
+        PopupMenu popup = new PopupMenu(context, tabStrip.getChildAt(position));
         TabLayout tabLayout = ((MainActivity)context).findViewById(R.id.tabLayout);
         SQLiteDatabase db = Sqlite.getInstance(context, DB_NAME, null, Sqlite.DB_VERSION).open();
         SharedPreferences sharedpreferences = context.getSharedPreferences(Helper.APP_PREFS, android.content.Context.MODE_PRIVATE);
