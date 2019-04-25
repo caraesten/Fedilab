@@ -277,6 +277,7 @@
     <string name="nothing_to_do">Није предузето ништа</string>
     <string name="toast_saved">Мултимедија је сачувана!</string>
     <string name="toast_error_translate">Десила се грешка приликом превођења!</string>
+    <string name="toast_error_translations_disabled">Translations are disabled in settings</string>
     <string name="toast_toot_saved">Нацрт сачуван!</string>
     <string name="toast_error_char_limit">Да ли сте сигурни да ова инстанца дозвољава оволики број карактера? Обично је ова вредност око 500 карактера.</string>
     <string name="toast_visibility_changed">Видљивост тутова је промењена за налог %1$s</string>
@@ -302,7 +303,6 @@
     <string name="set_auto_store_toot">Аутоматски чувај нацрте</string>
     <string name="set_bubble_counter">Прикажи бројаче</string>
     <string name="set_auto_add_media_url">Додај адресу мултимедије у тутове</string>
-    <string name="settings_title_notifications">Управљање обавештењима</string>
     <string name="set_notif_follow">Обавести када Вас неко запрати</string>
     <string name="set_notif_follow_ask">Обавести када неко затражи да Вас прати</string>
     <string name="set_notif_follow_share">Обавести када неко подржи Ваш статус</string>
@@ -310,7 +310,6 @@
     <string name="set_notif_follow_mention">Обавести када Вас неко помене</string>
     <string name="set_share_validation">Прикажи потврду пре давања подршке некоме</string>
     <string name="set_share_validation_fav">Прикажи дијалог за потврду пре додавања у омиљене</string>
-    <string name="settings_title_more_options">Напредне поставке</string>
     <string name="set_wifi_only">Обавештавај само на бежичној мрежи</string>
     <string name="set_notify">Обавештења?</string>
     <string name="set_notif_silent">Тиха обавештења</string>
@@ -327,7 +326,6 @@
     <string name="set_automatically_split_toot">Аутоматски подели тутове преко 500 карактера у одговору</string>
     <string name="note_no_space">Достигли сте дозвољених 160 карактера!</string>
     <string name="username_no_space">Достигли сте дозвољених 30 карактера!</string>
-    <string name="settings_title_hour">Термин за обавештења:</string>
     <string name="settings_time_from">Између</string>
     <string name="settings_time_to">и</string>
     <string name="settings_time_greater">Време мора бити веће од %1$s</string>
@@ -377,7 +375,6 @@
         <item>Жута</item>
         <item>Бела</item>
     </string-array>
-    <string name="set_title_news">Вести</string>
     <string name="set_notification_news">Обавести за нове тутове на сопственој лајни</string>
     <string name="action_follow">Запрати</string>
     <string name="action_unfollow">Престани да пратиш</string>
@@ -816,6 +813,12 @@
     <string name="vote">Vote</string>
     <string name="poll_not_private">A poll cannot be attached to a direct message!</string>
     <string name="notif_poll">A poll you have voted in has ended</string>
+    <string name="settings_category_notif_customize">Customize</string>
+    <string name="settings_category_notif_categories">Categories</string>
+    <string name="settings_category_notif_news">News</string>
+    <string name="settings_category_notif_time_slot">Time slot</string>
+    <string name="settings_category_notif_advanced">Advanced</string>
+    <string name="set_display_new_badge">Display \'new\' badge on unread toots</string>
     <string name="set_display_peertube">Display Peertube timeline</string>
     <string name="peertube_menu">Peertube</string>
     <string name="hide_tab">Hide the tab</string>
